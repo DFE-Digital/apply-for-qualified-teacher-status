@@ -1,0 +1,16 @@
+<%= render(CheckYourAnswersSummary::Component.new(
+  id: "passport-document",
+  model: application_form,
+  title: I18n.t("application_form.tasks.items.passport_document"),
+  fields: {
+    passport_expiry_date: {
+      title: "Expiry date",
+      href: %i[expiry_date teacher_interface application_form passport_document]
+    },
+    passport_document: {
+      title: "Passport",
+      href: [:teacher_interface, :application_form, application_form.passport_document]
+    },
+  },
+  changeable:
+)) %>

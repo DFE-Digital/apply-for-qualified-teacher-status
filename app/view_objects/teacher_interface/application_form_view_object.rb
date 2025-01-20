@@ -11,6 +11,10 @@ class TeacherInterface::ApplicationFormViewObject
 
   delegate :assessment, :country, :region, :teacher, to: :application_form
 
+  def requires_passport_as_identity_proof?
+    application_form.requires_passport_as_identity_proof
+  end
+
   def teaching_authority_provides_written_statement?
     application_form.region.teaching_authority_provides_written_statement
   end
@@ -30,10 +34,17 @@ class TeacherInterface::ApplicationFormViewObject
 
   def task_list_sections
     [
-      task_list_section(
-        :about_you,
-        %i[personal_information identification_document],
-      ),
+      if requires_passport_as_identity_proof?
+        task_list_section(
+          :about_you,
+          %i[personal_information passport_document],
+        )
+      else
+        task_list_section(
+          :about_you,
+          %i[personal_information identification_document],
+        )
+      end,
       task_list_section(:qualifications, %i[qualifications age_range subjects]),
       unless application_form.created_under_old_regulations?
         task_list_section(:english_language, %i[english_language])
@@ -241,6 +252,8 @@ class TeacherInterface::ApplicationFormViewObject
         :application_form,
         application_form.identification_document,
       ]
+    when :passport_document
+      %i[teacher_interface application_form passport_document]
     when :written_statement
       if application_form.teaching_authority_provides_written_statement
         %i[edit teacher_interface application_form written_statement]

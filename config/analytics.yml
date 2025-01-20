@@ -28,6 +28,8 @@
     - needs_registration_number
     - needs_work_history
     - needs_written_statement
+    - passport_document_status
+    - passport_expiry_date
     - personal_information_status
     - qualification_changed_work_history_duration
     - qualifications_status
@@ -36,6 +38,7 @@
     - region_id
     - registration_number
     - registration_number_status
+    - requires_passport_as_identity_proof
     - requires_preliminary_check
     - reviewer_id
     - stage

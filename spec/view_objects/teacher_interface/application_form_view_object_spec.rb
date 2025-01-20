@@ -169,6 +169,26 @@ RSpec.describe TeacherInterface::ApplicationFormViewObject do
         )
       end
     end
+
+    context "requires passport upload for identification" do
+      before do
+        application_form.update!(requires_passport_as_identity_proof: true)
+      end
+
+      it do
+        expect(subject).not_to include_task_list_item(
+          "About you",
+          "Upload your identity document",
+        )
+      end
+
+      it do
+        expect(subject).to include_task_list_item(
+          "About you",
+          "Upload your passport",
+        )
+      end
+    end
   end
 
   describe "#completed_task_list_sections" do

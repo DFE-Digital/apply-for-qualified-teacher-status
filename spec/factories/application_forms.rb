@@ -29,6 +29,8 @@
 #  needs_registration_number                     :boolean          not null
 #  needs_work_history                            :boolean          not null
 #  needs_written_statement                       :boolean          not null
+#  passport_document_status                      :string           default("not_started"), not null
+#  passport_expiry_date                          :date
 #  personal_information_status                   :string           default("not_started"), not null
 #  qualification_changed_work_history_duration   :boolean          default(FALSE), not null
 #  qualifications_status                         :string           default("not_started"), not null
@@ -36,6 +38,7 @@
 #  reference                                     :string(31)       not null
 #  registration_number                           :text
 #  registration_number_status                    :string           default("not_started"), not null
+#  requires_passport_as_identity_proof           :boolean          default(FALSE), not null
 #  requires_preliminary_check                    :boolean          default(FALSE), not null
 #  stage                                         :string           default("draft"), not null
 #  statuses                                      :string           default(["\"draft\""]), not null, is an Array
@@ -251,6 +254,22 @@ FactoryBot.define do
           :clean,
           document: application_form.identification_document,
         )
+      end
+    end
+
+    trait :with_passport_document do
+      passport_document_status { "completed" }
+
+      passport_expiry_date { Date.new(2.years.from_now.year, 1, 1) }
+      after(:create) do |application_form, _evaluator|
+        create(:upload, :clean, document: application_form.passport_document)
+      end
+    end
+
+    trait :with_unsafe_passport_document do
+      identification_document_status { "completed" }
+      after(:create) do |application_form, _evaluator|
+        create(:upload, :suspect, document: application_form.passport_document)
       end
     end
 

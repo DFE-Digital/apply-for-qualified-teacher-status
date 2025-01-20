@@ -66,6 +66,74 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
       end
     end
 
+    describe "passport document" do
+      subject(:passport_document_status) do
+        application_form.passport_document_status
+      end
+
+      context "without a passport document" do
+        let(:application_form) { create(:application_form) }
+
+        it "returns not_started" do
+          application_form.passport_document.destroy!
+          application_form.reload
+
+          described_class.call(application_form:)
+
+          expect(subject).to eq("not_started")
+        end
+      end
+
+      context "with no upload or expiry date" do
+        let(:application_form) { create(:application_form) }
+
+        it { is_expected.to eq("not_started") }
+      end
+
+      context "with valid expiry date but no upload" do
+        let(:application_form) do
+          create(
+            :application_form,
+            passport_expiry_date: Date.new(2.years.from_now.year, 1, 1),
+          )
+        end
+
+        it { is_expected.to eq("in_progress") }
+      end
+
+      context "with valid expiry date and an upload" do
+        let(:application_form) do
+          create(:application_form, :with_passport_document)
+        end
+
+        it { is_expected.to eq("completed") }
+      end
+
+      context "with valid expiry date and an unsafe upload" do
+        let(:application_form) do
+          create(
+            :application_form,
+            :with_unsafe_passport_document,
+            passport_expiry_date: Date.new(2.years.from_now.year, 1, 1),
+          )
+        end
+
+        it { is_expected.to eq("error") }
+      end
+
+      context "with invalid expiry date and an upload" do
+        let(:application_form) do
+          create(
+            :application_form,
+            :with_passport_document,
+            passport_expiry_date: Date.new(2.years.ago.year, 1, 1),
+          )
+        end
+
+        it { is_expected.to eq("in_progress") }
+      end
+    end
+
     describe "qualifications" do
       subject(:qualifications_status) { application_form.qualifications_status }
 

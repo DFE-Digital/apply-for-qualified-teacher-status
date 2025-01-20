@@ -29,6 +29,8 @@
 #  needs_registration_number                     :boolean          not null
 #  needs_work_history                            :boolean          not null
 #  needs_written_statement                       :boolean          not null
+#  passport_document_status                      :string           default("not_started"), not null
+#  passport_expiry_date                          :date
 #  personal_information_status                   :string           default("not_started"), not null
 #  qualification_changed_work_history_duration   :boolean          default(FALSE), not null
 #  qualifications_status                         :string           default("not_started"), not null
@@ -36,6 +38,7 @@
 #  reference                                     :string(31)       not null
 #  registration_number                           :text
 #  registration_number_status                    :string           default("not_started"), not null
+#  requires_passport_as_identity_proof           :boolean          default(FALSE), not null
 #  requires_preliminary_check                    :boolean          default(FALSE), not null
 #  stage                                         :string           default("draft"), not null
 #  statuses                                      :string           default(["\"draft\""]), not null, is an Array
@@ -83,6 +86,7 @@
 #
 class ApplicationForm < ApplicationRecord
   ATTACHABLE_DOCUMENT_TYPES = %w[
+    passport
     identification
     name_change
     medium_of_instruction
@@ -149,6 +153,7 @@ class ApplicationForm < ApplicationRecord
   STATUS_COLUMNS = %i[
     personal_information_status
     identification_document_status
+    passport_document_status
     qualifications_status
     age_range_status
     subjects_status
@@ -232,6 +237,10 @@ class ApplicationForm < ApplicationRecord
 
   def identification_document
     documents.find(&:identification?)
+  end
+
+  def passport_document
+    documents.find(&:passport?)
   end
 
   def name_change_document

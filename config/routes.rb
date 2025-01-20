@@ -297,6 +297,16 @@ Rails.application.routes.draw do
         end
       end
 
+      resource :passport_document,
+               controller: :passport_document,
+               only: %i[show] do
+        member do
+          get "expiry_date", to: "passport_document#expiry_date"
+          post "expiry_date", to: "passport_document#update_expiry_date"
+          get "check", to: "passport_document#check"
+        end
+      end
+
       resources :qualifications, except: %i[show] do
         collection do
           get "check", to: "qualifications#check_collection"

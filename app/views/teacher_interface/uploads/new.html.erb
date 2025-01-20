@@ -27,6 +27,21 @@
       </ul>
 
       <p class="govuk-hint">If you’re uploading an identity card or driving licence, you’ll need to upload both sides of the card.</p>
+    <% elsif @document.passport? %>
+      <h1 class="govuk-heading-l">Upload your passport</h1>
+
+      <p class="govuk-body">Only upload the passport pages that show your photo and personal details, including your:</p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li>name</li>
+        <li>passport number</li>
+        <li>expiry date</li>
+        <li>identity card number (if you have one)</li>
+      </ul>
+
+      <p class="govuk-body">Make sure all information is clear and readable and the edges of the pages are visible.</p>
+
+      <p class="govuk-body">You do not need to upload every page of your passport.</p>
     <% elsif @document.name_change? %>
       <h1 class="govuk-heading-l">Upload proof of your change of name</h1>
 
@@ -156,7 +171,23 @@
     <% end %>
   <% else %>
     <h1 class="govuk-heading-l">Upload the next page of your <%= I18n.t("document.document_type.#{@document.document_type}") %> document</h1>
-    <p class="govuk-body">Upload the next page of your <%= I18n.t("document.document_type.#{@document.document_type}") %> document. If your document has more pages, you can add them on the next screen.</p>
+
+    <% if @document.passport? %>
+      <p class="govuk-body">Only upload the passport pages that show your photo and personal details, including your:</p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li>name</li>
+        <li>passport number</li>
+        <li>expiry date</li>
+        <li>identity card number (if you have one)</li>
+      </ul>
+
+      <p class="govuk-body">Make sure all information is clear and readable and the edges of the pages are visible.</p>
+
+      <p class="govuk-body">You do not need to upload every page of your passport.</p>
+    <% else %>
+      <p class="govuk-body">Upload the next page of your <%= I18n.t("document.document_type.#{@document.document_type}") %> document. If your document has more pages, you can add them on the next screen.</p>
+    <% end %>
   <% end %>
 
   <%= f.govuk_file_field :original_attachment,

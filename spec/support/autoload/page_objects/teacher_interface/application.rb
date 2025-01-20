@@ -23,6 +23,10 @@ module PageObjects
         find_task_list_item("Enter your personal information")
       end
 
+      def passport_document_task_item
+        find_task_list_item("Upload your passport")
+      end
+
       def qualifications_task_item
         find_task_list_item("Add your teaching qualifications")
       end

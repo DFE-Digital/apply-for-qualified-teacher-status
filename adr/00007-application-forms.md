@@ -23,7 +23,6 @@ Inspired by [Apply for Teacher Training](https://github.com/DFE-Digital/apply-fo
 - `Teacher` - primarily used for authentication
 - `ApplicationForm` - which belongs to a `Teacher`, and holds the information that is common to all of the applications that the user makes
 - `WorkHistory` - which holds the information related to the work history of the teacher
-- `IdentityDocument` - which holds the uploaded identification documents
 
 This approach allows us to build quickly and provide entirely customised question views. It might lead to problems down the line if the application form changes a lot.
 
