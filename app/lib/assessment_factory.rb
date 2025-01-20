@@ -32,17 +32,35 @@ class AssessmentFactory
 
   def personal_information_section
     checks = [
-      :identification_document_present,
+      (
+        if application_form.requires_passport_as_identity_proof?
+          %i[expiry_date_valid passport_document_valid]
+        else
+          :identification_document_present
+        end
+      ),
       (:name_change_document_present if application_form.has_alternative_name),
       :duplicate_application,
       :applicant_already_qts,
       :applicant_already_dqt,
-    ].compact
+    ].flatten.compact
 
     failure_reasons = [
-      FailureReasons::IDENTIFICATION_DOCUMENT_EXPIRED,
-      FailureReasons::IDENTIFICATION_DOCUMENT_ILLEGIBLE,
-      FailureReasons::IDENTIFICATION_DOCUMENT_MISMATCH,
+      (
+        if application_form.requires_passport_as_identity_proof?
+          [
+            FailureReasons::PASSPORT_DOCUMENT_EXPIRED,
+            FailureReasons::PASSPORT_DOCUMENT_ILLEGIBLE,
+            FailureReasons::PASSPORT_DOCUMENT_MISMATCH,
+          ]
+        else
+          [
+            FailureReasons::IDENTIFICATION_DOCUMENT_EXPIRED,
+            FailureReasons::IDENTIFICATION_DOCUMENT_ILLEGIBLE,
+            FailureReasons::IDENTIFICATION_DOCUMENT_MISMATCH,
+          ]
+        end
+      ),
       (
         if application_form.has_alternative_name
           FailureReasons::NAME_CHANGE_DOCUMENT_ILLEGIBLE
@@ -50,13 +68,17 @@ class AssessmentFactory
       ),
       (
         if application_form.english_language_citizenship_exempt
-          FailureReasons::EL_EXEMPTION_BY_CITIZENSHIP_ID_UNCONFIRMED
+          if application_form.requires_passport_as_identity_proof?
+            FailureReasons::EL_EXEMPTION_BY_CITIZENSHIP_PASSPORT_UNCONFIRMED
+          else
+            FailureReasons::EL_EXEMPTION_BY_CITIZENSHIP_ID_UNCONFIRMED
+          end
         end
       ),
       FailureReasons::DUPLICATE_APPLICATION,
       FailureReasons::APPLICANT_ALREADY_QTS,
       FailureReasons::APPLICANT_ALREADY_DQT,
-    ].compact
+    ].flatten.compact
 
     if suitability_active?
       failure_reasons += [

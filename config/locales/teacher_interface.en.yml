@@ -16,6 +16,7 @@ en:
             degree_transcript_illegible: Your university degree transcript (or translation) is illegible or in a format we cannot accept.
             duplicate_application: You already have an application in progress.
             english_language_exemption_by_citizenship_not_confirmed: Your ID does not confirm English language exemption by birth or citizenship.
+            english_language_exemption_by_citizenship_not_confirmed_via_passport: Your passport does not confirm English language exemption by birth or citizenship.
             english_language_exemption_by_qualification_not_confirmed: Your qualification documents do not confirm English language exemption by country of study.
             english_language_moi_invalid_format: Your Medium of instruction (MOI) document is illegible or in a format that we cannot accept.
             english_language_moi_not_taught_in_english: Your medium of instruction (MOI) does not show that you were taught exclusively in English.
@@ -33,6 +34,9 @@ en:
             name_change_document_illegible: The evidence for your name change is illegible or in a format we cannot accept.
             not_qualified_to_teach_mainstream: You are not qualified to teach in mainstream education.
             professional_standing_request_expired: Your application has been declined as we did not receive your %{certificate_name} from %{teaching_authority_name} within 180 days.
+            passport_document_expired: Your passport document has expired.
+            passport_document_illegible: Your passport is illegible or in a format we cannot accept.
+            passport_document_mismatch: Your name on the online application form is different from the passport, but no evidence of change of name has been provided.
             qualifications_dont_match_other_details: Your uploaded qualifications do not match other details entered, for example, name of qualification, name of institution, or dates.
             qualifications_dont_match_subjects: The subjects you entered are acceptable for QTS, but the uploaded qualifications do not match them.
             qualified_to_teach: We were not provided with sufficient evidence to confirm qualification to teach at state or government schools.
