@@ -21,8 +21,12 @@ RUN apk upgrade --no-cache openssl libssl3 libcrypto3 curl expat
 # git: dependencies for bundle
 # vips-dev: dependencies for ruby-vips (image processing library)
 # imagemagick-dev: dependencies for rmagick (image conversion library)
+# imagemagick: runtime for imagemagick
+# pkgconfig: for finding libraries
 # poppler-utils: for analysing PDF files
-RUN apk add --update --no-cache build-base yarn postgresql14-dev git vips-dev imagemagick-dev poppler-utils
+RUN apk add --update --no-cache build-base yarn postgresql14-dev git vips-dev imagemagick-dev imagemagick pkgconfig poppler-utils && \
+    # Configure pkg-config to find ImageMagick
+    ln -s /usr/lib/pkgconfig/ImageMagick-7.Q16.pc /usr/lib/pkgconfig/MagickCore.pc
 
 # Install gems defined in Gemfile
 COPY Gemfile Gemfile.lock ./
@@ -85,9 +89,10 @@ RUN apk upgrade --no-cache openssl libssl3 libcrypto3 curl expat
 # libpq: required to run postgres
 # vips-dev: dependencies for ruby-vips (image processing library)
 # libreoffice-writer: for converting word documents to PDF
-# imagemagick-dev and imagemagick-pdf: for converting images to PDF
+# imagemagick-dev and imagemagick: for converting images to PDF
+# imagemagick-pdf: for PDF support in imagemagick
 # poppler-utils: for analysing PDF files
-RUN apk add --update --no-cache libpq vips-dev libreoffice-writer imagemagick-dev imagemagick-pdf poppler-utils
+RUN apk add --update --no-cache libpq vips-dev libreoffice-writer imagemagick-dev imagemagick imagemagick-pdf poppler-utils
 
 # Install fonts suitable for rendering DOCX and ODT files to PDF
 # https://wiki.alpinelinux.org/wiki/Fonts#Installation
