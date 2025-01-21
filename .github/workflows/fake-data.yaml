@@ -14,7 +14,7 @@ on:
 jobs:
   regenerate:
     name: Regenerate
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
 
     environment: ${{ github.event.inputs.environment }}
 

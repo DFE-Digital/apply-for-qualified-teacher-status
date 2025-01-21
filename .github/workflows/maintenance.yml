@@ -20,7 +20,7 @@ on:
 jobs:
   set-maintenance-mode:
     name: Set maintenance mode
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
 
     steps:
