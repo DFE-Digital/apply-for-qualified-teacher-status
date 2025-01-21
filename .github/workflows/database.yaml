@@ -33,7 +33,7 @@ env:
 jobs:
   backup:
     name: Backup database
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     environment:
       name: ${{ inputs.environment || 'production' }}
     env:
@@ -134,7 +134,7 @@ jobs:
     name: Restore preproduction
     needs: [backup]
     if: ${{ github.event_name == 'schedule' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     environment: production
     env:
       GLOBAL_CONFIG: preprod
