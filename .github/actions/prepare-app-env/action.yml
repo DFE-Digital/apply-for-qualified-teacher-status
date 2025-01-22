@@ -17,6 +17,10 @@ runs:
       run: sudo apt install -y libvips
       shell: bash
 
+    - name: Install libmagickwand
+      run: sudo apt-get install libmagickwand-dev
+      shell: bash
+
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
