@@ -165,6 +165,16 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
         )
       end
     end
+
+    context "with an archived assessor user" do
+      let!(:staff) { create(:staff, archived: true) }
+
+      it do
+        expect(subject).not_to include(
+          OpenStruct.new(id: staff.id, name: staff.name),
+        )
+      end
+    end
   end
 
   describe "#country_filter_options" do
