@@ -32,6 +32,39 @@ RSpec.describe "Teacher passport document", type: :system do
     and_i_see_the_completed_passport_document_task
   end
 
+  context "when the expiry date is in the past" do
+    it "navigates to interuption page and goes back to fix expiry date" do
+      when_i_visit_the(:teacher_application_page)
+      then_i_see_the(:teacher_application_page)
+      and_i_see_the_passport_document_task
+
+      when_i_click_the_passport_document_task
+      then_i_see_the(:teacher_passport_expiry_date_page)
+
+      when_i_fill_in_my_passport_expiry_date_that_has_expired
+      then_i_see_the(:teacher_passport_expiry_date_interruption_page)
+
+      when_i_choose_to_go_back_to_fix_my_expiry_date
+      then_i_see_the(:teacher_passport_expiry_date_page)
+    end
+
+    it "navigates to interuption page and goes back to application task list" do
+      when_i_visit_the(:teacher_application_page)
+      then_i_see_the(:teacher_application_page)
+      and_i_see_the_passport_document_task
+
+      when_i_click_the_passport_document_task
+      then_i_see_the(:teacher_passport_expiry_date_page)
+
+      when_i_fill_in_my_passport_expiry_date_that_has_expired
+      then_i_see_the(:teacher_passport_expiry_date_interruption_page)
+
+      when_i_choose_to_go_back_application_task_list
+      then_i_see_the(:teacher_application_page)
+      and_i_see_content_that_my_passport_has_expired
+    end
+  end
+
   private
 
   def given_an_application_form_exists
@@ -54,6 +87,38 @@ RSpec.describe "Teacher passport document", type: :system do
     teacher_passport_expiry_date_page.form.passport_expiry_date_year_field.fill_in with:
       2.years.from_now.year
     teacher_passport_expiry_date_page.form.continue_button.click
+  end
+
+  def when_i_fill_in_my_passport_expiry_date_that_has_expired
+    teacher_passport_expiry_date_page.form.passport_expiry_date_day_field.fill_in with:
+      "1"
+    teacher_passport_expiry_date_page.form.passport_expiry_date_month_field.fill_in with:
+      "1"
+    teacher_passport_expiry_date_page.form.passport_expiry_date_year_field.fill_in with:
+      2.years.ago.year
+    teacher_passport_expiry_date_page.form.continue_button.click
+  end
+
+  def when_i_choose_to_go_back_to_fix_my_expiry_date
+    teacher_passport_expiry_date_interruption_page
+      .form
+      .back_to_expiry_date_form_radio
+      .choose
+    teacher_passport_expiry_date_interruption_page.form.continue_button.click
+  end
+
+  def when_i_choose_to_go_back_application_task_list
+    teacher_passport_expiry_date_interruption_page
+      .form
+      .back_to_application_task_list_radio
+      .choose
+    teacher_passport_expiry_date_interruption_page.form.continue_button.click
+  end
+
+  def and_i_see_content_that_my_passport_has_expired
+    expect(teacher_application_page).to have_content(
+      "Your passport has expired",
+    )
   end
 
   def when_i_upload_a_file

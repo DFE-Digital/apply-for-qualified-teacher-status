@@ -28,16 +28,6 @@ RSpec.describe TeacherInterface::PassportExpiryDateForm, type: :model do
 
       before { form.valid? }
 
-      context "when the expiry date is in the past" do
-        let(:passport_expiry_date) { { 1 => 2.years.ago.year, 2 => 1, 3 => 1 } }
-
-        it do
-          expect(subject).to eq(
-            ["The passport expiry date must be in the future."],
-          )
-        end
-      end
-
       context "when expiry date has a 2 digit year" do
         let(:passport_expiry_date) { { 1 => 80, 2 => 1, 3 => 1 } }
 
@@ -77,6 +67,48 @@ RSpec.describe TeacherInterface::PassportExpiryDateForm, type: :model do
       expect(application_form.passport_expiry_date).to eq(
         Date.new(2.years.from_now.year, 1, 1),
       )
+    end
+  end
+
+  describe "#expiry_date_in_the_past?" do
+    context "when passport expiry date is in the past" do
+      let(:passport_expiry_date) { { 1 => 2.years.ago.year, 2 => 1, 3 => 1 } }
+
+      it "returns true" do
+        expect(form.expiry_date_in_the_past?).to be true
+      end
+    end
+
+    context "when passport expiry date is today" do
+      let(:passport_expiry_date) do
+        {
+          1 => Date.current.year,
+          2 => Date.current.month,
+          3 => Date.current.day,
+        }
+      end
+
+      it "returns false" do
+        expect(form.expiry_date_in_the_past?).to be false
+      end
+    end
+
+    context "when passport expiry date is in the future" do
+      let(:passport_expiry_date) do
+        { 1 => 2.years.from_now.year, 2 => 1, 3 => 1 }
+      end
+
+      it "returns false" do
+        expect(form.expiry_date_in_the_past?).to be false
+      end
+    end
+
+    context "when passport expiry date is nil" do
+      let(:passport_expiry_date) { nil }
+
+      it "returns false" do
+        expect(form.expiry_date_in_the_past?).to be false
+      end
     end
   end
 end

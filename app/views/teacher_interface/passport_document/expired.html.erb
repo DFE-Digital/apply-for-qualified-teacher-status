@@ -1,0 +1,52 @@
+<% content_for :page_title, title_with_error_prefix(t("application_form.tasks.sections.about_you"), error: @error) %>
+<% content_for :back_link_url, back_history_path(default: teacher_interface_application_form_path) %>
+
+<% if @error %>
+  <div role="alert" class="govuk-error-summary" data-module="govuk-error-summary">
+    <h2 class="govuk-error-summary__title">There is a problem</h2>
+    <div class="govuk-error-summary__body">
+      <ul class="govuk-list govuk-error-summary__list">
+        <li>
+          <a href="#back_to_expiry_date_form_option">Select whether you made an error or need to renew your passport.</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+<% end %>
+
+<%= form_with model: nil, url: [:expired, :teacher_interface, :application_form, :passport_document] do |f| %>
+  <div class="moj-interruption-card">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <div class="moj-interruption-card__content">
+          <h1 class="govuk-heading-l moj-interruption-card__heading">Your passport has expired</h1>
+          <div class="govuk-body-l">
+            <p class="govuk-body-l moj-interruption-card__body">The passport expiry date you entered is in the past. We can only accept valid passports to verify your identity.</p>
+            <p class="govuk-body-l moj-interruption-card__body">If you made an error, you can update the expiry date. The assessor will verify the expiry date against the passport file you upload.</p>
+            <p class="govuk-body-l moj-interruption-card__body">If your passport has expired, you need to renew it. You can still complete the other sections of your application during this time. You must complete your QTS application by <%= (@application_form.created_at + 6.months).to_date.to_fs %>.</p>
+          </div>
+
+          <div id="back_to_expiry_date_form_option">
+            <%= f.govuk_radio_buttons_fieldset :back_to_expiry_date, legend: { size: "m", text: "Select what you need to do:", class: "moj-interruption-card__body" } do %>
+              <div class="govuk-radios__item">
+                <input id="back-to-expiry-date-true-field" class="govuk-radios__input" type="radio" value="true" name="back_to_expiry_date">
+                <label for="back-to-expiry-date-true-field" class="govuk-radios__label govuk-body-l moj-interruption-card__body">
+                  I made an error, I need to update the expiry date
+                </label>
+              </div>
+              <div class="govuk-radios__item">
+                <input id="back-to-expiry-date-false-field" class="govuk-radios__input" type="radio" value="false" name="back_to_expiry_date">
+                <label for="back-to-expiry-date-false-field" class="govuk-radios__label govuk-body-l moj-interruption-card__body">
+                  I will complete other sections of my application whilst I renew my passport
+                </label>
+              </div>
+            <% end %>
+          </div>
+          <div class="govuk-button-group moj-interruption-card__actions">
+            <%= f.govuk_submit name: "button", value: "save_and_continue", class: "govuk-button--inverse" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

@@ -76,6 +76,11 @@ class TeacherInterface::ApplicationFormViewObject
     end
   end
 
+  def passport_expiry_date_expired?
+    application_form.passport_expiry_date.present? &&
+      application_form.passport_expiry_date < Date.current
+  end
+
   def can_submit?
     completed_task_list_sections.count == task_list_sections.count
   end
