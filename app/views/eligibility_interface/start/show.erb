@@ -32,6 +32,9 @@
 <p class="govuk-body"><strong>You must have:</strong></p>
 
 <ul class="govuk-list govuk-list--bullet">
+  <% if FeatureFlags::FeatureFlag.active?(:use_passport_for_identity_verification) %>
+    <li>a valid passport that has not expired</li>
+  <% end %>
   <li>an undergraduate degree equal to a UK bachelor’s degree</li>
   <li>completed teacher training equal to a <%= govuk_link_to "level 6 qualification", "https://www.gov.uk/what-different-qualification-levels-mean/list-of-qualification-levels#:~:text=Level%206%20qualifications%20are%3A,graduate%20certificate" %></li>
   <li>completed all mandatory induction processes to gain full teacher registration in the country where you qualified</li>
