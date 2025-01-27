@@ -34,6 +34,9 @@ jobs:
     name: Build and push Docker image
     runs-on: ubuntu-latest
     environment: development
+    permissions:
+      packages: write
+      id-token: write
 
     if: contains(github.event.pull_request.labels.*.name, 'deploy') || (github.event_name != 'pull_request' && github.event_name != 'workflow_dispatch')
 
@@ -47,9 +50,11 @@ jobs:
         shell: bash
         run: echo "value=$(make -s development print-infrastructure-key-vault-name)" >> $GITHUB_OUTPUT
 
-      - uses: Azure/login@v2
+      - uses: azure/login@v2
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
       - uses: Azure/get-keyvault-secrets@v1
         id: key-vault-secrets
@@ -189,8 +194,10 @@ jobs:
         with:
           environment: review
           docker-image: ${{ needs.docker.outputs.image }}
-          azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
           pull-request-number: ${{ github.event.pull_request.number }}
+          azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
 
       - name: Post sticky pull request comment
         if: github.event_name == 'pull_request'
@@ -226,7 +233,9 @@ jobs:
         with:
           environment: ${{ matrix.environment }}
           docker-image: ${{ needs.docker.outputs.image }}
-          azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
+          azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
   deploy_production:
     name: Deploy to production environment
@@ -249,13 +258,17 @@ jobs:
         with:
           environment: production
           docker-image: ${{ needs.docker.outputs.image }}
-          azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
+          azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           smoke-test-credentials-required: "false"
 
   notify_slack_of_failures:
     name: Notify Slack of failures
     runs-on: ubuntu-latest
     environment: development
+    permissions:
+      id-token: write
 
     if: ${{ failure() && github.ref == 'refs/heads/main' && github.event_name == 'push' }}
     needs: [docker, rspec_system, rspec_other, deploy_non_production]
@@ -267,9 +280,11 @@ jobs:
         shell: bash
         run: echo "value=$(make -s development print-infrastructure-key-vault-name)" >> $GITHUB_OUTPUT
 
-      - uses: Azure/login@v2
+      - uses: azure/login@v2
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
       - uses: Azure/get-keyvault-secrets@v1
         id: key-vault-secrets
@@ -295,6 +310,9 @@ jobs:
       name: ${{ inputs.environment }}
       url: ${{ steps.deploy.outputs.url }}
     concurrency: deploy_${{ inputs.environment }}
+    permissions:
+      id-token: write
+      pull-requests: write
 
     steps:
       - uses: actions/checkout@v4
@@ -304,6 +322,8 @@ jobs:
         with:
           environment: ${{ inputs.environment }}
           docker-image: ghcr.io/dfe-digital/apply-for-qualified-teacher-status:${{ inputs.docker-image-tag }}
-          azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
+          azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           pull-request-number: ${{ inputs.environment == 'review' && inputs.pull-request-number || '' }}
           smoke-test-credentials-required: ${{ inputs.environment == 'production' && 'false' || 'true' }}
