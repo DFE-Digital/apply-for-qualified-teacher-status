@@ -14,12 +14,12 @@ env:
   TF_VARS_PATH: terraform/application/config
 
 jobs:
-  sanitise-backup:
-    name: Sanitise Backup
+  sanitise-backup-and-restore-preproduction:
+    name: Sanitise Backup and Restore Preproduction
     runs-on: ubuntu-latest
-    environment: production
+    environment: preproduction
     env:
-      GLOBAL_CONFIG: production
+      GLOBAL_CONFIG: preprod
       BACKUP_FILE: ${{ inputs.backup-file }}
 
     steps:
@@ -29,10 +29,14 @@ jobs:
       - name: Set environment variables
         run: |
           source global_config/${GLOBAL_CONFIG}.sh
+          tf_vars_file=${TF_VARS_PATH}/${CONFIG}/variables.tfvars.json
+          APP_ENVIRONMENT=$(jq -r '.app_environment' ${tf_vars_file})
+          echo "APP_NAME=${SERVICE_NAME}-${APP_ENVIRONMENT}-web" >> $GITHUB_ENV
           echo "SANITISED_FILE_NAME=afqts_sanitised_$(date +"%F").sql.gz" >> $GITHUB_ENV
-          echo "RESOURCE_GROUP_NAME=s189p01-afqts-pd-rg" >> $GITHUB_ENV
-          echo "STORAGE_ACCOUNT_NAME=s189p01afqtsdbbkppdsa" >> $GITHUB_ENV
+          echo "CLUSTER_RG=s189t01-tsc-ts-rg" >> $GITHUB_ENV
+          echo "CLUSTER_NAME=s189t01-tsc-test-aks" >> $GITHUB_ENV
 
+      # Download backup for production database and sanitise
       - uses: azure/login@v2
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
@@ -53,61 +57,14 @@ jobs:
         run: |
           gzip -d --to-stdout ${BACKUP_FILE} | psql -d postgres
           psql -d postgres -f db/scripts/sanitise.sql
-          pg_dump -E utf8 --compress=1 --clean --if-exists --no-owner --verbose --no-password -f ${SANITISED_FILE_NAME}.sql.gz
+          pg_dump -E utf8 --compress=1 --clean --if-exists --no-owner --verbose --no-password -f ${SANITISED_FILE_NAME}
         env:
           PGUSER: postgres
           PGPASSWORD: postgres
           PGHOST: localhost
           PGPORT: 5432
 
-      - name: Upload sanitised backup to Azure Storage
-        run: |
-          STORAGE_CONN_STR=$(az storage account show-connection-string -g ${{ env.RESOURCE_GROUP_NAME }} -n ${{ env.STORAGE_ACCOUNT_NAME }} --query 'connectionString')
-          echo "::add-mask::$STORAGE_CONN_STR"
-
-          az storage blob upload --container-name database-backup \
-            --file ${SANITISED_FILE_NAME}.sql.gz --name ${SANITISED_FILE_NAME}.sql.gz --overwrite \
-            --connection-string "${STORAGE_CONN_STR}"
-          rm ${SANITISED_FILE_NAME}.sql.gz
-
-  restore-preproduction:
-    name: Restore preproduction
-    needs: sanitise-backup
-    runs-on: ubuntu-latest
-    environment: preproduction
-    env:
-      GLOBAL_CONFIG: preprod
-      BACKUP_FILE: ${{ inputs.backup-file }}
-
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - name: Set environment variables
-        run: |
-          source global_config/${GLOBAL_CONFIG}.sh
-          tf_vars_file=${TF_VARS_PATH}/${CONFIG}/variables.tfvars.json
-          APP_ENVIRONMENT=$(jq -r '.app_environment' ${tf_vars_file})
-          echo "APP_NAME=${SERVICE_NAME}-${APP_ENVIRONMENT}-web" >> $GITHUB_ENV
-          echo "SANITISED_FILE_NAME=afqts_sanitised_$(date +"%F").sql.gz" >> $GITHUB_ENV
-          echo "CLUSTER_RG=s189t01-tsc-ts-rg" >> $GITHUB_ENV
-          echo "CLUSTER_NAME=s189t01-tsc-test-aks" >> $GITHUB_ENV
-          echo "RESOURCE_GROUP_NAME=s189p01-afqts-pd-rg" >> $GITHUB_ENV
-          echo "STORAGE_ACCOUNT_NAME=s189p01afqtsdbbkppdsa" >> $GITHUB_ENV
-
-      # Download backup from production storage account
-      - uses: azure/login@v2
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-      - name: Download Backup from Azure Storage
-        run: |
-          az config set extension.use_dynamic_install=yes_without_prompt
-          az config set core.only_show_errors=true
-          az storage azcopy blob download --container database-backup \
-            --source ${SANITISED_FILE_NAME} --destination ${SANITISED_FILE_NAME}
-
-      # Restore backup to preproduction database
+      # Restore sanitised backup file to preproduction database
       - uses: azure/login@v2
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS_PREPRODUCTION }}
@@ -142,5 +99,4 @@ jobs:
           NOW=$(TZ=Europe/London date +"%F %R")
           echo "RESTORE SUCCESSFUL!" >> $GITHUB_STEP_SUMMARY
           echo "APP: ${APP_NAME}" >> $GITHUB_STEP_SUMMARY
-          echo "BACKUP FILE RESTORED: ${STORAGE_ACCOUNT_NAME} / database-backup / ${SANITISED_FILE_NAME}" >> $GITHUB_STEP_SUMMARY
           echo "AT: ${NOW}" >> $GITHUB_STEP_SUMMARY
