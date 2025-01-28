@@ -33,6 +33,7 @@ jobs:
           source global_config/${GLOBAL_CONFIG}.sh
           tf_vars_file=${TF_VARS_PATH}/${CONFIG}/variables.tfvars.json
           APP_ENVIRONMENT=$(jq -r '.app_environment' ${tf_vars_file})
+          echo "NAMESPACE=$(jq -r '.namespace' ${tf_vars_file})" >> $GITHUB_ENV
           echo "APP_NAME=${SERVICE_NAME}-${APP_ENVIRONMENT}-web" >> $GITHUB_ENV
           echo "SANITISED_FILE_NAME=afqts_sanitised_$(date +"%F").sql.gz" >> $GITHUB_ENV
           echo "CLUSTER_RG=s189t01-tsc-ts-rg" >> $GITHUB_ENV
@@ -99,7 +100,7 @@ jobs:
 
       - name: Restore backup to aks env database
         run: |
-          ./konduit.sh -i ${SANITISED_FILE_NAME} -c -t 7200 -x ${APP_NAME} -- psql
+          ./konduit.sh -n ${{ env.NAMESPACE }} -i ${SANITISED_FILE_NAME} -c -t 7200 -x ${APP_NAME} -- psql
 
       - name: Restore Summary
         if: success()
