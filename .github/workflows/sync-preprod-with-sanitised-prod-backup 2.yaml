@@ -17,7 +17,7 @@ jobs:
   sanitise-backup-and-restore-preproduction:
     name: Sanitise Backup and Restore Preproduction
     runs-on: ubuntu-latest
-    environment: preproduction
+    environment: production
     env:
       GLOBAL_CONFIG: preprod
       BACKUP_FILE: ${{ inputs.backup-file }}
