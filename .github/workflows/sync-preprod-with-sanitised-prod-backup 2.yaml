@@ -1,0 +1,119 @@
+name: Sync PreProd with Sanitised Prod Backup
+
+on:
+  workflow_dispatch:
+    inputs:
+      backup-file:
+        description: Name of the prod backup file to sanitise and restore on preproduction (e.g., afqts_pd_2025-01-10.sql.gz)
+        required: true
+        type: string
+
+env:
+  SERVICE_NAME: apply-for-qts
+  SERVICE_SHORT: afqts
+  TF_VARS_PATH: terraform/application/config
+
+jobs:
+  sanitise-backup-and-restore-preproduction:
+    name: Sanitise Backup and Restore Preproduction
+    runs-on: ubuntu-latest
+    environment: production
+    env:
+      GLOBAL_CONFIG: preprod
+      BACKUP_FILE: ${{ inputs.backup-file }}
+    permissions:
+      id-token: write
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set environment variables
+        run: |
+          source global_config/${GLOBAL_CONFIG}.sh
+          tf_vars_file=${TF_VARS_PATH}/${CONFIG}/variables.tfvars.json
+          APP_ENVIRONMENT=$(jq -r '.app_environment' ${tf_vars_file})
+          echo "NAMESPACE=$(jq -r '.namespace' ${tf_vars_file})" >> $GITHUB_ENV
+          echo "APP_NAME=${SERVICE_NAME}-${APP_ENVIRONMENT}-web" >> $GITHUB_ENV
+          echo "SANITISED_FILE_NAME=afqts_sanitised_$(date +"%F").sql.gz" >> $GITHUB_ENV
+          echo "CLUSTER_RG=s189t01-tsc-ts-rg" >> $GITHUB_ENV
+          echo "CLUSTER_NAME=s189t01-tsc-test-aks" >> $GITHUB_ENV
+          echo "PRODUCTION_RESOURCE_GROUP_NAME=s189p01-afqts-pd-rg" >> $GITHUB_ENV
+          echo "PRODUCTION_STORAGE_ACCOUNT_NAME=s189p01afqtsdbbkppdsa" >> $GITHUB_ENV
+
+      # Download backup for production database and sanitise
+      - uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Set Connection String
+        run: |
+          STORAGE_CONN_STR=$(az storage account show-connection-string -g ${PRODUCTION_RESOURCE_GROUP_NAME} -n ${PRODUCTION_STORAGE_ACCOUNT_NAME} --query 'connectionString')
+          echo "::add-mask::$STORAGE_CONN_STR"
+          echo "AZURE_STORAGE_CONNECTION_STRING=$STORAGE_CONN_STR" >> $GITHUB_ENV
+
+      - name: Download Production Backup from Azure Storage
+        run: |
+          az config set extension.use_dynamic_install=yes_without_prompt
+          az config set core.only_show_errors=true
+          az storage azcopy blob download --container database-backup \
+            --source ${BACKUP_FILE} --destination ${BACKUP_FILE}
+
+      - name: Install postgres client
+        uses: DFE-Digital/github-actions/install-postgres-client@master
+        with:
+          version: 14
+
+      - name: Sanitise dump
+        run: |
+          gzip -d --to-stdout ${BACKUP_FILE} | psql -d postgres
+          psql -d postgres -f db/scripts/sanitise.sql
+          pg_dump -E utf8 --compress=1 --clean --if-exists --no-owner --verbose --no-password -f ${SANITISED_FILE_NAME}
+        env:
+          PGUSER: postgres
+          PGPASSWORD: postgres
+          PGHOST: localhost
+          PGPORT: 5432
+
+      # Restore sanitised backup file to preproduction database
+      - uses: azure/login@v2
+        with:
+          azure-client-id: ${{ secrets.AZURE_CLIENT_ID_PREPRODUCTION }}
+          azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID_PREPRODUCTION }}
+
+      - name: Setup postgres client
+        uses: DFE-Digital/github-actions/install-postgres-client@master
+        with:
+          version: 14
+
+      - name: Install kubectl
+        uses: DFE-Digital/github-actions/set-kubectl@master
+
+      - uses: DFE-Digital/github-actions/set-kubelogin-environment@master
+        with:
+          azure-client-id: ${{ secrets.AZURE_CLIENT_ID_PREPRODUCTION }}
+          azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID_PREPRODUCTION }}
+
+      - name: K8 setup
+        run: |
+          az aks get-credentials --overwrite-existing -g ${CLUSTER_RG} -n ${CLUSTER_NAME}
+          kubelogin convert-kubeconfig -l spn
+          # install konduit
+          curl -s https://raw.githubusercontent.com/DFE-Digital/teacher-services-cloud/master/scripts/konduit.sh -o ./konduit.sh
+          chmod +x ./konduit.sh
+
+      - name: Restore backup to aks env database
+        run: |
+          ./konduit.sh -n ${{ env.NAMESPACE }} -i ${SANITISED_FILE_NAME} -c -t 7200 -x ${APP_NAME} -- psql
+
+      - name: Restore Summary
+        if: success()
+        run: |
+          NOW=$(TZ=Europe/London date +"%F %R")
+          echo "RESTORE SUCCESSFUL!" >> $GITHUB_STEP_SUMMARY
+          echo "APP: ${APP_NAME}" >> $GITHUB_STEP_SUMMARY
+          echo "AT: ${NOW}" >> $GITHUB_STEP_SUMMARY
