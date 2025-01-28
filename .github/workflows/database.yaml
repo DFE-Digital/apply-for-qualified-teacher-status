@@ -107,3 +107,4 @@ jobs:
           backup-file: ${{ env.BACKUP_FILE }}.sql
           db-server-name: ${{ inputs.db-server }}
           slack-webhook: ${{ steps.key-vault-secrets.outputs.SLACK_WEBHOOK }}
+          namespace: ${{ env.NAMESPACE }}
