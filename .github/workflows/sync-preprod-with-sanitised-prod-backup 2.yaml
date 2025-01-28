@@ -38,6 +38,8 @@ jobs:
           echo "SANITISED_FILE_NAME=afqts_sanitised_$(date +"%F").sql.gz" >> $GITHUB_ENV
           echo "CLUSTER_RG=s189t01-tsc-ts-rg" >> $GITHUB_ENV
           echo "CLUSTER_NAME=s189t01-tsc-test-aks" >> $GITHUB_ENV
+          echo "PRODUCTION_RESOURCE_GROUP_NAME=s189p01-afqts-pd-rg" >> $GITHUB_ENV
+          echo "PRODUCTION_STORAGE_ACCOUNT_NAME=s189p01afqtsdbbkppdsa" >> $GITHUB_ENV
 
       # Download backup for production database and sanitise
       - uses: azure/login@v2
@@ -45,6 +47,12 @@ jobs:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Set Connection String
+        run: |
+          STORAGE_CONN_STR=$(az storage account show-connection-string -g ${PRODUCTION_RESOURCE_GROUP_NAME} -n ${PRODUCTION_STORAGE_ACCOUNT_NAME} --query 'connectionString')
+          echo "::add-mask::$STORAGE_CONN_STR"
+          echo "AZURE_STORAGE_CONNECTION_STRING=$STORAGE_CONN_STR" >> $GITHUB_ENV
 
       - name: Download Production Backup from Azure Storage
         run: |
