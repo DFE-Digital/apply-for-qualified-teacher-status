@@ -16,7 +16,12 @@ module TeacherInterface
     end
 
     def expiry_date_in_the_past?
-      date = DateValidator.parse(passport_expiry_date)
+      date =
+        if passport_expiry_date.is_a?(Date)
+          passport_expiry_date
+        else
+          DateValidator.parse(passport_expiry_date)
+        end
 
       date.present? && date < Date.current
     end

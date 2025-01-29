@@ -110,5 +110,13 @@ RSpec.describe TeacherInterface::PassportExpiryDateForm, type: :model do
         expect(form.expiry_date_in_the_past?).to be false
       end
     end
+
+    context "when passport expiry date is already in a date format" do
+      let(:passport_expiry_date) { 2.years.ago.to_date }
+
+      it "returns true or false without any errors" do
+        expect(form.expiry_date_in_the_past?).to be true
+      end
+    end
   end
 end

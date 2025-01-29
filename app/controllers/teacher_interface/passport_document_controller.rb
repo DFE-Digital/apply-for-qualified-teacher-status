@@ -33,6 +33,10 @@ module TeacherInterface
         PassportExpiryDateForm.new(
           passport_expiry_date: application_form.passport_expiry_date,
         )
+
+      if @form.expiry_date_in_the_past?
+        @form.errors.add(:passport_expiry_date, :expired)
+      end
     end
 
     def update_expiry_date
