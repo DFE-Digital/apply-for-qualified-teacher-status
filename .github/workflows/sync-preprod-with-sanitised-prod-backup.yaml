@@ -82,6 +82,7 @@ jobs:
           gzip -d --to-stdout ${BACKUP_FILE} | psql -d postgres
           psql -d postgres -f db/scripts/sanitise.sql
           pg_dump -E utf8 --compress=1 --clean --if-exists --no-owner --verbose --no-password -f ${SANITISED_FILE_NAME}
+          rm ${BACKUP_FILE}
         env:
           PGUSER: postgres
           PGPASSWORD: postgres
