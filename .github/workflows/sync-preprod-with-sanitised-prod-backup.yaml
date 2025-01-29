@@ -110,6 +110,10 @@ jobs:
         run: |
           ./konduit.sh -n ${{ env.NAMESPACE }} -i ${SANITISED_FILE_NAME} -c -t 7200 -x ${APP_NAME} -- psql
 
+      - name: Remove the sanitized file
+        run: |
+          rm ${SANITISED_FILE_NAME}
+
       - name: Restore Summary
         if: success()
         run: |
