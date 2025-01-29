@@ -13,7 +13,7 @@ SET
   date_of_birth = '2000-01-01',
   alternative_given_names = '',
   alternative_family_name = '',
-  passport_expiry_date = CASE WHEN passport_expiry_date IS NULL THEN NULL ELSE '2032-01-01' END;,
+  passport_expiry_date = CASE WHEN passport_expiry_date IS NULL THEN NULL ELSE '2032-01-01' END,
   trs_match = '{}',
   registration_number = '';
 
