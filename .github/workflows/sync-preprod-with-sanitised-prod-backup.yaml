@@ -24,6 +24,17 @@ jobs:
     permissions:
       id-token: write
 
+    services:
+      postgres:
+        image: postgres:14
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -71,6 +82,7 @@ jobs:
           gzip -d --to-stdout ${BACKUP_FILE} | psql -d postgres
           psql -d postgres -f db/scripts/sanitise.sql
           pg_dump -E utf8 --compress=1 --clean --if-exists --no-owner --verbose --no-password -f ${SANITISED_FILE_NAME}
+          rm ${BACKUP_FILE}
         env:
           PGUSER: postgres
           PGPASSWORD: postgres
