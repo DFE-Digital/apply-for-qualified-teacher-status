@@ -184,7 +184,7 @@ deploy-azure-domains-resources: set-production-azure-subscription check-auto-app
 .PHONY: vendor-domain-infra-modules
 vendor-domain-infra-modules:
 	rm -rf terraform/domains/infrastructure/vendor/modules/domains
-	TERRAFORM_MODULES_TAG=stable
+	$(eval include global_config/domains.sh)
 	git -c advice.detachedHead=false clone --depth=1 --single-branch --branch ${TERRAFORM_MODULES_TAG} https://github.com/DFE-Digital/terraform-modules.git terraform/domains/infrastructure/vendor/modules/domains
 
 domains-infra-init: set-production-azure-subscription vendor-domain-infra-modules set-azure-account ## make domains-infra-init -  terraform init for dns core resources, eg Main FrontDoor resource
