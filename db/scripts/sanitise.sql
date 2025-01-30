@@ -70,7 +70,6 @@ SET
 -- FurtherInformationRequest
 UPDATE "further_information_requests"
 SET
-  failure_assessor_note = CASE WHEN failure_assessor_note IS NULL THEN NULL ELSE '[sanitised]' END,
   review_note = CASE WHEN review_note IS NULL THEN NULL ELSE '[sanitised]' END;
 
 -- MailDeliveryFailure
@@ -129,7 +128,15 @@ SET
 DELETE FROM "sessions";
 
 -- Staff
-DELETE FROM "staff";
+UPDATE "staff"
+SET
+    name = concat('Name-', id),
+    email = CONCAT('staff', id, '@example.com'),
+    unconfirmed_email = CONCAT('staff', id, '@example.com'),
+    encrypted_password = '',
+    azure_ad_uid = '',
+    unlock_token = '',
+    reset_password_token = '';
 
 -- SuitabilityRecord
 
@@ -162,7 +169,6 @@ SET
 -- TimelineEvent
 UPDATE "timeline_events"
 SET
-  annotation = CASE WHEN annotation IS NULL THEN NULL ELSE '[sanitised]' END,
   age_range_note = CASE WHEN age_range_note IS NULL THEN NULL ELSE '[sanitised]' END,
   new_value = CASE WHEN new_value IS NULL THEN NULL ELSE '[sanitised]' END,
   old_value = CASE WHEN old_value IS NULL THEN NULL ELSE '[sanitised]' END,
