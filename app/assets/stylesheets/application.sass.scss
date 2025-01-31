@@ -6,6 +6,7 @@ $moj-images-path: "/";
 @import "govuk-frontend/dist/govuk/index";
 @import "@ministryofjustice/frontend/moj/components/ticket-panel/ticket-panel";
 @import "@ministryofjustice/frontend/moj/components/timeline/timeline";
+@import "@ministryofjustice/frontend/moj/components/interruption-card/interruption-card";
 @import "dfe-autocomplete/src/dfe-autocomplete";
 @import "location-autocomplete.min";
 

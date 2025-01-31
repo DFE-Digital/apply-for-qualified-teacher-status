@@ -13,6 +13,23 @@
   </div>
 <% end %>
 
+<% if view_object.passport_expiry_date_expired? %>
+  <div class="moj-interruption-card">
+    <div class="moj-interruption-card__content">
+      <h1 class="govuk-heading-m moj-interruption-card__heading">Your passport has expired</h1>
+      <div class="govuk-body-m">
+        <p class="govuk-body-m moj-interruption-card__body">
+          We can now only accept valid, in-date passports to verify your identity. You need to renew your passport and update your passport details.
+        </p>
+      </div>
+
+      <div class="govuk-button-group moj-interruption-card__actions">
+        <%= govuk_link_to "Update passport details", [:expiry_date, :teacher_interface, :application_form, :passport_document], class: "govuk-button govuk-button--inverse" %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
 <% if view_object.show_work_history_under_submission_banner? || view_object.show_work_history_under_induction_banner? %>
   <%= govuk_notification_banner(title_text: "Important") do %>
     <p>You have added at least one teaching role that started before you were qualified as a teacher.</p>

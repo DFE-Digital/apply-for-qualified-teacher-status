@@ -530,4 +530,39 @@ RSpec.describe TeacherInterface::ApplicationFormViewObject do
       it { is_expected.to be false }
     end
   end
+
+  describe "#passport_expiry_date_expired?" do
+    subject(:passport_expiry_date_expired?) do
+      view_object.passport_expiry_date_expired?
+    end
+
+    let(:application_form) do
+      create(:application_form, region:, passport_expiry_date:)
+    end
+    let(:passport_expiry_date) {}
+
+    context "when passport expiry date is in the past" do
+      let(:passport_expiry_date) { Date.new(2.years.ago.year, 1, 1) }
+
+      it { is_expected.to be true }
+    end
+
+    context "when passport expiry date is today" do
+      let(:passport_expiry_date) { Date.current }
+
+      it { is_expected.to be false }
+    end
+
+    context "when passport expiry date is in the future" do
+      let(:passport_expiry_date) { Date.new(2.years.from_now.year, 1, 1) }
+
+      it { is_expected.to be false }
+    end
+
+    context "when passport expiry date is nil" do
+      let(:passport_expiry_date) { nil }
+
+      it { is_expected.to be false }
+    end
+  end
 end
