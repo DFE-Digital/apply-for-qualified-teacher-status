@@ -73,7 +73,7 @@ RSpec.describe AwardQTS do
 
   context "with a potential duplicate in QTS application form" do
     let(:application_form) do
-      create(:application_form, :potential_duplicate_in_dqt, teacher:)
+      create(:application_form, :potential_duplicate_in_trs, teacher:)
     end
 
     before { create(:trs_trn_request, application_form:) }

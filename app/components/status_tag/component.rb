@@ -46,6 +46,7 @@ module StatusTag
       overdue_lops: "pink",
       overdue_reference: "pink",
       potential_duplicate_in_dqt: "pink",
+      potential_duplicate_in_trs: "pink",
       pre_assessment: "pink",
       preliminary_check: "pink",
       received: "purple",

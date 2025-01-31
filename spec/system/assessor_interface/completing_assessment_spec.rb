@@ -10,7 +10,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
   it "does not allow any access if assessor is archived" do
     given_i_am_authorized_as_an_archived_assessor_user
     given_there_is_an_awardable_application_form
-    given_i_can_request_dqt_api
+    given_i_can_request_trs_api
 
     when_i_visit_the(
       :assessor_complete_assessment_page,
@@ -23,7 +23,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
   it "award" do
     given_i_am_authorized_as_an_assessor_user
     given_there_is_an_awardable_application_form
-    given_i_can_request_dqt_api
+    given_i_can_request_trs_api
 
     when_i_visit_the(
       :assessor_complete_assessment_page,
@@ -268,7 +268,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
     )
   end
 
-  def given_i_can_request_dqt_api
+  def given_i_can_request_trs_api
     uri_template =
       Addressable::Template.new(
         "https://test-teacher-qualifications-api.education.gov.uk/v2/trn-requests/{request_id}",

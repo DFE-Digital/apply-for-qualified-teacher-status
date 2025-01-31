@@ -100,7 +100,8 @@ en:
 
       checks:
         age_range_subjects_matches: that the age range and subjects information the applicant has entered matches the qualifications they’ve provided
-        applicant_already_dqt: applicant does not already appear in DQT
+        applicant_already_dqt: applicant does not already appear in TRS
+        applicant_already_trs: applicant does not already appear in TRS
         applicant_already_qts: applicant does not already hold QTS and induction exemption
         authorisation_to_teach: confirmation that authorisation to teach has never been suspended, barred, cancelled, revoked or restricted, and there are no sanctions present
         confirm_age_range_subjects: confirmation of the age ranges and subjects the applicant is qualified to teach
@@ -144,6 +145,7 @@ en:
           additional_degree_transcript_illegible: An additional degree transcript (or translation) is illegible or in a format that we cannot accept.
           age_range: The age range the applicant is qualified to teach does not fall within the requirements of QTS.
           applicant_already_dqt: There’s a potential existing match for this applicant. We need to ask for an additional identifier.
+          applicant_already_trs: There’s a potential existing match for this applicant. We need to ask for an additional identifier.
           applicant_already_qts: The applicant already holds QTS and induction exemption.
           application_and_qualification_names_do_not_match: The name on the online application form is different from 1 or more qualification documents, but no evidence of change of name was provided.
           authorisation_to_teach: Sanctions or restrictions were detected on professional record.
@@ -273,6 +275,8 @@ en:
             age_range_notes:
               blank: Enter a note to the applicant
             applicant_already_dqt_notes:
+              blank: Enter a note to the applicant
+            applicant_already_trs_notes:
               blank: Enter a note to the applicant
             applicant_already_qts_notes:
               blank: Enter a note to the applicant
