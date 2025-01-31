@@ -87,7 +87,11 @@ module TeacherInterface
       when "work_history_contact"
         "Add work history details"
       when "document"
-        "Upload your #{I18n.t("document.document_type.#{item.document.document_type}")} document"
+        if item.document.document_type == "passport"
+          "Upload your #{I18n.t("document.document_type.#{item.document.document_type}")}"
+        else
+          "Upload your #{I18n.t("document.document_type.#{item.document.document_type}")} document"
+        end
       end
     end
   end

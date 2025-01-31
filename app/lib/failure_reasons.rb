@@ -93,6 +93,8 @@ class FailureReasons
     IDENTIFICATION_DOCUMENT_ILLEGIBLE => :identification,
     IDENTIFICATION_DOCUMENT_MISMATCH => :name_change,
     NAME_CHANGE_DOCUMENT_ILLEGIBLE => :name_change,
+    PASSPORT_DOCUMENT_ILLEGIBLE => :passport,
+    PASSPORT_DOCUMENT_MISMATCH => :name_change,
     QUALIFICATIONS_DONT_MATCH_SUBJECTS => :qualification_document,
     QUALIFIED_TO_TEACH => :written_statement,
     REGISTRATION_NUMBER_ALTERNATIVE => :written_statement,
