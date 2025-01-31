@@ -1,12 +1,24 @@
-<p class="govuk-body">You must provide one of the following:</p>
-<ul class="govuk-list govuk-list--bullet">
-  <li>passport (must not have expired)</li>
-  <li>birth certificate</li>
-  <li>national identity card that shows your date of birth and nationality (must not have expired)</li>
-</ul>
-<%= govuk_details(summary_text: "Has your name changed?") do %>
-  <p class="govuk-body">
-    If the name on your proof of identity is different from that on your other documents, 
-    you need to provide evidence of your name change (for example, a marriage certificate or name change deed).
-  </p>
+<% if FeatureFlags::FeatureFlag.active?(:use_passport_for_identity_verification) %>
+  <p class="govuk-body">You must provide a valid passport.</p>
+  <p class="govuk-body">We only accept passports because they provide the most reliable and secure way to verify an applicant’s identity.</p>
+  <p class="govuk-body">You cannot apply for QTS with an expired passport or with any other identity document.</p>
+  <%= govuk_details(summary_text: "Has your name changed?") do %>
+    <p class="govuk-body">
+      If the name on your passport is different from that on your other documents,
+      you need to provide evidence of your name change (for example, a marriage certificate or name change deed).
+    </p>
+  <% end %>
+<% else %>
+  <p class="govuk-body">You must provide one of the following:</p>
+  <ul class="govuk-list govuk-list--bullet">
+    <li>passport (must not have expired)</li>
+    <li>birth certificate</li>
+    <li>national identity card that shows your date of birth and nationality (must not have expired)</li>
+  </ul>
+  <%= govuk_details(summary_text: "Has your name changed?") do %>
+    <p class="govuk-body">
+      If the name on your proof of identity is different from that on your other documents,
+      you need to provide evidence of your name change (for example, a marriage certificate or name change deed).
+    </p>
+  <% end %>
 <% end %>

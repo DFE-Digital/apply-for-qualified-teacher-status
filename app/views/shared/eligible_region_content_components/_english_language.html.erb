@@ -6,7 +6,11 @@
 
 <%= render "shared/english_language_exempt_countries" %>
 
-<p class="govuk-body">You’ll need to provide your passport or official identification documents for that country as proof. </p>
+<% if FeatureFlags::FeatureFlag.active?(:use_passport_for_identity_verification) %>
+  <p class="govuk-body">We will use your passport to verify your identity and check your English language ability. If you have more than one valid passport, you should only provide the one that proves you are exempt from English language requirements.</p>
+<% else %>
+  <p class="govuk-body">You’ll need to provide your passport or official identification documents for that country as proof. </p>
+<% end %>
 <p class="govuk-body">If you’re not exempt by birth or citizenship, you must be able to provide evidence of your English language ability in one of the following ways:</p>
 
 <h3 class="govuk-heading-s">2. If you studied in an exempt country</h3>
@@ -50,7 +54,12 @@
 
 <%= govuk_details(summary_text: "What if you have more than one nationality?") do %>
   <p class="govuk-body">
-    If you’re a national of more than 1 country and both are exempt from English language requirements, you can choose which of them you use to apply for QTS. Remember, you must be able to show a passport (or the recognised identity document for that country).
+    If you’re a national of more than 1 country and both are exempt from English language requirements, you can choose which of them you use to apply for QTS.
+    <% if FeatureFlags::FeatureFlag.active?(:use_passport_for_identity_verification) %>
+      Your passport will be used to verify that you are exempt.
+    <% else %>
+      Remember, you must be able to show a passport (or the recognised identity document for that country).
+    <% end %>
   </p>
 
   <p class="govuk-body">
