@@ -70,6 +70,16 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
       end
     end
 
+    context "with a passport expired failure reason" do
+      let(:failure_reason) { FailureReasons::PASSPORT_DOCUMENT_EXPIRED }
+
+      it do
+        expect(subject).to eq(
+          "helpers.label.assessor_interface_assessment_section_form.failure_reason_notes.passport_expired",
+        )
+      end
+    end
+
     context "with a text failure reason" do
       let(:failure_reason) { "there-once-was-a-cat-with-a-hungry-belly" }
 
@@ -114,6 +124,16 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
       end
     end
 
+    context "with a passport expired failure reason" do
+      let(:failure_reason) { FailureReasons::PASSPORT_DOCUMENT_EXPIRED }
+
+      it do
+        expect(subject).to eq(
+          "helpers.hint.assessor_interface_assessment_section_form.failure_reason_notes.passport_expired",
+        )
+      end
+    end
+
     context "with a text failure reason" do
       let(:failure_reason) { "soon-may-the-kitty-man-come" }
 
@@ -144,6 +164,16 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
       it do
         expect(subject).to eq(
           "helpers.placeholder.assessor_interface_assessment_section_form.failure_reason_notes.decline",
+        )
+      end
+    end
+
+    context "with a passport expired failure reason" do
+      let(:failure_reason) { FailureReasons::PASSPORT_DOCUMENT_EXPIRED }
+
+      it do
+        expect(subject).to eq(
+          "helpers.placeholder.assessor_interface_assessment_section_form.failure_reason_notes.passport_expired",
         )
       end
     end

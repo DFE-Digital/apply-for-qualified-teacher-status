@@ -124,6 +124,10 @@ class FailureReasons
     failure_reason.to_s == FailureReasons::FRAUD
   end
 
+  def self.passport_expired?(failure_reason)
+    failure_reason.to_s == FailureReasons::PASSPORT_DOCUMENT_EXPIRED
+  end
+
   def self.requires_note?(failure_reason)
     suitability?(failure_reason) || fraud?(failure_reason) ||
       further_information?(failure_reason)
