@@ -25,6 +25,7 @@ class AssessorInterface::ApplicationFormsIndexViewObject
     ApplicationForm
       .submitted
       .joins(:assessor)
+      .where(staff: { archived: false })
       .pluck(Arel.sql("DISTINCT ON(assessor_id) assessor_id"), "staff.name")
       .sort_by { |_id, name| name }
       .map { |id, name| OpenStruct.new(id:, name:) } +
