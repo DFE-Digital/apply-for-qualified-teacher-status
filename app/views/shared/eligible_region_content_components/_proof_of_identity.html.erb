@@ -1,6 +1,6 @@
 <% if FeatureFlags::FeatureFlag.active?(:use_passport_for_identity_verification) %>
   <p class="govuk-body">You must provide a valid passport.</p>
-  <p class="govuk-body">We only accept passports because they provide the most reliable and secure way to verify an applicant's identity.</p>
+  <p class="govuk-body">We only accept passports because they provide the most reliable and secure way to verify an applicant’s identity.</p>
   <p class="govuk-body">You cannot apply for QTS with an expired passport or with any other identity document.</p>
   <%= govuk_details(summary_text: "Has your name changed?") do %>
     <p class="govuk-body">
