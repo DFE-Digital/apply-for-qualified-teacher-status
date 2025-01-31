@@ -153,5 +153,45 @@ RSpec.describe TeacherInterface::FurtherInformationRequestViewObject do
         },
       )
     end
+
+    context "when the document item is passport" do
+      let!(:document_item) do
+        create(
+          :further_information_request_item,
+          :with_passport_document_response,
+          :completed,
+          further_information_request:,
+        )
+      end
+
+      it do
+        expect(subject).to eq(
+          {
+            text_item.id => {
+              title: "Tell us more about the subjects you can teach",
+              href: [
+                :edit,
+                :teacher_interface,
+                :application_form,
+                further_information_request,
+                text_item,
+              ],
+              value: text_item.response,
+            },
+            document_item.id => {
+              title: "Upload your passport",
+              href: [
+                :edit,
+                :teacher_interface,
+                :application_form,
+                further_information_request,
+                document_item,
+              ],
+              value: document_item.document,
+            },
+          },
+        )
+      end
+    end
   end
 end

@@ -46,6 +46,13 @@ FactoryBot.define do
       end
     end
 
+    trait :with_passport_document_response do
+      information_type { "document" }
+      failure_reason_key { "passport_document_illegible" }
+
+      after(:create) { |item| create(:document, :passport, documentable: item) }
+    end
+
     trait :with_work_history_contact_response do
       information_type { "work_history_contact" }
       failure_reason_key { "school_details_cannot_be_verified" }
