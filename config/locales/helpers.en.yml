@@ -40,8 +40,6 @@ en:
         add_another: If your document has several pages, you can upload them here. Otherwise, select ‘No’ and then ‘Continue’.
       teacher_interface_alternative_name_form:
         has_alternative_name: If your name appears differently on your ID documents or qualifications you need to upload proof of your name change, for example, your marriage or civil partnership certificate.
-        alternative_given_names: Enter your full name apart from your family name
-        alternative_family_name: Enter just your family name
       teacher_interface_english_language_proof_method_form:
         proof_method: There are 2 ways you can do this.
         proof_method_options:
@@ -200,9 +198,9 @@ en:
       teacher_interface_alternative_name_form:
         has_alternative_name_options:
           true: Yes – I’ll upload another document to prove this
-          false: "No"
+          false: No - my name does not appear differently
         alternative_given_names: Alternate given names
-        alternative_family_name: Alternate family name
+        alternative_family_name: Alternate surname
       teacher_interface_age_range_form:
         minimum: <span class="govuk-visually-hidden">Age</span> From
         maximum: <span class="govuk-visually-hidden">Age</span> To
@@ -344,7 +342,7 @@ en:
       teacher_interface_add_another_work_history_form:
         add_another: Add another role?
       teacher_interface_alternative_name_form:
-        has_alternative_name: Does your name appear differently on your ID documents or qualifications?
+        has_alternative_name: Does your name appear differently on your passport or qualifications?
       teacher_interface_document_available_form:
         available: Have you completed your induction period in Northern Ireland?
       teacher_interface_english_language_proof_method_form:

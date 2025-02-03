@@ -123,7 +123,7 @@ RSpec.describe "Teacher personal information", type: :system do
 
     family_name_row =
       teacher_check_personal_information_page.summary_list.rows[1]
-    expect(family_name_row.key.text).to eq("Family name")
+    expect(family_name_row.key.text).to eq("Surname")
     expect(family_name_row.value.text).to eq("Smith")
 
     date_of_birth_row =
@@ -134,21 +134,21 @@ RSpec.describe "Teacher personal information", type: :system do
     has_alternative_name_row =
       teacher_check_personal_information_page.summary_list.rows[3]
     expect(has_alternative_name_row.key.text).to eq(
-      "Name appears differently on your ID documents or qualifications?",
+      "Name appears differently on your passport or qualifications?",
     )
     expect(has_alternative_name_row.value.text).to eq("Yes")
 
     alternative_given_names_row =
       teacher_check_personal_information_page.summary_list.rows[4]
     expect(alternative_given_names_row.key.text).to eq(
-      "Alternative given names",
+      "Alternate given names",
     )
     expect(alternative_given_names_row.value.text).to eq("Jonathan")
 
     alternative_family_name_row =
       teacher_check_personal_information_page.summary_list.rows[5]
     expect(alternative_family_name_row.key.text).to eq(
-      "Alternative family name",
+      "Alternate surname",
     )
     expect(alternative_family_name_row.value.text).to eq("Smithe")
 
@@ -172,7 +172,7 @@ RSpec.describe "Teacher personal information", type: :system do
 
     family_name_row =
       teacher_check_personal_information_page.summary_list.rows.second
-    expect(family_name_row.key.text).to eq("Family name")
+    expect(family_name_row.key.text).to eq("Surname")
     expect(family_name_row.value.text).to eq("Smith")
 
     date_of_birth_row =
@@ -183,7 +183,7 @@ RSpec.describe "Teacher personal information", type: :system do
     has_alternative_name_row =
       teacher_check_personal_information_page.summary_list.rows.fourth
     expect(has_alternative_name_row.key.text).to eq(
-      "Name appears differently on your ID documents or qualifications?",
+      "Name appears differently on your passport or qualifications?",
     )
     expect(has_alternative_name_row.value.text).to eq("No")
   end

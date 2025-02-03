@@ -226,9 +226,9 @@ en:
             alternative_given_names:
               blank: Enter your alternate given names
             alternative_family_name:
-              blank: Enter your alternate family name
+              blank: Enter your alternate surname
             has_alternative_name:
-              inclusion: Tell us whether you have an alternative name
+              inclusion: Select if your name appears differently on your passport or qualifications
         teacher_interface/add_another_qualification_form:
           attributes:
             add_another:
@@ -300,9 +300,9 @@ en:
               too_young: You must be 18 or over to use this service
               too_old: Your date of birth cannot be that far in the past
             given_names:
-              blank: Enter your given names
+              blank: Enter your given names as they appear on your passport
             family_name:
-              blank: Enter your family name
+              blank: Enter your surname as it appears on your passport
         teacher_interface/new_session_form:
           attributes:
             sign_in_or_sign_up:

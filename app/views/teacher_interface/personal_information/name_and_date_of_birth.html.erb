@@ -9,11 +9,11 @@
 
   <%= f.govuk_text_field :given_names,
                          label: { text: "Given names", size: "m" },
-                         hint: { text: "Enter your full name apart from your family name" } %>
+                         hint: { text: "Enter your given names as they appear on your passport." } %>
 
   <%= f.govuk_text_field :family_name,
-                         label: { text: "Family name", size: "m" },
-                         hint: { text: "Enter just your family name" } %>
+                         label: { text: "Surname", size: "m" },
+                         hint: { text: "Enter your surname as it appears on your passport." } %>
 
   <%= f.govuk_date_field :date_of_birth,
                          date_of_birth: true,
