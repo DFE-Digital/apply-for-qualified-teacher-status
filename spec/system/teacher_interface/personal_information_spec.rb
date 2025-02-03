@@ -140,16 +140,12 @@ RSpec.describe "Teacher personal information", type: :system do
 
     alternative_given_names_row =
       teacher_check_personal_information_page.summary_list.rows[4]
-    expect(alternative_given_names_row.key.text).to eq(
-      "Alternate given names",
-    )
+    expect(alternative_given_names_row.key.text).to eq("Alternate given names")
     expect(alternative_given_names_row.value.text).to eq("Jonathan")
 
     alternative_family_name_row =
       teacher_check_personal_information_page.summary_list.rows[5]
-    expect(alternative_family_name_row.key.text).to eq(
-      "Alternate surname",
-    )
+    expect(alternative_family_name_row.key.text).to eq("Alternate surname")
     expect(alternative_family_name_row.value.text).to eq("Smithe")
 
     name_change_document_row =
