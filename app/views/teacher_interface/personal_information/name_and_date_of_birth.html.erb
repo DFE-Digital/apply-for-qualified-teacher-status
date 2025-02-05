@@ -1,11 +1,11 @@
 <% content_for :page_title, title_with_error_prefix(t("application_form.tasks.sections.about_you"), error: @form.errors.any?) %>
 <% content_for :back_link_url, back_history_path(default: teacher_interface_application_form_path) %>
 
-<span class="govuk-caption-l"><%= t("application_form.tasks.sections.about_you") %></span>
-<h1 class="govuk-heading-l">Personal information</h1>
-
 <%= form_with model: @form, url: [:name_and_date_of_birth, :teacher_interface, :application_form, :personal_information] do |f| %>
   <%= f.govuk_error_summary %>
+
+  <span class="govuk-caption-l"><%= t("application_form.tasks.sections.about_you") %></span>
+  <h1 class="govuk-heading-l">Personal information</h1>
 
   <%= f.govuk_text_field :given_names,
                          label: { text: "Given names", size: "m" },

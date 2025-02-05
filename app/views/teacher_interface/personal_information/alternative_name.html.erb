@@ -1,10 +1,10 @@
 <% content_for :page_title, title_with_error_prefix(t("application_form.tasks.sections.about_you"), error: @form.errors.any?) %>
 <% content_for :back_link_url, back_history_path(default: teacher_interface_application_form_path) %>
 
-<span class="govuk-caption-l"><%= t("application_form.tasks.sections.about_you") %></span>
-
 <%= form_with model: @form, url: [:alternative_name, :teacher_interface, :application_form, :personal_information] do |f| %>
   <%= f.govuk_error_summary %>
+
+  <span class="govuk-caption-l"><%= t("application_form.tasks.sections.about_you") %></span>
 
   <%= f.govuk_radio_buttons_fieldset :has_alternative_name, legend: { size: "l", tag: "h1" } do %>
     <%= f.govuk_radio_button :has_alternative_name, :true, link_errors: true do %>
