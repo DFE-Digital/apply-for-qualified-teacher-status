@@ -36,7 +36,7 @@ class AssessmentFactory
       (:name_change_document_present if application_form.has_alternative_name),
       :duplicate_application,
       :applicant_already_qts,
-      :applicant_already_dqt,
+      :applicant_already_trs,
     ].compact
 
     failure_reasons = [
@@ -55,7 +55,7 @@ class AssessmentFactory
       ),
       FailureReasons::DUPLICATE_APPLICATION,
       FailureReasons::APPLICANT_ALREADY_QTS,
-      FailureReasons::APPLICANT_ALREADY_DQT,
+      FailureReasons::APPLICANT_ALREADY_TRS,
     ].compact
 
     if suitability_active?

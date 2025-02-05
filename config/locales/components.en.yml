@@ -25,6 +25,7 @@ en:
       overdue_lops: Overdue LoPS
       overdue_reference: Overdue reference
       potential_duplicate_in_dqt: Potential duplication in DQT
+      potential_duplicate_in_trs: Potential duplication in TRS
       pre_assessment: Pre-assessment
       preliminary_check: Preliminary check
       received: Received
