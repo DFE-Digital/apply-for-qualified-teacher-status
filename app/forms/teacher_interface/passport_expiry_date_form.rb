@@ -15,16 +15,23 @@ module TeacherInterface
       application_form.update!(passport_expiry_date:)
     end
 
+    def expiry_date_in_the_past?
+      date =
+        if passport_expiry_date.is_a?(Date)
+          passport_expiry_date
+        else
+          DateValidator.parse(passport_expiry_date)
+        end
+
+      date.present? && date < Date.current
+    end
+
     private
 
     def passport_expiry_date_valid
       date = DateValidator.parse(passport_expiry_date)
 
-      if date.nil?
-        errors.add(:passport_expiry_date, :invalid)
-      elsif date < Date.current
-        errors.add(:passport_expiry_date, :expired)
-      end
+      errors.add(:passport_expiry_date, :invalid) if date.nil?
     end
   end
 end

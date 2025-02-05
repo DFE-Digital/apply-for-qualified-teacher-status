@@ -303,6 +303,8 @@ Rails.application.routes.draw do
         member do
           get "expiry_date", to: "passport_document#expiry_date"
           post "expiry_date", to: "passport_document#update_expiry_date"
+          get "expired", to: "passport_document#expired"
+          post "expired", to: "passport_document#update_expired"
           get "check", to: "passport_document#check"
         end
       end
