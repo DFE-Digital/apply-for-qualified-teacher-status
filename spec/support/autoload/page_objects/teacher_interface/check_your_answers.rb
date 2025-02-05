@@ -32,6 +32,13 @@ module PageObjects
                 "#app-check-your-answers-summary-subjects"
       end
 
+      section :your_english_language_proficiency,
+              "#app-application-form-your-english-language-proficiency" do
+        section :english_language_proficiency_summary_list,
+                GovukSummaryList,
+                "#app-check-your-answers-summary-english-language"
+      end
+
       section :work_history, "section#app-application-form-work-history" do
         section :add_summary_list,
                 GovukSummaryList,

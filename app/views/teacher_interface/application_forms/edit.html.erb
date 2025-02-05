@@ -20,6 +20,13 @@
   <%= render "shared/application_form/subjects_summary", application_form: @application_form, changeable: true %>
 </section>
 
+<% unless @application_form.created_under_old_regulations? %>
+  <section id="app-application-form-your-english-language-proficiency">
+    <h2 class="govuk-heading-m">Your English language proficiency</h2>
+    <%= render "shared/application_form/english_language_summary", application_form: @application_form, changeable: true %>
+  </section>
+<% end %>
+
 <% if @application_form.needs_work_history %>
   <section id="app-application-form-work-history">
     <h2 class="govuk-heading-m">Your work history</h2>
