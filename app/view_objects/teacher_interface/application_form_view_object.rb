@@ -9,7 +9,12 @@ class TeacherInterface::ApplicationFormViewObject
 
   attr_reader :application_form
 
-  delegate :assessment, :country, :region, :teacher, :passport_document_status, to: :application_form
+  delegate :assessment,
+           :country,
+           :region,
+           :teacher,
+           :passport_document_status,
+           to: :application_form
 
   def passport_document_status_in_progress?
     passport_document_status == "in_progress"
