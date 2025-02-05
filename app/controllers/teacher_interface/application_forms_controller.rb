@@ -8,6 +8,8 @@ module TeacherInterface
     before_action :redirect_unless_application_form_is_draft,
                   only: %i[edit update]
     before_action :load_application_form, except: %i[new create]
+    before_action :update_application_and_redirect_if_passport_expired,
+                  only: %i[edit update]
 
     define_history_origin :show
     define_history_reset :show
@@ -96,6 +98,19 @@ module TeacherInterface
       params.fetch(:teacher_interface_sanction_confirmation_form, {}).permit(
         :confirmed_no_sanctions,
       )
+    end
+
+    def update_application_and_redirect_if_passport_expired
+      unless application_form.requires_passport_as_identity_proof? &&
+               application_form.passport_expiry_date.present?
+        return
+      end
+
+      if application_form.passport_expiry_date < Date.current
+        ApplicationFormSectionStatusUpdater.call(application_form:)
+
+        redirect_to teacher_interface_application_form_path
+      end
     end
   end
 end

@@ -9,7 +9,11 @@ class TeacherInterface::ApplicationFormViewObject
 
   attr_reader :application_form
 
-  delegate :assessment, :country, :region, :teacher, to: :application_form
+  delegate :assessment, :country, :region, :teacher, :passport_document_status, to: :application_form
+
+  def passport_document_status_in_progress?
+    passport_document_status == "in_progress"
+  end
 
   def requires_passport_as_identity_proof?
     application_form.requires_passport_as_identity_proof

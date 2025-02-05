@@ -9,7 +9,7 @@ module PageObjects
       element :content_title, "app-task-list_section"
       element :app_task_list, ".app-task-list"
 
-      element :check_answers, ".govuk-button:not(.govuk-button--secondary)"
+      element :check_answers, ".govuk-button.check-your-answers"
       element :save_and_sign_out, ".govuk-button.govuk-button--secondary"
       element :start_now_button, ".govuk-button:not(.govuk-button--secondary)"
 

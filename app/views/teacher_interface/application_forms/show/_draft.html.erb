@@ -13,7 +13,7 @@
   </div>
 <% end %>
 
-<% if view_object.passport_expiry_date_expired? %>
+<% if view_object.passport_expiry_date_expired? && view_object.passport_document_status_in_progress? %>
   <div class="moj-interruption-card">
     <div class="moj-interruption-card__content">
       <h1 class="govuk-heading-m moj-interruption-card__heading">Your passport has expired</h1>
@@ -80,7 +80,7 @@
 
 <div class="govuk-button-group">
   <% if view_object.can_submit? %>
-    <%= govuk_button_link_to t("teacher_interface.application_forms.show.draft.check"), edit_teacher_interface_application_form_path %>
+    <%= govuk_button_link_to t("teacher_interface.application_forms.show.draft.check"), edit_teacher_interface_application_form_path, class: "check-your-answers" %>
   <% end %>
 
   <% if FeatureFlags::FeatureFlag.active?(:gov_one_applicant_login) %>
