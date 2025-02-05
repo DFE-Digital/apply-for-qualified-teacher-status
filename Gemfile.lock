@@ -10,7 +10,7 @@ GIT
 
 GIT
   remote: https://github.com/DFE-Digital/dfe-autocomplete.git
-  revision: 8e7389ff62a38bc8880323f6c58eed9c8d10f080
+  revision: 6a18985729ee74d21a67983cf6176605f62fed00
   specs:
     dfe-autocomplete (0.1.0)
       actionview (>= 7.0.2.3)
@@ -354,14 +354,14 @@ GEM
     mutex_m (0.3.0)
     net-http-persistent (4.0.2)
       connection_pool (~> 2.2)
-    net-imap (0.5.4)
+    net-imap (0.5.5)
       date
       net-protocol
     net-pop (0.1.2)
       net-protocol
     net-protocol (0.2.2)
       timeout
-    net-smtp (0.5.0)
+    net-smtp (0.5.1)
       net-protocol
     nio4r (2.7.4)
     nokogiri (1.18.2)
@@ -679,7 +679,8 @@ GEM
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
     webrick (1.9.1)
-    websocket-driver (0.7.6)
+    websocket-driver (0.7.7)
+      base64
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
     xpath (3.2.0)
