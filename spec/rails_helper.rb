@@ -19,6 +19,8 @@ require "validate_url/rspec_matcher"
 require "view_component/test_helpers"
 require "webmock/rspec"
 require "support/set_session_helpers"
+require 'govuk_design_system_formbuilder'
+require 'govuk_design_system_formbuilder/builder_helper'
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
