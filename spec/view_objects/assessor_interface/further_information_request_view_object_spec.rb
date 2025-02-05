@@ -110,7 +110,7 @@ RSpec.describe AssessorInterface::FurtherInformationRequestViewObject do
             },
             {
               heading:
-                "There is a problem with the passport. For example, it's incorrect, illegible, or incomplete.",
+                "There is a problem with the passport. For example, it’s incorrect, illegible, or incomplete.",
               description: document_item.failure_reason_assessor_feedback,
               check_your_answers: {
                 id: "further-information-requested-#{document_item.id}",
