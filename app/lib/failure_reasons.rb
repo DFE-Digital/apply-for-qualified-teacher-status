@@ -7,8 +7,11 @@ class FailureReasons
     AUTHORISATION_TO_TEACH = "authorisation_to_teach",
     CONFIRM_AGE_RANGE_SUBJECTS = "confirm_age_range_subjects",
     DUPLICATE_APPLICATION = "duplicate_application",
+    PASSPORT_DOCUMENT_EXPIRED = "passport_document_expired",
     EL_EXEMPTION_BY_CITIZENSHIP_ID_UNCONFIRMED =
       "english_language_exemption_by_citizenship_not_confirmed",
+    EL_EXEMPTION_BY_CITIZENSHIP_PASSPORT_UNCONFIRMED =
+      "english_language_exemption_by_citizenship_not_confirmed_via_passport",
     EL_EXEMPTION_BY_QUALIFICATION_DOCUMENTS_UNCONFIRMED =
       "english_language_exemption_by_qualification_not_confirmed",
     EL_GRADE_BELOW_B2 = "english_language_not_achieved_b2",
@@ -54,6 +57,8 @@ class FailureReasons
     IDENTIFICATION_DOCUMENT_EXPIRED = "identification_document_expired",
     IDENTIFICATION_DOCUMENT_ILLEGIBLE = "identification_document_illegible",
     IDENTIFICATION_DOCUMENT_MISMATCH = "identification_document_mismatch",
+    PASSPORT_DOCUMENT_ILLEGIBLE = "passport_document_illegible",
+    PASSPORT_DOCUMENT_MISMATCH = "passport_document_mismatch",
     NAME_CHANGE_DOCUMENT_ILLEGIBLE = "name_change_document_illegible",
     QUALIFICATIONS_DONT_MATCH_OTHER_DETAILS =
       "qualifications_dont_match_other_details",
@@ -88,6 +93,8 @@ class FailureReasons
     IDENTIFICATION_DOCUMENT_ILLEGIBLE => :identification,
     IDENTIFICATION_DOCUMENT_MISMATCH => :name_change,
     NAME_CHANGE_DOCUMENT_ILLEGIBLE => :name_change,
+    PASSPORT_DOCUMENT_ILLEGIBLE => :passport,
+    PASSPORT_DOCUMENT_MISMATCH => :name_change,
     QUALIFICATIONS_DONT_MATCH_SUBJECTS => :qualification_document,
     QUALIFIED_TO_TEACH => :written_statement,
     REGISTRATION_NUMBER_ALTERNATIVE => :written_statement,
@@ -115,6 +122,10 @@ class FailureReasons
 
   def self.fraud?(failure_reason)
     failure_reason.to_s == FailureReasons::FRAUD
+  end
+
+  def self.passport_expired?(failure_reason)
+    failure_reason.to_s == FailureReasons::PASSPORT_DOCUMENT_EXPIRED
   end
 
   def self.requires_note?(failure_reason)

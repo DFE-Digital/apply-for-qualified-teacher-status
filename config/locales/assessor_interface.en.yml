@@ -115,6 +115,8 @@ en:
         has_teacher_qualification_transcript: teaching qualification transcript is present (and translation if required)
         has_university_degree_certificate: university degree qualification certificate is present (and translation if required)
         has_university_degree_transcript: university degree transcript is present (and translation if required)
+        expiry_date_valid: the expiry date on the uploaded passport file matches the expiry date the applicant entered
+        passport_document_valid: the uploaded passport was valid and in date when the application was created
         identification_document_present: a valid ID document is present
         name_change_document_present: evidence of name change is present (if the name entered on the form is different to the name on their ID)
         qualifications_meet_level_6_or_equivalent: applicant holds qualifications that meet the required academic level (level 6 qualification or higher)
@@ -152,6 +154,7 @@ en:
           degree_transcript_illegible: The university degree transcript (or translation) is illegible or in a format that we cannot accept.
           duplicate_application: There’s already another in-flight application for this applicant.
           english_language_exemption_by_citizenship_not_confirmed: The applicant’s ID does not confirm English language exemption by birth/citizenship.
+          english_language_exemption_by_citizenship_not_confirmed_via_passport: The applicant’s passport does not confirm English language exemption by birth/citizenship.
           english_language_exemption_by_qualification_not_confirmed: The applicant’s qualification documents do not confirm English language exemption by country of study.
           english_language_moi_invalid_format: The applicant’s Medium of instruction (MOI) document is illegible or in a format that we cannot accept.
           english_language_moi_not_taught_in_english: The applicant’s MOI does not show that they were taught exclusively in English.
@@ -167,6 +170,9 @@ en:
           identification_document_mismatch: The name on the online application form is different from the ID document, but no evidence of change of name was provided.
           name_change_document_illegible: The evidence of change of name is illegible or in a format that we cannot accept.
           not_qualified_to_teach_mainstream: Applicant is not qualified to teach in mainstream education.
+          passport_document_expired: The passport had already expired when the application was submitted.
+          passport_document_illegible: There is a problem with the passport. For example, it’s incorrect, illegible, or incomplete.
+          passport_document_mismatch: The name on the online application form is different from the passport, but no evidence of change of name was provided.
           qualifications_dont_match_other_details: Uploaded qualifications do not match other details entered, for example, name of qualification, name of institution or dates.
           qualifications_dont_match_subjects: Subjects entered are acceptable for QTS, but the uploaded qualifications do not match them.
           qualified_to_teach: We were not provided with sufficient evidence to confirm qualification to teach at state or government schools.
@@ -206,7 +212,8 @@ en:
 
       english_language_proficiency:
         passed:
-          personal_information: This applicant has indicated English language exemption by birth/citizenship. I have checked their ID for evidence of this.
+          personal_information_passport: This applicant has indicated English language exemption by birth/citizenship. I have checked their passport for evidence of this.
+          personal_information_id: This applicant has indicated English language exemption by birth/citizenship. I have checked their ID for evidence of this.
           qualifications: This applicant has indicated English language exemption by country of study. I have checked their qualification documents for evidence of this.
 
     further_information_requests:

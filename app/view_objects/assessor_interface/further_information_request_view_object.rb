@@ -96,7 +96,11 @@ class AssessorInterface::FurtherInformationRequestViewObject
         "teacher_interface.further_information_request.show.failure_reason.#{item.failure_reason_key}",
       )
     when "document"
-      "Upload your #{I18n.t("document.document_type.#{item.document.document_type}")} document"
+      if item.document.document_type == "passport"
+        "Upload your #{I18n.t("document.document_type.#{item.document.document_type}")}"
+      else
+        "Upload your #{I18n.t("document.document_type.#{item.document.document_type}")} document"
+      end
     when "work_history_contact"
       "Please provide new contact information for your work history contact"
     end

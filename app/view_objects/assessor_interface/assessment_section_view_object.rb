@@ -163,7 +163,9 @@ module AssessorInterface
 
     def build_key(failure_reason, key_section)
       key =
-        if FailureReasons.fraud?(failure_reason)
+        if FailureReasons.passport_expired?(failure_reason)
+          "passport_expired"
+        elsif FailureReasons.fraud?(failure_reason)
           "fraud"
         elsif FailureReasons.suitability?(failure_reason)
           "suitability"

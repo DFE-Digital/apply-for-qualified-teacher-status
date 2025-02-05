@@ -13,8 +13,13 @@ RSpec.describe AssessmentFactory do
       needs_registration_number: false,
       age_range_min: 7,
       age_range_max: 11,
+      requires_passport_as_identity_proof:,
+      english_language_citizenship_exempt:,
     )
   end
+
+  let(:requires_passport_as_identity_proof) { false }
+  let(:english_language_citizenship_exempt) { false }
 
   before { FeatureFlags::FeatureFlag.activate(:suitability) }
 
@@ -80,6 +85,17 @@ RSpec.describe AssessmentFactory do
             expect(section.checks).to include("name_change_document_present")
             expect(section.failure_reasons).to include(
               "name_change_document_illegible",
+            )
+          end
+        end
+
+        context "with english language citizenship exemption" do
+          let(:english_language_citizenship_exempt) { true }
+
+          it "has the english exemption by citizenship unconfirmed failure reason" do
+            section = sections.personal_information.first
+            expect(section.failure_reasons).to include(
+              "english_language_exemption_by_citizenship_not_confirmed",
             )
           end
         end
@@ -447,6 +463,69 @@ RSpec.describe AssessmentFactory do
                 fraud
               ],
             )
+          end
+        end
+      end
+    end
+
+    context "with application form requiring passport as identity proof" do
+      let(:requires_passport_as_identity_proof) { true }
+
+      describe "sections" do
+        subject(:sections) { call.sections }
+
+        describe "personal information section" do
+          it "is created" do
+            expect(sections.personal_information.count).to eq(1)
+          end
+
+          it "has the right checks and failure reasons" do
+            section = sections.personal_information.first
+            expect(section.checks).to eq(
+              %w[
+                expiry_date_valid
+                passport_document_valid
+                duplicate_application
+                applicant_already_qts
+                applicant_already_dqt
+              ],
+            )
+            expect(section.failure_reasons).to eq(
+              %w[
+                passport_document_expired
+                passport_document_illegible
+                passport_document_mismatch
+                duplicate_application
+                applicant_already_qts
+                applicant_already_dqt
+                suitability
+                suitability_previously_declined
+                fraud
+              ],
+            )
+          end
+
+          context "with a name change document" do
+            before { application_form.update!(has_alternative_name: true) }
+
+            it "has the right checks and failure reasons" do
+              section = sections.personal_information.first
+              expect(section.checks).to include("name_change_document_present")
+              expect(section.failure_reasons).to include(
+                "name_change_document_illegible",
+              )
+            end
+          end
+
+          context "with english language citizenship exemption (via passport)" do
+            let(:english_language_citizenship_exempt) { true }
+
+            it "has the english exemption by citizenship unconfirmed failure reason" do
+              section = sections.personal_information.first
+              expect(section.failure_reasons).to include(
+                "english_language_exemption_by_citizenship_not_confirmed_via_passport",
+              )
+            end
           end
         end
       end

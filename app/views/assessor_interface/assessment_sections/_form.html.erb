@@ -2,6 +2,12 @@
   <%= f.govuk_error_summary %>
 
   <% if view_object.show_english_language_exemption_checkbox? %>
+    <% if view_object.assessment_section.personal_information? %>
+      <% english_language_section_passed_label = t("#{view_object.assessment_section.key}_#{view_object.application_form.requires_passport_as_identity_proof? ? 'passport' : 'id'}", scope: %i[assessor_interface assessment_sections english_language_proficiency passed]) %>
+    <% else %>
+      <% english_language_section_passed_label = t(view_object.assessment_section.key, scope: %i[assessor_interface assessment_sections english_language_proficiency passed]) %>
+    <% end %>
+
     <%= f.govuk_check_box :english_language_section_passed,
                           true,
                           false,
@@ -9,7 +15,7 @@
                           link_errors: true,
                           small: true,
                           label: {
-                            text: t(view_object.assessment_section.key, scope: %i[assessor_interface assessment_sections english_language_proficiency passed]),
+                            text: english_language_section_passed_label,
                             size: "s",
                           },
                           disabled: view_object.disable_form? %>

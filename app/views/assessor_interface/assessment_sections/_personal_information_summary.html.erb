@@ -1,5 +1,9 @@
 <%= render "shared/application_form/personal_information_summary", application_form:, changeable: false %>
-<%= render "shared/application_form/identification_document_summary", application_form:, changeable: false %>
+<% if application_form.requires_passport_as_identity_proof %>
+  <%= render "shared/application_form/passport_document_summary", application_form:, changeable: false %>
+<% else %>
+  <%= render "shared/application_form/identification_document_summary", application_form:, changeable: false %>
+<% end %>
 
 <% if application_form.english_language_citizenship_exempt %>
   <%= govuk_accordion do |accordion| %>
