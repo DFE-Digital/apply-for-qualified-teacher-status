@@ -10,6 +10,42 @@ RSpec.describe TeacherInterface::PersonalInformationViewObject do
     create(:application_form, requires_passport_as_identity_proof:)
   end
 
+  describe "#given_names_hint" do
+    it "returns the content with ID documents" do
+      expect(view_object.given_names_hint).to eq(
+        "Enter your given names as they appear on your ID documents.",
+      )
+    end
+
+    context "when the application form requires passport upload" do
+      let(:requires_passport_as_identity_proof) { true }
+
+      it "returns the content with passport" do
+        expect(view_object.given_names_hint).to eq(
+          "Enter your given names as they appear on your passport.",
+        )
+      end
+    end
+  end
+
+  describe "#family_name_hint" do
+    it "returns the content with ID documents" do
+      expect(view_object.family_name_hint).to eq(
+        "Enter your surname as it appears on your ID documents.",
+      )
+    end
+
+    context "when the application form requires passport upload" do
+      let(:requires_passport_as_identity_proof) { true }
+
+      it "returns the content with passport" do
+        expect(view_object.family_name_hint).to eq(
+          "Enter your surname as it appears on your passport.",
+        )
+      end
+    end
+  end
+
   describe "#alternative_name_legend" do
     it "returns the content with ID documents" do
       expect(view_object.alternative_name_legend).to eq(

@@ -12,7 +12,9 @@ RSpec.describe TeacherInterface::NameAndDateOfBirthForm, type: :model do
     )
   end
 
-  let(:application_form) { build(:application_form) }
+  let(:application_form) do
+    build(:application_form, requires_passport_as_identity_proof: false)
+  end
 
   describe "validations" do
     let(:given_names) { "" }
@@ -20,8 +22,19 @@ RSpec.describe TeacherInterface::NameAndDateOfBirthForm, type: :model do
     let(:date_of_birth) { "" }
 
     it { is_expected.to validate_presence_of(:application_form) }
-    it { is_expected.to validate_presence_of(:given_names) }
-    it { is_expected.to validate_presence_of(:family_name) }
+
+    it do
+      expect(subject).to validate_presence_of(:given_names).with_message(
+        "Enter your given names as it appears on your ID documents",
+      )
+    end
+
+    it do
+      expect(subject).to validate_presence_of(:family_name).with_message(
+        "Enter your surname as it appears on your ID documents",
+      )
+    end
+
     it { is_expected.to validate_presence_of(:date_of_birth) }
 
     context "when date of birth is more than 18 years ago but less than 100 years ago" do

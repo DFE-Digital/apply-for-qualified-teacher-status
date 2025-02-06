@@ -30,6 +30,8 @@ module TeacherInterface
     end
 
     def name_and_date_of_birth
+      @view_object =
+        TeacherInterface::PersonalInformationViewObject.new(application_form:)
       @form =
         NameAndDateOfBirthForm.new(
           given_names: application_form.given_names,
@@ -39,6 +41,8 @@ module TeacherInterface
     end
 
     def update_name_and_date_of_birth
+      @view_object =
+        TeacherInterface::PersonalInformationViewObject.new(application_form:)
       @form =
         NameAndDateOfBirthForm.new(
           name_and_date_of_birth_form_params.merge(application_form:),

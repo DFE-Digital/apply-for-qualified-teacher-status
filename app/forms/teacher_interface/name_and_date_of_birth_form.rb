@@ -11,8 +11,30 @@ module TeacherInterface
     attribute :date_of_birth
 
     validates :application_form, presence: true
-    validates :given_names, presence: true
-    validates :family_name, presence: true
+    validates :given_names,
+              presence: {
+                message: :blank_passport,
+              },
+              if: :requires_passport_as_identity_proof
+
+    validates :given_names,
+              presence: {
+                message: :blank_id_documents,
+              },
+              unless: :requires_passport_as_identity_proof
+
+    validates :family_name,
+              presence: {
+                message: :blank_passport,
+              },
+              if: :requires_passport_as_identity_proof
+
+    validates :family_name,
+              presence: {
+                message: :blank_id_documents,
+              },
+              unless: :requires_passport_as_identity_proof
+
     validates :date_of_birth, date: true
     validate :date_of_birth_valid
 
@@ -30,6 +52,12 @@ module TeacherInterface
       elsif date < 100.years.ago
         errors.add(:date_of_birth, :too_old)
       end
+    end
+
+    private
+
+    def requires_passport_as_identity_proof
+      application_form&.requires_passport_as_identity_proof?
     end
   end
 end

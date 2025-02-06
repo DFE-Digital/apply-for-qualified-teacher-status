@@ -301,9 +301,11 @@ en:
               too_young: You must be 18 or over to use this service
               too_old: Your date of birth cannot be that far in the past
             given_names:
-              blank: Enter your given names as they appear on your passport
+              blank_passport: Enter your given names as they appear on your passport
+              blank_id_documents: Enter your given names as it appears on your ID documents
             family_name:
-              blank: Enter your surname as it appears on your passport
+              blank_passport: Enter your surname as it appears on your passport
+              blank_id_documents: Enter your surname as it appears on your ID documents
         teacher_interface/new_session_form:
           attributes:
             sign_in_or_sign_up:
