@@ -199,6 +199,11 @@ RSpec.describe "Teacher personal information", type: :system do
   end
 
   def application_form
-    @application_form ||= create(:application_form, teacher:)
+    @application_form ||=
+      create(
+        :application_form,
+        teacher:,
+        requires_passport_as_identity_proof: true,
+      )
   end
 end
