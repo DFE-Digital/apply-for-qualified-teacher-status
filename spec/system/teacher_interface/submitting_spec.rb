@@ -141,6 +141,37 @@ RSpec.describe "Teacher submitting", type: :system do
       and_i_see_the_submitted_application_information
       and_i_receive_an_application_email
     end
+
+    context "and the passport has expired" do
+      let(:application_form) do
+        create(
+          :application_form,
+          :with_personal_information,
+          :with_passport_document,
+          :with_teaching_qualification,
+          :with_age_range,
+          :with_subjects,
+          :with_english_language_provider,
+          :with_work_history,
+          :with_written_statement,
+          :with_registration_number,
+          teacher:,
+          requires_passport_as_identity_proof: true,
+          passport_expiry_date: 2.days.ago.to_date,
+        )
+      end
+
+      it "redirects back to application task list with passport in progress" do
+        when_i_visit_the(:teacher_application_page)
+        then_i_see_the(:teacher_application_page)
+        and_i_see_the_completed_passport_document_task
+
+        when_i_click_check_your_answers
+        then_i_see_the(:teacher_application_page)
+        and_i_see_the_in_progress_passport_document_task
+        and_i_see_content_that_my_passport_has_expired
+      end
+    end
   end
 
   def and_i_see_the_identity_document_summary
@@ -245,6 +276,24 @@ RSpec.describe "Teacher submitting", type: :system do
       "Your QTS application: Initial checks required",
     )
     expect(message.to).to include("teacher@example.com")
+  end
+
+  def and_i_see_the_completed_passport_document_task
+    expect(
+      teacher_application_page.passport_document_task_item.status_tag.text,
+    ).to eq("Completed")
+  end
+
+  def and_i_see_the_in_progress_passport_document_task
+    expect(
+      teacher_application_page.passport_document_task_item.status_tag.text,
+    ).to eq("In progress")
+  end
+
+  def and_i_see_content_that_my_passport_has_expired
+    expect(teacher_application_page).to have_content(
+      "Your passport has expired",
+    )
   end
 
   def teacher
