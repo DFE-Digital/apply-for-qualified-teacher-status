@@ -2,14 +2,22 @@
 
 require "rails_helper"
 
-RSpec.describe "GET /assessor/applications/:reference/assign-assessor", type: :request do
-  subject(:assign_assessor) { get "/assessor/applications/#{application_form.reference}/assign-assessor" }
+RSpec.describe "GET /assessor/applications/:reference/assign-assessor",
+               type: :request do
+  subject(:assign_assessor) do
+    get "/assessor/applications/#{application_form.reference}/assign-assessor"
+  end
 
   let(:application_form) { create :application_form, :submitted }
-  
+
   before do
     create(:staff, :with_assess_permission, name: "Active Assessor")
-    create(:staff, :with_assess_permission, :archived, name: "Archived Assessor")
+    create(
+      :staff,
+      :with_assess_permission,
+      :archived,
+      name: "Archived Assessor",
+    )
     sign_in(create(:staff, :with_assess_permission))
     assign_assessor
   end
