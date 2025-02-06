@@ -92,5 +92,9 @@ FactoryBot.define do
     trait :with_withdraw_permission do
       withdraw_permission { true }
     end
+
+    trait :archived do
+      archived { true }
+    end
   end
 end
