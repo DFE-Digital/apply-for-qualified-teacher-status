@@ -57,6 +57,8 @@ module TeacherInterface
     end
 
     def alternative_name
+      @view_object =
+        TeacherInterface::PersonalInformationViewObject.new(application_form:)
       @form =
         AlternativeNameForm.new(
           has_alternative_name: application_form.has_alternative_name,
@@ -66,6 +68,8 @@ module TeacherInterface
     end
 
     def update_alternative_name
+      @view_object =
+        TeacherInterface::PersonalInformationViewObject.new(application_form:)
       @form =
         AlternativeNameForm.new(
           alternative_name_form_params.merge(application_form:),

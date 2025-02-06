@@ -14,7 +14,8 @@
       href: %i[name_and_date_of_birth teacher_interface application_form personal_information]
     },
     has_alternative_name: {
-      title: "Name appears differently on your passport or qualifications?",
+      title: application_form.requires_passport_as_identity_proof? ?
+        "Name appears differently on your passport or qualifications?": "Name appears differently on your ID documents or qualifications?",
       href: %i[alternative_name teacher_interface application_form personal_information]
     },
     alternative_given_names: application_form.has_alternative_name? ? {

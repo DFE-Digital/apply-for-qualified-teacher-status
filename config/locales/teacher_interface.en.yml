@@ -228,7 +228,8 @@ en:
             alternative_family_name:
               blank: Enter your alternate surname
             has_alternative_name:
-              inclusion: Select if your name appears differently on your passport or qualifications
+              inclusion_passport: Select if your name appears differently on your passport or qualifications
+              inclusion_id_documents: Select if your name appears differently on your ID documents or qualifications
         teacher_interface/add_another_qualification_form:
           attributes:
             add_another:

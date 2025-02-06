@@ -39,7 +39,8 @@ en:
       teacher_interface_add_another_upload_form:
         add_another: If your document has several pages, you can upload them here. Otherwise, select ‘No’ and then ‘Continue’.
       teacher_interface_alternative_name_form:
-        has_alternative_name: If your name appears differently on your passport or qualifications you need to upload proof of your name change, for example, your marriage or civil partnership certificate.
+        has_alternative_name_passport: If your name appears differently on your passport or qualifications you need to upload proof of your name change, for example, your marriage or civil partnership certificate.
+        has_alternative_name_id_documents: If your name appears differently on your ID documents or qualifications you need to upload proof of your name change, for example, your marriage or civil partnership certificate.
       teacher_interface_english_language_proof_method_form:
         proof_method: There are 2 ways you can do this.
         proof_method_options:
@@ -342,7 +343,8 @@ en:
       teacher_interface_add_another_work_history_form:
         add_another: Add another role?
       teacher_interface_alternative_name_form:
-        has_alternative_name: Does your name appear differently on your passport or qualifications?
+        has_alternative_name_passport: Does your name appear differently on your passport or qualifications?
+        has_alternative_name_id_documents: Does your name appear differently on your ID documents or qualifications?
       teacher_interface_document_available_form:
         available: Have you completed your induction period in Northern Ireland?
       teacher_interface_english_language_proof_method_form:
