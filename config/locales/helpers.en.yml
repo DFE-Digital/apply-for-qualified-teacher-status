@@ -39,9 +39,8 @@ en:
       teacher_interface_add_another_upload_form:
         add_another: If your document has several pages, you can upload them here. Otherwise, select ‘No’ and then ‘Continue’.
       teacher_interface_alternative_name_form:
-        has_alternative_name: If your name appears differently on your ID documents or qualifications you need to upload proof of your name change, for example, your marriage or civil partnership certificate.
-        alternative_given_names: Enter your full name apart from your family name
-        alternative_family_name: Enter just your family name
+        has_alternative_name_passport: If your name appears differently on your passport or qualifications you need to upload proof of your name change, for example, your marriage or civil partnership certificate.
+        has_alternative_name_id_documents: If your name appears differently on your ID documents or qualifications you need to upload proof of your name change, for example, your marriage or civil partnership certificate.
       teacher_interface_english_language_proof_method_form:
         proof_method: There are 2 ways you can do this.
         proof_method_options:
@@ -53,6 +52,11 @@ en:
         registration_number: Your teacher license number is made up of 2 letters, 6 numbers and a final 4 numbers. For example, PT/123456/1234.
       teacher_interface_has_work_history_form:
         has_work_history: If you’re a recent university graduate, or you've just completed your teaching qualification, you may not have held a professional teaching position yet.
+      teacher_interface_name_and_date_of_birth_form:
+        given_names_passport: Enter your given names as they appear on your passport.
+        given_names_id_documents: Enter your given names as they appear on your ID documents.
+        family_name_passport: Enter your surname as it appears on your passport.
+        family_name_id_documents: Enter your surname as it appears on your ID documents.
       teacher_interface_new_session_form:
         email: We need to send you an email with a link so that you can sign into the Apply for QTS in England service. Please enter the email address you used to register.
       teacher_interface_reference_request_additional_information_response_form:
@@ -200,9 +204,9 @@ en:
       teacher_interface_alternative_name_form:
         has_alternative_name_options:
           true: Yes – I’ll upload another document to prove this
-          false: "No"
+          false: No - my name does not appear differently
         alternative_given_names: Alternate given names
-        alternative_family_name: Alternate family name
+        alternative_family_name: Alternate surname
       teacher_interface_age_range_form:
         minimum: <span class="govuk-visually-hidden">Age</span> From
         maximum: <span class="govuk-visually-hidden">Age</span> To
@@ -344,7 +348,8 @@ en:
       teacher_interface_add_another_work_history_form:
         add_another: Add another role?
       teacher_interface_alternative_name_form:
-        has_alternative_name: Does your name appear differently on your ID documents or qualifications?
+        has_alternative_name_passport: Does your name appear differently on your passport or qualifications?
+        has_alternative_name_id_documents: Does your name appear differently on your ID documents or qualifications?
       teacher_interface_document_available_form:
         available: Have you completed your induction period in Northern Ireland?
       teacher_interface_english_language_proof_method_form:

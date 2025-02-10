@@ -8,7 +8,18 @@ module TeacherInterface
     attribute :alternative_family_name, :string
 
     validates :application_form, presence: true
-    validates :has_alternative_name, inclusion: { in: [true, false] }
+    validates :has_alternative_name,
+              inclusion: {
+                in: [true, false],
+                message: :inclusion_passport,
+              },
+              if: :requires_passport_as_identity_proof
+    validates :has_alternative_name,
+              inclusion: {
+                in: [true, false],
+                message: :inclusion_id_documents,
+              },
+              unless: :requires_passport_as_identity_proof
     validates :alternative_given_names,
               presence: true,
               if: :has_alternative_name
@@ -22,6 +33,12 @@ module TeacherInterface
         alternative_given_names:,
         alternative_family_name:,
       )
+    end
+
+    private
+
+    def requires_passport_as_identity_proof
+      application_form&.requires_passport_as_identity_proof?
     end
   end
 end

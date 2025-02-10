@@ -75,7 +75,7 @@ en:
         citizenship:
           heading: Were you born in or hold citizenship of any of the countries below?
           description: If you were born in, or hold citizenship of any of the following countries, you’re exempt from English language requirements.
-          evidence: You’ll need to provide a passport or other official form of identification. You can do this in the ‘About you’ section of the application form.
+          evidence: Assessors will use your passport to verify that you are exempt.
         qualification:
           heading: Was your teaching qualification or university degree taught in any of the following countries?
           description: If your teaching qualification or university degree was taught in any of the following countries, you’re exempt from English language requirements.
@@ -226,9 +226,10 @@ en:
             alternative_given_names:
               blank: Enter your alternate given names
             alternative_family_name:
-              blank: Enter your alternate family name
+              blank: Enter your alternate surname
             has_alternative_name:
-              inclusion: Tell us whether you have an alternative name
+              inclusion_passport: Select if your name appears differently on your passport or qualifications
+              inclusion_id_documents: Select if your name appears differently on your ID documents or qualifications
         teacher_interface/add_another_qualification_form:
           attributes:
             add_another:
@@ -300,9 +301,11 @@ en:
               too_young: You must be 18 or over to use this service
               too_old: Your date of birth cannot be that far in the past
             given_names:
-              blank: Enter your given names
+              blank_passport: Enter your given names as they appear on your passport
+              blank_id_documents: Enter your given names as it appears on your ID documents
             family_name:
-              blank: Enter your family name
+              blank_passport: Enter your surname as it appears on your passport
+              blank_id_documents: Enter your surname as it appears on your ID documents
         teacher_interface/new_session_form:
           attributes:
             sign_in_or_sign_up:
