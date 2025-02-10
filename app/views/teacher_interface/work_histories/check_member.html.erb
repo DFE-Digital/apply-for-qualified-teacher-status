@@ -6,7 +6,8 @@
 
 <%= render "shared/application_form/work_history_summary",
            work_histories: [@work_history],
-           highlighted_contact_emails: [] %>
+           highlighted_contact_emails: [],
+           changeable: true %>
 
 <% if @next_work_history %>
   <%= govuk_button_link_to "Continue", [:school, :teacher_interface, :application_form, @next_work_history] %>

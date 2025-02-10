@@ -33,7 +33,8 @@
 
     <%= render "shared/application_form/work_history_summary",
                work_histories: @application_form.work_histories.order_by_user,
-               highlighted_contact_emails: [] %>
+               highlighted_contact_emails: [],
+               changeable: true %>
   </section>
 <% end %>
 

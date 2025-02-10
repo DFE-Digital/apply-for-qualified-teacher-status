@@ -1,0 +1,54 @@
+<% content_for :page_title, "View your answers" %>
+<% content_for :back_link_url, back_history_path(default: teacher_interface_application_form_path) %>
+
+<h1 class="govuk-heading-xl">View the answers you submitted to us</h1>
+
+<section id="app-application-form-about-you">
+  <h2 class="govuk-heading-m">About you</h2>
+  <%= render "shared/application_form/personal_information_summary", application_form: @application_form, changeable: false %>
+  <% if @application_form.requires_passport_as_identity_proof? %>
+    <%= render "shared/application_form/passport_document_summary", application_form: @application_form, changeable: false %>
+  <% else %>
+    <%= render "shared/application_form/identification_document_summary", application_form: @application_form, changeable: false %>
+  <% end %>
+</section>
+
+<section id="app-application-form-who-you-can-teach">
+  <h2 class="govuk-heading-m">Who you can teach</h2>
+  <%= render "shared/application_form/qualifications_summary", application_form: @application_form, qualifications: @application_form.qualifications.order_by_user, changeable: false %>
+  <%= render "shared/application_form/age_range_summary", application_form: @application_form, changeable: false %>
+  <%= render "shared/application_form/subjects_summary", application_form: @application_form, changeable: false %>
+</section>
+
+<% unless @application_form.created_under_old_regulations? %>
+  <section id="app-application-form-your-english-language-proficiency">
+    <h2 class="govuk-heading-m">Your English language proficiency</h2>
+    <%= render "shared/application_form/english_language_summary", application_form: @application_form, changeable: false %>
+  </section>
+<% end %>
+
+<% if @application_form.needs_work_history %>
+  <section id="app-application-form-work-history">
+    <h2 class="govuk-heading-m">Your work history</h2>
+
+    <%= render "shared/application_form/work_history_summary",
+               work_histories: @application_form.work_histories.order_by_user,
+               highlighted_contact_emails: [],
+               changeable: false %>
+  </section>
+<% end %>
+
+<% if @application_form.needs_written_statement || @application_form.needs_registration_number %>
+  <section id="app-application-form-proof-of-recognition">
+    <h2 class="govuk-heading-m">Proof that you’re recognised as a teacher</h2>
+    <% if @application_form.needs_registration_number %>
+      <%= render "shared/application_form/registration_number_summary", application_form: @application_form, changeable: false %>
+    <% end %>
+    <% if @application_form.needs_written_statement %>
+      <%= render "shared/application_form/written_statement_summary", application_form: @application_form, changeable: false %>
+    <% end %>
+  </section>
+<% end %>
+
+<h2 class="govuk-heading-m">How we handle your data</h2>
+<p class="govuk-body">You can read about the data we collect from you, how we use it and how it’s stored, in our <%= govuk_link_to "privacy policy", "https://www.gov.uk/government/publications/privacy-information-education-providers-workforce-including-teachers/5a254207-a566-44f7-ac77-6ba59fd26e04#using-your-data-when-you-use-the-apply-for-qualified-teacher-status-qts-in-england-service" %>.</p>
