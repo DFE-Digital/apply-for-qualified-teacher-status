@@ -44,6 +44,11 @@ RSpec.describe "Teacher application check answers", type: :system do
     end
   end
 
+  it "english language proficiency section" do
+    when_i_click_change_link_for_english_language_proficiency
+    then_i_see_the(:teacher_english_language_exemption_page)
+  end
+
   it "work history section" do
     when_i_click_change_links(:work_history, :work_history) do
       if teacher_check_document_page.displayed?(0)
@@ -157,6 +162,15 @@ RSpec.describe "Teacher application check answers", type: :system do
   def and_i_dont_need_to_upload_another_file
     teacher_check_document_page.form.false_radio_item.input.click
     teacher_check_document_page.form.continue_button.click
+  end
+
+  def when_i_click_change_link_for_english_language_proficiency
+    find_change_link_summary_list(
+      :your_english_language_proficiency,
+      :english_language_proficiency,
+    ).rows[
+      1
+    ].actions.link.click
   end
 
   def teacher
