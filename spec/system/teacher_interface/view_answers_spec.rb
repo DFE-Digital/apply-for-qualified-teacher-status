@@ -64,7 +64,7 @@ RSpec.describe "Teacher application view answers", type: :system do
 
   def then_i_see_the_view_your_answers_title
     expect(teacher_view_answers_page.heading).to have_content(
-      "View the answers you submitted to us",
+      "View your submitted application",
     )
   end
 
