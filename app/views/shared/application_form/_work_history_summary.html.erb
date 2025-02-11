@@ -53,6 +53,10 @@
         format: :without_day,
         href: school_change_link_to,
       },
+      months_in_role: {
+      title: "Months in this role",
+      value: "#{WorkHistoryDuration.for_record(work_history).count_months} months",
+      },
       contact_name: !application_form.reduced_evidence_accepted ? {
         title: "Reference contact’s full name",
         href: contact_change_link_to,
