@@ -53,7 +53,7 @@ class HistoryStack
     return false unless entry
 
     if identifier.present?
-      entry[:check] == true || entry[:check] == identifier
+      [true, identifier].include?(entry[:check])
     else
       entry[:check].present?
     end
