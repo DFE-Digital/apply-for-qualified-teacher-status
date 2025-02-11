@@ -282,6 +282,8 @@ Rails.application.routes.draw do
     root to: redirect("/teacher/application")
 
     resource :application_form, path: "/application", except: %i[destroy] do
+      get "/answers", to: "application_forms#answers"
+
       resource :personal_information,
                controller: :personal_information,
                only: %i[show] do

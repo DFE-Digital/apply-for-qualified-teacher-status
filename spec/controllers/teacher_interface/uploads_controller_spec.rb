@@ -54,7 +54,19 @@ RSpec.describe TeacherInterface::UploadsController, type: :controller do
     let(:document) { create(:document, documentable: application_form) }
     let(:upload) { create(:upload, :clean, document:) }
 
-    include_examples "redirect unless application form is draft"
+    context "with a submitted application form" do
+      before { application_form.update!(submitted_at: Time.zone.now) }
+
+      it "renders the upload" do
+        perform
+        expect(response.status).to eq(200)
+      end
+
+      it "sends the blob stream" do
+        perform
+        expect(response.body).to eq(upload.attachment.blob.download)
+      end
+    end
 
     context "when the upload is present and user is authenticated" do
       it "renders the upload" do

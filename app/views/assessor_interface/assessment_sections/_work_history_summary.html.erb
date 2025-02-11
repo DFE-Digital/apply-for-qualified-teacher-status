@@ -8,7 +8,8 @@
 <% else %>
   <%= render "shared/application_form/work_history_summary",
              work_histories: application_form.work_histories.order_by_user,
-             highlighted_contact_emails: highlighted_work_history_contact_emails %>
+             highlighted_contact_emails: highlighted_work_history_contact_emails,
+             changeable: true %>
 <% end %>
 
 <% unless application_form.created_under_old_regulations? %>

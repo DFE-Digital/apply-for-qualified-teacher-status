@@ -482,6 +482,11 @@ module PageHelpers
       PageObjects::TeacherInterface::CheckYourAnswers.new
   end
 
+  def teacher_view_answers_page
+    @teacher_view_answers_page =
+      PageObjects::TeacherInterface::ViewYourAnswers.new
+  end
+
   def teacher_check_your_uploads_page
     @teacher_check_your_uploads_page =
       PageObjects::TeacherInterface::CheckYourUploads.new

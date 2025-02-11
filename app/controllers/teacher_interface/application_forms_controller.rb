@@ -51,6 +51,9 @@ module TeacherInterface
       @view_object = ApplicationFormViewObject.new(application_form:)
     end
 
+    def answers
+    end
+
     def edit
       @view_object = ApplicationFormViewObject.new(application_form:)
 
