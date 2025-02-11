@@ -13,7 +13,8 @@ module TeacherInterface
     before_action -> { authenticate_or_redirect(:teacher) }
 
     skip_before_action :track_history, only: :show
-    before_action :redirect_unless_draft_or_additional_information
+    before_action :redirect_unless_draft_or_additional_information,
+                  except: :show
     before_action :load_application_form
     before_action :load_document
     before_action :load_upload, only: %i[delete destroy show]
