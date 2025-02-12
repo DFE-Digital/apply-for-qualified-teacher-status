@@ -29,6 +29,7 @@
 #  needs_registration_number                     :boolean          not null
 #  needs_work_history                            :boolean          not null
 #  needs_written_statement                       :boolean          not null
+#  passport_country_of_issue_code                :string
 #  passport_document_status                      :string           default("not_started"), not null
 #  passport_expiry_date                          :date
 #  personal_information_status                   :string           default("not_started"), not null

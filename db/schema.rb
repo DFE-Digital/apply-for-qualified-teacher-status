@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_06_152916) do
+ActiveRecord::Schema[7.2].define(version: 2025_02_12_143034) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -101,6 +101,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_06_152916) do
     t.boolean "requires_passport_as_identity_proof", default: false, null: false
     t.string "passport_document_status", default: "not_started", null: false
     t.date "passport_expiry_date"
+    t.string "passport_country_of_issue_code"
     t.index ["action_required_by"], name: "index_application_forms_on_action_required_by"
     t.index ["assessor_id"], name: "index_application_forms_on_assessor_id"
     t.index ["english_language_provider_id"], name: "index_application_forms_on_english_language_provider_id"
