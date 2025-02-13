@@ -98,7 +98,6 @@ class AssessmentFactory
   def qualifications_section
     checks = [
       "qualifications_meet_level_6_or_equivalent",
-      "teaching_qualifications_completed_in_eligible_country",
       "qualified_in_mainstream_education",
       (
         if application_form.subject_limited

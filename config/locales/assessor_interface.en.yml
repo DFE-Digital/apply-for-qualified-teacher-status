@@ -119,7 +119,7 @@ en:
         passport_document_valid: the uploaded passport was valid and in date when the application was created
         identification_document_present: a valid ID document is present
         name_change_document_present: evidence of name change is present (if the name entered on the form is different to the name on their ID)
-        qualifications_meet_level_6_or_equivalent: applicant holds qualifications that meet the required academic level (level 6 qualification or higher)
+        qualifications_meet_level_6_or_equivalent: applicant holds a level 6 qualification or higher from the country where they’re recognised as a teacher
         qualified_in_mainstream_education: they’re qualified to teach in mainstream education (not vocationally only/SEN only/early years/pre-school only)
         qualified_to_teach: the applicant is qualified to teach at state or government schools
         qualified_to_teach_children_11_to_16: the applicant is qualified to teach children aged 11-16
@@ -190,7 +190,7 @@ en:
           teaching_qualification_1_year: The teacher training course qualification did not last at least 1 academic year.
           teaching_qualification_pedagogy: The teaching qualification did not have enough focus on pedagogy.
           teaching_qualification_subjects_criteria: The applicant is not qualified to teach one of the subjects that we currently accept (Maths, Science, Biology, Chemistry, Physics, French, German, Italian, Japanese, Latin, Mandarin, Russian, Spanish).
-          teaching_qualifications_from_ineligible_country: The teaching qualifications were completed in an ineligible country.
+          teaching_qualifications_from_ineligible_country: The teaching qualifications were completed in a different country to where they are recognised as a teacher.​
           teaching_qualifications_not_at_required_level: The teaching qualifications do not meet the required academic level (level 6).
           teaching_transcript_illegible: The teaching qualification transcript (or translation) is illegible or in a format that we cannot accept.
           unrecognised_references: Application contained 1 or more references that cannot be considered.
