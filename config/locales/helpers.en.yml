@@ -27,9 +27,9 @@ en:
         job: Type the updated job title in the text box below
         email: Type the updated email address in the text box below
       eligibility_interface_country_form:
-        location: This means you have all the qualifications needed to teach in a state school.<br /><br />You’ll need to show that you completed your teaching qualification in the country that you select.
+        location: This means you have all the qualifications needed to teach in a state school.<br /><br />You’ll need to show that you completed your teaching training at level 6 or equivalent in the country that you select.
       eligibility_interface_region_form:
-        region_id: This means you have all the qualifications needed to teach in a state school.<br /><br />You’ll need to show that you completed your teaching qualification in the country that you select.
+        region_id: This means you have all the qualifications needed to teach in a state school.<br /><br />You’ll need to show that you completed your teaching training at level 6 or equivalent in the country that you select.
       eligibility_interface_work_experience_form:
         work_experience: Your teaching work experience can be gained in any country but must be from after you qualified as a teacher.
       teacher:
