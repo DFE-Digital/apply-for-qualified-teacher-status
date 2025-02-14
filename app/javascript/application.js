@@ -60,7 +60,26 @@ var loadCountryAutoComplete = () => {
   }
 };
 
+var loadPassportCountryOfIssueAutoComplete = () => {
+  var passportCountryOfIssuePicker =
+    document.getElementById(
+      "teacher-interface-passport-expiry-date-form-passport-country-of-issue-code-field"
+    ) ??
+    document.getElementById(
+      "teacher-interface-passport-expiry-date-form-passport-country-of-issue-code-field-error"
+    );
+
+  if (passportCountryOfIssuePicker) {
+    openregisterLocationPicker({
+      selectElement: passportCountryOfIssuePicker,
+      url: "/autocomplete_passport_country_of_issues.json",
+      name: "passport_country_of_issue_autocomplete",
+    });
+  }
+};
+
 loadCountryAutoComplete();
+loadPassportCountryOfIssueAutoComplete();
 dfeAutocomplete({ rawAttribute: true });
 
 checkboxSearchFilter("app-applications-filters-assessor", "Search assessors");

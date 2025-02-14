@@ -318,6 +318,8 @@ en:
               blank: Enter your passport expiry date
               expired: The passport expiry date must be in the future
               invalid: The passport expiry date must be entered as numbers, including the day, month and year. For example, 27 3 2007
+            passport_country_of_issue_code:
+              blank: Select the country of issue of your passport
         teacher_interface/qualification_form:
           attributes:
             title:

@@ -14,6 +14,7 @@ SET
   alternative_given_names = '',
   alternative_family_name = '',
   passport_expiry_date = '2032-01-01',
+  passport_country_of_issue_code = 'GBR',
   trs_match = '{}',
   registration_number = '';
 

@@ -496,6 +496,7 @@ Rails.application.routes.draw do
   end
 
   resources :autocomplete_locations, only: %i[index]
+  resources :autocomplete_passport_country_of_issues, only: %i[index]
 
   get "accessibility", to: "static#accessibility"
   get "cookies", to: "static#cookies"
