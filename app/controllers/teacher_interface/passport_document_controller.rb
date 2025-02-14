@@ -32,6 +32,8 @@ module TeacherInterface
       @form =
         PassportExpiryDateForm.new(
           passport_expiry_date: application_form.passport_expiry_date,
+          passport_country_of_issue_code:
+            application_form.passport_country_of_issue_code,
         )
 
       if @form.expiry_date_in_the_past?
@@ -92,6 +94,7 @@ module TeacherInterface
     def passport_expiry_date_form_params
       params.require(:teacher_interface_passport_expiry_date_form).permit(
         :passport_expiry_date,
+        :passport_country_of_issue_code,
       )
     end
 

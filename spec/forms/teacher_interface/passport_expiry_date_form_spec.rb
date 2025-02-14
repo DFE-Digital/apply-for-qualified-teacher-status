@@ -4,16 +4,27 @@ require "rails_helper"
 
 RSpec.describe TeacherInterface::PassportExpiryDateForm, type: :model do
   subject(:form) do
-    described_class.new(application_form:, passport_expiry_date:)
+    described_class.new(
+      application_form:,
+      passport_expiry_date:,
+      passport_country_of_issue_code:,
+    )
   end
 
   let(:application_form) { build(:application_form) }
 
   describe "validations" do
     let(:passport_expiry_date) { "" }
+    let(:passport_country_of_issue_code) { "GHA" }
 
     it { is_expected.to validate_presence_of(:application_form) }
     it { is_expected.to validate_presence_of(:passport_expiry_date) }
+
+    it do
+      expect(subject).to validate_presence_of(
+        :passport_country_of_issue_code,
+      ).with_message("Select the country of issue of your passport")
+    end
 
     context "when the expiry date is in the future" do
       let(:passport_expiry_date) do
@@ -57,6 +68,7 @@ RSpec.describe TeacherInterface::PassportExpiryDateForm, type: :model do
   end
 
   describe "#save" do
+    let(:passport_country_of_issue_code) { "GHA" }
     let(:passport_expiry_date) do
       { 1 => 2.years.from_now.year, 2 => 1, 3 => 1 }
     end
@@ -71,6 +83,8 @@ RSpec.describe TeacherInterface::PassportExpiryDateForm, type: :model do
   end
 
   describe "#expiry_date_in_the_past?" do
+    let(:passport_country_of_issue_code) { "GHA" }
+
     context "when passport expiry date is in the past" do
       let(:passport_expiry_date) { { 1 => 2.years.ago.year, 2 => 1, 3 => 1 } }
 

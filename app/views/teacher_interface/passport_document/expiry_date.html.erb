@@ -25,5 +25,13 @@
                         legend: { text: "Passport expiry date" },
                         hint: { text: "For example, 27 3 #{2.years.from_now.year}" } %>
 
+  <%= f.govuk_select :passport_country_of_issue_code,
+                     options_for_select(
+                       CountryOfIssueForPassportCode::PASSPORT_COUNTRY_OF_ISSUE_CODES,
+                       @form.passport_country_of_issue_code,
+                     ),
+                     options: { include_blank: true },
+                     label: { text: "Country of issue", size: "m" } %>
+
   <%= render "shared/save_submit_buttons", f: %>
 <% end %>
