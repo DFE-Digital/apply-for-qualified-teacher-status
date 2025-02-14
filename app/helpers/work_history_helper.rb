@@ -16,15 +16,17 @@ module WorkHistoryHelper
   end
 
   def work_history_name_and_duration(work_history)
-    months = WorkHistoryDuration.for_record(work_history).count_months
-
     [
-      "#{work_history_name(work_history)} — #{months} months",
+      "#{work_history_name(work_history)} — #{work_history_count_in_months(work_history)}",
       (
         if work_history.current_or_most_recent_role?
           tag.span("(MOST RECENT)", class: "govuk-!-font-weight-bold")
         end
       ),
     ].compact_blank.join(" ").html_safe
+  end
+
+  def work_history_count_in_months(work_history)
+    "#{WorkHistoryDuration.for_record(work_history).count_months} months"
   end
 end
