@@ -25,7 +25,7 @@ RSpec.describe "Teacher passport document", type: :system do
 
     when_i_dont_need_to_upload_another_file
     then_i_see_the(:teacher_check_passport_document_page)
-    and_i_see_the_check_page_with_expiry_date
+    and_i_see_the_check_page_with_expiry_date_and_country_of_issue
 
     when_i_continue_from_check_page
     then_i_see_the(:teacher_application_page)
@@ -137,9 +137,9 @@ RSpec.describe "Teacher passport document", type: :system do
     teacher_check_document_page.form.continue_button.click
   end
 
-  def and_i_see_the_check_page_with_expiry_date
+  def and_i_see_the_check_page_with_expiry_date_and_country_of_issue
     expect(teacher_check_passport_document_page.summary_list.rows.count).to eq(
-      2,
+      3,
     )
 
     expiry_date_row = teacher_check_passport_document_page.summary_list.rows[0]
@@ -147,6 +147,11 @@ RSpec.describe "Teacher passport document", type: :system do
     expect(expiry_date_row.value.text).to eq(
       "1 January #{2.years.from_now.year}",
     )
+
+    country_of_issue_row =
+      teacher_check_passport_document_page.summary_list.rows[1]
+    expect(country_of_issue_row.key.text).to eq("Country of issue")
+    expect(country_of_issue_row.value.text).to eq("France")
   end
 
   def when_i_continue_from_check_page

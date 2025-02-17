@@ -339,6 +339,10 @@ class ApplicationForm < ApplicationRecord
     submitted? ? nil : 6.months
   end
 
+  def passport_country_of_issue_name
+    CountryOfIssueForPassport.to_name(passport_country_of_issue_code)
+  end
+
   private
 
   def reference_requests_not_yet_received_or_rejected
