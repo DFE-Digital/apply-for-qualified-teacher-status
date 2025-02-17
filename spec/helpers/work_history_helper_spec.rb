@@ -65,4 +65,17 @@ RSpec.describe WorkHistoryHelper do
       end
     end
   end
+
+  describe "#work_history_count_in_months" do
+    let(:work_history) { build(:work_history) }
+    let(:duration) { instance_double(WorkHistoryDuration, count_months: 6) }
+
+    before do
+      allow(WorkHistoryDuration).to receive(:for_record).with(work_history).and_return(duration)
+    end
+
+    it "returns the count of months with ' months' appended" do
+      expect(helper.work_history_count_in_months(work_history)).to eq("6 months")
+    end
+  end
 end
