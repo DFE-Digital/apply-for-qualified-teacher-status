@@ -27,7 +27,7 @@
 
   <%= f.govuk_select :passport_country_of_issue_code,
                      options_for_select(
-                       CountryOfIssueForPassportCode::PASSPORT_COUNTRY_OF_ISSUE_CODES,
+                       CountryOfIssueForPassport::CANONICAL_LIST,
                        @form.passport_country_of_issue_code,
                      ),
                      options: { include_blank: true },
