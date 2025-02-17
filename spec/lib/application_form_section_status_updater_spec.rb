@@ -90,10 +90,11 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
         it { is_expected.to eq("not_started") }
       end
 
-      context "with valid expiry date but no upload" do
+      context "with valid expiry date and country of issue but no upload" do
         let(:application_form) do
           create(
             :application_form,
+            passport_country_of_issue_code: "FRA",
             passport_expiry_date: Date.new(2.years.from_now.year, 1, 1),
           )
         end
@@ -101,7 +102,19 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
         it { is_expected.to eq("in_progress") }
       end
 
-      context "with valid expiry date and an upload" do
+      context "with valid expiry date and an upload but no country of issue" do
+        let(:application_form) do
+          create(
+            :application_form,
+            :with_passport_document,
+            passport_country_of_issue_code: nil,
+          )
+        end
+
+        it { is_expected.to eq("in_progress") }
+      end
+
+      context "with valid expiry date, country of issue and an upload" do
         let(:application_form) do
           create(:application_form, :with_passport_document)
         end
@@ -121,7 +134,7 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
         it { is_expected.to eq("error") }
       end
 
-      context "with invalid expiry date and an upload" do
+      context "with invalid expiry date" do
         let(:application_form) do
           create(
             :application_form,

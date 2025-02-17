@@ -50,6 +50,7 @@ class ApplicationFormSectionStatusUpdater
            :has_work_history,
            :work_histories,
            :registration_number,
+           :passport_country_of_issue_code,
            :passport_document,
            :passport_expiry_date,
            :teaching_authority_provides_written_statement,
@@ -80,7 +81,7 @@ class ApplicationFormSectionStatusUpdater
   end
 
   def passport_document_status
-    if passport_expiry_date.nil? &&
+    if passport_expiry_date.nil? && passport_country_of_issue_code.nil? &&
          (passport_document.nil? || passport_document.uploads.empty?)
       return :not_started
     end
@@ -88,6 +89,7 @@ class ApplicationFormSectionStatusUpdater
     if passport_document.any_unsafe_to_link?
       :error
     elsif passport_document.completed? && passport_expiry_date.present? &&
+          passport_country_of_issue_code.present? &&
           passport_expiry_date >= Date.current
       :completed
     else
