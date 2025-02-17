@@ -24,47 +24,10 @@ module TeacherInterface
                       application_form
                       english_language
                     ]
-      elsif application_form.english_language_citizenship_exempt.nil?
+      else
         redirect_to exemption_teacher_interface_application_form_english_language_path(
                       "citizenship",
                     )
-      elsif application_form.english_language_qualification_exempt.nil?
-        redirect_to exemption_teacher_interface_application_form_english_language_path(
-                      "qualification",
-                    )
-      elsif application_form.english_language_proof_method.blank?
-        redirect_to %i[
-                      proof_method
-                      teacher_interface
-                      application_form
-                      english_language
-                    ]
-      elsif application_form.english_language_proof_method_medium_of_instruction?
-        redirect_to [
-                      :teacher_interface,
-                      :application_form,
-                      application_form.english_language_medium_of_instruction_document,
-                    ]
-      elsif application_form.english_language_provider_other
-        redirect_to [
-                      :teacher_interface,
-                      :application_form,
-                      application_form.english_language_proficiency_document,
-                    ]
-      elsif application_form.english_language_provider.nil?
-        redirect_to %i[
-                      provider
-                      teacher_interface
-                      application_form
-                      english_language
-                    ]
-      else
-        redirect_to %i[
-                      provider_reference
-                      teacher_interface
-                      application_form
-                      english_language
-                    ]
       end
     end
 
