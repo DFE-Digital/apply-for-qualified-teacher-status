@@ -26,6 +26,7 @@ module TeacherInterface
     end
 
     def edit
+      @view_object = TeacherInterface::DocumentViewObject.new(document:)
       @form =
         if show_available_form?
           DocumentAvailableForm.new(document:, available: document.available)
@@ -44,6 +45,7 @@ module TeacherInterface
     end
 
     def update
+      @view_object = TeacherInterface::DocumentViewObject.new(document:)
       @form =
         if show_available_form?
           DocumentAvailableForm.new(

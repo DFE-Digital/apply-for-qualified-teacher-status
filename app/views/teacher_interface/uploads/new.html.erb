@@ -6,6 +6,8 @@
 <%= form_with model: @form, url: [:teacher_interface, :application_form, @document, :uploads] do |f| %>
   <%= f.govuk_error_summary %>
 
+  <span class="govuk-caption-l"><%= @view_object.section_caption %></span>
+
   <% if @document.uploads.empty? || !@document.allow_multiple_uploads? %>
     <% if @document.english_language_proficiency? %>
       <h1 class="govuk-heading-l">Upload your English language proficiency test</h1>
@@ -57,8 +59,6 @@
       <h1 class="govuk-heading-l">Upload your Medium of Instruction (MOI)</h1>
       <p class="govuk-body">This document must confirm that the primary language used to teach this qualification was English.</p>
     <% elsif @document.qualification_certificate? %>
-      <span class="govuk-caption-l"><%= I18n.t("application_form.tasks.sections.qualifications") %></span>
-
       <h1 class="govuk-heading-l">
         <% if @document.documentable.try(:institution_name).present? %>
           Upload your <%= @document.documentable.institution_name %> <%= I18n.t("document.document_type.qualification_certificate") %>
@@ -73,8 +73,6 @@
     <% elsif @document.qualification_document? %>
       <h1 class="govuk-heading-l">Upload your qualification document</h1>
     <% elsif @document.qualification_transcript? %>
-      <span class="govuk-caption-l"><%= I18n.t("application_form.tasks.sections.qualifications") %></span>
-
       <h1 class="govuk-heading-l">
         <% if @document.documentable.try(:institution_name).present? %>
           Upload your <%= @document.documentable.institution_name %> <%= I18n.t("document.document_type.qualification_transcript") %>
@@ -93,7 +91,6 @@
     <% elsif @document.unsigned_consent? %>
       <h1 class="govuk-heading-xl">Upload your unsigned consent document</h1>
     <% elsif @document.written_statement? %>
-      <span class="govuk-caption-l">Proof that you’re recognised as a teacher</span>
       <h1 class="govuk-heading-l">Upload your written statement</h1>
 
       <% if CountryCode.northern_ireland?(@application_form.region.country.code) %>

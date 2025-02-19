@@ -4,6 +4,8 @@
 <%= form_with model: @form, url: %i[registration_number teacher_interface application_form] do |f| %>
   <%= f.govuk_error_summary %>
 
+  <span class="govuk-caption-l"><%= I18n.t("application_form.tasks.sections.proof_of_recognition") %></span>
+
   <%= f.govuk_text_field :registration_number, label: { size: "l", tag: "h1" } %>
 
   <% if @application_form.region.status_check_online? %>

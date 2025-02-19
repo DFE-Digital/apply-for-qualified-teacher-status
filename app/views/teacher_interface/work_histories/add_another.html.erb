@@ -4,6 +4,8 @@
 <%= form_with model: @form, url: %i[add_another teacher_interface application_form work_histories] do |f| %>
   <%= f.govuk_error_summary %>
 
+  <span class="govuk-caption-l"><%= I18n.t("application_form.tasks.sections.work_history") %></span>
+
   <h1 class="govuk-heading-l">
     <% if @years_count > 0 %>
       You’ve added <%= pluralize(@years_count, "year") %> and <%= pluralize(@months_count, "month") %> of work experience
