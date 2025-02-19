@@ -26,6 +26,12 @@ Rails.application.config.filter_parameters += %i[
   unconfirmed_email
   current_sign_in_ip
   last_sign_in_ip
+  _form
+  _feedback
+  _note
+  _text
+  _response
+  _comment
 ]
 
 Rails.application.config.filter_redirect << %r{/teacher/check_email}
