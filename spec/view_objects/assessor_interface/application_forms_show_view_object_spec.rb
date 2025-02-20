@@ -581,9 +581,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
     end
 
     context "without any verification steps but application awarded" do
-      before do
-        assessment.award!
-      end
+      before { assessment.award! }
 
       it do
         expect(subject).not_to include_task_list_item(
@@ -615,9 +613,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
     end
 
     context "without any verification steps but application declined" do
-      before do
-        assessment.decline!
-      end
+      before { assessment.decline! }
 
       it do
         expect(subject).not_to include_task_list_item(
@@ -643,7 +639,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       it do
         expect(subject).not_to include_task_list_item(
           "Verification",
-          "Verification decision"
+          "Verification decision",
         )
       end
     end
