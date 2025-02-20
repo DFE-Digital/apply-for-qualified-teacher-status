@@ -1,12 +1,12 @@
 <% content_for :page_title, title_with_error_prefix(t("application_form.tasks.items.subjects"), error: @form.errors.any?) %>
 <% content_for :back_link_url, back_history_path(default: teacher_interface_application_form_path) %>
 
-<span class="govuk-caption-l"><%= I18n.t("application_form.tasks.sections.qualifications") %></span>
-<h1 class="govuk-heading-l"><%= I18n.t("application_form.subjects.heading") %></h1>
-<p class="govuk-hint"><%= I18n.t("application_form.subjects.hint") %></p>
-
 <%= form_with model: @form, url: %i[subjects teacher_interface application_form] do |f| %>
   <%= f.govuk_error_summary %>
+
+  <span class="govuk-caption-l"><%= I18n.t("application_form.tasks.sections.qualifications") %></span>
+  <h1 class="govuk-heading-l"><%= I18n.t("application_form.subjects.heading") %></h1>
+  <p class="govuk-hint"><%= I18n.t("application_form.subjects.hint") %></p>
 
   <% (1..3).map { |i| :"subject_#{i}" }.each do |field| %>
     <%= f.govuk_text_field field %>
