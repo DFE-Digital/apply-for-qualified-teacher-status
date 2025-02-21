@@ -23,6 +23,13 @@ RSpec.describe "Assessor authentication", type: :system do
     then_i_see_the_forbidden_page
   end
 
+  it "has a manage access link" do
+    given_staff_exist
+
+    when_i_visit_the(:assessor_applications_page)
+    then_i_see_the_manage_access_link
+  end
+
   private
 
   def given_staff_exist
@@ -35,5 +42,9 @@ RSpec.describe "Assessor authentication", type: :system do
 
   def when_i_click_sign_out
     assessor_applications_page.header.sign_out_link.click
+  end
+
+  def then_i_see_the_manage_access_link
+    expect(assessor_applications_page).to have_content("Manage access")
   end
 end
