@@ -10,6 +10,8 @@
 <%= form_with model: @form, url: [:teacher_interface, :application_form, @document], method: :patch do |f| %>
   <%= f.govuk_error_summary %>
 
+  <span class="govuk-caption-l"><%= @view_object.section_caption %></span>
+
   <h1 class="govuk-heading-xl"><%= title %></h1>
 
   <% if @document.for_consent_request? %>

@@ -4,6 +4,8 @@
 <%= form_with model: @form, url: [:contact, :teacher_interface, :application_form, @work_history] do |f| %>
   <%= f.govuk_error_summary %>
 
+  <span class="govuk-caption-l"><%= I18n.t("application_form.tasks.sections.work_history") %></span>
+
   <h1 class="govuk-heading-l"><%= t("application_form.work_history.contact.heading") %></h1>
 
   <p class="govuk-body">If your application is successful, we’ll contact this person before awarding QTS to check what you’ve told us. You may want to let them know that you’ve put them forward as a reference.</p>

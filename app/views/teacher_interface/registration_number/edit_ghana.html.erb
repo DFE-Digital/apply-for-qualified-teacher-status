@@ -4,6 +4,8 @@
 <%= form_with model: @form, url: %i[registration_number teacher_interface application_form] do |f| %>
   <%= f.govuk_error_summary %>
 
+  <span class="govuk-caption-l"><%= I18n.t("application_form.tasks.sections.proof_of_recognition") %></span>
+
   <div class="govuk-form-group <%= 'govuk-form-group--error' if @form.errors.present? %>">
     <fieldset class="govuk-fieldset" aria-describedby="teacher-interface-ghana-registration-number-form-registration-number-hint">
       <h1 class="govuk-label-wrapper">

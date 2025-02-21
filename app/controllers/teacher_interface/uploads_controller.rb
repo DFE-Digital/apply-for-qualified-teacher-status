@@ -28,10 +28,12 @@ module TeacherInterface
     end
 
     def new
+      @view_object = TeacherInterface::DocumentViewObject.new(document:)
       @form = UploadForm.new(document:)
     end
 
     def create
+      @view_object = TeacherInterface::DocumentViewObject.new(document:)
       @form = UploadForm.new(upload_form_params.merge(document:))
 
       handle_application_form_section(

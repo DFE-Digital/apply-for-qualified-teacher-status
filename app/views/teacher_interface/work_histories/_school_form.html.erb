@@ -1,6 +1,8 @@
 <%= form_with model: form, url: form.work_history.new_record? ? %i[teacher_interface application_form work_histories] : [:school, :teacher_interface, :application_form, form.work_history], method: :post do |f| %>
   <%= f.govuk_error_summary %>
 
+  <span class="govuk-caption-l"><%= I18n.t("application_form.tasks.sections.work_history") %></span>
+
   <h1 class="govuk-heading-l">
     <%= t("application_form.work_history.school.heading.#{form.work_history.locale_key}") %>
   </h1>
