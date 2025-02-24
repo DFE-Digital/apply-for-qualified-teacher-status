@@ -18,6 +18,7 @@
       <% end %>
 
       <% header.with_navigation_item(text: "Support console", href: main_app.support_interface_root_path) %>
+      <% header.with_navigation_item(text: "Manage access") %>
       <% header.with_navigation_item(text: "Sign out", href: main_app.destroy_staff_session_path) %>
     <% end %>
   <% when "support" %>
