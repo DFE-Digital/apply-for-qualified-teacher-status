@@ -27,6 +27,7 @@ RSpec.describe "Assessor authentication", type: :system do
     given_staff_exist
 
     when_i_visit_the(:assessor_applications_page)
+    when_i_login
     then_i_see_the_manage_access_link
   end
 
