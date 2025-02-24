@@ -29,6 +29,7 @@
     - needs_work_history
     - needs_written_statement
     - passport_document_status
+    - passport_country_of_issue_code
     - passport_expiry_date
     - personal_information_status
     - qualification_changed_work_history_duration

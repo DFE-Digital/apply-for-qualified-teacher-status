@@ -6,13 +6,18 @@ module TeacherInterface
 
     attr_accessor :application_form
     attribute :passport_expiry_date
+    attribute :passport_country_of_issue_code
 
     validates :application_form, presence: true
     validates :passport_expiry_date, presence: true
+    validates :passport_country_of_issue_code, presence: true
     validate :passport_expiry_date_valid
 
     def update_model
-      application_form.update!(passport_expiry_date:)
+      application_form.update!(
+        passport_expiry_date:,
+        passport_country_of_issue_code:,
+      )
     end
 
     def expiry_date_in_the_past?

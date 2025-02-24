@@ -5,6 +5,7 @@
     - date_of_birth
     - family_name
     - given_names
+    - passport_country_of_issue_code
     - passport_expiry_date
     - registration_number
     - trs_match
