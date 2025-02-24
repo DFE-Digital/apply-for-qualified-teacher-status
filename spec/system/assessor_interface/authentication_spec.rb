@@ -29,6 +29,9 @@ RSpec.describe "Assessor authentication", type: :system do
     when_i_visit_the(:assessor_applications_page)
     when_i_login
     then_i_see_the_manage_access_link
+
+    when_i_click_manage_access_link
+    then_i_see_the(:support_staff_index_page)
   end
 
   private
@@ -47,5 +50,9 @@ RSpec.describe "Assessor authentication", type: :system do
 
   def then_i_see_the_manage_access_link
     expect(assessor_applications_page).to have_content("Manage access")
+  end
+
+  def when_i_click_manage_access_link
+    assessor_applications_page.header.manage_access_link.click
   end
 end
