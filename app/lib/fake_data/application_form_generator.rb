@@ -98,7 +98,7 @@ class FakeData::ApplicationFormGenerator
     traits = %i[
       with_personal_information
       with_degree_qualification
-      with_identification_document
+      with_passport_document
       with_age_range
       with_subjects
     ]
