@@ -388,7 +388,7 @@ module PageHelpers
 
   def support_staff_index_page
     @support_staff_index_page ||= PageObjects::SupportInterface::StaffIndex.new
-  end 
+  end
 
   def staff_signed_out_page
     @staff_signed_out_page ||= PageObjects::Staff::SignedOut.new
