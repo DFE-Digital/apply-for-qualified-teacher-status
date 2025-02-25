@@ -259,6 +259,7 @@ FactoryBot.define do
     end
 
     trait :with_passport_document do
+      requires_passport_as_identity_proof { true }
       passport_document_status { "completed" }
 
       passport_country_of_issue_code { "FRA" }

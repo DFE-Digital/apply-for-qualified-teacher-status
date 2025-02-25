@@ -48,7 +48,6 @@ RSpec.describe "Teacher application view answers", type: :system do
         :with_teaching_qualification,
         :submitted,
         teacher:,
-        requires_passport_as_identity_proof: true,
       )
     end
 

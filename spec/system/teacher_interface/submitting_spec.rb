@@ -124,7 +124,6 @@ RSpec.describe "Teacher submitting", type: :system do
         :with_written_statement,
         :with_registration_number,
         teacher:,
-        requires_passport_as_identity_proof: true,
       )
     end
 
@@ -156,7 +155,6 @@ RSpec.describe "Teacher submitting", type: :system do
           :with_written_statement,
           :with_registration_number,
           teacher:,
-          requires_passport_as_identity_proof: true,
           passport_expiry_date: 2.days.ago.to_date,
         )
       end
