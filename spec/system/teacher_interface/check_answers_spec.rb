@@ -26,6 +26,9 @@ RSpec.describe "Teacher application check answers", type: :system do
     when_i_click_change_links(:who_you_can_teach, :qualification) do
       if teacher_check_document_page.displayed?(0)
         and_i_dont_need_to_upload_another_file
+      elsif teacher_edit_qualification_page.displayed?
+        and_i_check_teaching_qualification_confirmation
+        and_i_click_continue
       else
         and_i_click_continue
       end
@@ -162,6 +165,11 @@ RSpec.describe "Teacher application check answers", type: :system do
   def and_i_dont_need_to_upload_another_file
     teacher_check_document_page.form.false_radio_item.input.click
     teacher_check_document_page.form.continue_button.click
+  end
+
+  def and_i_check_teaching_qualification_confirmation
+    check "I confirm this is the first qualification I have that qualifies me to teach.",
+          visible: false
   end
 
   def when_i_click_change_link_for_english_language_proficiency

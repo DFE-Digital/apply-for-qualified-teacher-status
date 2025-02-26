@@ -42,6 +42,7 @@ RSpec.describe "Teacher back links", type: :system do
     #  <- teacher_edit_qualification_page
 
     when_i_click_qualifications
+    and_i_check_teaching_qualification_confirmation
     and_i_click_continue
     then_i_see_the(:teacher_upload_document_page)
 
@@ -58,6 +59,7 @@ RSpec.describe "Teacher back links", type: :system do
     #  -> teacher_part_of_degree_page
     #  <- document_form_page <- document_form_page <- teacher_edit_qualification_page
 
+    and_i_check_teaching_qualification_confirmation
     when_i_click_continue
     then_i_see_the(:teacher_check_document_page)
 
@@ -86,6 +88,7 @@ RSpec.describe "Teacher back links", type: :system do
     #  -> teacher_part_of_degree_page -> teacher_check_qualification_page
     #  <- teacher_application_page
 
+    and_i_check_teaching_qualification_confirmation
     when_i_click_continue
     then_i_see_the(:teacher_check_document_page)
 
@@ -124,6 +127,7 @@ RSpec.describe "Teacher back links", type: :system do
       qualification_id: qualification.id,
     )
 
+    and_i_check_teaching_qualification_confirmation
     when_i_click_continue
     then_i_see_the(:teacher_check_qualifications_page)
 
@@ -286,6 +290,11 @@ RSpec.describe "Teacher back links", type: :system do
       .actions
       .link
       .click
+  end
+
+  def and_i_check_teaching_qualification_confirmation
+    check "I confirm this is the first qualification I have that qualifies me to teach.",
+          visible: false
   end
 
   def when_i_add_another_qualification
