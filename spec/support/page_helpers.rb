@@ -254,7 +254,8 @@ module PageHelpers
   end
 
   def assessor_staff_index_page
-    @assessor_staff_index_page ||= PageObjects::AssessorInterface::StaffIndex.new
+    @assessor_staff_index_page ||=
+      PageObjects::AssessorInterface::StaffIndex.new
   end
 
   def assessor_suitability_records_page
