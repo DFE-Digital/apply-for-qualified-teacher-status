@@ -7,7 +7,7 @@ en:
             additional_degree_certificate_illegible: Your additional degree certificate (or translation) is illegible or in a format we cannot accept.
             additional_degree_transcript_illegible: Your additional degree transcript (or translation) is illegible or in a format we cannot accept.
             age_range: The age range you are qualified to teach does not fall within the requirements of QTS.
-            applicant_already_dqt: Your details have been matched with someone who already has QTS and is registered in our database for qualified teachers.
+            applicant_already_dqt: We need more information to verify your identity.
             applicant_already_qts: You already hold QTS and induction exemption.
             application_and_qualification_names_do_not_match: The name on the application form is different from 1 or more qualification documents, but no evidence of change of name has been provided.
             authorisation_to_teach: Sanctions or restrictions were detected on your professional record.
@@ -30,13 +30,13 @@ en:
             further_information_request_expired: Your application has been declined as you did not respond to the assessor’s request for further information within the specified time.
             identification_document_expired: Your ID document has expired.
             identification_document_illegible: Your ID document is illegible or in a format we cannot accept.
-            identification_document_mismatch: Your name on the online application form is different from the ID document, but no evidence of change of name has been provided.
-            name_change_document_illegible: The evidence for your name change is illegible or in a format we cannot accept.
+            identification_document_mismatch: Your name on the application is different from your ID document, but you didn't provide evidence that your name has changed.
+            name_change_document_illegible: There is a problem with the proof that you changed your name.
             not_qualified_to_teach_mainstream: You are not qualified to teach in mainstream education.
             professional_standing_request_expired: Your application has been declined as we did not receive your %{certificate_name} from %{teaching_authority_name} within 180 days.
             passport_document_expired: Your passport had already expired when the application was submitted.
             passport_document_illegible: There is a problem with your passport. For example, it’s incorrect, illegible, or incomplete.
-            passport_document_mismatch: Your name on the online application form is different from your passport, but no evidence of change of name has been provided.
+            passport_document_mismatch: Your name on the application is different from your passport, but you didn't provide evidence that your name has changed.
             qualifications_dont_match_other_details: Your uploaded qualifications do not match other details entered, for example, name of qualification, name of institution, or dates.
             qualifications_dont_match_subjects: The subjects you entered are acceptable for QTS, but the uploaded qualifications do not match them.
             qualified_to_teach: We were not provided with sufficient evidence to confirm qualification to teach at state or government schools.

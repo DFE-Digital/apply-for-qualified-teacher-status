@@ -167,12 +167,12 @@ en:
           full_professional_status: Recognition level as a teacher does not match the required level, or has outstanding additional conditions.
           identification_document_expired: The ID document has expired.
           identification_document_illegible: The ID document is illegible or in a format that we cannot accept.
-          identification_document_mismatch: The name on the online application form is different from the ID document, but no evidence of change of name was provided.
-          name_change_document_illegible: The evidence of change of name is illegible or in a format that we cannot accept.
+          identification_document_mismatch: The name on the application form is different from the ID document, but no evidence of change of name was provided.
+          name_change_document_illegible: There is a problem with the change of name evidence, for example, it's incorrect, illegible, or incomplete.
           not_qualified_to_teach_mainstream: Applicant is not qualified to teach in mainstream education.
           passport_document_expired: The passport had already expired when the application was submitted.
           passport_document_illegible: There is a problem with the passport. For example, it’s incorrect, illegible, or incomplete.
-          passport_document_mismatch: The name on the online application form is different from the passport, but no evidence of change of name was provided.
+          passport_document_mismatch: The name on the application form is different from the passport, but no evidence of change of name was provided.
           qualifications_dont_match_other_details: Uploaded qualifications do not match other details entered, for example, name of qualification, name of institution or dates.
           qualifications_dont_match_subjects: Subjects entered are acceptable for QTS, but the uploaded qualifications do not match them.
           qualified_to_teach: We were not provided with sufficient evidence to confirm qualification to teach at state or government schools.
