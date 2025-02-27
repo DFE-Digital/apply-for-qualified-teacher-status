@@ -345,8 +345,8 @@ RSpec.describe TeacherInterface::ApplicationFormViewObject do
               },
               {
                 name:
-                  "We were not provided with sufficient evidence to confirm " \
-                    "qualification to teach at state or government schools.",
+                  "We were not provided with enough evidence to confirm you are " \
+                    "qualified to teach at state or government schools.",
               },
             ],
           },
