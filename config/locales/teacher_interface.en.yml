@@ -39,10 +39,10 @@ en:
             passport_document_mismatch: Your name on the application is different from your passport, but you didn’t provide evidence that your name has changed.
             qualifications_dont_match_other_details: Your uploaded qualifications do not match other details entered, for example, name of qualification, name of institution, or dates.
             qualifications_dont_match_subjects: The subjects you entered are acceptable for QTS, but the uploaded qualifications do not match them.
-            qualified_to_teach: We were not provided with sufficient evidence to confirm qualification to teach at state or government schools.
+            qualified_to_teach: We were not provided with enough evidence to confirm you are qualified to teach at state or government schools.
             qualified_to_teach_children_11_to_16: You are not qualified to teach children aged 11-16.
             registration_number: We could not find your reference number, or the number was in the wrong format.
-            registration_number_alternative: We could not find your reference number.
+            registration_number_alternative: There’s a problem with your reference number. You need to provide written proof that you are recognised as a teacher.
             satisfactory_evidence_work_history: The information you provided on work history is not sufficient to award QTS.
             school_details_cannot_be_verified: We could not verify the school details you provided.
             suitability: We were not provided with enough evidence to show you meet our suitability to teach requirements. This is because of sanctions, restrictions, penalties, or incidents of misconduct.
@@ -60,9 +60,9 @@ en:
             unrecognised_references: Your application contained one or more references we cannot consider.
             work_history_break: There is an unexplained break in your work history.
             work_history_duration: Your work experience does not meet the minimum duration requirements.
-            written_statement_illegible: Your letter is illegible or in a format we cannot accept.
+            written_statement_illegible: There is a problem with the written confirmation that proves you’re recognised as a teacher.
             written_statement_information: Your letter is missing information.
-            written_statement_recent: Your letter was not issued within the last 6 months.
+            written_statement_recent: The written confirmation that you’re recognised as a teacher was issued more than 6 months after submitting your application.
         draft:
           check: Check your application
           save: Save and sign out

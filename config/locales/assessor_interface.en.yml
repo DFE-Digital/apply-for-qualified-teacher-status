@@ -196,9 +196,9 @@ en:
           unrecognised_references: Application contained 1 or more references that cannot be considered.
           work_history_break: There is an unexplained break in the applicant’s work history.
           work_history_duration: The applicant’s work experience does not meet the minimum duration requirements.
-          written_statement_illegible: The letter is illegible or in a format that we cannot accept.
+          written_statement_illegible: There is a problem with the letter, for example it’s missing, incorrect or illegible.
           written_statement_information: The letter is missing information.
-          written_statement_recent: The letter was not issued within the last 6 months.
+          written_statement_recent: The letter was issued more than 6 months after the application was created.
         as_question:
           label:
             teaching_qualifications_not_at_required_level: Does the teaching qualification meet the required academic level? (level 6 or higher)
