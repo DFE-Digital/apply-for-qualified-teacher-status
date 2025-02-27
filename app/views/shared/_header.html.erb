@@ -19,7 +19,7 @@
 
       <% if SupportInterface::StaffPolicy.new(current_staff, Staff).index? %>
         <% header.with_navigation_item(text: "Support console", href: main_app.support_interface_root_path) %>
-        <% header.with_navigation_item(text: "Manage access", href: main_app.support_interface_staff_index_path) %>
+        <% header.with_navigation_item(text: "Manage access", href: main_app.assessor_interface_staff_index_path) %>
       <% end %>
       <% header.with_navigation_item(text: "Sign out", href: main_app.destroy_staff_session_path) %>
     <% end %>
