@@ -18,10 +18,10 @@ en:
             english_language_exemption_by_citizenship_not_confirmed: Your ID does not confirm English language exemption by birth or citizenship.
             english_language_exemption_by_citizenship_not_confirmed_via_passport: Your passport does not confirm English language exemption by birth or citizenship.
             english_language_exemption_by_qualification_not_confirmed: Your qualification documents do not confirm English language exemption by country of study.
-            english_language_moi_invalid_format: Your Medium of instruction (MOI) document is illegible or in a format that we cannot accept.
+            english_language_moi_invalid_format: There’s a problem with your Medium of Instruction (MOI) document.
             english_language_moi_not_taught_in_english: Your medium of instruction (MOI) does not show that you were taught exclusively in English.
             english_language_not_achieved_b2: You provided evidence of a secure English language test (SELT) that has not achieved B2 level. Find out what tests we can accept.
-            english_language_proficiency_document_illegible: Your English language proficiency test document is illegible or in a format we cannot accept.
+            english_language_proficiency_document_illegible: There’s a problem with your English language proficiency test document.
             english_language_qualification_invalid: Your English language qualification is not from one of the approved providers.
             english_language_selt_expired: You have provided evidence of a secure English language test (SELT) but the test was not completed within the last 2 years.
             english_language_unverifiable_reference_number: We were unable to verify the reference number you have provided.
