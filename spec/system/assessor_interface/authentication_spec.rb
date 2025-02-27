@@ -32,7 +32,7 @@ RSpec.describe "Assessor authentication", type: :system do
       then_i_see_the_manage_access_link
 
       when_i_click_manage_access_link
-      then_i_see_the(:support_staff_index_page)
+      then_i_see_the(:assessor_staff_index_page)
     end
   end
 
