@@ -168,7 +168,7 @@ en:
           identification_document_expired: The ID document has expired.
           identification_document_illegible: The ID document is illegible or in a format that we cannot accept.
           identification_document_mismatch: The name on the application form is different from the ID document, but no evidence of change of name was provided.
-          name_change_document_illegible: There is a problem with the change of name evidence, for example, it's incorrect, illegible, or incomplete.
+          name_change_document_illegible: There is a problem with the change of name evidence, for example, it’s incorrect, illegible, or incomplete.
           not_qualified_to_teach_mainstream: Applicant is not qualified to teach in mainstream education.
           passport_document_expired: The passport had already expired when the application was submitted.
           passport_document_illegible: There is a problem with the passport. For example, it’s incorrect, illegible, or incomplete.
@@ -184,7 +184,7 @@ en:
           special_education_only: Applicant holds a Special Educational Needs and Disabilities (SEND) only qualification and is not qualified to teach in mainstream education.
           suitability: The applicant does not meet the suitability to teach requirements.
           suitability_previously_declined: The applicant has previously been declined because they do not meet the suitability to teach requirements. They are being declined again for suitability.
-          teaching_certificate_illegible: There is a problem with the teaching qualification certificate (or translation), for example, it's incorrect, illegible, or incomplete.
+          teaching_certificate_illegible: There is a problem with the teaching qualification certificate (or translation), for example, it’s incorrect, illegible, or incomplete.
           teaching_hours_not_fulfilled: The required teaching hours have not been fulfilled.
           teaching_qualification: We were not provided with sufficient evidence to confirm the teaching qualification entered on the online application form.
           teaching_qualification_1_year: The teacher training course qualification did not last at least 1 academic year.
@@ -192,7 +192,7 @@ en:
           teaching_qualification_subjects_criteria: The applicant is not qualified to teach one of the subjects that we currently accept (Maths, Science, Biology, Chemistry, Physics, French, German, Italian, Japanese, Latin, Mandarin, Russian, Spanish).
           teaching_qualifications_from_ineligible_country: The teaching qualifications were completed in a different country to where they are recognised as a teacher.​
           teaching_qualifications_not_at_required_level: The teaching qualifications do not meet the required academic level (level 6).
-          teaching_transcript_illegible: There is a problem with the teaching qualification transcript (or translation), for example, it's incorrect, illegible, or incomplete.
+          teaching_transcript_illegible: There is a problem with the teaching qualification transcript (or translation), for example, it’s incorrect, illegible, or incomplete.
           unrecognised_references: Application contained 1 or more references that cannot be considered.
           work_history_break: There is an unexplained break in the applicant’s work history.
           work_history_duration: The applicant’s work experience does not meet the minimum duration requirements.
