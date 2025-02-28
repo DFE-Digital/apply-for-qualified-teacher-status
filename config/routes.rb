@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   namespace :assessor_interface, path: "/assessor" do
     root to: redirect("/assessor/applications")
 
-    resources :staff, only: %i[index]
+    resources :staff, only: %i[index edit update]
 
     resources :application_forms,
               path: "/applications",
@@ -249,8 +249,6 @@ Rails.application.routes.draw do
     resources :regions, only: %i[edit update] do
       get "preview", on: :member
     end
-
-    resources :staff, only: %i[index edit update]
 
     devise_scope :staff do
       authenticate :staff do

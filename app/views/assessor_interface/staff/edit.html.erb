@@ -2,10 +2,10 @@
 
 <h1 class="govuk-heading-l">Edit ‘<%= @staff.name %>’</h1>
 
-<%= form_with model: [:support_interface, @staff] do |f| %>
+<%= form_with model: [:assessor_interface, @staff] do |f| %>
   <%= render "permissions_fields", f: %>
 
   <%= f.govuk_submit do %>
-    <%= govuk_link_to "Cancel", %i[support_interface staff index] %>
+    <%= govuk_link_to "Cancel", %i[assessor_interface staff index] %>
   <% end %>
 <% end %>

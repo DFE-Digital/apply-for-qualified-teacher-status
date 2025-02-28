@@ -8,6 +8,17 @@ class AssessorInterface::StaffController < AssessorInterface::BaseController
     @staff = Staff.not_archived.order(:name)
   end
 
+  def edit
+  end
+
+  def update
+    if @staff.update(staff_params)
+      redirect_to %i[assessor_interface staff index]
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def load_staff
