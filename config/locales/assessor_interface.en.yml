@@ -193,7 +193,7 @@ en:
           teaching_qualifications_from_ineligible_country: The teaching qualifications were completed in a different country to where they are recognised as a teacher.​
           teaching_qualifications_not_at_required_level: The teaching qualifications do not meet the required academic level (level 6).
           teaching_transcript_illegible: There is a problem with the teaching qualification transcript (or translation), for example, it’s incorrect, illegible, or incomplete.
-          unrecognised_references: Application contained 1 or more references that cannot be considered.
+          unrecognised_references: We could not verify 1 or more references entered by the applicant.
           work_history_break: There is an unexplained break in the applicant’s work history.
           work_history_duration: The applicant’s work experience does not meet the minimum duration requirements.
           written_statement_illegible: There is a problem with the letter, for example, it’s missing, incorrect or illegible.
