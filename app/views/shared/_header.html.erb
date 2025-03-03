@@ -42,8 +42,8 @@
       ) %>
       <% header.with_navigation_item(
          text: "Staff",
-         href: main_app.support_interface_staff_index_path,
-         active: request.path.start_with?("/support/staff")
+         href: main_app.assessor_interface_staff_index_path,
+         active: request.path.start_with?("/assessor/staff")
        ) %>
       <% header.with_navigation_item(text: "Sidekiq", href: main_app.support_interface_sidekiq_web_path) %>
       <% header.with_navigation_item(text: "Assessor case management", href: main_app.assessor_interface_root_path) %>

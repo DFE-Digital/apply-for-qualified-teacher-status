@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "Staff support", type: :system do
+RSpec.describe "Staff assessor", type: :system do
   it "requires permission" do
     given_i_am_authorized_as_an_assessor_user
     when_i_visit_the_staff_page
@@ -91,7 +91,7 @@ RSpec.describe "Staff support", type: :system do
   end
 
   def when_i_visit_the_staff_page
-    visit support_interface_staff_index_path
+    visit assessor_interface_staff_index_path
   end
 
   def when_i_visit_the_invitation_email_with_azure_ad_enabled_i_see_the_link_to_access
@@ -117,7 +117,7 @@ RSpec.describe "Staff support", type: :system do
   end
 
   def then_i_see_the_staff_index
-    expect(page).to have_current_path("/support/staff")
+    expect(page).to have_current_path("/assessor/staff")
     expect(page).to have_title("Staff")
   end
 
