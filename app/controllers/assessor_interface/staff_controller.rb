@@ -4,7 +4,7 @@ class AssessorInterface::StaffController < AssessorInterface::BaseController
   before_action :load_staff, except: :index
 
   def index
-    authorize [:support_interface, Staff]
+    authorize [:assessor_interface, Staff]
     @staff = Staff.not_archived.order(:name)
   end
 
