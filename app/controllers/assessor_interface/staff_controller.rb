@@ -23,7 +23,7 @@ class AssessorInterface::StaffController < AssessorInterface::BaseController
 
   def load_staff
     @staff = Staff.find(params[:id])
-    authorize [:support_interface, @staff]
+    authorize [:assessor_interface, @staff]
   end
 
   def staff_params
