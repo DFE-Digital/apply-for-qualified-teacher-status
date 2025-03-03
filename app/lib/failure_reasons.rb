@@ -77,7 +77,7 @@ class FailureReasons
     WRITTEN_STATEMENT_RECENT = "written_statement_recent",
   ].freeze
 
-  WORK_HISTORY_FAILURE_REASONS = [SCHOOL_DETAILS_CANNOT_BE_VERIFIED].freeze
+  WORK_HISTORY_REFERENCE_FAILURE_REASONS = [UNRECOGNISED_REFERENCES].freeze
 
   ALL = (DECLINABLE + FURTHER_INFORMATIONABLE).freeze
 
@@ -138,6 +138,6 @@ class FailureReasons
   end
 
   def self.chooses_work_history?(failure_reason)
-    WORK_HISTORY_FAILURE_REASONS.include?(failure_reason.to_s)
+    WORK_HISTORY_REFERENCE_FAILURE_REASONS.include?(failure_reason.to_s)
   end
 end

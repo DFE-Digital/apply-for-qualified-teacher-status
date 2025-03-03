@@ -28,7 +28,11 @@ module AssessorInterface
     delegate :registration_number,
              :requires_preliminary_check,
              to: :application_form
-    delegate :checks, :failure_reasons, :preliminary?, to: :assessment_section
+    delegate :checks,
+             :failure_reasons,
+             :preliminary?,
+             :selected_failure_reasons,
+             to: :assessment_section
     delegate :region, :country, to: :application_form
 
     def notes_label_key_for(failure_reason:)
