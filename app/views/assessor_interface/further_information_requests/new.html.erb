@@ -4,7 +4,7 @@
 <h1 class="govuk-heading-xl">Check the information you’re asking the applicant for</h1>
 
 <% @further_information_request.items.group_by(&:failure_reason_key).each do |failure_reason_key, items| %>
-  <% if failure_reason_key == FailureReasons::UNRECOGNISED_REFERENCES %>
+  <% if FailureReasons.chooses_work_history?(failure_reason_key) %>
     <section class="app-further-information-request-item">
       <h2 class="govuk-heading-m">Reason for request</h2>
       <% if items.size == 1 %>
