@@ -142,37 +142,37 @@ en:
 
       failure_reasons:
         as_statement:
-          additional_degree_certificate_illegible: An additional degree certificate (or translation) is illegible or in a format that we cannot accept.
-          additional_degree_transcript_illegible: An additional degree transcript (or translation) is illegible or in a format that we cannot accept.
+          additional_degree_certificate_illegible: There is a problem with the additional degree certificate (or translation), for example, it’s incorrect, illegible, or incomplete.
+          additional_degree_transcript_illegible: There is a problem with the additional degree transcript, (or translation) for example, it’s incorrect, illegible, or incomplete.
           age_range: The age range the applicant is qualified to teach does not fall within the requirements of QTS.
           applicant_already_dqt: There’s a potential existing match for this applicant. We need to ask for an additional identifier.
           applicant_already_qts: The applicant already holds QTS and induction exemption.
-          application_and_qualification_names_do_not_match: The name on the online application form is different from 1 or more qualification documents, but no evidence of change of name was provided.
+          application_and_qualification_names_do_not_match: The name on the application is different from 1 or more qualification documents, but no evidence of change of name was provided.
           authorisation_to_teach: Sanctions or restrictions were detected on professional record.
           confirm_age_range_subjects: We were not provided with sufficient evidence to confirm qualification to teach the age ranges and subjects entered on the online application form.
-          degree_certificate_illegible: The university degree certificate (or translation) is illegible or in a format that we cannot accept.
-          degree_transcript_illegible: The university degree transcript (or translation) is illegible or in a format that we cannot accept.
+          degree_certificate_illegible: There is a problem with the university degree certificate (or translation), for example, it’s incorrect, illegible, or incomplete.
+          degree_transcript_illegible: There is a problem with the university degree transcript (or translation), for example, it’s incorrect, illegible, or incomplete.
           duplicate_application: There’s already another in-flight application for this applicant.
           english_language_exemption_by_citizenship_not_confirmed: The applicant’s ID does not confirm English language exemption by birth/citizenship.
           english_language_exemption_by_citizenship_not_confirmed_via_passport: The applicant’s passport does not confirm English language exemption by birth/citizenship.
           english_language_exemption_by_qualification_not_confirmed: The applicant’s qualification documents do not confirm English language exemption by country of study.
-          english_language_moi_invalid_format: The applicant’s Medium of instruction (MOI) document is illegible or in a format that we cannot accept.
+          english_language_moi_invalid_format: There’s a problem with the Medium of Instruction (MOI) document, for example, it’s incorrect, illegible or incomplete.
           english_language_moi_not_taught_in_english: The applicant’s MOI does not show that they were taught exclusively in English.
           english_language_not_achieved_b2: The applicant provided evidence of a SELT but has not achieved B2 level.
-          english_language_proficiency_document_illegible: The applicant’s English language proficiency test document is illegible or in a format that we cannot accept.
+          english_language_proficiency_document_illegible: There’s a problem with the English language proficiency test document, for example, it’s incorrect, illegible, or incomplete.
           english_language_qualification_invalid: The applicant’s English language qualification is not from one of the approved providers.
           english_language_selt_expired: The applicant provided evidence of a SELT but the test was not completed within the last 2 years.
-          english_language_unverifiable_reference_number: Unable to verify the reference number that the applicant has provided.
+          english_language_unverifiable_reference_number: There’s a problem with the reference number, for example, it’s incorrect and can’t be verified.
           fraud: Applicant has provided information that cannot be verified and is potentially fraudulent.
           full_professional_status: Recognition level as a teacher does not match the required level, or has outstanding additional conditions.
           identification_document_expired: The ID document has expired.
           identification_document_illegible: The ID document is illegible or in a format that we cannot accept.
-          identification_document_mismatch: The name on the online application form is different from the ID document, but no evidence of change of name was provided.
-          name_change_document_illegible: The evidence of change of name is illegible or in a format that we cannot accept.
+          identification_document_mismatch: The name on the application form is different from the ID document, but no evidence of change of name was provided.
+          name_change_document_illegible: There is a problem with the change of name evidence, for example, it’s incorrect, illegible, or incomplete.
           not_qualified_to_teach_mainstream: Applicant is not qualified to teach in mainstream education.
           passport_document_expired: The passport had already expired when the application was submitted.
           passport_document_illegible: There is a problem with the passport. For example, it’s incorrect, illegible, or incomplete.
-          passport_document_mismatch: The name on the online application form is different from the passport, but no evidence of change of name was provided.
+          passport_document_mismatch: The name on the application form is different from the passport, but no evidence of change of name was provided.
           qualifications_dont_match_other_details: Uploaded qualifications do not match other details entered, for example, name of qualification, name of institution or dates.
           qualifications_dont_match_subjects: Subjects entered are acceptable for QTS, but the uploaded qualifications do not match them.
           qualified_to_teach: We were not provided with sufficient evidence to confirm qualification to teach at state or government schools.
@@ -184,7 +184,7 @@ en:
           special_education_only: Applicant holds a Special Educational Needs and Disabilities (SEND) only qualification and is not qualified to teach in mainstream education.
           suitability: The applicant does not meet the suitability to teach requirements.
           suitability_previously_declined: The applicant has previously been declined because they do not meet the suitability to teach requirements. They are being declined again for suitability.
-          teaching_certificate_illegible: The teaching qualification certificate (or translation) is illegible or in a format that we cannot accept.
+          teaching_certificate_illegible: There is a problem with the teaching qualification certificate (or translation), for example, it’s incorrect, illegible, or incomplete.
           teaching_hours_not_fulfilled: The required teaching hours have not been fulfilled.
           teaching_qualification: We were not provided with sufficient evidence to confirm the teaching qualification entered on the online application form.
           teaching_qualification_1_year: The teacher training course qualification did not last at least 1 academic year.
@@ -192,13 +192,13 @@ en:
           teaching_qualification_subjects_criteria: The applicant is not qualified to teach one of the subjects that we currently accept (Maths, Science, Biology, Chemistry, Physics, French, German, Italian, Japanese, Latin, Mandarin, Russian, Spanish).
           teaching_qualifications_from_ineligible_country: The teaching qualifications were completed in a different country to where they are recognised as a teacher.​
           teaching_qualifications_not_at_required_level: The teaching qualifications do not meet the required academic level (level 6).
-          teaching_transcript_illegible: The teaching qualification transcript (or translation) is illegible or in a format that we cannot accept.
+          teaching_transcript_illegible: There is a problem with the teaching qualification transcript (or translation), for example, it’s incorrect, illegible, or incomplete.
           unrecognised_references: Application contained 1 or more references that cannot be considered.
           work_history_break: There is an unexplained break in the applicant’s work history.
           work_history_duration: The applicant’s work experience does not meet the minimum duration requirements.
-          written_statement_illegible: The letter is illegible or in a format that we cannot accept.
+          written_statement_illegible: There is a problem with the letter, for example, it’s missing, incorrect or illegible.
           written_statement_information: The letter is missing information.
-          written_statement_recent: The letter was not issued within the last 6 months.
+          written_statement_recent: The letter was issued more than 6 months before the application was created.
         as_question:
           label:
             teaching_qualifications_not_at_required_level: Does the teaching qualification meet the required academic level? (level 6 or higher)

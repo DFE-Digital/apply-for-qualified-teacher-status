@@ -4,24 +4,24 @@ en:
       show:
         declined:
           failure_reasons:
-            additional_degree_certificate_illegible: Your additional degree certificate (or translation) is illegible or in a format we cannot accept.
-            additional_degree_transcript_illegible: Your additional degree transcript (or translation) is illegible or in a format we cannot accept.
+            additional_degree_certificate_illegible: There is a problem with your additional degree certificate (or translation).
+            additional_degree_transcript_illegible: There is a problem with your additional degree transcript (or translation).
             age_range: The age range you are qualified to teach does not fall within the requirements of QTS.
-            applicant_already_dqt: Your details have been matched with someone who already has QTS and is registered in our database for qualified teachers.
+            applicant_already_dqt: We need more information to verify your identity.
             applicant_already_qts: You already hold QTS and induction exemption.
-            application_and_qualification_names_do_not_match: The name on the application form is different from 1 or more qualification documents, but no evidence of change of name has been provided.
+            application_and_qualification_names_do_not_match: Your name on the application form is different from 1 or more of the qualifications documents you uploaded.
             authorisation_to_teach: Sanctions or restrictions were detected on your professional record.
             confirm_age_range_subjects: We were not provided with sufficient evidence to confirm qualification to teach the age ranges and subjects entered on the application form.
-            degree_certificate_illegible: Your university degree certificate (or translation) is illegible or in a format we cannot accept.
-            degree_transcript_illegible: Your university degree transcript (or translation) is illegible or in a format we cannot accept.
+            degree_certificate_illegible: There is a problem with your university degree certificate (or translation).
+            degree_transcript_illegible: There is a problem with your university degree transcript (or translation).
             duplicate_application: You already have an application in progress.
             english_language_exemption_by_citizenship_not_confirmed: Your ID does not confirm English language exemption by birth or citizenship.
             english_language_exemption_by_citizenship_not_confirmed_via_passport: Your passport does not confirm English language exemption by birth or citizenship.
             english_language_exemption_by_qualification_not_confirmed: Your qualification documents do not confirm English language exemption by country of study.
-            english_language_moi_invalid_format: Your Medium of instruction (MOI) document is illegible or in a format that we cannot accept.
+            english_language_moi_invalid_format: There’s a problem with your Medium of Instruction (MOI) document.
             english_language_moi_not_taught_in_english: Your medium of instruction (MOI) does not show that you were taught exclusively in English.
             english_language_not_achieved_b2: You provided evidence of a secure English language test (SELT) that has not achieved B2 level. Find out what tests we can accept.
-            english_language_proficiency_document_illegible: Your English language proficiency test document is illegible or in a format we cannot accept.
+            english_language_proficiency_document_illegible: There’s a problem with your English language proficiency test document.
             english_language_qualification_invalid: Your English language qualification is not from one of the approved providers.
             english_language_selt_expired: You have provided evidence of a secure English language test (SELT) but the test was not completed within the last 2 years.
             english_language_unverifiable_reference_number: We were unable to verify the reference number you have provided.
@@ -30,25 +30,25 @@ en:
             further_information_request_expired: Your application has been declined as you did not respond to the assessor’s request for further information within the specified time.
             identification_document_expired: Your ID document has expired.
             identification_document_illegible: Your ID document is illegible or in a format we cannot accept.
-            identification_document_mismatch: Your name on the online application form is different from the ID document, but no evidence of change of name has been provided.
-            name_change_document_illegible: The evidence for your name change is illegible or in a format we cannot accept.
+            identification_document_mismatch: Your name on the application is different from your ID document, but you didn’t provide evidence that your name has changed.
+            name_change_document_illegible: There is a problem with the proof that you changed your name.
             not_qualified_to_teach_mainstream: You are not qualified to teach in mainstream education.
             professional_standing_request_expired: Your application has been declined as we did not receive your %{certificate_name} from %{teaching_authority_name} within 180 days.
             passport_document_expired: Your passport had already expired when the application was submitted.
             passport_document_illegible: There is a problem with your passport. For example, it’s incorrect, illegible, or incomplete.
-            passport_document_mismatch: Your name on the online application form is different from your passport, but no evidence of change of name has been provided.
+            passport_document_mismatch: Your name on the application is different from your passport, but you didn’t provide evidence that your name has changed.
             qualifications_dont_match_other_details: Your uploaded qualifications do not match other details entered, for example, name of qualification, name of institution, or dates.
             qualifications_dont_match_subjects: The subjects you entered are acceptable for QTS, but the uploaded qualifications do not match them.
-            qualified_to_teach: We were not provided with sufficient evidence to confirm qualification to teach at state or government schools.
+            qualified_to_teach: We were not provided with enough evidence to confirm you are qualified to teach at state or government schools.
             qualified_to_teach_children_11_to_16: You are not qualified to teach children aged 11-16.
             registration_number: We could not find your reference number, or the number was in the wrong format.
-            registration_number_alternative: We could not find your reference number.
+            registration_number_alternative: There’s a problem with your reference number. You need to provide written proof that you are recognised as a teacher.
             satisfactory_evidence_work_history: The information you provided on work history is not sufficient to award QTS.
             school_details_cannot_be_verified: We could not verify the school details you provided.
             suitability: We were not provided with enough evidence to show you meet our suitability to teach requirements. This is because of sanctions, restrictions, penalties, or incidents of misconduct.
             suitability_previously_declined: "You were previously declined QTS because we were not provided with enough evidence to show you meet our suitability to teach requirements. This was because of sanctions, restrictions, penalties, or incidents of misconduct.\n\nYour new application does not show evidence that you now meet our suitability to teach requirements."
             special_education_only: We require teachers to be qualified to teach in mainstream education. Your qualification is for Special Education Needs and Disabilities (SEND) only. In England, this does not qualify you to teach in mainstream education.
-            teaching_certificate_illegible: Your teaching qualification certificate (or translation) is illegible or in a format we cannot accept.
+            teaching_certificate_illegible: There is a problem with your teaching qualification certificate (or translation).
             teaching_hours_not_fulfilled: You have not fulfilled the required number of teaching hours.
             teaching_qualification: We were not provided with sufficient evidence to verify the teaching qualification provided.
             teaching_qualification_1_year: Your teacher training course qualification did not last at least 1 academic year.
@@ -56,13 +56,13 @@ en:
             teaching_qualification_subjects_criteria: You are not qualified to teach one of the subjects we currently accept (Maths, Science, Biology, Chemistry, Physics, French, German, Italian, Japanese, Latin, Mandarin, Russian, Spanish).
             teaching_qualifications_from_ineligible_country: Your teaching qualifications were completed in a different country to where you are recognised as a teacher.​
             teaching_qualifications_not_at_required_level: Your teaching qualifications do not meet the required academic level (level 6).
-            teaching_transcript_illegible: Your teaching qualification transcript (or translation) is illegible or in a format we cannot accept.
+            teaching_transcript_illegible: There is a problem with your teaching qualification transcript (or translation).
             unrecognised_references: Your application contained one or more references we cannot consider.
             work_history_break: There is an unexplained break in your work history.
             work_history_duration: Your work experience does not meet the minimum duration requirements.
-            written_statement_illegible: Your letter is illegible or in a format we cannot accept.
+            written_statement_illegible: There is a problem with the written confirmation that proves you’re recognised as a teacher.
             written_statement_information: Your letter is missing information.
-            written_statement_recent: Your letter was not issued within the last 6 months.
+            written_statement_recent: The written confirmation that you’re recognised as a teacher was issued more than 6 months before submitting your application.
         draft:
           check: Check your application
           save: Save and sign out
@@ -283,7 +283,7 @@ en:
         teacher_interface/further_information_request_item_text_form:
           attributes:
             response:
-              blank: "Please respond to the assessor's request"
+              blank: "Please respond to the assessor’s request"
         teacher_interface/further_information_request_item_work_history_contact_form:
           attributes:
             contact_name:
