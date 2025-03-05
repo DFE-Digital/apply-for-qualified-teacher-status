@@ -174,7 +174,7 @@ en:
           passport_document_expired: The passport had already expired when the application was submitted.
           passport_document_illegible: There is a problem with the passport. For example, it’s incorrect, illegible, or incomplete.
           passport_document_mismatch: The name on the application form is different from the passport, but no evidence of change of name was provided.
-          qualifications_dont_match_other_details: Uploaded qualifications do not match other details entered, for example, name of qualification, name of institution or dates.
+          qualifications_dont_match_other_details: Uploaded qualifications do not match other information entered, for example, the subject, name of qualification, name of institution or dates.
           qualifications_dont_match_subjects: Subjects entered are acceptable for QTS, but the uploaded qualifications do not match them.
           qualified_to_teach: We were not provided with sufficient evidence to confirm qualification to teach at state or government schools.
           qualified_to_teach_children_11_to_16: The applicant is not qualified to teach children aged 11-16.

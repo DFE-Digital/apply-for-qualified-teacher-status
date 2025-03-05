@@ -135,7 +135,6 @@ RSpec.describe AssessmentFactory do
               teaching_qualification_pedagogy
               teaching_qualification_1_year
               not_qualified_to_teach_mainstream
-              qualifications_dont_match_subjects
               qualifications_dont_match_other_details
               teaching_certificate_illegible
               teaching_transcript_illegible
@@ -183,7 +182,6 @@ RSpec.describe AssessmentFactory do
                 teaching_qualification_pedagogy
                 teaching_qualification_1_year
                 not_qualified_to_teach_mainstream
-                qualifications_dont_match_subjects
                 qualifications_dont_match_other_details
                 qualified_to_teach_children_11_to_16
                 teaching_qualification_subjects_criteria
@@ -234,7 +232,6 @@ RSpec.describe AssessmentFactory do
                 english_language_exemption_by_qualification_not_confirmed
                 english_language_not_exempt_by_qualification_country
                 not_qualified_to_teach_mainstream
-                qualifications_dont_match_subjects
                 qualifications_dont_match_other_details
                 teaching_certificate_illegible
                 teaching_transcript_illegible

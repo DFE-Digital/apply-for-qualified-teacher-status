@@ -45,7 +45,6 @@ module AssessmentFactories
           end
         ),
         FailureReasons::NOT_QUALIFIED_TO_TEACH_MAINSTREAM,
-        FailureReasons::QUALIFICATIONS_DONT_MATCH_SUBJECTS,
         FailureReasons::QUALIFICATIONS_DONT_MATCH_OTHER_DETAILS,
         (
           if application_form.subject_limited
