@@ -38,6 +38,7 @@ module AssessmentFactories
             FailureReasons::EL_GRADE_BELOW_B2,
             FailureReasons::EL_SELT_EXPIRED,
             FailureReasons::EL_SELT_EXPIRED_DURING_ASSESSMENT,
+            FailureReasons::EL_REQUIRE_ALTERNATIVE,
           ]
         end
 

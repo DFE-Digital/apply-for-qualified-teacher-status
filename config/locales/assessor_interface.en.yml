@@ -161,6 +161,7 @@ en:
           english_language_moi_not_taught_in_english: The applicant’s MOI does not show that they were taught exclusively in English.
           english_language_not_achieved_b2: The applicant provided evidence of a SELT but has not achieved B2 level.
           english_language_proficiency_document_illegible: There’s a problem with the English language proficiency test document, for example, it’s incorrect, illegible, or incomplete.
+          english_language_proficiency_require_alternative: The applicant needs to provide another way to verify their English language proficiency, for example an MOI or different ELP test.
           english_language_qualification_invalid: The applicant’s English language qualification is not from one of the approved providers.
           english_language_selt_expired: The applicant provided evidence of a SELT but the test was not completed within the last 2 years.
           english_language_selt_expired_during_assessment: The SELT evidence expired whilst the applicant waited for initial assessment.

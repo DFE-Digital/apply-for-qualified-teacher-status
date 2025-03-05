@@ -23,6 +23,7 @@ en:
             english_language_moi_not_taught_in_english: Your medium of instruction (MOI) does not show that you were taught exclusively in English.
             english_language_not_achieved_b2: You provided evidence of a secure English language test (SELT) that has not achieved B2 level. Find out what tests we can accept.
             english_language_proficiency_document_illegible: There’s a problem with your English language proficiency test document.
+            english_language_proficiency_require_alternative: You need to provide another way to verify your English language proficiency.
             english_language_qualification_invalid: Your English language qualification is not from one of the approved providers.
             english_language_selt_expired: You have provided evidence of a secure English language test (SELT) but the test was not completed within the last 2 years.
             english_language_selt_expired_during_assessment: You have provided evidence of a secure English language test (SELT) but the test was completed more than 2 years ago.

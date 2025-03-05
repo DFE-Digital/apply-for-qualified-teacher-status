@@ -49,7 +49,8 @@ class FailureReasons
       "application_and_qualification_names_do_not_match",
     DEGREE_CERTIFICATE_ILLEGIBLE = "degree_certificate_illegible",
     DEGREE_TRANSCRIPT_ILLEGIBLE = "degree_transcript_illegible",
-    EL_SELT_EXPIRED_DURING_ASSESSMENT = "english_language_selt_expired_during_assessment",
+    EL_SELT_EXPIRED_DURING_ASSESSMENT =
+      "english_language_selt_expired_during_assessment",
     EL_NOT_EXEMPT_BY_QUALIFICATION_COUNTRY =
       "english_language_not_exempt_by_qualification_country",
     EL_MOI_INVALID_FORMAT = "english_language_moi_invalid_format",
@@ -57,6 +58,7 @@ class FailureReasons
       "english_language_unverifiable_reference_number",
     EL_PROFICIENCY_DOCUMENT_ILLEGIBLE =
       "english_language_proficiency_document_illegible",
+    EL_REQUIRE_ALTERNATIVE = "english_language_proficiency_require_alternative",
     IDENTIFICATION_DOCUMENT_EXPIRED = "identification_document_expired",
     IDENTIFICATION_DOCUMENT_ILLEGIBLE = "identification_document_illegible",
     IDENTIFICATION_DOCUMENT_MISMATCH = "identification_document_mismatch",
@@ -66,7 +68,8 @@ class FailureReasons
     QUALIFICATIONS_DONT_MATCH_OTHER_DETAILS =
       "qualifications_dont_match_other_details",
     QUALIFICATIONS_DONT_MATCH_SUBJECTS = "qualifications_dont_match_subjects",
-    QUALIFICATIONS_OR_MODULES_REQUIRED_NOT_PROVIDED = "qualifications_or_modules_required_not_provided",
+    QUALIFICATIONS_OR_MODULES_REQUIRED_NOT_PROVIDED =
+      "qualifications_or_modules_required_not_provided",
     QUALIFIED_TO_TEACH = "qualified_to_teach",
     REGISTRATION_NUMBER = "registration_number",
     REGISTRATION_NUMBER_ALTERNATIVE = "registration_number_alternative",
@@ -94,6 +97,7 @@ class FailureReasons
     EL_NOT_EXEMPT_BY_QUALIFICATION_COUNTRY => :qualification_certificate,
     EL_MOI_INVALID_FORMAT => :medium_of_instruction,
     EL_PROFICIENCY_DOCUMENT_ILLEGIBLE => :english_language_proficiency,
+    EL_REQUIRE_ALTERNATIVE => :english_language_proficiency,
     EL_SELT_EXPIRED_DURING_ASSESSMENT => :medium_of_instruction,
     IDENTIFICATION_DOCUMENT_EXPIRED => :identification,
     IDENTIFICATION_DOCUMENT_ILLEGIBLE => :identification,
@@ -102,7 +106,8 @@ class FailureReasons
     PASSPORT_DOCUMENT_ILLEGIBLE => :passport,
     PASSPORT_DOCUMENT_MISMATCH => :name_change,
     QUALIFICATIONS_DONT_MATCH_SUBJECTS => :qualification_document,
-    QUALIFICATIONS_OR_MODULES_REQUIRED_NOT_PROVIDED => :qualification_transcript,
+    QUALIFICATIONS_OR_MODULES_REQUIRED_NOT_PROVIDED =>
+      :qualification_transcript,
     QUALIFIED_TO_TEACH => :written_statement,
     REGISTRATION_NUMBER_ALTERNATIVE => :written_statement,
     TEACHING_CERTIFICATE_ILLEGIBLE => :qualification_certificate,
