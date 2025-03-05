@@ -49,6 +49,7 @@ class FailureReasons
       "application_and_qualification_names_do_not_match",
     DEGREE_CERTIFICATE_ILLEGIBLE = "degree_certificate_illegible",
     DEGREE_TRANSCRIPT_ILLEGIBLE = "degree_transcript_illegible",
+    EL_SELT_EXPIRED_DURING_ASSESSMENT = "english_language_selt_expired_during_assessment",
     EL_NOT_EXEMPT_BY_QUALIFICATION_COUNTRY =
       "english_language_not_exempt_by_qualification_country",
     EL_MOI_INVALID_FORMAT = "english_language_moi_invalid_format",
@@ -93,6 +94,7 @@ class FailureReasons
     EL_NOT_EXEMPT_BY_QUALIFICATION_COUNTRY => :qualification_certificate,
     EL_MOI_INVALID_FORMAT => :medium_of_instruction,
     EL_PROFICIENCY_DOCUMENT_ILLEGIBLE => :english_language_proficiency,
+    EL_SELT_EXPIRED_DURING_ASSESSMENT => :medium_of_instruction,
     IDENTIFICATION_DOCUMENT_EXPIRED => :identification,
     IDENTIFICATION_DOCUMENT_ILLEGIBLE => :identification,
     IDENTIFICATION_DOCUMENT_MISMATCH => :name_change,

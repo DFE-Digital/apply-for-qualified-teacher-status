@@ -25,6 +25,7 @@ en:
             english_language_proficiency_document_illegible: There’s a problem with your English language proficiency test document.
             english_language_qualification_invalid: Your English language qualification is not from one of the approved providers.
             english_language_selt_expired: You have provided evidence of a secure English language test (SELT) but the test was not completed within the last 2 years.
+            english_language_selt_expired_during_assessment: You have provided evidence of a secure English language test (SELT) but the test was completed more than 2 years ago.
             english_language_unverifiable_reference_number: We were unable to verify the reference number you have provided.
             fraud: You have provided information that cannot be verified.
             full_professional_status: Your recognition level as a teacher does not match the required level or has outstanding conditions.

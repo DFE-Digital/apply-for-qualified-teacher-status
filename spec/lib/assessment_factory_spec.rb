@@ -352,6 +352,83 @@ RSpec.describe AssessmentFactory do
         it "is included in the task list when the EL feature is enabled" do
           expect(sections.english_language_proficiency.count).to eq(1)
         end
+
+        context "when the english language is exempt" do
+          before do
+            application_form.english_language_qualification_exempt = true
+          end
+
+          it "has the right checks and failure reasons" do
+            section = sections.english_language_proficiency.first
+            expect(section.checks).to be_empty
+            expect(section.failure_reasons).to eq(
+              %w[suitability suitability_previously_declined fraud],
+            )
+          end
+        end
+
+        context "when the english language proof is MOI" do
+          before do
+            application_form.english_language_proof_method =
+              :medium_of_instruction
+          end
+
+          it "has the right checks and failure reasons" do
+            section = sections.english_language_proficiency.first
+            expect(section.checks).to eq(%w[english_language_valid_moi])
+            expect(section.failure_reasons).to eq(
+              %w[
+                english_language_moi_not_taught_in_english
+                english_language_moi_invalid_format
+                suitability
+                suitability_previously_declined
+                fraud
+              ],
+            )
+          end
+        end
+
+        context "when the english language proof is SELT" do
+          before { application_form.english_language_proof_method = :provider }
+
+          it "has the right checks and failure reasons" do
+            section = sections.english_language_proficiency.first
+            expect(section.checks).to eq(%w[english_language_valid_provider])
+            expect(section.failure_reasons).to eq(
+              %w[
+                english_language_qualification_invalid
+                english_language_unverifiable_reference_number
+                english_language_not_achieved_b2
+                english_language_selt_expired
+                english_language_selt_expired_during_assessment
+                suitability
+                suitability_previously_declined
+                fraud
+              ],
+            )
+          end
+
+          context "with the provider being other" do
+            before { application_form.english_language_provider_other = true }
+
+            it "has the right checks and failure reasons" do
+              section = sections.english_language_proficiency.first
+              expect(section.checks).to eq(%w[english_language_valid_provider])
+              expect(section.failure_reasons).to eq(
+                %w[
+                  english_language_qualification_invalid
+                  english_language_proficiency_document_illegible
+                  english_language_not_achieved_b2
+                  english_language_selt_expired
+                  english_language_selt_expired_during_assessment
+                  suitability
+                  suitability_previously_declined
+                  fraud
+                ],
+              )
+            end
+          end
+        end
       end
 
       describe "work history section" do
