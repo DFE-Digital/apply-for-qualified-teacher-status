@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-class SupportInterface::StaffController < SupportInterface::BaseController
+class AssessorInterface::StaffController < AssessorInterface::BaseController
   before_action :load_staff, except: :index
 
   def index
-    authorize [:support_interface, Staff]
+    authorize [:assessor_interface, Staff]
     @staff = Staff.not_archived.order(:name)
   end
 
@@ -13,7 +13,7 @@ class SupportInterface::StaffController < SupportInterface::BaseController
 
   def update
     if @staff.update(staff_params)
-      redirect_to %i[support_interface staff index]
+      redirect_to %i[assessor_interface staff index]
     else
       render :edit, status: :unprocessable_entity
     end
@@ -23,7 +23,7 @@ class SupportInterface::StaffController < SupportInterface::BaseController
 
   def load_staff
     @staff = Staff.find(params[:id])
-    authorize [:support_interface, @staff]
+    authorize [:assessor_interface, @staff]
   end
 
   def staff_params

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe SupportInterface::StaffPolicy do
+RSpec.describe AssessorInterface::StaffPolicy do
   it_behaves_like "a policy"
 
   describe "#index?" do

@@ -17,7 +17,10 @@
         <% header.with_navigation_item(text: "Suitability records", href: main_app.assessor_interface_suitability_records_path) %>
       <% end %>
 
-      <% header.with_navigation_item(text: "Support console", href: main_app.support_interface_root_path) %>
+      <% if AssessorInterface::StaffPolicy.new(current_staff, Staff).index? %>
+        <% header.with_navigation_item(text: "Support console", href: main_app.support_interface_root_path) %>
+        <% header.with_navigation_item(text: "Manage access", href: main_app.assessor_interface_staff_index_path) %>
+      <% end %>
       <% header.with_navigation_item(text: "Sign out", href: main_app.destroy_staff_session_path) %>
     <% end %>
   <% when "support" %>
@@ -37,11 +40,6 @@
          href: main_app.support_interface_english_language_providers_path,
          active: request.path.start_with?("/support/english_language_providers")
       ) %>
-      <% header.with_navigation_item(
-         text: "Staff",
-         href: main_app.support_interface_staff_index_path,
-         active: request.path.start_with?("/support/staff")
-       ) %>
       <% header.with_navigation_item(text: "Sidekiq", href: main_app.support_interface_sidekiq_web_path) %>
       <% header.with_navigation_item(text: "Assessor case management", href: main_app.assessor_interface_root_path) %>
       <% header.with_navigation_item(text: "Sign out", href: main_app.destroy_staff_session_path) %>

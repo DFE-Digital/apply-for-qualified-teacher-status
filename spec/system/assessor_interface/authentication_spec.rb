@@ -23,10 +23,42 @@ RSpec.describe "Assessor authentication", type: :system do
     then_i_see_the_forbidden_page
   end
 
+  context "when user has support console permission" do
+    it "allows access to manage access" do
+      given_staff_with_support_console_permission_exist
+
+      when_i_visit_the(:assessor_applications_page)
+      when_i_login
+      then_i_see_the_manage_access_link
+
+      when_i_click_manage_access_link
+      then_i_see_the(:assessor_staff_index_page)
+    end
+  end
+
+  context "when user does not have support console permission" do
+    it "does not allow access to manage access" do
+      given_staff_exist
+
+      when_i_visit_the(:assessor_applications_page)
+      when_i_login
+      then_i_do_not_see_the_manage_access_link
+    end
+  end
+
   private
 
   def given_staff_exist
     create(:staff, email: "staff@example.com", password: "password")
+  end
+
+  def given_staff_with_support_console_permission_exist
+    create(
+      :staff,
+      :with_support_console_permission,
+      email: "staff@example.com",
+      password: "password",
+    )
   end
 
   def when_i_login
@@ -35,5 +67,17 @@ RSpec.describe "Assessor authentication", type: :system do
 
   def when_i_click_sign_out
     assessor_applications_page.header.sign_out_link.click
+  end
+
+  def then_i_see_the_manage_access_link
+    expect(assessor_applications_page).to have_content("Manage access")
+  end
+
+  def then_i_do_not_see_the_manage_access_link
+    expect(assessor_applications_page).not_to have_content("Manage access")
+  end
+
+  def when_i_click_manage_access_link
+    assessor_applications_page.header.manage_access_link.click
   end
 end

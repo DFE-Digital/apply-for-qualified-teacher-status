@@ -253,6 +253,11 @@ module PageHelpers
       PageObjects::AssessorInterface::SendSignedConsentDocuments.new
   end
 
+  def assessor_staff_index_page
+    @assessor_staff_index_page ||=
+      PageObjects::AssessorInterface::StaffIndex.new
+  end
+
   def assessor_suitability_records_page
     @assessor_suitability_records_page ||=
       PageObjects::AssessorInterface::SuitabilityRecords.new
