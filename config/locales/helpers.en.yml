@@ -326,6 +326,7 @@ en:
         selected_failure_reasons: What are the reasons for your recommendation?
         scotland_full_registration: Does the applicant have or are they eligible for full registration?
         school_details_cannot_be_verified_work_history_checked: Select the school that we were unable to verify (there may be more than one)
+        unrecognised_references_work_history_checked: Select the school that we were unable to verify the reference for (there may be more than one)
       assessor_interface_filter_form:
         action_required_by: Action required by
         assessor_ids: Assessor name

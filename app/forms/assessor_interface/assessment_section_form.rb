@@ -78,6 +78,11 @@ class AssessorInterface::AssessmentSectionForm
       klass.preliminary = assessment_section.preliminary?
 
       assessment_section.failure_reasons.each do |failure_reason|
+        selected_failure_reason =
+          assessment_section.selected_failure_reasons.find_by(
+            key: failure_reason,
+          )
+
         klass.attribute "#{failure_reason}_checked", :boolean
 
         if assessment_section.preliminary?
@@ -90,6 +95,9 @@ class AssessorInterface::AssessmentSectionForm
           klass.validates "#{failure_reason}_work_history_checked",
                           presence: true,
                           if: :"#{failure_reason}_checked"
+        elsif selected_failure_reason.present? &&
+              selected_failure_reason.work_histories.present?
+          klass.attribute "#{failure_reason}_work_history_checked"
         end
 
         klass.attribute "#{failure_reason}_notes", :string
@@ -122,7 +130,8 @@ class AssessorInterface::AssessmentSectionForm
       selected_failure_reasons_hash.each do |key, notes|
         attributes["#{key}_checked"] = true
         attributes["#{key}_notes"] = notes[:assessor_feedback]
-        if FailureReasons.chooses_work_history?(key)
+        if FailureReasons.chooses_work_history?(key) ||
+             notes[:work_history_ids].present?
           attributes["#{key}_work_history_checked"] = notes[:work_history_ids]
         end
       end

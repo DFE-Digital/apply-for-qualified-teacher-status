@@ -199,6 +199,50 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
     end
   end
 
+  describe "#selected_work_histories_for" do
+    subject(:selected_work_histories_for) do
+      view_object.selected_work_histories_for(failure_reason:)
+    end
+
+    let(:application_form) do
+      create(:application_form, :with_work_history, region:)
+    end
+    let(:failure_reason) { FailureReasons::UNRECOGNISED_REFERENCES }
+    let(:work_histories) { application_form.work_histories }
+    let(:selected_failure_reason) do
+      create :selected_failure_reason,
+             key: failure_reason,
+             assessment_section:,
+             work_histories:
+    end
+
+    before { selected_failure_reason }
+
+    it "returns the work histories attached to the selected failure reason" do
+      expect(selected_work_histories_for).to eq(application_form.work_histories)
+    end
+
+    context "when there is no work history attached" do
+      let(:work_histories) { [] }
+
+      it "returns the empty" do
+        expect(selected_work_histories_for).to be_empty
+      end
+    end
+
+    context "when the selected failure reason is not on assessment section" do
+      let(:selected_failure_reason) do
+        create :selected_failure_reason,
+               key: FailureReasons::SCHOOL_DETAILS_CANNOT_BE_VERIFIED,
+               assessment_section:
+      end
+
+      it "returns nil" do
+        expect(selected_work_histories_for).to be_nil
+      end
+    end
+  end
+
   describe "#show_form?" do
     subject(:show_form?) { view_object.show_form? }
 
