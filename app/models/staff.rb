@@ -8,6 +8,7 @@
 #  archived                       :boolean          default(FALSE)
 #  assess_permission              :boolean          default(FALSE)
 #  azure_ad_uid                   :string
+#  can_manage_staff_access        :boolean          default(TRUE), not null
 #  change_email_permission        :boolean          default(FALSE), not null
 #  change_name_permission         :boolean          default(FALSE), not null
 #  change_work_history_permission :boolean          default(FALSE), not null
