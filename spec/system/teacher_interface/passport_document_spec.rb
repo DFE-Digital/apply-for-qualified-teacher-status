@@ -86,8 +86,7 @@ RSpec.describe "Teacher passport document", type: :system do
       "1"
     teacher_passport_expiry_date_page.form.passport_expiry_date_year_field.fill_in with:
       2.years.from_now.year
-    teacher_passport_expiry_date_page.form.passport_country_of_issue_code.fill_in with:
-      "France"
+    teacher_passport_expiry_date_page.form.passport_country_of_issue_code.select "France"
     teacher_passport_expiry_date_page.form.continue_button.click
   end
 
@@ -98,8 +97,7 @@ RSpec.describe "Teacher passport document", type: :system do
       "1"
     teacher_passport_expiry_date_page.form.passport_expiry_date_year_field.fill_in with:
       2.years.ago.year
-    teacher_passport_expiry_date_page.form.passport_country_of_issue_code.fill_in with:
-      "France"
+    teacher_passport_expiry_date_page.form.passport_country_of_issue_code.select "France"
     teacher_passport_expiry_date_page.form.continue_button.click
   end
 
