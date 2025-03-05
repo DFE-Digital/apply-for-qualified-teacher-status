@@ -156,6 +156,7 @@ en:
           english_language_exemption_by_citizenship_not_confirmed: The applicant’s ID does not confirm English language exemption by birth/citizenship.
           english_language_exemption_by_citizenship_not_confirmed_via_passport: The applicant’s passport does not confirm English language exemption by birth/citizenship.
           english_language_exemption_by_qualification_not_confirmed: The applicant’s qualification documents do not confirm English language exemption by country of study.
+          english_language_not_exempt_by_qualification_country: The country the qualifications were issued in is not exempt from English Language proficiency requirements.
           english_language_moi_invalid_format: There’s a problem with the Medium of Instruction (MOI) document, for example, it’s incorrect, illegible or incomplete.
           english_language_moi_not_taught_in_english: The applicant’s MOI does not show that they were taught exclusively in English.
           english_language_not_achieved_b2: The applicant provided evidence of a SELT but has not achieved B2 level.

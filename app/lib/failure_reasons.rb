@@ -49,6 +49,8 @@ class FailureReasons
       "application_and_qualification_names_do_not_match",
     DEGREE_CERTIFICATE_ILLEGIBLE = "degree_certificate_illegible",
     DEGREE_TRANSCRIPT_ILLEGIBLE = "degree_transcript_illegible",
+    EL_NOT_EXEMPT_BY_QUALIFICATION_COUNTRY =
+      "english_language_not_exempt_by_qualification_country",
     EL_MOI_INVALID_FORMAT = "english_language_moi_invalid_format",
     EL_UNVERIFIABLE_REFERENCE_NUMBER =
       "english_language_unverifiable_reference_number",
