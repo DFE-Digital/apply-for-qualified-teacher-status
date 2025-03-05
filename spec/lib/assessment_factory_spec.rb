@@ -500,6 +500,7 @@ RSpec.describe AssessmentFactory do
               %w[
                 written_statement_illegible
                 written_statement_recent
+                written_statement_mismatch
                 authorisation_to_teach
                 teaching_qualification
                 confirm_age_range_subjects
@@ -545,6 +546,7 @@ RSpec.describe AssessmentFactory do
               %w[
                 written_statement_illegible
                 written_statement_recent
+                written_statement_mismatch
                 written_statement_information
                 authorisation_to_teach
                 teaching_qualification

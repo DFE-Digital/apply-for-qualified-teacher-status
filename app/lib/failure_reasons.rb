@@ -82,6 +82,7 @@ class FailureReasons
     WORK_HISTORY_INFORMATION = "work_history_information",
     WRITTEN_STATEMENT_ILLEGIBLE = "written_statement_illegible",
     WRITTEN_STATEMENT_INFORMATION = "written_statement_information",
+    WRITTEN_STATEMENT_MISMATCH = "written_statement_mismatch",
     WRITTEN_STATEMENT_RECENT = "written_statement_recent",
   ].freeze
 

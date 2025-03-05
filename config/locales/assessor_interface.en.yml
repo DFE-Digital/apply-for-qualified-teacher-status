@@ -203,6 +203,7 @@ en:
           work_history_duration: The applicant’s work experience does not meet the minimum duration requirements.
           written_statement_illegible: There is a problem with the letter, for example, it’s missing, incorrect or illegible.
           written_statement_information: The letter is missing information.
+          written_statement_mismatch: Information on the letter does not match information entered in the application.
           written_statement_recent: The letter was issued more than 6 months before the application was created.
         as_question:
           label:

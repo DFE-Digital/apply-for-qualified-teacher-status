@@ -67,6 +67,7 @@ en:
             work_history_duration: Your work experience does not meet the minimum duration requirements.
             written_statement_illegible: There is a problem with the written confirmation that proves you’re recognised as a teacher.
             written_statement_information: Your letter is missing information.
+            written_statement_mismatch: Information in the written confirmation that you’re a recognised teacher does not match information you have entered.
             written_statement_recent: The written confirmation that you’re recognised as a teacher was issued more than 6 months before submitting your application.
         draft:
           check: Check your application
@@ -105,6 +106,7 @@ en:
           unrecognised_references: Tell us more about your work history
           work_history_break: Tell us more about your work history
           work_history_information: Tell us more about your work history
+          written_statement_mismatch: Tell us more about your written statement
     reference_requests:
       show:
         title: You’ve been asked to act as a reference

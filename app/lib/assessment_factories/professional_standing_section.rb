@@ -41,6 +41,11 @@ module AssessmentFactories
           FailureReasons::WRITTEN_STATEMENT_RECENT if written_statement_required
         ),
         (
+          if written_statement_required
+            FailureReasons::WRITTEN_STATEMENT_MISMATCH
+          end
+        ),
+        (
           if written_statement_induction
             FailureReasons::WRITTEN_STATEMENT_INFORMATION
           end
