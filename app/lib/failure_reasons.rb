@@ -79,6 +79,7 @@ class FailureReasons
     TEACHING_TRANSCRIPT_ILLEGIBLE = "teaching_transcript_illegible",
     UNRECOGNISED_REFERENCES = "unrecognised_references",
     WORK_HISTORY_BREAK = "work_history_break",
+    WORK_HISTORY_INFORMATION = "work_history_information",
     WRITTEN_STATEMENT_ILLEGIBLE = "written_statement_illegible",
     WRITTEN_STATEMENT_INFORMATION = "written_statement_information",
     WRITTEN_STATEMENT_RECENT = "written_statement_recent",

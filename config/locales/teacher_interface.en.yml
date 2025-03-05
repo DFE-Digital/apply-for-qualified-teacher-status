@@ -63,6 +63,7 @@ en:
             teaching_transcript_illegible: There is a problem with your teaching qualification transcript (or translation).
             unrecognised_references: We could not verify 1 or more references you provided.
             work_history_break: There is an unexplained break in your work history.
+            work_history_information: There is a problem with your work history.
             work_history_duration: Your work experience does not meet the minimum duration requirements.
             written_statement_illegible: There is a problem with the written confirmation that proves you’re recognised as a teacher.
             written_statement_information: Your letter is missing information.
@@ -103,6 +104,7 @@ en:
           school_details_cannot_be_verified: Tell us more about this school
           unrecognised_references: Tell us more about your work history
           work_history_break: Tell us more about your work history
+          work_history_information: Tell us more about your work history
     reference_requests:
       show:
         title: You’ve been asked to act as a reference

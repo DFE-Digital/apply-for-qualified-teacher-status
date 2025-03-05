@@ -458,6 +458,7 @@ RSpec.describe AssessmentFactory do
                 school_details_cannot_be_verified
                 unrecognised_references
                 work_history_duration
+                work_history_information
                 suitability
                 suitability_previously_declined
                 fraud

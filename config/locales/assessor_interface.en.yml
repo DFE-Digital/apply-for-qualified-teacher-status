@@ -199,6 +199,7 @@ en:
           teaching_transcript_illegible: There is a problem with the teaching qualification transcript (or translation), for example, it’s incorrect, illegible, or incomplete.
           unrecognised_references: We could not verify 1 or more references entered by the applicant.
           work_history_break: There is an unexplained break in the applicant’s work history.
+          work_history_information: There is a problem with the applicant’s work history, for example the job role, hours worked per week, or the start and end date.
           work_history_duration: The applicant’s work experience does not meet the minimum duration requirements.
           written_statement_illegible: There is a problem with the letter, for example, it’s missing, incorrect or illegible.
           written_statement_information: The letter is missing information.

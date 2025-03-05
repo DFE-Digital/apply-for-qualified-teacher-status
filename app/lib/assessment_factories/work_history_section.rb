@@ -16,6 +16,7 @@ module AssessmentFactories
         FailureReasons::SCHOOL_DETAILS_CANNOT_BE_VERIFIED,
         FailureReasons::UNRECOGNISED_REFERENCES,
         FailureReasons::WORK_HISTORY_DURATION,
+        FailureReasons::WORK_HISTORY_INFORMATION,
       ]
 
       if suitability_active?
