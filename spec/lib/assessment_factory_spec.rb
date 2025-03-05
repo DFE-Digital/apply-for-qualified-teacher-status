@@ -129,6 +129,7 @@ RSpec.describe AssessmentFactory do
           expect(section.failure_reasons).to eq(
             %w[
               application_and_qualification_names_do_not_match
+              qualifications_or_modules_required_not_provided
               teaching_qualifications_from_ineligible_country
               teaching_qualifications_not_at_required_level
               teaching_hours_not_fulfilled
@@ -176,6 +177,7 @@ RSpec.describe AssessmentFactory do
             expect(section.failure_reasons).to eq(
               %w[
                 application_and_qualification_names_do_not_match
+                qualifications_or_modules_required_not_provided
                 teaching_qualifications_from_ineligible_country
                 teaching_qualifications_not_at_required_level
                 teaching_hours_not_fulfilled
@@ -224,6 +226,7 @@ RSpec.describe AssessmentFactory do
             expect(section.failure_reasons).to eq(
               %w[
                 application_and_qualification_names_do_not_match
+                qualifications_or_modules_required_not_provided
                 teaching_qualifications_from_ineligible_country
                 teaching_qualifications_not_at_required_level
                 teaching_hours_not_fulfilled

@@ -34,6 +34,7 @@ module AssessmentFactories
     def failure_reasons
       reasons = [
         FailureReasons::APPLICATION_AND_QUALIFICATION_NAMES_DO_NOT_MATCH,
+        FailureReasons::QUALIFICATIONS_OR_MODULES_REQUIRED_NOT_PROVIDED,
         FailureReasons::TEACHING_QUALIFICATIONS_FROM_INELIGIBLE_COUNTRY,
         FailureReasons::TEACHING_QUALIFICATIONS_NOT_AT_REQUIRED_LEVEL,
         FailureReasons::TEACHING_HOURS_NOT_FULFILLED,

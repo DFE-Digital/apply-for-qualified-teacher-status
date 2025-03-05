@@ -40,6 +40,7 @@ en:
             passport_document_mismatch: Your name on the application is different from your passport, but you didn’t provide evidence that your name has changed.
             qualifications_dont_match_other_details: Your uploaded qualifications do not match the information you have entered.
             qualifications_dont_match_subjects: The subjects you entered are acceptable for QTS, but the uploaded qualifications do not match them.
+            qualifications_or_modules_required_not_provided: You have not provided the required qualifications or modules.
             qualified_to_teach: We were not provided with enough evidence to confirm you are qualified to teach at state or government schools.
             qualified_to_teach_children_11_to_16: You are not qualified to teach children aged 11-16.
             registration_number: We could not find your reference number, or the number was in the wrong format.

@@ -65,6 +65,7 @@ class FailureReasons
     QUALIFICATIONS_DONT_MATCH_OTHER_DETAILS =
       "qualifications_dont_match_other_details",
     QUALIFICATIONS_DONT_MATCH_SUBJECTS = "qualifications_dont_match_subjects",
+    QUALIFICATIONS_OR_MODULES_REQUIRED_NOT_PROVIDED = "qualifications_or_modules_required_not_provided",
     QUALIFIED_TO_TEACH = "qualified_to_teach",
     REGISTRATION_NUMBER = "registration_number",
     REGISTRATION_NUMBER_ALTERNATIVE = "registration_number_alternative",
@@ -89,6 +90,7 @@ class FailureReasons
     APPLICATION_AND_QUALIFICATION_NAMES_DO_NOT_MATCH => :name_change,
     DEGREE_CERTIFICATE_ILLEGIBLE => :qualification_certificate,
     DEGREE_TRANSCRIPT_ILLEGIBLE => :qualification_transcript,
+    EL_NOT_EXEMPT_BY_QUALIFICATION_COUNTRY => :qualification_certificate,
     EL_MOI_INVALID_FORMAT => :medium_of_instruction,
     EL_PROFICIENCY_DOCUMENT_ILLEGIBLE => :english_language_proficiency,
     IDENTIFICATION_DOCUMENT_EXPIRED => :identification,
@@ -98,6 +100,7 @@ class FailureReasons
     PASSPORT_DOCUMENT_ILLEGIBLE => :passport,
     PASSPORT_DOCUMENT_MISMATCH => :name_change,
     QUALIFICATIONS_DONT_MATCH_SUBJECTS => :qualification_document,
+    QUALIFICATIONS_OR_MODULES_REQUIRED_NOT_PROVIDED => :qualification_transcript,
     QUALIFIED_TO_TEACH => :written_statement,
     REGISTRATION_NUMBER_ALTERNATIVE => :written_statement,
     TEACHING_CERTIFICATE_ILLEGIBLE => :qualification_certificate,
