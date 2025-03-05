@@ -45,6 +45,11 @@ module AssessmentFactories
             FailureReasons::EL_EXEMPTION_BY_QUALIFICATION_DOCUMENTS_UNCONFIRMED
           end
         ),
+        (
+          if application_form.english_language_qualification_exempt
+            FailureReasons::EL_NOT_EXEMPT_BY_QUALIFICATION_COUNTRY
+          end
+        ),
         FailureReasons::NOT_QUALIFIED_TO_TEACH_MAINSTREAM,
         FailureReasons::QUALIFICATIONS_DONT_MATCH_OTHER_DETAILS,
         (
