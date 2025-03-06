@@ -551,7 +551,7 @@ RSpec.describe "Assessor check submitted details", type: :system do
           :work_history,
           assessment: application_form.assessment,
           failure_reasons: %w[
-            school_details_cannot_be_verified
+            unrecognised_references
             identification_document_expired
           ],
         )
