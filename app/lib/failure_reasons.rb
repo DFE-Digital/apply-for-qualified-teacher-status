@@ -108,8 +108,7 @@ class FailureReasons
     PASSPORT_DOCUMENT_ILLEGIBLE => :passport,
     PASSPORT_DOCUMENT_MISMATCH => :name_change,
     QUALIFICATIONS_DONT_MATCH_SUBJECTS => :qualification_document,
-    QUALIFICATIONS_OR_MODULES_REQUIRED_NOT_PROVIDED =>
-      :qualification_document,
+    QUALIFICATIONS_OR_MODULES_REQUIRED_NOT_PROVIDED => :qualification_document,
     QUALIFIED_TO_TEACH => :written_statement,
     REGISTRATION_NUMBER_ALTERNATIVE => :written_statement,
     TEACHING_CERTIFICATE_ILLEGIBLE => :qualification_certificate,
