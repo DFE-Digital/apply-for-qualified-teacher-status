@@ -29,6 +29,7 @@
 #  last_sign_in_at                :datetime
 #  last_sign_in_ip                :string
 #  locked_at                      :datetime
+#  manage_staff_permission        :boolean          default(FALSE), not null
 #  name                           :text             default(""), not null
 #  remember_created_at            :datetime
 #  reset_password_sent_at         :datetime
