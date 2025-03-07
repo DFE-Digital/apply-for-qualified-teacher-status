@@ -49,11 +49,16 @@ class FailureReasons
       "application_and_qualification_names_do_not_match",
     DEGREE_CERTIFICATE_ILLEGIBLE = "degree_certificate_illegible",
     DEGREE_TRANSCRIPT_ILLEGIBLE = "degree_transcript_illegible",
+    EL_SELT_EXPIRED_DURING_ASSESSMENT =
+      "english_language_selt_expired_during_assessment",
+    EL_NOT_EXEMPT_BY_QUALIFICATION_COUNTRY =
+      "english_language_not_exempt_by_qualification_country",
     EL_MOI_INVALID_FORMAT = "english_language_moi_invalid_format",
     EL_UNVERIFIABLE_REFERENCE_NUMBER =
       "english_language_unverifiable_reference_number",
     EL_PROFICIENCY_DOCUMENT_ILLEGIBLE =
       "english_language_proficiency_document_illegible",
+    EL_REQUIRE_ALTERNATIVE = "english_language_proficiency_require_alternative",
     IDENTIFICATION_DOCUMENT_EXPIRED = "identification_document_expired",
     IDENTIFICATION_DOCUMENT_ILLEGIBLE = "identification_document_illegible",
     IDENTIFICATION_DOCUMENT_MISMATCH = "identification_document_mismatch",
@@ -63,6 +68,8 @@ class FailureReasons
     QUALIFICATIONS_DONT_MATCH_OTHER_DETAILS =
       "qualifications_dont_match_other_details",
     QUALIFICATIONS_DONT_MATCH_SUBJECTS = "qualifications_dont_match_subjects",
+    QUALIFICATIONS_OR_MODULES_REQUIRED_NOT_PROVIDED =
+      "qualifications_or_modules_required_not_provided",
     QUALIFIED_TO_TEACH = "qualified_to_teach",
     REGISTRATION_NUMBER = "registration_number",
     REGISTRATION_NUMBER_ALTERNATIVE = "registration_number_alternative",
@@ -72,8 +79,10 @@ class FailureReasons
     TEACHING_TRANSCRIPT_ILLEGIBLE = "teaching_transcript_illegible",
     UNRECOGNISED_REFERENCES = "unrecognised_references",
     WORK_HISTORY_BREAK = "work_history_break",
+    WORK_HISTORY_INFORMATION = "work_history_information",
     WRITTEN_STATEMENT_ILLEGIBLE = "written_statement_illegible",
     WRITTEN_STATEMENT_INFORMATION = "written_statement_information",
+    WRITTEN_STATEMENT_MISMATCH = "written_statement_mismatch",
     WRITTEN_STATEMENT_RECENT = "written_statement_recent",
   ].freeze
 
@@ -87,8 +96,11 @@ class FailureReasons
     APPLICATION_AND_QUALIFICATION_NAMES_DO_NOT_MATCH => :name_change,
     DEGREE_CERTIFICATE_ILLEGIBLE => :qualification_certificate,
     DEGREE_TRANSCRIPT_ILLEGIBLE => :qualification_transcript,
+    EL_NOT_EXEMPT_BY_QUALIFICATION_COUNTRY => :medium_of_instruction,
     EL_MOI_INVALID_FORMAT => :medium_of_instruction,
     EL_PROFICIENCY_DOCUMENT_ILLEGIBLE => :english_language_proficiency,
+    EL_REQUIRE_ALTERNATIVE => :medium_of_instruction,
+    EL_SELT_EXPIRED_DURING_ASSESSMENT => :english_language_proficiency,
     IDENTIFICATION_DOCUMENT_EXPIRED => :identification,
     IDENTIFICATION_DOCUMENT_ILLEGIBLE => :identification,
     IDENTIFICATION_DOCUMENT_MISMATCH => :name_change,
@@ -96,6 +108,7 @@ class FailureReasons
     PASSPORT_DOCUMENT_ILLEGIBLE => :passport,
     PASSPORT_DOCUMENT_MISMATCH => :name_change,
     QUALIFICATIONS_DONT_MATCH_SUBJECTS => :qualification_document,
+    QUALIFICATIONS_OR_MODULES_REQUIRED_NOT_PROVIDED => :qualification_document,
     QUALIFIED_TO_TEACH => :written_statement,
     REGISTRATION_NUMBER_ALTERNATIVE => :written_statement,
     TEACHING_CERTIFICATE_ILLEGIBLE => :qualification_certificate,
