@@ -22,6 +22,7 @@ class Staff::InvitationsController < Devise::InvitationsController
         support_console_permission
         verify_permission
         withdraw_permission
+        manage_staff_permission
       ],
     )
   end
