@@ -10,7 +10,7 @@ GIT
 
 GIT
   remote: https://github.com/DFE-Digital/dfe-autocomplete.git
-  revision: 1d4cc65039e11cc3ba9e7217a719b8128d0e4d53
+  revision: 674ad38e35ba391526075109052f106694f167da
   specs:
     dfe-autocomplete (0.2.0)
       actionview (>= 7.0.2.3)
