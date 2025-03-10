@@ -17,8 +17,11 @@
         <% header.with_navigation_item(text: "Suitability records", href: main_app.assessor_interface_suitability_records_path) %>
       <% end %>
 
-      <% if AssessorInterface::StaffPolicy.new(current_staff, Staff).index? %>
+      <% if SupportInterface::CountryPolicy.new(current_staff, Country).index? %>
         <% header.with_navigation_item(text: "Support console", href: main_app.support_interface_root_path) %>
+      <% end %>
+      
+      <% if AssessorInterface::StaffPolicy.new(current_staff, Staff).index? %>
         <% header.with_navigation_item(text: "Manage access", href: main_app.assessor_interface_staff_index_path) %>
       <% end %>
       <% header.with_navigation_item(text: "Sign out", href: main_app.destroy_staff_session_path) %>
