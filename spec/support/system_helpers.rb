@@ -61,6 +61,11 @@ module SystemHelpers
     sign_in(@user = user)
   end
 
+  def given_i_am_authorized_as_a_manage_staff_user
+    user = create(:staff, :with_manage_staff_permission, name: "Manager")
+    given_i_am_authorized_as_a_user(user)
+  end
+
   def given_i_am_authorized_as_a_support_user
     user = create(:staff, :with_support_console_permission, name: "Support")
     given_i_am_authorized_as_a_user(user)
