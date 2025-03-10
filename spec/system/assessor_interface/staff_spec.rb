@@ -168,7 +168,7 @@ RSpec.describe "Staff assessor", type: :system do
   end
 
   def and_i_see_the_helpdesk_user
-    expect(page).to have_content("Support console access\tNo")
+    expect(page).to have_content("Staff access management\tNo")
   end
 
   def when_i_click_on_the_helpdesk_user
@@ -184,6 +184,6 @@ RSpec.describe "Staff assessor", type: :system do
   end
 
   def then_i_see_the_changed_permission
-    expect(page).to have_content("Support console access\tYes")
+    expect(page).to have_content("Staff access management\tYes")
   end
 end
