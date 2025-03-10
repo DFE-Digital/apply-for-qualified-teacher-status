@@ -17,7 +17,7 @@ RSpec.describe "Staff assessor", type: :system do
 
   it "allows inviting a user with Azure active directory active" do
     given_sign_in_with_active_directory_is_active
-    given_i_am_authorized_as_a_support_user
+    given_i_am_authorized_as_a_manage_staff_user
     when_i_visit_the_staff_page
     then_i_see_the_staff_index
 
@@ -38,7 +38,7 @@ RSpec.describe "Staff assessor", type: :system do
 
   it "allows inviting a user with Azure active directory deactivated" do
     given_sign_in_with_active_directory_is_disabled
-    given_i_am_authorized_as_a_support_user
+    given_i_am_authorized_as_a_manage_staff_user
     when_i_visit_the_staff_page
     then_i_see_the_staff_index
 
@@ -62,7 +62,7 @@ RSpec.describe "Staff assessor", type: :system do
 
   it "allows editing permissions when Azure active directory is active" do
     given_sign_in_with_active_directory_is_active
-    given_i_am_authorized_as_a_support_user
+    given_i_am_authorized_as_a_manage_staff_user
     given_a_helpdesk_user_exists
     when_i_visit_the_staff_page
     then_i_see_the_staff_index
@@ -187,6 +187,6 @@ RSpec.describe "Staff assessor", type: :system do
   end
 
   def then_i_see_the_changed_permission
-    expect(page).not_to have_content("Support console access\tNo")
+    expect(page).to have_content("Support console access\tYes")
   end
 end
