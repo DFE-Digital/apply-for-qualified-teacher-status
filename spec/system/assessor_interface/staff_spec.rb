@@ -172,7 +172,7 @@ RSpec.describe "Staff assessor", type: :system do
   end
 
   def when_i_click_on_the_helpdesk_user
-    find(:xpath, "(//a[text()='Change'])[8]").click
+    find(:xpath, "(//a[text()='Change'])[16]").click
   end
 
   def then_i_see_the_staff_edit_form
