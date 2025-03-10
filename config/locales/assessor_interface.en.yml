@@ -156,12 +156,15 @@ en:
           english_language_exemption_by_citizenship_not_confirmed: The applicant’s ID does not confirm English language exemption by birth/citizenship.
           english_language_exemption_by_citizenship_not_confirmed_via_passport: The applicant’s passport does not confirm English language exemption by birth/citizenship.
           english_language_exemption_by_qualification_not_confirmed: The applicant’s qualification documents do not confirm English language exemption by country of study.
+          english_language_not_exempt_by_qualification_country: The country the qualifications were issued in is not exempt from English Language proficiency requirements.
           english_language_moi_invalid_format: There’s a problem with the Medium of Instruction (MOI) document, for example, it’s incorrect, illegible or incomplete.
           english_language_moi_not_taught_in_english: The applicant’s MOI does not show that they were taught exclusively in English.
           english_language_not_achieved_b2: The applicant provided evidence of a SELT but has not achieved B2 level.
           english_language_proficiency_document_illegible: There’s a problem with the English language proficiency test document, for example, it’s incorrect, illegible, or incomplete.
+          english_language_proficiency_require_alternative: The applicant needs to provide an MOI to verify their English language proficiency.
           english_language_qualification_invalid: The applicant’s English language qualification is not from one of the approved providers.
           english_language_selt_expired: The applicant provided evidence of a SELT but the test was not completed within the last 2 years.
+          english_language_selt_expired_during_assessment: The SELT evidence expired whilst the applicant waited for initial assessment.
           english_language_unverifiable_reference_number: There’s a problem with the reference number, for example, it’s incorrect and can’t be verified.
           fraud: Applicant has provided information that cannot be verified and is potentially fraudulent.
           full_professional_status: Recognition level as a teacher does not match the required level, or has outstanding additional conditions.
@@ -173,8 +176,9 @@ en:
           passport_document_expired: The passport had already expired when the application was submitted.
           passport_document_illegible: There is a problem with the passport. For example, it’s incorrect, illegible, or incomplete.
           passport_document_mismatch: The name on the application form is different from the passport, but no evidence of change of name was provided.
-          qualifications_dont_match_other_details: Uploaded qualifications do not match other details entered, for example, name of qualification, name of institution or dates.
+          qualifications_dont_match_other_details: Uploaded qualifications do not match other information entered, for example, the subject, name of qualification, name of institution or dates.
           qualifications_dont_match_subjects: Subjects entered are acceptable for QTS, but the uploaded qualifications do not match them.
+          qualifications_or_modules_required_not_provided: The applicant has not provided the required qualifications or modules.
           qualified_to_teach: We were not provided with sufficient evidence to confirm qualification to teach at state or government schools.
           qualified_to_teach_children_11_to_16: The applicant is not qualified to teach children aged 11-16.
           registration_number: We could not find the applicant’s reference number, or the number was in the wrong format. The applicant will need to supply the number again.
@@ -195,9 +199,11 @@ en:
           teaching_transcript_illegible: There is a problem with the teaching qualification transcript (or translation), for example, it’s incorrect, illegible, or incomplete.
           unrecognised_references: We could not verify 1 or more references entered by the applicant.
           work_history_break: There is an unexplained break in the applicant’s work history.
+          work_history_information: There is a problem with the applicant’s work history, for example the job role, hours worked per week, or the start and end date.
           work_history_duration: The applicant’s work experience does not meet the minimum duration requirements.
           written_statement_illegible: There is a problem with the letter, for example, it’s missing, incorrect or illegible.
           written_statement_information: The letter is missing information.
+          written_statement_mismatch: Information on the letter does not match information entered in the application.
           written_statement_recent: The letter was issued more than 6 months before the application was created.
         as_question:
           label:

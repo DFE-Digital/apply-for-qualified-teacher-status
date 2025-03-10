@@ -28,4 +28,18 @@ namespace :assessment_sections do
 
     puts "Assessment sections with key #{key} updated with failure reasons: #{failure_reasons}"
   end
+
+  desc "Sync assessments not started with latest version of checks and failure reasons"
+  task sync_not_started_assessments_checks_and_failure_reasons: :environment do
+    assessments_not_started =
+      Assessment.includes(:application_form).where(
+        application_form: {
+          stage: %w[not_started pre_assessment],
+        },
+      )
+
+    assessments_not_started.find_each do |assessment|
+      SyncAssessmentChecksAndFailureReasonsJob.perform_later(assessment)
+    end
+  end
 end
