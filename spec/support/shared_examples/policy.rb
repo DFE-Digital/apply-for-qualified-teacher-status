@@ -201,3 +201,25 @@ RSpec.shared_examples "a policy method requiring the withdraw permission" do
     end
   end
 end
+
+RSpec.shared_examples "a policy method requiring the manage staff permission" do
+  context "without permission" do
+    let(:user) { create(:staff) }
+
+    it { is_expected.to be false }
+  end
+
+  context "with permission" do
+    let(:user) { create(:staff, :with_manage_staff_permission) }
+
+    it { is_expected.to be true }
+
+    context "when staff is archived" do
+      let(:user) do
+        create(:staff, :with_manage_staff_permission, archived: true)
+      end
+
+      it { is_expected.to be false }
+    end
+  end
+end

@@ -78,6 +78,10 @@ FactoryBot.define do
       change_work_history_permission { true }
     end
 
+    trait :with_manage_staff_permission do
+      manage_staff_permission { true }
+    end
+
     trait :with_reverse_decision_permission do
       reverse_decision_permission { true }
     end
