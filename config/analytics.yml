@@ -306,6 +306,7 @@
     - last_sign_in_at
     - last_sign_in_ip
     - locked_at
+    - manage_staff_permission
     - name
     - remember_created_at
     - reset_password_sent_at

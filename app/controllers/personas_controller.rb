@@ -127,6 +127,7 @@ class PersonasController < ApplicationController
         support_console_permission: :desc,
         verify_permission: :desc,
         withdraw_permission: :desc,
+        manage_staff_permission: :desc,
         email: :asc,
       )
   end

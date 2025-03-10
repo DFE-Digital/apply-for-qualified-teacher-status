@@ -25,7 +25,7 @@ RSpec.describe "Assessor authentication", type: :system do
 
   context "when user has support console permission" do
     it "allows access to manage access" do
-      given_staff_with_support_console_permission_exist
+      given_staff_with_manage_staff_permission_exist
 
       when_i_visit_the(:assessor_applications_page)
       when_i_login
@@ -52,10 +52,10 @@ RSpec.describe "Assessor authentication", type: :system do
     create(:staff, email: "staff@example.com", password: "password")
   end
 
-  def given_staff_with_support_console_permission_exist
+  def given_staff_with_manage_staff_permission_exist
     create(
       :staff,
-      :with_support_console_permission,
+      :with_manage_staff_permission,
       email: "staff@example.com",
       password: "password",
     )
