@@ -26,7 +26,7 @@ RSpec.describe "Staff assessor", type: :system do
 
     when_i_fill_email_address
     and_i_fill_name
-    and_i_choose_support_console_permission
+    then_i_choose_support_console_permission
     and_i_send_invitation
     then_i_see_an_invitation_email
     then_i_see_the_staff_index
@@ -47,7 +47,7 @@ RSpec.describe "Staff assessor", type: :system do
 
     when_i_fill_email_address
     and_i_fill_name
-    and_i_choose_support_console_permission
+    then_i_choose_support_console_permission
     and_i_send_invitation
     then_i_see_an_invitation_email
     then_i_see_the_invited_staff_user
@@ -70,7 +70,7 @@ RSpec.describe "Staff assessor", type: :system do
 
     when_i_click_on_the_helpdesk_user
     then_i_see_the_staff_edit_form
-    when_i_choose_support_console_permission
+    then_i_choose_support_console_permission
     and_i_submit_the_edit_form
 
     then_i_see_the_changed_permission
@@ -155,7 +155,7 @@ RSpec.describe "Staff assessor", type: :system do
     fill_in "staff-password-confirmation-field", with: "password"
   end
 
-  def and_i_choose_support_console_permission
+  def then_i_choose_support_console_permission
     check "staff-support-console-permission-1-field", visible: false
   end
 
@@ -178,9 +178,6 @@ RSpec.describe "Staff assessor", type: :system do
   def then_i_see_the_staff_edit_form
     expect(page).to have_content("Edit ‘Helpdesk’")
   end
-
-  alias_method :when_i_choose_support_console_permission,
-               :and_i_choose_support_console_permission
 
   def and_i_submit_the_edit_form
     click_button "Continue"
