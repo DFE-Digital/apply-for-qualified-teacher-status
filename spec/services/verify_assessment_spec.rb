@@ -65,6 +65,26 @@ RSpec.describe VerifyAssessment do
         expect { call }.not_to change(ProfessionalStandingRequest, :count)
       end
     end
+
+    context "when reduced evidence is accepted for application" do
+      let(:application_form) do
+        create(:application_form, :submitted, reduced_evidence_accepted: true)
+      end
+
+      it "doesn't create a professional standing request" do
+        expect { call }.not_to change(ProfessionalStandingRequest, :count)
+      end
+    end
+
+    context "when work history is not required for application" do
+      let(:application_form) do
+        create(:application_form, :submitted, needs_work_history: false)
+      end
+
+      it "doesn't create a professional standing request" do
+        expect { call }.not_to change(ProfessionalStandingRequest, :count)
+      end
+    end
   end
 
   describe "creating reference request" do
@@ -82,6 +102,26 @@ RSpec.describe VerifyAssessment do
       it "sets the attributes correctly" do
         expect(reference_request.requested?).to be true
       end
+    end
+
+    context "when reduced evidence is accepted for application" do
+      let(:application_form) do
+        create(:application_form, :submitted, reduced_evidence_accepted: true)
+      end
+
+      before { call }
+
+      it { is_expected.to be_nil }
+    end
+
+    context "when work history is not required for application" do
+      let(:application_form) do
+        create(:application_form, :submitted, needs_work_history: false)
+      end
+
+      before { call }
+
+      it { is_expected.to be_nil }
     end
   end
 
