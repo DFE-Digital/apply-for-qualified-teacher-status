@@ -1,7 +1,7 @@
 <% content_for :page_title, title_with_error_prefix("Further information required", error: @form&.errors&.any?) %>
 <% content_for :back_link_url, back_history_path(default: teacher_interface_application_form_further_information_request_path(@further_information_request)) %>
 
-<%= form_with model: @form, url: [:teacher_interface, :application_form, @further_information_request, @further_information_request_item], method: :put do |f| %>
+<%= form_with url: [:teacher_interface, :application_form, @further_information_request, @further_information_request_item], method: :put do |f| %>
   <% if f.object.present? %>
     <%= f.govuk_error_summary %>
   <% end %>
