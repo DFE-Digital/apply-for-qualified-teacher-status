@@ -38,6 +38,7 @@ RSpec.describe "Teacher further information", type: :system do
 
     when_i_click_the_document_task_list_item
     then_i_see_the(:teacher_further_information_required_page)
+    raise
     and_i_click_continue
     then_i_see_the(:teacher_upload_document_page)
 
