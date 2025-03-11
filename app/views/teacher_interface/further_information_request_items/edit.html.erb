@@ -1,48 +1,12 @@
 <% content_for :page_title, title_with_error_prefix("Further information required", error: @form&.errors&.any?) %>
 <% content_for :back_link_url, back_history_path(default: teacher_interface_application_form_further_information_request_path(@further_information_request)) %>
 
-<%= form_with url: [:teacher_interface, :application_form, @further_information_request, @further_information_request_item], method: :put do |f| %>
-  <% if f.object.present? %>
-    <%= f.govuk_error_summary %>
+<% if @form %>
+  <%= form_with model: @form, url: [:teacher_interface, :application_form, @further_information_request, @further_information_request_item], method: :put do |f| %>
+    <%= render 'inner_form', f: f %>
   <% end %>
-
-  <h1 class="govuk-heading-l">Further information required</h1>
-
-  <h2 class="govuk-heading-s">Notes from the assessor</h2>
-
-  <%= govuk_inset_text do %>
-    <%= simple_format @further_information_request_item.failure_reason_assessor_feedback %>
+<% else %>
+  <%= form_with url: [:teacher_interface, :application_form, @further_information_request, @further_information_request_item], method: :put do |f| %>
+    <%= render 'inner_form', f: f %>
   <% end %>
-
-  <% if @further_information_request_item.text? %>
-    <%= f.govuk_text_area :response, label: { size: "s" } %>
-  <% end %>
-
-  <% if @further_information_request_item.document? %>
-    <p class="govuk-body">You can upload this document on the next screen.</p>
-  <% end %>
-
-  <% if @further_information_request_item.work_history_contact? %>
-    <% work_history = @further_information_request_item.work_history %>
-      <p class="govuk-body">Enter the contact details of a suitable referee who can verify your time spent working at <%= work_history.school_name %> from <%= work_history.start_date.to_fs(:month_and_year) %> <% if work_history.end_date.present? %>
-          to <%= work_history.end_date.to_fs(:month_and_year) %>
-      <% end %></p>
-
-      <%= f.govuk_text_field :contact_name, label: {text: "Contact’s name"} %>
-
-      <%= f.govuk_text_field :contact_job, label: {text: "Contact’s job title"} %>
-
-      <%= f.govuk_email_field :contact_email, label: {text: "Contact’s email address"} %>
-
-      <%= govuk_details(summary_text: "Choosing someone to verify this role") do %>
-
-        <p>A senior member of staff means either a headteacher/principal, an assistant/deputy head or a school business manager.</p>
-
-        <p>Make sure you have an up-to-date email address for the person you choose, because the reference they provide will be important to your application.</p>
-
-        <p>We’ll ask them to confirm that you worked at the school for the period you’ve told us about.</p>
-      <% end %>
-  <% end %>
-
-  <%= render "shared/save_submit_buttons", f: %>
 <% end %>
