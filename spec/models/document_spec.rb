@@ -17,6 +17,7 @@
 #  index_documents_on_document_type  (document_type)
 #  index_documents_on_documentable   (documentable_type,documentable_id)
 #
+
 require "rails_helper"
 
 RSpec.describe Document, type: :model do

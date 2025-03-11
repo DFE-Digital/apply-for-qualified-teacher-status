@@ -21,6 +21,7 @@
 #
 #  fk_rails_...  (region_id => regions.id)
 #
+
 class EligibilityCheck < ApplicationRecord
   belongs_to :region, optional: true
   has_one :application

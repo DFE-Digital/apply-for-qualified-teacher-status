@@ -21,6 +21,7 @@
 #  fk_rails_...  (application_form_id => application_forms.id)
 #  fk_rails_...  (author_id => staff.id)
 #
+
 class Note < ApplicationRecord
   belongs_to :application_form
   belongs_to :author, class_name: "Staff"

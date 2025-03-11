@@ -21,6 +21,7 @@
 #  fk_rails_...  (application_form_id => application_forms.id)
 #  fk_rails_...  (author_id => staff.id)
 #
+
 FactoryBot.define do
   factory :note do
     application_form

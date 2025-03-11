@@ -67,7 +67,7 @@ group :development do
   gem "rladr"
   gem "web-console"
 
-  gem "annotate", require: false
+  gem "annotaterb", require: false
   gem "prettier_print", require: false
   gem "rubocop-govuk", require: false
   gem "syntax_tree", require: false

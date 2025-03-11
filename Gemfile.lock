@@ -120,9 +120,7 @@ GEM
       public_suffix (>= 2.0.2, < 7.0)
     aes_key_wrap (1.1.0)
     amazing_print (1.7.2)
-    annotate (2.6.5)
-      activerecord (>= 2.3.0)
-      rake (>= 0.8.7)
+    annotaterb (4.14.0)
     ast (2.4.2)
     attr_required (1.0.2)
     azure-storage-blob (2.0.3)
@@ -705,7 +703,7 @@ PLATFORMS
 DEPENDENCIES
   activerecord-session_store
   amazing_print
-  annotate
+  annotaterb
   azure-storage-blob
   bootsnap
   business
