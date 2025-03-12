@@ -15,11 +15,13 @@ RSpec.describe AssessmentFactory do
       age_range_max: 11,
       requires_passport_as_identity_proof:,
       english_language_citizenship_exempt:,
+      english_language_qualification_exempt:,
     )
   end
 
   let(:requires_passport_as_identity_proof) { false }
   let(:english_language_citizenship_exempt) { false }
+  let(:english_language_qualification_exempt) { false }
 
   before { FeatureFlags::FeatureFlag.activate(:suitability) }
 
@@ -127,13 +129,13 @@ RSpec.describe AssessmentFactory do
           expect(section.failure_reasons).to eq(
             %w[
               application_and_qualification_names_do_not_match
+              qualifications_or_modules_required_not_provided
               teaching_qualifications_from_ineligible_country
               teaching_qualifications_not_at_required_level
               teaching_hours_not_fulfilled
               teaching_qualification_pedagogy
               teaching_qualification_1_year
               not_qualified_to_teach_mainstream
-              qualifications_dont_match_subjects
               qualifications_dont_match_other_details
               teaching_certificate_illegible
               teaching_transcript_illegible
@@ -175,16 +177,65 @@ RSpec.describe AssessmentFactory do
             expect(section.failure_reasons).to eq(
               %w[
                 application_and_qualification_names_do_not_match
+                qualifications_or_modules_required_not_provided
                 teaching_qualifications_from_ineligible_country
                 teaching_qualifications_not_at_required_level
                 teaching_hours_not_fulfilled
                 teaching_qualification_pedagogy
                 teaching_qualification_1_year
                 not_qualified_to_teach_mainstream
-                qualifications_dont_match_subjects
                 qualifications_dont_match_other_details
                 qualified_to_teach_children_11_to_16
                 teaching_qualification_subjects_criteria
+                teaching_certificate_illegible
+                teaching_transcript_illegible
+                degree_certificate_illegible
+                degree_transcript_illegible
+                additional_degree_certificate_illegible
+                additional_degree_transcript_illegible
+                special_education_only
+                suitability
+                suitability_previously_declined
+                fraud
+              ],
+            )
+          end
+        end
+
+        context "when the applicant is exempt for english languaged due to qualification country" do
+          let(:english_language_qualification_exempt) { true }
+
+          it "has the right checks and failure reasons" do
+            section = sections.qualifications.first
+
+            expect(section.checks).to eq(
+              %w[
+                qualifications_meet_level_6_or_equivalent
+                qualified_in_mainstream_education
+                has_teacher_qualification_certificate
+                has_teacher_qualification_transcript
+                has_university_degree_certificate
+                has_university_degree_transcript
+                has_additional_qualification_certificate
+                has_additional_degree_transcript
+                teaching_qualification_pedagogy
+                teaching_qualification_1_year
+              ],
+            )
+
+            expect(section.failure_reasons).to eq(
+              %w[
+                application_and_qualification_names_do_not_match
+                qualifications_or_modules_required_not_provided
+                teaching_qualifications_from_ineligible_country
+                teaching_qualifications_not_at_required_level
+                teaching_hours_not_fulfilled
+                teaching_qualification_pedagogy
+                teaching_qualification_1_year
+                english_language_exemption_by_qualification_not_confirmed
+                english_language_not_exempt_by_qualification_country
+                not_qualified_to_teach_mainstream
+                qualifications_dont_match_other_details
                 teaching_certificate_illegible
                 teaching_transcript_illegible
                 degree_certificate_illegible
@@ -301,6 +352,85 @@ RSpec.describe AssessmentFactory do
         it "is included in the task list when the EL feature is enabled" do
           expect(sections.english_language_proficiency.count).to eq(1)
         end
+
+        context "when the english language is exempt" do
+          before do
+            application_form.english_language_qualification_exempt = true
+          end
+
+          it "has the right checks and failure reasons" do
+            section = sections.english_language_proficiency.first
+            expect(section.checks).to be_empty
+            expect(section.failure_reasons).to eq(
+              %w[suitability suitability_previously_declined fraud],
+            )
+          end
+        end
+
+        context "when the english language proof is MOI" do
+          before do
+            application_form.english_language_proof_method =
+              :medium_of_instruction
+          end
+
+          it "has the right checks and failure reasons" do
+            section = sections.english_language_proficiency.first
+            expect(section.checks).to eq(%w[english_language_valid_moi])
+            expect(section.failure_reasons).to eq(
+              %w[
+                english_language_moi_not_taught_in_english
+                english_language_moi_invalid_format
+                suitability
+                suitability_previously_declined
+                fraud
+              ],
+            )
+          end
+        end
+
+        context "when the english language proof is SELT" do
+          before { application_form.english_language_proof_method = :provider }
+
+          it "has the right checks and failure reasons" do
+            section = sections.english_language_proficiency.first
+            expect(section.checks).to eq(%w[english_language_valid_provider])
+            expect(section.failure_reasons).to eq(
+              %w[
+                english_language_qualification_invalid
+                english_language_unverifiable_reference_number
+                english_language_not_achieved_b2
+                english_language_selt_expired
+                english_language_selt_expired_during_assessment
+                english_language_proficiency_require_alternative
+                suitability
+                suitability_previously_declined
+                fraud
+              ],
+            )
+          end
+
+          context "with the provider being other" do
+            before { application_form.english_language_provider_other = true }
+
+            it "has the right checks and failure reasons" do
+              section = sections.english_language_proficiency.first
+              expect(section.checks).to eq(%w[english_language_valid_provider])
+              expect(section.failure_reasons).to eq(
+                %w[
+                  english_language_qualification_invalid
+                  english_language_proficiency_document_illegible
+                  english_language_not_achieved_b2
+                  english_language_selt_expired
+                  english_language_selt_expired_during_assessment
+                  english_language_proficiency_require_alternative
+                  suitability
+                  suitability_previously_declined
+                  fraud
+                ],
+              )
+            end
+          end
+        end
       end
 
       describe "work history section" do
@@ -328,6 +458,7 @@ RSpec.describe AssessmentFactory do
                 school_details_cannot_be_verified
                 unrecognised_references
                 work_history_duration
+                work_history_information
                 suitability
                 suitability_previously_declined
                 fraud
@@ -369,6 +500,7 @@ RSpec.describe AssessmentFactory do
               %w[
                 written_statement_illegible
                 written_statement_recent
+                written_statement_mismatch
                 authorisation_to_teach
                 teaching_qualification
                 confirm_age_range_subjects
@@ -414,6 +546,7 @@ RSpec.describe AssessmentFactory do
               %w[
                 written_statement_illegible
                 written_statement_recent
+                written_statement_mismatch
                 written_statement_information
                 authorisation_to_teach
                 teaching_qualification
