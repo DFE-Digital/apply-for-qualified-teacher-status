@@ -19,6 +19,7 @@
 #
 #  fk_rails_...  (assessment_section_id => assessment_sections.id)
 #
+
 class SelectedFailureReason < ApplicationRecord
   belongs_to :assessment_section
   has_one :assessment, through: :assessment_section

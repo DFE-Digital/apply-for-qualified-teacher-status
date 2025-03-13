@@ -3,9 +3,9 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.3.0"
+ruby "3.3.4"
 
-gem "rails", "7.2.2.1"
+gem "rails", "~> 8.0"
 
 gem "activerecord-session_store"
 gem "amazing_print"
@@ -67,7 +67,7 @@ group :development do
   gem "rladr"
   gem "web-console"
 
-  gem "annotate", require: false
+  gem "annotaterb", require: false
   gem "prettier_print", require: false
   gem "rubocop-govuk", require: false
   gem "syntax_tree", require: false

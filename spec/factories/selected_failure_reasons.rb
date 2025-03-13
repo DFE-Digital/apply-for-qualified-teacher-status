@@ -19,6 +19,7 @@
 #
 #  fk_rails_...  (assessment_section_id => assessment_sections.id)
 #
+
 FactoryBot.define do
   factory :selected_failure_reason do
     assessment_section

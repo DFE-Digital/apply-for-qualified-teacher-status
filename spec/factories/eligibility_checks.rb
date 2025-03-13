@@ -21,6 +21,7 @@
 #
 #  fk_rails_...  (region_id => regions.id)
 #
+
 FactoryBot.define do
   factory :eligibility_check do
     country_code { nil }

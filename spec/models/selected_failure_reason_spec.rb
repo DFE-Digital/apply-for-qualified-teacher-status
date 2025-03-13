@@ -19,6 +19,7 @@
 #
 #  fk_rails_...  (assessment_section_id => assessment_sections.id)
 #
+
 require "rails_helper"
 
 RSpec.describe SelectedFailureReason do

@@ -17,6 +17,7 @@
 #  index_documents_on_document_type  (document_type)
 #  index_documents_on_documentable   (documentable_type,documentable_id)
 #
+
 FactoryBot.define do
   factory :document do
     association :documentable, factory: :application_form

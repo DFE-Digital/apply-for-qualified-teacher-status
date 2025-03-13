@@ -17,6 +17,7 @@
 #  index_documents_on_document_type  (document_type)
 #  index_documents_on_documentable   (documentable_type,documentable_id)
 #
+
 class Document < ApplicationRecord
   belongs_to :documentable, polymorphic: true
 

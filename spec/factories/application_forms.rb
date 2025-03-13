@@ -42,7 +42,7 @@
 #  requires_passport_as_identity_proof           :boolean          default(FALSE), not null
 #  requires_preliminary_check                    :boolean          default(FALSE), not null
 #  stage                                         :string           default("draft"), not null
-#  statuses                                      :string           default(["\"draft\""]), not null, is an Array
+#  statuses                                      :string           default(["draft"]), not null, is an Array
 #  subject_limited                               :boolean          default(FALSE), not null
 #  subjects                                      :text             default([]), not null, is an Array
 #  subjects_status                               :string           default("not_started"), not null

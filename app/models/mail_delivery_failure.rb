@@ -15,5 +15,6 @@
 #
 #  index_mail_delivery_failures_on_email_address  (email_address)
 #
+
 class MailDeliveryFailure < ApplicationRecord
 end
