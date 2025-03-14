@@ -58,10 +58,13 @@ class VerifyAssessment
               :work_histories
 
   delegate :application_form, to: :assessment
-  delegate :teaching_authority_provides_written_statement, to: :application_form
+  delegate :teaching_authority_provides_written_statement,
+           :reduced_evidence_accepted,
+           :needs_work_history,
+           to: :application_form
 
   def create_professional_standing_request
-    if professional_standing && !teaching_authority_provides_written_statement
+    if professional_standing && !skip_professional_standing?
       ProfessionalStandingRequest.create!(assessment:)
     end
   end
@@ -73,6 +76,8 @@ class VerifyAssessment
   end
 
   def create_reference_requests
+    return if skip_references?
+
     work_histories.map do |work_history|
       ReferenceRequest
         .create!(assessment:, work_history:)
@@ -87,5 +92,14 @@ class VerifyAssessment
       action: :references_requested,
       reference_requests:,
     )
+  end
+
+  def skip_professional_standing?
+    teaching_authority_provides_written_statement ||
+      reduced_evidence_accepted || !needs_work_history
+  end
+
+  def skip_references?
+    reduced_evidence_accepted || !needs_work_history
   end
 end

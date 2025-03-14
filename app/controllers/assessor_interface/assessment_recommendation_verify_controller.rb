@@ -37,7 +37,8 @@ module AssessorInterface
     end
 
     def update
-      professional_standing = session[:professional_standing]
+      professional_standing =
+        skip_professional_standing? ? nil : session[:professional_standing]
       qualifications =
         application_form.qualifications.where(id: session[:qualification_ids])
       qualifications_assessor_note =
