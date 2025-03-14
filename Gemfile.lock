@@ -525,7 +525,7 @@ GEM
       actionpack (>= 5.2)
       railties (>= 5.2)
     retriable (3.1.2)
-    rexml (3.4.0)
+    rexml (3.4.1)
     rladr (1.2.0)
     rmagick (6.1.1)
       observer (~> 0.1)
@@ -677,7 +677,7 @@ GEM
     webfinger (1.2.0)
       activesupport
       httpclient (>= 2.4)
-    webmock (3.25.0)
+    webmock (3.25.1)
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
