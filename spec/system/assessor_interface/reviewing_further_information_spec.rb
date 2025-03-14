@@ -65,7 +65,7 @@ RSpec.describe "Assessor reviewing further information", type: :system do
       assessment_id:,
       id: further_information_request.id,
     )
-    and_i_see_the_check_your_answers_items
+    and_i_see_the_check_your_answers_items_without_the_previous_referee_details
     and_i_do_not_see_the_review_further_information_form
   end
 
@@ -94,6 +94,25 @@ RSpec.describe "Assessor reviewing further information", type: :system do
     expect(rows.first.key.text).to eq(
       "Tell us more about the subjects you can teach",
     )
+
+    expect(page).to have_content("Review previous referee details?")
+
+    expect(rows.last.key.text).to eq("Upload your identity document")
+  end
+
+  def and_i_see_the_check_your_answers_items_without_the_previous_referee_details
+    rows =
+      assessor_review_further_information_request_page.summary_lists.flat_map(
+        &:rows
+      )
+
+    expect(rows.count).to eq(5)
+
+    expect(rows.first.key.text).to eq(
+      "Tell us more about the subjects you can teach",
+    )
+
+    expect(page).not_to have_content("Review previous referee details?")
 
     expect(rows.last.key.text).to eq("Upload your identity document")
   end
