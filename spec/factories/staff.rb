@@ -29,6 +29,7 @@
 #  last_sign_in_at                :datetime
 #  last_sign_in_ip                :string
 #  locked_at                      :datetime
+#  manage_staff_permission        :boolean          default(FALSE), not null
 #  name                           :text             default(""), not null
 #  remember_created_at            :datetime
 #  reset_password_sent_at         :datetime
@@ -75,6 +76,10 @@ FactoryBot.define do
 
     trait :with_change_work_history_permission do
       change_work_history_permission { true }
+    end
+
+    trait :with_manage_staff_permission do
+      manage_staff_permission { true }
     end
 
     trait :with_reverse_decision_permission do

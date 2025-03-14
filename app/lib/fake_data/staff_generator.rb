@@ -38,6 +38,7 @@ class FakeData::StaffGenerator
       reverse_decision_permission: true,
       support_console_permission: true,
       withdraw_permission: true,
+      manage_staff_permission: true,
     },
     { name: "Antonio (helpdesk)", email: "helpdesk.antonio@education.gov.uk" },
   ].freeze

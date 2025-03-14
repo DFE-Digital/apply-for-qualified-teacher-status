@@ -17,7 +17,7 @@ RSpec.describe "Staff assessor", type: :system do
 
   it "allows inviting a user with Azure active directory active" do
     given_sign_in_with_active_directory_is_active
-    given_i_am_authorized_as_a_support_user
+    given_i_am_authorized_as_a_manage_staff_user
     when_i_visit_the_staff_page
     then_i_see_the_staff_index
 
@@ -26,7 +26,7 @@ RSpec.describe "Staff assessor", type: :system do
 
     when_i_fill_email_address
     and_i_fill_name
-    and_i_choose_support_console_permission
+    then_i_choose_manage_staff_permission
     and_i_send_invitation
     then_i_see_an_invitation_email
     then_i_see_the_staff_index
@@ -38,7 +38,7 @@ RSpec.describe "Staff assessor", type: :system do
 
   it "allows inviting a user with Azure active directory deactivated" do
     given_sign_in_with_active_directory_is_disabled
-    given_i_am_authorized_as_a_support_user
+    given_i_am_authorized_as_a_manage_staff_user
     when_i_visit_the_staff_page
     then_i_see_the_staff_index
 
@@ -47,7 +47,7 @@ RSpec.describe "Staff assessor", type: :system do
 
     when_i_fill_email_address
     and_i_fill_name
-    and_i_choose_support_console_permission
+    then_i_choose_manage_staff_permission
     and_i_send_invitation
     then_i_see_an_invitation_email
     then_i_see_the_invited_staff_user
@@ -62,7 +62,7 @@ RSpec.describe "Staff assessor", type: :system do
 
   it "allows editing permissions when Azure active directory is active" do
     given_sign_in_with_active_directory_is_active
-    given_i_am_authorized_as_a_support_user
+    given_i_am_authorized_as_a_manage_staff_user
     given_a_helpdesk_user_exists
     when_i_visit_the_staff_page
     then_i_see_the_staff_index
@@ -70,7 +70,7 @@ RSpec.describe "Staff assessor", type: :system do
 
     when_i_click_on_the_helpdesk_user
     then_i_see_the_staff_edit_form
-    when_i_choose_support_console_permission
+    then_i_choose_manage_staff_permission
     and_i_submit_the_edit_form
 
     then_i_see_the_changed_permission
@@ -155,8 +155,8 @@ RSpec.describe "Staff assessor", type: :system do
     fill_in "staff-password-confirmation-field", with: "password"
   end
 
-  def and_i_choose_support_console_permission
-    check "staff-support-console-permission-1-field", visible: false
+  def then_i_choose_manage_staff_permission
+    check "staff-manage-staff-permission-1-field", visible: false
   end
 
   def and_i_send_invitation
@@ -168,25 +168,22 @@ RSpec.describe "Staff assessor", type: :system do
   end
 
   def and_i_see_the_helpdesk_user
-    expect(page).to have_content("Support console access\tNo")
+    expect(page).to have_content("Staff access management\tNo")
   end
 
   def when_i_click_on_the_helpdesk_user
-    find(:xpath, "(//a[text()='Change'])[8]").click
+    find(:xpath, "(//a[text()='Change'])[16]").click
   end
 
   def then_i_see_the_staff_edit_form
     expect(page).to have_content("Edit ‘Helpdesk’")
   end
 
-  alias_method :when_i_choose_support_console_permission,
-               :and_i_choose_support_console_permission
-
   def and_i_submit_the_edit_form
     click_button "Continue"
   end
 
   def then_i_see_the_changed_permission
-    expect(page).not_to have_content("Support console access\tNo")
+    expect(page).to have_content("Staff access management\tYes")
   end
 end

@@ -51,6 +51,7 @@ en:
         support_console_permission: Support console access
         verify_permission: Verify applicants
         withdraw_permission: Withdraw
+        manage_staff_permission: Staff access management
     errors:
       models:
         application_form:

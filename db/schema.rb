@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_12_143034) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_07_150915) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -153,8 +153,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_12_143034) do
     t.text "recommendation_assessor_note", default: "", null: false
     t.boolean "references_verified"
     t.boolean "scotland_full_registration"
-    t.boolean "unsigned_consent_document_generated", default: false, null: false
     t.text "qualifications_assessor_note", default: "", null: false
+    t.boolean "unsigned_consent_document_generated", default: false, null: false
     t.index ["application_form_id"], name: "index_assessments_on_application_form_id"
   end
 
@@ -474,6 +474,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_12_143034) do
     t.boolean "verify_permission", default: false, null: false
     t.boolean "change_email_permission", default: false, null: false
     t.boolean "archived", default: false
+    t.boolean "manage_staff_permission", default: false, null: false
     t.index "lower((email)::text)", name: "index_staff_on_lower_email", unique: true
     t.index ["confirmation_token"], name: "index_staff_on_confirmation_token", unique: true
     t.index ["invitation_token"], name: "index_staff_on_invitation_token", unique: true
