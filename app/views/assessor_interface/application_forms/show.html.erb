@@ -3,6 +3,14 @@
 
 <% application_form = @view_object.application_form %>
 
+<% if FeatureFlags::FeatureFlag.active?(:personas) %>
+  <%= govuk_notification_banner(title_text: "Important") do |notification_banner| %>
+    <% notification_banner.with_heading(text: "Testing feature") %>
+    <p class="govuk-body">Within this enviroment, you can sign in as the applicant of this application to help with testing.</p>
+    <%= govuk_button_to "Sign in as applicant".html_safe, teacher_sign_in_persona_path(application_form.teacher) %>
+  <% end %>
+<% end %>
+
 <%= render "linked_application_forms",
            teacher: application_form.teacher,
            email_used_as_reference_in_this_application_form: @view_object.email_used_as_reference_in_this_application_form?,
