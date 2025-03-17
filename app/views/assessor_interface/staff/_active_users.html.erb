@@ -1,0 +1,119 @@
+<% content_for :page_title, 'Staff' %>
+
+<h1 class="govuk-heading-l">Staff</h1>
+
+<p class="govuk-body">
+  <%= govuk_button_link_to "Invite staff user", new_staff_invitation_path %>
+</p>
+
+<% @staff.find_each do |staff| %>
+  <h2 class="govuk-heading-m"><%= staff.name %></h2>
+
+  <%= govuk_summary_list do |summary_list|
+    summary_list.with_row do |row|
+      row.with_key { "Email address" }
+      row.with_value { staff.email }
+    end
+
+    summary_list.with_row do |row|
+      row.with_key { "Created at" }
+      row.with_value { staff.created_at.to_s }
+    end
+
+    summary_list.with_row do |row|
+      row.with_key { t("activerecord.attributes.staff.assess_permission") }
+      row.with_value { govuk_boolean_tag(staff.assess_permission) }
+      row.with_action(
+        href: edit_assessor_interface_staff_path(staff),
+        visually_hidden_text: t("activerecord.attributes.staff.assess_permission")
+      )
+    end
+
+    summary_list.with_row do |row|
+      row.with_key { t("activerecord.attributes.staff.change_name_permission") }
+      row.with_value { govuk_boolean_tag(staff.change_name_permission) }
+      row.with_action(
+        href: edit_assessor_interface_staff_path(staff),
+        visually_hidden_text: t("activerecord.attributes.staff.change_name_permission")
+      )
+    end
+
+    summary_list.with_row do |row|
+      row.with_key { t("activerecord.attributes.staff.change_work_history_permission") }
+      row.with_value { govuk_boolean_tag(staff.change_work_history_permission) }
+      row.with_action(
+        href: edit_assessor_interface_staff_path(staff),
+        visually_hidden_text: t("activerecord.attributes.staff.change_work_history_permission")
+      )
+    end
+
+    summary_list.with_row do |row|
+      row.with_key { t("activerecord.attributes.staff.reverse_decision_permission") }
+      row.with_value { govuk_boolean_tag(staff.reverse_decision_permission) }
+      row.with_action(
+        href: edit_assessor_interface_staff_path(staff),
+        visually_hidden_text: t("activerecord.attributes.staff.reverse_decision_permission")
+      )
+    end
+
+    summary_list.with_row do |row|
+      row.with_key { t("activerecord.attributes.staff.support_console_permission") }
+      row.with_value { govuk_boolean_tag(staff.support_console_permission) }
+      row.with_action(
+        href: edit_assessor_interface_staff_path(staff),
+        visually_hidden_text: t("activerecord.attributes.staff.support_console_permission")
+      )
+    end
+
+    summary_list.with_row do |row|
+      row.with_key { t("activerecord.attributes.staff.verify_permission") }
+      row.with_value { govuk_boolean_tag(staff.verify_permission) }
+      row.with_action(
+        href: edit_assessor_interface_staff_path(staff),
+        visually_hidden_text: t("activerecord.attributes.staff.verify_permission")
+      )
+    end
+
+    summary_list.with_row do |row|
+      row.with_key { t("activerecord.attributes.staff.withdraw_permission") }
+      row.with_value { govuk_boolean_tag(staff.withdraw_permission) }
+      row.with_action(
+        href: edit_assessor_interface_staff_path(staff),
+        visually_hidden_text: t("activerecord.attributes.staff.withdraw_permission")
+      )
+    end
+
+    summary_list.with_row do |row|
+      row.with_key { t("activerecord.attributes.staff.manage_staff_permission") }
+      row.with_value { govuk_boolean_tag(staff.manage_staff_permission) }
+      row.with_action(
+        href: edit_assessor_interface_staff_path(staff),
+        visually_hidden_text: t("activerecord.attributes.staff.manage_staff_permission")
+      )
+    end
+
+    if staff.created_by_invite?
+      summary_list.with_row do |row|
+        row.with_key { "Invitation status" }
+
+        row.with_value do
+          if staff.invitation_accepted?
+             govuk_tag(text: "Accepted", colour: "green")
+          else
+            govuk_tag(text: "Not accepted", colour: "red")
+          end
+        end
+      end
+
+      summary_list.with_row do |row|
+        row.with_key { "Invited at" }
+        row.with_value { staff.invitation_sent_at.to_s }
+      end
+    end
+
+    summary_list.with_row do |row|
+      row.with_key { "Last signed in at" }
+      row.with_value { staff.last_sign_in_at.to_s }
+    end
+  end %>
+<% end %>
