@@ -87,10 +87,6 @@ RSpec.describe "Staff assessor", type: :system do
     then_i_see_the_archived_user
   end
 
-  # it "removes archived staff member from archived page when unarchived" do
-
-  # end
-
   private
 
   def given_a_helpdesk_user_exists
