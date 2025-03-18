@@ -184,6 +184,8 @@ RSpec.describe "Staff assessor", type: :system do
   end
 
   def then_i_see_the_changed_permission
-    expect(page).to have_content("Manage staff\nNo\tNo\tNo\tNo\tNo\tNo\tNo\tYes")
+    expect(page).to have_content(
+      "Manage staff\nNo\tNo\tNo\tNo\tNo\tNo\tNo\tYes",
+    )
   end
 end
