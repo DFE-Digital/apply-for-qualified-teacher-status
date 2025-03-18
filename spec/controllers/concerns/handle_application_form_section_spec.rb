@@ -23,7 +23,7 @@ RSpec.describe HandleApplicationFormSection, type: :controller do
       )
     end
 
-    let(:form) { double }
+    let(:form) { instance_double(TeacherInterface::BaseForm, errors: []) }
     let(:if_success_then_redirect) { :redirect }
     let(:if_failure_then_render) { :render }
 
