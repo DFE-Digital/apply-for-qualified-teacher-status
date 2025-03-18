@@ -88,7 +88,7 @@ RSpec.describe "Staff assessor", type: :system do
   end
 
   # it "removes archived staff member from archived page when unarchived" do
-    
+
   # end
 
   private
@@ -98,7 +98,7 @@ RSpec.describe "Staff assessor", type: :system do
   end
 
   def given_a_archived_user_exists
-    create(:staff, name: "Archived user")
+    create(:staff, name: "ArchivedUser", archived: true)
   end
 
   def given_sign_in_with_active_directory_is_active
@@ -195,11 +195,11 @@ RSpec.describe "Staff assessor", type: :system do
   end
 
   def then_i_see_the_archived_user
-    expect(page).to have_content("Archived user")
+    expect(page).to have_content("ArchivedUser")
   end
 
   def and_i_do_not_see_the_archived_user
-    expect(page).not_to have_content("Archived user")
+    expect(page).not_to have_content("ArchivedUser")
   end
 
   def when_i_click_on_the_helpdesk_user
@@ -215,6 +215,8 @@ RSpec.describe "Staff assessor", type: :system do
   end
 
   def then_i_see_the_changed_permission
-    expect(page).to have_content("Manage staff\nNo\tNo\tNo\tNo\tNo\tNo\tNo\tYes")
+    expect(page).to have_content(
+      "Manage staff\nNo\tNo\tNo\tNo\tNo\tNo\tNo\tYes",
+    )
   end
 end
