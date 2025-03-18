@@ -1,0 +1,30 @@
+<% @staff.find_each do |staff| %>
+  <h2 class="govuk-heading-m"><%= staff.name %></h2>
+  
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <%= govuk_summary_list do |summary_list|
+        summary_list.with_row do |row|
+          row.with_key { "User data" }    
+          row.with_value { "" }
+        end
+
+        summary_list.with_row do |row|
+          row.with_key { "Email address" }
+          row.with_value { staff.email }
+        end
+
+        summary_list.with_row do |row|
+          row.with_key { "Invited" }
+          row.with_value { staff.invitation_sent_at.to_s }
+        end
+
+        summary_list.with_row do |row|
+          row.with_key { "Last signed in" }
+          row.with_value { staff.last_sign_in_at.to_s }
+        end
+      end %>
+    </div>
+  </div>
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+<% end %>

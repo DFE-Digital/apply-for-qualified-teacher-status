@@ -6,6 +6,7 @@ class AssessorInterface::StaffController < AssessorInterface::BaseController
   def index
     authorize [:assessor_interface, Staff]
     @staff = Staff.not_archived.order(:name)
+    render layout: "full_from_desktop"
   end
 
   def edit
