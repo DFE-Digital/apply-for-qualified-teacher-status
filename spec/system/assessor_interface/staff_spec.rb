@@ -76,10 +76,29 @@ RSpec.describe "Staff assessor", type: :system do
     then_i_see_the_changed_permission
   end
 
+  it "allows archived user to only appear on archived users tab" do
+    given_i_am_authorized_as_a_manage_staff_user
+    given_a_archived_user_exists
+    when_i_visit_the_staff_page
+    then_i_see_the_staff_index
+    and_i_do_not_see_the_archived_user
+
+    when_i_click_on_archived
+    then_i_see_the_archived_user
+  end
+
+  # it "removes archived staff member from archived page when unarchived" do
+    
+  # end
+
   private
 
   def given_a_helpdesk_user_exists
     create(:staff, name: "Helpdesk")
+  end
+
+  def given_a_archived_user_exists
+    create(:staff, name: "Archived user")
   end
 
   def given_sign_in_with_active_directory_is_active
@@ -110,6 +129,10 @@ RSpec.describe "Staff assessor", type: :system do
 
   def when_i_click_on_invite
     click_link "Invite"
+  end
+
+  def when_i_click_on_archived
+    click_link "Archived users"
   end
 
   def when_i_fill_email_address
@@ -171,6 +194,14 @@ RSpec.describe "Staff assessor", type: :system do
     expect(page).to have_content("Manage staff\nNo\tNo\tNo\tNo\tNo\tNo\tNo\tNo")
   end
 
+  def then_i_see_the_archived_user
+    expect(page).to have_content("Archived user")
+  end
+
+  def and_i_do_not_see_the_archived_user
+    expect(page).not_to have_content("Archived user")
+  end
+
   def when_i_click_on_the_helpdesk_user
     find(:xpath, "(//a[text()='Change permissions'])[2]").click
   end
@@ -184,8 +215,6 @@ RSpec.describe "Staff assessor", type: :system do
   end
 
   def then_i_see_the_changed_permission
-    expect(page).to have_content(
-      "Manage staff\nNo\tNo\tNo\tNo\tNo\tNo\tNo\tYes",
-    )
+    expect(page).to have_content("Manage staff\nNo\tNo\tNo\tNo\tNo\tNo\tNo\tYes")
   end
 end
