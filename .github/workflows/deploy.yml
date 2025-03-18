@@ -33,7 +33,6 @@ jobs:
   docker:
     name: Build and push Docker image
     runs-on: ubuntu-latest
-    environment: development
     permissions:
       packages: write
       id-token: write
@@ -46,28 +45,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - id: key-vault-name
-        shell: bash
-        run: echo "value=$(make -s development print-infrastructure-key-vault-name)" >> $GITHUB_OUTPUT
-
-      - uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-
-      - uses: Azure/get-keyvault-secrets@v1
-        id: key-vault-secrets
-        with:
-          keyvault: ${{ steps.key-vault-name.outputs.value }}
-          secrets: "SNYK-TOKEN"
-
       - uses: DFE-Digital/github-actions/build-docker-image@master
         id: build-docker-image
         with:
           docker-repository: ghcr.io/dfe-digital/apply-for-qualified-teacher-status
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          snyk-token: ${{ steps.key-vault-secrets.outputs.SNYK-TOKEN }}
+          snyk-token: ${{ secrets.SNYK_TOKEN }}
 
   rspec_system:
     name: Rspec System
@@ -266,7 +249,6 @@ jobs:
   notify_slack_of_failures:
     name: Notify Slack of failures
     runs-on: ubuntu-latest
-    environment: development
     permissions:
       id-token: write
 
@@ -276,29 +258,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - id: key-vault-name
-        shell: bash
-        run: echo "value=$(make -s development print-infrastructure-key-vault-name)" >> $GITHUB_OUTPUT
-
-      - uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-
-      - uses: Azure/get-keyvault-secrets@v1
-        id: key-vault-secrets
-        with:
-          keyvault: ${{ steps.key-vault-name.outputs.value }}
-          secrets: "SLACK-WEBHOOK"
-
       - name: Notify Slack channel on job failure
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_TITLE: Deployment of apply-for-qualified-teacher-status to ${{ needs.deploy_non_production.outputs.environment_name }} failed
           SLACK_MESSAGE: |
             Deployment to ${{ needs.deploy_non_production.outputs.environment_name }} environment failed
-          SLACK_WEBHOOK: ${{ steps.key-vault-secrets.outputs.SLACK-WEBHOOK }}
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           SLACK_COLOR: failure
           SLACK_FOOTER: Sent from notify_slack_of_failures job in deploy workflow
 
