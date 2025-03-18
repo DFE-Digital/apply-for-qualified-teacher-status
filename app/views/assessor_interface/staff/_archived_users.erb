@@ -16,15 +16,20 @@
 
         summary_list.with_row do |row|
           row.with_key { "Invited" }
-          row.with_value { staff.invitation_sent_at.to_s }
+          row.with_value { staff.created_at.to_s }
         end
 
         summary_list.with_row do |row|
           row.with_key { "Last signed in" }
-          row.with_value { staff.last_sign_in_at.to_s }
+          row.with_value { staff.current_sign_in_at.to_s }
+        end
+
+				summary_list.with_row do |row|
+          row.with_key { "Archived" }
+          row.with_value { staff.updated_at.to_s }
         end
       end %>
     </div>
   </div>
-    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+  <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
 <% end %>
