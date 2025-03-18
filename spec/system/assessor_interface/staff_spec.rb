@@ -168,11 +168,11 @@ RSpec.describe "Staff assessor", type: :system do
   end
 
   def and_i_see_the_helpdesk_user
-    expect(page).to have_content("Staff access management\tNo")
+    expect(page).to have_content("Manage staff\nNo\tNo\tNo\tNo\tNo\tNo\tNo\tNo")
   end
 
   def when_i_click_on_the_helpdesk_user
-    find(:xpath, "(//a[text()='Change'])[16]").click
+    find(:xpath, "(//a[text()='Change permissions'])[2]").click
   end
 
   def then_i_see_the_staff_edit_form
@@ -184,6 +184,6 @@ RSpec.describe "Staff assessor", type: :system do
   end
 
   def then_i_see_the_changed_permission
-    expect(page).to have_content("Staff access management\tYes")
+    expect(page).to have_content("Manage staff\nNo\tNo\tNo\tNo\tNo\tNo\tNo\tYes")
   end
 end

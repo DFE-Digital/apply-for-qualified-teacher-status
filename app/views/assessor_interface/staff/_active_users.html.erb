@@ -1,6 +1,5 @@
 <% @staff.find_each do |staff| %>
   <h2 class="govuk-heading-m"><%= staff.name %></h2>
-  
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <%= govuk_summary_list do |summary_list|
@@ -22,6 +21,19 @@
         summary_list.with_row do |row|
           row.with_key { "Last signed in" }
           row.with_value { staff.last_sign_in_at.to_s }
+        end
+
+        if staff.created_by_invite?
+            summary_list.with_row do |row|
+                row.with_key { "Invitation status" }
+                row.with_value do
+                if staff.invitation_accepted?
+                    govuk_tag(text: "Accepted", colour: "green")
+                else
+                    govuk_tag(text: "Not accepted", colour: "red")
+                end
+                end
+            end
         end
       end %>
     </div>
