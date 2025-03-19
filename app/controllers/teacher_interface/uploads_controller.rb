@@ -66,6 +66,8 @@ module TeacherInterface
       if @form.save(validate: true)
         redirect_to [:teacher_interface, :application_form, document]
       else
+        send_errors_to_big_query(@form)
+
         render :delete, status: :unprocessable_entity
       end
     end

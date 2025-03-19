@@ -2,6 +2,7 @@
 
 module TeacherInterface
   class ApplicationFormsController < BaseController
+    include HandleApplicationFormSection
     include HistoryTrackable
 
     before_action :redirect_if_application_form_active, only: %i[new create]
@@ -39,6 +40,8 @@ module TeacherInterface
       elsif @country_region_form.save(validate: true)
         redirect_to teacher_interface_application_form_path
       else
+        send_errors_to_big_query(@country_region_form)
+
         render :new, status: :unprocessable_entity
       end
     end
@@ -78,6 +81,8 @@ module TeacherInterface
         SubmitApplicationForm.call(application_form:, user: current_teacher)
         redirect_to %i[teacher_interface application_form]
       else
+        send_errors_to_big_query(@sanction_confirmation_form)
+
         render :edit, status: :unprocessable_entity
       end
     end
