@@ -3,7 +3,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <h3 class="govuk-heading-m">User data</h3>
-      
+
       <%= govuk_summary_list do |summary_list|
         summary_list.with_row do |row|
           row.with_key { "Email address" }
@@ -22,7 +22,7 @@
       end %>
     </div>
     <div class="govuk-grid-column-one-third">
-      <div class="govuk-!-padding-top-2 govuk-!-text-align-centre">
+      <div class="govuk-!-padding-top-2 govuk-!-text-align-right">
         <%= govuk_link_to("Change permissions", edit_assessor_interface_staff_path(staff)) %>
       </div>
     </div>
@@ -56,7 +56,7 @@
       end
     end
   end %>
-  
+
   <% unless index + 1 == @active_staff.count %>
     <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
   <% end %>
