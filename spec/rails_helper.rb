@@ -12,6 +12,7 @@ require "rspec/rails"
 
 require "capybara/cuprite"
 require "dfe/analytics/testing"
+require "dfe/analytics/rspec/matchers"
 require "support/page_helpers"
 require "site_prism"
 require "site_prism/all_there"
