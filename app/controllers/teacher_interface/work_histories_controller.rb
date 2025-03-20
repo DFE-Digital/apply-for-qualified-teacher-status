@@ -121,6 +121,8 @@ module TeacherInterface
           end
         end
       else
+        send_errors_to_big_query(@form)
+
         render :add_another, status: :unprocessable_entity
       end
     end
@@ -226,6 +228,8 @@ module TeacherInterface
       if @form.save(validate: true)
         redirect_to %i[check teacher_interface application_form work_histories]
       else
+        send_errors_to_big_query(@form)
+
         render :delete, status: :unprocessable_entity
       end
     end

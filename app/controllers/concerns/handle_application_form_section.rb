@@ -22,6 +22,8 @@ module HandleApplicationFormSection
         redirect_to check_path || %i[teacher_interface application_form]
       end
     else
+      send_errors_to_big_query(form)
+
       render if_failure_then_render, status: :unprocessable_entity
     end
   end
@@ -30,5 +32,26 @@ module HandleApplicationFormSection
 
   def history_stack
     @history_stack ||= HistoryStack.new(session:)
+  end
+
+  def send_errors_to_big_query(form)
+    error_events = []
+
+    form.errors.each do |error|
+      error_events << DfE::Analytics::Event
+        .new
+        .with_type(:form_validation_failure)
+        .with_user(current_teacher)
+        .with_request_details(request)
+        .with_data(
+          data: {
+            form_class: form.class.to_s,
+            error_attribute: error.attribute,
+            error_message: error.message,
+          },
+        )
+    end
+
+    DfE::Analytics::SendEvents.do(error_events) if error_events.present?
   end
 end

@@ -11,8 +11,19 @@ RSpec.describe HandleApplicationFormSection, type: :controller do
     end
   end
   let(:session) { {} }
+  let(:current_teacher) { create(:teacher) }
+  let(:request) do
+    ActionController::TestRequest.new({}, {}, TeacherInterface::BaseController)
+  end
 
-  before { allow(controller).to receive_messages(params:, session:) }
+  before do
+    allow(controller).to receive_messages(
+      params:,
+      session:,
+      current_teacher:,
+      request:,
+    )
+  end
 
   describe "#handle_application_form_section" do
     subject(:handle_application_form_section) do
@@ -23,7 +34,7 @@ RSpec.describe HandleApplicationFormSection, type: :controller do
       )
     end
 
-    let(:form) { double }
+    let(:form) { instance_double(TeacherInterface::BaseForm, errors: []) }
     let(:if_success_then_redirect) { :redirect }
     let(:if_failure_then_render) { :render }
 
@@ -40,11 +51,30 @@ RSpec.describe HandleApplicationFormSection, type: :controller do
       end
 
       context "when form is invalid" do
+        let(:error) do
+          ActiveModel::Error.new(
+            TeacherInterface::NameAndDateOfBirthForm.new,
+            :given_names,
+          )
+        end
+
+        let(:form) do
+          instance_double(
+            TeacherInterface::NameAndDateOfBirthForm,
+            errors: [error],
+          )
+        end
+
         before { allow(form).to receive(:save).and_return(false) }
 
-        it "renders the failure" do
+        it "renders the failure and sends a custom form_validation_failure event to BigQuery" do
           expect(controller).to receive(:render)
+
           handle_application_form_section
+
+          expect(
+            :form_validation_failure,
+          ).to have_been_enqueued_as_analytics_events
         end
       end
     end
