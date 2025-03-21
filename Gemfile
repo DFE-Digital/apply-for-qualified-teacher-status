@@ -9,7 +9,7 @@ gem "rails", "~> 8.0"
 
 gem "activerecord-session_store"
 gem "amazing_print"
-gem "azure-storage-blob"
+gem "azure-blob"
 gem "bootsnap", require: false
 gem "business"
 gem "combine_pdf"
