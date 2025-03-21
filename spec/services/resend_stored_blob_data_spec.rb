@@ -10,10 +10,7 @@ RSpec.describe ResendStoredBlobData do
     let(:response_success) { true }
     let(:put_blob_url) { "http://example.com/uploads/#{upload.attachment.key}" }
     let(:stubbed_blob_service) do
-      instance_double(
-        Azure::Storage::Blob::BlobService,
-        generate_uri: put_blob_url,
-      )
+      instance_double(AzureBlob::Client, generate_uri: put_blob_url)
     end
     let(:stubbed_response) do
       instance_double(
@@ -23,9 +20,7 @@ RSpec.describe ResendStoredBlobData do
     end
 
     before do
-      allow(Azure::Storage::Blob::BlobService).to receive(:new).and_return(
-        stubbed_blob_service,
-      )
+      allow(AzureBlob::Client).to receive(:new).and_return(stubbed_blob_service)
       allow(stubbed_blob_service).to receive(:call).and_return(stubbed_response)
     end
 

@@ -125,17 +125,14 @@ module SystemHelpers
         </Tag>
       </Tags>
     XML
-    stubbed_service =
-      instance_double(Azure::Storage::Blob::BlobService, generate_uri: tags_url)
+    stubbed_service = instance_double(AzureBlob::Client, generate_uri: tags_url)
     stubbed_response =
       instance_double(
         Azure::Core::Http::HttpResponse,
         success?: true,
         body: response_body,
       )
-    allow(Azure::Storage::Blob::BlobService).to receive(:new).and_return(
-      stubbed_service,
-    )
+    allow(AzureBlob::Client).to receive(:new).and_return(stubbed_service)
     allow(stubbed_service).to receive(:call).and_return(stubbed_response)
   end
 
