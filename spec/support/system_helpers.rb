@@ -125,15 +125,9 @@ module SystemHelpers
         </Tag>
       </Tags>
     XML
-    stubbed_service = instance_double(AzureBlob::Client, generate_uri: tags_url)
-    stubbed_response =
-      instance_double(
-        Azure::Core::Http::HttpResponse,
-        success?: true,
-        body: response_body,
-      )
+    stubbed_service = instance_double(AzureBlob::Client)
     allow(AzureBlob::Client).to receive(:new).and_return(stubbed_service)
-    allow(stubbed_service).to receive(:call).and_return(stubbed_response)
+    allow(stubbed_service).to receive(:get_blob).and_return(response_body)
   end
 
   def given_malware_scanning_is_disabled
