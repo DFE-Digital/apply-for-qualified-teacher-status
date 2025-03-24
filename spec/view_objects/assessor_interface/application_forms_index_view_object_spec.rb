@@ -95,6 +95,16 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
         it { is_expected.to be_empty }
       end
 
+      context "with a fi_request_statuses filter" do
+        before do
+          allow_any_instance_of(Filters::Statuses).to receive(
+            :apply,
+          ).and_return(ApplicationForm.none)
+        end
+
+        it { is_expected.to be_empty }
+      end
+
       context "with show all filter" do
         before do
           allow_any_instance_of(Filters::Stage).to receive(:apply).and_return(
@@ -232,6 +242,61 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
             OpenStruct.new(id: "verification", label: "Verification (4)"),
             OpenStruct.new(id: "review", label: "Review (5)"),
             OpenStruct.new(id: "completed", label: "Completed (6)"),
+          ],
+        )
+      end
+    end
+  end
+
+  describe "#fi_request_statuses_filter_options" do
+    subject(:fi_request_statuses_filter_options) do
+      view_object.fi_request_statuses_filter_options
+    end
+
+    it do
+      expect(subject).to eq(
+        [
+          OpenStruct.new(
+            id: "waiting_on_further_information",
+            label: "Waiting on further information (0)",
+          ),
+          OpenStruct.new(
+            id: "received_further_information",
+            label: "Received further information (0)",
+          ),
+        ],
+      )
+    end
+
+    context "with application forms" do
+      before do
+        create_list(
+          :application_form,
+          2,
+          :submitted,
+          :assessment_stage,
+          statuses: [:waiting_on_further_information],
+        )
+        create_list(
+          :application_form,
+          3,
+          :submitted,
+          :assessment_stage,
+          statuses: [:received_further_information],
+        )
+      end
+
+      it do
+        expect(subject).to eq(
+          [
+            OpenStruct.new(
+              id: "waiting_on_further_information",
+              label: "Waiting on further information (2)",
+            ),
+            OpenStruct.new(
+              id: "received_further_information",
+              label: "Received further information (3)",
+            ),
           ],
         )
       end
