@@ -49,6 +49,10 @@ class AssessorInterface::ApplicationFormsIndexViewObject
     STAGE_FILTER_OPTIONS.map { |name| stage_filter_entry(name) }
   end
 
+  def fi_request_statuses_filter_options
+    FI_REQUESTS_FILTER_OPTIONS.map { |name| statuses_filter_entry(name) }
+  end
+
   def flag_as_unsuitable?(application_form)
     suitability_active? &&
       suitability_matcher.flag_as_unsuitable?(application_form:)
@@ -65,6 +69,11 @@ class AssessorInterface::ApplicationFormsIndexViewObject
     verification
     review
     completed
+  ].freeze
+
+  FI_REQUESTS_FILTER_OPTIONS = %w[
+    waiting_on_further_information
+    received_further_information
   ].freeze
 
   def filter_params
@@ -92,10 +101,14 @@ class AssessorInterface::ApplicationFormsIndexViewObject
   def application_forms_with_pagy
     @application_forms_with_pagy ||=
       pagy(
-        ::Filters::Stage.apply(
+        ::Filters::Statuses.apply(
           scope:
-            ::Filters::ActionRequiredBy.apply(
-              scope: application_forms_without_counted_filters,
+            ::Filters::Stage.apply(
+              scope:
+                ::Filters::ActionRequiredBy.apply(
+                  scope: application_forms_without_counted_filters,
+                  params: filter_params,
+                ),
               params: filter_params,
             ),
           params: filter_params,
@@ -107,7 +120,11 @@ class AssessorInterface::ApplicationFormsIndexViewObject
     @action_required_by_filter_counts ||=
       ::Filters::Stage
         .apply(
-          scope: application_forms_without_counted_filters,
+          scope:
+            ::Filters::Statuses.apply(
+              scope: application_forms_without_counted_filters,
+              params: filter_params,
+            ),
           params: filter_params,
         )
         .group(:action_required_by)
@@ -126,7 +143,11 @@ class AssessorInterface::ApplicationFormsIndexViewObject
     @stage_filter_counts ||=
       ::Filters::ActionRequiredBy
         .apply(
-          scope: application_forms_without_counted_filters,
+          scope:
+            ::Filters::Statuses.apply(
+              scope: application_forms_without_counted_filters,
+              params: filter_params,
+            ),
           params: filter_params,
         )
         .group(:stage)
@@ -144,6 +165,42 @@ class AssessorInterface::ApplicationFormsIndexViewObject
     OpenStruct.new(
       id: name,
       label: "#{readable_name} (#{stage_filter_counts.fetch(name, 0)})",
+    )
+  end
+
+  def statuses_filter_counts
+    @statuses_filter_counts ||=
+      ::Filters::Statuses
+        .apply(
+          scope:
+            ::Filters::Stage.apply(
+              scope:
+                ::Filters::ActionRequiredBy.apply(
+                  scope: application_forms_without_counted_filters,
+                  params: filter_params,
+                ),
+              params: filter_params,
+            ),
+          params: {
+          },
+        )
+        .map(&:statuses)
+        .flatten
+        .compact
+        .tally
+  end
+
+  def statuses_filter_entry(name)
+    readable_name =
+      I18n.t(
+        name,
+        scope: %i[components status_tag],
+        default: name.to_s.humanize,
+      )
+
+    OpenStruct.new(
+      id: name,
+      label: "#{readable_name} (#{statuses_filter_counts.fetch(name, 0)})",
     )
   end
 

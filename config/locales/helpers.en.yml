@@ -334,6 +334,7 @@ en:
         submitted_at: Created date
         submitted_at_after: Start date
         submitted_at_before: End date
+        fi_request_statuses: FI requests
       assessor_interface_select_work_histories_form:
         work_history_ids: Schools
       assessor_interface_suitability_record_form:

@@ -13,5 +13,6 @@ class AssessorInterface::FilterForm
                 :show_all,
                 :stage,
                 :submitted_at_after,
-                :submitted_at_before
+                :submitted_at_before,
+                :fi_request_statuses
 end

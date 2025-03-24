@@ -69,6 +69,15 @@
         <%= f.govuk_check_box :show_all, :true, multiple: false, label: { text: "Show applications completed over 90 days ago" }, checked: @view_object.filter_form.show_all == "true" %>
       <% end %>
     </section>
+
+
+    <section id="app-applications-filters-fi-requests">
+      <%= f.govuk_check_boxes_fieldset :fi_request_statuses, legend: { size: "s" }, small: true do %>
+        <% @view_object.fi_request_statuses_filter_options.each do |option| %>
+          <%= f.govuk_check_box :fi_request_statuses, option.id, label: { text: option.label }, checked: @view_object.filter_form.fi_request_statuses&.include?(option.id) %>
+        <% end %>
+      <% end %>
+    </section>
   <% end %>
 </div>
 
