@@ -38,6 +38,7 @@
   end
 end %>
 
-<%= form_with url: [:confirm, :assessor_interface, @application_form, @assessment, :assessment_recommendation_award] do |f| %>
-  <% render "shared/assessor_interface/continue_cancel_button", f: %>
-<% end %>
+<div class="govuk-button-group">
+  <%= govuk_button_link_to "Continue", [:confirm, :assessor_interface, @application_form, @assessment, :assessment_recommendation_award] %>
+  <%= render "shared/assessor_interface/cancel_link" %>
+</div>
