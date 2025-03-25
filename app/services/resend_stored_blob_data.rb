@@ -5,8 +5,6 @@ require "azure_blob"
 class ResendStoredBlobData
   include ServicePattern
 
-  BLOB_CONTAINER_NAME = ENV["AZURE_STORAGE_CONTAINER"] || "uploads"
-
   def initialize(upload:)
     @upload = upload
   end
