@@ -24,7 +24,7 @@ RSpec.describe ResendStoredBlobData do
       resend_stored_blob_data
 
       expect(stubbed_blob_service).to have_received(:create_block_blob).with(
-        "uploads/#{upload.attachment.key}",
+        upload.attachment.key,
         upload.attachment.download,
       )
     end

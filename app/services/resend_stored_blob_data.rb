@@ -17,10 +17,7 @@ class ResendStoredBlobData
     end
 
     success =
-      blob_service.create_block_blob(
-        File.join(BLOB_CONTAINER_NAME, upload.attachment.key),
-        attachment_data,
-      )
+      blob_service.create_block_blob(upload.attachment.key, attachment_data)
 
     if success
       UpdateMalwareScanResultJob.set(wait: 2.seconds).perform_later(upload)
@@ -44,11 +41,5 @@ class ResendStoredBlobData
 
   def attachment_data
     @attachment_data ||= upload.attachment.download
-  end
-
-  def put_blob_url
-    blob_service.generate_uri(
-      File.join(BLOB_CONTAINER_NAME, upload.attachment.key),
-    )
   end
 end
