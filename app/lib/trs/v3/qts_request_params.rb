@@ -5,6 +5,12 @@ module TRS
     class QTSRequestParams
       include ServicePattern
 
+      AWARDED_QTS_STATUS = "Approved"
+
+      SCOTLAND_RECOGNITION_ROUTE_TYPE_ID = "52835b1f-1f2e-4665-abc6-7fb1ef0a80bb"
+      NORTHERN_IRELAND_RECOGNITION_ROUTE_TYPE_ID = "3604ef30-8f11-4494-8b52-a2f9c5371e03"
+      ALL_RECOGNITION_ROUTE_TYPE_ID = "6f27bdeb-d00a-4ef9-b0ea-26498ce64713"
+
       def initialize(application_form:)
         @application_form = application_form
         @teacher = application_form.teacher
@@ -13,20 +19,20 @@ module TRS
 
       def call
         {
-          routeType: route_type,
-          startDate: teaching_qualification.start_date.iso8601,
-          endDate: teaching_qualification.complete_date.iso8601,
-          subjects:,
-          ageRange: age_range,
-          degreeType: nil,
-          trainingCountryCode:
+          routeTypeId: route_type_id,
+          status: AWARDED_QTS_STATUS,
+          awardedDate: application_form.awarded_at.to_date.iso8601,
+          trainingStartDate: teaching_qualification.start_date.iso8601,
+          trainingEndDate: teaching_qualification.complete_date.iso8601,
+          trainingSubjectReferences: subjects,
+          trainingAgeSpecialism: age_range,
+          degreeTypeId: nil,
+          trainingCountryReference:
             CountryCode.for_code(
               teaching_qualification.institution_country_code,
             ),
-          providerUkprn: nil,
-          routeStatus: "Awarded", # TODO: TBC
-          exemptFromInduction: exempt_from_induction,
-          inductionExemptionReasons: induction_exemption_reasons,
+          trainingProviderUkprn: nil,
+          isExemptFromInduction: exempt_from_induction,
         }
       end
 
@@ -43,7 +49,7 @@ module TRS
       end
 
       def age_range
-        { from: assessment.age_range_min, to: assessment.age_range_max }
+        { type: "Range", from: assessment.age_range_min, to: assessment.age_range_max }
       end
 
       def exempt_from_induction
@@ -52,19 +58,13 @@ module TRS
         !assessment.induction_required
       end
 
-      def induction_exemption_reasons
-        # TODO: List of potential reasons to be provided.
-        # This must be provided if exemptFromInduction is true
-      end
-
-      def route_type
-        # TODO: The value returned will be either an enum or GUID. TBD
-        if CountryCode.scotland?(country_code)
-          "Scotland R"
-        elsif CountryCode.northern_ireland?(country_code)
-          "NI R"
+      def route_type_id
+        if ::CountryCode.scotland?(country_code)
+          SCOTLAND_RECOGNITION_ROUTE_TYPE_ID
+        elsif ::CountryCode.northern_ireland?(country_code)
+          NORTHERN_IRELAND_RECOGNITION_ROUTE_TYPE_ID
         else
-          "Apply for QTS"
+          ALL_RECOGNITION_ROUTE_TYPE_ID
         end
       end
 

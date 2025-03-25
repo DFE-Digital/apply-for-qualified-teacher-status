@@ -26,7 +26,7 @@ class TRS::Client::V3::UpdateQTSRequest
   attr_reader :application_form
 
   def trn
-    application_form.trn
+    application_form.teacher.trn
   end
 
   def reference
