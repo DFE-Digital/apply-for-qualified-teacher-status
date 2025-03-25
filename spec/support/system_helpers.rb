@@ -116,7 +116,6 @@ module SystemHelpers
 
   def given_malware_scanning_is_enabled(scan_result: "No threats found")
     FeatureFlags::FeatureFlag.activate(:fetch_malware_scan_result)
-    tags_url = "https://example.com/uploads/abc987xyz123?comp=tags"
     response_body = <<-XML.squish
       <Tags>
         <Tag>
