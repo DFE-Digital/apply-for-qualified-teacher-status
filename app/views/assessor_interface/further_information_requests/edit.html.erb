@@ -4,13 +4,27 @@
 <h1 class="govuk-heading-xl"><%= t(".title") %></h1>
 
 <% @view_object.review_items.each do |item| %>
-  <h2 class="govuk-heading-m"><%= item.fetch(:heading) %></h2>
-  <%= govuk_inset_text(text: item.fetch(:description)) %>
-  <%= render(CheckYourAnswersSummary::Component.new(**item.fetch(:check_your_answers))) %>
-  <% if (item[:work_history_summary_list_rows]).present? && !@view_object.further_information_request.review_passed? %>
-    <%= govuk_details(summary_text: "Review previous referee details?") do %>
-      <%= govuk_summary_list(rows: item[:work_history_summary_list_rows]) %>
+  <%= govuk_summary_card(title: item.fetch(:heading), html_attributes: { id: item.fetch(:id) }) do |card| %>
+    <h3 class="govuk-heading-s">Applicant's latest response</h3>
+    <p class="govuk-hint"><%= item.fetch(:recieved_date) %></p>
+
+    <% if item[:applicant_text_response] %>
+      <p class="govuk-body"><%= item.fetch(:applicant_text_response) %></p>
     <% end %>
+
+    <% if item[:applicant_contact_response] %>
+      <%= govuk_inset_text do %>
+        <%= govuk_list item.fetch(:applicant_contact_response) %>
+      <% end %>
+    <% end %>
+
+    <% if item[:applicant_upload_response] %>
+      <%= document_link_to(item.fetch(:applicant_upload_response)) %>
+    <% end %>
+
+    <h3 class="govuk-heading-s">Further information request</h3>
+    <p class="govuk-hint"><%= item.fetch(:requested_date) %></p>
+    <p class="govuk-body"><%= item.fetch(:assessor_request) %></p>
   <% end %>
 <% end %>
 

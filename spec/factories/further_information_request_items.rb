@@ -55,7 +55,7 @@ FactoryBot.define do
 
     trait :with_work_history_contact_response do
       information_type { "work_history_contact" }
-      failure_reason_key { "school_details_cannot_be_verified" }
+      failure_reason_key { "unrecognised_references" }
       work_history do
         further_information_request.application_form.work_histories.first
       end

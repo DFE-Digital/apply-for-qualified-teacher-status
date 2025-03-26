@@ -39,94 +39,61 @@ RSpec.describe AssessorInterface::FurtherInformationRequestViewObject do
         further_information_request:,
       )
     end
+    let!(:work_history_contact_item) do
+      create(
+        :further_information_request_item,
+        :with_work_history_contact_response,
+        :completed,
+        further_information_request:,
+        contact_email: "john@school.com",
+        contact_job: "Principal",
+        contact_name: "John Scott",
+      )
+    end
 
     it do
       expect(subject).to eq(
         [
           {
+            id: "further-information-requested-#{text_item.id}",
+            recieved_date:
+              further_information_request.received_at.to_date.to_fs,
+            requested_date:
+              further_information_request.requested_at.to_date.to_fs,
             heading:
               "Subjects entered are acceptable for QTS, but the uploaded qualifications do not match them.",
-            description: text_item.failure_reason_assessor_feedback,
-            check_your_answers: {
-              id: "further-information-requested-#{text_item.id}",
-              model: text_item,
-              title: "Further information requested",
-              fields: {
-                text_item.id => {
-                  title: "Tell us more about the subjects you can teach",
-                  value: text_item.response,
-                },
-              },
-            },
+            assessor_request: text_item.failure_reason_assessor_feedback,
+            applicant_text_response: text_item.response,
           },
           {
+            id: "further-information-requested-#{document_item.id}",
+            recieved_date:
+              further_information_request.received_at.to_date.to_fs,
+            requested_date:
+              further_information_request.requested_at.to_date.to_fs,
             heading:
               "The ID document is illegible or in a format that we cannot accept.",
-            description: document_item.failure_reason_assessor_feedback,
-            check_your_answers: {
-              id: "further-information-requested-#{document_item.id}",
-              model: document_item,
-              title: "Further information requested",
-              fields: {
-                document_item.id => {
-                  title: "Upload your identity document",
-                  value: document_item.document,
-                },
-              },
-            },
+            assessor_request: document_item.failure_reason_assessor_feedback,
+            applicant_upload_response: document_item.document,
+          },
+          {
+            id: "further-information-requested-#{work_history_contact_item.id}",
+            recieved_date:
+              further_information_request.received_at.to_date.to_fs,
+            requested_date:
+              further_information_request.requested_at.to_date.to_fs,
+            heading:
+              "We could not verify 1 or more references entered by the applicant.",
+            assessor_request:
+              work_history_contact_item.failure_reason_assessor_feedback,
+            applicant_contact_response: [
+              "Contact’s name: John Scott",
+              "Contact’s job: Principal",
+              "Contact’s email: john@school.com",
+            ],
           },
         ],
       )
-    end
-
-    context "when the document item is passport" do
-      let!(:document_item) do
-        create(
-          :further_information_request_item,
-          :with_passport_document_response,
-          :completed,
-          further_information_request:,
-        )
-      end
-
-      it do
-        expect(subject).to eq(
-          [
-            {
-              heading:
-                "Subjects entered are acceptable for QTS, but the uploaded qualifications do not match them.",
-              description: text_item.failure_reason_assessor_feedback,
-              check_your_answers: {
-                id: "further-information-requested-#{text_item.id}",
-                model: text_item,
-                title: "Further information requested",
-                fields: {
-                  text_item.id => {
-                    title: "Tell us more about the subjects you can teach",
-                    value: text_item.response,
-                  },
-                },
-              },
-            },
-            {
-              heading:
-                "There is a problem with the passport. For example, it’s incorrect, illegible, or incomplete.",
-              description: document_item.failure_reason_assessor_feedback,
-              check_your_answers: {
-                id: "further-information-requested-#{document_item.id}",
-                model: document_item,
-                title: "Further information requested",
-                fields: {
-                  document_item.id => {
-                    title: "Upload your passport",
-                    value: document_item.document,
-                  },
-                },
-              },
-            },
-          ],
-        )
-      end
     end
   end
 

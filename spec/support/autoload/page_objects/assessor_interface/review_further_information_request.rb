@@ -7,7 +7,7 @@ module PageObjects
                 "/further-information-requests/{id}/edit"
 
       element :heading, ".govuk-heading-xl"
-      sections :summary_lists, GovukSummaryList, ".govuk-summary-list"
+      sections :summary_cards, GovukSummaryList, ".govuk-summary-card"
     end
   end
 end

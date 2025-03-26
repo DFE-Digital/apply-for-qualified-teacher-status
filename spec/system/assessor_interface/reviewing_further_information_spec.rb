@@ -30,7 +30,7 @@ RSpec.describe "Assessor reviewing further information", type: :system do
       assessment_id:,
       id: further_information_request.id,
     )
-    and_i_see_the_check_your_answers_items
+    and_i_see_the_fi_responses
 
     when_i_mark_the_section_as_complete
     then_i_see_the(:assessor_complete_assessment_page, reference:)
@@ -46,7 +46,7 @@ RSpec.describe "Assessor reviewing further information", type: :system do
       assessment_id:,
       id: further_information_request.id,
     )
-    and_i_see_the_check_your_answers_items
+    and_i_see_the_fi_responses
 
     when_i_mark_the_section_as_incomplete
     then_i_see_the(:assessor_complete_assessment_page, reference:)
@@ -65,7 +65,7 @@ RSpec.describe "Assessor reviewing further information", type: :system do
       assessment_id:,
       id: further_information_request.id,
     )
-    and_i_see_the_check_your_answers_items_without_the_previous_referee_details
+    and_i_see_the_fi_responses
     and_i_do_not_see_the_review_further_information_form
   end
 
@@ -83,38 +83,20 @@ RSpec.describe "Assessor reviewing further information", type: :system do
     assessor_application_page.review_requested_information_task.click
   end
 
-  def and_i_see_the_check_your_answers_items
-    rows =
-      assessor_review_further_information_request_page.summary_lists.flat_map(
-        &:rows
-      )
+  def and_i_see_the_fi_responses
+    items = assessor_review_further_information_request_page.summary_cards
 
-    expect(rows.count).to eq(8)
+    expect(items.count).to eq(3)
 
-    expect(rows.first.key.text).to eq(
-      "Tell us more about the subjects you can teach",
+    expect(items.first).to have_content(
+      "Subjects entered are acceptable for QTS, but the uploaded qualifications do not match them.",
     )
-
-    expect(page).to have_content("Review previous referee details?")
-
-    expect(rows.last.key.text).to eq("Upload your identity document")
-  end
-
-  def and_i_see_the_check_your_answers_items_without_the_previous_referee_details
-    rows =
-      assessor_review_further_information_request_page.summary_lists.flat_map(
-        &:rows
-      )
-
-    expect(rows.count).to eq(5)
-
-    expect(rows.first.key.text).to eq(
-      "Tell us more about the subjects you can teach",
+    expect(items.second).to have_content(
+      "We could not verify 1 or more references entered by the applicant.",
     )
-
-    expect(page).not_to have_content("Review previous referee details?")
-
-    expect(rows.last.key.text).to eq("Upload your identity document")
+    expect(items.last).to have_content(
+      "The ID document is illegible or in a format that we cannot accept.",
+    )
   end
 
   def when_i_mark_the_section_as_complete
