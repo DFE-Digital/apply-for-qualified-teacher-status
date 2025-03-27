@@ -18,7 +18,7 @@ class TRS::Client::V3::UpdateQTSRequest
         req.body = body
       end
 
-    response.body.transform_keys { |key| key.underscore.to_sym }
+    response.body
   end
 
   private
