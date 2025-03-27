@@ -76,4 +76,11 @@ class FurtherInformationRequestItem < ApplicationRecord
       email: contact_email,
     )
   end
+
+  def assessment_section
+    assessment
+      .sections
+      .includes(:selected_failure_reasons)
+      .find_by(selected_failure_reasons: { key: failure_reason_key })
+  end
 end
