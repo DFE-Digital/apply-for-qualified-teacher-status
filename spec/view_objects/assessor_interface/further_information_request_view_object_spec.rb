@@ -20,8 +20,106 @@ RSpec.describe AssessorInterface::FurtherInformationRequestViewObject do
     }
   end
 
+  describe "#grouped_review_items_by_assessment_section" do
+    subject(:grouped_review_items_by_assessment_section) do
+      view_object.grouped_review_items_by_assessment_section
+    end
+
+    let(:personal_information_assessment_section) do
+      create :assessment_section, :personal_information, assessment:
+    end
+    let!(:passport_document_illegible) do
+      create(
+        :further_information_request_item,
+        :with_document_response,
+        :completed,
+        further_information_request:,
+        failure_reason_key: "passport_document_illegible",
+      )
+    end
+    let!(:passport_document_mismatch) do
+      create(
+        :further_information_request_item,
+        :with_document_response,
+        :completed,
+        further_information_request:,
+        failure_reason_key: "passport_document_mismatch",
+      )
+    end
+    let!(:qualifications_dont_match_other_details) do
+      create(
+        :further_information_request_item,
+        :with_text_response,
+        :completed,
+        further_information_request:,
+        failure_reason_key: "qualifications_dont_match_other_details",
+      )
+    end
+    let!(:qualifications_or_modules_required_not_provided) do
+      create(
+        :further_information_request_item,
+        :with_document_response,
+        :completed,
+        further_information_request:,
+        failure_reason_key: "qualifications_or_modules_required_not_provided",
+      )
+    end
+
+    let(:qualifications_assessment_section) do
+      create :assessment_section, :qualifications, assessment:
+    end
+
+    before do
+      create :selected_failure_reason,
+             assessment_section: personal_information_assessment_section,
+             key: "passport_document_illegible"
+      create :selected_failure_reason,
+             assessment_section: personal_information_assessment_section,
+             key: "passport_document_mismatch"
+
+      create :selected_failure_reason,
+             assessment_section: qualifications_assessment_section,
+             key: "qualifications_dont_match_other_details"
+      create :selected_failure_reason,
+             assessment_section: qualifications_assessment_section,
+             key: "qualifications_or_modules_required_not_provided"
+    end
+
+    it do
+      expect(subject).to eq(
+        [
+          {
+            section_id: personal_information_assessment_section.id,
+            heading: "Personal information",
+            section_link_text: "Check original personal information details",
+            review_items:
+              view_object.review_items(
+                [passport_document_mismatch, passport_document_illegible],
+              ),
+          },
+          {
+            section_id: qualifications_assessment_section.id,
+            heading: "Qualifications",
+            section_link_text: "Check original qualifications details",
+            review_items:
+              view_object.review_items(
+                [
+                  qualifications_or_modules_required_not_provided,
+                  qualifications_dont_match_other_details,
+                ],
+              ),
+          },
+        ],
+      )
+    end
+  end
+
   describe "#review_items" do
-    subject(:review_items) { view_object.review_items }
+    subject(:review_items) do
+      view_object.review_items(
+        [text_item, document_item, work_history_contact_item],
+      )
+    end
 
     let!(:text_item) do
       create(
@@ -55,17 +153,6 @@ RSpec.describe AssessorInterface::FurtherInformationRequestViewObject do
       expect(subject).to eq(
         [
           {
-            id: "further-information-requested-#{text_item.id}",
-            recieved_date:
-              further_information_request.received_at.to_date.to_fs,
-            requested_date:
-              further_information_request.requested_at.to_date.to_fs,
-            heading:
-              "Subjects entered are acceptable for QTS, but the uploaded qualifications do not match them.",
-            assessor_request: text_item.failure_reason_assessor_feedback,
-            applicant_text_response: text_item.response,
-          },
-          {
             id: "further-information-requested-#{document_item.id}",
             recieved_date:
               further_information_request.received_at.to_date.to_fs,
@@ -75,6 +162,17 @@ RSpec.describe AssessorInterface::FurtherInformationRequestViewObject do
               "The ID document is illegible or in a format that we cannot accept.",
             assessor_request: document_item.failure_reason_assessor_feedback,
             applicant_upload_response: document_item.document,
+          },
+          {
+            id: "further-information-requested-#{text_item.id}",
+            recieved_date:
+              further_information_request.received_at.to_date.to_fs,
+            requested_date:
+              further_information_request.requested_at.to_date.to_fs,
+            heading:
+              "Subjects entered are acceptable for QTS, but the uploaded qualifications do not match them.",
+            assessor_request: text_item.failure_reason_assessor_feedback,
+            applicant_text_response: text_item.response,
           },
           {
             id: "further-information-requested-#{work_history_contact_item.id}",

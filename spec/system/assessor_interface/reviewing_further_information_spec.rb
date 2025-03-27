@@ -89,13 +89,13 @@ RSpec.describe "Assessor reviewing further information", type: :system do
     expect(items.count).to eq(3)
 
     expect(items.first).to have_content(
-      "Subjects entered are acceptable for QTS, but the uploaded qualifications do not match them.",
+      "The ID document is illegible or in a format that we cannot accept.",
     )
     expect(items.second).to have_content(
-      "We could not verify 1 or more references entered by the applicant.",
+      "Subjects entered are acceptable for QTS, but the uploaded qualifications do not match them.",
     )
     expect(items.last).to have_content(
-      "The ID document is illegible or in a format that we cannot accept.",
+      "We could not verify 1 or more references entered by the applicant.",
     )
   end
 
@@ -143,7 +143,13 @@ RSpec.describe "Assessor reviewing further information", type: :system do
         :received_further_information_request,
         :with_items,
         assessment: application_form.assessment,
-      )
+      ).tap do |further_information_request|
+        further_information_request.items.each do |item|
+          create :selected_failure_reason,
+                 assessment_section: application_form.assessment.sections.first,
+                 key: item.failure_reason_key
+        end
+      end
   end
 
   delegate :reference, to: :application_form
