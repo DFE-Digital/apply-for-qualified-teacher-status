@@ -153,7 +153,7 @@ RSpec.describe AssessorInterface::FurtherInformationRequestViewObject do
       expect(subject).to eq(
         [
           {
-            id: "further-information-requested-#{document_item.id}",
+            id: document_item.id,
             recieved_date:
               further_information_request.received_at.to_date.to_fs,
             requested_date:
@@ -164,7 +164,7 @@ RSpec.describe AssessorInterface::FurtherInformationRequestViewObject do
             applicant_upload_response: document_item.document,
           },
           {
-            id: "further-information-requested-#{text_item.id}",
+            id: text_item.id,
             recieved_date:
               further_information_request.received_at.to_date.to_fs,
             requested_date:
@@ -175,7 +175,7 @@ RSpec.describe AssessorInterface::FurtherInformationRequestViewObject do
             applicant_text_response: text_item.response,
           },
           {
-            id: "further-information-requested-#{work_history_contact_item.id}",
+            id: work_history_contact_item.id,
             recieved_date:
               further_information_request.received_at.to_date.to_fs,
             requested_date:
