@@ -367,6 +367,27 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       end
     end
 
+    context "with a all items failed but not completed note" do
+      before do
+        assessment.request_further_information!
+        further_information_request =
+          create(
+            :received_further_information_request,
+            :with_items,
+            assessment:,
+          )
+        further_information_request.items.update_all(review_decision: "decline")
+      end
+
+      it do
+        expect(subject).to include_task_list_item(
+          "Assessment",
+          "Review further information from applicant",
+          status: :in_progress,
+        )
+      end
+    end
+
     context "with a passed further information request and a finished assessment" do
       before do
         assessment.award!

@@ -46,6 +46,18 @@ RSpec.describe AssessorInterface::FurtherInformationRequestPolicy do
     it_behaves_like "a policy method with permission"
   end
 
+  describe "#edit_decline?" do
+    subject(:edit_decline?) { policy.edit_decline? }
+
+    it_behaves_like "a policy method with permission"
+  end
+
+  describe "#update_decline?" do
+    subject(:update_decline?) { policy.update_decline? }
+
+    it_behaves_like "a policy method requiring the assess permission"
+  end
+
   describe "#destroy?" do
     subject(:destroy?) { policy.destroy? }
 

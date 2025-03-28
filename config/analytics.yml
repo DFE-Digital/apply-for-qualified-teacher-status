@@ -170,6 +170,8 @@
     - further_information_request_id
     - id
     - information_type
+    - review_decision
+    - review_decision_note
     - updated_at
     - work_history_id
   :mail_delivery_failures:
