@@ -263,7 +263,14 @@ class AssessorInterface::ApplicationFormsShowViewObject
         if !further_information_request.received?
           :cannot_start
         elsif !further_information_request.reviewed?
-          :not_started
+          if further_information_request
+               .items
+               .pluck(:review_decision)
+               .all?(&:nil?)
+            :not_started
+          else
+            :in_progress
+          end
         elsif assessment.request_further_information?
           :in_progress
         else
