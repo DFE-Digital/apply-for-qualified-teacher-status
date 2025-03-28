@@ -12,6 +12,8 @@
 #  failure_reason_key               :string           default(""), not null
 #  information_type                 :string
 #  response                         :text
+#  review_decision                  :string
+#  review_decision_note             :text
 #  created_at                       :datetime         not null
 #  updated_at                       :datetime         not null
 #  further_information_request_id   :bigint
