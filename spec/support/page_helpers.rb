@@ -228,6 +228,11 @@ module PageHelpers
       PageObjects::AssessorInterface::ReviewFurtherInformationRequest.new
   end
 
+  def assessor_decline_further_information_request_page
+    @assessor_decline_further_information_request_page ||=
+      PageObjects::AssessorInterface::DeclineFurtherInformationRequest.new
+  end
+
   def assessor_review_professional_standing_request_page
     @assessor_review_professional_standing_request_page ||=
       PageObjects::AssessorInterface::ReviewProfessionalStandingRequest.new

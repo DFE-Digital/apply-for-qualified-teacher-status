@@ -21,7 +21,7 @@ RSpec.describe "Assessor reviewing further information", type: :system do
     then_i_see_the_forbidden_page
   end
 
-  it "review complete" do
+  it "review accept" do
     when_i_visit_the(:assessor_application_page, reference:)
     and_i_click_review_requested_information
     then_i_see_the(
@@ -32,12 +32,12 @@ RSpec.describe "Assessor reviewing further information", type: :system do
     )
     and_i_see_the_fi_responses
 
-    when_i_mark_the_section_as_complete
+    when_i_mark_the_information_received_as_accepted
     then_i_see_the(:assessor_complete_assessment_page, reference:)
     and_i_see_an_award_qts_option
   end
 
-  it "review incomplete" do
+  it "review all decline" do
     when_i_visit_the(:assessor_application_page, reference:)
     and_i_click_review_requested_information
     then_i_see_the(
@@ -48,7 +48,35 @@ RSpec.describe "Assessor reviewing further information", type: :system do
     )
     and_i_see_the_fi_responses
 
-    when_i_mark_the_section_as_incomplete
+    when_i_mark_the_information_received_as_decline
+    then_i_see_the(
+      :assessor_decline_further_information_request_page,
+      reference:,
+    )
+    when_i_add_a_decline_note_and_submit
+
+    then_i_see_the(:assessor_complete_assessment_page, reference:)
+    and_i_see_a_decline_qts_option
+  end
+
+  it "review some accept and some decline" do
+    when_i_visit_the(:assessor_application_page, reference:)
+    and_i_click_review_requested_information
+    then_i_see_the(
+      :assessor_review_further_information_request_page,
+      reference:,
+      assessment_id:,
+      id: further_information_request.id,
+    )
+    and_i_see_the_fi_responses
+
+    when_i_mark_the_information_received_as_some_accepted_and_some_declined
+    then_i_see_the(
+      :assessor_decline_further_information_request_page,
+      reference:,
+    )
+    when_i_add_a_decline_note_and_submit
+
     then_i_see_the(:assessor_complete_assessment_page, reference:)
     and_i_see_a_decline_qts_option
   end
@@ -99,8 +127,10 @@ RSpec.describe "Assessor reviewing further information", type: :system do
     )
   end
 
-  def when_i_mark_the_section_as_complete
-    assessor_review_further_information_request_page.submit_yes
+  def when_i_mark_the_information_received_as_accepted
+    assessor_review_further_information_request_page.submit_yes(
+      items: further_information_request.items,
+    )
   end
 
   def and_i_see_an_award_qts_option
@@ -109,10 +139,41 @@ RSpec.describe "Assessor reviewing further information", type: :system do
     ).not_to be_nil
   end
 
-  def when_i_mark_the_section_as_incomplete
+  def when_i_mark_the_information_received_as_decline
     assessor_review_further_information_request_page.submit_no(
-      note: "Failure reason",
+      items: further_information_request.items,
     )
+  end
+
+  def when_i_mark_the_information_received_as_some_accepted_and_some_declined
+    assessor_review_further_information_request_page.find(
+      "#assessor-interface-further-information-request-review-form-#{
+        further_information_request.items.first.id
+      }-decision-decline-field",
+      visible: false,
+    ).choose
+
+    assessor_review_further_information_request_page.find(
+      "#assessor-interface-further-information-request-review-form-#{
+        further_information_request.items.second.id
+      }-decision-accept-field",
+      visible: false,
+    ).choose
+
+    assessor_review_further_information_request_page.find(
+      "#assessor-interface-further-information-request-review-form-#{
+        further_information_request.items.last.id
+      }-decision-accept-field",
+      visible: false,
+    ).choose
+
+    assessor_review_further_information_request_page.form.submit_button.click
+  end
+
+  def when_i_add_a_decline_note_and_submit
+    assessor_decline_further_information_request_page.form.note_textarea.fill_in with:
+      "Decline note."
+    assessor_decline_further_information_request_page.form.submit_button.click
   end
 
   def and_i_see_a_decline_qts_option
@@ -120,7 +181,9 @@ RSpec.describe "Assessor reviewing further information", type: :system do
   end
 
   def and_i_do_not_see_the_review_further_information_form
-    expect(assessor_review_further_information_request_page).not_to have_form
+    expect(
+      assessor_review_further_information_request_page.form,
+    ).not_to have_submit_button
   end
 
   def application_form

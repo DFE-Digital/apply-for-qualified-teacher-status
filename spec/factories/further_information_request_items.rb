@@ -59,7 +59,8 @@ FactoryBot.define do
       information_type { "work_history_contact" }
       failure_reason_key { "unrecognised_references" }
       work_history do
-        further_information_request.application_form.work_histories.first
+        further_information_request.application_form.work_histories.first ||
+          create(:work_history, application_form:)
       end
     end
 

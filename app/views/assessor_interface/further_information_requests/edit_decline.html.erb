@@ -1,0 +1,14 @@
+<% content_for :page_title, title_with_error_prefix(t(".title"), error: @form.errors.any?) %>
+<% content_for :back_link_url, edit_assessor_interface_application_form_assessment_further_information_request_path(@application_form, @view_object.assessment, @view_object.further_information_request) %>
+
+<% if policy([:assessor_interface, @view_object.further_information_request]).update? && @view_object.can_update? %>
+  <%= form_with model: @form, url: [:decline, :assessor_interface, @view_object.application_form, @view_object.assessment, @view_object.further_information_request], method: :post do |f| %>
+    <%= f.govuk_error_summary %>
+
+    <h1 class="govuk-heading-xl"><%= t(".title") %></h1>
+
+    <%= f.govuk_text_area :note, label: { text: t(".failure_assessor_note").html_safe } %>
+
+    <%= render "shared/assessor_interface/continue_cancel_button", f: %>
+  <% end %>
+<% end %>
