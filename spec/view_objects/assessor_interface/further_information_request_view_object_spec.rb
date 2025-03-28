@@ -234,4 +234,68 @@ RSpec.describe AssessorInterface::FurtherInformationRequestViewObject do
       it { is_expected.to be false }
     end
   end
+
+  describe "#can_decline?" do
+    subject(:can_update?) { view_object.can_decline? }
+
+    let(:further_information_request) do
+      create(:received_further_information_request, :with_items, assessment:)
+    end
+
+    context "when further information can be updated" do
+      before do
+        further_information_request.update!(review_passed: false)
+        assessment.request_further_information!
+      end
+
+      context "with no decisions yet made on any of the further information request items" do
+        it { is_expected.to be false }
+      end
+
+      context "with the further information request items being all accepted" do
+        before do
+          further_information_request.items.update_all(
+            review_decision: "accept",
+          )
+        end
+
+        it { is_expected.to be false }
+      end
+
+      context "with the further information request items being all declined" do
+        before do
+          further_information_request.items.update_all(
+            review_decision: "decline",
+          )
+        end
+
+        it { is_expected.to be true }
+      end
+
+      context "with the further information request items being mix of accept and decline" do
+        before do
+          further_information_request.items.first.update!(
+            review_decision: "accept",
+          )
+          further_information_request.items.second.update!(
+            review_decision: "accept",
+          )
+          further_information_request.items.third.update!(
+            review_decision: "decline",
+          )
+        end
+
+        it { is_expected.to be true }
+      end
+    end
+
+    context "when further information cannot be updated" do
+      before do
+        further_information_request.update!(review_passed: true)
+        assessment.award!
+      end
+
+      it { is_expected.to be false }
+    end
+  end
 end

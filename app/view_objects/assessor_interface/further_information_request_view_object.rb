@@ -86,6 +86,11 @@ class AssessorInterface::FurtherInformationRequestViewObject
       assessment.request_further_information?
   end
 
+  def can_decline?
+    can_update? &&
+      further_information_request.items.any?(&:review_decision_decline?)
+  end
+
   private
 
   attr_reader :params

@@ -10,6 +10,7 @@ module AssessorInterface
       authorize [:assessor_interface, further_information_request]
     end
 
+    before_action :ensure_can_decline, only: %i[edit_decline update_decline]
     before_action :load_application_form_and_assessment, only: %i[new edit]
     before_action :load_view_object,
                   only: %i[edit update edit_decline update_decline]
@@ -154,6 +155,12 @@ module AssessorInterface
       params.require(
         :assessor_interface_further_information_request_decline_form,
       ).permit(:note)
+    end
+
+    def ensure_can_decline
+      return if view_object.can_decline?
+
+      redirect_to [:assessor_interface, view_object.application_form]
     end
   end
 end
