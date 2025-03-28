@@ -14,4 +14,12 @@ class AssessorInterface::FurtherInformationRequestPolicy < ApplicationPolicy
 
     true
   end
+
+  def edit_decline?
+    edit?
+  end
+
+  def update_decline?
+    update?
+  end
 end

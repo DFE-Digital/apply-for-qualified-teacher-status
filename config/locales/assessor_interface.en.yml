@@ -242,6 +242,9 @@ en:
           english_language_proficiency: Check original English language proficiency details
           work_history: Check original work history details
           professional_standing: Check original professional standing details
+      edit_decline:
+        title: Add an internal note to explain why the application is being declined
+        failure_assessor_note: This is an internal note. It will not be seen by the applicant.
 
   activemodel:
     errors:
@@ -409,6 +412,10 @@ en:
           attributes:
             generated:
               blank: Confirm you have generated the non-signed TRA consent document
+        assessor_interface/further_information_request_decline_form:
+          attributes:
+            note:
+              blank: Enter an internal note about why the application is being declined
         assessor_interface/induction_required_form:
           attributes:
             induction_required:

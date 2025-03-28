@@ -59,7 +59,7 @@ class AssessorInterface::FurtherInformationRequestViewObject
       .sort_by(&:failure_reason_key)
       .map do |item|
         {
-          id: "further-information-requested-#{item.id}",
+          id: item.id,
           recieved_date: further_information_request.received_at.to_date.to_fs,
           requested_date:
             further_information_request.requested_at.to_date.to_fs,
