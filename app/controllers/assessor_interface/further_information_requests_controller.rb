@@ -146,6 +146,10 @@ module AssessorInterface
     end
 
     def further_information_request_review_form_params
+      unless params[:assessor_interface_further_information_request_review_form]
+        return {}
+      end
+
       params.require(
         :assessor_interface_further_information_request_review_form,
       ).permit(*form_class.permittable_parameters(further_information_request))
