@@ -189,6 +189,68 @@ RSpec.describe AssessorInterface::FurtherInformationRequestReviewForm,
     end
   end
 
+  describe "#all_further_information_request_items_accepted?" do
+    subject(:all_further_information_request_items_accepted?) do
+      form.all_further_information_request_items_accepted?
+    end
+
+    before { form.save }
+
+    context "when all items are accepted" do
+      let(:params) do
+        object = {}
+
+        further_information_request.items.each do |item|
+          object["#{item.id}_decision"] = "accept"
+        end
+
+        object
+      end
+
+      it "returns true" do
+        expect(all_further_information_request_items_accepted?).to be true
+      end
+    end
+
+    context "when some items are declined and some accepted" do
+      let(:params) do
+        object = {}
+
+        object[
+          "#{further_information_request.items.first.id}_decision"
+        ] = "decline"
+        object[
+          "#{further_information_request.items.second.id}_decision"
+        ] = "accept"
+        object[
+          "#{further_information_request.items.last.id}_decision"
+        ] = "accept"
+
+        object
+      end
+
+      it "returns false" do
+        expect(all_further_information_request_items_accepted?).to be false
+      end
+    end
+
+    context "when all items are declined" do
+      let(:params) do
+        object = {}
+
+        further_information_request.items.each do |item|
+          object["#{item.id}_decision"] = "decline"
+        end
+
+        object
+      end
+
+      it "returns false" do
+        expect(all_further_information_request_items_accepted?).to be false
+      end
+    end
+  end
+
   describe ".initial_attributes" do
     subject(:initial_attributes) do
       described_class.initial_attributes(further_information_request)
