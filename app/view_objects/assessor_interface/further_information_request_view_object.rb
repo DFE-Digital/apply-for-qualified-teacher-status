@@ -22,36 +22,40 @@ class AssessorInterface::FurtherInformationRequestViewObject
   delegate :application_form, :assessment, to: :further_information_request
 
   def grouped_review_items_by_assessment_section
-    further_information_request
-      .items
-      .group_by(&:assessment_section)
-      .sort_by { |assessment_section, _items| assessment_section.key }
-      .map do |assessment_section, items|
-        {
-          section_id: assessment_section.id,
-          heading:
-            I18n.t(
-              assessment_section.key,
-              scope: %i[
-                assessor_interface
-                further_information_requests
-                edit
-                assessment_section
-              ],
-            ),
-          section_link_text:
-            I18n.t(
-              assessment_section.key,
-              scope: %i[
-                assessor_interface
-                further_information_requests
-                edit
-                assessment_section_links
-              ],
-            ),
-          review_items: review_items(items),
-        }
-      end
+    grouped_further_information_request =
+      further_information_request
+        .items
+        .group_by(&:assessment_section)
+        .sort_by do |assessment_section, _items|
+          AssessmentSection.keys.keys.index(assessment_section.key)
+        end
+
+    grouped_further_information_request.map do |assessment_section, items|
+      {
+        section_id: assessment_section.id,
+        heading:
+          I18n.t(
+            assessment_section.key,
+            scope: %i[
+              assessor_interface
+              further_information_requests
+              edit
+              assessment_section
+            ],
+          ),
+        section_link_text:
+          I18n.t(
+            assessment_section.key,
+            scope: %i[
+              assessor_interface
+              further_information_requests
+              edit
+              assessment_section_links
+            ],
+          ),
+        review_items: review_items(items),
+      }
+    end
   end
 
   def review_items(items)
