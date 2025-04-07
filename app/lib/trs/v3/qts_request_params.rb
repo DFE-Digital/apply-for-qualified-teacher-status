@@ -7,8 +7,10 @@ module TRS
 
       AWARDED_QTS_STATUS = "Approved"
 
-      SCOTLAND_RECOGNITION_ROUTE_TYPE_ID = "52835b1f-1f2e-4665-abc6-7fb1ef0a80bb"
-      NORTHERN_IRELAND_RECOGNITION_ROUTE_TYPE_ID = "3604ef30-8f11-4494-8b52-a2f9c5371e03"
+      SCOTLAND_RECOGNITION_ROUTE_TYPE_ID =
+        "52835b1f-1f2e-4665-abc6-7fb1ef0a80bb"
+      NORTHERN_IRELAND_RECOGNITION_ROUTE_TYPE_ID =
+        "3604ef30-8f11-4494-8b52-a2f9c5371e03"
       ALL_RECOGNITION_ROUTE_TYPE_ID = "6f27bdeb-d00a-4ef9-b0ea-26498ce64713"
 
       def initialize(application_form:)
@@ -49,7 +51,11 @@ module TRS
       end
 
       def age_range
-        { type: "Range", from: assessment.age_range_min, to: assessment.age_range_max }
+        {
+          type: "Range",
+          from: assessment.age_range_min,
+          to: assessment.age_range_max,
+        }
       end
 
       def exempt_from_induction
