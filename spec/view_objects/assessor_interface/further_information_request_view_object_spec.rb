@@ -181,7 +181,8 @@ RSpec.describe AssessorInterface::FurtherInformationRequestViewObject do
             requested_date:
               further_information_request.requested_at.to_date.to_fs,
             heading:
-              "We could not verify 1 or more references entered by the applicant.",
+              "We could not verify 1 or more references entered by the applicant" \
+                " for #{work_history_contact_item.work_history.school_name}.",
             assessor_request:
               work_history_contact_item.failure_reason_assessor_feedback,
             applicant_contact_response: [

@@ -67,16 +67,7 @@ class AssessorInterface::FurtherInformationRequestViewObject
           recieved_date: further_information_request.received_at.to_date.to_fs,
           requested_date:
             further_information_request.requested_at.to_date.to_fs,
-          heading:
-            I18n.t(
-              item.failure_reason_key,
-              scope: %i[
-                assessor_interface
-                assessment_sections
-                failure_reasons
-                as_statement
-              ],
-            ),
+          heading: heading(item),
           assessor_request: item.failure_reason_assessor_feedback,
           applicant_text_response: item.response,
           applicant_contact_response: work_history_contact_response(item),
@@ -116,5 +107,24 @@ class AssessorInterface::FurtherInformationRequestViewObject
         value: item.contact_email,
       },
     }.map { |_key, value| "#{value[:title]}: #{value[:value]}" }
+  end
+
+  def heading(item)
+    content =
+      I18n.t(
+        item.failure_reason_key,
+        scope: %i[
+          assessor_interface
+          assessment_sections
+          failure_reasons
+          as_statement
+        ],
+      )
+
+    if item.work_history_contact?
+      content.gsub(".", " for #{item.work_history.school_name}.")
+    else
+      content
+    end
   end
 end
