@@ -35,17 +35,13 @@ RSpec.describe StatusTag::Component, type: :component do
     context "with an 'in progress' status" do
       let(:status) { :in_progress }
 
-      it do
-        expect(subject).to eq(
-          "govuk-tag govuk-tag--light-blue app-task-list__tag",
-        )
-      end
+      it { is_expected.to eq("govuk-tag govuk-tag--blue app-task-list__tag") }
     end
 
     context "with a 'completed' status" do
       let(:status) { :completed }
 
-      it { is_expected.to eq("govuk-tag app-task-list__tag") }
+      it { is_expected.to eq("govuk-tag govuk-tag--green app-task-list__tag") }
     end
 
     context "with an 'assessment_in_progress' status" do
