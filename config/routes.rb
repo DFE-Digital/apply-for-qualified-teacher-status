@@ -127,7 +127,12 @@ Rails.application.routes.draw do
 
         resources :further_information_requests,
                   path: "/further-information-requests",
-                  only: %i[new create edit update]
+                  only: %i[new create edit update] do
+          member do
+            get "decline", to: "further_information_requests#edit_decline"
+            post "decline", to: "further_information_requests#update_decline"
+          end
+        end
 
         resource :professional_standing_request,
                  path: "/professional-standing-request",

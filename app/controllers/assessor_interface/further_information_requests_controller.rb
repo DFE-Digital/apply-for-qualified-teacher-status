@@ -10,8 +10,10 @@ module AssessorInterface
       authorize [:assessor_interface, further_information_request]
     end
 
+    before_action :ensure_can_decline, only: %i[edit_decline update_decline]
     before_action :load_application_form_and_assessment, only: %i[new edit]
-    before_action :load_view_object, only: %i[edit update]
+    before_action :load_view_object,
+                  only: %i[edit update edit_decline update_decline]
 
     def new
       @further_information_request =
@@ -34,19 +36,57 @@ module AssessorInterface
 
     def edit
       @form =
-        RequestableReviewForm.new(
-          requestable: view_object.further_information_request,
+        form_class.new(
           user: current_staff,
-          passed: view_object.further_information_request.review_passed,
-          note: view_object.further_information_request.review_note,
+          **form_class.initial_attributes(further_information_request),
         )
     end
 
     def update
       @form =
-        RequestableReviewForm.new(
-          requestable_review_form_params.merge(
-            requestable: view_object.further_information_request,
+        form_class.new(
+          further_information_request_review_form_params.merge(
+            further_information_request:,
+            user: current_staff,
+          ),
+        )
+
+      if @form.save
+        if @form.all_further_information_request_items_accepted?
+          redirect_to [
+                        :edit,
+                        :assessor_interface,
+                        view_object.application_form,
+                        view_object.assessment,
+                      ]
+        else
+          redirect_to [
+                        :decline,
+                        :assessor_interface,
+                        view_object.application_form,
+                        view_object.assessment,
+                        view_object.further_information_request,
+                      ]
+        end
+      else
+        render :edit, status: :unprocessable_entity
+      end
+    end
+
+    def edit_decline
+      @form =
+        AssessorInterface::FurtherInformationRequestDeclineForm.new(
+          further_information_request:,
+          user: current_staff,
+          note: further_information_request.review_note,
+        )
+    end
+
+    def update_decline
+      @form =
+        AssessorInterface::FurtherInformationRequestDeclineForm.new(
+          further_information_request_decline_form_params.merge(
+            further_information_request:,
             user: current_staff,
           ),
         )
@@ -59,11 +99,18 @@ module AssessorInterface
                       view_object.assessment,
                     ]
       else
-        render :edit, status: :unprocessable_entity
+        render :edit_decline, status: :unprocessable_entity
       end
     end
 
     private
+
+    def form_class
+      @form_class ||=
+        AssessorInterface::FurtherInformationRequestReviewForm.for_further_information_request(
+          further_information_request,
+        )
+    end
 
     def load_application_form_and_assessment
       @application_form = application_form
@@ -98,11 +145,26 @@ module AssessorInterface
       @view_object ||= FurtherInformationRequestViewObject.new(params:)
     end
 
-    def requestable_review_form_params
-      params.require(:assessor_interface_requestable_review_form).permit(
-        :passed,
-        :note,
-      )
+    def further_information_request_review_form_params
+      unless params[:assessor_interface_further_information_request_review_form]
+        return {}
+      end
+
+      params.require(
+        :assessor_interface_further_information_request_review_form,
+      ).permit(*form_class.permittable_parameters(further_information_request))
+    end
+
+    def further_information_request_decline_form_params
+      params.require(
+        :assessor_interface_further_information_request_decline_form,
+      ).permit(:note)
+    end
+
+    def ensure_can_decline
+      return if view_object.can_decline?
+
+      redirect_to [:assessor_interface, view_object.application_form]
     end
   end
 end

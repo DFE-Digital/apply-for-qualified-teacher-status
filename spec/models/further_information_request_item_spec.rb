@@ -12,6 +12,8 @@
 #  failure_reason_key               :string           default(""), not null
 #  information_type                 :string
 #  response                         :text
+#  review_decision                  :string
+#  review_decision_note             :text
 #  created_at                       :datetime         not null
 #  updated_at                       :datetime         not null
 #  further_information_request_id   :bigint
@@ -159,6 +161,36 @@ RSpec.describe FurtherInformationRequestItem do
       end
 
       it { is_expected.to be false }
+    end
+  end
+
+  describe "#assessment_section" do
+    subject(:further_information_request_item) do
+      create(
+        :further_information_request_item,
+        :with_work_history_contact_response,
+      )
+    end
+
+    let!(:assessment_section) do
+      create :assessment_section,
+             assessment: further_information_request_item.assessment
+    end
+
+    it "returns nil when no assessment section with selected failure reason exists" do
+      expect(subject.assessment_section).to be_nil
+    end
+
+    context "when assessment section with selected failure reason exists" do
+      before do
+        create :selected_failure_reason,
+               assessment_section:,
+               key: further_information_request_item.failure_reason_key
+      end
+
+      it "returns assessment section" do
+        expect(subject.assessment_section).to eq(assessment_section)
+      end
     end
   end
 end

@@ -14,6 +14,7 @@
   :further_information_request_items:
     - contact_email
     - contact_name
+    - review_decision_note
   :mail_delivery_failures:
     - email_address
   :selected_failure_reasons:

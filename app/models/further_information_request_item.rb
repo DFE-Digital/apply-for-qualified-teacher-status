@@ -12,6 +12,8 @@
 #  failure_reason_key               :string           default(""), not null
 #  information_type                 :string
 #  response                         :text
+#  review_decision                  :string
+#  review_decision_note             :text
 #  created_at                       :datetime         not null
 #  updated_at                       :datetime         not null
 #  further_information_request_id   :bigint
@@ -39,6 +41,8 @@ class FurtherInformationRequestItem < ApplicationRecord
          document: "document",
          work_history_contact: "work_history_contact",
        }
+
+  enum :review_decision, { accept: "accept", decline: "decline" }, prefix: true
 
   def status
     if completed?
@@ -75,5 +79,12 @@ class FurtherInformationRequestItem < ApplicationRecord
       job: contact_job,
       email: contact_email,
     )
+  end
+
+  def assessment_section
+    assessment
+      .sections
+      .includes(:selected_failure_reasons)
+      .find_by(selected_failure_reasons: { key: failure_reason_key })
   end
 end

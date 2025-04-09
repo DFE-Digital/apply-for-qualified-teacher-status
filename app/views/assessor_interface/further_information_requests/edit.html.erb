@@ -1,30 +1,52 @@
 <% content_for :page_title, title_with_error_prefix(t(".title"), error: @form.errors.any?) %>
 <% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
 
-<h1 class="govuk-heading-xl"><%= t(".title") %></h1>
+<%= form_with model: @form, url: [:assessor_interface, @view_object.application_form, @view_object.assessment, @view_object.further_information_request], method: :put do |f| %>
+  <%= f.govuk_error_summary %>
 
-<% @view_object.review_items.each do |item| %>
-  <h2 class="govuk-heading-m"><%= item.fetch(:heading) %></h2>
-  <%= govuk_inset_text(text: item.fetch(:description)) %>
-  <%= render(CheckYourAnswersSummary::Component.new(**item.fetch(:check_your_answers))) %>
-  <% if (item[:work_history_summary_list_rows]).present? && !@view_object.further_information_request.review_passed? %>
-    <%= govuk_details(summary_text: "Review previous referee details?") do %>
-      <%= govuk_summary_list(rows: item[:work_history_summary_list_rows]) %>
-    <% end %>
-  <% end %>
-<% end %>
+  <h1 class="govuk-heading-xl"><%= t(".title") %></h1>
+  <% @view_object.grouped_review_items_by_assessment_section.each do |assessment_section_group| %>
+    <div class="govuk-!-margin-bottom-7 govuk-!-margin-top-9">
+      <h2 class="govuk-heading-l govuk-!-margin-bottom-3"><%= assessment_section_group.fetch(:heading) %></h2>
+      <%= govuk_link_to assessment_section_group.fetch(:section_link_text),
+                        assessor_interface_application_form_assessment_assessment_section_path(@application_form.reference, @application_form.assessment, assessment_section_group.fetch(:section_id)),
+                        new_tab: true %>
+    </div>
 
-<% if policy([:assessor_interface, @view_object.further_information_request]).update? && @view_object.can_update? %>
-  <%= form_with model: @form, url: [:assessor_interface, @view_object.application_form, @view_object.assessment, @view_object.further_information_request], method: :put do |f| %>
-    <%= f.govuk_error_summary %>
+    <% assessment_section_group.fetch(:review_items).each do |item| %>
+      <%= govuk_summary_card(title: item.fetch(:heading), html_attributes: { id: item.fetch(:id) }) do |card| %>
+        <h3 class="govuk-heading-s govuk-!-margin-bottom-2">Applicant's latest response</h3>
+        <p class="govuk-hint govuk-!-margin-bottom-2"><%= item.fetch(:recieved_date) %></p>
 
-    <%= f.govuk_radio_buttons_fieldset :passed, legend: { size: "s", text: t(".passed") } do %>
-      <%= f.govuk_radio_button :passed, :true, link_errors: true %>
-      <%= f.govuk_radio_button :passed, :false do %>
-        <%= f.govuk_text_area :note, label: { text: t(".failure_assessor_note").html_safe } %>
+        <% if item[:applicant_text_response] %>
+          <p class="govuk-body govuk-!-margin-bottom-2"><%= item.fetch(:applicant_text_response) %></p>
+        <% end %>
+
+        <% if item[:applicant_contact_response] %>
+          <%= govuk_inset_text(classes: "govuk-!-margin-top-0") do %>
+            <%= govuk_list item.fetch(:applicant_contact_response) %>
+          <% end %>
+        <% end %>
+
+        <% if item[:applicant_upload_response] %>
+          <%= document_link_to(item.fetch(:applicant_upload_response)) %>
+        <% end %>
+
+        <h3 class="govuk-heading-s govuk-!-margin-bottom-2">Further information request</h3>
+        <p class="govuk-hint govuk-!-margin-bottom-2"><%= item.fetch(:requested_date) %></p>
+        <p class="govuk-body"><%= item.fetch(:assessor_request) %></p>
+
+        <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
+
+        <%= f.govuk_radio_buttons_fieldset :"#{item.fetch(:id)}_decision", legend: { text: "How would you like to respond?", size: "s" } do %>
+          <%= f.govuk_radio_button :"#{item.fetch(:id)}_decision", :accept, label: { text: "Yes, accept information" }, disabled: !policy([:assessor_interface, @view_object.further_information_request]).update? || !@view_object.can_update? %>
+          <%= f.govuk_radio_button :"#{item.fetch(:id)}_decision", :decline, label: { text: "No, decline application" }, disabled: !policy([:assessor_interface, @view_object.further_information_request]).update? || !@view_object.can_update? %>
+        <% end %>
       <% end %>
     <% end %>
+  <% end %>
 
+  <% if policy([:assessor_interface, @view_object.further_information_request]).update? && @view_object.can_update? %>
     <%= render "shared/assessor_interface/continue_cancel_button", f: %>
   <% end %>
 <% end %>

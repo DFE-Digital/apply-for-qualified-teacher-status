@@ -12,6 +12,8 @@
 #  failure_reason_key               :string           default(""), not null
 #  information_type                 :string
 #  response                         :text
+#  review_decision                  :string
+#  review_decision_note             :text
 #  created_at                       :datetime         not null
 #  updated_at                       :datetime         not null
 #  further_information_request_id   :bigint
@@ -55,9 +57,10 @@ FactoryBot.define do
 
     trait :with_work_history_contact_response do
       information_type { "work_history_contact" }
-      failure_reason_key { "school_details_cannot_be_verified" }
+      failure_reason_key { "unrecognised_references" }
       work_history do
-        further_information_request.application_form.work_histories.first
+        further_information_request.application_form.work_histories.first ||
+          create(:work_history, :completed, application_form:)
       end
     end
 
