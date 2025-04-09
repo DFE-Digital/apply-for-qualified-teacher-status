@@ -7456,7 +7456,7 @@
   },
   "nym:ENG": {
     "edges": {
-      "from": ["uk:ENG"]
+      "from": ["GBR"]
     },
     "meta": {
       "canonical": false,
@@ -7696,7 +7696,7 @@
   },
   "nym:England": {
     "edges": {
-      "from": ["uk:ENG"]
+      "from": ["GBR"]
     },
     "meta": {
       "canonical": false,
@@ -8356,7 +8356,7 @@
   },
   "nym:GBN": {
     "edges": {
-      "from": ["uk:GBN"]
+      "from": ["GBR"]
     },
     "meta": {
       "canonical": false,
@@ -12106,7 +12106,7 @@
   },
   "nym:NIR": {
     "edges": {
-      "from": ["uk:NIR"]
+      "from": ["GBR"]
     },
     "meta": {
       "canonical": false,
@@ -12511,7 +12511,7 @@
   },
   "nym:Northern Ireland": {
     "edges": {
-      "from": ["uk:NIR"]
+      "from": ["GBR"]
     },
     "meta": {
       "canonical": false,
@@ -15361,7 +15361,7 @@
   },
   "nym:SCT": {
     "edges": {
-      "from": ["uk:SCT"]
+      "from": ["GBR"]
     },
     "meta": {
       "canonical": false,
@@ -15901,7 +15901,7 @@
   },
   "nym:Scotland": {
     "edges": {
-      "from": ["uk:SCT"]
+      "from": ["GBR"]
     },
     "meta": {
       "canonical": false,
@@ -20806,7 +20806,7 @@
   },
   "nym:WLS": {
     "edges": {
-      "from": ["uk:WLS"]
+      "from": ["GBR"]
     },
     "meta": {
       "canonical": false,
@@ -20836,7 +20836,7 @@
   },
   "nym:Wales": {
     "edges": {
-      "from": ["uk:WLS"]
+      "from": ["GBR"]
     },
     "meta": {
       "canonical": false,
