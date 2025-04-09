@@ -4,17 +4,19 @@
 <h1 class="govuk-heading-xl">Check the further information requests</h1>
 
 <% @view_object.grouped_review_items_by_assessment_section.each do |assessment_section_group| %>
-  <div class="govuk-!-margin-bottom-9">
+  <section class="govuk-!-margin-bottom-9">
     <h2 class="govuk-heading-l"><%= assessment_section_group[:heading] %></h2>
 
     <% assessment_section_group[:items].each do |item| %>
-      <h3 class="govuk-heading-s govuk-!-margin-bottom-3"><%= item[:heading] %></h3>
+      <div class="app-further-information-request-item">
+        <h3 class="govuk-heading-s govuk-!-margin-bottom-3"><%= item[:heading] %></h3>
 
-      <%= govuk_inset_text(classes: "govuk-!-margin-top-0") do %>
-        <%= simple_format item[:feedback] %>
-      <% end %>
+        <%= govuk_inset_text(classes: "govuk-!-margin-top-0") do %>
+          <%= simple_format item[:feedback] %>
+        <% end %>
+      </div>
     <% end %>
-  </div>
+  </section>
 <% end %>
 
 <%= form_with model: [:assessor_interface, @application_form, @assessment, @view_object.further_information_request] do |f| %>
