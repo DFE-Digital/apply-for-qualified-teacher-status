@@ -15,7 +15,7 @@ class UpdateTRSTRNRequestJob < ApplicationJob
       trs_trn_request.update!(potential_duplicate:)
     end
 
-    ApplicationFormStatusUpdater.call(application_form:, user: "DQT")
+    ApplicationFormStatusUpdater.call(application_form:, user: "TRS")
 
     unless potential_duplicate
       awarded_at = Time.zone.now
@@ -28,7 +28,7 @@ class UpdateTRSTRNRequestJob < ApplicationJob
 
       AwardQTS.call(
         application_form:,
-        user: "DQT",
+        user: "TRS",
         trn: trn_response[:trn],
         access_your_teaching_qualifications_url:
           trn_response[:access_your_teaching_qualifications_link],

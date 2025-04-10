@@ -58,7 +58,7 @@ RSpec.describe UpdateTRSTRNRequestJob, type: :job do
         it "awards QTS" do
           expect(AwardQTS).to receive(:call).with(
             application_form:,
-            user: "DQT",
+            user: "TRS",
             trn:,
             access_your_teaching_qualifications_url: "https://aytq.com",
             awarded_at: Time.zone.now,
@@ -248,7 +248,7 @@ RSpec.describe UpdateTRSTRNRequestJob, type: :job do
         it "awards QTS" do
           expect(AwardQTS).to receive(:call).with(
             application_form:,
-            user: "DQT",
+            user: "TRS",
             trn:,
             access_your_teaching_qualifications_url: "https://aytq.com",
             awarded_at: Time.zone.now,
