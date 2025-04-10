@@ -22,15 +22,7 @@ class AssessorInterface::FurtherInformationRequestViewObject
   delegate :application_form, :assessment, to: :further_information_request
 
   def grouped_review_items_by_assessment_section
-    grouped_further_information_request =
-      further_information_request
-        .items
-        .group_by(&:assessment_section)
-        .sort_by do |assessment_section, _items|
-          AssessmentSection.keys.keys.index(assessment_section.key)
-        end
-
-    grouped_further_information_request.map do |assessment_section, items|
+    items_by_assessment_section.map do |assessment_section, items|
       {
         section_id: assessment_section.id,
         heading:
@@ -67,7 +59,7 @@ class AssessorInterface::FurtherInformationRequestViewObject
           recieved_date: further_information_request.received_at.to_date.to_fs,
           requested_date:
             further_information_request.requested_at.to_date.to_fs,
-          heading: heading(item),
+          heading: item_heading(item),
           assessor_request: item.failure_reason_assessor_feedback,
           applicant_text_response: item.response,
           applicant_contact_response: work_history_contact_response(item),
@@ -90,6 +82,13 @@ class AssessorInterface::FurtherInformationRequestViewObject
 
   attr_reader :params
 
+  def items_by_assessment_section
+    @items_by_assessment_section ||=
+      FurtherInformationRequestItemsByAssessmentSection.call(
+        further_information_request:,
+      )
+  end
+
   def work_history_contact_response(item)
     return unless item.work_history_contact?
 
@@ -109,7 +108,7 @@ class AssessorInterface::FurtherInformationRequestViewObject
     }.map { |_key, value| "#{value[:title]}: #{value[:value]}" }
   end
 
-  def heading(item)
+  def item_heading(item)
     content =
       I18n.t(
         item.failure_reason_key,

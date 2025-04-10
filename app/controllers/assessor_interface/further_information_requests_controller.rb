@@ -16,13 +16,8 @@ module AssessorInterface
                   only: %i[edit update edit_decline update_decline]
 
     def new
-      @further_information_request =
-        assessment.further_information_requests.build(
-          items:
-            FurtherInformationRequestItemsFactory.call(
-              assessment_sections: assessment.sections,
-            ),
-        )
+      @view_object =
+        AssessorInterface::FurtherInformationRequestNewViewObject.new(params:)
     end
 
     def create
