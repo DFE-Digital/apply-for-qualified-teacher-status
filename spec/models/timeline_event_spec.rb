@@ -76,7 +76,7 @@ RSpec.describe TimelineEvent do
     end
 
     context "with a creator name" do
-      before { timeline_event.creator_name = "DQT" }
+      before { timeline_event.creator_name = "TRS" }
 
       it { is_expected.not_to validate_presence_of(:creator) }
     end

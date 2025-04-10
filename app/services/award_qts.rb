@@ -7,11 +7,13 @@ class AwardQTS
     application_form:,
     user:,
     trn:,
-    access_your_teaching_qualifications_url:
+    access_your_teaching_qualifications_url:,
+    awarded_at:
   )
     @application_form = application_form
     @user = user
     @trn = trn
+    @awarded_at = awarded_at
     @access_your_teaching_qualifications_url =
       access_your_teaching_qualifications_url
   end
@@ -28,7 +30,7 @@ class AwardQTS
         trn:,
         access_your_teaching_qualifications_url:,
       )
-      application_form.update!(awarded_at: Time.zone.now)
+      application_form.update!(awarded_at:)
       ApplicationFormStatusUpdater.call(application_form:, user:)
     end
 
@@ -50,5 +52,6 @@ class AwardQTS
   attr_reader :application_form,
               :user,
               :trn,
+              :awarded_at,
               :access_your_teaching_qualifications_url
 end
