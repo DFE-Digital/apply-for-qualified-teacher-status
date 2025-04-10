@@ -57,7 +57,9 @@ RSpec.describe AwardQTS do
     end
 
     it "sets the awarded at date" do
-      expect { call }.to change(application_form, :awarded_at).to(awarded_at)
+      freeze_time do
+        expect { call }.to change(application_form, :awarded_at).to(awarded_at)
+      end
     end
 
     context "without a TRN" do
@@ -99,7 +101,9 @@ RSpec.describe AwardQTS do
     end
 
     it "sets the awarded at date" do
-      expect { call }.to change(application_form, :awarded_at).to(awarded_at)
+      freeze_time do
+        expect { call }.to change(application_form, :awarded_at).to(awarded_at)
+      end
     end
 
     context "without a TRN" do
