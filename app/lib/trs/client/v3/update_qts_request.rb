@@ -4,13 +4,15 @@ class TRS::Client::V3::UpdateQTSRequest
   include ServicePattern
   include TRS::Client::Connection
 
-  def initialize(application_form:)
+  def initialize(application_form:, trn:, awarded_at:)
     @application_form = application_form
+    @awarded_at = awarded_at
+    @trn = trn
   end
 
   def call
     path = "/v3/persons/#{trn}/professional-statuses/#{reference}"
-    body = TRS::V3::QTSRequestParams.call(application_form:)
+    body = TRS::V3::QTSRequestParams.call(application_form:, awarded_at:)
     response =
       connection.put(path) do |req|
         # TODO: Temporary API version and will need to change once in production
@@ -23,11 +25,7 @@ class TRS::Client::V3::UpdateQTSRequest
 
   private
 
-  attr_reader :application_form
-
-  def trn
-    application_form.teacher.trn
-  end
+  attr_reader :application_form, :trn, :awarded_at
 
   def reference
     application_form.reference

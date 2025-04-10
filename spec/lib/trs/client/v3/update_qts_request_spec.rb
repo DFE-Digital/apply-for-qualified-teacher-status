@@ -3,14 +3,16 @@
 require "rails_helper"
 
 RSpec.describe TRS::Client::V3::UpdateQTSRequest do
-  subject(:call) { described_class.call(application_form:) }
+  subject(:call) { described_class.call(application_form:, trn:, awarded_at:) }
 
-  let(:application_form) { create(:application_form, teacher:) }
-  let(:teacher) { create(:teacher, trn: "12345") }
+  let(:application_form) { create(:application_form) }
+  let(:trn) { "12345" }
+  let(:awarded_at) { Time.zone.now }
 
   before do
     allow(TRS::V3::QTSRequestParams).to receive(:call).with(
       application_form:,
+      awarded_at:,
     ).and_return("body")
   end
 
@@ -18,7 +20,7 @@ RSpec.describe TRS::Client::V3::UpdateQTSRequest do
     before do
       stub_request(
         :put,
-        "https://test-teacher-qualifications-api.education.gov.uk/v3/persons/#{teacher.trn}/professional-statuses/#{application_form.reference}",
+        "https://test-teacher-qualifications-api.education.gov.uk/v3/persons/#{trn}/professional-statuses/#{application_form.reference}",
       ).with(
         body: "body",
         headers: {
@@ -42,7 +44,7 @@ RSpec.describe TRS::Client::V3::UpdateQTSRequest do
     before do
       stub_request(
         :put,
-        "https://test-teacher-qualifications-api.education.gov.uk/v3/persons/#{teacher.trn}/professional-statuses/#{application_form.reference}",
+        "https://test-teacher-qualifications-api.education.gov.uk/v3/persons/#{trn}/professional-statuses/#{application_form.reference}",
       ).with(
         body: "body",
         headers: {
