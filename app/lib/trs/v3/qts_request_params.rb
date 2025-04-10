@@ -31,9 +31,7 @@ module TRS
           trainingAgeSpecialism: age_range,
           degreeTypeId: nil,
           trainingCountryReference:
-            CountryCode.for_code(
-              teaching_qualification.institution_country_code,
-            ),
+            teaching_qualification.institution_country_code,
           trainingProviderUkprn: nil,
           isExemptFromInduction: exempt_from_induction,
         }
