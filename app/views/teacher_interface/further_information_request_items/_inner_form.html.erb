@@ -4,7 +4,7 @@
 
 <h1 class="govuk-heading-l">Further information required</h1>
 
-<h2 class="govuk-heading-s">Notes from the assessor</h2>
+<h2 class="govuk-heading-s"><%= I18n.t("teacher_interface.application_forms.show.declined.failure_reasons.#{@further_information_request_item.failure_reason_key}") %></h2>
 
 <%= govuk_inset_text do %>
   <%= simple_format @further_information_request_item.failure_reason_assessor_feedback %>
