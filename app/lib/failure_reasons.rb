@@ -14,6 +14,7 @@ class FailureReasons
       "english_language_exemption_by_citizenship_not_confirmed_via_passport",
     EL_EXEMPTION_BY_QUALIFICATION_DOCUMENTS_UNCONFIRMED =
       "english_language_exemption_by_qualification_not_confirmed",
+    EL_ESOL_BELOW_REQUIRED_LEVEL = "english_language_esol_below_required_level",
     EL_GRADE_BELOW_B2 = "english_language_not_achieved_b2",
     EL_MOI_NOT_TAUGHT_IN_ENGLISH = "english_language_moi_not_taught_in_english",
     EL_QUALIFICATION_INVALID = "english_language_qualification_invalid",
@@ -49,6 +50,8 @@ class FailureReasons
       "application_and_qualification_names_do_not_match",
     DEGREE_CERTIFICATE_ILLEGIBLE = "degree_certificate_illegible",
     DEGREE_TRANSCRIPT_ILLEGIBLE = "degree_transcript_illegible",
+    EL_ESOL_DOCUMENT_ILLEGIBLE = "english_language_esol_document_illegible",
+    EL_ESOL_EXPIRED_DURING_ASSESSMENT = "english_language_esol_expired_during_assessment",
     EL_SELT_EXPIRED_DURING_ASSESSMENT =
       "english_language_selt_expired_during_assessment",
     EL_NOT_EXEMPT_BY_QUALIFICATION_COUNTRY =
@@ -96,6 +99,8 @@ class FailureReasons
     APPLICATION_AND_QUALIFICATION_NAMES_DO_NOT_MATCH => :name_change,
     DEGREE_CERTIFICATE_ILLEGIBLE => :qualification_certificate,
     DEGREE_TRANSCRIPT_ILLEGIBLE => :qualification_transcript,
+    EL_ESOL_DOCUMENT_ILLEGIBLE => :english_for_speakers_of_other_languages,
+    EL_ESOL_EXPIRED_DURING_ASSESSMENT => :english_for_speakers_of_other_languages,
     EL_NOT_EXEMPT_BY_QUALIFICATION_COUNTRY => :medium_of_instruction,
     EL_MOI_INVALID_FORMAT => :medium_of_instruction,
     EL_PROFICIENCY_DOCUMENT_ILLEGIBLE => :english_language_proficiency,

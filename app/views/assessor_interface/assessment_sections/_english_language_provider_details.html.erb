@@ -10,11 +10,11 @@
     <% end %>
   <% else %>
     <p class="govuk-body">
-      Applicants from <%= CountryName.from_region(region, with_definite_article: true) %> can provide tests from a wider range of approved providers.
+      Applicants from <%= CountryName.from_region(region, with_definite_article: true) %> can provide evidence from a wider range of approved providers.
     </p>
 
     <p class="govuk-body">
-      <%= govuk_link_to "Approved providers", "https://register.ofqual.gov.uk/Search?category=Qualifications&query=ESOl", new_tab: true %>
+      <%= govuk_link_to "Approved providers", "https://find-a-qualification.services.ofqual.gov.uk/qualifications?availability=Available%20to%20learners&qualificationTypes=English%20For%20Speakers%20of%20Other%20Languages&qualificationLevels=Level%201,Level%201%2FLevel%202,Level%202&nationalAvailability=International", new_tab: true %>
     </p>
   <% end %>
 <% end %>
