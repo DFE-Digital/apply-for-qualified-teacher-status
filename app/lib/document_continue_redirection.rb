@@ -39,6 +39,10 @@ class DocumentContinueRedirection
     %i[check teacher_interface application_form english_language]
   end
 
+  def english_for_speakers_of_other_languages_url
+    %i[check teacher_interface application_form english_language]
+  end
+
   def english_language_proficiency_url
     %i[check teacher_interface application_form english_language]
   end

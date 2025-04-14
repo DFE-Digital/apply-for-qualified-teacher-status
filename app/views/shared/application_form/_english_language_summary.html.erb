@@ -13,12 +13,20 @@
     } : nil,
     english_language_proof_method: !application_form.english_language_exempt? ? {
       title: "Chosen verification method",
-      value: application_form.english_language_proof_method_medium_of_instruction? ? "Medium of instruction" : "Approved test provider",
+      value: case application_form.english_language_proof_method
+      when "medium_of_instruction" then "Medium of instruction"
+      when "esol" then "English for Speakers of Other Languages (ESOL) certificate"
+      else "Approved test provider"
+      end,
       href: %i[proof_method teacher_interface application_form english_language]
     } : nil,
     english_language_medium_of_instruction_document: !application_form.english_language_exempt? && application_form.english_language_proof_method_medium_of_instruction? ? {
       title: "Medium of instruction document",
       href: [:teacher_interface, :application_form, application_form.english_language_medium_of_instruction_document]
+    } : nil,
+    english_for_speakers_of_other_languages_document: !application_form.english_language_exempt? && application_form.english_language_proof_method_esol? ? {
+      title: "English for Speakers of Other Languages (ESOL) certificate document",
+      href: [:teacher_interface, :application_form, application_form.english_for_speakers_of_other_languages_document]
     } : nil,
     english_language_provider: !application_form.english_language_exempt? && application_form.english_language_proof_method_provider? ? {
       title: "Your approved provider",

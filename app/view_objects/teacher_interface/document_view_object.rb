@@ -16,7 +16,8 @@ class TeacherInterface::DocumentViewObject
           document.identification?
       I18n.t("application_form.tasks.sections.about_you")
     elsif document.medium_of_instruction? ||
-          document.english_language_proficiency?
+          document.english_language_proficiency? ||
+          document.english_for_speakers_of_other_languages?
       I18n.t("application_form.tasks.sections.english_language")
     elsif document.written_statement?
       I18n.t("application_form.tasks.sections.proof_of_recognition")

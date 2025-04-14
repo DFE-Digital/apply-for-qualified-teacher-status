@@ -1,0 +1,9 @@
+<%= govuk_details(summary_text: "About approved providers") do %>
+  <p class="govuk-body">
+    To apply for QTS you need to show that you’ve passed a Secure English Language Test (SELT) at B2 level, from one of the approved providers on the list, within the last 2 years. We cannot accept English language tests from a provider that does not appear on the list.
+  </p>
+
+  <p class="govuk-body">
+    See the list of <%= govuk_link_to "approved providers", english_language_guidance_path, new_tab: true %>.
+  </p>
+<% end %>

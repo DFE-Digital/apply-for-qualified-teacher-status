@@ -18,6 +18,18 @@ RSpec.describe TeacherInterface::EnglishLanguageProofMethodForm, type: :model do
         %w[medium_of_instruction provider],
       )
     end
+
+    context "when the application form accepts reduced evidence" do
+      let(:application_form) do
+        create(:application_form, reduced_evidence_accepted: true)
+      end
+
+      it do
+        expect(subject).to validate_inclusion_of(:proof_method).in_array(
+          %w[medium_of_instruction provider esol],
+        )
+      end
+    end
   end
 
   describe "#save" do
@@ -42,6 +54,48 @@ RSpec.describe TeacherInterface::EnglishLanguageProofMethodForm, type: :model do
           application_form.english_language_medium_of_instruction_document.uploads,
           :count,
         ).to(0)
+      end
+    end
+
+    context "with an existing English language ESOL" do
+      let(:application_form) do
+        create(:application_form, :with_english_language_esol)
+      end
+
+      it "clears the documents" do
+        expect { save }.to change(
+          application_form.english_for_speakers_of_other_languages_document.uploads,
+          :count,
+        ).to(0)
+      end
+    end
+
+    context "with existing English language as provider and changing to ESOL" do
+      let(:application_form) do
+        create(
+          :application_form,
+          :with_english_language_proficiency_document,
+          reduced_evidence_accepted: true,
+        )
+      end
+
+      let(:proof_method) { "esol" }
+
+      it "clears the documents" do
+        expect { save }.to change(
+          application_form.english_language_proficiency_document.uploads,
+          :count,
+        ).to(0)
+      end
+
+      it "updates all the provider fields to nil" do
+        subject
+
+        expect(application_form).to have_attributes(
+          english_language_provider_id: nil,
+          english_language_provider_other: false,
+          english_language_provider_reference: "",
+        )
       end
     end
   end

@@ -299,6 +299,22 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
         it { is_expected.to eq("completed") }
       end
 
+      context "when ESOL" do
+        let(:application_form) do
+          create(:application_form, english_language_proof_method: "esol")
+        end
+
+        it { is_expected.to eq("in_progress") }
+      end
+
+      context "when ESOL and uploaded" do
+        let(:application_form) do
+          create(:application_form, :with_english_language_esol)
+        end
+
+        it { is_expected.to eq("completed") }
+      end
+
       context "when provider" do
         let(:application_form) do
           create(:application_form, english_language_proof_method: "provider")

@@ -273,8 +273,8 @@ en:
         teacher_interface/english_language_proof_method_form:
           attributes:
             proof_method:
-              blank: Select your method of validation
-              inclusion: Select your method of validation
+              blank: Select your method of proving your English language proficiency
+              inclusion: Select your method of proving your English language proficiency
         teacher_interface/english_language_provider_form:
           attributes:
             provider_id:

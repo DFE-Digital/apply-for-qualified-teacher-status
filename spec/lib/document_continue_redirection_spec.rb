@@ -61,6 +61,18 @@ RSpec.describe DocumentContinueRedirection do
       end
     end
 
+    context "with a ESOL document" do
+      let(:document) do
+        create(:document, :english_for_speakers_of_other_languages)
+      end
+
+      it do
+        expect(subject).to eq(
+          %i[check teacher_interface application_form english_language],
+        )
+      end
+    end
+
     context "with a name change document" do
       let(:document) { create(:document, :name_change) }
 

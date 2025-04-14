@@ -96,6 +96,12 @@ module TeacherInterface
               :application_form,
               application_form.english_language_medium_of_instruction_document,
             ]
+          elsif @form.esol?
+            [
+              :teacher_interface,
+              :application_form,
+              application_form.english_for_speakers_of_other_languages_document,
+            ]
           else
             %i[provider teacher_interface application_form english_language]
           end

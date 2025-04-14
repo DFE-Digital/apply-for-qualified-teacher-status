@@ -64,6 +64,18 @@ RSpec.describe TeacherInterface::DocumentViewObject do
       end
     end
 
+    context "when ESOL document" do
+      let(:document) do
+        create(:document, :english_for_speakers_of_other_languages)
+      end
+
+      it "returns 'Your English language proficiency'" do
+        expect(view_object.section_caption).to eq(
+          "Your English language proficiency",
+        )
+      end
+    end
+
     context "when English language proficiency document" do
       let(:document) { create(:document, :english_language_proficiency) }
 

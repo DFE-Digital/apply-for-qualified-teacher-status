@@ -31,6 +31,11 @@ module TeacherInterface
           .english_language_proficiency_document
           .uploads
           .destroy_all
+
+        application_form
+          .english_for_speakers_of_other_languages_document
+          .uploads
+          .destroy_all
       end
 
       if exempt && citizenship?

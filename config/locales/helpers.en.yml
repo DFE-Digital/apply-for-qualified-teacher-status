@@ -42,8 +42,8 @@ en:
         has_alternative_name_passport: If your name appears differently on your passport or qualifications you need to upload proof of your name change, for example, your marriage or civil partnership certificate.
         has_alternative_name_id_documents: If your name appears differently on your ID documents or qualifications you need to upload proof of your name change, for example, your marriage or civil partnership certificate.
       teacher_interface_english_language_proof_method_form:
-        proof_method: There are 2 ways you can do this.
         proof_method_options:
+          esol: The certificate must test reading, writing, listening and speaking skills. We cannot accept English language tests from a provider that has not been approved.
           medium_of_instruction: This is sometimes called a 'Medium of Instruction' (MOI) and you can request it from the institution where you studied. It must be signed and stamped by them on official headed paper, and it must state that the medium of instruction was English. It must also include your name, degree title and award date.
           provider: The test must have been taken within the last 2 years. We cannot accept English language tests from a provider that does not appear on the list.
       teacher_interface_further_information_request_item_text_form:
@@ -228,6 +228,7 @@ en:
           false: "No, I’ll show my English language ability using another method"
       teacher_interface_english_language_proof_method_form:
         proof_method_options:
+          esol: Upload proof of an English for Speakers of Other Languages (ESOL) certificate at Level 1 or Level 2 from one of the approved providers.
           medium_of_instruction: Upload an official document that shows your teaching qualification or university degree was taught exclusively in the English language.
           provider: Upload proof of a Secure English Language Test (SELT) at B2 level, from one of the approved providers.
       teacher_interface_further_information_request_item_text_form:

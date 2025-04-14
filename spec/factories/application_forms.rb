@@ -338,6 +338,22 @@ FactoryBot.define do
       end
     end
 
+    trait :with_english_language_esol do
+      english_language_citizenship_exempt { false }
+      english_language_qualification_exempt { false }
+      english_language_proof_method { "esol" }
+      english_language_status { "completed" }
+
+      after(:create) do |application_form, _evaluator|
+        create(
+          :upload,
+          :clean,
+          document:
+            application_form.english_for_speakers_of_other_languages_document,
+        )
+      end
+    end
+
     trait :with_english_language_proficiency_document do
       with_english_language_provider
 
