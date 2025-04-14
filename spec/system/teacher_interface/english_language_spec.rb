@@ -112,8 +112,7 @@ RSpec.describe "Teacher English language", type: :system do
     and_i_see_the_my_provider_reference
   end
 
-  it "other provider" do
-    given_there_are_english_language_providers
+  it "ESOL journey reference" do
     given_the_application_form_accepts_reduced_evidence
 
     when_i_visit_the(:teacher_application_page)
@@ -135,19 +134,16 @@ RSpec.describe "Teacher English language", type: :system do
     when_i_am_not_exempt
     then_i_see_the(:teacher_english_language_proof_method_page)
 
-    when_i_use_a_provider_reference
-    then_i_see_the(:teacher_english_language_provider_page)
-    and_i_see_the_providers_with_an_other
-
-    when_i_select_the_other_provider
+    when_i_use_an_esol_reference
     then_i_see_the(:teacher_upload_document_page)
+    and_i_see_the_content_for_esol
 
     when_i_upload_a_file
     then_i_see_the(:teacher_check_document_page)
 
     when_i_dont_need_to_upload_another_file
     then_i_see_the(:teacher_check_english_language_page)
-    and_i_see_the_my_other_provider
+    and_i_see_the_my_esol_upload
   end
 
   private
@@ -215,6 +211,17 @@ RSpec.describe "Teacher English language", type: :system do
   def when_i_use_a_provider_reference
     teacher_english_language_proof_method_page.form.provider_radio_item.choose
     teacher_english_language_proof_method_page.form.continue_button.click
+  end
+
+  def when_i_use_an_esol_reference
+    teacher_english_language_proof_method_page.form.esol_radio_item.choose
+    teacher_english_language_proof_method_page.form.continue_button.click
+  end
+
+  def and_i_see_the_content_for_esol
+    expect(teacher_upload_document_page).to have_content(
+      "Upload your English for Speakers of Other Languages (ESOL) certificate",
+    )
   end
 
   def when_i_upload_a_medium_of_instruction
@@ -351,8 +358,8 @@ RSpec.describe "Teacher English language", type: :system do
     teacher_check_document_page.form.continue_button.click
   end
 
-  def and_i_see_the_my_other_provider
-    expect(teacher_check_english_language_page.summary_list.rows.count).to eq(5)
+  def and_i_see_the_my_esol_upload
+    expect(teacher_check_english_language_page.summary_list.rows.count).to eq(4)
 
     proof_method_summary_list_row =
       teacher_check_english_language_page.summary_list.rows.third
@@ -360,18 +367,13 @@ RSpec.describe "Teacher English language", type: :system do
       "Chosen verification method",
     )
     expect(proof_method_summary_list_row.value.text).to eq(
-      "Approved test provider",
+      "English for Speakers of Other Languages (ESOL) certificate",
     )
 
-    provider_summary_list_row =
-      teacher_check_english_language_page.summary_list.rows.fourth
-    expect(provider_summary_list_row.key.text).to eq("Your approved provider")
-    expect(provider_summary_list_row.value.text).to eq("Other")
-
     reference_summary_list_row =
-      teacher_check_english_language_page.summary_list.rows.fifth
+      teacher_check_english_language_page.summary_list.rows.fourth
     expect(reference_summary_list_row.key.text).to eq(
-      "English language proficiency test document",
+      "English for Speakers of Other Languages (ESOL) certificate document",
     )
     expect(reference_summary_list_row.value.text).to eq(
       "upload.pdf (opens in new tab)",

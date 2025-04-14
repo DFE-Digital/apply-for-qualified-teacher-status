@@ -14,6 +14,9 @@ module PageObjects
         section :provider_radio_item,
                 PageObjects::GovukRadioItem,
                 ".govuk-radios__item:nth-of-type(2)"
+        section :esol_radio_item,
+                PageObjects::GovukRadioItem,
+                ".govuk-radios__item:nth-of-type(3)"
 
         element :continue_button, ".govuk-button:not(.govuk-button--secondary)"
         element :save_and_come_back_later_button,

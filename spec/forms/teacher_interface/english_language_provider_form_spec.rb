@@ -19,16 +19,6 @@ RSpec.describe TeacherInterface::EnglishLanguageProviderForm, type: :model do
         providers.map(&:id).map(&:to_s),
       )
     end
-
-    context "when reduced evidence is accepted" do
-      before { application_form.update!(reduced_evidence_accepted: true) }
-
-      it do
-        expect(subject).to validate_inclusion_of(:provider_id).in_array(
-          providers.map(&:id).map(&:to_s) + ["other"],
-        )
-      end
-    end
   end
 
   describe "#save" do
@@ -42,32 +32,6 @@ RSpec.describe TeacherInterface::EnglishLanguageProviderForm, type: :model do
           application_form,
           :english_language_provider,
         ).to(providers.first)
-      end
-
-      context "with an existing English language provider" do
-        let(:application_form) do
-          create(:application_form, :with_english_language_provider)
-        end
-
-        it "clears the reference" do
-          expect { save }.to change(
-            application_form,
-            :english_language_provider_reference,
-          ).to("")
-        end
-      end
-    end
-
-    context "when other is selected" do
-      before { application_form.update!(reduced_evidence_accepted: true) }
-
-      let(:provider_id) { "other" }
-
-      it "saves the application form" do
-        expect { save }.to change(
-          application_form,
-          :english_language_provider_other,
-        ).to(true)
       end
 
       context "with an existing English language provider" do
