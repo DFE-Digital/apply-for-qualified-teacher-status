@@ -51,7 +51,7 @@ RSpec.describe DestroyApplicationForm do
   include_examples "deletes model", AssessmentSection
   include_examples "deletes model", ConsentRequest
   include_examples "deletes model", TRSTRNRequest
-  include_examples "deletes model", Document, 22, 11
+  include_examples "deletes model", Document, 24, 12
   include_examples "deletes model", FurtherInformationRequest
   include_examples "deletes model", FurtherInformationRequestItem, 6, 3
   include_examples "deletes model", Note

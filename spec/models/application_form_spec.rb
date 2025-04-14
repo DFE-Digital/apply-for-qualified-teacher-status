@@ -132,6 +132,7 @@ RSpec.describe ApplicationForm, type: :model do
         .with_values(
           medium_of_instruction: "medium_of_instruction",
           provider: "provider",
+          esol: "esol",
         )
         .with_prefix(:english_language_proof_method)
         .backed_by_column_of_type(:string)

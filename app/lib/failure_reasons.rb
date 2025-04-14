@@ -51,7 +51,8 @@ class FailureReasons
     DEGREE_CERTIFICATE_ILLEGIBLE = "degree_certificate_illegible",
     DEGREE_TRANSCRIPT_ILLEGIBLE = "degree_transcript_illegible",
     EL_ESOL_DOCUMENT_ILLEGIBLE = "english_language_esol_document_illegible",
-    EL_ESOL_EXPIRED_DURING_ASSESSMENT = "english_language_esol_expired_during_assessment",
+    EL_ESOL_EXPIRED_DURING_ASSESSMENT =
+      "english_language_esol_expired_during_assessment",
     EL_SELT_EXPIRED_DURING_ASSESSMENT =
       "english_language_selt_expired_during_assessment",
     EL_NOT_EXEMPT_BY_QUALIFICATION_COUNTRY =
@@ -100,7 +101,8 @@ class FailureReasons
     DEGREE_CERTIFICATE_ILLEGIBLE => :qualification_certificate,
     DEGREE_TRANSCRIPT_ILLEGIBLE => :qualification_transcript,
     EL_ESOL_DOCUMENT_ILLEGIBLE => :english_for_speakers_of_other_languages,
-    EL_ESOL_EXPIRED_DURING_ASSESSMENT => :english_for_speakers_of_other_languages,
+    EL_ESOL_EXPIRED_DURING_ASSESSMENT =>
+      :english_for_speakers_of_other_languages,
     EL_NOT_EXEMPT_BY_QUALIFICATION_COUNTRY => :medium_of_instruction,
     EL_MOI_INVALID_FORMAT => :medium_of_instruction,
     EL_PROFICIENCY_DOCUMENT_ILLEGIBLE => :english_language_proficiency,
