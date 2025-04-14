@@ -12,7 +12,7 @@
       View
       <%= govuk_link_to "approved SELT providers", english_language_guidance_path, new_tab: true %>
       and
-      <%= govuk_link_to "approved ESOL providers", "https://find-a-qualification.services.ofqual.gov.uk/qualifications?availability=Available%20to%20learners&qualificationTypes=English%20For%20Speakers%20of%20Other%20Languages&qualificationLevels=Level%201,Level%201%2FLevel%202,Level%202&nationalAvailability=International", new_tab: true %>.
+      <%= govuk_link_to "approved ESOL providers", t("service.ofqual_list_of_esol_providers_url"), new_tab: true %>.
     <% else %>
       See the list of <%= govuk_link_to "approved providers", english_language_guidance_path, new_tab: true %>.
     <% end %>
