@@ -246,8 +246,8 @@ class AssessorInterface::ApplicationFormsShowViewObject
   def further_information_request_task_list_item(further_information_request)
     {
       name:
-        I18n.t(
-          "assessor_interface.application_forms.show.assessment_tasks.items.review_requested_information",
+        further_information_request_task_list_item_name(
+          further_information_request,
         ),
       link:
         if further_information_request.received?
@@ -277,6 +277,23 @@ class AssessorInterface::ApplicationFormsShowViewObject
           :completed
         end,
     }
+  end
+
+  def further_information_request_task_list_item_name(
+    further_information_request
+  )
+    key =
+      if further_information_request.first_request?
+        "review_requested_information_first_request"
+      elsif further_information_request.second_request?
+        "review_requested_information_second_request"
+      else
+        "review_requested_information_last_request"
+      end
+
+    I18n.t(
+      "assessor_interface.application_forms.show.assessment_tasks.items.#{key}",
+    )
   end
 
   def verification_task_list_section

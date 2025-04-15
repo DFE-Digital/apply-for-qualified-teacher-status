@@ -25,7 +25,9 @@
 require "rails_helper"
 
 RSpec.describe FurtherInformationRequest do
-  subject(:further_information_request) { create(:further_information_request) }
+  subject(:model) { further_information_request }
+
+  let(:further_information_request) { create(:further_information_request) }
 
   it_behaves_like "a remindable" do
     subject { create(:requested_further_information_request) }
@@ -61,6 +63,228 @@ RSpec.describe FurtherInformationRequest do
       end
 
       it { is_expected.to eq([expected]) }
+    end
+  end
+
+  describe "#first_request?" do
+    subject(:first_request?) { further_information_request.first_request? }
+
+    let(:further_information_request) do
+      create(:requested_further_information_request)
+    end
+
+    context "when the only further information request within assessment" do
+      it { is_expected.to be true }
+    end
+
+    context "when one other further information request exists within assesment requested previously" do
+      before do
+        create :requested_further_information_request,
+               requested_at: further_information_request.requested_at - 1.day,
+               assessment: further_information_request.assessment
+      end
+
+      it { is_expected.to be false }
+    end
+
+    context "when one other further information request exists within assesment requested after" do
+      before do
+        create :requested_further_information_request,
+               requested_at: further_information_request.requested_at + 1.day,
+               assessment: further_information_request.assessment
+      end
+
+      it { is_expected.to be true }
+    end
+
+    context "when two other further information request exists within assesment requested previously" do
+      before do
+        create :requested_further_information_request,
+               requested_at: further_information_request.requested_at - 2.days,
+               assessment: further_information_request.assessment
+
+        create :requested_further_information_request,
+               requested_at: further_information_request.requested_at - 1.day,
+               assessment: further_information_request.assessment
+      end
+
+      it { is_expected.to be false }
+    end
+
+    context "when two other further information request exists within assesment requested after" do
+      before do
+        create :requested_further_information_request,
+               requested_at: further_information_request.requested_at + 2.days,
+               assessment: further_information_request.assessment
+
+        create :requested_further_information_request,
+               requested_at: further_information_request.requested_at + 1.day,
+               assessment: further_information_request.assessment
+      end
+
+      it { is_expected.to be true }
+    end
+
+    context "when two other further information request exists within assesment requested before and after" do
+      before do
+        create :requested_further_information_request,
+               requested_at: further_information_request.requested_at - 2.days,
+               assessment: further_information_request.assessment
+
+        create :requested_further_information_request,
+               requested_at: further_information_request.requested_at + 1.day,
+               assessment: further_information_request.assessment
+      end
+
+      it { is_expected.to be false }
+    end
+  end
+
+  describe "#second_request?" do
+    subject(:second_request?) { further_information_request.second_request? }
+
+    let(:further_information_request) do
+      create(:requested_further_information_request)
+    end
+
+    context "when the only further information request within assessment" do
+      it { is_expected.to be false }
+    end
+
+    context "when one other further information request exists within assesment requested previously" do
+      before do
+        create :requested_further_information_request,
+               requested_at: further_information_request.requested_at - 1.day,
+               assessment: further_information_request.assessment
+      end
+
+      it { is_expected.to be true }
+    end
+
+    context "when one other further information request exists within assesment requested after" do
+      before do
+        create :requested_further_information_request,
+               requested_at: further_information_request.requested_at + 1.day,
+               assessment: further_information_request.assessment
+      end
+
+      it { is_expected.to be false }
+    end
+
+    context "when two other further information request exists within assesment requested previously" do
+      before do
+        create :requested_further_information_request,
+               requested_at: further_information_request.requested_at - 2.days,
+               assessment: further_information_request.assessment
+
+        create :requested_further_information_request,
+               requested_at: further_information_request.requested_at - 1.day,
+               assessment: further_information_request.assessment
+      end
+
+      it { is_expected.to be false }
+    end
+
+    context "when two other further information request exists within assesment requested after" do
+      before do
+        create :requested_further_information_request,
+               requested_at: further_information_request.requested_at + 2.days,
+               assessment: further_information_request.assessment
+
+        create :requested_further_information_request,
+               requested_at: further_information_request.requested_at + 1.day,
+               assessment: further_information_request.assessment
+      end
+
+      it { is_expected.to be false }
+    end
+
+    context "when two other further information request exists within assesment requested before and after" do
+      before do
+        create :requested_further_information_request,
+               requested_at: further_information_request.requested_at - 2.days,
+               assessment: further_information_request.assessment
+
+        create :requested_further_information_request,
+               requested_at: further_information_request.requested_at + 1.day,
+               assessment: further_information_request.assessment
+      end
+
+      it { is_expected.to be true }
+    end
+  end
+
+  describe "#third_request?" do
+    subject(:third_request?) { further_information_request.third_request? }
+
+    let(:further_information_request) do
+      create(:requested_further_information_request)
+    end
+
+    context "when the only further information request within assessment" do
+      it { is_expected.to be false }
+    end
+
+    context "when one other further information request exists within assesment requested previously" do
+      before do
+        create :requested_further_information_request,
+               requested_at: further_information_request.requested_at - 1.day,
+               assessment: further_information_request.assessment
+      end
+
+      it { is_expected.to be false }
+    end
+
+    context "when one other further information request exists within assesment requested after" do
+      before do
+        create :requested_further_information_request,
+               requested_at: further_information_request.requested_at + 1.day,
+               assessment: further_information_request.assessment
+      end
+
+      it { is_expected.to be false }
+    end
+
+    context "when two other further information request exists within assesment requested previously" do
+      before do
+        create :requested_further_information_request,
+               requested_at: further_information_request.requested_at - 2.days,
+               assessment: further_information_request.assessment
+
+        create :requested_further_information_request,
+               requested_at: further_information_request.requested_at - 1.day,
+               assessment: further_information_request.assessment
+      end
+
+      it { is_expected.to be true }
+    end
+
+    context "when two other further information request exists within assesment requested after" do
+      before do
+        create :requested_further_information_request,
+               requested_at: further_information_request.requested_at + 2.days,
+               assessment: further_information_request.assessment
+
+        create :requested_further_information_request,
+               requested_at: further_information_request.requested_at + 1.day,
+               assessment: further_information_request.assessment
+      end
+
+      it { is_expected.to be false }
+    end
+
+    context "when two other further information request exists within assesment requested before and after" do
+      before do
+        create :requested_further_information_request,
+               requested_at: further_information_request.requested_at - 2.days,
+               assessment: further_information_request.assessment
+
+        create :requested_further_information_request,
+               requested_at: further_information_request.requested_at + 1.day,
+               assessment: further_information_request.assessment
+      end
+
+      it { is_expected.to be false }
     end
   end
 end

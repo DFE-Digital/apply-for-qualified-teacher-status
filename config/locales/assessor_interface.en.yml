@@ -25,7 +25,9 @@ en:
             professional_standing_request: Verify LoPS
             qualification_requests: Verify qualifications
             reference_requests: Verify references
-            review_requested_information: Review further information from applicant
+            review_requested_information_first_request: Review further information received - first request
+            review_requested_information_second_request: Review further information received - second request
+            review_requested_information_last_request: Review further information received - final request
             review_verifications: Review verifications
             verification_decision: Verification decision
 

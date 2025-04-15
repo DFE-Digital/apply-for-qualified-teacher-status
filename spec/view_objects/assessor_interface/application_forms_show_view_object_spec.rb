@@ -311,7 +311,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       it do
         expect(subject).to include_task_list_item(
           "Assessment",
-          "Review further information from applicant",
+          "Review further information received - first request",
           status: :cannot_start,
         )
       end
@@ -323,7 +323,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       it do
         expect(subject).to include_task_list_item(
           "Assessment",
-          "Review further information from applicant",
+          "Review further information received - first request",
           status: :not_started,
         )
       end
@@ -342,7 +342,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       it do
         expect(subject).to include_task_list_item(
           "Assessment",
-          "Review further information from applicant",
+          "Review further information received - first request",
           status: :in_progress,
         )
       end
@@ -361,7 +361,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       it do
         expect(subject).to include_task_list_item(
           "Assessment",
-          "Review further information from applicant",
+          "Review further information received - first request",
           status: :in_progress,
         )
       end
@@ -382,7 +382,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       it do
         expect(subject).to include_task_list_item(
           "Assessment",
-          "Review further information from applicant",
+          "Review further information received - first request",
           status: :in_progress,
         )
       end
@@ -401,7 +401,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       it do
         expect(subject).to include_task_list_item(
           "Assessment",
-          "Review further information from applicant",
+          "Review further information received - first request",
           status: :completed,
         )
       end
@@ -420,7 +420,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       it do
         expect(subject).to include_task_list_item(
           "Assessment",
-          "Review further information from applicant",
+          "Review further information received - first request",
           status: :completed,
         )
       end

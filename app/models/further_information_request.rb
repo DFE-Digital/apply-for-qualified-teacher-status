@@ -91,6 +91,24 @@ class FurtherInformationRequest < ApplicationRecord
     update_work_history_contact_items(user:) if verify_passed?
   end
 
+  def first_request?
+    assessment
+      .further_information_requests
+      .order(:requested_at)
+      .index(self)
+      .zero?
+  end
+
+  def second_request?
+    assessment.further_information_requests.order(:requested_at).index(self) ==
+      1
+  end
+
+  def third_request?
+    assessment.further_information_requests.order(:requested_at).index(self) ==
+      2
+  end
+
   delegate :teacher, to: :application_form
 
   private
