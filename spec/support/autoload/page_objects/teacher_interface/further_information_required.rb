@@ -7,6 +7,7 @@ module PageObjects
 
       element :back_link, ".govuk-back-link"
       element :heading, ".govuk-heading-l"
+      element :failure_reason_heading, "h2.govuk-heading-s"
       element :feedback, ".govuk-inset-text"
 
       section :form, "form" do
