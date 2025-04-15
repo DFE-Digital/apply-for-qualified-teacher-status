@@ -8,8 +8,8 @@
 <%= govuk_task_list do |task_list|
   @view_object.task_list_items.each do |item|
     task_list.with_item do |row|
-      row.with_title(text: item[:title], href: item[:href], classes: "max-w-500")
-      row.with_status(text: render(StatusTag::Component.new(item[:status])))
+      row.with_title(text: item[:title], href: item[:href])
+      row.with_status(text: render(StatusTag::Component.new(item[:status])), classes: "app-white-space-nowrap")
     end
   end
 end %>
