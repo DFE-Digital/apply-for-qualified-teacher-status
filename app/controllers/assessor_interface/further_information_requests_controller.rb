@@ -21,10 +21,13 @@ module AssessorInterface
     end
 
     def create
-      RequestFurtherInformation.call(assessment:, user: current_staff)
+      FurtherInformationRequests::CreateFromAssessmentSections.call(
+        assessment:,
+        user: current_staff,
+      )
 
       redirect_to [:status, :assessor_interface, application_form]
-    rescue RequestFurtherInformation::AlreadyExists
+    rescue FurtherInformationRequests::CreateFromAssessmentSections::AlreadyExists
       flash[:warning] = "Further information has already been requested."
       render :new, status: :unprocessable_entity
     end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class RequestFurtherInformation
+class FurtherInformationRequests::CreateFromAssessmentSections
   include ServicePattern
 
   def initialize(assessment:, user:)
