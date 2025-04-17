@@ -38,7 +38,11 @@ class ConsentLetter
 
           pdf.font "Open Sans"
 
-          pdf.image("public/tra-logo.png", position: :right, scale: 0.6)
+          pdf.image(
+            "public/dfe-logo-master-portrait-white.png",
+            position: :right,
+            scale: 0.6,
+          )
 
           pdf.pad(SECTION_PAD) do
             pdf.text "By submitting an application to the Apply for qualified teacher status (QTS) in England."
@@ -49,7 +53,7 @@ class ConsentLetter
             end
 
             pdf.text "I hereby authorise and request all parties to release information on my academic " \
-                       "standing/records to the TRA for the purpose of verification in accordance with UK GDPR."
+                       "standing/records to the Department for Education for the purpose of verification in accordance with UK GDPR."
           end
 
           pdf.text "Name: #{application_form_full_name(application_form)}"
@@ -61,9 +65,6 @@ class ConsentLetter
           pdf.text "Date of consent: #{date_of_consent.to_fs}"
 
           pdf.pad(SECTION_PAD) do
-            pdf.text "The service is run by the Teaching Regulation Agency (TRA) an executive agency of the " \
-                       "Department for Education (DfE)."
-
             pdf.pad_top(LINE_PAD) do
               pdf.text "The full privacy statement can be found " \
                          "<link href='#{PRIVACY_URL}'><u><color rgb='0000EE'>here</color></u></link>.",
