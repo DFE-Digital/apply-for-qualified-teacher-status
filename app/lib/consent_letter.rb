@@ -53,7 +53,8 @@ class ConsentLetter
             end
 
             pdf.text "I hereby authorise and request all parties to release information on my academic " \
-                       "standing/records to the Department for Education for the purpose of verification in accordance with UK GDPR."
+                       "standing/records to the Department for Education for the purpose of " \
+                       "verification in accordance with UK GDPR."
           end
 
           pdf.text "Name: #{application_form_full_name(application_form)}"
