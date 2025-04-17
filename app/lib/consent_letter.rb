@@ -39,9 +39,9 @@ class ConsentLetter
           pdf.font "Open Sans"
 
           pdf.image(
-            "public/dfe-logo-master-portrait-white.png",
+            "public/dfe-logo-master-portrait-black.png",
             position: :right,
-            scale: 0.6,
+            scale: 0.06,
           )
 
           pdf.pad(SECTION_PAD) do
@@ -66,11 +66,9 @@ class ConsentLetter
           pdf.text "Date of consent: #{date_of_consent.to_fs}"
 
           pdf.pad(SECTION_PAD) do
-            pdf.pad_top(LINE_PAD) do
-              pdf.text "The full privacy statement can be found " \
-                         "<link href='#{PRIVACY_URL}'><u><color rgb='0000EE'>here</color></u></link>.",
-                       inline_format: true
-            end
+            pdf.text "The full privacy statement can be found " \
+                       "<link href='#{PRIVACY_URL}'><u><color rgb='0000EE'>here</color></u></link>.",
+                     inline_format: true
           end
         end
   end
