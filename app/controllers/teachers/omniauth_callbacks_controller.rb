@@ -39,7 +39,7 @@ class Teachers::OmniauthCallbacksController < ApplicationController
   end
 
   def new_user_without_eligibility_check_completed?(gov_one_id, email)
-    (Teacher.find_by(gov_one_id:).nil? && Teacher.find_by(email:).nil?) &&
+    Teacher.find_by(gov_one_id:).nil? && Teacher.find_by(email:).nil? &&
       (
         eligibility_check.nil? || !eligibility_check.completed? ||
           !eligibility_check.eligible?

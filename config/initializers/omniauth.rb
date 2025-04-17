@@ -20,7 +20,7 @@ callback_path = "/teacher/auth/gov_one/callback"
 
 jwks_uri =
   if onelogin_sign_in_issuer_uri.present?
-    "#{onelogin_sign_in_issuer_uri&.to_s}.well-known/jwks.json"
+    "#{onelogin_sign_in_issuer_uri}.well-known/jwks.json"
   end
 
 gov_one_redirect_uri =
@@ -33,7 +33,7 @@ gov_one_redirect_uri =
 end_session_endpoint =
   (
     if onelogin_sign_in_issuer_uri.present?
-      "#{onelogin_sign_in_issuer_uri&.to_s}logout"
+      "#{onelogin_sign_in_issuer_uri}logout"
     end
   )
 
