@@ -103,14 +103,25 @@ RSpec.describe "Teacher further information", type: :system do
 
   def when_i_click_the_text_task_list_item
     text_task_list_item.click
+    expect(
+      teacher_further_information_required_page.failure_reason_heading.text,
+    ).to eq(
+      "The subjects you entered are acceptable for QTS, but the uploaded qualifications do not match them.",
+    )
   end
 
   def when_i_click_the_work_history_contact_task_list_item
     work_history_task_list_item.click
+    expect(
+      teacher_further_information_required_page.failure_reason_heading.text,
+    ).to eq("We could not verify 1 or more references you provided.")
   end
 
   def when_i_click_the_document_task_list_item
     document_task_list_item.click
+    expect(
+      teacher_further_information_required_page.failure_reason_heading.text,
+    ).to eq("Your ID document is illegible or in a format we cannot accept.")
   end
 
   def when_i_fill_in_the_response
