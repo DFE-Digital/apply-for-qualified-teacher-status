@@ -91,6 +91,7 @@ class ApplicationForm < ApplicationRecord
     identification
     name_change
     medium_of_instruction
+    english_for_speakers_of_other_languages
     english_language_proficiency
     written_statement
   ].freeze
@@ -123,7 +124,11 @@ class ApplicationForm < ApplicationRecord
   validates :withdrawn_at, absence: true, if: :declined_at?
 
   enum :english_language_proof_method,
-       { medium_of_instruction: "medium_of_instruction", provider: "provider" },
+       {
+         medium_of_instruction: "medium_of_instruction",
+         provider: "provider",
+         esol: "esol",
+       },
        prefix: true
 
   validates :english_language_provider,

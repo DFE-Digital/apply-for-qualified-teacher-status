@@ -23,11 +23,22 @@ RSpec.describe TeacherInterface::EnglishLanguageExemptionForm, type: :model do
 
     let(:exempt) { "true" }
 
-    it "saves the application form" do
+    it "saves the application forms english_language_citizenship_exempt" do
       expect { save }.to change(
         application_form,
         :english_language_citizenship_exempt,
       ).to(true)
+    end
+
+    context "when the exemption is for qualifications" do
+      let(:exemption_field) { "qualification" }
+
+      it "saves the application form english_language_qualification_exempt" do
+        expect { save }.to change(
+          application_form,
+          :english_language_qualification_exempt,
+        ).to(true)
+      end
     end
 
     context "with an existing English language provider" do
@@ -40,6 +51,20 @@ RSpec.describe TeacherInterface::EnglishLanguageExemptionForm, type: :model do
           application_form,
           :english_language_provider,
         ).to(nil)
+      end
+    end
+
+    context "with an existing ESOL document selected" do
+      let(:application_form) do
+        create(:application_form, :with_english_language_esol)
+      end
+
+      it "deletes the ESOL document" do
+        expect { save }.to change(
+          application_form.english_for_speakers_of_other_languages_document.uploads,
+          :count,
+        ).to(0)
+        expect(application_form.english_language_proof_method).to be_nil
       end
     end
   end

@@ -32,6 +32,7 @@ class Document < ApplicationRecord
            class_name: "Upload"
 
   UNTRANSLATABLE_TYPES = %w[
+    english_for_speakers_of_other_languages
     english_language_proficiency
     identification
     medium_of_instruction

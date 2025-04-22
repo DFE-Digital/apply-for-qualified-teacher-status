@@ -1,15 +1,20 @@
 <%= govuk_details(summary_text: "About approved providers") do %>
   <p class="govuk-body">
     <% if reduced_evidence_accepted %>
-      To apply for QTS you must use an approved provider. We cannot accept English language proficiency tests from a provider that does not appear on the list.
+      We can only accept Secure English Language Tests (SELT) or English for Speakers of Other Languages (ESOL) certificates from one of the approved providers on these lists.
     <% else %>
       To apply for QTS you need to show that you’ve passed a Secure English Language Test (SELT) at B2 level, from one of the approved providers on the list, within the last 2 years. We cannot accept English language tests from a provider that does not appear on the list.
     <% end %>
   </p>
 
   <p class="govuk-body">
-    See the list of <%= govuk_link_to "approved providers",
-                                      reduced_evidence_accepted ? "https://register.ofqual.gov.uk/Search?category=Qualifications&query=ESOl" : english_language_guidance_path,
-                                      new_tab: true %>.
+    <% if reduced_evidence_accepted %>
+      View
+      <%= govuk_link_to "approved SELT providers", english_language_guidance_path, new_tab: true %>
+      and
+      <%= govuk_link_to "approved ESOL providers", t("service.ofqual_list_of_esol_providers_url"), new_tab: true %>.
+    <% else %>
+      See the list of <%= govuk_link_to "approved providers", english_language_guidance_path, new_tab: true %>.
+    <% end %>
   </p>
 <% end %>

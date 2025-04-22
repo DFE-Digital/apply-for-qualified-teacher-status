@@ -96,6 +96,12 @@ module TeacherInterface
               :application_form,
               application_form.english_language_medium_of_instruction_document,
             ]
+          elsif @form.esol?
+            [
+              :teacher_interface,
+              :application_form,
+              application_form.english_for_speakers_of_other_languages_document,
+            ]
           else
             %i[provider teacher_interface application_form english_language]
           end
@@ -121,22 +127,12 @@ module TeacherInterface
 
       handle_application_form_section(
         form: @form,
-        if_success_then_redirect: ->(_check_path) do
-          if @form.other?
-            [
-              :teacher_interface,
-              :application_form,
-              application_form.english_language_proficiency_document,
-            ]
-          else
-            %i[
-              provider_reference
-              teacher_interface
-              application_form
-              english_language
-            ]
-          end
-        end,
+        if_success_then_redirect: %i[
+          provider_reference
+          teacher_interface
+          application_form
+          english_language
+        ],
         if_failure_then_render: :edit_provider,
       )
     end

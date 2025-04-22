@@ -431,6 +431,29 @@ RSpec.describe AssessmentFactory do
             end
           end
         end
+
+        context "when the english language proof is ESOL" do
+          before { application_form.english_language_proof_method = :esol }
+
+          it "has the right checks and failure reasons" do
+            section = sections.english_language_proficiency.first
+            expect(section.checks).to eq(
+              %w[english_language_esol_provider english_language_valid_esol],
+            )
+            expect(section.failure_reasons).to eq(
+              %w[
+                english_language_proficiency_require_alternative
+                english_language_esol_document_illegible
+                english_language_esol_expired_during_assessment
+                english_language_qualification_invalid
+                english_language_esol_below_required_level
+                suitability
+                suitability_previously_declined
+                fraud
+              ],
+            )
+          end
+        end
       end
 
       describe "work history section" do

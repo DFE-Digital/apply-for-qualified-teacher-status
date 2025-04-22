@@ -293,7 +293,18 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
       it { is_expected.to be true }
     end
 
-    context "when the application EL proof method is not 'provider'" do
+    context "when the application EL proof method is 'ESOL'" do
+      let(:application_form) do
+        create(:application_form, :with_english_language_esol)
+      end
+      let(:assessment_section) do
+        create(:assessment_section, :english_language_proficiency, assessment:)
+      end
+
+      it { is_expected.to be true }
+    end
+
+    context "when the application EL proof method is 'MOI'" do
       let(:application_form) do
         create(:application_form, :with_english_language_medium_of_instruction)
       end

@@ -14,7 +14,7 @@ module Documentable
 
     base::ATTACHABLE_DOCUMENT_TYPES.each do |document_type|
       define_method "#{document_type}_document" do
-        documents.find { |document| document.document_type == document_type }
+        documents.find_or_create_by!(document_type:)
       end
     end
   end

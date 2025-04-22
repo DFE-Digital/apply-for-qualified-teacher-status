@@ -19,6 +19,9 @@ en:
             english_language_exemption_by_citizenship_not_confirmed_via_passport: Your passport does not confirm English language exemption by birth or citizenship.
             english_language_exemption_by_qualification_not_confirmed: Your qualification documents do not confirm English language exemption by country of study.
             english_language_not_exempt_by_qualification_country: The country your qualifications were issued in is not exempt from English language requirements.
+            english_language_esol_below_required_level: Your English for Speakers of Other Languages (ESOL) certificate does not meet our requirements.
+            english_language_esol_document_illegible: There’s a problem with your English for Speakers of Other Languages (ESOL) certificate document.
+            english_language_esol_expired_during_assessment: You have provided evidence of an English for Speakers of Other Languages (ESOL) certificate, but the test was completed more than 2 years ago.
             english_language_moi_invalid_format: There’s a problem with your Medium of Instruction (MOI) document.
             english_language_moi_not_taught_in_english: Your medium of instruction (MOI) does not show that you were taught exclusively in English.
             english_language_not_achieved_b2: You provided evidence of a secure English language test (SELT) that has not achieved B2 level. Find out what tests we can accept.
@@ -273,8 +276,8 @@ en:
         teacher_interface/english_language_proof_method_form:
           attributes:
             proof_method:
-              blank: Select your method of validation
-              inclusion: Select your method of validation
+              blank: Select your method of proving your English language proficiency
+              inclusion: Select your method of proving your English language proficiency
         teacher_interface/english_language_provider_form:
           attributes:
             provider_id:

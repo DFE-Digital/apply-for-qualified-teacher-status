@@ -43,6 +43,7 @@ class ApplicationFormSectionStatusUpdater
            :english_language_qualification_exempt,
            :english_language_proof_method,
            :english_language_medium_of_instruction_document,
+           :english_for_speakers_of_other_languages_document,
            :english_language_proficiency_document,
            :english_language_provider,
            :english_language_provider_other,
@@ -133,6 +134,13 @@ class ApplicationFormSectionStatusUpdater
     case english_language_proof_method
     when "medium_of_instruction"
       if (status = english_language_medium_of_instruction_document.status) !=
+           "not_started"
+        status
+      else
+        "in_progress"
+      end
+    when "esol"
+      if (status = english_for_speakers_of_other_languages_document.status) !=
            "not_started"
         status
       else

@@ -83,7 +83,10 @@ module AssessorInterface
 
     def show_english_language_provider_details?
       assessment_section.english_language_proficiency? &&
-        application_form.english_language_proof_method_provider?
+        (
+          application_form.english_language_proof_method_provider? ||
+            application_form.english_language_proof_method_esol?
+        )
     end
 
     def show_english_language_exemption_checkbox?

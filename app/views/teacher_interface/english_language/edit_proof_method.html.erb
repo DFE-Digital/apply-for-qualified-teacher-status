@@ -7,9 +7,10 @@
   <span class="govuk-caption-l"><%= t("application_form.tasks.sections.english_language") %></span>
 
   <%= f.govuk_collection_radio_buttons :proof_method,
-                                       [OpenStruct.new(value: "medium_of_instruction"), OpenStruct.new(value: "provider")],
+                                       @form.proof_methods,
                                        :value,
-                                       legend: { tag: "h1", size: "l" } %>
+                                       legend: { tag: "h1", size: "l" },
+                                       hint: { text: "There are #{@form.proof_methods.count} ways you can do this." } %>
 
   <%= render "shared/english_language_approved_providers", reduced_evidence_accepted: @application_form.reduced_evidence_accepted %>
 

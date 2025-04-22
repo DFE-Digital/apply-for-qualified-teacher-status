@@ -13,7 +13,17 @@
       <h1 class="govuk-heading-l">Upload your English language proficiency test</h1>
       <p class="govuk-body">This document must confirm that you have an English language proficiency test from an approved provider at level B2 of the Common European Framework of Reference for Languages (CEFR) scale.</p>
       <p class="govuk-body">The test must be on the list of approved English language proficiency tests and awarded within the last 2 years before the date of your application.</p>
-      <%= render "shared/english_language_approved_providers", reduced_evidence_accepted: @application_form.reduced_evidence_accepted %>
+      <%= render "shared/english_language_approved_selt_providers", reduced_evidence_accepted: @application_form.reduced_evidence_accepted %>
+    <% elsif @document.english_for_speakers_of_other_languages? %>
+      <h1 class="govuk-heading-l">Upload your English for Speakers of Other Languages (ESOL) certificate</h1>
+      <p>Your English for Speakers of Other Languages (ESOL) certificate must:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>be level 1 or level 2</li>
+        <li>be from an <%= govuk_link_to "approved provider", t("service.ofqual_list_of_esol_providers_url"), new_tab: true %></li>
+        <li>test reading, writing, listening and speaking skills</li>
+        <li>be awarded within the last 2 years before the date of your application</li>
+      </ul>
+      <%= render "shared/english_language_approved_esol_providers", reduced_evidence_accepted: @application_form.reduced_evidence_accepted %>
     <% elsif @document.identification? %>
       <h1 class="govuk-heading-l">Upload a valid identification document</h1>
 

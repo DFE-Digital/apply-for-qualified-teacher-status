@@ -21,46 +21,23 @@ module TeacherInterface
     end
 
     def update_model
-      if provider_id == "other"
-        application_form.update!(
-          english_language_provider_id: nil,
-          english_language_provider_other: true,
-          english_language_provider_reference: "",
-        )
-      else
-        if provider_id != application_form.english_language_provider_id
-          application_form.update!(english_language_provider_reference: "")
-        end
-
-        application_form.update!(
-          english_language_provider_id: provider_id,
-          english_language_provider_other: false,
-        )
-
-        application_form
-          .english_language_proficiency_document
-          .uploads
-          .destroy_all
+      if provider_id != application_form.english_language_provider_id
+        application_form.update!(english_language_provider_reference: "")
       end
-    end
 
-    OTHER_PROVIDER =
-      OpenStruct.new(id: "other", name: "Other approved provider")
+      application_form.update!(
+        english_language_provider_id: provider_id,
+        english_language_provider_other: false,
+      )
+
+      application_form.english_language_proficiency_document.uploads.destroy_all
+    end
 
     def providers
       EnglishLanguageProvider
         .order(:created_at)
         .pluck(:id, :name)
         .map { |id, name| OpenStruct.new(id: id.to_s, name:) }
-        .tap do |providers|
-          if application_form&.reduced_evidence_accepted
-            providers << OTHER_PROVIDER
-          end
-        end
-    end
-
-    def other?
-      provider_id == "other"
     end
   end
 end

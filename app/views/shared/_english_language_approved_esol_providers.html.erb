@@ -1,0 +1,9 @@
+<%= govuk_details(summary_text: "About approved providers") do %>
+  <p class="govuk-body">
+    To apply for QTS you must use an approved provider. We cannot accept English language proficiency tests from a provider that does not appear on the list.
+  </p>
+
+  <p class="govuk-body">
+    View <%= govuk_link_to "approved ESOL providers", t("service.ofqual_list_of_esol_providers_url"), new_tab: true %>.
+  </p>
+<% end %>
