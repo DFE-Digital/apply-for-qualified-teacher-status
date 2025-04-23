@@ -114,6 +114,45 @@ RSpec.describe AssessorInterface::FurtherInformationRequestViewObject do
     end
   end
 
+  describe "#title" do
+    subject(:title) { view_object.title }
+
+    it "returns as review of first request" do
+      expect(title).to eq("Review further information received - first request")
+    end
+
+    context "when it is the second request" do
+      before do
+        create :further_information_request,
+               assessment:,
+               requested_at: further_information_request.requested_at - 1.day
+      end
+
+      it "returns as review of second request" do
+        expect(title).to eq(
+          "Review further information received - second request",
+        )
+      end
+    end
+
+    context "when it is the third request" do
+      before do
+        create :further_information_request,
+               assessment:,
+               requested_at: further_information_request.requested_at - 1.day
+        create :further_information_request,
+               assessment:,
+               requested_at: further_information_request.requested_at - 2.days
+      end
+
+      it "returns as review of final request" do
+        expect(title).to eq(
+          "Review further information received - final request",
+        )
+      end
+    end
+  end
+
   describe "#grouped_follow_up_items_by_assessment_section" do
     subject(:grouped_follow_up_items_by_assessment_section) do
       view_object.grouped_follow_up_items_by_assessment_section

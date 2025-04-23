@@ -1,18 +1,11 @@
-<% content_for :page_title, title_with_error_prefix(t(".title"), error: @form.errors.any?) %>
+<% content_for :page_title, title_with_error_prefix(@view_object.title, error: @form.errors.any?) %>
 <% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
 
 <%= form_with model: @form, url: [:assessor_interface, @view_object.application_form, @view_object.assessment, @view_object.further_information_request], method: :put do |f| %>
   <%= f.govuk_error_summary %>
 
   <h1 class="govuk-heading-xl">
-    <%= t(".title") %>
-    <% if @view_object.further_information_request.first_request? %>
-      - first request
-    <% elsif @view_object.further_information_request.second_request? %>
-      - second request
-    <% else %>
-      - final request
-    <% end %>
+    <%= @view_object.title %>
   </h1>
 
   <% @view_object.grouped_review_items_by_assessment_section.each do |assessment_section_group| %>

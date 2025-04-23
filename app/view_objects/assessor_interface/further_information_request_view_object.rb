@@ -21,6 +21,19 @@ class AssessorInterface::FurtherInformationRequestViewObject
 
   delegate :application_form, :assessment, to: :further_information_request
 
+  def title
+    key =
+      if further_information_request.first_request?
+        "first_request"
+      elsif further_information_request.second_request?
+        "second_request"
+      else
+        "last_request"
+      end
+
+    I18n.t("assessor_interface.further_information_requests.edit.title.#{key}")
+  end
+
   def grouped_review_items_by_assessment_section
     items_by_assessment_section.map do |assessment_section, items|
       {
