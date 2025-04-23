@@ -287,4 +287,58 @@ RSpec.describe FurtherInformationRequest do
       it { is_expected.to be false }
     end
   end
+
+  describe "#after_reviewed" do
+    let(:further_information_request) do
+      create(:received_further_information_request)
+    end
+    let(:further_information_request_item) do
+      create :further_information_request_item,
+             :with_work_history_contact_response,
+             further_information_request:,
+             contact_name: "new referee",
+             contact_job: "Teacher",
+             contact_email: "newemail@test.com",
+             work_history: work_history
+    end
+    let(:work_history) do
+      create :work_history,
+             :completed,
+             application_form: further_information_request.application_form
+    end
+    let(:user) { create :staff }
+
+    context "when the work history contact item is declined" do
+      before { further_information_request_item.review_decision_decline! }
+
+      it "does not update the work history contact" do
+        expect {
+          further_information_request.after_reviewed(user:)
+        }.not_to change(work_history, :contact_email)
+      end
+    end
+
+    context "when the work history contact item is accepted" do
+      before { further_information_request_item.review_decision_accept! }
+
+      it "does not update the work history contact" do
+        expect { further_information_request.after_reviewed(user:) }.to change(
+          work_history,
+          :contact_email,
+        )
+      end
+    end
+
+    context "when the work history contact item is followed up with new further information request" do
+      before do
+        further_information_request_item.review_decision_further_information!
+      end
+
+      it "does not update the work history contact" do
+        expect {
+          further_information_request.after_reviewed(user:)
+        }.not_to change(work_history, :contact_email)
+      end
+    end
+  end
 end

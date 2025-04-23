@@ -84,11 +84,11 @@ class FurtherInformationRequest < ApplicationRecord
   end
 
   def after_reviewed(user:)
-    update_work_history_contact_items(user:) if review_passed?
+    update_work_history_contact_items(user:)
   end
 
   def after_verified(user:)
-    update_work_history_contact_items(user:) if verify_passed?
+    update_work_history_contact_items(user:)
   end
 
   def first_request?
@@ -114,6 +114,8 @@ class FurtherInformationRequest < ApplicationRecord
   private
 
   def update_work_history_contact_items(user:)
-    items.each { |item| item.update_work_history_contact(user:) }
+    items.each do |item|
+      item.update_work_history_contact(user:) if item.review_decision_accept?
+    end
   end
 end
