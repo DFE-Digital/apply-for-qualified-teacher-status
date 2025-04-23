@@ -125,6 +125,46 @@ RSpec.describe Assessment, type: :model do
 
             it { is_expected.to be false }
           end
+
+          context "with multiple further information requests" do
+            context "with a passed latest further information request" do
+              before do
+                create(
+                  :further_information_request,
+                  :review_failed,
+                  assessment:,
+                  requested_at: 2.days.ago,
+                )
+                create(
+                  :further_information_request,
+                  :review_passed,
+                  assessment:,
+                  requested_at: 1.day.ago,
+                )
+              end
+
+              it { is_expected.to be true }
+            end
+
+            context "with a failed latest further information request" do
+              before do
+                create(
+                  :further_information_request,
+                  :review_failed,
+                  assessment:,
+                  requested_at: 2.days.ago,
+                )
+                create(
+                  :further_information_request,
+                  :review_failed,
+                  assessment:,
+                  requested_at: 1.day.ago,
+                )
+              end
+
+              it { is_expected.to be false }
+            end
+          end
         end
       end
 
@@ -300,6 +340,46 @@ RSpec.describe Assessment, type: :model do
 
         it { is_expected.to be true }
       end
+
+      context "with multiple further information requests" do
+        context "with a passed latest further information request" do
+          before do
+            create(
+              :further_information_request,
+              :review_failed,
+              assessment:,
+              requested_at: 2.days.ago,
+            )
+            create(
+              :further_information_request,
+              :review_passed,
+              assessment:,
+              requested_at: 1.day.ago,
+            )
+          end
+
+          it { is_expected.to be false }
+        end
+
+        context "with a failed latest further information request" do
+          before do
+            create(
+              :further_information_request,
+              :review_failed,
+              assessment:,
+              requested_at: 2.days.ago,
+            )
+            create(
+              :further_information_request,
+              :review_failed,
+              assessment:,
+              requested_at: 1.day.ago,
+            )
+          end
+
+          it { is_expected.to be true }
+        end
+      end
     end
 
     context "when awarded pending verification" do
@@ -432,6 +512,46 @@ RSpec.describe Assessment, type: :model do
             end
 
             it { is_expected.to be false }
+          end
+
+          context "with multiple further information requests" do
+            context "with a passed latest further information request" do
+              before do
+                create(
+                  :further_information_request,
+                  :review_failed,
+                  assessment:,
+                  requested_at: 2.days.ago,
+                )
+                create(
+                  :further_information_request,
+                  :review_passed,
+                  assessment:,
+                  requested_at: 1.day.ago,
+                )
+              end
+
+              it { is_expected.to be true }
+            end
+
+            context "with a failed latest further information request" do
+              before do
+                create(
+                  :further_information_request,
+                  :review_failed,
+                  assessment:,
+                  requested_at: 2.days.ago,
+                )
+                create(
+                  :further_information_request,
+                  :review_failed,
+                  assessment:,
+                  requested_at: 1.day.ago,
+                )
+              end
+
+              it { is_expected.to be false }
+            end
           end
         end
       end
