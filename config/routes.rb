@@ -131,6 +131,15 @@ Rails.application.routes.draw do
           member do
             get "decline", to: "further_information_requests#edit_decline"
             post "decline", to: "further_information_requests#update_decline"
+
+            get "follow-up", to: "further_information_requests#edit_follow_up"
+            post "follow-up",
+                 to: "further_information_requests#update_follow_up"
+
+            get "confirm-follow-up",
+                to: "further_information_requests#edit_confirm_follow_up"
+            post "confirm-follow-up",
+                 to: "further_information_requests#update_confirm_follow_up"
           end
         end
 

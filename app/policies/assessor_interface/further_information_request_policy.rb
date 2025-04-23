@@ -22,4 +22,20 @@ class AssessorInterface::FurtherInformationRequestPolicy < ApplicationPolicy
   def update_decline?
     update?
   end
+
+  def edit_follow_up?
+    edit?
+  end
+
+  def update_follow_up?
+    update?
+  end
+
+  def edit_confirm_follow_up?
+    edit?
+  end
+
+  def update_confirm_follow_up?
+    update?
+  end
 end

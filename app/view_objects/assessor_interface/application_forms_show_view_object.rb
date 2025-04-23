@@ -271,7 +271,9 @@ class AssessorInterface::ApplicationFormsShowViewObject
           else
             :in_progress
           end
-        elsif assessment.request_further_information?
+        elsif assessment.request_further_information? &&
+              assessment.latest_further_information_request ==
+                further_information_request
           :in_progress
         else
           :completed

@@ -28,13 +28,35 @@ RSpec.describe TeacherInterface::ApplicationFormViewObject do
 
     it { is_expected.to be_nil }
 
-    context "with an application form" do
+    context "with a further information request" do
       before do
         assessment = create(:assessment, application_form:)
         create(:further_information_request, assessment:)
       end
 
       it { is_expected.not_to be_nil }
+    end
+
+    context "with multiple further information requests" do
+      let(:assessment) { create(:assessment, application_form:) }
+
+      let!(:new_further_information_request) do
+        create(
+          :further_information_request,
+          assessment:,
+          requested_at: 1.day.ago,
+        )
+      end
+
+      before do
+        create(
+          :further_information_request,
+          assessment:,
+          requested_at: 2.days.ago,
+        )
+      end
+
+      it { is_expected.to eq(new_further_information_request) }
     end
   end
 

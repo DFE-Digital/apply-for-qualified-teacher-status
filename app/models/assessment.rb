@@ -217,6 +217,10 @@ class Assessment < ApplicationRecord
       )
   end
 
+  def latest_further_information_request
+    further_information_requests.order(:requested_at).last
+  end
+
   private
 
   def all_sections_assessed?

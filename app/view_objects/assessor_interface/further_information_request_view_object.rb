@@ -50,6 +50,33 @@ class AssessorInterface::FurtherInformationRequestViewObject
     end
   end
 
+  def grouped_follow_up_items_by_assessment_section
+    grouped_items =
+      items_by_assessment_section.map do |assessment_section, items|
+        items_requiring_follow_up =
+          items.select(&:review_decision_further_information?)
+
+        next if items_requiring_follow_up.empty?
+
+        {
+          section_id: assessment_section.id,
+          heading:
+            I18n.t(
+              assessment_section.key,
+              scope: %i[
+                assessor_interface
+                further_information_requests
+                edit
+                assessment_section
+              ],
+            ),
+          review_items: review_items(items_requiring_follow_up),
+        }
+      end
+
+    grouped_items.compact
+  end
+
   def review_items(items)
     items
       .sort_by(&:failure_reason_key)
@@ -64,18 +91,30 @@ class AssessorInterface::FurtherInformationRequestViewObject
           applicant_text_response: item.response,
           applicant_contact_response: work_history_contact_response(item),
           applicant_upload_response: item.document,
+          review_decision_note: item.review_decision_note,
         }.compact
       end
   end
 
   def can_update?
     further_information_request.review_passed.nil? ||
-      assessment.request_further_information?
+      (
+        assessment.request_further_information? &&
+          assessment.latest_further_information_request ==
+            further_information_request
+      )
   end
 
   def can_decline?
     can_update? &&
       further_information_request.items.any?(&:review_decision_decline?)
+  end
+
+  def can_follow_up?
+    can_update? &&
+      further_information_request.items.any?(
+        &:review_decision_further_information?
+      ) && further_information_request.items.none?(&:review_decision_decline?)
   end
 
   private

@@ -489,4 +489,44 @@ RSpec.describe Assessment, type: :model do
       it { is_expected.to include("request_further_information") }
     end
   end
+
+  describe "#latest_further_information_request" do
+    context "when assessment has no further information requests" do
+      it "returns nil" do
+        expect(assessment.latest_further_information_request).to be_nil
+      end
+    end
+
+    context "when assessment has one further information requests" do
+      let!(:further_information_request) do
+        create :further_information_request, assessment:
+      end
+
+      it "returns the further information request" do
+        expect(assessment.reload.latest_further_information_request).to eq(
+          further_information_request,
+        )
+      end
+    end
+
+    context "when assessment has multiple further information requests" do
+      let!(:latest_further_information_request) do
+        create :further_information_request,
+               assessment:,
+               requested_at: 1.day.ago
+      end
+
+      before do
+        create :further_information_request,
+               assessment:,
+               requested_at: 2.days.ago
+      end
+
+      it "returns the latest further information request" do
+        expect(assessment.reload.latest_further_information_request).to eq(
+          latest_further_information_request,
+        )
+      end
+    end
+  end
 end

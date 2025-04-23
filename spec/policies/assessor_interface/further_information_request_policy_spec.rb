@@ -58,6 +58,30 @@ RSpec.describe AssessorInterface::FurtherInformationRequestPolicy do
     it_behaves_like "a policy method requiring the assess permission"
   end
 
+  describe "#edit_follow_up?" do
+    subject(:edit_follow_up?) { policy.edit_follow_up? }
+
+    it_behaves_like "a policy method with permission"
+  end
+
+  describe "#update_follow_up?" do
+    subject(:update_follow_up?) { policy.update_follow_up? }
+
+    it_behaves_like "a policy method requiring the assess permission"
+  end
+
+  describe "#edit_confirm_follow_up?" do
+    subject(:edit_confirm_follow_up?) { policy.edit_confirm_follow_up? }
+
+    it_behaves_like "a policy method with permission"
+  end
+
+  describe "#update_confirm_follow_up?" do
+    subject(:update_confirm_follow_up?) { policy.update_confirm_follow_up? }
+
+    it_behaves_like "a policy method requiring the assess permission"
+  end
+
   describe "#destroy?" do
     subject(:destroy?) { policy.destroy? }
 

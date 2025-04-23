@@ -70,6 +70,12 @@ module PageObjects
         )
       end
 
+      def review_second_requested_information_task
+        find_task_list_item(
+          "Review further information received - second request",
+        )
+      end
+
       def verify_professional_standing_task
         find_task_list_item("Verify LoPS")
       end

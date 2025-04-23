@@ -34,6 +34,12 @@ class AssessorInterface::FurtherInformationRequestReviewForm
     further_information_request.items.all?(&:review_decision_accept?)
   end
 
+  def follow_up_further_information_requested?
+    further_information_request.items.any?(
+      &:review_decision_further_information?
+    ) && further_information_request.items.none?(&:review_decision_decline?)
+  end
+
   class << self
     def for_further_information_request(further_information_request)
       klass =

@@ -1,0 +1,24 @@
+<% content_for :page_title, "Check the further information you’re asking the applicant for" %>
+<% content_for :back_link_url, follow_up_assessor_interface_application_form_assessment_further_information_request_path(@application_form, @view_object.assessment, @view_object.further_information_request) %>
+
+<h1 class="govuk-heading-xl">Check the further information requests</h1>
+
+<% @view_object.grouped_follow_up_items_by_assessment_section.each do |assessment_section_group| %>
+  <section class="govuk-!-margin-bottom-9">
+    <h2 class="govuk-heading-l"><%= assessment_section_group[:heading] %></h2>
+
+    <% assessment_section_group[:review_items].each do |item| %>
+      <div class="app-further-information-request-item">
+        <h3 class="govuk-heading-s govuk-!-margin-bottom-3"><%= item[:heading] %></h3>
+
+        <%= govuk_inset_text(classes: "govuk-!-margin-top-0") do %>
+          <%= simple_format item[:review_decision_note] %>
+        <% end %>
+      </div>
+    <% end %>
+  </section>
+<% end %>
+
+<%= form_with model: [:confirm_follow_up, :assessor_interface, @view_object.application_form, @view_object.assessment, @view_object.further_information_request], method: :post do |f| %>
+  <% render "shared/assessor_interface/continue_cancel_button", f: %>
+<% end %>
