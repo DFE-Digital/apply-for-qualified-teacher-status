@@ -97,7 +97,7 @@ RSpec.describe "Assessor reviewing further information", type: :system do
     and_i_do_not_see_the_review_further_information_form
   end
 
-  it "review request further information" do
+  it "review and request further information" do
     when_i_visit_the(:assessor_application_page, reference:)
     and_i_click_review_requested_information
     then_i_see_the(
@@ -130,6 +130,38 @@ RSpec.describe "Assessor reviewing further information", type: :system do
     and_i_see_a_new_further_information_request_created
   end
 
+  context "when the further information is the 3rd request received" do
+    before do
+      create :received_further_information_request,
+             :with_items,
+             assessment_id: assessment_id,
+             reviewed_at: Time.current,
+             requested_at: further_information_request.requested_at - 2.days
+      create :received_further_information_request,
+             :with_items,
+             assessment_id: assessment_id,
+             reviewed_at: Time.current,
+             requested_at: further_information_request.requested_at - 1.day
+    end
+
+    it "review and only be able to accept or reject" do
+      when_i_visit_the(:assessor_application_page, reference:)
+      and_i_click_review_final_requested_information
+      then_i_see_the(
+        :assessor_review_further_information_request_page,
+        reference:,
+        assessment_id:,
+        id: further_information_request.id,
+      )
+      and_i_see_the_fi_responses
+      and_i_only_see_options_to_accept_and_decline_fi_responses
+
+      when_i_mark_the_information_received_as_accepted
+      then_i_see_the(:assessor_complete_assessment_page, reference:)
+      and_i_see_an_award_qts_option
+    end
+  end
+
   private
 
   def given_there_is_an_application_form_with_failure_reasons
@@ -142,6 +174,10 @@ RSpec.describe "Assessor reviewing further information", type: :system do
 
   def and_i_click_review_requested_information
     assessor_application_page.review_first_requested_information_task.click
+  end
+
+  def and_i_click_review_final_requested_information
+    assessor_application_page.review_final_requested_information_task.click
   end
 
   def and_i_see_the_fi_responses
@@ -158,6 +194,20 @@ RSpec.describe "Assessor reviewing further information", type: :system do
     expect(items.last).to have_content(
       "We could not verify 1 or more references entered by the applicant for " \
         "#{application_form.work_histories.first.school_name}.",
+    )
+  end
+
+  def and_i_only_see_options_to_accept_and_decline_fi_responses
+    expect(
+      assessor_review_further_information_request_page,
+    ).not_to have_content("No, request further information")
+
+    expect(assessor_review_further_information_request_page).to have_content(
+      "Yes, accept information",
+    )
+
+    expect(assessor_review_further_information_request_page).to have_content(
+      "No, decline application",
     )
   end
 
