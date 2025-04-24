@@ -341,4 +341,228 @@ RSpec.describe FurtherInformationRequest do
       end
     end
   end
+
+  describe "#should_send_reminder_email?" do
+    subject(:should_send_reminder_email?) do
+      further_information_request.should_send_reminder_email?(
+        nil,
+        number_of_reminders_sent,
+      )
+    end
+
+    let(:further_information_request) { create(:further_information_request) }
+    let(:number_of_reminders_sent) { 0 }
+
+    it { is_expected.to be false }
+
+    context "when the further information request is 2 weeks from expiry" do
+      # Initial FI requests expire after 6 weeks
+      let(:further_information_request) do
+        create(:further_information_request, requested_at: 4.weeks.ago)
+      end
+
+      it { is_expected.to be true }
+
+      context "with the request not being the first further information request" do
+        # 2nd & 3rd FI requests expire after 3 weeks
+        let(:further_information_request) do
+          create(:further_information_request, requested_at: 1.week.ago)
+        end
+
+        before do
+          create(
+            :received_further_information_request,
+            assessment: further_information_request.assessment,
+            requested_at: 10.weeks.ago,
+          )
+        end
+
+        it { is_expected.to be false }
+      end
+
+      context "when the number of reminders already sent is 1" do
+        let(:number_of_reminders_sent) { 1 }
+
+        it { is_expected.to be false }
+      end
+    end
+
+    context "when the further information request is 1 weeks from expiry" do
+      # Initial FI requests expire after 6 weeks
+      let(:further_information_request) do
+        create(:further_information_request, requested_at: 5.weeks.ago)
+      end
+
+      it { is_expected.to be true }
+
+      context "with the request not being the first further information request" do
+        # 2nd & 3rd FI requests expire after 3 weeks
+        let(:further_information_request) do
+          create(:further_information_request, requested_at: 2.weeks.ago)
+        end
+
+        before do
+          create(
+            :received_further_information_request,
+            assessment: further_information_request.assessment,
+            requested_at: 10.weeks.ago,
+          )
+        end
+
+        it { is_expected.to be true }
+      end
+
+      context "when the number of reminders already sent is 1" do
+        let(:number_of_reminders_sent) { 1 }
+
+        it { is_expected.to be true }
+
+        context "with the request not being the first further information request" do
+          # 2nd & 3rd FI requests expire after 3 weeks
+          let(:further_information_request) do
+            create(:further_information_request, requested_at: 2.weeks.ago)
+          end
+
+          before do
+            create(
+              :received_further_information_request,
+              assessment: further_information_request.assessment,
+              requested_at: 10.weeks.ago,
+            )
+          end
+
+          it { is_expected.to be false }
+        end
+      end
+
+      context "when the number of reminders already sent is 2" do
+        let(:number_of_reminders_sent) { 2 }
+
+        it { is_expected.to be false }
+      end
+    end
+
+    context "when the further information request is 2 days from expiry" do
+      # Initial FI requests expire after 6 weeks
+      let(:further_information_request) do
+        create(
+          :further_information_request,
+          requested_at: (5.weeks + 5.days).ago,
+        )
+      end
+
+      it { is_expected.to be true }
+
+      context "with the request not being the first further information request" do
+        # 2nd & 3rd FI requests expire after 3 weeks
+        let(:further_information_request) do
+          create(
+            :further_information_request,
+            requested_at: (2.weeks + 5.days).ago,
+          )
+        end
+
+        before do
+          create(
+            :received_further_information_request,
+            assessment: further_information_request.assessment,
+            requested_at: 10.weeks.ago,
+          )
+        end
+
+        it { is_expected.to be true }
+      end
+
+      context "when the number of reminders already sent is 1" do
+        let(:number_of_reminders_sent) { 1 }
+
+        it { is_expected.to be true }
+
+        context "with the request not being the first further information request" do
+          # 2nd & 3rd FI requests expire after 3 weeks
+          let(:further_information_request) do
+            create(
+              :further_information_request,
+              requested_at: (2.weeks + 5.days).ago,
+            )
+          end
+
+          before do
+            create(
+              :received_further_information_request,
+              assessment: further_information_request.assessment,
+              requested_at: 10.weeks.ago,
+            )
+          end
+
+          it { is_expected.to be true }
+        end
+      end
+
+      context "when the number of reminders already sent is 2" do
+        let(:number_of_reminders_sent) { 2 }
+
+        it { is_expected.to be true }
+
+        context "with the request not being the first further information request" do
+          # 2nd & 3rd FI requests expire after 3 weeks
+          let(:further_information_request) do
+            create(
+              :further_information_request,
+              requested_at: (2.weeks + 5.days).ago,
+            )
+          end
+
+          before do
+            create(
+              :received_further_information_request,
+              assessment: further_information_request.assessment,
+              requested_at: 10.weeks.ago,
+            )
+          end
+
+          it { is_expected.to be false }
+        end
+      end
+    end
+  end
+
+  describe "#expires_at" do
+    it "returns 6 weeks" do
+      expect(further_information_request.expires_after).to eq(6.weeks)
+    end
+
+    context "when the further information request is the 2nd request" do
+      before do
+        create(
+          :received_further_information_request,
+          assessment: further_information_request.assessment,
+          requested_at: 10.weeks.ago,
+        )
+      end
+
+      it "returns 3 weeks" do
+        expect(further_information_request.expires_after).to eq(3.weeks)
+      end
+    end
+
+    context "when the further information request is the 3rd request" do
+      before do
+        create(
+          :received_further_information_request,
+          assessment: further_information_request.assessment,
+          requested_at: 8.weeks.ago,
+        )
+        create(
+          :received_further_information_request,
+          assessment: further_information_request.assessment,
+          requested_at: 10.weeks.ago,
+        )
+      end
+
+      it "returns 3 weeks" do
+        expect(further_information_request.expires_after).to eq(3.weeks)
+      end
+    end
+  end
 end

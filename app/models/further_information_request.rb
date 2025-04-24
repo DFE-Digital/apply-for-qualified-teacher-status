@@ -43,12 +43,16 @@ class FurtherInformationRequest < ApplicationRecord
   FOUR_WEEK_COUNTRY_CODES = %w[AU CA GI NZ US].freeze
 
   def should_send_reminder_email?(_name, number_of_reminders_sent)
-    days_until_expired &&
-      (
-        (days_until_expired <= 14 && number_of_reminders_sent.zero?) ||
-          (days_until_expired <= 7 && number_of_reminders_sent == 1) ||
-          (days_until_expired <= 2 && number_of_reminders_sent == 2)
-      )
+    return false unless days_until_expired
+
+    if first_request?
+      (days_until_expired <= 14 && number_of_reminders_sent.zero?) ||
+        (days_until_expired <= 7 && number_of_reminders_sent == 1) ||
+        (days_until_expired <= 2 && number_of_reminders_sent == 2)
+    else
+      (days_until_expired <= 7 && number_of_reminders_sent.zero?) ||
+        (days_until_expired <= 2 && number_of_reminders_sent == 1)
+    end
   end
 
   def send_reminder_email(_name, _number_of_reminders_sent)
@@ -61,8 +65,10 @@ class FurtherInformationRequest < ApplicationRecord
   end
 
   def expires_after
-    if application_form.created_under_old_regulations? &&
-         FOUR_WEEK_COUNTRY_CODES.include?(application_form.country.code)
+    if !first_request?
+      3.weeks
+    elsif application_form.created_under_old_regulations? &&
+          FOUR_WEEK_COUNTRY_CODES.include?(application_form.country.code)
       4.weeks
     else
       6.weeks
