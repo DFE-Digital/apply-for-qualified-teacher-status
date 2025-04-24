@@ -206,6 +206,57 @@ RSpec.describe UpdateTRSTRNRequestJob, type: :job do
             trs_trn_request,
           )
         end
+
+        context "with trn included in the response" do
+          before do
+            allow(TRS::Client::V3::CreateTRNRequest).to receive(
+              :call,
+            ).and_return(
+              {
+                potential_duplicate: true,
+                trn:,
+                access_your_teaching_qualifications_link: "https://aytq.com",
+              },
+            )
+            allow(TRS::Client::V3::UpdateQTSRequest).to receive(
+              :call,
+            ).and_return(nil)
+          end
+
+          it "marks the request as complete" do
+            expect { perform }.to change(trs_trn_request, :complete?).to(true)
+          end
+
+          it "sets potential duplicate" do
+            expect { perform }.to change(
+              trs_trn_request,
+              :potential_duplicate,
+            ).to(false)
+          end
+
+          it "sends request to update QTS status on TRS" do
+            perform
+
+            expect(TRS::Client::V3::UpdateQTSRequest).to have_received(
+              :call,
+            ).with(application_form:, trn:, awarded_at: Time.zone.now)
+          end
+
+          it "awards QTS" do
+            expect(AwardQTS).to receive(:call).with(
+              application_form:,
+              user: "TRS",
+              trn:,
+              access_your_teaching_qualifications_url: "https://aytq.com",
+              awarded_at: Time.zone.now,
+            )
+            perform
+          end
+
+          it "doesn't queue another job" do
+            expect { perform }.not_to have_enqueued_job(described_class)
+          end
+        end
       end
     end
 
@@ -398,6 +449,55 @@ RSpec.describe UpdateTRSTRNRequestJob, type: :job do
           expect { perform }.to have_enqueued_job(described_class).with(
             trs_trn_request,
           )
+        end
+
+        context "with trn included in the response" do
+          before do
+            allow(TRS::Client::V3::ReadTRNRequest).to receive(:call).and_return(
+              {
+                potential_duplicate: true,
+                trn:,
+                access_your_teaching_qualifications_link: "https://aytq.com",
+              },
+            )
+            allow(TRS::Client::V3::UpdateQTSRequest).to receive(
+              :call,
+            ).and_return(nil)
+          end
+
+          it "marks the request as complete" do
+            expect { perform }.to change(trs_trn_request, :complete?).to(true)
+          end
+
+          it "sets potential duplicate" do
+            expect { perform }.to change(
+              trs_trn_request,
+              :potential_duplicate,
+            ).to(false)
+          end
+
+          it "sends request to update QTS status on TRS" do
+            perform
+
+            expect(TRS::Client::V3::UpdateQTSRequest).to have_received(
+              :call,
+            ).with(application_form:, trn:, awarded_at: Time.zone.now)
+          end
+
+          it "awards QTS" do
+            expect(AwardQTS).to receive(:call).with(
+              application_form:,
+              user: "TRS",
+              trn:,
+              access_your_teaching_qualifications_url: "https://aytq.com",
+              awarded_at: Time.zone.now,
+            )
+            perform
+          end
+
+          it "doesn't queue another job" do
+            expect { perform }.not_to have_enqueued_job(described_class)
+          end
         end
       end
     end

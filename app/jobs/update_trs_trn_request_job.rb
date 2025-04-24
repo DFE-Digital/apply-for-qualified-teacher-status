@@ -10,7 +10,9 @@ class UpdateTRSTRNRequestJob < ApplicationJob
 
     trs_trn_request.pending! if trs_trn_request.initial?
 
-    potential_duplicate = trn_response[:potential_duplicate]
+    potential_duplicate =
+      trn_response[:potential_duplicate] && trn_response[:trn].presence.nil?
+
     if potential_duplicate != trs_trn_request.potential_duplicate
       trs_trn_request.update!(potential_duplicate:)
     end
