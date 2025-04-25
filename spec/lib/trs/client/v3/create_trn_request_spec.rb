@@ -23,7 +23,7 @@ RSpec.describe TRS::Client::V3::CreateTRNRequest do
       ).with(
         body: "body",
         headers: {
-          "X-Api-Version" => "Next",
+          "X-Api-Version" => "20250425",
           "Authorization" => "Bearer test-api-key",
           "Content-Type" => "application/json",
         },
@@ -59,7 +59,7 @@ RSpec.describe TRS::Client::V3::CreateTRNRequest do
       ).with(
         body: "body",
         headers: {
-          "X-Api-Version" => "Next",
+          "X-Api-Version" => "20250425",
           "Authorization" => "Bearer test-api-key",
           "Content-Type" => "application/json",
         },
