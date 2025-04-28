@@ -18,7 +18,7 @@ We’ve also made the text on the service as simple as possible to understand.
 
 ## Feedback and contact information
 
-If you need information on this service in a different format like accessible PDF, large print, easy read, audio recording or braille, contact [qts.enquiries@education.gov.uk](mailto:qts.enquiries@education.gov.uk).
+If you need information on this service in a different format like accessible PDF, large print, easy read, audio recording or braille, contact [Professional.Recognition@education.gov.uk](mailto:Professional.Recognition@education.gov.uk).
 
 We’ll consider your request and get back to you in 5 days.
 
@@ -26,7 +26,7 @@ This service was built following GOV.UK design guidelines, which meet the [Web C
 
 ## Reporting accessibility problems with Apply for qualified teacher status (QTS) in England
 
-We’re always looking to improve the accessibility of this service. If you find any problems not listed on this page or think we’re not meeting accessibility requirements, contact [qts.enquiries@education.gov.uk](mailto:qts.enquiries@education.gov.uk). Include ‘Accessibility’ in the subject line of your email.
+We’re always looking to improve the accessibility of this service. If you find any problems not listed on this page or think we’re not meeting accessibility requirements, contact [Professional.Recognition@education.gov.uk](mailto:Professional.Recognition@education.gov.uk). Include ‘Accessibility’ in the subject line of your email.
 
 ## Enforcement procedure
 
