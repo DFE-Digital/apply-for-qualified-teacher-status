@@ -86,9 +86,7 @@ We’d be grateful if you could provide written evidence of their professional s
 Please include their QTS application reference number abc.
 
 Kind regards,
-Teaching Regulation Agency (TRA)
-
-TRA is an executive agency, sponsored by the Department for Education. We have responsibility for the regulation of the teaching profession in England.
+The Professional Recognition team, Apply for QTS in England
       EMAIL
     end
   end
