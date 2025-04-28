@@ -13,8 +13,9 @@ module TRS
         "3604ef30-8f11-4494-8b52-a2f9c5371e03"
       ALL_RECOGNITION_ROUTE_TYPE_ID = "6f27bdeb-d00a-4ef9-b0ea-26498ce64713"
 
-      def initialize(application_form:)
+      def initialize(application_form:, awarded_at:)
         @application_form = application_form
+        @awarded_at = awarded_at
         @teacher = application_form.teacher
         @assessment = application_form.assessment
       end
@@ -23,16 +24,14 @@ module TRS
         {
           routeTypeId: route_type_id,
           status: AWARDED_QTS_STATUS,
-          awardedDate: application_form.awarded_at.to_date.iso8601,
+          awardedDate: awarded_at.to_date.iso8601,
           trainingStartDate: teaching_qualification.start_date.iso8601,
           trainingEndDate: teaching_qualification.complete_date.iso8601,
           trainingSubjectReferences: subjects,
           trainingAgeSpecialism: age_range,
           degreeTypeId: nil,
           trainingCountryReference:
-            CountryCode.for_code(
-              teaching_qualification.institution_country_code,
-            ),
+            teaching_qualification.institution_country_code,
           trainingProviderUkprn: nil,
           isExemptFromInduction: exempt_from_induction,
         }
@@ -40,7 +39,7 @@ module TRS
 
       private
 
-      attr_reader :application_form, :teacher, :assessment
+      attr_reader :application_form, :teacher, :assessment, :awarded_at
 
       def teaching_qualification
         @teaching_qualification ||= application_form.teaching_qualification

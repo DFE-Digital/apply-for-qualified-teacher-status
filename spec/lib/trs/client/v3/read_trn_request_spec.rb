@@ -15,13 +15,13 @@ RSpec.describe TRS::Client::V3::ReadTRNRequest do
       ).with(
         headers: {
           "Authorization" => "Bearer test-api-key",
-          "X-Api-Version" => "Next",
+          "X-Api-Version" => "20250425",
         },
       ).to_return(
         status: 200,
         body:
           '{"requestId":"72888c5d-db14-4222-829b-7db9c2ec0dc3","status":"Completed",' \
-            '"trn":"1234567"}',
+            '"trn":"1234567","potentialDuplicate":false,"accessYourTeachingQualificationsLink":null}',
         headers: {
           "Content-Type" => "application/json",
         },
@@ -34,6 +34,8 @@ RSpec.describe TRS::Client::V3::ReadTRNRequest do
           request_id: "72888c5d-db14-4222-829b-7db9c2ec0dc3",
           status: "Completed",
           trn: "1234567",
+          potential_duplicate: false,
+          access_your_teaching_qualifications_link: nil,
         },
       )
     end
@@ -47,7 +49,7 @@ RSpec.describe TRS::Client::V3::ReadTRNRequest do
       ).with(
         headers: {
           "Authorization" => "Bearer test-api-key",
-          "X-Api-Version" => "Next",
+          "X-Api-Version" => "20250425",
         },
       ).to_return(
         status: 400,

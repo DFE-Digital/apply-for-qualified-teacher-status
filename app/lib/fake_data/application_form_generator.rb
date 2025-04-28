@@ -514,6 +514,7 @@ class FakeData::ApplicationFormGenerator
         user:,
         trn:,
         access_your_teaching_qualifications_url:,
+        awarded_at: Time.zone.now,
       )
     end
   end

@@ -9,12 +9,14 @@ RSpec.describe AwardQTS do
       user:,
       trn:,
       access_your_teaching_qualifications_url:,
+      awarded_at:,
     )
   end
 
   let(:teacher) { create(:teacher) }
   let(:user) { create(:staff) }
   let(:trn) { "abcdef" }
+  let(:awarded_at) { Time.zone.now }
   let(:access_your_teaching_qualifications_url) { "https://aytq.com" }
 
   context "with a submitted application form" do
@@ -56,9 +58,7 @@ RSpec.describe AwardQTS do
 
     it "sets the awarded at date" do
       freeze_time do
-        expect { call }.to change(application_form, :awarded_at).to(
-          Time.zone.now,
-        )
+        expect { call }.to change(application_form, :awarded_at).to(awarded_at)
       end
     end
 
@@ -102,9 +102,7 @@ RSpec.describe AwardQTS do
 
     it "sets the awarded at date" do
       freeze_time do
-        expect { call }.to change(application_form, :awarded_at).to(
-          Time.zone.now,
-        )
+        expect { call }.to change(application_form, :awarded_at).to(awarded_at)
       end
     end
 

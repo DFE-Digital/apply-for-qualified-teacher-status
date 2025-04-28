@@ -59,7 +59,7 @@ RSpec.describe UpdateTRSMatchJob do
     context "when draft" do
       let(:application_form) { create(:application_form, :draft) }
 
-      it "doesn't search DQT for teachers" do
+      it "doesn't search TRS for teachers" do
         expect(TRS::Client::FindTeachers).not_to receive(:call)
 
         perform
@@ -69,7 +69,7 @@ RSpec.describe UpdateTRSMatchJob do
     context "when completed" do
       let(:application_form) { create(:application_form, :awarded) }
 
-      it "doesn't search DQT for teachers" do
+      it "doesn't search TRS for teachers" do
         expect(TRS::Client::FindTeachers).not_to receive(:call)
 
         perform

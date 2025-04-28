@@ -14,8 +14,7 @@ class TRS::Client::V3::CreateTRNRequest
     body = TRS::V3::TRNRequestParams.call(request_id:, application_form:)
     response =
       connection.post(path) do |req|
-        # TODO: Temporary API version and will need to change once in production
-        req.headers["X-Api-Version"] = "Next"
+        req.headers["X-Api-Version"] = "20250425"
         req.body = body
       end
 

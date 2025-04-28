@@ -12,8 +12,7 @@ class TRS::Client::V3::ReadTRNRequest
     path = "/v3/trn-requests"
     response =
       connection.get(path) do |req|
-        # TODO: Temporary API version and will need to change once in production
-        req.headers["X-Api-Version"] = "Next"
+        req.headers["X-Api-Version"] = "20250425"
         req.params["requestId"] = request_id
       end
 
