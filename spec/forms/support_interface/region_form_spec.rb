@@ -49,7 +49,7 @@ RSpec.describe SupportInterface::RegionForm, type: :model do
         :teaching_authority_provides_written_statement,
       ).with_message(
         "Please select whether teaching authority only send the letter of professional " \
-          "standing (LOPS) directly to the TRA",
+          "standing (LOPS) directly to the DfE",
       )
     end
 
