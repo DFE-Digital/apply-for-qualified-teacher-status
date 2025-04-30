@@ -6,7 +6,7 @@ class ApplicationMailer < Mail::Notify::Mailer
   GOVUK_NOTIFY_TEMPLATE_ID =
     ENV.fetch(
       "GOVUK_NOTIFY_TEMPLATE_ID_APPLICATION",
-      "95adafaf-0920-4623-bddc-340853c047af",
+      "7f036b52-9e08-40c9-8b52-0bb527d70f4a",
     )
 
   rescue_from Notifications::Client::RequestError do

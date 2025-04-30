@@ -6,7 +6,7 @@ class DeviseMailer < Devise::Passwordless::Mailer
   GOVUK_NOTIFY_TEMPLATE_ID =
     ENV.fetch(
       "GOVUK_NOTIFY_TEMPLATE_ID_DEVISE",
-      "8331da6b-6e8a-4782-ab56-2a74200d51d2",
+      "4981b601-eaab-46a3-9f6a-7a42cdd0d4cf",
     )
 
   def devise_mail(record, action, opts = {}, &_block)
