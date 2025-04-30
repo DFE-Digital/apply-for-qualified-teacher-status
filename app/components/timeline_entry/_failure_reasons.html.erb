@@ -2,8 +2,8 @@
   <li>
     <p class="govuk-body">
       <%= t(failure_reason.key, scope: %i[assessor_interface assessment_sections failure_reasons as_statement]) %>
+      <br />
+      <span class="govuk-hint"><%= simple_format failure_reason.assessor_feedback %></span>
     </p>
-
-    <%= simple_format failure_reason.assessor_feedback %>
   </li>
 <% end %>

@@ -22,26 +22,19 @@
       <% end %>
     <% elsif timeline_event.assessment_section_recorded? %>
       <p class="govuk-body">
-        <%= description_vars[:section_name] %>:
         <%= render StatusTag::Component.new(description_vars[:status]) %>
       </p>
 
-      <% if (visible_failure_reasons = description_vars[:visible_failure_reasons]).present? %>
-        <%= govuk_inset_text do %>
+      <% if (failure_reasons = description_vars[:failure_reasons]).present? %>
+        <%= govuk_details(summary_text: "View details") do %>
           <ul class="govuk-list--bullet">
-            <%= render "timeline_entry/failure_reasons", failure_reasons: visible_failure_reasons %>
-
-            <% if (hidden_failure_reasons = description_vars[:hidden_failure_reasons]).present? %>
-              <%= govuk_details(summary_text: "View additional reasons") do %>
-                <%= render "timeline_entry/failure_reasons", failure_reasons: hidden_failure_reasons %>
-              <% end %>
-            <% end %>
+            <%= render "timeline_entry/failure_reasons", failure_reasons: failure_reasons %>
           </ul>
         <% end %>
       <% end %>
     <% elsif timeline_event.requestable_reviewed? %>
       <p class="govuk-body">
-        Status has changed to: <%= render(StatusTag::Component.new(description_vars[:new_status])) %>
+        Status has changed to <%= render(StatusTag::Component.new(description_vars[:new_status])) %>
       </p>
 
       <% if (note = description_vars[:note]).present? %>
@@ -49,7 +42,7 @@
       <% end %>
     <% elsif timeline_event.requestable_verified? %>
       <p class="govuk-body">
-        Status has changed to: <%= render(StatusTag::Component.new(description_vars[:new_status])) %>
+        Status has changed to <%= render(StatusTag::Component.new(description_vars[:new_status])) %>
       </p>
 
       <% if (note = description_vars[:note]).present? %>
@@ -64,7 +57,7 @@
 
     <% elsif timeline_event.application_declined? %>
       <p class="govuk-body">
-        Status has changed to: <%= render(StatusTag::Component.new(:declined)) %>
+        Status has changed to <%= render(StatusTag::Component.new(:declined)) %>
       </p>
 
       <% TeacherInterface::ApplicationFormViewObject.new(application_form: timeline_event.application_form).declined_reasons.each do |title, reasons| %>

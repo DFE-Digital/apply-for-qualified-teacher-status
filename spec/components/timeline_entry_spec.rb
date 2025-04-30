@@ -102,7 +102,6 @@ RSpec.describe TimelineEntry::Component, type: :component do
     end
 
     it "describes the event" do
-      expect(component.text).to include("Personal Information:")
       expect(component.text).to include("Rejected")
       expect(component.text).to include(expected_failure_reason_text)
       expect(component.text).to include(failure_reason.assessor_feedback)
@@ -422,7 +421,7 @@ RSpec.describe TimelineEntry::Component, type: :component do
     end
 
     it "describes the event" do
-      expect(component.text).to include("Status has changed to: Rejected")
+      expect(component.text).to include("Status has changed to Rejected")
       expect(component.text).to include("For this reason.")
     end
 
@@ -442,7 +441,7 @@ RSpec.describe TimelineEntry::Component, type: :component do
     end
 
     it "describes the event" do
-      expect(component.text).to include("Status has changed to: Accepted")
+      expect(component.text).to include("Status has changed to Accepted")
     end
 
     it "attributes to the creator" do
@@ -461,7 +460,7 @@ RSpec.describe TimelineEntry::Component, type: :component do
     end
 
     it "describes the event" do
-      expect(component.text).to include("Status has changed to: Rejected")
+      expect(component.text).to include("Status has changed to Rejected")
     end
 
     it "attributes to the creator" do
@@ -480,7 +479,7 @@ RSpec.describe TimelineEntry::Component, type: :component do
     end
 
     it "describes the event" do
-      expect(component.text).to include("Status has changed to: Accepted")
+      expect(component.text).to include("Status has changed to Accepted")
     end
 
     it "attributes to the creator" do
@@ -499,7 +498,7 @@ RSpec.describe TimelineEntry::Component, type: :component do
     end
 
     it "describes the event" do
-      expect(component.text).to include("Status has changed to: Rejected")
+      expect(component.text).to include("Status has changed to Rejected")
     end
 
     it "attributes to the creator" do
@@ -518,7 +517,7 @@ RSpec.describe TimelineEntry::Component, type: :component do
     end
 
     it "describes the event" do
-      expect(component.text).to include("Status has changed to: Accepted")
+      expect(component.text).to include("Status has changed to Accepted")
     end
 
     it "attributes to the creator" do
@@ -537,7 +536,7 @@ RSpec.describe TimelineEntry::Component, type: :component do
     end
 
     it "describes the event" do
-      expect(component.text).to include("Status has changed to: Rejected")
+      expect(component.text).to include("Status has changed to Rejected")
     end
 
     it "attributes to the creator" do
