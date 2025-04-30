@@ -128,7 +128,7 @@ en:
         consent_method_options:
           signed_ecctis: Ecctis standard consent document with signature
           signed_institution: Institution’s custom consent document
-          unsigned: Non-signed TRA consent document
+          unsigned: Non-signed DfE consent document
           none: No consent required
       assessor_interface_create_note_form:
         text: Add a note to this application

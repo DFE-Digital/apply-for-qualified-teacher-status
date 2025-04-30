@@ -416,7 +416,7 @@ en:
         assessor_interface/generate_unsigned_consent_document_form:
           attributes:
             generated:
-              blank: Confirm you have generated the non-signed TRA consent document
+              blank: Confirm you have generated the non-signed DfE consent document
         assessor_interface/further_information_request_decline_form:
           attributes:
             note:

@@ -29,7 +29,7 @@ en:
             teaching_authority_online_checker_url:
               url: Online checker website is not a valid URL
             teaching_authority_provides_written_statement:
-              inclusion: Please select whether teaching authority only send the letter of professional standing (LOPS) directly to the TRA
+              inclusion: Please select whether teaching authority only send the letter of professional standing (LOPS) directly to the DfE
             work_history_section_to_omit:
               inclusion: Please choose which sections will be removed
             written_statement_optional:
