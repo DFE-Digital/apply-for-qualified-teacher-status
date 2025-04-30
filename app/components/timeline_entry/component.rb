@@ -20,7 +20,17 @@ module TimelineEntry
         if timeline_event.requestable_event_type?
           "components.timeline_entry.title.#{timeline_event.event_type}.#{timeline_event.requestable.class.name}"
         elsif timeline_event.assessment_section_recorded?
-          "components.timeline_entry.title.assessment_section_recorded.#{timeline_event.assessment_section.key}"
+          preliminary_or_not =
+            (
+              if timeline_event.assessment_section.preliminary?
+                "preliminary"
+              else
+                "not_preliminary"
+              end
+            )
+
+          "components.timeline_entry.title.assessment_section_recorded" \
+            ".#{preliminary_or_not}.#{timeline_event.assessment_section.key}"
         else
           "components.timeline_entry.title.#{timeline_event.event_type}"
         end
