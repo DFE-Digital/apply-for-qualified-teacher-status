@@ -87,6 +87,14 @@ RSpec.describe "Staff assessor", type: :system do
     then_i_see_the_archived_user
   end
 
+  it "allows user to be archived with archive button" do
+    given_i_am_authorized_as_a_manage_staff_user
+    given_a_archived_user_exists
+    when_i_visit_the_staff_page
+    then_i_see_the_staff_index
+    and_i_see_the_archive_user_button
+  end
+
   private
 
   def given_a_helpdesk_user_exists
@@ -214,5 +222,9 @@ RSpec.describe "Staff assessor", type: :system do
     expect(page).to have_content(
       "Manage staff\nNo\tNo\tNo\tNo\tNo\tNo\tNo\tYes",
     )
+  end
+
+  def and_i_see_the_archive_user_button
+    expect(page).to have_content("Archive user")
   end
 end
