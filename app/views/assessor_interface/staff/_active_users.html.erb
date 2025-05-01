@@ -22,8 +22,13 @@
       end %>
     </div>
     <div class="govuk-grid-column-one-third">
-      <div class="govuk-!-padding-top-2 govuk-!-text-align-right">
-        <%= govuk_link_to("Change permissions", edit_assessor_interface_staff_path(staff)) %>
+      <div class="govuk-grid-row">
+        <div class="govuk-!-padding-top-2 govuk-grid-column-one-half govuk-!-text-align-left">
+          <%= govuk_link_to("Change permissions", edit_assessor_interface_staff_path(staff)) %>
+        </div>
+        <div class="govuk-!-padding-top-2 govuk-grid-column-one-half govuk-!-text-align-right">
+          <%= govuk_button_link_to('Archive user', '#', secondary: true) %>
+        </div>
       </div>
     </div>
   </div>
