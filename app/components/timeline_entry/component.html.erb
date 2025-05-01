@@ -38,7 +38,9 @@
       </p>
 
       <% if (note = description_vars[:note]).present? %>
-        <%= govuk_inset_text { simple_format note } %>
+        <%= govuk_details(summary_text: "View details") do %>
+          <%= simple_format note, class: "govuk-hint" %>
+        <% end %>
       <% end %>
     <% elsif timeline_event.requestable_verified? %>
       <p class="govuk-body">
@@ -46,7 +48,9 @@
       </p>
 
       <% if (note = description_vars[:note]).present? %>
-        <%= govuk_inset_text { simple_format note } %>
+        <%= govuk_details(summary_text: "View details") do %>
+          <%= simple_format note, class: "govuk-hint" %>
+        <% end %>
       <% end %>
     <% elsif timeline_event.information_changed? %>
       <p class="govuk-body">
