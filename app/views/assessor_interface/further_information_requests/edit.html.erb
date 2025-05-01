@@ -1,10 +1,13 @@
-<% content_for :page_title, title_with_error_prefix(t(".title"), error: @form.errors.any?) %>
+<% content_for :page_title, title_with_error_prefix(@view_object.title, error: @form.errors.any?) %>
 <% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
 
 <%= form_with model: @form, url: [:assessor_interface, @view_object.application_form, @view_object.assessment, @view_object.further_information_request], method: :put do |f| %>
   <%= f.govuk_error_summary %>
 
-  <h1 class="govuk-heading-xl"><%= t(".title") %></h1>
+  <h1 class="govuk-heading-xl">
+    <%= @view_object.title %>
+  </h1>
+
   <% @view_object.grouped_review_items_by_assessment_section.each do |assessment_section_group| %>
     <div class="govuk-!-margin-bottom-7 govuk-!-margin-top-9">
       <h2 class="govuk-heading-l govuk-!-margin-bottom-3"><%= assessment_section_group.fetch(:heading) %></h2>
@@ -40,6 +43,7 @@
 
         <%= f.govuk_radio_buttons_fieldset :"#{item.fetch(:id)}_decision", legend: { text: "How would you like to respond?", size: "s" } do %>
           <%= f.govuk_radio_button :"#{item.fetch(:id)}_decision", :accept, label: { text: "Yes, accept information" }, disabled: !policy([:assessor_interface, @view_object.further_information_request]).update? || !@view_object.can_update? %>
+          <%= f.govuk_radio_button :"#{item.fetch(:id)}_decision", :further_information, label: { text: "No, request further information" }, disabled: !policy([:assessor_interface, @view_object.further_information_request]).update? || !@view_object.can_update? unless @view_object.further_information_request.third_request? %>
           <%= f.govuk_radio_button :"#{item.fetch(:id)}_decision", :decline, label: { text: "No, decline application" }, disabled: !policy([:assessor_interface, @view_object.further_information_request]).update? || !@view_object.can_update? %>
         <% end %>
       <% end %>

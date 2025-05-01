@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe RequestFurtherInformation do
+RSpec.describe FurtherInformationRequests::CreateFromAssessmentSections do
   subject(:call) { described_class.call(assessment:, user:) }
 
   let(:application_form) { create(:application_form, :submitted) }
@@ -56,7 +56,9 @@ RSpec.describe RequestFurtherInformation do
     before { create(:further_information_request, assessment:) }
 
     it "raises an error" do
-      expect { call }.to raise_error(RequestFurtherInformation::AlreadyExists)
+      expect { call }.to raise_error(
+        FurtherInformationRequests::CreateFromAssessmentSections::AlreadyExists,
+      )
     end
   end
 end

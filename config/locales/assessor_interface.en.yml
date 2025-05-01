@@ -25,7 +25,9 @@ en:
             professional_standing_request: Verify LoPS
             qualification_requests: Verify qualifications
             reference_requests: Verify references
-            review_requested_information: Review further information from applicant
+            review_requested_information_first_request: Review further information received - first request
+            review_requested_information_second_request: Review further information received - second request
+            review_requested_information_last_request: Review further information received - final request
             review_verifications: Review verifications
             verification_decision: Verification decision
 
@@ -229,7 +231,10 @@ en:
 
     further_information_requests:
       edit:
-        title: Review further information from applicant
+        title:
+          first_request: Review further information received - first request
+          second_request: Review further information received - second request
+          last_request: Review further information received - final request
         check_your_answers: Further information requested
         passed: Has the applicant completed this section to your satisfaction?
         failure_assessor_note: '<strong class="govuk-!-font-weight-bold">Internal note:</strong> Explain why this section is not completed to your satisfaction'
@@ -250,6 +255,8 @@ en:
       edit_decline:
         title: Add an internal note to explain why the application is being declined
         failure_assessor_note: This is an internal note. It will not be seen by the applicant.
+      edit_follow_up:
+        title: Request further information
 
   activemodel:
     errors:

@@ -121,7 +121,7 @@ class Assessment < ApplicationRecord
         (all_sections_assessed? && any_section_failed? && any_section_declines?)
     elsif request_further_information?
       all_further_information_requests_reviewed? &&
-        any_further_information_requests_failed?
+        latest_further_information_request_failed?
     elsif review?
       return false unless all_consent_requests_reviewed?
       return false unless all_qualification_requests_reviewed?
@@ -217,6 +217,10 @@ class Assessment < ApplicationRecord
       )
   end
 
+  def latest_further_information_request
+    further_information_requests.order(:requested_at).last
+  end
+
   private
 
   def all_sections_assessed?
@@ -244,13 +248,14 @@ class Assessment < ApplicationRecord
       further_information_requests.all?(&:reviewed?)
   end
 
-  def all_further_information_requests_passed?
-    further_information_requests.present? &&
-      further_information_requests.all?(&:review_passed?)
+  def latest_further_information_requests_passed?
+    latest_further_information_request.present? &&
+      latest_further_information_request.review_passed?
   end
 
-  def any_further_information_requests_failed?
-    further_information_requests.any?(&:review_failed?)
+  def latest_further_information_request_failed?
+    latest_further_information_request.present? &&
+      latest_further_information_request.review_failed?
   end
 
   def all_reference_requests_reviewed?
@@ -390,6 +395,9 @@ class Assessment < ApplicationRecord
 
   def all_sections_or_further_information_requests_passed?
     (unknown? && all_sections_passed?) ||
-      (request_further_information? && all_further_information_requests_passed?)
+      (
+        request_further_information? &&
+          latest_further_information_requests_passed?
+      )
   end
 end

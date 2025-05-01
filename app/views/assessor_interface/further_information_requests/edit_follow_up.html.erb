@@ -1,0 +1,22 @@
+<% content_for :page_title, title_with_error_prefix(t(".title"), error: @form.errors.any?) %>
+<% content_for :back_link_url, edit_assessor_interface_application_form_assessment_further_information_request_path(@application_form, @view_object.assessment, @view_object.further_information_request) %>
+
+<%= form_with model: @form, url: [:follow_up, :assessor_interface, @view_object.application_form, @view_object.assessment, @view_object.further_information_request], method: :post do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <h1 class="govuk-heading-xl"><%= t(".title") %></h1>
+
+  <% @view_object.grouped_follow_up_items_by_assessment_section.each do |assessment_section_group| %>
+    <div>
+      <h2 class="govuk-heading-l"><%= assessment_section_group.fetch(:heading) %></h2>
+
+      <% assessment_section_group.fetch(:review_items).each do |item| %>
+        <%= f.govuk_text_area "#{item.fetch(:id)}_decision_note", label: { text: item.fetch(:heading), size: "s" } %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <% if policy([:assessor_interface, @view_object.further_information_request]).update? && @view_object.can_update? %>
+    <%= render "shared/assessor_interface/continue_cancel_button", f: %>
+  <% end %>
+<% end %>

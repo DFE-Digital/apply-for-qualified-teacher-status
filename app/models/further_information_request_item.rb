@@ -42,7 +42,13 @@ class FurtherInformationRequestItem < ApplicationRecord
          work_history_contact: "work_history_contact",
        }
 
-  enum :review_decision, { accept: "accept", decline: "decline" }, prefix: true
+  enum :review_decision,
+       {
+         accept: "accept",
+         decline: "decline",
+         further_information: "further_information",
+       },
+       prefix: true
 
   def status
     if completed?

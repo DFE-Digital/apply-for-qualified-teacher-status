@@ -233,6 +233,16 @@ module PageHelpers
       PageObjects::AssessorInterface::DeclineFurtherInformationRequest.new
   end
 
+  def assessor_follow_up_further_information_request_page
+    @assessor_follow_up_further_information_request_page ||=
+      PageObjects::AssessorInterface::FollowUpFurtherInformationRequest.new
+  end
+
+  def assessor_confirm_follow_up_further_information_request_page
+    @assessor_confirm_follow_up_further_information_request_page ||=
+      PageObjects::AssessorInterface::ConfirmFollowUpFurtherInformationRequest.new
+  end
+
   def assessor_review_professional_standing_request_page
     @assessor_review_professional_standing_request_page ||=
       PageObjects::AssessorInterface::ReviewProfessionalStandingRequest.new

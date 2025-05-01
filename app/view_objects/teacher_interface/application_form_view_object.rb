@@ -30,7 +30,7 @@ class TeacherInterface::ApplicationFormViewObject
 
   def further_information_request
     @further_information_request ||=
-      assessment&.further_information_requests&.first
+      assessment&.latest_further_information_request
   end
 
   def started_at

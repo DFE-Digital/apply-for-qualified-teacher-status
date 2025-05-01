@@ -64,8 +64,22 @@ module PageObjects
         find_task_list_item("Check professional standing")
       end
 
-      def review_requested_information_task
-        find_task_list_item("Review further information from applicant")
+      def review_first_requested_information_task
+        find_task_list_item(
+          "Review further information received - first request",
+        )
+      end
+
+      def review_second_requested_information_task
+        find_task_list_item(
+          "Review further information received - second request",
+        )
+      end
+
+      def review_final_requested_information_task
+        find_task_list_item(
+          "Review further information received - final request",
+        )
       end
 
       def verify_professional_standing_task

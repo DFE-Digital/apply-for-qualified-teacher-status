@@ -43,12 +43,16 @@ class FurtherInformationRequest < ApplicationRecord
   FOUR_WEEK_COUNTRY_CODES = %w[AU CA GI NZ US].freeze
 
   def should_send_reminder_email?(_name, number_of_reminders_sent)
-    days_until_expired &&
-      (
-        (days_until_expired <= 14 && number_of_reminders_sent.zero?) ||
-          (days_until_expired <= 7 && number_of_reminders_sent == 1) ||
-          (days_until_expired <= 2 && number_of_reminders_sent == 2)
-      )
+    return false unless days_until_expired
+
+    if first_request?
+      (days_until_expired <= 14 && number_of_reminders_sent.zero?) ||
+        (days_until_expired <= 7 && number_of_reminders_sent == 1) ||
+        (days_until_expired <= 2 && number_of_reminders_sent == 2)
+    else
+      (days_until_expired <= 7 && number_of_reminders_sent.zero?) ||
+        (days_until_expired <= 2 && number_of_reminders_sent == 1)
+    end
   end
 
   def send_reminder_email(_name, _number_of_reminders_sent)
@@ -61,8 +65,10 @@ class FurtherInformationRequest < ApplicationRecord
   end
 
   def expires_after
-    if application_form.created_under_old_regulations? &&
-         FOUR_WEEK_COUNTRY_CODES.include?(application_form.country.code)
+    if !first_request?
+      3.weeks
+    elsif application_form.created_under_old_regulations? &&
+          FOUR_WEEK_COUNTRY_CODES.include?(application_form.country.code)
       4.weeks
     else
       6.weeks
@@ -84,11 +90,29 @@ class FurtherInformationRequest < ApplicationRecord
   end
 
   def after_reviewed(user:)
-    update_work_history_contact_items(user:) if review_passed?
+    update_work_history_contact_items(user:)
   end
 
   def after_verified(user:)
-    update_work_history_contact_items(user:) if verify_passed?
+    update_work_history_contact_items(user:)
+  end
+
+  def first_request?
+    assessment
+      .further_information_requests
+      .order(:requested_at)
+      .index(self)
+      .zero?
+  end
+
+  def second_request?
+    assessment.further_information_requests.order(:requested_at).index(self) ==
+      1
+  end
+
+  def third_request?
+    assessment.further_information_requests.order(:requested_at).index(self) ==
+      2
   end
 
   delegate :teacher, to: :application_form
@@ -96,6 +120,8 @@ class FurtherInformationRequest < ApplicationRecord
   private
 
   def update_work_history_contact_items(user:)
-    items.each { |item| item.update_work_history_contact(user:) }
+    items.each do |item|
+      item.update_work_history_contact(user:) if item.review_decision_accept?
+    end
   end
 end

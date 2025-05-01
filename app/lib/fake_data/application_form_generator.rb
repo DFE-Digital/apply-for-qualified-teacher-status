@@ -242,7 +242,7 @@ class FakeData::ApplicationFormGenerator
 
   def request_further_information
     date_generator.travel_to_next_short do
-      RequestFurtherInformation.call(
+      FurtherInformationRequests::CreateFromAssessmentSections.call(
         assessment:,
         user: application_form.assessor,
       )

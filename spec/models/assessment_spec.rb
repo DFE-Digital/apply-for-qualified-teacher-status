@@ -125,6 +125,46 @@ RSpec.describe Assessment, type: :model do
 
             it { is_expected.to be false }
           end
+
+          context "with multiple further information requests" do
+            context "with a passed latest further information request" do
+              before do
+                create(
+                  :further_information_request,
+                  :review_failed,
+                  assessment:,
+                  requested_at: 2.days.ago,
+                )
+                create(
+                  :further_information_request,
+                  :review_passed,
+                  assessment:,
+                  requested_at: 1.day.ago,
+                )
+              end
+
+              it { is_expected.to be true }
+            end
+
+            context "with a failed latest further information request" do
+              before do
+                create(
+                  :further_information_request,
+                  :review_failed,
+                  assessment:,
+                  requested_at: 2.days.ago,
+                )
+                create(
+                  :further_information_request,
+                  :review_failed,
+                  assessment:,
+                  requested_at: 1.day.ago,
+                )
+              end
+
+              it { is_expected.to be false }
+            end
+          end
         end
       end
 
@@ -300,6 +340,46 @@ RSpec.describe Assessment, type: :model do
 
         it { is_expected.to be true }
       end
+
+      context "with multiple further information requests" do
+        context "with a passed latest further information request" do
+          before do
+            create(
+              :further_information_request,
+              :review_failed,
+              assessment:,
+              requested_at: 2.days.ago,
+            )
+            create(
+              :further_information_request,
+              :review_passed,
+              assessment:,
+              requested_at: 1.day.ago,
+            )
+          end
+
+          it { is_expected.to be false }
+        end
+
+        context "with a failed latest further information request" do
+          before do
+            create(
+              :further_information_request,
+              :review_failed,
+              assessment:,
+              requested_at: 2.days.ago,
+            )
+            create(
+              :further_information_request,
+              :review_failed,
+              assessment:,
+              requested_at: 1.day.ago,
+            )
+          end
+
+          it { is_expected.to be true }
+        end
+      end
     end
 
     context "when awarded pending verification" do
@@ -433,6 +513,46 @@ RSpec.describe Assessment, type: :model do
 
             it { is_expected.to be false }
           end
+
+          context "with multiple further information requests" do
+            context "with a passed latest further information request" do
+              before do
+                create(
+                  :further_information_request,
+                  :review_failed,
+                  assessment:,
+                  requested_at: 2.days.ago,
+                )
+                create(
+                  :further_information_request,
+                  :review_passed,
+                  assessment:,
+                  requested_at: 1.day.ago,
+                )
+              end
+
+              it { is_expected.to be true }
+            end
+
+            context "with a failed latest further information request" do
+              before do
+                create(
+                  :further_information_request,
+                  :review_failed,
+                  assessment:,
+                  requested_at: 2.days.ago,
+                )
+                create(
+                  :further_information_request,
+                  :review_failed,
+                  assessment:,
+                  requested_at: 1.day.ago,
+                )
+              end
+
+              it { is_expected.to be false }
+            end
+          end
         end
       end
 
@@ -487,6 +607,46 @@ RSpec.describe Assessment, type: :model do
       end
 
       it { is_expected.to include("request_further_information") }
+    end
+  end
+
+  describe "#latest_further_information_request" do
+    context "when assessment has no further information requests" do
+      it "returns nil" do
+        expect(assessment.latest_further_information_request).to be_nil
+      end
+    end
+
+    context "when assessment has one further information requests" do
+      let!(:further_information_request) do
+        create :further_information_request, assessment:
+      end
+
+      it "returns the further information request" do
+        expect(assessment.reload.latest_further_information_request).to eq(
+          further_information_request,
+        )
+      end
+    end
+
+    context "when assessment has multiple further information requests" do
+      let!(:latest_further_information_request) do
+        create :further_information_request,
+               assessment:,
+               requested_at: 1.day.ago
+      end
+
+      before do
+        create :further_information_request,
+               assessment:,
+               requested_at: 2.days.ago
+      end
+
+      it "returns the latest further information request" do
+        expect(assessment.reload.latest_further_information_request).to eq(
+          latest_further_information_request,
+        )
+      end
     end
   end
 end

@@ -187,6 +187,220 @@ RSpec.describe AssessorInterface::FurtherInformationRequestReviewForm,
         end
       end
     end
+
+    context "when all items request follow up" do
+      let(:params) do
+        object = {}
+
+        further_information_request.items.each do |item|
+          object["#{item.id}_decision"] = "further_information"
+        end
+
+        object
+      end
+
+      it "updates the items review_decision" do
+        form_save
+
+        expect(
+          further_information_request.items.reload.first,
+        ).to be_review_decision_further_information
+        expect(
+          further_information_request.items.reload.second,
+        ).to be_review_decision_further_information
+        expect(
+          further_information_request.items.reload.last,
+        ).to be_review_decision_further_information
+      end
+
+      it "does not update review passed field" do
+        expect { form_save }.not_to change(
+          further_information_request,
+          :review_passed,
+        )
+      end
+
+      it "does not update review note field" do
+        expect { form_save }.not_to change(
+          further_information_request,
+          :review_note,
+        )
+      end
+
+      it "does not set reviewed at" do
+        freeze_time do
+          expect { form_save }.not_to change(
+            further_information_request,
+            :reviewed_at,
+          )
+        end
+      end
+    end
+
+    context "when some items are declined and some request follow up" do
+      let(:params) do
+        object = {}
+
+        object[
+          "#{further_information_request.items.first.id}_decision"
+        ] = "decline"
+        object[
+          "#{further_information_request.items.second.id}_decision"
+        ] = "further_information"
+        object[
+          "#{further_information_request.items.last.id}_decision"
+        ] = "further_information"
+
+        object
+      end
+
+      it "updates the items review_decision" do
+        form_save
+
+        expect(
+          further_information_request.items.reload.first,
+        ).to be_review_decision_decline
+        expect(
+          further_information_request.items.reload.second,
+        ).to be_review_decision_further_information
+        expect(
+          further_information_request.items.reload.last,
+        ).to be_review_decision_further_information
+      end
+
+      it "does not update review passed field" do
+        expect { form_save }.not_to change(
+          further_information_request,
+          :review_passed,
+        )
+      end
+
+      it "does not update review note field" do
+        expect { form_save }.not_to change(
+          further_information_request,
+          :review_note,
+        )
+      end
+
+      it "does not set reviewed at" do
+        freeze_time do
+          expect { form_save }.not_to change(
+            further_information_request,
+            :reviewed_at,
+          )
+        end
+      end
+    end
+
+    context "when some items are accepted and some request follow up" do
+      let(:params) do
+        object = {}
+
+        object[
+          "#{further_information_request.items.first.id}_decision"
+        ] = "accept"
+        object[
+          "#{further_information_request.items.second.id}_decision"
+        ] = "accept"
+        object[
+          "#{further_information_request.items.last.id}_decision"
+        ] = "further_information"
+
+        object
+      end
+
+      it "updates the items review_decision" do
+        form_save
+
+        expect(
+          further_information_request.items.reload.first,
+        ).to be_review_decision_accept
+        expect(
+          further_information_request.items.reload.second,
+        ).to be_review_decision_accept
+        expect(
+          further_information_request.items.reload.last,
+        ).to be_review_decision_further_information
+      end
+
+      it "does not update review passed field" do
+        expect { form_save }.not_to change(
+          further_information_request,
+          :review_passed,
+        )
+      end
+
+      it "does not update review note field" do
+        expect { form_save }.not_to change(
+          further_information_request,
+          :review_note,
+        )
+      end
+
+      it "does not set reviewed at" do
+        freeze_time do
+          expect { form_save }.not_to change(
+            further_information_request,
+            :reviewed_at,
+          )
+        end
+      end
+    end
+
+    context "when some items are declined, some accepted and some request follow up" do
+      let(:params) do
+        object = {}
+
+        object[
+          "#{further_information_request.items.first.id}_decision"
+        ] = "decline"
+        object[
+          "#{further_information_request.items.second.id}_decision"
+        ] = "accept"
+        object[
+          "#{further_information_request.items.last.id}_decision"
+        ] = "further_information"
+
+        object
+      end
+
+      it "updates the items review_decision" do
+        form_save
+
+        expect(
+          further_information_request.items.reload.first,
+        ).to be_review_decision_decline
+        expect(
+          further_information_request.items.reload.second,
+        ).to be_review_decision_accept
+        expect(
+          further_information_request.items.reload.last,
+        ).to be_review_decision_further_information
+      end
+
+      it "does not update review passed field" do
+        expect { form_save }.not_to change(
+          further_information_request,
+          :review_passed,
+        )
+      end
+
+      it "does not update review note field" do
+        expect { form_save }.not_to change(
+          further_information_request,
+          :review_note,
+        )
+      end
+
+      it "does not set reviewed at" do
+        freeze_time do
+          expect { form_save }.not_to change(
+            further_information_request,
+            :reviewed_at,
+          )
+        end
+      end
+    end
   end
 
   describe "#all_further_information_request_items_accepted?" do
@@ -247,6 +461,232 @@ RSpec.describe AssessorInterface::FurtherInformationRequestReviewForm,
 
       it "returns false" do
         expect(all_further_information_request_items_accepted?).to be false
+      end
+    end
+
+    context "when all items request follow up" do
+      let(:params) do
+        object = {}
+
+        further_information_request.items.each do |item|
+          object["#{item.id}_decision"] = "further_information"
+        end
+
+        object
+      end
+
+      it "returns false" do
+        expect(all_further_information_request_items_accepted?).to be false
+      end
+    end
+
+    context "when some items are declined and some request follow up" do
+      let(:params) do
+        object = {}
+
+        object[
+          "#{further_information_request.items.first.id}_decision"
+        ] = "decline"
+        object[
+          "#{further_information_request.items.second.id}_decision"
+        ] = "further_information"
+        object[
+          "#{further_information_request.items.last.id}_decision"
+        ] = "further_information"
+
+        object
+      end
+
+      it "returns false" do
+        expect(all_further_information_request_items_accepted?).to be false
+      end
+    end
+
+    context "when some items are accepted and some request follow up" do
+      let(:params) do
+        object = {}
+
+        object[
+          "#{further_information_request.items.first.id}_decision"
+        ] = "accept"
+        object[
+          "#{further_information_request.items.second.id}_decision"
+        ] = "accept"
+        object[
+          "#{further_information_request.items.last.id}_decision"
+        ] = "further_information"
+
+        object
+      end
+
+      it "returns false" do
+        expect(all_further_information_request_items_accepted?).to be false
+      end
+    end
+
+    context "when some items are declined, some accepted and some request follow up" do
+      let(:params) do
+        object = {}
+
+        object[
+          "#{further_information_request.items.first.id}_decision"
+        ] = "decline"
+        object[
+          "#{further_information_request.items.second.id}_decision"
+        ] = "accept"
+        object[
+          "#{further_information_request.items.last.id}_decision"
+        ] = "further_information"
+
+        object
+      end
+
+      it "returns false" do
+        expect(all_further_information_request_items_accepted?).to be false
+      end
+    end
+  end
+
+  describe "#follow_up_further_information_requested?" do
+    subject(:follow_up_further_information_requested?) do
+      form.follow_up_further_information_requested?
+    end
+
+    before { form.save }
+
+    context "when all items are accepted" do
+      let(:params) do
+        object = {}
+
+        further_information_request.items.each do |item|
+          object["#{item.id}_decision"] = "accept"
+        end
+
+        object
+      end
+
+      it "returns false" do
+        expect(follow_up_further_information_requested?).to be false
+      end
+    end
+
+    context "when some items are declined and some accepted" do
+      let(:params) do
+        object = {}
+
+        object[
+          "#{further_information_request.items.first.id}_decision"
+        ] = "decline"
+        object[
+          "#{further_information_request.items.second.id}_decision"
+        ] = "accept"
+        object[
+          "#{further_information_request.items.last.id}_decision"
+        ] = "accept"
+
+        object
+      end
+
+      it "returns false" do
+        expect(follow_up_further_information_requested?).to be false
+      end
+    end
+
+    context "when all items are declined" do
+      let(:params) do
+        object = {}
+
+        further_information_request.items.each do |item|
+          object["#{item.id}_decision"] = "decline"
+        end
+
+        object
+      end
+
+      it "returns false" do
+        expect(follow_up_further_information_requested?).to be false
+      end
+    end
+
+    context "when all items request follow up" do
+      let(:params) do
+        object = {}
+
+        further_information_request.items.each do |item|
+          object["#{item.id}_decision"] = "further_information"
+        end
+
+        object
+      end
+
+      it "returns true" do
+        expect(follow_up_further_information_requested?).to be true
+      end
+    end
+
+    context "when some items are declined and some request follow up" do
+      let(:params) do
+        object = {}
+
+        object[
+          "#{further_information_request.items.first.id}_decision"
+        ] = "decline"
+        object[
+          "#{further_information_request.items.second.id}_decision"
+        ] = "further_information"
+        object[
+          "#{further_information_request.items.last.id}_decision"
+        ] = "further_information"
+
+        object
+      end
+
+      it "returns false" do
+        expect(follow_up_further_information_requested?).to be false
+      end
+    end
+
+    context "when some items are accepted and some request follow up" do
+      let(:params) do
+        object = {}
+
+        object[
+          "#{further_information_request.items.first.id}_decision"
+        ] = "accept"
+        object[
+          "#{further_information_request.items.second.id}_decision"
+        ] = "accept"
+        object[
+          "#{further_information_request.items.last.id}_decision"
+        ] = "further_information"
+
+        object
+      end
+
+      it "returns true" do
+        expect(follow_up_further_information_requested?).to be true
+      end
+    end
+
+    context "when some items are declined, some accepted and some request follow up" do
+      let(:params) do
+        object = {}
+
+        object[
+          "#{further_information_request.items.first.id}_decision"
+        ] = "decline"
+        object[
+          "#{further_information_request.items.second.id}_decision"
+        ] = "accept"
+        object[
+          "#{further_information_request.items.last.id}_decision"
+        ] = "further_information"
+
+        object
+      end
+
+      it "returns false" do
+        expect(follow_up_further_information_requested?).to be false
       end
     end
   end

@@ -311,7 +311,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       it do
         expect(subject).to include_task_list_item(
           "Assessment",
-          "Review further information from applicant",
+          "Review further information received - first request",
           status: :cannot_start,
         )
       end
@@ -323,7 +323,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       it do
         expect(subject).to include_task_list_item(
           "Assessment",
-          "Review further information from applicant",
+          "Review further information received - first request",
           status: :not_started,
         )
       end
@@ -342,7 +342,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       it do
         expect(subject).to include_task_list_item(
           "Assessment",
-          "Review further information from applicant",
+          "Review further information received - first request",
           status: :in_progress,
         )
       end
@@ -361,7 +361,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       it do
         expect(subject).to include_task_list_item(
           "Assessment",
-          "Review further information from applicant",
+          "Review further information received - first request",
           status: :in_progress,
         )
       end
@@ -382,7 +382,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       it do
         expect(subject).to include_task_list_item(
           "Assessment",
-          "Review further information from applicant",
+          "Review further information received - first request",
           status: :in_progress,
         )
       end
@@ -401,7 +401,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       it do
         expect(subject).to include_task_list_item(
           "Assessment",
-          "Review further information from applicant",
+          "Review further information received - first request",
           status: :completed,
         )
       end
@@ -420,7 +420,122 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       it do
         expect(subject).to include_task_list_item(
           "Assessment",
-          "Review further information from applicant",
+          "Review further information received - first request",
+          status: :completed,
+        )
+      end
+    end
+
+    context "with multiple further information requests where one has failed and another one is requested" do
+      before do
+        assessment.request_further_information!
+        create(
+          :received_further_information_request,
+          :with_items,
+          :review_failed,
+          assessment:,
+          requested_at: 2.days.ago,
+        )
+        create(
+          :received_further_information_request,
+          :with_items,
+          assessment:,
+          requested_at: 1.day.ago,
+        )
+      end
+
+      it do
+        expect(subject).to include_task_list_item(
+          "Assessment",
+          "Review further information received - first request",
+          status: :completed,
+        )
+      end
+
+      it do
+        expect(subject).to include_task_list_item(
+          "Assessment",
+          "Review further information received - second request",
+          status: :not_started,
+        )
+      end
+
+      context "with the new one being partially filled out" do
+        before do
+          assessment.reload.latest_further_information_request.items.update_all(
+            review_decision: "accept",
+          )
+        end
+
+        it do
+          expect(subject).to include_task_list_item(
+            "Assessment",
+            "Review further information received - second request",
+            status: :in_progress,
+          )
+        end
+      end
+    end
+
+    context "with multiple further information requests where both have failed" do
+      before do
+        assessment.decline!
+        create(
+          :received_further_information_request,
+          :review_failed,
+          assessment:,
+        )
+        create(
+          :received_further_information_request,
+          :review_failed,
+          assessment:,
+        )
+      end
+
+      it do
+        expect(subject).to include_task_list_item(
+          "Assessment",
+          "Review further information received - first request",
+          status: :completed,
+        )
+      end
+
+      it do
+        expect(subject).to include_task_list_item(
+          "Assessment",
+          "Review further information received - second request",
+          status: :completed,
+        )
+      end
+    end
+
+    context "with multiple further information requests where one failed and other accepted" do
+      before do
+        assessment.award!
+        create(
+          :received_further_information_request,
+          :review_passed,
+          assessment:,
+        )
+        create(
+          :received_further_information_request,
+          :review_passed,
+          assessment:,
+        )
+      end
+
+      it do
+        expect(subject).to include_task_list_item(
+          "Assessment",
+          "Review further information received - first request",
+          status: :completed,
+        )
+      end
+
+      it do
+        expect(subject).to include_task_list_item(
+          "Assessment",
+          "Review further information received - second request",
           status: :completed,
         )
       end
