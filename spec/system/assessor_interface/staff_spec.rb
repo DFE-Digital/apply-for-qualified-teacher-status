@@ -93,6 +93,9 @@ RSpec.describe "Staff assessor", type: :system do
     when_i_visit_the_staff_page
     then_i_see_the_staff_index
     and_i_see_the_archive_user_button
+
+    when_i_click_the_archive_user_button
+    then_i_see_the_archive_alert_page
   end
 
   private
@@ -226,5 +229,13 @@ RSpec.describe "Staff assessor", type: :system do
 
   def and_i_see_the_archive_user_button
     expect(page).to have_content("Archive user")
+  end
+
+  def when_i_click_the_archive_user_button
+    find(:xpath, "(//a[text()='Archive user'])[1]").click
+  end
+
+  def then_i_see_the_archive_alert_page
+    expect(page).to have_content("Are you sure you want to archive the user")
   end
 end
