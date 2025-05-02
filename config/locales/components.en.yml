@@ -55,7 +55,16 @@ en:
         action_required_by_changed: Action required by changed
         age_range_subjects_verified: Age range and subjects verified
         application_declined: Application declined
-        assessment_section_recorded: Section assessed
+        assessment_section_recorded:
+          not_preliminary:
+            age_range_subjects: Age range subjects assessed
+            english_language_proficiency: English language proficiency assessed
+            personal_information: Personal information assessed
+            professional_standing: Professional standing assessed
+            qualifications: Qualifications assessed
+            work_history: Work history assessed
+          preliminary:
+            qualifications: Preliminary check (qualifications) assessed
         assessor_assigned: Assessor assigned
         email_sent: Email sent
         information_changed: Information changed after submission

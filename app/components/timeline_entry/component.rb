@@ -19,6 +19,18 @@ module TimelineEntry
       locale_key =
         if timeline_event.requestable_event_type?
           "components.timeline_entry.title.#{timeline_event.event_type}.#{timeline_event.requestable.class.name}"
+        elsif timeline_event.assessment_section_recorded?
+          preliminary_or_not =
+            (
+              if timeline_event.assessment_section.preliminary?
+                "preliminary"
+              else
+                "not_preliminary"
+              end
+            )
+
+          "components.timeline_entry.title.assessment_section_recorded" \
+            ".#{preliminary_or_not}.#{timeline_event.assessment_section.key}"
         else
           "components.timeline_entry.title.#{timeline_event.event_type}"
         end
@@ -98,18 +110,7 @@ module TimelineEntry
       {
         section_name: assessment_section.key.titleize,
         status:,
-        visible_failure_reasons:
-          if selected_failure_reasons.count <= 2
-            selected_failure_reasons
-          else
-            selected_failure_reasons.take(1)
-          end,
-        hidden_failure_reasons:
-          if selected_failure_reasons.count <= 2
-            []
-          else
-            selected_failure_reasons.drop(1)
-          end,
+        failure_reasons: selected_failure_reasons,
       }
     end
 

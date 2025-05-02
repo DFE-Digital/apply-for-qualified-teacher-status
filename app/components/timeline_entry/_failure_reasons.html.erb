@@ -1,9 +1,8 @@
 <% failure_reasons.each do |failure_reason| %>
   <li>
-    <p class="govuk-body">
+    <p class="govuk-body govuk-!-margin-bottom-0">
       <%= t(failure_reason.key, scope: %i[assessor_interface assessment_sections failure_reasons as_statement]) %>
     </p>
-
-    <%= simple_format failure_reason.assessor_feedback %>
+    <%= simple_format failure_reason.assessor_feedback, class: "govuk-hint" %>
   </li>
 <% end %>
