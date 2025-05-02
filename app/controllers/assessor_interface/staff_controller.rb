@@ -21,6 +21,9 @@ class AssessorInterface::StaffController < AssessorInterface::BaseController
     end
   end
 
+  def alert
+  end
+
   private
 
   def load_staff

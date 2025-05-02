@@ -8,4 +8,8 @@ class AssessorInterface::StaffPolicy < ApplicationPolicy
   def update?
     user.manage_staff_permission? && !user.archived?
   end
+
+  def alert?
+    user.manage_staff_permission? && !user.archived?
+  end
 end

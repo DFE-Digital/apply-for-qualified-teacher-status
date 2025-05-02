@@ -1,0 +1,14 @@
+<% content_for :page_title, "Archive alert" %>
+
+<h1 class="govuk-heading-xl">Are you sure you want to archive the user <%= @staff.name %>?</h1>
+
+<p>You'll be able to reactivate this user from the 'Archived users' tab.</p>
+
+<div class="govuk-!-padding-top-4 govuk-grid-row">
+    <div class="govuk-grid-column-one-third govuk-!-text-align-left">
+      <%= govuk_button_link_to 'Yes, archive this user', '#' %>
+    </div>
+    <div class="govuk-grid-column-one-third govuk-!-text-align-left">
+      <%= govuk_link_to("No, cancel", '#') %>
+    </div>
+</div>
