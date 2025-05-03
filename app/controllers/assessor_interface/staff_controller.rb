@@ -24,6 +24,14 @@ class AssessorInterface::StaffController < AssessorInterface::BaseController
   def alert
   end
 
+  def archive
+    if @staff.update(archived: true)
+      redirect_to "#{assessor_interface_staff_index_path}#archived-users"
+    else
+      render :index, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def load_staff

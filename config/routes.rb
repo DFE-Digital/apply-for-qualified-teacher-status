@@ -15,7 +15,10 @@ Rails.application.routes.draw do
     root to: redirect("/assessor/applications")
 
     resources :staff, only: %i[index edit update] do
-      member { get "alert", to: "staff#alert" }
+      member do
+        get "alert", to: "staff#alert"
+        get "archive", to: "staff#archive"
+      end
     end
 
     resources :application_forms,
