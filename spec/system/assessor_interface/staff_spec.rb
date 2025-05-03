@@ -105,6 +105,7 @@ RSpec.describe "Staff assessor", type: :system do
     then_i_see_the_archive_alert_page
     when_i_click_on_yes
     then_i_see_the_user_zack
+    and_zack_is_at_the_top_of_the_list_of_users
   end
 
   private
@@ -262,5 +263,10 @@ RSpec.describe "Staff assessor", type: :system do
 
   def then_i_see_the_user_zack
     expect(page).to have_content("Zack")
+  end
+
+  def and_zack_is_at_the_top_of_the_list_of_users
+    first_staff_heading = find(:xpath, "//h2[@class='govuk-heading-l'][1]")
+    expect(first_staff_heading).to have_content("Zack")
   end
 end
