@@ -98,6 +98,12 @@ RSpec.describe "Staff assessor", type: :system do
     then_i_see_the_archive_alert_page
     when_i_click_on_no
     then_i_see_the_staff_index
+
+    when_i_click_the_archive_user_button
+    then_i_see_the_archive_alert_page
+    when_i_click_on_yes
+    given_a_archived_user_exists
+    then_i_see_the_archived_user
   end
 
   private
@@ -243,5 +249,9 @@ RSpec.describe "Staff assessor", type: :system do
 
   def when_i_click_on_no
     assessor_staff_alert_page.cancel_link.click
+  end
+
+  def when_i_click_on_yes
+    assessor_staff_alert_page.archive_button.click
   end
 end
