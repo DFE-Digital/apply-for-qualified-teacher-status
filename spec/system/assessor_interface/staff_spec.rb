@@ -90,6 +90,8 @@ RSpec.describe "Staff assessor", type: :system do
   it "allows user to be archived with archive button" do
     given_i_am_authorized_as_a_manage_staff_user
     given_a_archived_user_exists
+    given_a_helpdesk_user_exists
+    given_user_zack_exists
     when_i_visit_the_staff_page
     then_i_see_the_staff_index
     and_i_see_the_archive_user_button
@@ -102,8 +104,7 @@ RSpec.describe "Staff assessor", type: :system do
     when_i_click_the_archive_user_button
     then_i_see_the_archive_alert_page
     when_i_click_on_yes
-    given_a_archived_user_exists
-    then_i_see_the_archived_user
+    then_i_see_the_user_zack
   end
 
   private
@@ -114,6 +115,10 @@ RSpec.describe "Staff assessor", type: :system do
 
   def given_a_archived_user_exists
     create(:staff, name: "ArchivedUser", archived: true)
+  end
+
+  def given_user_zack_exists
+    create(:staff, name: "Zack")
   end
 
   def given_sign_in_with_active_directory_is_active
@@ -240,7 +245,7 @@ RSpec.describe "Staff assessor", type: :system do
   end
 
   def when_i_click_the_archive_user_button
-    find(:xpath, "(//a[text()='Archive user'])[1]").click
+    find(:xpath, "(//a[text()='Archive user'])[3]").click
   end
 
   def then_i_see_the_archive_alert_page
@@ -253,5 +258,9 @@ RSpec.describe "Staff assessor", type: :system do
 
   def when_i_click_on_yes
     assessor_staff_alert_page.archive_button.click
+  end
+
+  def then_i_see_the_user_zack
+    expect(page).to have_content("Zack")
   end
 end
