@@ -2,70 +2,42 @@ name: Delete Review App
 
 on:
   pull_request:
-    types: [closed]
-    branches: [main]
+    branches:
+      - main
+    types:
+      - closed
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: PR number of review app to delete
+        required: false
+        type: string
 
 jobs:
   delete-review-app:
-    name: Delete Review App ${{ github.event.pull_request.number }}
-    concurrency: deploy_review_${{ github.event.pull_request.number }}
-    if: ${{ contains(github.event.pull_request.labels.*.name, 'deploy') }}
+    name: Delete Review App ${{ github.event.pull_request.number || github.event.inputs.pr_number }}
+    concurrency: deploy_review_${{ github.event.pull_request.number || github.event.inputs.pr_number }}
     runs-on: ubuntu-latest
+    if: >
+      github.event.action == 'closed' && contains(github.event.pull_request.labels.*.name, 'deploy') ||
+      (github.event.action == 'unlabeled' && github.event.label.name == 'deploy') || (github.event_name ==
+      'workflow_dispatch')
+
     environment: review
     permissions:
+      pull-requests: write
       id-token: write
 
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-
-      - uses: google-github-actions/auth@v2
-        with:
-          project_id: apply-for-qts-in-england
-          workload_identity_provider: projects/385922361840/locations/global/workloadIdentityPools/apply-for-qualified-teacher-sta3/providers/apply-for-qualified-teacher-sta3
-
-      - uses: hashicorp/setup-terraform@v3
-        with:
-          terraform_version: 1.5.0
-          terraform_wrapper: false
-
-      - name: Set environment variables
-        run: |
-          state_file_name=terraform-${{ github.event.pull_request.number }}.tfstate
-
-          echo "TF_STATE_FILE=$state_file_name" >> $GITHUB_ENV
-
-          state_file_status=$(az storage blob list -c afqts-tfstate \
-            --account-name "s189t01afqtstfstatervsa" \
-            --prefix $state_file_name --query "[].name" -o tsv)
-
-          if [ -n "$state_file_status" ]; then
-            echo "TF_STATE_EXISTS=true" >> $GITHUB_ENV
-          fi
-
-      - uses: DFE-Digital/github-actions/set-kubelogin-environment@master
-        if: env.TF_STATE_EXISTS == 'true'
+      - uses: DFE-Digital/github-actions/delete-review-app@master
         with:
           azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
           azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-
-      - name: Destroy Terraform
-        if: env.TF_STATE_EXISTS == 'true'
-        id: destroy-terraform
-        shell: bash
-        run: make ci review terraform-destroy
-        env:
-          DOCKER_IMAGE: "ghcr.io/dfe-digital/apply-for-qualified-teacher-status:no-tag"
-          PULL_REQUEST_NUMBER: ${{ github.event.pull_request.number }}
-
-      - name: Delete Terraform state file
-        if: env.TF_STATE_EXISTS == 'true'
-        run: |
-          az storage blob delete -c afqts-tfstate --name ${{ env.TF_STATE_FILE }} \
-            --account-name "s189t01afqtstfstatervsa"
+          pr-number: ${{ github.event.pull_request.number || github.event.inputs.pr_number }}
+          resource-group-name: s189t01-afqts-rv-rg
+          storage-account-name: s189t01afqtstfstatervsa
+          container-name: afqts-tfstate
+          tf-state-file: terraform-${{ github.event.pull_request.number || github.event.inputs.pr_number }}.tfstate
+          gcp-wip: projects/385922361840/locations/global/workloadIdentityPools/apply-for-qualified-teacher-sta3/providers/apply-for-qualified-teacher-sta3
+          gcp-project-id: apply-for-qts-in-england
