@@ -5,6 +5,7 @@ KEY_VAULT_PURGE_PROTECTION=false
 ARM_TEMPLATE_TAG=1.1.6
 SERVICE_NAME=apply-for-qts
 SERVICE_SHORT=afqts
+DOCKER_REPOSITORY = ghcr.io/dfe-digital/apply-for-qualified-teacher-status
 
 .PHONY: help
 help: ## Show this help
@@ -17,12 +18,12 @@ development: test-cluster ## Specify development configuration
 
 .PHONY: review
 review: test-cluster ## Specify review configuration
-	$(if ${PULL_REQUEST_NUMBER},,$(error Missing PULL_REQUEST_NUMBER))
-	$(eval ENVIRONMENT=pr-${PULL_REQUEST_NUMBER})
+	$(if ${PR_NUMBER},,$(error Missing PR_NUMBER))
+	$(eval ENVIRONMENT=pr-${PR_NUMBER})
 	$(eval include global_config/review.sh)
-	$(eval TERRAFORM_BACKEND_KEY=terraform-$(PULL_REQUEST_NUMBER).tfstate)
-	$(eval export TF_VAR_app_suffix=-$(PULL_REQUEST_NUMBER))
-	$(eval export TF_VAR_uploads_storage_account_name=$(AZURE_RESOURCE_PREFIX)afqtsrv$(PULL_REQUEST_NUMBER)sa)
+	$(eval TERRAFORM_BACKEND_KEY=terraform-$(PR_NUMBER).tfstate)
+	$(eval export TF_VAR_app_suffix=-$(PR_NUMBER))
+	$(eval export TF_VAR_uploads_storage_account_name=$(AZURE_RESOURCE_PREFIX)afqtsrv$(PR_NUMBER)sa)
 
 .PHONY: test
 test: test-cluster ## Specify test configuration
@@ -100,7 +101,7 @@ vendor-modules:
 	git -c advice.detachedHead=false clone --depth=1 --single-branch --branch ${TERRAFORM_MODULES_TAG} https://github.com/DFE-Digital/terraform-modules.git terraform/application/vendor/modules/dfe-terraform-modules
 
 terraform-init: composed-variables vendor-modules set-azure-account ## Initialize terraform for AKS
-	$(if $(DOCKER_IMAGE), , $(error Missing environment variable "DOCKER_IMAGE"))
+	$(if $(DOCKER_IMAGE), , $(eval DOCKER_IMAGE=$(DOCKER_REPOSITORY):main))
 	$(eval TERRAFORM_BACKEND_KEY=$(or ${TERRAFORM_BACKEND_KEY},terraform.tfstate))
 
 	terraform -chdir=terraform/application init -upgrade -reconfigure \

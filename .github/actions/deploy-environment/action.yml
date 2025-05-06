@@ -58,7 +58,7 @@ runs:
         cd terraform/application && echo "url=$(terraform output -raw url)" >> $GITHUB_OUTPUT
       env:
         DOCKER_IMAGE: ${{ inputs.docker-image }}
-        PULL_REQUEST_NUMBER: ${{ inputs.pull-request-number }}
+        PR_NUMBER: ${{ inputs.pull-request-number }}
 
     - uses: azure/login@v2
       with:
@@ -71,16 +71,16 @@ runs:
       shell: bash
       run: |
         make ci review get-cluster-credentials
-        kubectl exec -n tra-development deployment/apply-for-qts-review-${PULL_REQUEST_NUMBER}-web -- sh -c "cd /app && /usr/local/bin/bundle exec rails db:seed review_app:configure fake_data:generate"
+        kubectl exec -n tra-development deployment/apply-for-qts-review-${PR_NUMBER}-web -- sh -c "cd /app && /usr/local/bin/bundle exec rails db:seed review_app:configure fake_data:generate"
       env:
-        PULL_REQUEST_NUMBER: ${{ inputs.pull-request-number }}
+        PR_NUMBER: ${{ inputs.pull-request-number }}
 
     - id: key-vault-name
       if: ${{ inputs.smoke-test-credentials-required == 'true' }}
       shell: bash
       run: echo "value=$(make -s ${{ inputs.environment }} print-application-key-vault-name)" >> $GITHUB_OUTPUT
       env:
-        PULL_REQUEST_NUMBER: ${{ inputs.pull-request-number }}
+        PR_NUMBER: ${{ inputs.pull-request-number }}
 
     - uses: Azure/get-keyvault-secrets@v1
       id: smoke-test-secrets
