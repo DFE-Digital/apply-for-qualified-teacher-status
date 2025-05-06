@@ -115,7 +115,7 @@ RSpec.describe "Staff assessor", type: :system do
   end
 
   def given_a_archived_user_exists
-    create(:staff, name: "ArchivedUser", archived: true)
+    create(:staff, name: "ArchivedUser", archived: true, updated_at: 1.day.ago)
   end
 
   def given_user_zack_exists
