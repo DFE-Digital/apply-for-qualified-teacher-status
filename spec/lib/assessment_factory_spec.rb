@@ -444,6 +444,7 @@ RSpec.describe AssessmentFactory do
               %w[
                 english_language_proficiency_require_alternative
                 english_language_esol_document_illegible
+                english_language_esol_expired
                 english_language_esol_expired_during_assessment
                 english_language_qualification_invalid
                 english_language_esol_below_required_level
