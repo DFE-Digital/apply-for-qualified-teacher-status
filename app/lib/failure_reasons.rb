@@ -18,6 +18,7 @@ class FailureReasons
     EL_GRADE_BELOW_B2 = "english_language_not_achieved_b2",
     EL_MOI_NOT_TAUGHT_IN_ENGLISH = "english_language_moi_not_taught_in_english",
     EL_QUALIFICATION_INVALID = "english_language_qualification_invalid",
+    EL_ESOL_EXPIRED = "english_language_esol_expired",
     EL_SELT_EXPIRED = "english_language_selt_expired",
     FRAUD = "fraud",
     FULL_PROFESSIONAL_STATUS = "full_professional_status",
