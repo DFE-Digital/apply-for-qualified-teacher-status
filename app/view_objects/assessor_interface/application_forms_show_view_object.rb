@@ -380,6 +380,12 @@ class AssessorInterface::ApplicationFormsShowViewObject
   end
 
   def verification_decision_task_list_item
+    if assessment.decline? && qualification_requests_task_list_item.nil? &&
+         reference_requests_task_list_item.nil? &&
+         professional_standing_request_task_list_item.nil?
+      return
+    end
+
     {
       name:
         I18n.t(
