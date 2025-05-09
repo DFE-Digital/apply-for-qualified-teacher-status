@@ -16,8 +16,8 @@ Rails.application.routes.draw do
 
     resources :staff, only: %i[index edit update] do
       member do
-        get "alert", to: "staff#alert"
-        get "archive", to: "staff#archive"
+        get "archive", to: "staff#edit_archive"
+        post "archive", to: "staff#update_archive"
       end
     end
 
