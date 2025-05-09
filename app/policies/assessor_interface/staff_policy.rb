@@ -9,11 +9,11 @@ class AssessorInterface::StaffPolicy < ApplicationPolicy
     user.manage_staff_permission? && !user.archived?
   end
 
-  def alert?
+  def edit_archive?
     user.manage_staff_permission? && !user.archived?
   end
 
-  def archive?
+  def update_archive?
     user.manage_staff_permission? && !user.archived?
   end
 end
