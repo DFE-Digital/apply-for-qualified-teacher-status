@@ -6,7 +6,7 @@ class AssessorInterface::StaffController < AssessorInterface::BaseController
   def index
     authorize [:assessor_interface, Staff]
     @active_staff = Staff.not_archived.order(:name)
-    @archived_staff = Staff.archived.order(:name)
+    @archived_staff = Staff.archived.order(updated_at: :desc)
     render layout: "full_from_desktop"
   end
 
@@ -19,6 +19,18 @@ class AssessorInterface::StaffController < AssessorInterface::BaseController
     else
       render :edit, status: :unprocessable_entity
     end
+  end
+
+  def update_archive
+    if @staff.update(archived: true)
+      redirect_to "#{assessor_interface_staff_index_path}#archived-users"
+    else
+      flash[:warning] = "Unable to archive staff"
+      redirect_to assessor_interface_staff_index_path
+    end
+  end
+
+  def edit_archive
   end
 
   private

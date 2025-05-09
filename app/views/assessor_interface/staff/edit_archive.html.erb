@@ -1,0 +1,12 @@
+<% content_for :page_title, "Archive alert" %>
+
+<h1 class="govuk-heading-xl">Are you sure you want to archive the user <%= @staff.name %>?</h1>
+
+<p class="govuk-!-padding-bottom-5">You'll be able to reactivate this user from the 'Archived users' tab.</p>
+
+<%= form_with url: archive_assessor_interface_staff_path(@staff), method: :post do |f| %>
+  <div class="govuk-button-group">
+    <%= f.govuk_submit "Yes, archive this user"%>
+    <%= govuk_link_to("No, cancel", assessor_interface_staff_index_path, class: "govuk-link--no-visited-state") %>
+  </div>
+<% end %>

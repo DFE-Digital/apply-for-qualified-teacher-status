@@ -87,6 +87,27 @@ RSpec.describe "Staff assessor", type: :system do
     then_i_see_the_archived_user
   end
 
+  it "allows user to be archived with archive button" do
+    given_i_am_authorized_as_a_manage_staff_user
+    given_a_archived_user_exists
+    given_a_helpdesk_user_exists
+    given_user_zack_exists
+    when_i_visit_the_staff_page
+    then_i_see_the_staff_index
+    and_i_see_the_archive_user_button
+
+    when_i_click_the_archive_user_button
+    then_i_see_the_archive_alert_page
+    when_i_click_on_no
+    then_i_see_the_staff_index
+
+    when_i_click_the_archive_user_button
+    then_i_see_the_archive_alert_page
+    when_i_click_on_yes
+    then_i_see_the_user_zack
+    and_zack_is_at_the_top_of_the_list_of_users
+  end
+
   private
 
   def given_a_helpdesk_user_exists
@@ -94,7 +115,11 @@ RSpec.describe "Staff assessor", type: :system do
   end
 
   def given_a_archived_user_exists
-    create(:staff, name: "ArchivedUser", archived: true)
+    create(:staff, name: "ArchivedUser", archived: true, updated_at: 1.day.ago)
+  end
+
+  def given_user_zack_exists
+    create(:staff, name: "Zack")
   end
 
   def given_sign_in_with_active_directory_is_active
@@ -214,5 +239,34 @@ RSpec.describe "Staff assessor", type: :system do
     expect(page).to have_content(
       "Manage staff\nNo\tNo\tNo\tNo\tNo\tNo\tNo\tYes",
     )
+  end
+
+  def and_i_see_the_archive_user_button
+    expect(page).to have_content("Archive user")
+  end
+
+  def when_i_click_the_archive_user_button
+    find(:xpath, "(//a[text()='Archive user'])[3]").click
+  end
+
+  def then_i_see_the_archive_alert_page
+    expect(page).to have_content("Are you sure you want to archive the user")
+  end
+
+  def when_i_click_on_no
+    assessor_staff_alert_page.cancel_link.click
+  end
+
+  def when_i_click_on_yes
+    assessor_staff_alert_page.archive_button.click
+  end
+
+  def then_i_see_the_user_zack
+    expect(page).to have_content("Zack")
+  end
+
+  def and_zack_is_at_the_top_of_the_list_of_users
+    first_staff_heading = find(:xpath, "//h2[@class='govuk-heading-l'][1]")
+    expect(first_staff_heading).to have_content("Zack")
   end
 end

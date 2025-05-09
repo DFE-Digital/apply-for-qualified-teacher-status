@@ -268,6 +268,11 @@ module PageHelpers
       PageObjects::AssessorInterface::SendSignedConsentDocuments.new
   end
 
+  def assessor_staff_alert_page
+    @assessor_staff_alert_page ||=
+      PageObjects::AssessorInterface::StaffAlert.new
+  end
+
   def assessor_staff_index_page
     @assessor_staff_index_page ||=
       PageObjects::AssessorInterface::StaffIndex.new
