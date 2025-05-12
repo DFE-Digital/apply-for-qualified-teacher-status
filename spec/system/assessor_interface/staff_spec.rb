@@ -109,11 +109,14 @@ RSpec.describe "Staff assessor", type: :system do
     and_i_see_the_success_message
   end
 
-  it "allows user to be reactivated with reactivate button" do
+  it "allows user to be unarchived with reactivate button" do
     given_i_am_authorized_as_a_manage_staff_user
     given_a_archived_user_exists
+
     when_i_click_the_archived_users_tab
     then_i_see_the_reactivate_user_button
+    when_i_click_the_reactivate_user_button
+    then_i_see_the_edit_unarchive_page
   end
 
   private
@@ -291,5 +294,13 @@ RSpec.describe "Staff assessor", type: :system do
 
   def then_i_see_the_reactivate_user_button
     expect(page).to have_content("Reactivate user")
+  end
+
+  def when_i_click_the_reactivate_user_button
+    find(:xpath, '//*[@id="archived-users"]/div[1]/div[2]/a').click
+  end
+
+  def then_i_see_the_edit_unarchive_page
+    expect(page).to have_content("Are you sure you want to reactivate the user")
   end
 end
