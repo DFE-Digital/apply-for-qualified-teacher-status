@@ -117,6 +117,9 @@ RSpec.describe "Staff assessor", type: :system do
     then_i_see_the_reactivate_user_button
     when_i_click_the_reactivate_user_button
     then_i_see_the_edit_unarchive_page
+
+    when_i_click_on_no
+    then_i_see_the_reactivate_user_button
   end
 
   private
