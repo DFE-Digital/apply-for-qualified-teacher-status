@@ -1,5 +1,12 @@
 <% @archived_staff.each_with_index do |staff, index| %>
-  <h2 class="govuk-heading-l"><%= staff.name %></h2>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h2 class="govuk-heading-l"><%= staff.name %></h2>
+    </div>
+    <div class="govuk-grid-column-one-third govuk-!-text-align-right">
+      <%= govuk_button_link_to('Reactivate user', '#', secondary: true) %>
+    </div>
+  </div>
   
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
