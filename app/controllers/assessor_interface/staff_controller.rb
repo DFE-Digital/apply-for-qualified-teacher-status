@@ -23,6 +23,7 @@ class AssessorInterface::StaffController < AssessorInterface::BaseController
 
   def update_archive
     if @staff.update(archived: true)
+      flash[:success] = "#{@staff.name} has been archived"
       redirect_to "#{assessor_interface_staff_index_path}#archived-users"
     else
       flash[:warning] = "Unable to archive staff"
