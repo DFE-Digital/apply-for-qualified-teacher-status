@@ -34,6 +34,12 @@ class AssessorInterface::StaffController < AssessorInterface::BaseController
   def edit_archive
   end
 
+  def update_unarchive
+  end
+
+  def edit_unarchive
+  end
+
   private
 
   def load_staff

@@ -4,7 +4,7 @@
       <h2 class="govuk-heading-l"><%= staff.name %></h2>
     </div>
     <div class="govuk-grid-column-one-third govuk-!-text-align-right">
-      <%= govuk_button_link_to('Reactivate user', '#', secondary: true) %>
+      <%= govuk_button_link_to('Reactivate user', unarchive_assessor_interface_staff_path(staff), secondary: true) %>
     </div>
   </div>
   

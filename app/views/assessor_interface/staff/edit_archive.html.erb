@@ -1,4 +1,4 @@
-<% content_for :page_title, "Archive alert" %>
+<% content_for :page_title, "Edit archive" %>
 <% content_for :back_link_url, assessor_interface_staff_index_path %>
 
 <h1 class="govuk-heading-xl">Are you sure you want to archive the user <%= @staff.name %>?</h1>
@@ -8,6 +8,6 @@
 <%= form_with url: archive_assessor_interface_staff_path(@staff), method: :post do |f| %>
   <div class="govuk-button-group">
     <%= f.govuk_submit "Yes, archive this user"%>
-    <%= govuk_link_to("No, cancel", assessor_interface_staff_index_path, class: "govuk-link--no-visited-state") %>
+    <%= govuk_link_to("No, cancel", assessor_interface_staff_index_path) %>
   </div>
 <% end %>

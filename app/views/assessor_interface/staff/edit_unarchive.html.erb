@@ -1,0 +1,13 @@
+<% content_for :page_title, "Edit unarchive" %>
+<% content_for :back_link_url, "#{assessor_interface_staff_index_path}#archived-users" %>
+
+<h1 class="govuk-heading-xl">Are you sure you want to reactivate the user <%= @staff.name %>?</h1>
+
+<p class="govuk-!-padding-bottom-5">This user will be given the permissions they had before they were archived. You can change their permissions from the 'Actice users' tab.</p>
+
+<%= form_with url: unarchive_assessor_interface_staff_path(@staff), method: :post do |f| %>
+  <div class="govuk-button-group">
+    <%= f.govuk_submit "Yes, reactivate this user"%>
+    <%= govuk_link_to("No, cancel", "#{assessor_interface_staff_index_path}#archived-users") %>
+  </div>
+<% end %>
