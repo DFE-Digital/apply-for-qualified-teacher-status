@@ -301,7 +301,8 @@ RSpec.describe "Staff assessor", type: :system do
   end
 
   def and_sam_is_at_the_top_of_the_list_of_users
-    first_staff_heading = find(:xpath, '//*[@id="active-users"]/h2[1]')
+    first_staff_heading =
+      find(:xpath, '//*[@id="active-users"]/div[1]/div[1]/h2')
     expect(first_staff_heading).to have_content("Sam")
   end
 
