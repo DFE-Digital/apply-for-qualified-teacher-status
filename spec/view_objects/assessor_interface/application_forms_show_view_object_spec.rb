@@ -580,6 +580,70 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
       end
     end
 
+    context "without any verification steps but application awarded" do
+      before { assessment.award! }
+
+      it do
+        expect(subject).not_to include_task_list_item(
+          "Verification",
+          "Verify qualifications",
+        )
+      end
+
+      it do
+        expect(subject).not_to include_task_list_item(
+          "Verification",
+          "Verify references",
+        )
+      end
+
+      it do
+        expect(subject).not_to include_task_list_item(
+          "Verification",
+          "Verify LoPS",
+        )
+      end
+
+      it do
+        expect(subject).to include_task_list_item(
+          "Verification",
+          "Verification decision",
+        )
+      end
+    end
+
+    context "without any verification steps but application declined" do
+      before { assessment.decline! }
+
+      it do
+        expect(subject).not_to include_task_list_item(
+          "Verification",
+          "Verify qualifications",
+        )
+      end
+
+      it do
+        expect(subject).not_to include_task_list_item(
+          "Verification",
+          "Verify references",
+        )
+      end
+
+      it do
+        expect(subject).not_to include_task_list_item(
+          "Verification",
+          "Verify LoPS",
+        )
+      end
+
+      it do
+        expect(subject).not_to include_task_list_item(
+          "Verification",
+          "Verification decision",
+        )
+      end
+    end
+
     context "with a reference request" do
       before do
         assessment.verify!
