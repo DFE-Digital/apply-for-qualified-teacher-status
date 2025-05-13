@@ -90,7 +90,6 @@ RSpec.describe "Staff assessor", type: :system do
   it "allows user to be archived with archive button" do
     given_i_am_authorized_as_a_manage_staff_user
     given_a_archived_user_exists
-    given_a_helpdesk_user_exists
     given_user_zack_exists
     when_i_visit_the_staff_page
     then_i_see_the_staff_index
@@ -111,7 +110,6 @@ RSpec.describe "Staff assessor", type: :system do
 
   it "allows user to be unarchived with reactivate button" do
     given_i_am_authorized_as_a_manage_staff_user
-    given_a_archived_user_exists
     given_user_sam_exists
     given_a_helpdesk_user_exists
 
@@ -142,7 +140,7 @@ RSpec.describe "Staff assessor", type: :system do
   end
 
   def given_user_zack_exists
-    create(:staff, name: "Zack")
+    create(:staff, name: "Zack", updated_at: 1.day.ago)
   end
 
   def given_user_sam_exists
@@ -251,7 +249,7 @@ RSpec.describe "Staff assessor", type: :system do
   end
 
   def when_i_click_on_the_helpdesk_user
-    find(:xpath, "(//a[text()='Change permissions'])[1]").click
+    find(:xpath, "(//a[text()='Change permissions'])[2]").click
   end
 
   def then_i_see_the_staff_edit_form
@@ -273,7 +271,7 @@ RSpec.describe "Staff assessor", type: :system do
   end
 
   def when_i_click_the_archive_user_button
-    find(:xpath, "(//a[text()='Archive user'])[3]").click
+    find(:xpath, "(//a[text()='Archive user'])[2]").click
   end
 
   def then_i_see_the_edit_archive_page
@@ -303,9 +301,8 @@ RSpec.describe "Staff assessor", type: :system do
   end
 
   def and_sam_is_at_the_top_of_the_list_of_users
-    first_staff_heading = 
-      find(:xpath, '//*[@id="active-users"]/h2[1]')
-    expect(first_staff_heading).to have_content("Samx")
+    first_staff_heading = find(:xpath, '//*[@id="active-users"]/h2[1]')
+    expect(first_staff_heading).to have_content("Sam")
   end
 
   def and_i_see_the_archive_success_message
