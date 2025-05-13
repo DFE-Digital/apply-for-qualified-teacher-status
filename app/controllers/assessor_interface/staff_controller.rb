@@ -35,6 +35,7 @@ class AssessorInterface::StaffController < AssessorInterface::BaseController
   end
 
   def update_unarchive
+    redirect_to assessor_interface_staff_index_path
   end
 
   def edit_unarchive

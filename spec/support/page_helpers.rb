@@ -273,6 +273,11 @@ module PageHelpers
       PageObjects::AssessorInterface::StaffArchive.new
   end
 
+  def assessor_staff_unarchive_page
+    @assessor_staff_unarchive_page ||=
+      PageObjects::AssessorInterface::StaffUnarchive.new
+  end
+
   def assessor_staff_index_page
     @assessor_staff_index_page ||=
       PageObjects::AssessorInterface::StaffIndex.new

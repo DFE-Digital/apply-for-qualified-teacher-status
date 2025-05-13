@@ -103,7 +103,7 @@ RSpec.describe "Staff assessor", type: :system do
 
     when_i_click_the_archive_user_button
     then_i_see_the_edit_archive_page
-    when_i_click_on_yes
+    when_i_click_on_yes_archive
     then_i_see_the_user_zack
     and_zack_is_at_the_top_of_the_list_of_users
     and_i_see_the_success_message
@@ -112,6 +112,7 @@ RSpec.describe "Staff assessor", type: :system do
   it "allows user to be unarchived with reactivate button" do
     given_i_am_authorized_as_a_manage_staff_user
     given_a_archived_user_exists
+    given_user_sam_exists
 
     when_i_click_the_archived_users_tab
     then_i_see_the_reactivate_user_button
@@ -120,6 +121,11 @@ RSpec.describe "Staff assessor", type: :system do
 
     when_i_click_on_no
     then_i_see_the_reactivate_user_button
+
+    when_i_click_the_reactivate_user_button
+    then_i_see_the_edit_unarchive_page
+    when_i_click_on_yes_reactivate
+    then_i_see_the_user_sam
   end
 
   private
@@ -134,6 +140,10 @@ RSpec.describe "Staff assessor", type: :system do
 
   def given_user_zack_exists
     create(:staff, name: "Zack")
+  end
+
+  def given_user_sam_exists
+    create(:staff, name: "ArchivedSam", archived: true)
   end
 
   def given_sign_in_with_active_directory_is_active
@@ -271,8 +281,12 @@ RSpec.describe "Staff assessor", type: :system do
     assessor_staff_archive_page.cancel_link.click
   end
 
-  def when_i_click_on_yes
+  def when_i_click_on_yes_archive
     assessor_staff_archive_page.archive_button.click
+  end
+
+  def when_i_click_on_yes_reactivate
+    assessor_staff_unarchive_page.reactivate_button.click
   end
 
   def then_i_see_the_user_zack
@@ -305,5 +319,9 @@ RSpec.describe "Staff assessor", type: :system do
 
   def then_i_see_the_edit_unarchive_page
     expect(page).to have_content("Are you sure you want to reactivate the user")
+  end
+
+  def then_i_see_the_user_sam
+    expect(page).to have_content("Sam")
   end
 end
