@@ -113,6 +113,7 @@ RSpec.describe "Staff assessor", type: :system do
     given_i_am_authorized_as_a_manage_staff_user
     given_a_archived_user_exists
     given_user_sam_exists
+    given_a_helpdesk_user_exists
 
     when_i_click_the_archived_users_tab
     then_i_see_the_reactivate_user_button
@@ -127,6 +128,7 @@ RSpec.describe "Staff assessor", type: :system do
     when_i_click_on_yes_reactivate
     then_i_see_the_user_sam
     and_i_see_the_reactivate_success_message
+    and_sam_is_at_the_top_of_the_list_of_users
   end
 
   private
@@ -144,7 +146,7 @@ RSpec.describe "Staff assessor", type: :system do
   end
 
   def given_user_sam_exists
-    create(:staff, name: "ArchivedSam", archived: true)
+    create(:staff, name: "Sam", archived: true)
   end
 
   def given_sign_in_with_active_directory_is_active
@@ -298,6 +300,12 @@ RSpec.describe "Staff assessor", type: :system do
     first_staff_heading =
       find(:xpath, '//*[@id="archived-users"]/div[1]/div[1]/h2')
     expect(first_staff_heading).to have_content("Zack")
+  end
+
+  def and_sam_is_at_the_top_of_the_list_of_users
+    first_staff_heading = 
+      find(:xpath, '//*[@id="active-users"]/h2[1]')
+    expect(first_staff_heading).to have_content("Samx")
   end
 
   def and_i_see_the_archive_success_message
