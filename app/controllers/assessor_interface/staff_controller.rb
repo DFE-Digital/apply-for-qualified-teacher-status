@@ -35,7 +35,13 @@ class AssessorInterface::StaffController < AssessorInterface::BaseController
   end
 
   def update_unarchive
-    redirect_to assessor_interface_staff_index_path
+    if @staff.update(archived: false)
+      flash[:success] = "#{@staff.name} has been reactivated"
+      redirect_to assessor_interface_staff_index_path
+    else
+      flash[:warning] = "Unable to reactivate staff"
+      redirect_to "#{assessor_interface_staff_index_path}#archived-users"
+    end
   end
 
   def edit_unarchive

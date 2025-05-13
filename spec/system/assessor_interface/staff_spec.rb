@@ -106,7 +106,7 @@ RSpec.describe "Staff assessor", type: :system do
     when_i_click_on_yes_archive
     then_i_see_the_user_zack
     and_zack_is_at_the_top_of_the_list_of_users
-    and_i_see_the_success_message
+    and_i_see_the_archive_success_message
   end
 
   it "allows user to be unarchived with reactivate button" do
@@ -126,6 +126,7 @@ RSpec.describe "Staff assessor", type: :system do
     then_i_see_the_edit_unarchive_page
     when_i_click_on_yes_reactivate
     then_i_see_the_user_sam
+    and_i_see_the_reactivate_success_message
   end
 
   private
@@ -299,9 +300,14 @@ RSpec.describe "Staff assessor", type: :system do
     expect(first_staff_heading).to have_content("Zack")
   end
 
-  def and_i_see_the_success_message
+  def and_i_see_the_archive_success_message
     success_message = find(:xpath, '//*[@id="main-content"]/div[1]/div[2]/p')
     expect(success_message).to have_content("Zack has been archived")
+  end
+
+  def and_i_see_the_reactivate_success_message
+    success_message = find(:xpath, '//*[@id="main-content"]/div[1]/div[2]/p')
+    expect(success_message).to have_content("Sam has been reactivated")
   end
 
   def when_i_click_the_archived_users_tab
