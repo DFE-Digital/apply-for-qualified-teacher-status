@@ -13,7 +13,8 @@ RSpec.describe CheckYourAnswersSummary::Component, type: :component do
         title:,
         fields:,
         changeable:,
-        delete_link_to:,
+        with_action_link_to:,
+        with_action_link_label:,
       ),
     )
   end
@@ -79,7 +80,8 @@ RSpec.describe CheckYourAnswersSummary::Component, type: :component do
   end
 
   let(:changeable) { true }
-  let(:delete_link_to) { nil }
+  let(:with_action_link_to) { nil }
+  let(:with_action_link_label) { nil }
 
   it "renders the card with an id" do
     expect(component.css(".govuk-summary-card").attribute("id").value).to eq(
@@ -92,11 +94,12 @@ RSpec.describe CheckYourAnswersSummary::Component, type: :component do
   end
 
   context "with a delete link" do
-    let(:delete_link_to) { "/delete" }
+    let(:with_action_link_to) { "/delete" }
+    let(:with_action_link_label) { "Delete" }
 
     it "renders a link" do
       a = component.at_css(".govuk-summary-card__actions a")
-      expect(a.text.strip).to eq("Delete title")
+      expect(a.text.strip).to eq("Delete")
       expect(a.attribute("href").value).to eq("/delete")
     end
   end

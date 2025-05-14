@@ -46,6 +46,7 @@
       } : nil,
     },
     changeable:,
-    delete_link_to: qualification.can_delete? ? [:delete, :teacher_interface, :application_form, qualification] : nil,
+    with_action_link_to: changeable && qualification.can_delete? ? [:delete, :teacher_interface, :application_form, qualification] : nil,
+    with_action_link_label: changeable && qualification.can_delete? ? "Delete <span class=\"govuk-visually-hidden\">#{qualification.title.downcase}</span>".html_safe : nil,
   )) %>
 <% end %>
