@@ -18,17 +18,23 @@
 
     summary_list.with_row do |row|
       row.with_key { "Invited" }
-      row.with_value { staff.created_at.to_s }
+      row.with_value { staff.created_at.in_time_zone('London').strftime("%Y-%m-%d %H:%M:%S") }
     end
 
     summary_list.with_row do |row|
       row.with_key { "Last signed in" }
-      row.with_value { staff.current_sign_in_at.to_s }
+      row.with_value do
+        if staff.current_sign_in_at.nil?
+          "Never signed in"
+        else
+          staff.current_sign_in_at.in_time_zone('London').strftime("%Y-%m-%d %H:%M:%S")
+        end
+      end
     end
 
     summary_list.with_row do |row|
       row.with_key { "Archived" }
-      row.with_value { staff.updated_at.to_s }
+      row.with_value { staff.updated_at.in_time_zone('London').strftime("%Y-%m-%d %H:%M:%S") }
     end
   end %>
   
