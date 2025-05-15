@@ -3,7 +3,7 @@
 
 <h1 class="govuk-heading-xl">Are you sure you want to reactivate the user <%= @staff.name %>?</h1>
 
-<p class="govuk-!-padding-bottom-5">This user will be given the permissions they had before they were archived. You can change their permissions from the 'Actice users' tab.</p>
+<p class="govuk-!-padding-bottom-5">This user will be given the permissions they had before they were archived. You can change their permissions from the 'Active users' tab.</p>
 
 <%= form_with url: unarchive_assessor_interface_staff_path(@staff), method: :post do |f| %>
   <div class="govuk-button-group">
