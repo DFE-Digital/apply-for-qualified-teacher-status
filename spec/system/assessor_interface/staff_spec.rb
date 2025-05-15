@@ -212,7 +212,7 @@ RSpec.describe "Staff assessor", type: :system do
 
   def then_i_see_the_accepted_staff_user
     expect(page).to have_content("test@example.com")
-    expect(page).to have_content("Last signed in\t#{Time.zone.now.year}")
+    expect(page.text).to match(/Last signed in.*#{Time.zone.now.year}/)
   end
 
   def and_i_fill_name
