@@ -4,46 +4,46 @@
 #
 # Table name: staff
 #
-#  id                             :bigint           not null, primary key
-#  archived                       :boolean          default(FALSE)
-#  assess_permission              :boolean          default(FALSE)
-#  azure_ad_uid                   :string
-#  change_email_permission        :boolean          default(FALSE), not null
-#  change_name_permission         :boolean          default(FALSE), not null
-#  change_work_history_permission :boolean          default(FALSE), not null
-#  confirmation_sent_at           :datetime
-#  confirmation_token             :string
-#  confirmed_at                   :datetime
-#  current_sign_in_at             :datetime
-#  current_sign_in_ip             :string
-#  email                          :string           default(""), not null
-#  encrypted_password             :string           default(""), not null
-#  failed_attempts                :integer          default(0), not null
-#  invitation_accepted_at         :datetime
-#  invitation_created_at          :datetime
-#  invitation_limit               :integer
-#  invitation_sent_at             :datetime
-#  invitation_token               :string
-#  invitations_count              :integer          default(0)
-#  invited_by_type                :string
-#  last_sign_in_at                :datetime
-#  last_sign_in_ip                :string
-#  locked_at                      :datetime
-#  manage_staff_permission        :boolean          default(FALSE), not null
-#  name                           :text             default(""), not null
-#  remember_created_at            :datetime
-#  reset_password_sent_at         :datetime
-#  reset_password_token           :string
-#  reverse_decision_permission    :boolean          default(FALSE), not null
-#  sign_in_count                  :integer          default(0), not null
-#  support_console_permission     :boolean          default(FALSE), not null
-#  unconfirmed_email              :string
-#  unlock_token                   :string
-#  verify_permission              :boolean          default(FALSE), not null
-#  withdraw_permission            :boolean          default(FALSE), not null
-#  created_at                     :datetime         not null
-#  updated_at                     :datetime         not null
-#  invited_by_id                  :bigint
+#  id                                               :bigint           not null, primary key
+#  archived                                         :boolean          default(FALSE)
+#  assess_permission                                :boolean          default(FALSE)
+#  azure_ad_uid                                     :string
+#  change_email_permission                          :boolean          default(FALSE), not null
+#  change_name_permission                           :boolean          default(FALSE), not null
+#  change_work_history_and_qualification_permission :boolean          default(FALSE), not null
+#  confirmation_sent_at                             :datetime
+#  confirmation_token                               :string
+#  confirmed_at                                     :datetime
+#  current_sign_in_at                               :datetime
+#  current_sign_in_ip                               :string
+#  email                                            :string           default(""), not null
+#  encrypted_password                               :string           default(""), not null
+#  failed_attempts                                  :integer          default(0), not null
+#  invitation_accepted_at                           :datetime
+#  invitation_created_at                            :datetime
+#  invitation_limit                                 :integer
+#  invitation_sent_at                               :datetime
+#  invitation_token                                 :string
+#  invitations_count                                :integer          default(0)
+#  invited_by_type                                  :string
+#  last_sign_in_at                                  :datetime
+#  last_sign_in_ip                                  :string
+#  locked_at                                        :datetime
+#  manage_staff_permission                          :boolean          default(FALSE), not null
+#  name                                             :text             default(""), not null
+#  remember_created_at                              :datetime
+#  reset_password_sent_at                           :datetime
+#  reset_password_token                             :string
+#  reverse_decision_permission                      :boolean          default(FALSE), not null
+#  sign_in_count                                    :integer          default(0), not null
+#  support_console_permission                       :boolean          default(FALSE), not null
+#  unconfirmed_email                                :string
+#  unlock_token                                     :string
+#  verify_permission                                :boolean          default(FALSE), not null
+#  withdraw_permission                              :boolean          default(FALSE), not null
+#  created_at                                       :datetime         not null
+#  updated_at                                       :datetime         not null
+#  invited_by_id                                    :bigint
 #
 # Indexes
 #
@@ -74,8 +74,8 @@ FactoryBot.define do
       change_name_permission { true }
     end
 
-    trait :with_change_work_history_permission do
-      change_work_history_permission { true }
+    trait :with_change_work_history_and_qualification_permission do
+      change_work_history_and_qualification_permission { true }
     end
 
     trait :with_manage_staff_permission do
