@@ -25,12 +25,12 @@
 
     summary_list.with_row do |row|
       row.with_key { "Invited" }
-      row.with_value { format_uk_time(staff.created_at) }
+      row.with_value { format_human_readable_uk_time(staff.created_at) }
     end
 
     summary_list.with_row do |row|
       row.with_key { "Last signed in" }
-      row.with_value { format_uk_time(staff.current_sign_in_at) }
+      row.with_value { format_human_readable_uk_time(staff.current_sign_in_at) }
     end
   end %>
 
