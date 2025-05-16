@@ -122,7 +122,7 @@ class PersonasController < ApplicationController
       Staff.order(
         assess_permission: :desc,
         change_name_permission: :desc,
-        change_work_history_permission: :desc,
+        change_work_history_and_qualification_permission: :desc,
         reverse_decision_permission: :desc,
         support_console_permission: :desc,
         verify_permission: :desc,

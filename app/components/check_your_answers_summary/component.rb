@@ -8,7 +8,8 @@ module CheckYourAnswersSummary
       title:,
       fields:,
       changeable: true,
-      delete_link_to: nil
+      with_action_link_to: nil,
+      with_action_link_label: nil
     )
       super
       @model = model
@@ -16,17 +17,14 @@ module CheckYourAnswersSummary
       @title = title
       @fields = fields
       @changeable = changeable
-      @delete_link_to = delete_link_to
+      @with_action_link_to = with_action_link_to
+      @with_action_link_label = with_action_link_label
     end
 
-    attr_reader :title
+    attr_reader :title, :with_action_link_to, :with_action_link_label
 
     def rows
       fields_with_translations.map { |field| row_for_field(field) }
-    end
-
-    def delete_link_to
-      @delete_link_to if changeable && @delete_link_to
     end
 
     private

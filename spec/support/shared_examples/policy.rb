@@ -96,7 +96,7 @@ RSpec.shared_examples "a policy method requiring the change name permission" do
   end
 end
 
-RSpec.shared_examples "a policy method requiring the change work history permission" do
+RSpec.shared_examples "a policy method requiring the change work history and qualification permission" do
   context "without permission" do
     let(:user) { create(:staff) }
 
@@ -104,13 +104,19 @@ RSpec.shared_examples "a policy method requiring the change work history permiss
   end
 
   context "with permission" do
-    let(:user) { create(:staff, :with_change_work_history_permission) }
+    let(:user) do
+      create(:staff, :with_change_work_history_and_qualification_permission)
+    end
 
     it { is_expected.to be true }
 
     context "when staff is archived" do
       let(:user) do
-        create(:staff, :with_change_work_history_permission, archived: true)
+        create(
+          :staff,
+          :with_change_work_history_and_qualification_permission,
+          archived: true,
+        )
       end
 
       it { is_expected.to be false }

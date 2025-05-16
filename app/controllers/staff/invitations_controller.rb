@@ -17,7 +17,7 @@ class Staff::InvitationsController < Devise::InvitationsController
         name
         assess_permission
         change_name_permission
-        change_work_history_permission
+        change_work_history_and_qualification_permission
         reverse_decision_permission
         support_console_permission
         verify_permission

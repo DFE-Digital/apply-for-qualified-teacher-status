@@ -6,7 +6,7 @@
       head.with_row do |row|
         row.with_cell(header: true, text: "Assess applications")
         row.with_cell(header: true, text: "Change names")
-        row.with_cell(header: true, text: "Change work history")
+        row.with_cell(header: true, text: "Change work history and qualification")
         row.with_cell(header: true, text: "Reverse decisions")
         row.with_cell(header: true, text: "Support console")
         row.with_cell(header: true, text: "Verify applications")
@@ -20,7 +20,7 @@
       body.with_row do |row|
         row.with_cell { govuk_boolean_tag(staff.assess_permission) }
         row.with_cell { govuk_boolean_tag(staff.change_name_permission) }
-        row.with_cell { govuk_boolean_tag(staff.change_work_history_permission) }
+        row.with_cell { govuk_boolean_tag(staff.change_work_history_and_qualification_permission) }
         row.with_cell { govuk_boolean_tag(staff.reverse_decision_permission) }
         row.with_cell { govuk_boolean_tag(staff.support_console_permission) }
         row.with_cell { govuk_boolean_tag(staff.verify_permission) }

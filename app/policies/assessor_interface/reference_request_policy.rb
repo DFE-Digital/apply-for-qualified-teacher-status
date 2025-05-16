@@ -20,7 +20,8 @@ class AssessorInterface::ReferenceRequestPolicy < ApplicationPolicy
   def edit_verify?
     return false if user.archived?
 
-    user.assess_permission || user.change_work_history_permission ||
+    user.assess_permission ||
+      user.change_work_history_and_qualification_permission ||
       user.verify_permission
   end
 

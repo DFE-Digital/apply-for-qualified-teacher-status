@@ -1,9 +1,9 @@
 <%= govuk_summary_card(title:, html_attributes: { id: }) do |card|
-  if delete_link_to.present?
+  if with_action_link_to.present?
     card.with_action do
       govuk_link_to(
-        "Delete <span class=\"govuk-visually-hidden\">#{title.downcase}</span>".html_safe,
-        delete_link_to
+        with_action_link_label,
+        with_action_link_to
       )
     end
   end

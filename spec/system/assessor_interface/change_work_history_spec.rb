@@ -140,6 +140,6 @@ RSpec.describe "Assessor change work history", type: :system do
   end
 
   def manager
-    create(:staff, :with_change_work_history_permission)
+    create(:staff, :with_change_work_history_and_qualification_permission)
   end
 end

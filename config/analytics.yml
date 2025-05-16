@@ -289,7 +289,7 @@
     - assess_permission
     - change_email_permission
     - change_name_permission
-    - change_work_history_permission
+    - change_work_history_and_qualification_permission
     - confirmation_sent_at
     - confirmed_at
     - created_at
