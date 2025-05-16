@@ -122,7 +122,7 @@ RSpec.describe "Assessor reviewing further information", type: :system do
 
     when_i_review_the_follow_up_notes_and_submit
 
-    then_i_see_the(:assessor_application_status_page, reference:)
+    then_i_see_the_application_status_page_with_further_information_deadline
     and_i_receive_a_further_information_requested_email
 
     when_i_click_to_go_to_application_overview
@@ -331,6 +331,19 @@ RSpec.describe "Assessor reviewing further information", type: :system do
     expect(
       assessor_review_further_information_request_page.form,
     ).not_to have_submit_button
+  end
+
+  def then_i_see_the_application_status_page_with_further_information_deadline
+    then_i_see_the(:assessor_application_status_page, reference:)
+    expect(assessor_application_status_page).to have_content(
+      "Second further information request sent successfully",
+    )
+    expect(assessor_application_status_page).to have_content(
+      "They have 3 weeks to respond.",
+    )
+    expect(assessor_application_status_page).to have_content(
+      "They will automatically be sent a reminder 7 days and then 2 days before the request expires.",
+    )
   end
 
   def and_i_receive_a_further_information_requested_email

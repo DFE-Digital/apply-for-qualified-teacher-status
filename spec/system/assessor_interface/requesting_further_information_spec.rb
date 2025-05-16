@@ -35,7 +35,7 @@ RSpec.describe "Assessor requesting further information", type: :system do
     and_i_see_the_further_information_request_items
 
     when_i_click_the_continue_button
-    then_i_see_the(:assessor_application_status_page, reference:)
+    then_i_see_the_application_status_page_with_further_information_deadline
     and_i_receive_a_further_information_requested_email
   end
 
@@ -65,6 +65,19 @@ RSpec.describe "Assessor requesting further information", type: :system do
 
   def when_i_click_the_continue_button
     assessor_request_further_information_page.continue_button.click
+  end
+
+  def then_i_see_the_application_status_page_with_further_information_deadline
+    then_i_see_the(:assessor_application_status_page, reference:)
+    expect(assessor_application_status_page).to have_content(
+      "First further information request sent successfully",
+    )
+    expect(assessor_application_status_page).to have_content(
+      "They have 6 weeks to respond.",
+    )
+    expect(assessor_application_status_page).to have_content(
+      "They will automatically be sent a reminder 14 days, 7 days, and 2 days before the request expires.",
+    )
   end
 
   def and_i_receive_a_further_information_requested_email
