@@ -1,0 +1,17 @@
+<% content_for :page_title, title_with_error_prefix(t(".title"), error: @form.errors.any?) %>
+<% content_for :back_link_url, assessor_interface_application_form_assessment_assessment_section_path(@application_form, @application_form.assessment, @qualification_assessment_section) %>
+
+<%= form_with model: @form, url: [:assign_teaching, :assessor_interface, @application_form, @qualification], method: :post do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <h1 class="govuk-heading-xl"><%= t(".title") %></h1>
+
+
+  <p class="govuk-body govuk-!-margin-bottom-8">
+    The applicant’s teaching qualification will be changed to <strong class="govuk-!-font-weight-bold"><%= @qualification.title %></strong>. You can change this teaching qualification later if needed.
+  </p>
+
+  <%= f.govuk_submit "Yes, assign as teaching qualification" do %>
+    <%= govuk_link_to "Cancel", assessor_interface_application_form_assessment_assessment_section_path(@application_form, @application_form.assessment, @qualification_assessment_section) %>
+  <% end %>
+<% end %>
