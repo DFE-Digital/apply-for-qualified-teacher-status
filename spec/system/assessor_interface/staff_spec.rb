@@ -87,6 +87,48 @@ RSpec.describe "Staff assessor", type: :system do
     then_i_see_the_archived_user
   end
 
+  it "allows user to be archived with archive button" do
+    given_i_am_authorized_as_a_manage_staff_user
+    given_a_archived_user_exists
+    given_user_zack_exists
+    when_i_visit_the_staff_page
+    then_i_see_the_staff_index
+    and_i_see_the_archive_user_button
+
+    when_i_click_the_archive_user_button
+    then_i_see_the_edit_archive_page
+    when_i_click_on_no
+    then_i_see_the_staff_index
+
+    when_i_click_the_archive_user_button
+    then_i_see_the_edit_archive_page
+    when_i_click_on_yes_archive
+    then_i_see_the_user_zack
+    and_zack_is_at_the_top_of_the_list_of_users
+    and_i_see_the_archive_success_message
+  end
+
+  it "allows user to be unarchived with reactivate button" do
+    given_i_am_authorized_as_a_manage_staff_user
+    given_user_sam_exists
+    given_a_helpdesk_user_exists
+
+    when_i_click_the_archived_users_tab
+    then_i_see_the_reactivate_user_button
+    when_i_click_the_reactivate_user_button
+    then_i_see_the_edit_unarchive_page
+
+    when_i_click_on_no
+    then_i_see_the_reactivate_user_button
+
+    when_i_click_the_reactivate_user_button
+    then_i_see_the_edit_unarchive_page
+    when_i_click_on_yes_reactivate
+    then_i_see_the_user_sam
+    and_i_see_the_reactivate_success_message
+    and_sam_is_at_the_top_of_the_list_of_users
+  end
+
   private
 
   def given_a_helpdesk_user_exists
@@ -94,7 +136,15 @@ RSpec.describe "Staff assessor", type: :system do
   end
 
   def given_a_archived_user_exists
-    create(:staff, name: "ArchivedUser", archived: true)
+    create(:staff, name: "ArchivedUser", archived: true, updated_at: 1.day.ago)
+  end
+
+  def given_user_zack_exists
+    create(:staff, name: "Zack", updated_at: 1.day.ago)
+  end
+
+  def given_user_sam_exists
+    create(:staff, name: "Sam", archived: true)
   end
 
   def given_sign_in_with_active_directory_is_active
@@ -162,7 +212,7 @@ RSpec.describe "Staff assessor", type: :system do
 
   def then_i_see_the_accepted_staff_user
     expect(page).to have_content("test@example.com")
-    expect(page).to have_content("Last signed in\t#{Time.zone.now.year}")
+    expect(page.text).to match(/Last signed in.*#{Time.zone.now.year}/)
   end
 
   def and_i_fill_name
@@ -199,7 +249,7 @@ RSpec.describe "Staff assessor", type: :system do
   end
 
   def when_i_click_on_the_helpdesk_user
-    find(:xpath, "(//a[text()='Change permissions'])[1]").click
+    find(:xpath, "(//a[text()='Change permissions'])[2]").click
   end
 
   def then_i_see_the_staff_edit_form
@@ -214,5 +264,76 @@ RSpec.describe "Staff assessor", type: :system do
     expect(page).to have_content(
       "Manage staff\nNo\tNo\tNo\tNo\tNo\tNo\tNo\tYes",
     )
+  end
+
+  def and_i_see_the_archive_user_button
+    expect(page).to have_content("Archive user")
+  end
+
+  def when_i_click_the_archive_user_button
+    find(:xpath, "(//a[text()='Archive user'])[2]").click
+  end
+
+  def then_i_see_the_edit_archive_page
+    expect(page).to have_content("Are you sure you want to archive the user")
+  end
+
+  def when_i_click_on_no
+    assessor_staff_archive_page.cancel_link.click
+  end
+
+  def when_i_click_on_yes_archive
+    assessor_staff_archive_page.archive_button.click
+  end
+
+  def when_i_click_on_yes_reactivate
+    assessor_staff_unarchive_page.reactivate_button.click
+  end
+
+  def then_i_see_the_user_zack
+    expect(page).to have_content("Zack")
+  end
+
+  def and_zack_is_at_the_top_of_the_list_of_users
+    first_staff_heading =
+      find(:xpath, '//*[@id="archived-users"]/div[1]/div[1]/h2')
+    expect(first_staff_heading).to have_content("Zack")
+  end
+
+  def and_sam_is_at_the_top_of_the_list_of_users
+    first_staff_heading =
+      find(:xpath, '//*[@id="active-users"]/div[1]/div[1]/h2')
+    expect(first_staff_heading).to have_content("Sam")
+  end
+
+  def and_i_see_the_archive_success_message
+    success_message = find(:xpath, '//*[@id="main-content"]/div[1]/div[2]/p')
+    expect(success_message).to have_content("Zack has been archived")
+  end
+
+  def and_i_see_the_reactivate_success_message
+    success_message = find(:xpath, '//*[@id="main-content"]/div[1]/div[2]/p')
+    expect(success_message).to have_content("Sam has been reactivated")
+  end
+
+  def when_i_click_the_archived_users_tab
+    visit assessor_interface_staff_index_path
+    assessor_staff_index_page.archived_users_tab.click
+  end
+
+  def then_i_see_the_reactivate_user_button
+    expect(page).to have_content("Reactivate user")
+  end
+
+  def when_i_click_the_reactivate_user_button
+    find(:xpath, '//*[@id="archived-users"]/div[1]/div[2]/a').click
+  end
+
+  def then_i_see_the_edit_unarchive_page
+    expect(page).to have_content("Are you sure you want to reactivate the user")
+  end
+
+  def then_i_see_the_user_sam
+    expect(page).to have_content("Sam")
   end
 end

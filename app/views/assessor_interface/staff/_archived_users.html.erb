@@ -1,33 +1,36 @@
 <% @archived_staff.each_with_index do |staff, index| %>
-  <h2 class="govuk-heading-l"><%= staff.name %></h2>
-  
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <h3 class="govuk-heading-m">User data</h3>
-      
-      <%= govuk_summary_list do |summary_list|
-        summary_list.with_row do |row|
-          row.with_key { "Email address" }
-          row.with_value { staff.email }
-        end
-
-        summary_list.with_row do |row|
-          row.with_key { "Invited" }
-          row.with_value { staff.created_at.to_s }
-        end
-
-        summary_list.with_row do |row|
-          row.with_key { "Last signed in" }
-          row.with_value { staff.current_sign_in_at.to_s }
-        end
-
-        summary_list.with_row do |row|
-          row.with_key { "Archived" }
-          row.with_value { staff.updated_at.to_s }
-        end
-      end %>
+      <h2 class="govuk-heading-l"><%= staff.name %></h2>
+    </div>
+    <div class="govuk-grid-column-one-third govuk-!-text-align-right">
+      <%= govuk_button_link_to('Reactivate user', unarchive_assessor_interface_staff_path(staff), secondary: true) %>
     </div>
   </div>
+
+  <h3 class="govuk-heading-m">User data</h3>
+  
+  <%= govuk_summary_list do |summary_list|
+    summary_list.with_row do |row|
+      row.with_key { "Email address" }
+      row.with_value { staff.email }
+    end
+
+    summary_list.with_row do |row|
+      row.with_key { "Invited" }
+      row.with_value { format_human_readable_uk_time(staff.created_at) }
+    end
+
+    summary_list.with_row do |row|
+      row.with_key { "Last signed in" }
+      row.with_value { format_human_readable_uk_time(staff.current_sign_in_at) }
+    end
+
+    summary_list.with_row do |row|
+      row.with_key { "Archived" }
+      row.with_value { format_human_readable_uk_time(staff.updated_at) }
+    end
+  end %>
   
   <% unless index + 1 == @archived_staff.count %>
     <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">

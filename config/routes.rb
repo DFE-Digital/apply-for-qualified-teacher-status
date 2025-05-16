@@ -14,7 +14,15 @@ Rails.application.routes.draw do
   namespace :assessor_interface, path: "/assessor" do
     root to: redirect("/assessor/applications")
 
-    resources :staff, only: %i[index edit update]
+    resources :staff, only: %i[index edit update] do
+      member do
+        get "archive", to: "staff#edit_archive"
+        post "archive", to: "staff#update_archive"
+
+        get "unarchive", to: "staff#edit_unarchive"
+        post "unarchive", to: "staff#update_unarchive"
+      end
+    end
 
     resources :application_forms,
               path: "/applications",
