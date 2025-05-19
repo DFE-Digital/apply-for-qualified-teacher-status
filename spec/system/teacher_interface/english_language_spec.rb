@@ -179,7 +179,7 @@ RSpec.describe "Teacher English language", type: :system do
     summary_list_row =
       teacher_check_english_language_page.summary_list.rows.first
     expect(summary_list_row.key.text).to eq(
-      "Were you born in or hold citizenship of any of the countries below?",
+      "Were you born in or hold citizenship of any of the following countries?",
     )
     expect(summary_list_row.value.text).to eq("Yes")
   end
