@@ -82,7 +82,7 @@ en:
         heading: Check your answers
       edit_exemption:
         citizenship:
-          heading: Were you born in or hold citizenship of any of the countries below?
+          heading: Were you born in or hold citizenship of any of the following countries?
           description: If you were born in, or hold citizenship of any of the following countries, you’re exempt from English language requirements.
           evidence: Assessors will use your passport to verify that you are exempt.
         qualification:
