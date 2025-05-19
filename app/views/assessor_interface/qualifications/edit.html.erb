@@ -1,0 +1,4 @@
+<% content_for :page_title, title_with_error_prefix(t(".title"), error: @form.errors.any?) %>
+<% content_for :back_link_url, edit_assessor_interface_application_form_assessment_further_information_request_path(@application_form, @view_object.assessment, @view_object.further_information_request) %>
+
+<%# TODO %>

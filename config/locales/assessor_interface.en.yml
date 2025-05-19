@@ -258,6 +258,14 @@ en:
       edit_follow_up:
         title: Request further information
 
+    qualifications:
+      edit_assign_teaching:
+        title: Are you sure you want to change the applicant’s teaching qualification?
+      invalid_country:
+        title: Qualification cannot be assigned as the teaching qualification
+      invalid_work_duration:
+        title: Qualification cannot be assigned as the teaching qualification
+
   activemodel:
     errors:
       models:
