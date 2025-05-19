@@ -41,7 +41,9 @@ class AssignNewTeachingQualification
         raise InvalidWorkHistoryDuration
       end
 
-      UpdateAssessmentInductionRequired.call(assessment:) if application_form.review_stage?
+      if application_form.review_stage?
+        UpdateAssessmentInductionRequired.call(assessment:)
+      end
 
       create_timeline_event(
         :teaching_qualification,
@@ -65,6 +67,7 @@ class AssignNewTeachingQualification
       "information_changed",
       application_form:,
       user:,
+      qualification: new_teaching_qualification,
       column_name:,
       old_value:,
       new_value:,

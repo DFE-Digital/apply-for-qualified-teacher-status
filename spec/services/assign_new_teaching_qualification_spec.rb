@@ -64,15 +64,13 @@ RSpec.describe AssignNewTeachingQualification do
              teaching_qualification_part_of_degree: false
     end
 
-    before do
-      allow(UpdateAssessmentInductionRequired).to receive(:call)
-    end
+    before { allow(UpdateAssessmentInductionRequired).to receive(:call) }
 
-    it 'calls the UpdateAssessmentInductionRequired' do
+    it "calls the UpdateAssessmentInductionRequired" do
       call
 
       expect(UpdateAssessmentInductionRequired).to have_received(:call).with(
-        assessment: application_form.assessment
+        assessment: application_form.assessment,
       )
     end
   end
@@ -83,7 +81,7 @@ RSpec.describe AssignNewTeachingQualification do
     it "raises AlreadyReassigned" do
       expect { call }.to raise_error(
         AssignNewTeachingQualification::AlreadyReassigned,
-        "Teaching qualification has already changed, please review and try again"
+        "Teaching qualification has already changed, please review and try again",
       )
     end
 
@@ -121,7 +119,7 @@ RSpec.describe AssignNewTeachingQualification do
     it "raises InvalidState" do
       expect { call }.to raise_error(
         AssignNewTeachingQualification::InvalidState,
-        "Teaching qualification can only be update while the application is in assessment or review stage"
+        "Teaching qualification can only be update while the application is in assessment or review stage",
       )
     end
 
@@ -152,7 +150,7 @@ RSpec.describe AssignNewTeachingQualification do
     it "raises InvalidState" do
       expect { call }.to raise_error(
         AssignNewTeachingQualification::InvalidState,
-        "Teaching qualification can only be update while the application is in assessment or review stage"
+        "Teaching qualification can only be update while the application is in assessment or review stage",
       )
     end
 
@@ -217,7 +215,7 @@ RSpec.describe AssignNewTeachingQualification do
     before do
       application_form.work_histories.update_all(
         start_date: new_teaching_qualification.certificate_date - 5.years,
-        end_date: new_teaching_qualification.complete_date + 5.months
+        end_date: new_teaching_qualification.complete_date + 5.months,
       )
     end
 
