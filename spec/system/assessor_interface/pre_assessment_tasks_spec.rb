@@ -183,6 +183,7 @@ RSpec.describe "Assessor pre-assessment tasks", type: :system do
             :application_form,
             :preliminary_check,
             :with_personal_information,
+            :with_teaching_qualification,
             assessor: Staff.last,
             teaching_authority_provides_written_statement: true,
           )
