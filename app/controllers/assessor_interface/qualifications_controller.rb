@@ -123,7 +123,6 @@ module AssessorInterface
       params.require(:assessor_interface_qualification_update_form).permit(
         :certificate_date,
         :complete_date,
-        :institution_country_code,
         :institution_name,
         :start_date,
         :title,
