@@ -6,7 +6,6 @@ RSpec.describe "Assessor change teaching qualification", type: :system do
   let(:application_form) do
     create :application_form,
            :submitted,
-           :with_degree_qualification,
            :with_personal_information,
            teaching_qualification_part_of_degree: false
   end
@@ -15,28 +14,27 @@ RSpec.describe "Assessor change teaching qualification", type: :system do
 
   let(:assessment) { create(:assessment, application_form:) }
 
-  let(:initial_teaching_qualification) do
-    application_form.teaching_qualification
+  let!(:initial_teaching_qualification) do
+    create :qualification,
+           :completed,
+           application_form:,
+           institution_country_code: application_form.country.code,
+           created_at: 2.hours.ago
   end
 
-  let(:initial_bachelor_qualification) do
-    application_form.bachelor_degree_qualification
+  let!(:initial_bachelor_qualification) do
+    create :qualification,
+           :completed,
+           application_form:,
+           institution_country_code: application_form.country.code,
+           created_at: 1.hour.ago
   end
 
-  let(:qualifications_assessment_section) do
+  let!(:qualifications_assessment_section) do
     create(:assessment_section, :qualifications, assessment:)
   end
 
-  let(:work_history) { create(:work_history, :completed, application_form:) }
-
-  before do
-    application_form
-    initial_teaching_qualification
-    initial_bachelor_qualification
-
-    work_history
-    qualifications_assessment_section
-  end
+  before { create(:work_history, :completed, application_form:) }
 
   it "checks permissions for editing teaching qualification" do
     given_i_am_authorized_as_a_user(assessor)
