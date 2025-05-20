@@ -201,21 +201,12 @@ RSpec.describe "Assessor assign new teaching qualification", type: :system do
       given_i_am_authorized_as_a_user(manager)
 
       when_i_visit_the(
-        :assessor_assign_teaching_qualification_page,
-        reference:,
-        assessment_id: assessment.id,
-        qualification_id: initial_bachelor_qualification.id,
-      )
-      then_i_see_the_content_for_changing_applicant_teaching_qualification
-
-      when_i_confirm_that_i_want_to_assign_as_teaching_qualification
-      then_i_see_the(
         :assessor_assessment_section_page,
         reference:,
         assessment_id: assessment.id,
         section_id: qualifications_assessment_section.id,
       )
-      and_i_see_an_flash_message_that_the_application_is_in_incorrect_stage
+      then_i_cannot_see_an_option_to_assign_new_teaching_qualification
     end
   end
 
@@ -236,6 +227,15 @@ RSpec.describe "Assessor assign new teaching qualification", type: :system do
       assessor_assessment_section_page.find("#other-qualifications-section")
 
     expect(qualification_summary).to have_content(
+      "Assign as teaching qualification",
+    )
+  end
+
+  def then_i_cannot_see_an_option_to_assign_new_teaching_qualification
+    qualification_summary =
+      assessor_assessment_section_page.find("#other-qualifications-section")
+
+    expect(qualification_summary).not_to have_content(
       "Assign as teaching qualification",
     )
   end

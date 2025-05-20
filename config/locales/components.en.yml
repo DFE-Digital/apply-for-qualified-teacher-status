@@ -135,3 +135,9 @@ en:
         family_name: Family name
         given_names: Given names
         teaching_qualification: Teaching qualification
+        title: Teaching qualification title
+        institution_name: Teaching qualification name of institution
+        certificate_date: Teaching qualification awarded date
+        complete_date: Teaching qualification completed date
+        start_date: Teaching qualification start date
+        teaching_qualification_part_of_degree: Teaching qualification as part of bachelors degree

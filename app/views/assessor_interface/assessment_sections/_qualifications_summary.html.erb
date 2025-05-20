@@ -1,5 +1,7 @@
 <% preliminary = assessment_section.preliminary? %>
 
+<% can_update_qualifications = !preliminary && policy([:assessor_interface, application_form.teaching_qualification]).edit? && @view_object.qualifications_can_be_updated? %>
+
 <div id="teaching-qualification-section">
   <h3 class="govuk-heading-m govuk-!-margin-top-7">Teaching qualification</h3>
 
@@ -41,8 +43,8 @@
       },
     },
     changeable: false,
-    with_action_link_to: preliminary || !policy([:assessor_interface, application_form.teaching_qualification]).edit? ? nil : [:delete, :teacher_interface, :application_form, application_form.teaching_qualification],
-    with_action_link_label: preliminary || !policy([:assessor_interface, application_form.teaching_qualification]).edit? ? nil : "Edit",
+    with_action_link_to: can_update_qualifications ? [:edit, :assessor_interface, application_form, application_form.teaching_qualification] : nil,
+    with_action_link_label: can_update_qualifications ? "Edit" : nil,
   )) %>
 </div>
 
@@ -85,8 +87,8 @@
           },
         },
         changeable: false,
-        with_action_link_to: preliminary || !policy([:assessor_interface, qualification]).edit_assign_teaching? ? nil : [:assign_teaching, :assessor_interface, application_form, qualification],
-        with_action_link_label: preliminary || !policy([:assessor_interface, qualification]).edit_assign_teaching? ? nil : "Assign as teaching qualification",
+        with_action_link_to: can_update_qualifications ? [:assign_teaching, :assessor_interface, application_form, qualification] : nil,
+        with_action_link_label: can_update_qualifications ? "Assign as teaching qualification" : nil,
       )) %>
     <% end %>
   </div>

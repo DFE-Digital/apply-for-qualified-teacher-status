@@ -20,7 +20,16 @@ module AssessorInterface
         )
 
       if @form.save
-        redirect_to [:assessor_interface, application_form]
+        flash[
+          :success
+        ] = "#{qualification.title} teaching qualification has been updated"
+
+        redirect_to [
+                      :assessor_interface,
+                      application_form,
+                      assessment,
+                      @qualification_assessment_section,
+                    ]
       else
         render :edit, status: :unprocessable_entity
       end

@@ -79,6 +79,11 @@ module PageHelpers
       PageObjects::AssessorInterface::CheckQualifications.new
   end
 
+  def assessor_edit_teaching_qualification_page
+    @assessor_edit_teaching_qualification_page ||=
+      PageObjects::AssessorInterface::EditTeachingQualification.new
+  end
+
   def assessor_assign_teaching_qualification_page
     @assessor_assign_teaching_qualification_page ||=
       PageObjects::AssessorInterface::AssignTeachingQualification.new

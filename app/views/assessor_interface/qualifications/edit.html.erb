@@ -1,4 +1,82 @@
-<% content_for :page_title, title_with_error_prefix(t(".title"), error: @form.errors.any?) %>
-<% content_for :back_link_url, edit_assessor_interface_application_form_assessment_further_information_request_path(@application_form, @view_object.assessment, @view_object.further_information_request) %>
+<% content_for :page_title, title_with_error_prefix(t(".title", qualification_title: @qualification.title), error: @form.errors.any?) %>
+<% content_for :back_link_url, assessor_interface_application_form_assessment_assessment_section_path(@application_form, @application_form.assessment, @qualification_assessment_section) %>
 
-<%# TODO %>
+<%= form_with model: @form, url: [:assessor_interface, @application_form, @qualification], method: :put do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <h1 class="govuk-heading-xl"><%= t(".title", qualification_title: @qualification.title) %></h1>
+
+  <h2 class="govuk-heading-m">Current teaching qualification details</h2>
+
+  <%= govuk_summary_list(actions: false) do |summary_list|
+    summary_list.with_row do |row|
+      row.with_key { "Teaching qualification title" }
+      row.with_value { @qualification.title }
+    end
+
+    summary_list.with_row do |row|
+      row.with_key { "Name of institution" }
+      row.with_value { @qualification.institution_name }
+    end
+
+    summary_list.with_row do |row|
+      row.with_key { "When did you start this qualification?" }
+      row.with_value { @qualification.start_date.to_fs(:month_and_year) }
+    end
+
+    summary_list.with_row do |row|
+      row.with_key { "When did you complete this qualification?" }
+      row.with_value { @qualification.complete_date.to_fs(:month_and_year) }
+    end
+
+    summary_list.with_row do |row|
+      row.with_key { "When were you awarded this qualification?" }
+      row.with_value { @qualification.certificate_date.to_fs(:month_and_year) }
+    end
+
+    summary_list.with_row do |row|
+      row.with_key { "Certificate document" }
+      row.with_value { document_link_to(@qualification.certificate_document, translated: @qualification.certificate_document.translated_uploads.any?) }
+    end
+
+    summary_list.with_row do |row|
+      row.with_key { "Transcript document" }
+      row.with_value { document_link_to(@qualification.transcript_document, translated: @qualification.transcript_document.translated_uploads.any?) }
+    end
+
+    summary_list.with_row do |row|
+      row.with_key { "Part of your bachelor’s degree?" }
+      row.with_value { @application_form.teaching_qualification_part_of_degree ? "Yes" : "No" }
+    end
+  end %>
+
+  <h2 class="govuk-heading-m">New teaching qualification details</h2>
+  <h3 class="govuk-heading-s">Change applicant’s qualification (optional)</h3>
+
+  <%= f.govuk_text_field :title %>
+  <%= f.govuk_text_field :institution_name %>
+
+  <%= f.govuk_date_field :start_date,
+                         omit_day: true,
+                         maxlength_enabled: true,
+                         legend: { size: "s" } %>
+
+  <%= f.govuk_date_field :complete_date,
+                         omit_day: true,
+                         maxlength_enabled: true,
+                         legend: { size: "s" } %>
+
+  <%= f.govuk_date_field :certificate_date,
+                         omit_day: true,
+                         maxlength_enabled: true,
+                         legend: { size: "s" } %>
+
+  <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
+
+  <%= f.govuk_collection_radio_buttons :teaching_qualification_part_of_degree,
+                                       %i[true false],
+                                       :itself,
+                                       legend: { size: "s" } %>
+
+  <%= render "shared/assessor_interface/continue_cancel_button", f: %>
+<% end %>
