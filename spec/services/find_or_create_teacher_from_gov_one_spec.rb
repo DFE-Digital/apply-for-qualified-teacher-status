@@ -135,9 +135,11 @@ RSpec.describe FindOrCreateTeacherFromGovOne do
   end
 
   context "when a teacher record exists with one gov_one_id and gets updated with a new one" do
-    let!(:existing_teacher) { create :teacher, email:, gov_one_id: "old-gov-one-id" }
+    let!(:existing_teacher) do
+      create :teacher, email:, gov_one_id: "old-gov-one-id"
+    end
     let(:gov_one_id) { "new-gov-one-id" }
-  
+
     it "does not generate a new teacher record" do
       expect { call }.not_to change(Teacher, :count)
     end
@@ -146,6 +148,5 @@ RSpec.describe FindOrCreateTeacherFromGovOne do
       call
       expect(existing_teacher.reload.gov_one_id).to eq(gov_one_id)
     end
-  
   end
 end
