@@ -27,7 +27,7 @@ module EligibilityInterface
       if eligibility_check.qualified_for_subject_required?
         eligibility_interface_qualified_for_subject_path
       else
-        eligibility_interface_work_experience_path
+        %i[eligibility_interface result]
       end
     end
 
