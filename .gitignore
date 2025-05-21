@@ -28,3 +28,4 @@ bin/konduit.sh
 .terraform
 terraform/*token*
 terraform/*/vendor
+terraform/domains/*/vendor/

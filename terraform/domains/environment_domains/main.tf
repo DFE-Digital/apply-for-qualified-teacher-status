@@ -6,6 +6,7 @@ module "domains" {
   domains             = var.domains
   environment         = var.environment_short
   host_name           = var.origin_hostname
+  rate_limit          = try(var.rate_limit, null)
 }
 
 data "azurerm_cdn_frontdoor_profile" "main" {
