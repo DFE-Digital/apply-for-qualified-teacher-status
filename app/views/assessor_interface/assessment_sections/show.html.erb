@@ -10,6 +10,8 @@
           application_forms_contact_email_used_as_teacher: @view_object.work_history_application_forms_contact_email_used_as_teacher,
           application_forms_contact_email_used_as_reference: @view_object.work_history_application_forms_contact_email_used_as_reference %>
 
+<%= yield :error_summary %>
+
 <%= render "shared/assessor_header",
            title: t(".title.#{preliminary_key}.#{section_key}"),
            application_form: @view_object.application_form %>
