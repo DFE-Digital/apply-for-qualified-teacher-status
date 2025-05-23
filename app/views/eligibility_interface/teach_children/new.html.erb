@@ -10,7 +10,7 @@
 %>
 
 <% content_for :page_title, title_with_error_prefix(legend, error: @form.errors.any?) %>
-<% content_for :back_link_url, eligibility_interface_degree_path %>
+<% content_for :back_link_url, eligibility_interface_misconduct_path %>
 
 <%= form_with model: @form, url: [:eligibility_interface, :teach_children] do |f| %>
   <%= f.govuk_error_summary %>

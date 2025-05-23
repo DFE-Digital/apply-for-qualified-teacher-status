@@ -344,6 +344,12 @@ RSpec.describe EligibilityCheck, type: :model do
       end
 
       it { is_expected.to eq(:degree) }
+
+      context "when country skips eligibility questions" do
+        let(:country) { create(:country, eligibility_skip_questions: true) }
+
+        it { is_expected.to eq(:result) }
+      end
     end
 
     context "when degree is present" do
@@ -353,20 +359,6 @@ RSpec.describe EligibilityCheck, type: :model do
           region: create(:region, country:),
           qualification: true,
           degree: true,
-        }
-      end
-
-      it { is_expected.to eq(:teach_children) }
-    end
-
-    context "when teach children is present" do
-      let(:attributes) do
-        {
-          country_code: country.code,
-          region: create(:region, country:),
-          qualification: true,
-          degree: true,
-          teach_children: true,
         }
       end
 
@@ -380,7 +372,6 @@ RSpec.describe EligibilityCheck, type: :model do
           region: create(:region, country:),
           qualification: true,
           degree: true,
-          teach_children: true,
           work_experience: "under_9_months",
         }
       end
@@ -395,13 +386,34 @@ RSpec.describe EligibilityCheck, type: :model do
           region: create(:region, country:),
           qualification: true,
           degree: true,
-          teach_children: true,
           work_experience: "under_9_months",
           free_of_sanctions: true,
         }
       end
 
+      it { is_expected.to eq(:teach_children) }
+    end
+
+    context "when teach children is present" do
+      let(:attributes) do
+        {
+          country_code: country.code,
+          region: create(:region, country:),
+          qualification: true,
+          degree: true,
+          work_experience: "under_9_months",
+          free_of_sanctions: true,
+          teach_children: true,
+        }
+      end
+
       it { is_expected.to eq(:result) }
+
+      context "with country being subject restricted" do
+        let(:country) { create(:country, subject_limited: true) }
+
+        it { is_expected.to eq(:qualified_for_subject) }
+      end
     end
 
     context "with an ineligible country" do

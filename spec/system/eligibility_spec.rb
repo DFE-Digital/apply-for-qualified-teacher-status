@@ -19,15 +19,15 @@ RSpec.describe "Eligibility check", type: :system do
     then_i_see_the(:eligibility_degree_page)
 
     when_i_have_a_degree
-    then_i_see_the(:eligibility_teach_children_page)
-
-    when_i_can_teach_children
     then_i_see_the(:eligibility_work_experience_page)
 
     when_i_have_more_than_20_months_work_experience
     then_i_see_the(:eligibility_misconduct_page)
 
     when_i_dont_have_a_misconduct_record
+    then_i_see_the(:eligibility_teach_children_page)
+
+    when_i_can_teach_children
     then_i_see_the(:eligibility_eligible_page)
 
     when_i_visit_the(:eligibility_start_page)
@@ -52,15 +52,15 @@ RSpec.describe "Eligibility check", type: :system do
     then_i_see_the(:eligibility_degree_page)
 
     when_i_dont_have_a_degree
-    then_i_see_the(:eligibility_teach_children_page)
-
-    when_i_cant_teach_children
     then_i_see_the(:eligibility_work_experience_page)
 
     when_i_have_under_9_months_work_experience
     then_i_see_the(:eligibility_misconduct_page)
 
     when_i_have_a_misconduct_record
+    then_i_see_the(:eligibility_teach_children_page)
+
+    when_i_cant_teach_children
     then_i_see_the(:eligibility_ineligible_page)
     and_i_see_the_ineligible_degree_text
     and_i_see_the_ineligible_qualification_text_with_eligible_country
@@ -112,16 +112,10 @@ RSpec.describe "Eligibility check", type: :system do
     when_i_have_a_qualification
     then_i_see_the(:eligibility_degree_page)
 
-    when_i_visit_the(:eligibility_teach_children_page)
+    when_i_visit_the(:eligibility_work_experience_page)
     then_i_see_the(:eligibility_degree_page)
 
     when_i_have_a_degree
-    then_i_see_the(:eligibility_teach_children_page)
-
-    when_i_visit_the(:eligibility_work_experience_page)
-    then_i_see_the(:eligibility_teach_children_page)
-
-    when_i_can_teach_children
     then_i_see_the(:eligibility_work_experience_page)
 
     when_i_visit_the(:eligibility_misconduct_page)
@@ -129,6 +123,12 @@ RSpec.describe "Eligibility check", type: :system do
 
     when_i_have_more_than_20_months_work_experience
     then_i_see_the(:eligibility_misconduct_page)
+
+    when_i_visit_the(:eligibility_teach_children_page)
+    then_i_see_the(:eligibility_misconduct_page)
+
+    when_i_can_teach_children
+    then_i_see_the(:eligibility_teach_children_page)
   end
 
   it "handles the country picker error" do
@@ -158,25 +158,9 @@ RSpec.describe "Eligibility check", type: :system do
     then_i_see_the(:eligibility_qualification_page)
 
     when_i_dont_have_a_qualification
-    then_i_see_the(:eligibility_degree_page)
-
-    when_i_dont_have_a_degree
-    then_i_see_the(:eligibility_teach_children_page)
-
-    when_i_cant_teach_children
-    then_i_see_the(:eligibility_work_experience_page)
-
-    when_i_have_under_9_months_work_experience
-    then_i_see_the(:eligibility_misconduct_page)
-
-    when_i_have_a_misconduct_record
     then_i_see_the(:eligibility_ineligible_page)
-    and_i_see_the_ineligible_degree_text
+
     and_i_see_the_ineligible_qualification_text_with_skip_questions_country
-    and_i_see_the_ineligible_degree_text
-    and_i_see_the_ineligible_teach_children_text
-    and_i_see_the_ineligible_work_experience_text
-    and_i_see_the_ineligible_misconduct_text
   end
 
   it "handles countries with multiple regions" do
@@ -203,18 +187,18 @@ RSpec.describe "Eligibility check", type: :system do
     then_i_see_the(:eligibility_degree_page)
 
     when_i_have_a_degree
-    then_i_see_the(:eligibility_teach_children_page)
-
-    when_i_can_teach_children
-    then_i_see_the(:eligibility_qualified_for_subject_page)
-
-    when_i_am_qualified_to_teach_a_relevant_subject
     then_i_see_the(:eligibility_work_experience_page)
 
     when_i_have_more_than_20_months_work_experience
     then_i_see_the(:eligibility_misconduct_page)
 
     when_i_dont_have_a_misconduct_record
+    then_i_see_the(:eligibility_teach_children_page)
+
+    when_i_can_teach_children
+    then_i_see_the(:eligibility_qualified_for_subject_page)
+
+    when_i_am_qualified_to_teach_a_relevant_subject
     then_i_see_the(:eligibility_eligible_page)
   end
 
@@ -232,18 +216,18 @@ RSpec.describe "Eligibility check", type: :system do
     then_i_see_the(:eligibility_degree_page)
 
     when_i_have_a_degree
-    then_i_see_the(:eligibility_teach_children_page)
-
-    when_i_cant_teach_children
-    then_i_see_the(:eligibility_qualified_for_subject_page)
-
-    when_i_am_qualified_to_teach_a_relevant_subject
     then_i_see_the(:eligibility_work_experience_page)
 
     when_i_have_more_than_20_months_work_experience
     then_i_see_the(:eligibility_misconduct_page)
 
     when_i_dont_have_a_misconduct_record
+    then_i_see_the(:eligibility_teach_children_page)
+
+    when_i_cant_teach_children
+    then_i_see_the(:eligibility_qualified_for_subject_page)
+
+    when_i_am_qualified_to_teach_a_relevant_subject
     then_i_see_the(:eligibility_ineligible_page)
   end
 
@@ -261,18 +245,18 @@ RSpec.describe "Eligibility check", type: :system do
     then_i_see_the(:eligibility_degree_page)
 
     when_i_have_a_degree
-    then_i_see_the(:eligibility_teach_children_page)
-
-    when_i_can_teach_children
-    then_i_see_the(:eligibility_qualified_for_subject_page)
-
-    when_i_am_not_qualified_to_teach_a_relevant_subject
     then_i_see_the(:eligibility_work_experience_page)
 
     when_i_have_more_than_20_months_work_experience
     then_i_see_the(:eligibility_misconduct_page)
 
     when_i_dont_have_a_misconduct_record
+    then_i_see_the(:eligibility_teach_children_page)
+
+    when_i_can_teach_children
+    then_i_see_the(:eligibility_qualified_for_subject_page)
+
+    when_i_am_not_qualified_to_teach_a_relevant_subject
     then_i_see_the(:eligibility_ineligible_page)
   end
 
@@ -298,6 +282,7 @@ RSpec.describe "Eligibility check", type: :system do
 
   def given_countries_exist
     create(:country, :with_national_region, code: "GB-SCT")
+
     create(
       :country,
       :with_national_region,
@@ -475,7 +460,7 @@ RSpec.describe "Eligibility check", type: :system do
   end
 
   def and_i_see_the_ineligible_qualification_text_with_skip_questions_country
-    expect(eligibility_ineligible_page.reasons).to have_content(
+    expect(eligibility_ineligible_page).to have_content(
       "You have not completed a formal teaching qualification in Portugal, for example, an undergraduate teaching " \
         "degree or postgraduate teaching qualification.",
     )

@@ -156,14 +156,15 @@ class EligibilityCheck < ApplicationRecord
 
     unless skip_additional_questions?
       return :degree if degree.nil?
+
+      return :work_experience if work_experience.blank?
+      return :misconduct if free_of_sanctions.nil?
+
       return :teach_children if teach_children.nil?
 
       if qualified_for_subject_required? && qualified_for_subject.nil?
         return :qualified_for_subject
       end
-
-      return :work_experience if work_experience.blank?
-      return :misconduct if free_of_sanctions.nil?
     end
 
     :result
@@ -175,14 +176,14 @@ class EligibilityCheck < ApplicationRecord
     elsif skip_additional_questions? && qualification
       %i[country region qualification result]
     else
-      %i[country region qualification degree teach_children] +
+      %i[country region qualification degree work_experience misconduct] +
         (
           if qualified_for_subject_required?
-            %i[qualified_for_subject]
+            %i[teach_children qualified_for_subject]
           else
-            []
+            %i[teach_children]
           end
-        ) + %i[work_experience misconduct result]
+        ) + %i[result]
     end
   end
 

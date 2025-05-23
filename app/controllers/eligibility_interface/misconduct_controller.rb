@@ -21,7 +21,7 @@ module EligibilityInterface
     def create
       @form = MisconductForm.new(form_params.merge(eligibility_check:))
       if @form.save
-        redirect_to %i[eligibility_interface result]
+        redirect_to %i[eligibility_interface teach_children]
       else
         render :new, status: :unprocessable_entity
       end

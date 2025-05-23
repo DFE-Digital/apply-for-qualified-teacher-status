@@ -35,9 +35,9 @@ describe "Smoke test", :js, :smoke_test, type: :system do
     and_i_select_a_state
     and_i_have_a_teaching_qualification
     and_i_have_a_university_degree
-    and_i_am_qualified_to_teach_children
     and_i_have_work_experience
     and_i_dont_have_sanctions
+    and_i_am_qualified_to_teach_children
     then_i_should_be_eligible_to_apply
   end
 

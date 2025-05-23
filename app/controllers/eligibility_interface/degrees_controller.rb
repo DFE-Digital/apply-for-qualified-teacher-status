@@ -11,7 +11,7 @@ module EligibilityInterface
     def create
       @form = DegreeForm.new(form_params.merge(eligibility_check:))
       if @form.save
-        redirect_to %i[eligibility_interface teach_children]
+        redirect_to %i[eligibility_interface work_experience]
       else
         render :new, status: :unprocessable_entity
       end

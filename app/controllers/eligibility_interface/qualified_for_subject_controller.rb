@@ -14,7 +14,7 @@ module EligibilityInterface
     def create
       @form = QualifiedForSubjectForm.new(form_params.merge(eligibility_check:))
       if @form.save
-        redirect_to %i[eligibility_interface work_experience]
+        redirect_to %i[eligibility_interface result]
       else
         render :new, status: :unprocessable_entity
       end

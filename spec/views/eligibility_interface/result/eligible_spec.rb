@@ -6,8 +6,12 @@ RSpec.describe "eligibility_interface/result/eligible.html.erb", type: :view do
   subject { render }
 
   let(:region) { create :region }
+  let(:eligibility_check) { create :eligibility_check }
 
-  before { assign(:region, region) }
+  before do
+    assign(:region, region)
+    assign(:eligibility_check, eligibility_check)
+  end
 
   it do
     expect(subject).to match(
