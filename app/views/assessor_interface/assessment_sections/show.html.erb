@@ -10,7 +10,11 @@
           application_forms_contact_email_used_as_teacher: @view_object.work_history_application_forms_contact_email_used_as_teacher,
           application_forms_contact_email_used_as_reference: @view_object.work_history_application_forms_contact_email_used_as_reference %>
 
-<%= yield :error_summary %>
+<% if @view_object.show_form? && @form.errors.any? %>
+  <%= form_with model: @form, url: [:assessor_interface, @view_object.application_form, @view_object.assessment, @view_object.assessment_section], method: :put, local: true do |f| %>
+    <%= f.govuk_error_summary %>
+  <% end %>
+<% end %>
 
 <%= render "shared/assessor_header",
            title: t(".title.#{preliminary_key}.#{section_key}"),

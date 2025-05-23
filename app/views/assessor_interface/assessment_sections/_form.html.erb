@@ -1,5 +1,5 @@
 <%= form_with model: form, url: [:assessor_interface, view_object.application_form, view_object.assessment, @view_object.assessment_section], method: :put do |f| %>
-  <%= content_for(:error_summary) { f.govuk_error_summary } %>
+  <%= f.govuk_error_summary %>
 
   <% if view_object.show_english_language_exemption_checkbox? %>
     <% if view_object.assessment_section.personal_information? %>
