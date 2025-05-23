@@ -56,7 +56,7 @@ RSpec.describe AssessorInterface::ReferenceRequestPolicy do
     subject(:edit_verify?) { policy.edit_verify? }
 
     it_behaves_like "a policy method requiring the assess permission"
-    it_behaves_like "a policy method requiring the change work history permission"
+    it_behaves_like "a policy method requiring the change work history and qualification permission"
     it_behaves_like "a policy method requiring the verify permission"
   end
 

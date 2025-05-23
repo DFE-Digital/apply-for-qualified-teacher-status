@@ -79,6 +79,26 @@ module PageHelpers
       PageObjects::AssessorInterface::CheckQualifications.new
   end
 
+  def assessor_edit_teaching_qualification_page
+    @assessor_edit_teaching_qualification_page ||=
+      PageObjects::AssessorInterface::EditTeachingQualification.new
+  end
+
+  def assessor_assign_teaching_qualification_page
+    @assessor_assign_teaching_qualification_page ||=
+      PageObjects::AssessorInterface::AssignTeachingQualification.new
+  end
+
+  def assessor_assign_teaching_qualification_invalid_country_page
+    @assessor_assign_teaching_qualification_invalid_country_page ||=
+      PageObjects::AssessorInterface::AssignTeachingQualificationInvalidCountry.new
+  end
+
+  def assessor_assign_teaching_qualification_invalid_work_duration_page
+    @assessor_assign_teaching_qualification_invalid_work_duration_page ||=
+      PageObjects::AssessorInterface::AssignTeachingQualificationInvalidWorkDuration.new
+  end
+
   def assessor_check_work_history_page
     @assessor_check_work_history_page ||=
       PageObjects::AssessorInterface::CheckWorkHistory.new

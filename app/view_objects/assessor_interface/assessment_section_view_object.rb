@@ -51,6 +51,11 @@ module AssessorInterface
       selected_failure_reasons.find_by(key: failure_reason)&.work_histories
     end
 
+    def qualifications_can_be_updated?
+      application_form.not_started_stage? ||
+        application_form.assessment_stage? || application_form.review_stage?
+    end
+
     def show_form?
       return true if preliminary?
 

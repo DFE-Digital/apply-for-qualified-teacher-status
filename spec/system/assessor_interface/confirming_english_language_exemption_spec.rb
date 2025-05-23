@@ -309,6 +309,7 @@ RSpec.describe "Assessor confirms English language section", type: :system do
             :application_form,
             :with_work_history,
             :with_personal_information,
+            :with_teaching_qualification,
             :submitted,
             :with_assessment,
           )

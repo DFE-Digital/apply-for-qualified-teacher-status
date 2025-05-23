@@ -54,6 +54,17 @@ Rails.application.routes.draw do
 
       resources :work_histories, path: "/work-histories", only: %i[edit update]
 
+      resources :qualifications, only: %i[edit update] do
+        member do
+          get "assign-teaching", to: "qualifications#edit_assign_teaching"
+          post "assign-teaching", to: "qualifications#update_assign_teaching"
+
+          get "invalid-country", to: "qualifications#invalid_country"
+          get "invalid-work-duration",
+              to: "qualifications#invalid_work_duration"
+        end
+      end
+
       resources :assessments, only: %i[edit update destroy] do
         member do
           get "review"

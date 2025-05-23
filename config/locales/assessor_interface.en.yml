@@ -258,6 +258,16 @@ en:
       edit_follow_up:
         title: Request further information
 
+    qualifications:
+      edit:
+        title: "Change details for ‘%{qualification_title}’ teaching qualification"
+      edit_assign_teaching:
+        title: Are you sure you want to change the applicant’s teaching qualification?
+      invalid_country:
+        title: Qualification cannot be assigned as the teaching qualification
+      invalid_work_duration:
+        title: Qualification cannot be assigned as the teaching qualification
+
   activemodel:
     errors:
       models:
@@ -438,6 +448,21 @@ en:
               inclusion: Select whether you received a response about this letter of professional standing
             expired:
               inclusion: Select whether you want to mark this for review
+        assessor_interface/qualification_update_form:
+          attributes:
+            start_date:
+              invalid: Enter the new qualification start date in the format 3 2010
+              after_existing_complete_date: The qualification start date must be before the qualification completed date
+            complete_date:
+              invalid: Enter the new qualification completed date in the format 3 2010
+              before_existing_start_date: The qualification completed date must be after the qualification start date and on or before the qualification awarded date
+              after_existing_certificate_date: The qualification completed date must be after the qualification start date and on or before the qualification awarded date
+              comparison: The qualification completed date must be after the qualification start date and on or before the qualification awarded date
+            certificate_date:
+              invalid: Enter the new qualification certificate date in the format 3 2010
+              before_existing_complete_date: The qualification awarded date must be on or after the qualification completed date
+              work_history_under_9_months: The qualification awarded date cannot be changed because the applicant will have less than 9 months of work experience
+              comparison: The qualification awarded date must be on or after the qualification completed date
         assessor_interface/requestable_request_form:
           attributes:
             passed:

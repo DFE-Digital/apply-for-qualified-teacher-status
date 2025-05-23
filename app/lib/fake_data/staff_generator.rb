@@ -34,7 +34,7 @@ class FakeData::StaffGenerator
       name: "Sally (manager)",
       email: "manager.sally@education.gov.uk",
       change_name_permission: true,
-      change_work_history_permission: true,
+      change_work_history_and_qualification_permission: true,
       reverse_decision_permission: true,
       support_console_permission: true,
       withdraw_permission: true,

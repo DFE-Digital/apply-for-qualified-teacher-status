@@ -1,34 +1,32 @@
-<% preliminary ||= false %>
-
 <% qualifications.each do |qualification| %>
   <%= render(CheckYourAnswersSummary::Component.new(
     id: "qualification-#{qualification.id}",
     model: qualification,
     title: qualification.title,
     fields: {
-      title: preliminary ? nil : {
+      title: {
         title: t(qualification.locale_key, scope: %i[application_form qualifications form fields title]),
         href: [:edit, :teacher_interface, :application_form, qualification]
       },
-      institution_name: preliminary ? nil : {
+      institution_name: {
         title: t("application_form.qualifications.form.fields.institution_name"),
         href: [:edit, :teacher_interface, :application_form, qualification]
       },
-      institution_country_name: preliminary ? nil : {
+      institution_country_name: {
         title: t("application_form.qualifications.form.fields.institution_country"),
         href: [:edit, :teacher_interface, :application_form, qualification]
       },
-      start_date: preliminary ? nil : {
+      start_date: {
         title: t(qualification.locale_key, scope: %i[application_form qualifications form fields start_date]),
         format: :without_day,
         href: [:edit, :teacher_interface, :application_form, qualification]
       },
-      complete_date: preliminary ? nil : {
+      complete_date: {
         title: t(qualification.locale_key, scope: %i[application_form qualifications form fields complete_date]),
         format: :without_day,
         href: [:edit, :teacher_interface, :application_form, qualification]
       },
-      certificate_date: preliminary ? nil : {
+      certificate_date: {
         title: t(qualification.locale_key, scope: %i[application_form qualifications form fields certificate_date]),
         format: :without_day,
         href: [:edit, :teacher_interface, :application_form, qualification]
@@ -39,13 +37,14 @@
       transcript_document: {
         href: [:teacher_interface, :application_form, qualification.transcript_document],
       },
-      part_of_degree: !preliminary && qualification.is_teaching? ? {
+      part_of_degree: qualification.is_teaching? ? {
         title: "Part of your bachelor’s degree?",
         href: %i[part_of_degree teacher_interface application_form qualifications],
         value: application_form.teaching_qualification_part_of_degree,
       } : nil,
     },
     changeable:,
-    delete_link_to: qualification.can_delete? ? [:delete, :teacher_interface, :application_form, qualification] : nil,
+    with_action_link_to: changeable && qualification.can_delete? ? [:delete, :teacher_interface, :application_form, qualification] : nil,
+    with_action_link_label: changeable && qualification.can_delete? ? "Delete <span class=\"govuk-visually-hidden\">#{qualification.title.downcase}</span>".html_safe : nil,
   )) %>
 <% end %>

@@ -1,0 +1,12 @@
+<% content_for :page_title, t(".title") %>
+<% content_for :back_link_url, assessor_interface_application_form_assessment_assessment_section_path(@application_form, @application_form.assessment, @qualification_assessment_section) %>
+
+<h1 class="govuk-heading-xl"><%= t(".title") %></h1>
+
+<p class="govuk-body">
+  Changing this qualification would mean the applicant has less than 9 months of work experience.
+</p>
+
+<p class="govuk-body">
+  <%= govuk_link_to "Go back", assessor_interface_application_form_assessment_assessment_section_path(@application_form, @application_form.assessment, @qualification_assessment_section) %> to make a decision about the qualifications for this application.
+</p>

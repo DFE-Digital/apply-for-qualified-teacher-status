@@ -55,6 +55,7 @@
       } : nil,
     },
     changeable:,
-    delete_link_to: [:delete, :teacher_interface, :application_form, work_history]
+    with_action_link_to: [:delete, :teacher_interface, :application_form, work_history],
+    with_action_link_label: "Delete <span class=\"govuk-visually-hidden\">#{work_history.school_name.downcase}</span>".html_safe,
   )) %>
 <% end %>

@@ -137,6 +137,12 @@ en:
         location: Country trained in
         name: Applicant name
         reference: Application reference number
+      assessor_interface_qualification_update_form:
+        title: New teaching qualification title
+        institution_name: New name of institution
+        teaching_qualification_part_of_degree_options:
+          true: Yes, qualification is part of their bachelors degree
+          false: No, qualification is not part of their bachelors degree
       assessor_interface_requestable_review_form:
         passed_options:
           true: Yes, mark as accepted
@@ -336,6 +342,11 @@ en:
         submitted_at_after: Start date
         submitted_at_before: End date
         fi_request_statuses: FI requests
+      assessor_interface_qualification_update_form:
+        start_date: Change qualification start date (optional)
+        complete_date: Change qualification completed date (optional)
+        certificate_date: Change qualification awarded date (optional)
+        teaching_qualification_part_of_degree: Change if qualification is part of their bachelor’s degree (optional)
       assessor_interface_select_work_histories_form:
         work_history_ids: Schools
       assessor_interface_suitability_record_form:

@@ -243,6 +243,56 @@ RSpec.describe AssessorInterface::AssessmentSectionViewObject do
     end
   end
 
+  describe "#qualifications_can_be_updated?" do
+    subject(:qualifications_can_be_updated?) do
+      view_object.qualifications_can_be_updated?
+    end
+
+    context "when application is draft stage" do
+      let(:application_form) { create(:application_form, :draft_stage) }
+
+      it { is_expected.to be false }
+    end
+
+    context "when application is pre assessment stage" do
+      let(:application_form) do
+        create(:application_form, :pre_assessment_stage)
+      end
+
+      it { is_expected.to be false }
+    end
+
+    context "when application is not started stage" do
+      let(:application_form) { create(:application_form, :not_started_stage) }
+
+      it { is_expected.to be true }
+    end
+
+    context "when application is assessment stage" do
+      let(:application_form) { create(:application_form, :assessment_stage) }
+
+      it { is_expected.to be true }
+    end
+
+    context "when application is verification stage" do
+      let(:application_form) { create(:application_form, :verification_stage) }
+
+      it { is_expected.to be false }
+    end
+
+    context "when application is review stage" do
+      let(:application_form) { create(:application_form, :review_stage) }
+
+      it { is_expected.to be true }
+    end
+
+    context "when application is completed stage" do
+      let(:application_form) { create(:application_form, :completed_stage) }
+
+      it { is_expected.to be false }
+    end
+  end
+
   describe "#show_form?" do
     subject(:show_form?) { view_object.show_form? }
 
