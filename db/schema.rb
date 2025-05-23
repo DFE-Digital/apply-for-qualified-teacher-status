@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_15_083411) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_23_091331) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -619,6 +619,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_15_083411) do
     t.string "address_line1"
     t.string "address_line2"
     t.string "school_website"
+    t.string "postcode"
     t.index ["application_form_id"], name: "index_work_histories_on_application_form_id"
     t.index ["canonical_contact_email"], name: "index_work_histories_on_canonical_contact_email"
   end
