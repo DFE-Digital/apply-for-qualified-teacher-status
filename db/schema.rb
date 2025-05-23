@@ -620,6 +620,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_30_085038) do
     t.string "address_line1"
     t.string "address_line2"
     t.string "school_website"
+    t.string "postcode"
     t.index ["application_form_id"], name: "index_work_histories_on_application_form_id"
     t.index ["canonical_contact_email"], name: "index_work_histories_on_canonical_contact_email"
   end
