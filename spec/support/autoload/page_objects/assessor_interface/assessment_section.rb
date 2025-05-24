@@ -19,7 +19,7 @@ module PageObjects
                  ".govuk-checkboxes__item"
         elements :failure_reason_note_textareas,
                  ".govuk-checkboxes__conditional .govuk-textarea"
-        element :continue_button, "button"
+        element :continue_button, "button.govuk-button"
       end
 
       section :preliminary_form, "form" do
