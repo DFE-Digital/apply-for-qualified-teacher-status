@@ -50,7 +50,9 @@
                        options_for_select(locations, form.country_location),
                        options: { include_blank: true } %>
 
-    <%= f.govuk_text_field :school_website, hint: { text: t("helpers.hint.teacher_interface_work_history_school_form.school_website").html_safe }  %>
+    <%= f.govuk_text_field :postcode %>
+
+    <%= f.govuk_text_field :school_website %>
   <% end %>
 
   <%= f.govuk_text_field :job, label: { size: "m" } %>
