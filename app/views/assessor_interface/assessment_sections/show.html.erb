@@ -6,25 +6,26 @@
 <% content_for :page_title, title_with_error_prefix(t(".title.#{preliminary_key}.#{section_key}"), error: @form.errors.any?) %>
 <% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
 <% content_for(:assessment_section_top_of_form) do %>
-<%= render "linked_application_forms",
-          application_forms_contact_email_used_as_teacher: @view_object.work_history_application_forms_contact_email_used_as_teacher,
-          application_forms_contact_email_used_as_reference: @view_object.work_history_application_forms_contact_email_used_as_reference %>
+  <%= render "linked_application_forms",
+            application_forms_contact_email_used_as_teacher: @view_object.work_history_application_forms_contact_email_used_as_teacher,
+            application_forms_contact_email_used_as_reference: @view_object.work_history_application_forms_contact_email_used_as_reference %>
 
-<%= render "shared/assessor_header",
-           title: t(".title.#{preliminary_key}.#{section_key}"),
-           application_form: @view_object.application_form %>
+  <%= render "shared/assessor_header",
+            title: t(".title.#{preliminary_key}.#{section_key}"),
+            application_form: @view_object.application_form %>
 
-<% if @view_object.show_teacher_name_and_date_of_birth? %>
-  <h2 class="govuk-heading-m"><%= @view_object.teacher_name_and_date_of_birth %></h2>
+  <% if @view_object.show_teacher_name_and_date_of_birth? %>
+    <h2 class="govuk-heading-m"><%= @view_object.teacher_name_and_date_of_birth %></h2>
+  <% end %>
+
+  <%= render "#{section_key}_summary",
+            region: @view_object.region,
+            application_form: @view_object.application_form,
+            assessment: @view_object.assessment,
+            assessment_section: @view_object.assessment_section,
+            highlighted_work_history_contact_emails: @view_object.highlighted_work_history_contact_emails %>
 <% end %>
 
-<%= render "#{section_key}_summary",
-           region: @view_object.region,
-           application_form: @view_object.application_form,
-           assessment: @view_object.assessment,
-           assessment_section: @view_object.assessment_section,
-           highlighted_work_history_contact_emails: @view_object.highlighted_work_history_contact_emails %>
-<% end %>
 <% if @view_object.show_form? %>
   <%= render "form", form: @form, view_object: @view_object %>
 <% end %>
