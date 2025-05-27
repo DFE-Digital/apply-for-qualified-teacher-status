@@ -1,7 +1,17 @@
 <% ineligible_country = @eligibility_check.ineligible_reasons.include?(:country) %>
 
 <% content_for :page_title, "You’re not eligible" %>
-<% content_for :back_link_url, ineligible_country ? eligibility_interface_countries_path : eligibility_interface_misconduct_path %>
+<% content_for :back_link_url,
+               if ineligible_country
+                 eligibility_interface_countries_path
+               elsif @eligibility_check.qualified_for_subject_required?
+                 eligibility_interface_qualified_for_subject_path
+               elsif @eligibility_check.skip_additional_questions?
+                 eligibility_interface_qualifications_path
+               else
+                 eligibility_interface_teach_children_path
+               end  %>
+
 <% current_date = Date.current %>
 
 <h1 class="govuk-heading-xl">
