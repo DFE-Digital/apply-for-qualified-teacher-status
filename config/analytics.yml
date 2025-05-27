@@ -390,6 +390,7 @@
     - hours_per_week
     - id
     - job
+    - postcode
     - school_name
     - school_website
     - start_date
