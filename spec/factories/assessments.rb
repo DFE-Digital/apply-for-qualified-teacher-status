@@ -68,6 +68,7 @@ FactoryBot.define do
 
     trait :verify do
       recommendation { "verify" }
+      verification_started_at { Time.zone.now }
       recommended_at { Time.zone.now }
     end
 
