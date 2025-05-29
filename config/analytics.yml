@@ -89,6 +89,7 @@
     - subjects
     - unsigned_consent_document_generated
     - updated_at
+    - verification_started_at
     - working_days_since_started
     - working_days_started_to_recommendation
     - working_days_submission_to_recommendation

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_15_083411) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_29_130205) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -155,6 +155,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_15_083411) do
     t.boolean "scotland_full_registration"
     t.boolean "unsigned_consent_document_generated", default: false, null: false
     t.text "qualifications_assessor_note", default: "", null: false
+    t.datetime "verification_started_at"
     t.index ["application_form_id"], name: "index_assessments_on_application_form_id"
   end
 

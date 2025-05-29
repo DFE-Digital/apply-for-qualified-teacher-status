@@ -19,6 +19,7 @@
 #  subjects                                  :text             default([]), not null, is an Array
 #  subjects_note                             :text             default(""), not null
 #  unsigned_consent_document_generated       :boolean          default(FALSE), not null
+#  verification_started_at                   :datetime
 #  working_days_since_started                :integer
 #  working_days_started_to_recommendation    :integer
 #  working_days_submission_to_recommendation :integer
