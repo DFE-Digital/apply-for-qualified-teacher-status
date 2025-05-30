@@ -51,6 +51,7 @@ jobs:
           docker-repository: ghcr.io/dfe-digital/apply-for-qualified-teacher-status
           github-token: ${{ secrets.GITHUB_TOKEN }}
           snyk-token: ${{ secrets.SNYK_TOKEN }}
+          max-cache: true
 
   rspec_system:
     name: Rspec System
