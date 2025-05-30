@@ -52,7 +52,8 @@
 #  trs_match                                     :jsonb
 #  withdrawn_at                                  :datetime
 #  work_history_status                           :string           default("not_started"), not null
-#  working_days_since_submission                 :integer
+#  working_days_between_submitted_and_completed  :integer
+#  working_days_between_submitted_and_today      :integer
 #  written_statement_confirmation                :boolean          default(FALSE), not null
 #  written_statement_optional                    :boolean          default(FALSE), not null
 #  written_statement_status                      :string           default("not_started"), not null

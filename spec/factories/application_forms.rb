@@ -52,7 +52,8 @@
 #  trs_match                                     :jsonb
 #  withdrawn_at                                  :datetime
 #  work_history_status                           :string           default("not_started"), not null
-#  working_days_since_submission                 :integer
+#  working_days_between_submitted_and_completed  :integer
+#  working_days_between_submitted_and_today      :integer
 #  written_statement_confirmation                :boolean          default(FALSE), not null
 #  written_statement_optional                    :boolean          default(FALSE), not null
 #  written_statement_status                      :string           default("not_started"), not null
@@ -174,7 +175,7 @@ FactoryBot.define do
       not_started_stage
       statuses { %w[assessment_not_started] }
       submitted_at { Time.zone.now }
-      working_days_since_submission { 0 }
+      working_days_between_submitted_and_today { 0 }
     end
 
     trait :preliminary_check do

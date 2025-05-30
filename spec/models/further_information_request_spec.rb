@@ -4,19 +4,17 @@
 #
 # Table name: further_information_requests
 #
-#  id                                          :bigint           not null, primary key
-#  expired_at                                  :datetime
-#  received_at                                 :datetime
-#  requested_at                                :datetime
-#  review_note                                 :string           default(""), not null
-#  review_passed                               :boolean
-#  reviewed_at                                 :datetime
-#  working_days_assessment_started_to_creation :integer
-#  working_days_received_to_recommendation     :integer
-#  working_days_since_received                 :integer
-#  created_at                                  :datetime         not null
-#  updated_at                                  :datetime         not null
-#  assessment_id                               :bigint           not null
+#  id                                                   :bigint           not null, primary key
+#  expired_at                                           :datetime
+#  received_at                                          :datetime
+#  requested_at                                         :datetime
+#  review_note                                          :string           default(""), not null
+#  review_passed                                        :boolean
+#  reviewed_at                                          :datetime
+#  working_days_between_assessment_started_to_requested :integer
+#  created_at                                           :datetime         not null
+#  updated_at                                           :datetime         not null
+#  assessment_id                                        :bigint           not null
 #
 # Indexes
 #

@@ -91,8 +91,8 @@ RSpec.describe SubmitApplicationForm do
   end
 
   describe "setting working days since submission" do
-    subject(:working_days_since_submission) do
-      application_form.working_days_since_submission
+    subject(:working_days_between_submitted_and_today) do
+      application_form.working_days_between_submitted_and_today
     end
 
     it { is_expected.to be_nil }

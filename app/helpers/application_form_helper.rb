@@ -102,7 +102,10 @@ module ApplicationFormHelper
         },
         value: {
           text:
-            pluralize(application_form.working_days_since_submission, "day"),
+            pluralize(
+              application_form.working_days_between_submitted_and_today,
+              "day",
+            ),
         },
       },
       {

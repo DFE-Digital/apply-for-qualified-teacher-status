@@ -87,7 +87,9 @@ class VerifyAssessment
   end
 
   def update_assessment_verification_started_at
-    assessment.update!(verification_started_at: Time.zone.now) if assessment.verification_started_at.nil?
+    if assessment.verification_started_at.nil?
+      assessment.update!(verification_started_at: Time.zone.now)
+    end
   end
 
   def send_references_requested_email(reference_requests)
