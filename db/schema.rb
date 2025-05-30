@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_15_083411) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_30_085038) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -66,7 +66,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_15_083411) do
     t.boolean "needs_work_history", null: false
     t.boolean "needs_written_statement", null: false
     t.boolean "needs_registration_number", null: false
-    t.integer "working_days_since_submission"
+    t.integer "working_days_between_submitted_and_today"
     t.boolean "confirmed_no_sanctions", default: false
     t.string "personal_information_status", default: "not_started", null: false
     t.string "identification_document_status", default: "not_started", null: false
@@ -102,6 +102,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_15_083411) do
     t.string "passport_document_status", default: "not_started", null: false
     t.date "passport_expiry_date"
     t.string "passport_country_of_issue_code"
+    t.integer "working_days_between_submitted_and_completed"
     t.index ["action_required_by"], name: "index_application_forms_on_action_required_by"
     t.index ["assessor_id"], name: "index_application_forms_on_assessor_id"
     t.index ["english_language_provider_id"], name: "index_application_forms_on_english_language_provider_id"
@@ -145,16 +146,18 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_15_083411) do
     t.text "age_range_note", default: "", null: false
     t.text "subjects_note", default: "", null: false
     t.datetime "started_at"
-    t.integer "working_days_started_to_recommendation"
-    t.integer "working_days_submission_to_recommendation"
-    t.integer "working_days_submission_to_started"
-    t.integer "working_days_since_started"
+    t.integer "working_days_between_started_and_completed"
+    t.integer "working_days_between_submitted_and_started"
+    t.integer "working_days_between_started_and_today"
     t.boolean "induction_required"
     t.text "recommendation_assessor_note", default: "", null: false
     t.boolean "references_verified"
     t.boolean "scotland_full_registration"
     t.boolean "unsigned_consent_document_generated", default: false, null: false
     t.text "qualifications_assessor_note", default: "", null: false
+    t.datetime "verification_started_at"
+    t.integer "working_days_between_started_and_verification_started"
+    t.integer "working_days_between_submitted_and_verification_started"
     t.index ["application_form_id"], name: "index_assessments_on_application_form_id"
   end
 
@@ -262,9 +265,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_15_083411) do
     t.datetime "updated_at", null: false
     t.boolean "review_passed"
     t.string "review_note", default: "", null: false
-    t.integer "working_days_received_to_recommendation"
-    t.integer "working_days_since_received"
-    t.integer "working_days_assessment_started_to_creation"
+    t.integer "working_days_between_assessment_started_to_requested"
     t.datetime "reviewed_at"
     t.datetime "requested_at"
     t.datetime "expired_at"

@@ -141,6 +141,10 @@ RSpec.describe VerifyAssessment do
     expect { call }.to change(application_form, :stage).to("verification")
   end
 
+  it "sents the assessment verification started at" do
+    expect { call }.to change(assessment, :verification_started_at).from(nil)
+  end
+
   describe "sending referee email" do
     it "queues an email job" do
       expect { call }.to have_enqueued_mail(RefereeMailer, :reference_requested)

@@ -17,7 +17,7 @@ class SubmitApplicationForm
         subject_limited: region.country.subject_limited,
         subjects: application_form.subjects.compact_blank,
         submitted_at: Time.zone.now,
-        working_days_since_submission: 0,
+        working_days_between_submitted_and_today: 0,
       )
 
       assessment = AssessmentFactory.call(application_form:)

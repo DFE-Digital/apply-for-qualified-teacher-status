@@ -55,7 +55,8 @@
     - updated_at
     - withdrawn_at
     - work_history_status
-    - working_days_since_submission
+    - working_days_between_submitted_and_today
+    - working_days_between_submitted_and_completed
     - written_statement_confirmation
     - written_statement_optional
     - written_statement_status
@@ -89,10 +90,12 @@
     - subjects
     - unsigned_consent_document_generated
     - updated_at
-    - working_days_since_started
-    - working_days_started_to_recommendation
-    - working_days_submission_to_recommendation
-    - working_days_submission_to_started
+    - verification_started_at
+    - working_days_between_started_and_today
+    - working_days_between_started_and_completed
+    - working_days_between_submitted_and_started
+    - working_days_between_started_and_verification_started
+    - working_days_between_submitted_and_verification_started
   :consent_requests:
     - assessment_id
     - created_at
@@ -158,9 +161,7 @@
     - review_passed
     - reviewed_at
     - updated_at
-    - working_days_assessment_started_to_creation
-    - working_days_received_to_recommendation
-    - working_days_since_received
+    - working_days_between_assessment_started_to_requested
   :further_information_request_items:
     - contact_email
     - contact_job
