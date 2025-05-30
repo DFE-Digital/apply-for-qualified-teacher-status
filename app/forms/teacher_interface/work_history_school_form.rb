@@ -12,6 +12,7 @@ module TeacherInterface
     attribute :address_line2, :string
     attribute :city, :string
     attribute :country_location, :string
+    attribute :postcode, :string
     attribute :school_website, :string
     attribute :job, :string
     attribute :hours_per_week, :integer
@@ -50,6 +51,7 @@ module TeacherInterface
         address_line2:,
         city:,
         country_code:,
+        postcode:,
         school_website:,
         job:,
         hours_per_week:,

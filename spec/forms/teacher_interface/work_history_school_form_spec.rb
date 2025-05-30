@@ -12,6 +12,7 @@ RSpec.describe TeacherInterface::WorkHistorySchoolForm, type: :model do
       address_line2:,
       city:,
       country_location:,
+      postcode:,
       school_website:,
       job:,
       hours_per_week:,
@@ -33,6 +34,7 @@ RSpec.describe TeacherInterface::WorkHistorySchoolForm, type: :model do
     let(:address_line2) { "" }
     let(:city) { "" }
     let(:country_location) { "" }
+    let(:postcode) { "" }
     let(:school_website) { "" }
     let(:job) { "" }
     let(:hours_per_week) { "" }
@@ -107,6 +109,7 @@ RSpec.describe TeacherInterface::WorkHistorySchoolForm, type: :model do
     let(:address_line2) { "Address Line 2" }
     let(:city) { "City" }
     let(:country_location) { "country:FR" }
+    let(:postcode) { "12345" }
     let(:school_website) { "www.website.com" }
     let(:job) { "Job" }
     let(:hours_per_week) { "30" }
@@ -122,6 +125,7 @@ RSpec.describe TeacherInterface::WorkHistorySchoolForm, type: :model do
       expect(work_history.school_name).to eq("School")
       expect(work_history.city).to eq("City")
       expect(work_history.country_code).to eq("FR")
+      expect(work_history.postcode).to eq("12345")
       expect(work_history.job).to eq("Job")
       expect(work_history.hours_per_week).to eq(30)
       expect(work_history.start_date).to eq(Date.new(2020, 10, 1))
