@@ -18,6 +18,8 @@ module PageObjects
                 "#teacher-interface-work-history-school-form-city-field"
         element :country_input,
                 "#teacher-interface-work-history-school-form-country-location-field"
+        element :postcode_input,
+                "#teacher-interface-work-history-school-form-postcode-field"
         element :school_website_input,
                 "#teacher-interface-work-history-school-form-school-website-field"
 

@@ -18,6 +18,7 @@
 #  end_date_is_estimate    :boolean          default(FALSE), not null
 #  hours_per_week          :integer
 #  job                     :text             default(""), not null
+#  postcode                :string
 #  school_name             :text             default(""), not null
 #  school_website          :string
 #  start_date              :date
