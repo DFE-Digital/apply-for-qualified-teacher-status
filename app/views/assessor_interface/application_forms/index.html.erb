@@ -41,6 +41,10 @@
       <%= f.govuk_text_field :email, label: { size: "s" } %>
     </section>
 
+    <section id="app-applications-filters-date-of-birth">
+      <%= f.govuk_date_field :date_of_birth, legend: { size: "s" } %>
+    </section>
+
     <section id="app-applications-filters-submitted-at">
       <%= f.govuk_fieldset legend: { text: I18n.t("helpers.legend.assessor_interface_filter_form.submitted_at"), size: "s" } do %>
         <%= f.govuk_date_field :submitted_at_after, legend: { size: "s" } %>
