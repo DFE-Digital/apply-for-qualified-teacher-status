@@ -3,15 +3,15 @@
 class UpdateWorkingDaysJob < ApplicationJob
   def perform
     update_application_forms_since_submission
+    update_application_forms_submitted_to_completed
 
     update_assessments_since_started
-    update_assessments_started_to_recommendation
-    update_assessments_submission_to_recommendation
+    update_assessments_started_to_completed
     update_assessments_submission_to_started
+    update_assessment_started_to_verification
+    update_assessment_submission_to_verification
 
-    update_further_information_requests_assessment_started_to_creation
-    update_further_information_requests_since_received
-    update_further_information_requests_received_to_recommendation
+    update_further_information_requests_assessment_started_to_requested
   end
 
   private
@@ -29,7 +29,7 @@ class UpdateWorkingDaysJob < ApplicationJob
       .where.not(submitted_at: nil)
       .find_each do |application_form|
         application_form.update!(
-          working_days_since_submission:
+          working_days_between_submitted_and_today:
             calendar.business_days_between(
               application_form.submitted_at,
               today,
@@ -38,44 +38,45 @@ class UpdateWorkingDaysJob < ApplicationJob
       end
   end
 
+  def update_application_forms_submitted_to_completed
+    ApplicationForm.completed_stage.find_each do |application_form|
+      application_form.update!(
+        working_days_between_submitted_and_completed:
+          calendar.business_days_between(
+            application_form.submitted_at,
+            application_form.awarded_at || application_form.declined_at ||
+              application_form.withdrawn_at,
+          ),
+      )
+    end
+  end
+
   def update_assessments_since_started
     Assessment
       .where.not(started_at: nil)
       .find_each do |assessment|
         assessment.update!(
-          working_days_since_started:
+          working_days_between_started_and_today:
             calendar.business_days_between(assessment.started_at, today),
         )
       end
   end
 
-  def update_assessments_started_to_recommendation
-    Assessment
-      .where.not(started_at: nil)
-      .where.not(recommended_at: nil)
-      .find_each do |assessment|
-        assessment.update!(
-          working_days_started_to_recommendation:
-            calendar.business_days_between(
-              assessment.started_at,
-              assessment.recommended_at,
-            ),
-        )
-      end
-  end
-
-  def update_assessments_submission_to_recommendation
+  def update_assessments_started_to_completed
     Assessment
       .joins(:application_form)
       .includes(:application_form)
-      .where.not(application_form: { submitted_at: nil })
-      .where.not(recommended_at: nil)
+      .where(application_form: { stage: "completed" })
+      .where.not(started_at: nil)
       .find_each do |assessment|
+        application_form = assessment.application_form
+
         assessment.update!(
-          working_days_submission_to_recommendation:
+          working_days_between_started_and_completed:
             calendar.business_days_between(
-              assessment.application_form.submitted_at,
-              assessment.recommended_at,
+              assessment.started_at,
+              application_form.awarded_at || application_form.declined_at ||
+                application_form.withdrawn_at,
             ),
         )
       end
@@ -89,7 +90,7 @@ class UpdateWorkingDaysJob < ApplicationJob
       .where.not(started_at: nil)
       .find_each do |assessment|
         assessment.update!(
-          working_days_submission_to_started:
+          working_days_between_submitted_and_started:
             calendar.business_days_between(
               assessment.application_form.submitted_at,
               assessment.started_at,
@@ -98,48 +99,50 @@ class UpdateWorkingDaysJob < ApplicationJob
       end
   end
 
-  def update_further_information_requests_assessment_started_to_creation
+  def update_assessment_started_to_verification
+    Assessment
+      .where.not(started_at: nil)
+      .where.not(verification_started_at: nil)
+      .find_each do |assessment|
+        assessment.update!(
+          working_days_between_started_and_verification_started:
+            calendar.business_days_between(
+              assessment.started_at,
+              assessment.verification_started_at,
+            ),
+        )
+      end
+  end
+
+  def update_assessment_submission_to_verification
+    Assessment
+      .joins(:application_form)
+      .includes(:application_form)
+      .where.not(application_form: { submitted_at: nil })
+      .where.not(verification_started_at: nil)
+      .find_each do |assessment|
+        assessment.update!(
+          working_days_between_submitted_and_verification_started:
+            calendar.business_days_between(
+              assessment.application_form.submitted_at,
+              assessment.verification_started_at,
+            ),
+        )
+      end
+  end
+
+  def update_further_information_requests_assessment_started_to_requested
     FurtherInformationRequest
       .joins(:assessment)
       .includes(:assessment)
       .where.not(assessment: { started_at: nil })
+      .where.not(requested_at: nil)
       .find_each do |further_information_request|
         further_information_request.update!(
-          working_days_assessment_started_to_creation:
+          working_days_between_assessment_started_to_requested:
             calendar.business_days_between(
               further_information_request.assessment.started_at,
-              further_information_request.created_at,
-            ),
-        )
-      end
-  end
-
-  def update_further_information_requests_since_received
-    FurtherInformationRequest
-      .where.not(received_at: nil)
-      .find_each do |further_information_request|
-        further_information_request.update!(
-          working_days_since_received:
-            calendar.business_days_between(
-              further_information_request.received_at,
-              today,
-            ),
-        )
-      end
-  end
-
-  def update_further_information_requests_received_to_recommendation
-    FurtherInformationRequest
-      .joins(:assessment)
-      .includes(:assessment)
-      .where.not(received_at: nil)
-      .where.not(assessment: { recommended_at: nil })
-      .find_each do |further_information_request|
-        further_information_request.update!(
-          working_days_received_to_recommendation:
-            calendar.business_days_between(
-              further_information_request.received_at,
-              further_information_request.assessment.recommended_at,
+              further_information_request.requested_at,
             ),
         )
       end

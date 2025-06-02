@@ -26,6 +26,7 @@ class VerifyAssessment
       ActiveRecord::Base.transaction do
         assessment.qualifications_assessor_note = qualifications_assessor_note
         assessment.verify!
+        update_assessment_verification_started_at
 
         create_professional_standing_request
         create_qualification_requests
@@ -82,6 +83,12 @@ class VerifyAssessment
       ReferenceRequest
         .create!(assessment:, work_history:)
         .tap { |requestable| RequestRequestable.call(requestable:, user:) }
+    end
+  end
+
+  def update_assessment_verification_started_at
+    if assessment.verification_started_at.nil?
+      assessment.update!(verification_started_at: Time.zone.now)
     end
   end
 
