@@ -4,11 +4,11 @@ module Filters
   class DateOfBirth < Base
     def apply
       new_scope = scope
-      
+
       if date_of_birth.present?
         new_scope = new_scope.where("DATE(date_of_birth) = ?", date_of_birth)
       end
-      
+
       new_scope
     end
 
