@@ -88,6 +88,7 @@ class AssessorInterface::ApplicationFormsIndexViewObject
           ::Filters::Country,
           ::Filters::Name,
           ::Filters::Email,
+          ::Filters::DateOfBirth,
           ::Filters::Reference,
           ::Filters::SubmittedAt,
           ::Filters::ShowAll,
