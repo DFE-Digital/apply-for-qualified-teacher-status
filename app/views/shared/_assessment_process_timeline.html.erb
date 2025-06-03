@@ -2,7 +2,12 @@
   Your teaching qualifications and experience will be assessed against strict requirements. These requirements are mandatory and must be met in full. The process is designed to ensure we only award QTS to the highest quality teachers. This means it can take time.
 </p>
 
-<p class="govuk-body">We assess 90 per cent of applications within 12 months.</p>
+<p class="govuk-body">
+  We assess 90 per cent of applications within 12 months.
+  <% if FeatureFlags::FeatureFlag.active?(:prioritisation) %>
+    However, if we can confirm that you have <%= govuk_link_to "eligible work experience in England", "https://www.gov.uk/government/publications/awarding-qualified-teacher-status-to-overseas-teachers/a-fairer-approach-to-awarding-qts-to-overseas-teachers--2" %>, we will prioritise your application. This means you will receive a faster response.
+  <% end %>
+</p>
 
 <p class="govuk-body">Information correct as of March 2025. Timelines are based on total applications completed since February 2023.</p>
 

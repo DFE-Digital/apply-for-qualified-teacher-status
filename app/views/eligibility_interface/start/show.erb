@@ -17,6 +17,9 @@
   <li>If you’re eligible, you’ll be able to submit an application.</li>
   <li>Each application will be assessed by a trained assessor.</li>
   <li>They will check all the information submitted.</li>
+  <% if FeatureFlags::FeatureFlag.active?(:prioritisation) %>
+    <li>If you have eligible work experience in England, your application will be prioritised.</li>
+  <% end %>
   <li>Some information may need verification by third parties.</li>
   <li>Once the assessment and all verifications have been completed, you’ll be told if you have been awarded QTS.</li>
 </ol>
