@@ -97,11 +97,13 @@ class EligibilityCheck < ApplicationRecord
         !eligible_work_experience_in_england? && qualified_for_subject == false
 
     teach_children_ineligible =
-      (!qualified_for_subject_required? && teach_children == false) ||
-        (
-          qualified_for_subject_required? &&
-            eligible_work_experience_in_england? && teach_children == false
-        )
+      (
+        !qualified_for_subject_required? ||
+          (
+            qualified_for_subject_required? &&
+              eligible_work_experience_in_england?
+          )
+      ) && teach_children == false
 
     teach_children_secondary_ineligible =
       qualified_for_subject_required? &&
@@ -187,28 +189,18 @@ class EligibilityCheck < ApplicationRecord
       %i[country result]
     elsif skip_additional_questions? && qualification
       %i[country region qualification result]
-    elsif includes_prioritisation
-      %i[
-        country
-        region
-        qualification
-        degree
-        work_experience
-        misconduct
-        work_experience_in_england
-      ] +
-        (
-          if qualified_for_subject_required? &&
-               !eligible_work_experience_in_england
-            %i[teach_children qualified_for_subject]
-          else
-            %i[teach_children]
-          end
-        ) + %i[result]
     else
       %i[country region qualification degree work_experience misconduct] +
         (
-          if qualified_for_subject_required?
+          if includes_prioritisation
+            %i[work_experience_in_england]
+          else
+            []
+          end
+        ) +
+        (
+          if qualified_for_subject_required? &&
+               !eligible_work_experience_in_england?
             %i[teach_children qualified_for_subject]
           else
             %i[teach_children]
