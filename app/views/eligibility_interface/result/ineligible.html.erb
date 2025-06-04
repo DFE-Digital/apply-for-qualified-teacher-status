@@ -4,7 +4,7 @@
 <% content_for :back_link_url,
                if ineligible_country
                  eligibility_interface_countries_path
-               elsif @eligibility_check.qualified_for_subject_required?
+               elsif @eligibility_check.qualified_for_subject_required? && !@eligibility_check.eligible_work_experience_in_england?
                  eligibility_interface_qualified_for_subject_path
                elsif @eligibility_check.skip_additional_questions?
                  eligibility_interface_qualifications_path

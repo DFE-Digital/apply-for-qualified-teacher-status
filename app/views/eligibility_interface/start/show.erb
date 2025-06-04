@@ -18,7 +18,7 @@
   <li>Each application will be assessed by a trained assessor.</li>
   <li>They will check all the information submitted.</li>
   <% if FeatureFlags::FeatureFlag.active?(:prioritisation) %>
-    <li>If you have eligible work experience in England, your application will be prioritised.</li>
+    <li>If you have <%= govuk_link_to "eligible work experience in England", "https://www.gov.uk/government/publications/awarding-qualified-teacher-status-to-overseas-teachers/a-fairer-approach-to-awarding-qts-to-overseas-teachers--2" %>, your application will be prioritised.</li>
   <% end %>
   <li>Some information may need verification by third parties.</li>
   <li>Once the assessment and all verifications have been completed, you’ll be told if you have been awarded QTS.</li>

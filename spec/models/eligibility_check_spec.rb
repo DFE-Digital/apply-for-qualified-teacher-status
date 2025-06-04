@@ -99,7 +99,7 @@ RSpec.describe EligibilityCheck, type: :model do
       it { is_expected.to include(:teach_children) }
     end
 
-    context "when filtering by subject" do
+    context "when country is subject restricted" do
       before do
         eligibility_check.country_code = "IN"
         create(:country, :subject_limited, code: "IN")
@@ -109,6 +109,14 @@ RSpec.describe EligibilityCheck, type: :model do
         before { eligibility_check.teach_children = false }
 
         it { is_expected.to include(:teach_children_secondary) }
+
+        context "with applicant having eligible work experience in England" do
+          before do
+            eligibility_check.eligible_work_experience_in_england = true
+          end
+
+          it { is_expected.to include(:teach_children) }
+        end
       end
 
       context "when qualified_for_subject is false" do
@@ -160,13 +168,13 @@ RSpec.describe EligibilityCheck, type: :model do
   describe "#eligible?" do
     subject(:eligible?) { eligibility_check.eligible? }
 
-    context "when not eligible" do
+    let(:country) { create(:country, :with_national_region) }
+
+    context "when no values entered for eligibility check" do
       it { is_expected.to be false }
     end
 
-    context "when eligible" do
-      let(:country) { create(:country, :with_national_region) }
-
+    context "when all values entered and eligible" do
       before do
         eligibility_check.free_of_sanctions = true
         eligibility_check.work_experience = "over_20_months"
@@ -178,6 +186,109 @@ RSpec.describe EligibilityCheck, type: :model do
       end
 
       it { is_expected.to be true }
+    end
+
+    context "when all values entered and not eligible" do
+      before do
+        eligibility_check.free_of_sanctions = true
+        eligibility_check.work_experience = "over_20_months"
+        eligibility_check.teach_children = true
+        eligibility_check.degree = false
+        eligibility_check.qualification = false
+        eligibility_check.region = country.regions.first
+        eligibility_check.country_code = country.code
+      end
+
+      it { is_expected.to be false }
+    end
+
+    context "when country skips additional eligibility questions" do
+      let(:country) do
+        create(
+          :country,
+          :with_national_region,
+          eligibility_skip_questions: true,
+        )
+      end
+
+      before do
+        eligibility_check.region = country.regions.first
+        eligibility_check.country_code = country.code
+      end
+
+      context "when no values entered for eligibility check" do
+        it { is_expected.to be_nil }
+      end
+
+      context "with qualification true" do
+        before { eligibility_check.qualification = true }
+
+        it { is_expected.to be true }
+      end
+
+      context "with qualification false" do
+        before { eligibility_check.qualification = false }
+
+        it { is_expected.to be false }
+      end
+    end
+
+    context "when from subject restricted country" do
+      let(:country) do
+        create(:country, :with_national_region, :subject_limited)
+      end
+
+      context "with all values entered and except subject" do
+        before do
+          eligibility_check.free_of_sanctions = true
+          eligibility_check.work_experience = "over_20_months"
+          eligibility_check.teach_children = true
+          eligibility_check.degree = true
+          eligibility_check.qualification = true
+          eligibility_check.region = country.regions.first
+          eligibility_check.country_code = country.code
+        end
+
+        it { is_expected.to be_nil }
+
+        context "when work experience in England is true" do
+          before do
+            eligibility_check.eligible_work_experience_in_england = true
+          end
+
+          it { is_expected.to be true }
+        end
+      end
+
+      context "with all values entered and with qualified for subject false" do
+        before do
+          eligibility_check.free_of_sanctions = true
+          eligibility_check.work_experience = "over_20_months"
+          eligibility_check.teach_children = true
+          eligibility_check.degree = true
+          eligibility_check.qualification = true
+          eligibility_check.qualified_for_subject = false
+          eligibility_check.region = country.regions.first
+          eligibility_check.country_code = country.code
+        end
+
+        it { is_expected.to be false }
+      end
+
+      context "with all values entered and with qualified for subject true" do
+        before do
+          eligibility_check.free_of_sanctions = true
+          eligibility_check.work_experience = "over_20_months"
+          eligibility_check.teach_children = true
+          eligibility_check.degree = true
+          eligibility_check.qualification = true
+          eligibility_check.qualified_for_subject = true
+          eligibility_check.region = country.regions.first
+          eligibility_check.country_code = country.code
+        end
+
+        it { is_expected.to be true }
+      end
     end
   end
 
@@ -417,10 +528,211 @@ RSpec.describe EligibilityCheck, type: :model do
       end
     end
 
+    context "when free of sanctions is present with prioritisation feature included" do
+      subject { eligibility_check.status(includes_prioritisation: true) }
+
+      let(:attributes) do
+        {
+          country_code: country.code,
+          region: create(:region, country:),
+          qualification: true,
+          degree: true,
+          work_experience: "under_9_months",
+          free_of_sanctions: true,
+        }
+      end
+
+      it { is_expected.to eq(:work_experience_in_england) }
+    end
+
+    context "when work experience in England is present with prioritisation feature included" do
+      subject { eligibility_check.status(includes_prioritisation: true) }
+
+      let(:attributes) do
+        {
+          country_code: country.code,
+          region: create(:region, country:),
+          qualification: true,
+          degree: true,
+          work_experience: "under_9_months",
+          eligible_work_experience_in_england: true,
+          free_of_sanctions: true,
+        }
+      end
+
+      it { is_expected.to eq(:teach_children) }
+    end
+
+    context "when teach children is present with prioritisation feature included" do
+      subject { eligibility_check.status(includes_prioritisation: true) }
+
+      let(:attributes) do
+        {
+          country_code: country.code,
+          region: create(:region, country:),
+          qualification: true,
+          degree: true,
+          work_experience: "under_9_months",
+          free_of_sanctions: true,
+          teach_children: true,
+          eligible_work_experience_in_england:,
+        }
+      end
+
+      let(:eligible_work_experience_in_england) { true }
+
+      it { is_expected.to eq(:result) }
+
+      context "with country being subject restricted" do
+        let(:country) { create(:country, subject_limited: true) }
+
+        it { is_expected.to eq(:result) }
+
+        context "with not being eligible for work experience in England" do
+          let(:eligible_work_experience_in_england) { false }
+
+          it { is_expected.to eq(:qualified_for_subject) }
+        end
+      end
+    end
+
     context "with an ineligible country" do
       let(:attributes) { { country_code: "XX" } }
 
       it { is_expected.to eq(:result) }
+    end
+  end
+
+  describe "#status_route" do
+    subject(:status_route) { eligibility_check.status_route }
+
+    let(:eligibility_check) { described_class.new(attributes) }
+    let(:country) { create(:country) }
+    let(:region) { create(:region, country:) }
+
+    let(:attributes) { { country_code: country.code, region: region } }
+
+    it "returns default flow" do
+      expect(status_route).to eq(
+        %i[
+          country
+          region
+          qualification
+          degree
+          work_experience
+          misconduct
+          teach_children
+          result
+        ],
+      )
+    end
+
+    context "when country eligibility status is ineligible" do
+      let(:attributes) { { country_code: "NOT_FOUND" } }
+
+      it "returns ineligible flow" do
+        expect(status_route).to eq(%i[country result])
+      end
+    end
+
+    context "when country skips additional questions and qualification provided" do
+      let(:country) { create(:country, eligibility_skip_questions: true) }
+      let(:attributes) do
+        { country_code: country.code, region: region, qualification: true }
+      end
+
+      it "returns reduced questions flow" do
+        expect(status_route).to eq(%i[country region qualification result])
+      end
+    end
+
+    context "when the country is subject limited" do
+      let(:country) { create(:country, subject_limited: true) }
+
+      it "returns subject limited flow" do
+        expect(status_route).to eq(
+          %i[
+            country
+            region
+            qualification
+            degree
+            work_experience
+            misconduct
+            teach_children
+            qualified_for_subject
+            result
+          ],
+        )
+      end
+    end
+
+    context "when prioritisation flow is included" do
+      subject(:status_route) do
+        eligibility_check.status_route(includes_prioritisation: true)
+      end
+
+      it "returns default flow with work experience in england route" do
+        expect(status_route).to eq(
+          %i[
+            country
+            region
+            qualification
+            degree
+            work_experience
+            misconduct
+            work_experience_in_england
+            teach_children
+            result
+          ],
+        )
+      end
+
+      context "when the country is subject limited" do
+        let(:country) { create(:country, subject_limited: true) }
+
+        it "returns subject limited flow" do
+          expect(status_route).to eq(
+            %i[
+              country
+              region
+              qualification
+              degree
+              work_experience
+              misconduct
+              work_experience_in_england
+              teach_children
+              qualified_for_subject
+              result
+            ],
+          )
+        end
+
+        context "with work experience in England being true" do
+          let(:attributes) do
+            {
+              country_code: country.code,
+              region: region,
+              eligible_work_experience_in_england: true,
+            }
+          end
+
+          it "returns prioritisation flow with subject restriction question" do
+            expect(status_route).to eq(
+              %i[
+                country
+                region
+                qualification
+                degree
+                work_experience
+                misconduct
+                work_experience_in_england
+                teach_children
+                result
+              ],
+            )
+          end
+        end
+      end
     end
   end
 

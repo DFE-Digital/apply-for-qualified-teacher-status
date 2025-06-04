@@ -1,0 +1,48 @@
+<%
+  legend = "Have you worked in an eligible educational setting in England within the last 12 months?"
+  hint = "
+    If we can confirm with your reference that you have eligible work experience in England, then your application will be prioritised.
+    <br /><br />
+    We will only consider the following eligible roles worked in England within the last 12 months:
+    <ul class='govuk-list govuk-list--bullet govuk-hint'>
+      <li>a teacher in a state school, independent school, college or university</li>
+      <li>a supply teacher, cover supervisor or teaching assistant in a state school</li>
+      <li>a kindergarten, pre-school or nursery teacher in a nursery</li>
+      <li>a lecturer or tutor in a college or university</li>
+    </ul>
+  ".html_safe
+%>
+
+<% content_for :page_title, title_with_error_prefix(legend, error: @form.errors.any?) %>
+<% content_for :back_link_url, eligibility_interface_misconduct_path %>
+
+<%= form_with model: @form, url: [:eligibility_interface, :work_experience_in_england] do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <%= f.govuk_collection_radio_buttons(
+    :eligible,
+    [
+      OpenStruct.new(label: 'Yes, I have eligible experience in England', value: true),
+      OpenStruct.new(label: 'No', value: false)
+    ],
+    :value,
+    :label,
+    legend: { size: 'l', tag: 'h1', text: legend },
+    hint: { text: hint }
+  ) %>
+
+  <%= govuk_details(summary_text: "Definitions of these roles and settings") do %>
+    <h3 class="govuk-heading-s">State school</h3>
+    <p>State schools in England are government-funded, and provide free, compulsory education to children aged 5 to 18. They include academies, free schools, community schools, grammar schools, foundation schools, voluntary-aided and voluntary-controlled schools.</p>
+
+    <h3 class="govuk-heading-s">Independent school</h3>
+    <p>An independent school in England is a school that is not administered or funded by the government. Instead, they charge fees to attend. They are also known as private schools.</p>
+
+    <h3 class="govuk-heading-s">Tutor or lecturer</h3>
+    <p>Someone who teaches or supports students in a college or university, including delivering lessons, running tutorials, or providing academic support as part of a course or qualification.</p>
+  <% end %>
+
+  <%= govuk_warning_text(text: "You will need to provide references to confirm your work experience in England before your application is prioritised. If we cannot confirm your experience, your application will not be prioritised.") %>
+
+  <%= f.govuk_submit %>
+<% end %>
