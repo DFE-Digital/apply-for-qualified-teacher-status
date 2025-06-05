@@ -39,4 +39,8 @@ feature_flags:
     author: Hassan Mir
     description: New applicants must upload passport as their proof of identity as opposed to any photo ID.
 
+  prioritisation:
+    author: Hassan Mir
+    description: New prioritisation flows for applicants that have work experience in England.
+
 parent_controller: SupportInterface::FeatureFlagsController

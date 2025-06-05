@@ -4,18 +4,19 @@
 #
 # Table name: eligibility_checks
 #
-#  id                    :bigint           not null, primary key
-#  completed_at          :datetime
-#  country_code          :string
-#  degree                :boolean
-#  free_of_sanctions     :boolean
-#  qualification         :boolean
-#  qualified_for_subject :boolean
-#  teach_children        :boolean
-#  work_experience       :string
-#  created_at            :datetime         not null
-#  updated_at            :datetime         not null
-#  region_id             :bigint
+#  id                                  :bigint           not null, primary key
+#  completed_at                        :datetime
+#  country_code                        :string
+#  degree                              :boolean
+#  eligible_work_experience_in_england :boolean
+#  free_of_sanctions                   :boolean
+#  qualification                       :boolean
+#  qualified_for_subject               :boolean
+#  teach_children                      :boolean
+#  work_experience                     :string
+#  created_at                          :datetime         not null
+#  updated_at                          :datetime         not null
+#  region_id                           :bigint
 #
 # Foreign Keys
 #
@@ -92,13 +93,21 @@ class EligibilityCheck < ApplicationRecord
     work_experience_ineligible = work_experience_under_9_months?
 
     qualified_for_subject_ineligible =
-      qualified_for_subject_required? && qualified_for_subject == false
+      qualified_for_subject_required? &&
+        !eligible_work_experience_in_england? && qualified_for_subject == false
 
     teach_children_ineligible =
-      !qualified_for_subject_required? && teach_children == false
+      (
+        !qualified_for_subject_required? ||
+          (
+            qualified_for_subject_required? &&
+              eligible_work_experience_in_england?
+          )
+      ) && teach_children == false
 
     teach_children_secondary_ineligible =
-      qualified_for_subject_required? && teach_children == false
+      qualified_for_subject_required? &&
+        !eligible_work_experience_in_england? && teach_children == false
 
     [
       (:country if region.nil?),
@@ -146,7 +155,7 @@ class EligibilityCheck < ApplicationRecord
     completed_at.present?
   end
 
-  def status
+  def status(includes_prioritisation: false)
     return :country if country_code.blank?
 
     return :result if country_eligibility_status == :ineligible
@@ -160,9 +169,14 @@ class EligibilityCheck < ApplicationRecord
       return :work_experience if work_experience.blank?
       return :misconduct if free_of_sanctions.nil?
 
+      if includes_prioritisation && eligible_work_experience_in_england.nil?
+        return :work_experience_in_england
+      end
+
       return :teach_children if teach_children.nil?
 
-      if qualified_for_subject_required? && qualified_for_subject.nil?
+      if qualified_for_subject_required? && qualified_for_subject.nil? &&
+           !eligible_work_experience_in_england?
         return :qualified_for_subject
       end
     end
@@ -170,7 +184,7 @@ class EligibilityCheck < ApplicationRecord
     :result
   end
 
-  def status_route
+  def status_route(includes_prioritisation: false)
     if country_code.present? && country_eligibility_status == :ineligible
       %i[country result]
     elsif skip_additional_questions? && qualification
@@ -178,7 +192,15 @@ class EligibilityCheck < ApplicationRecord
     else
       %i[country region qualification degree work_experience misconduct] +
         (
-          if qualified_for_subject_required?
+          if includes_prioritisation
+            %i[work_experience_in_england]
+          else
+            []
+          end
+        ) +
+        (
+          if qualified_for_subject_required? &&
+               !eligible_work_experience_in_england?
             %i[teach_children qualified_for_subject]
           else
             %i[teach_children]
@@ -200,7 +222,7 @@ class EligibilityCheck < ApplicationRecord
   end
 
   def teach_children?
-    if qualified_for_subject_required?
+    if qualified_for_subject_required? && !eligible_work_experience_in_england?
       teach_children && qualified_for_subject
     else
       teach_children

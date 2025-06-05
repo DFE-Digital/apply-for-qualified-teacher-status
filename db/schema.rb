@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_30_085038) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_02_131857) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -217,6 +217,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_30_085038) do
     t.datetime "completed_at"
     t.string "work_experience"
     t.boolean "qualified_for_subject"
+    t.boolean "eligible_work_experience_in_england"
   end
 
   create_table "english_language_providers", force: :cascade do |t|

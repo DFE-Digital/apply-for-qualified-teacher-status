@@ -11,9 +11,6 @@ module PageObjects
         sections :radio_items,
                  PageObjects::GovukRadioItem,
                  ".govuk-radios__item"
-        section :false_radio_item,
-                PageObjects::GovukRadioItem,
-                ".govuk-radios__item:nth-of-type(2)"
         section :true_radio_item,
                 PageObjects::GovukRadioItem,
                 ".govuk-radios__item:nth-of-type(1)"

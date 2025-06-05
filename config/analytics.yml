@@ -139,6 +139,7 @@
     - teach_children
     - updated_at
     - work_experience
+    - eligible_work_experience_in_england
   :english_language_providers:
     - accepted_tests
     - b2_level_requirement

@@ -266,6 +266,8 @@ Rails.application.routes.draw do
     post "qualified-for-subject", to: "qualified_for_subject#create"
     get "work-experience", to: "work_experience#new"
     post "work-experience", to: "work_experience#create"
+    get "work-experience-in-england", to: "work_experience_in_england#new"
+    post "work-experience-in-england", to: "work_experience_in_england#create"
   end
 
   namespace :support_interface, path: "/support" do
