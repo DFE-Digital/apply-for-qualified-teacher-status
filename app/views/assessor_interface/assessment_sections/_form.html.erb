@@ -1,8 +1,6 @@
 <%= form_with model: form, url: [:assessor_interface, view_object.application_form, view_object.assessment, @view_object.assessment_section], method: :put do |f| %>
   <%= f.govuk_error_summary %>
-  
-  <%= yield :assessment_section_top_of_form %>
-  
+
   <% if view_object.show_english_language_exemption_checkbox? %>
     <% if view_object.assessment_section.personal_information? %>
       <% english_language_section_passed_label = t("#{view_object.assessment_section.key}_#{view_object.application_form.requires_passport_as_identity_proof? ? 'passport' : 'id'}", scope: %i[assessor_interface assessment_sections english_language_proficiency passed]) %>
