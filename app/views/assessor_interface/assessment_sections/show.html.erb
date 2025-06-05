@@ -28,8 +28,8 @@
 
 <% if @view_object.show_form? %>
   <%= render "form", form: @form, view_object: @view_object %>
-<% end %>
-
-<% if @view_object.show_english_language_exemption_content? %>
+<% elsif @view_object.show_english_language_exemption_content? %>
   <%= render "english_language_exemption_content", application_form: @view_object.application_form %>
+<% else %>
+  <%= yield :assessment_section_top_of_form %>
 <% end %>
