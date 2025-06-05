@@ -6,6 +6,7 @@ class AssessorInterface::FilterForm
 
   attr_accessor :action_required_by,
                 :assessor_ids,
+                :date_of_birth,
                 :email,
                 :location,
                 :name,
