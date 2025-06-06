@@ -400,7 +400,6 @@ RSpec.describe AssessmentFactory do
                 english_language_unverifiable_reference_number
                 english_language_not_achieved_b2
                 english_language_selt_expired
-                english_language_selt_expired_during_assessment
                 english_language_proficiency_require_alternative
                 suitability
                 suitability_previously_declined
@@ -421,7 +420,6 @@ RSpec.describe AssessmentFactory do
                   english_language_proficiency_document_illegible
                   english_language_not_achieved_b2
                   english_language_selt_expired
-                  english_language_selt_expired_during_assessment
                   english_language_proficiency_require_alternative
                   suitability
                   suitability_previously_declined
@@ -444,7 +442,7 @@ RSpec.describe AssessmentFactory do
               %w[
                 english_language_proficiency_require_alternative
                 english_language_esol_document_illegible
-                english_language_esol_expired_during_assessment
+                english_language_esol_expired
                 english_language_qualification_invalid
                 english_language_esol_below_required_level
                 suitability
