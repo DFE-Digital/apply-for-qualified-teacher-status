@@ -110,7 +110,7 @@ RSpec.describe EligibilityCheck, type: :model do
 
         it { is_expected.to include(:teach_children_secondary) }
 
-        context "with applicant having eligible work experience in England" do
+        context "with applicant having valid work experience in England" do
           before do
             eligibility_check.eligible_work_experience_in_england = true
           end
