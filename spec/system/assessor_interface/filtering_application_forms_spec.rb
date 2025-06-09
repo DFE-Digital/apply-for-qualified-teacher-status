@@ -56,6 +56,10 @@ RSpec.describe "Assessor filtering application forms", type: :system do
     when_i_clear_the_filters
     and_i_apply_the_show_all_filter
     then_i_see_a_list_of_all_applications
+
+    when_i_clear_the_filters
+    and_i_apply_the_date_of_birth_filter
+    then_i_see_a_list_of_applications_filtered_by_date_of_birth
   end
 
   private
@@ -67,6 +71,7 @@ RSpec.describe "Assessor filtering application forms", type: :system do
       region: create(:region, :in_country, country_code: "US"),
       given_names: "Cher",
       family_name: "Bert",
+      date_of_birth: Date.new(2000, 1, 1),
       assessor: assessors.second,
       submitted_at: 2.months.ago,
       reference: "CHERBERT",
@@ -261,5 +266,19 @@ RSpec.describe "Assessor filtering application forms", type: :system do
 
   def then_i_see_a_list_of_all_applications
     expect(assessor_applications_page.search_results.count).to eq(5)
+  end
+
+  def then_i_see_a_list_of_applications_filtered_by_date_of_birth
+    expect(assessor_applications_page.search_results.count).to eq(1)
+    expect(assessor_applications_page.search_results.first.name.text).to eq(
+      "Cher Bert",
+    )
+  end
+
+  def and_i_apply_the_date_of_birth_filter
+    assessor_applications_page.date_of_birth_filter.day.set("01")
+    assessor_applications_page.date_of_birth_filter.month.set("01")
+    assessor_applications_page.date_of_birth_filter.year.set("2000")
+    assessor_applications_page.apply_filters.click
   end
 end

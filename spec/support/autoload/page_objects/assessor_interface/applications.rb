@@ -42,6 +42,13 @@ module PageObjects
                 "#assessor_interface_filter_form_submitted_at_before_1i"
       end
 
+      section :date_of_birth_filter,
+              "#app-applications-filters-date-of-birth" do
+        element :day, "#assessor_interface_filter_form_date_of_birth_3i"
+        element :month, "#assessor_interface_filter_form_date_of_birth_2i"
+        element :year, "#assessor_interface_filter_form_date_of_birth_1i"
+      end
+
       section :action_required_by_filter,
               "#app-applications-filters-action-required-by" do
         sections :items, GovukCheckboxItem, ".govuk-checkboxes__item"
