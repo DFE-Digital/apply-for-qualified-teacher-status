@@ -31,7 +31,7 @@ module AssessmentFactories
           [
             FailureReasons::EL_REQUIRE_ALTERNATIVE,
             FailureReasons::EL_ESOL_DOCUMENT_ILLEGIBLE,
-            FailureReasons::EL_ESOL_EXPIRED_DURING_ASSESSMENT,
+            FailureReasons::EL_ESOL_EXPIRED,
             FailureReasons::EL_QUALIFICATION_INVALID,
             FailureReasons::EL_ESOL_BELOW_REQUIRED_LEVEL,
           ]
@@ -47,7 +47,6 @@ module AssessmentFactories
             ),
             FailureReasons::EL_GRADE_BELOW_B2,
             FailureReasons::EL_SELT_EXPIRED,
-            FailureReasons::EL_SELT_EXPIRED_DURING_ASSESSMENT,
             FailureReasons::EL_REQUIRE_ALTERNATIVE,
           ]
         end
