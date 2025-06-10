@@ -126,6 +126,10 @@ RSpec.describe ApplicationFormFactory do
       expect(application_form.requires_passport_as_identity_proof).to be false
     end
 
+    it "doesn't include prioritisation features" do
+      expect(application_form.includes_prioritisation_features).to be false
+    end
+
     context "when reduced evidence is accepted" do
       let(:region) { create(:region, :reduced_evidence_accepted) }
 
@@ -173,6 +177,16 @@ RSpec.describe ApplicationFormFactory do
 
       it "sets requires passport document as identity proof" do
         expect(application_form.requires_passport_as_identity_proof).to be true
+      end
+    end
+
+    context "when the feature for prioritisation is released" do
+      before { FeatureFlags::FeatureFlag.activate(:prioritisation) }
+
+      after { FeatureFlags::FeatureFlag.deactivate(:prioritisation) }
+
+      it "sets requires passport document as identity proof" do
+        expect(application_form.includes_prioritisation_features).to be true
       end
     end
   end

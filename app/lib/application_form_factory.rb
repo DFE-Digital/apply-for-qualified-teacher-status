@@ -23,6 +23,7 @@ class ApplicationFormFactory
         teaching_authority_provides_written_statement:,
         written_statement_optional:,
         requires_passport_as_identity_proof:,
+        includes_prioritisation_features:,
       )
     end
   end
@@ -66,5 +67,9 @@ class ApplicationFormFactory
 
   def requires_passport_as_identity_proof
     FeatureFlags::FeatureFlag.active?(:use_passport_for_identity_verification)
+  end
+
+  def includes_prioritisation_features
+    FeatureFlags::FeatureFlag.active?(:prioritisation)
   end
 end

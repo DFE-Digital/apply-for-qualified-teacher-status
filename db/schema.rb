@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_02_131857) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_09_154704) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -103,6 +103,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_02_131857) do
     t.date "passport_expiry_date"
     t.string "passport_country_of_issue_code"
     t.integer "working_days_between_submitted_and_completed"
+    t.boolean "includes_prioritisation_features", default: false, null: false
     t.index ["action_required_by"], name: "index_application_forms_on_action_required_by"
     t.index ["assessor_id"], name: "index_application_forms_on_assessor_id"
     t.index ["english_language_provider_id"], name: "index_application_forms_on_english_language_provider_id"

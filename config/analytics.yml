@@ -25,6 +25,7 @@
     - has_work_history
     - id
     - identification_document_status
+    - includes_prioritisation_features
     - needs_registration_number
     - needs_work_history
     - needs_written_statement
