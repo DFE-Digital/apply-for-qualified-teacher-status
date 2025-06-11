@@ -71,6 +71,19 @@ RSpec.describe "Teacher work history", type: :system do
     when_i_delete_work_history
     then_i_see_the(:teacher_check_work_histories_page)
     and_i_see_two_work_histories
+
+    when_i_click_delete_work_history
+    then_i_see_the(:teacher_delete_work_history_page)
+
+    when_i_delete_work_history
+    then_i_see_the(:teacher_check_work_histories_page)
+    and_i_see_one_work_history
+
+    when_i_click_delete_work_history
+    then_i_see_the(:teacher_delete_work_history_page)
+
+    when_i_delete_work_history
+    then_i_see_the(:teacher_new_work_history_page)
   end
 
   private
@@ -260,6 +273,10 @@ RSpec.describe "Teacher work history", type: :system do
 
   def and_i_see_two_work_histories
     expect(teacher_check_work_histories_page.summary_cards.count).to eq(2)
+  end
+
+  def and_i_see_one_work_history
+    expect(teacher_check_work_histories_page.summary_cards.count).to eq(1)
   end
 
   def teacher
