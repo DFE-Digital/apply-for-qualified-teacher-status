@@ -22,6 +22,7 @@
     - family_name
     - given_names
     - has_alternative_name
+    - has_other_england_work_history
     - has_work_history
     - id
     - identification_document_status
@@ -29,6 +30,7 @@
     - needs_registration_number
     - needs_work_history
     - needs_written_statement
+    - other_england_work_history_status
     - passport_document_status
     - passport_country_of_issue_code
     - passport_expiry_date
@@ -391,6 +393,7 @@
     - end_date_is_estimate
     - hours_per_week
     - id
+    - is_other_england_educational_role
     - job
     - postcode
     - school_name

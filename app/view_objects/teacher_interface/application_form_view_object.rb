@@ -59,7 +59,18 @@ class TeacherInterface::ApplicationFormViewObject
         task_list_section(:english_language, %i[english_language])
       end,
       if needs_work_history
-        task_list_section(:work_history, %i[work_history])
+        task_list_section(
+          :work_history,
+          [
+            :work_history,
+            (
+              if includes_prioritisation_features &&
+                   work_history_status_completed?
+                :other_england_work_history
+              end
+            ),
+          ].compact,
+        )
       end,
       if needs_written_statement || needs_registration_number
         task_list_section(
@@ -215,6 +226,8 @@ class TeacherInterface::ApplicationFormViewObject
            :needs_registration_number,
            :teaching_authority_provides_written_statement,
            :requires_preliminary_check,
+           :includes_prioritisation_features,
+           :work_history_status_completed?,
            to: :application_form
 
   delegate :consent_requests,
@@ -280,6 +293,8 @@ class TeacherInterface::ApplicationFormViewObject
       end
     when :work_history
       %i[teacher_interface application_form work_histories]
+    when :other_england_work_history
+      %i[teacher_interface application_form other_england_work_histories]
     else
       url_helpers = Rails.application.routes.url_helpers
       begin

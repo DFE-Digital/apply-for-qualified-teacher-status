@@ -4,29 +4,30 @@
 #
 # Table name: work_histories
 #
-#  id                      :bigint           not null, primary key
-#  address_line1           :string
-#  address_line2           :string
-#  canonical_contact_email :text             default(""), not null
-#  city                    :text             default(""), not null
-#  contact_email           :text             default(""), not null
-#  contact_email_domain    :text             default(""), not null
-#  contact_job             :string           default(""), not null
-#  contact_name            :text             default(""), not null
-#  country_code            :text             default(""), not null
-#  end_date                :date
-#  end_date_is_estimate    :boolean          default(FALSE), not null
-#  hours_per_week          :integer
-#  job                     :text             default(""), not null
-#  postcode                :string
-#  school_name             :text             default(""), not null
-#  school_website          :string
-#  start_date              :date
-#  start_date_is_estimate  :boolean          default(FALSE), not null
-#  still_employed          :boolean
-#  created_at              :datetime         not null
-#  updated_at              :datetime         not null
-#  application_form_id     :bigint           not null
+#  id                                :bigint           not null, primary key
+#  address_line1                     :string
+#  address_line2                     :string
+#  canonical_contact_email           :text             default(""), not null
+#  city                              :text             default(""), not null
+#  contact_email                     :text             default(""), not null
+#  contact_email_domain              :text             default(""), not null
+#  contact_job                       :string           default(""), not null
+#  contact_name                      :text             default(""), not null
+#  country_code                      :text             default(""), not null
+#  end_date                          :date
+#  end_date_is_estimate              :boolean          default(FALSE), not null
+#  hours_per_week                    :integer
+#  is_other_england_educational_role :boolean          default(FALSE), not null
+#  job                               :text             default(""), not null
+#  postcode                          :string
+#  school_name                       :text             default(""), not null
+#  school_website                    :string
+#  start_date                        :date
+#  start_date_is_estimate            :boolean          default(FALSE), not null
+#  still_employed                    :boolean
+#  created_at                        :datetime         not null
+#  updated_at                        :datetime         not null
+#  application_form_id               :bigint           not null
 #
 # Indexes
 #
@@ -45,16 +46,29 @@ class WorkHistory < ApplicationRecord
           required: false,
           dependent: :destroy
 
+  scope :teaching_role, -> { where(is_other_england_educational_role: false) }
+  scope :other_england_educational_role,
+        -> { where(is_other_england_educational_role: true) }
+
   scope :order_by_role, -> { order(start_date: :desc) }
   scope :order_by_user, -> { order(created_at: :asc) }
 
-  def current_or_most_recent_role?
-    application_form.work_histories.empty? ||
-      application_form.work_histories.order_by_role.first == self
+  def initial_other_england_educational_role_by_user?
+    application_form.work_histories.other_england_educational_role.empty? ||
+      application_form
+        .work_histories
+        .other_england_educational_role
+        .order_by_user
+        .first == self
+  end
+
+  def current_or_most_recent_teaching_role?
+    application_form.work_histories.teaching_role.empty? ||
+      application_form.work_histories.teaching_role.order_by_role.first == self
   end
 
   def locale_key
-    if current_or_most_recent_role?
+    if current_or_most_recent_teaching_role?
       "current_or_most_recent_role"
     else
       "previous_role"
@@ -81,6 +95,8 @@ class WorkHistory < ApplicationRecord
       values.append(end_date)
     end
 
+    values.append(postcode) if is_other_england_educational_role?
+
     unless application_form.reduced_evidence_accepted?
       unless contact_email.match?(ValidForNotifyValidator::EMAIL_REGEX)
         return false
@@ -90,7 +106,7 @@ class WorkHistory < ApplicationRecord
     end
 
     unless application_form.created_under_old_regulations?
-      values.append(hours_per_week)
+      values.append(hours_per_week) unless is_other_england_educational_role?
 
       unless application_form.reduced_evidence_accepted?
         values.append(contact_job)

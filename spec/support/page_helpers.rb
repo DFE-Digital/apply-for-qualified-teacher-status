@@ -711,6 +711,41 @@ module PageHelpers
       PageObjects::TeacherInterface::NewWorkHistory.new
   end
 
+  def teacher_meets_criteria_other_england_work_history_page
+    @teacher_meets_criteria_other_england_work_history_page ||=
+      PageObjects::TeacherInterface::MeetsCriteriaOtherEnglandWorkHistory.new
+  end
+
+  def teacher_new_other_england_work_history_page
+    @teacher_new_other_england_work_history_page ||=
+      PageObjects::TeacherInterface::NewOtherEnglandWorkHistory.new
+  end
+
+  def teacher_edit_other_england_work_history_contact_page
+    @teacher_edit_other_england_work_history_contact_page ||=
+      PageObjects::TeacherInterface::EditOtherEnglandWorkHistoryContact.new
+  end
+
+  def teacher_check_other_england_work_history_page
+    @teacher_check_other_england_work_history_page ||=
+      PageObjects::TeacherInterface::CheckOtherEnglandWorkHistory.new
+  end
+
+  def teacher_check_other_england_work_histories_page
+    @teacher_check_other_england_work_histories_page ||=
+      PageObjects::TeacherInterface::CheckOtherEnglandWorkHistories.new
+  end
+
+  def teacher_add_another_other_england_work_history_page
+    @teacher_add_another_other_england_work_history_page ||=
+      PageObjects::TeacherInterface::AddAnotherOtherEnglandWorkHistory.new
+  end
+
+  def teacher_delete_other_england_work_history_page
+    @teacher_delete_other_england_work_history_page =
+      PageObjects::TeacherInterface::DeleteOtherEnglandWorkHistory.new
+  end
+
   def teacher_teaching_qualification_part_of_degree_page
     @teacher_teaching_qualification_part_of_degree_page ||=
       PageObjects::TeacherInterface::TeachingQualificationPartOfDegree.new

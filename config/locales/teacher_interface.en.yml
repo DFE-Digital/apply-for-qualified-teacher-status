@@ -127,6 +127,15 @@ en:
         title: Check your answers
       delete:
         title: Delete work history
+    other_england_work_histories:
+      add_another:
+        title: Do you want to add more valid educational work experience in England?
+      check_collection:
+        title: Check your answers
+      check_member:
+        title: Check your answers
+      delete:
+        title: Delete work history
 
   application_form:
     tasks:
@@ -135,6 +144,7 @@ en:
         qualifications: Your qualifications
         english_language: Your English language proficiency
         work_history: Your work history
+        other_england_work_history: Other work experience in England
         proof_of_recognition: Proof that you’re recognised as a teacher
       items:
         personal_information: Enter your personal information
@@ -145,6 +155,7 @@ en:
         subjects: Enter the subjects you can teach
         english_language: Verify your English language proficiency
         work_history: Add your work history
+        other_england_work_history: Add other work experience in England
         registration_number:
           ghana: Enter your teacher license number
           other: Enter your registration number
@@ -199,6 +210,16 @@ en:
           previous_role: Add another role
       contact:
         heading: Who should we contact to verify this role?
+    other_england_work_history:
+      meets_criteria:
+        heading: Do you have other educational work experience in England that meets our criteria?
+      school:
+        first:
+          heading: Add your valid educational work experience in England
+        others:
+          heading: Add more valid educational work experience in England
+      contact:
+        heading: Who should we contact to verify this role?
     summary:
       name: Name
       country: Country trained in
@@ -251,6 +272,10 @@ en:
             add_another:
               inclusion: Select whether you need to upload another page
         teacher_interface/add_another_work_history_form:
+          attributes:
+            add_another:
+              inclusion: Select whether you need to add another role
+        teacher_interface/add_another_other_england_work_history_form:
           attributes:
             add_another:
               inclusion: Select whether you need to add another role
@@ -497,6 +522,32 @@ en:
               future: Start date must be in the past
             still_employed:
               inclusion: Tell us whether you are still employed at this school
+            end_date:
+              blank: Enter the end date in the format 3 1980
+              invalid: Enter the end date in the format 3 1980
+              future: End date must be in the past
+              comparison: End date must be after start date
+        teacher_interface/other_england_work_history_school_form:
+          attributes:
+            school_name:
+              blank: Enter the institution name
+            address_line1:
+              blank: Enter address line 1, typically the building and street
+            city:
+              blank: Enter town or city
+            country_location:
+              blank: Enter the country
+              inclusion: The institution must be in England
+            job:
+              blank: Enter the job role
+            postcode:
+              blank: Enter a postcode
+            start_date:
+              blank: Enter the start date in the format 3 1980
+              invalid: Enter the start date in the format 3 1980
+              future: Start date must be in the past
+            still_employed:
+              inclusion: Tell us whether you are still employed at this institution
             end_date:
               blank: Enter the end date in the format 3 1980
               invalid: Enter the end date in the format 3 1980

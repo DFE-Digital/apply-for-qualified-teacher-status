@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_09_154704) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_10_141518) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -104,6 +104,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_09_154704) do
     t.string "passport_country_of_issue_code"
     t.integer "working_days_between_submitted_and_completed"
     t.boolean "includes_prioritisation_features", default: false, null: false
+    t.boolean "has_other_england_work_history"
+    t.string "other_england_work_history_status", default: "not_started", null: false
     t.index ["action_required_by"], name: "index_application_forms_on_action_required_by"
     t.index ["assessor_id"], name: "index_application_forms_on_assessor_id"
     t.index ["english_language_provider_id"], name: "index_application_forms_on_english_language_provider_id"
@@ -623,6 +625,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_09_154704) do
     t.string "address_line2"
     t.string "school_website"
     t.string "postcode"
+    t.boolean "is_other_england_educational_role", default: false, null: false
     t.index ["application_form_id"], name: "index_work_histories_on_application_form_id"
     t.index ["canonical_contact_email"], name: "index_work_histories_on_canonical_contact_email"
   end

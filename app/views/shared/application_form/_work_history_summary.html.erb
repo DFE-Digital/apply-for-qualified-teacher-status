@@ -4,9 +4,16 @@
   <% application_form = work_history.application_form %>
   <% as_assessor_and_can_edit_work_history = current_namespace == "assessor" && AssessorInterface::WorkHistoryPolicy.new(current_staff, work_history).edit? %>
 
-  <% school_change_link_to = as_teacher ? [:school, :teacher_interface, :application_form, work_history] : nil %>
-  <% contact_change_link_to = as_teacher ? [:contact, :teacher_interface, :application_form, work_history] : (as_assessor_and_can_edit_work_history ? [:edit, :assessor_interface, application_form, work_history] : nil) %>
-  <% with_action_link_to = as_teacher && changeable ? [:delete, :teacher_interface, :application_form, work_history] : nil %>
+  <% if work_history.is_other_england_educational_role? %>
+    <% school_change_link_to = as_teacher ? school_teacher_interface_application_form_other_england_work_history_path(work_history) : nil %>
+    <% contact_change_link_to = as_teacher ? contact_teacher_interface_application_form_other_england_work_history_path(work_history) : (as_assessor_and_can_edit_work_history ? [:edit, :assessor_interface, application_form, work_history] : nil) %>
+    <% with_action_link_to = as_teacher && changeable ? delete_teacher_interface_application_form_other_england_work_history_path(work_history) : nil %>
+  <% else %>
+    <% school_change_link_to = as_teacher ? [:school, :teacher_interface, :application_form, work_history] : nil %>
+    <% contact_change_link_to = as_teacher ? [:contact, :teacher_interface, :application_form, work_history] : (as_assessor_and_can_edit_work_history ? [:edit, :assessor_interface, application_form, work_history] : nil) %>
+    <% with_action_link_to = as_teacher && changeable ? [:delete, :teacher_interface, :application_form, work_history] : nil %>
+  <% end %>
+
   <% with_action_link_label = as_teacher && changeable ? "Delete <span class=\"govuk-visually-hidden\">#{work_history.school_name.downcase}</span>".html_safe : nil %>
 
   <%= render(CheckYourAnswersSummary::Component.new(
@@ -14,7 +21,10 @@
     model: work_history,
     title: work_history.school_name,
     fields: {
-      school_name: { href: school_change_link_to },
+      school_name: {
+        title: work_history.is_other_england_educational_role? ? "Name of institution" : "School name",
+        href: school_change_link_to
+      },
       address_line1: {
         title: "Address line 1 of institution",
         href: school_change_link_to,
@@ -32,18 +42,18 @@
         href: school_change_link_to,
       },
       postcode: {
-        title: "Postal/ZIP code of institution",
+        title: work_history.is_other_england_educational_role? ? "Postcode of institution" : "Postal/ZIP code of institution",
         href: school_change_link_to
       },
       school_website: {
-        title: "School webpage",
+        title: work_history.is_other_england_educational_role? ? "Institution webpage" : "School webpage",
         href: school_change_link_to
       },
       job: {
         title: "Your job role",
         href: school_change_link_to,
       },
-      hours_per_week: {
+      hours_per_week: work_history.is_other_england_educational_role? ? nil : {
         title: "Hours per week",
         href: school_change_link_to,
       },

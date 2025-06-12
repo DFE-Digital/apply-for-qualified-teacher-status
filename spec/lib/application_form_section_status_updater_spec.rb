@@ -377,6 +377,17 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
         end
 
         it { is_expected.to eq("completed") }
+
+        context "when there is also other England work history role that is incomplete" do
+          let(:application_form) do
+            create(:application_form).tap do |application_form|
+              create(:work_history, :completed, application_form:)
+              create(:work_history, :other_england_role, application_form:)
+            end
+          end
+
+          it { is_expected.to eq("completed") }
+        end
       end
 
       context "under the old regulations" do
@@ -435,6 +446,65 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
             it { is_expected.to eq("completed") }
           end
         end
+      end
+    end
+
+    describe "other England work history" do
+      subject(:other_england_work_history_status) do
+        application_form.other_england_work_history_status
+      end
+
+      context "with has not answered whether they have other England work experience" do
+        let(:application_form) { create(:application_form) }
+
+        it { is_expected.to eq("not_started") }
+      end
+
+      context "with has no other England work history" do
+        let(:application_form) do
+          create(:application_form, has_other_england_work_history: false)
+        end
+
+        it { is_expected.to eq("completed") }
+      end
+
+      context "with has other England work history but no work history" do
+        let(:application_form) do
+          create(:application_form, has_other_england_work_history: true)
+        end
+
+        it { is_expected.to eq("in_progress") }
+      end
+
+      context "with an incomplete work history" do
+        let(:application_form) do
+          create(
+            :application_form,
+            has_other_england_work_history: true,
+          ).tap do |application_form|
+            create(:work_history, :other_england_role, application_form:)
+          end
+        end
+
+        it { is_expected.to eq("in_progress") }
+      end
+
+      context "with a complete work history" do
+        let(:application_form) do
+          create(
+            :application_form,
+            has_other_england_work_history: true,
+          ).tap do |application_form|
+            create(
+              :work_history,
+              :other_england_role,
+              :completed,
+              application_form:,
+            )
+          end
+        end
+
+        it { is_expected.to eq("completed") }
       end
     end
 
