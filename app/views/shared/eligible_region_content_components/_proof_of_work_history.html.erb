@@ -22,3 +22,11 @@
 <% unless region.reduced_evidence_accepted %>
   <p class="govuk-body">We will contact the references you’ve provided to confirm your teaching work history before we award QTS.</p>
 <% end %>
+
+<% if eligibility_check&.eligible_work_experience_in_england? %>
+  <h3 class="govuk-heading-s">Work experience in England</h3>
+
+  <p class="govuk-body">For your application to be prioritised, you will need to provide information about your work experience in England and references who can confirm what you have told us.</p>
+  <p class="govuk-body">If your work experience is not valid, or if we can’t confirm it with your references, then we won’t prioritise your application.</p>
+  <p class="govuk-body">Read more about <%= govuk_link_to "what roles and settings are valid for your application to be prioritised", "https://www.gov.uk/government/publications/awarding-qualified-teacher-status-to-overseas-teachers/a-fairer-approach-to-awarding-qts-to-overseas-teachers--2" %>.</p>
+<% end %>

@@ -38,4 +38,16 @@
   </ul>
 
   <p class="govuk-body">We accept any of the above as evidence you are qualified to teach a specific subject.</p>
+
+  <% if FeatureFlags::FeatureFlag.active?(:prioritisation) %>
+    <h3 class="govuk-heading-s">If you have valid work experience in England</h3>
+
+    <p class="govuk-body">
+      Your application will be prioritised if you have valid work experience in England within the last 12 months that we can confirm with your references. This means you must be qualified to teach children aged anywhere between 5 to 16. You do not need to meet the specific subject requirements.
+    </p>
+
+    <p class="govuk-body">
+      If we can't confirm that you have valid work experience in England, the standard requirements apply. You must be qualified to teach children aged 11 to 16 in one or more of the specific subjects listed above.
+    </p>
+  <% end %>
 <% end %>

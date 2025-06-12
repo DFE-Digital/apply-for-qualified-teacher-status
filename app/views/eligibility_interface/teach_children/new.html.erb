@@ -3,14 +3,23 @@
   hint = "You do not need to be qualified to teach this full age range. \
           For example, you might be qualified to teach children aged 5 to 11, or 14 to 16."
 
-  if @form.eligibility_check.qualified_for_subject_required?
+  if @form.eligibility_check.qualified_for_subject_required? && !@eligibility_check.eligible_work_experience_in_england?
     legend = "Are you qualified to teach children aged 11-16 years?"
     hint = "You must be qualified to teach children aged 11-16 to be eligible for QTS."
   end
+
+  if @form.eligibility_check.qualified_for_subject_required? && @eligibility_check.eligible_work_experience_in_england?
+    hint += "<br /><br />"
+    hint += "You told us you have valid work experience in England. If we cannot confirm this, you will need to prove you are qualified to teach children aged anywhere between 11 and 16 years."
+  end
+%>
+
+<%
+  back_link_url = FeatureFlags::FeatureFlag.active?(:prioritisation) ? eligibility_interface_work_experience_in_england_path : eligibility_interface_misconduct_path
 %>
 
 <% content_for :page_title, title_with_error_prefix(legend, error: @form.errors.any?) %>
-<% content_for :back_link_url, eligibility_interface_misconduct_path %>
+<% content_for :back_link_url, back_link_url %>
 
 <%= form_with model: @form, url: [:eligibility_interface, :teach_children] do |f| %>
   <%= f.govuk_error_summary %>
@@ -21,7 +30,7 @@
     :value,
     :label,
     legend: { size: 'l', tag: 'h1', text: legend },
-    hint: { text: hint }
+    hint: { text: hint.html_safe }
   ) %>
 
   <%= f.govuk_submit %>

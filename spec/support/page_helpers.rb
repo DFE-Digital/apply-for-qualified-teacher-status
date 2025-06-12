@@ -422,6 +422,11 @@ module PageHelpers
       PageObjects::EligibilityInterface::WorkExperience.new
   end
 
+  def eligibility_work_experience_in_england_page
+    @eligibility_work_experience_in_england_page ||=
+      PageObjects::EligibilityInterface::WorkExperienceInEngland.new
+  end
+
   def personas_page
     @personas_page ||= PageObjects::Personas.new
   end
