@@ -36,7 +36,6 @@ module AssessorInterface::AgeRangeSubjectsForm
     attribute :subjects_note, :string
 
     validates :subject_1, presence: true
-    validates :subject_1_raw, presence: true
   end
 
   def save
