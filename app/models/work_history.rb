@@ -93,6 +93,11 @@ class WorkHistory < ApplicationRecord
     if still_employed == false
       values.pop
       values.append(end_date)
+
+      if is_other_england_educational_role? && end_date.present? &&
+           end_date < 1.year.ago.beginning_of_month
+        return false
+      end
     end
 
     values.append(postcode) if is_other_england_educational_role?

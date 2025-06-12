@@ -244,5 +244,48 @@ RSpec.describe WorkHistory, type: :model do
         it { is_expected.to be true }
       end
     end
+
+    context "with not still employed and end date present" do
+      let(:work_history) do
+        create(:work_history, :completed, still_employed: false, end_date:)
+      end
+      let(:end_date) { 11.months.ago.beginning_of_month }
+
+      it { is_expected.to be true }
+
+      context "when the work history is other England role" do
+        let(:work_history) do
+          create(
+            :work_history,
+            :other_england_role,
+            :completed,
+            still_employed: false,
+            end_date:,
+          )
+        end
+
+        it { is_expected.to be true }
+      end
+
+      context "with the end date being over 12 months ago" do
+        let(:end_date) { 13.months.ago.beginning_of_month }
+
+        it { is_expected.to be true }
+
+        context "when the work history is other England role" do
+          let(:work_history) do
+            create(
+              :work_history,
+              :other_england_role,
+              :completed,
+              still_employed: false,
+              end_date:,
+            )
+          end
+
+          it { is_expected.to be false }
+        end
+      end
+    end
   end
 end

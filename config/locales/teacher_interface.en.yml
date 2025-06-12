@@ -553,6 +553,7 @@ en:
               invalid: Enter the end date in the format 3 1980
               future: End date must be in the past
               comparison: End date must be after start date
+              over_12_months_ago: The end date cannot be more than 12 months ago
         teacher_interface/written_statement_confirmation_form:
           attributes:
             written_statement_confirmation:

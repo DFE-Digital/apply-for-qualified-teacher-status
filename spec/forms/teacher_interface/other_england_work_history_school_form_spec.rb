@@ -47,7 +47,7 @@ RSpec.describe TeacherInterface::OtherEnglandWorkHistorySchoolForm,
     it { is_expected.to allow_values(true, false).for(:still_employed) }
     it { is_expected.to allow_values("country:GB-ENG").for(:country_location) }
 
-    context "with an invalid start date" do
+    context "with an invalid start date format" do
       let(:start_date) { { 1 => 2022, 2 => 13, 3 => 1 } }
 
       it { is_expected.not_to be_valid }
@@ -70,7 +70,7 @@ RSpec.describe TeacherInterface::OtherEnglandWorkHistorySchoolForm,
 
       it { is_expected.to validate_presence_of(:end_date) }
 
-      context "with an invalid end date" do
+      context "with an invalid end date format" do
         let(:end_date) { { 1 => 2022, 2 => 13, 3 => 1 } }
 
         it { is_expected.not_to be_valid }
@@ -79,6 +79,12 @@ RSpec.describe TeacherInterface::OtherEnglandWorkHistorySchoolForm,
       context "with a start date after the end date" do
         let(:start_date) { { 1 => 2022, 2 => 11, 3 => 1 } }
         let(:end_date) { { 1 => 2022, 2 => 10, 3 => 1 } }
+
+        it { is_expected.not_to be_valid }
+      end
+
+      context "with end date more than a year ago" do
+        let(:end_date) { { 1 => 2023, 2 => 1, 3 => 1 } }
 
         it { is_expected.not_to be_valid }
       end
@@ -107,7 +113,9 @@ RSpec.describe TeacherInterface::OtherEnglandWorkHistorySchoolForm,
     let(:job) { "Job" }
     let(:start_date) { { 1 => 2020, 2 => 10, 3 => 1 } }
     let(:still_employed) { "false" }
-    let(:end_date) { { 1 => 2021, 2 => 10, 3 => 1 } }
+    let(:end_date) do
+      { 1 => Date.current.year, 2 => Date.current.month, 3 => 1 }
+    end
 
     before { expect(save).to be true }
 
@@ -119,7 +127,7 @@ RSpec.describe TeacherInterface::OtherEnglandWorkHistorySchoolForm,
       expect(work_history.job).to eq("Job")
       expect(work_history.start_date).to eq(Date.new(2020, 10, 1))
       expect(work_history.still_employed).to be false
-      expect(work_history.end_date).to eq(Date.new(2021, 10, 1))
+      expect(work_history.end_date).to eq(Date.current.beginning_of_month)
       expect(work_history.is_other_england_educational_role).to be(true)
     end
 

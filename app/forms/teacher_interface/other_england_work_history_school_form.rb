@@ -29,6 +29,8 @@ module TeacherInterface
     validates :end_date, date: true, if: -> { still_employed == false }
     validates_with DateComparisonValidator, if: -> { still_employed == false }
 
+    validate :end_date_within_last_12_months, if: -> { still_employed == false }
+
     def initialize(values)
       if (country_code = values.delete(:country_code))
         values[:country_location] = CountryCode.to_location(country_code)
@@ -62,6 +64,14 @@ module TeacherInterface
 
     def country_code
       CountryCode.from_location(country_location)
+    end
+
+    def end_date_within_last_12_months
+      date = DateValidator.parse(end_date)
+
+      if date.present? && date < 1.year.ago.beginning_of_month
+        errors.add(:end_date, :over_12_months_ago)
+      end
     end
   end
 end
