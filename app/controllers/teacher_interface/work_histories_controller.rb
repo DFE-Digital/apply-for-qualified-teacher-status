@@ -227,7 +227,16 @@ module TeacherInterface
         )
 
       if @form.save(validate: true)
-        redirect_to %i[check teacher_interface application_form work_histories]
+        if application_form.work_histories.none?
+          redirect_to %i[new teacher_interface application_form work_history]
+        else
+          redirect_to %i[
+                        check
+                        teacher_interface
+                        application_form
+                        work_histories
+                      ]
+        end
       else
         send_errors_to_big_query(@form)
 
