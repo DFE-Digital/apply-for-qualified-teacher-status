@@ -172,6 +172,39 @@ RSpec.describe "Teacher submitting", type: :system do
     end
   end
 
+  context "when application has other England work history" do
+    let(:application_form) do
+      create(
+        :application_form,
+        :with_personal_information,
+        :with_identification_document,
+        :with_teaching_qualification,
+        :with_age_range,
+        :with_subjects,
+        :with_english_language_provider,
+        :with_work_history,
+        :with_other_england_work_history,
+        :with_written_statement,
+        :with_registration_number,
+        teacher:,
+      )
+    end
+
+    it "submits" do
+      when_i_visit_the(:teacher_application_page)
+      then_i_see_the(:teacher_application_page)
+
+      when_i_click_check_your_answers
+      then_i_see_the(:teacher_check_your_answers_page)
+      and_i_see_the_other_england_work_history_summary
+
+      when_i_confirm_i_have_no_sanctions
+      then_i_see_the(:teacher_submitted_application_page)
+      and_i_see_the_submitted_application_information
+      and_i_receive_an_application_email
+    end
+  end
+
   def and_i_see_the_identity_document_summary
     expect(teacher_submitted_application_page).to have_content(
       "Upload your identity document",
@@ -187,6 +220,12 @@ RSpec.describe "Teacher submitting", type: :system do
     )
     expect(teacher_submitted_application_page).to have_content(
       "Upload your passport",
+    )
+  end
+
+  def and_i_see_the_other_england_work_history_summary
+    expect(teacher_submitted_application_page).to have_content(
+      "Other work experience in England",
     )
   end
 

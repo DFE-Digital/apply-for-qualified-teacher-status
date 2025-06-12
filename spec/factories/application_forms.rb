@@ -424,6 +424,19 @@ FactoryBot.define do
       end
     end
 
+    trait :with_other_england_work_history do
+      has_other_england_work_history { true }
+      other_england_work_history_status { "completed" }
+
+      after(:create) do |application_form, _evaluator|
+        create :work_history,
+               :completed,
+               :other_england_role,
+               :still_employed,
+               application_form:
+      end
+    end
+
     trait :with_written_statement do
       needs_written_statement { true }
       written_statement_status { "completed" }
