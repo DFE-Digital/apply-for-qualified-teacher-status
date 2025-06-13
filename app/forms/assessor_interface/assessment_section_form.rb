@@ -26,7 +26,11 @@ class AssessorInterface::AssessmentSectionForm
     return {} if passed
 
     work_histories =
-      assessment_section.assessment.application_form.work_histories
+      assessment_section
+        .assessment
+        .application_form
+        .work_histories
+        .teaching_role
 
     assessment_section
       .failure_reasons

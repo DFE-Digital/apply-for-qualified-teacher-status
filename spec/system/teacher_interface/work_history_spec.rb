@@ -86,6 +86,65 @@ RSpec.describe "Teacher work history", type: :system do
     then_i_see_the(:teacher_new_work_history_page)
   end
 
+  context "when application form has prioritisation features enabled" do
+    before { application_form.update!(includes_prioritisation_features: true) }
+
+    it "record work history and navigates to other work experience in England" do
+      when_i_visit_the(:teacher_application_page)
+      then_i_see_the(:teacher_application_page)
+      and_i_see_the_work_history_task
+
+      when_i_click_the_work_history_task
+      then_i_see_the(:teacher_new_work_history_page)
+
+      when_i_fill_in_the_school_information
+      then_i_see_the(:teacher_edit_work_history_contact_page)
+
+      when_i_fill_in_the_contact_information
+      then_i_see_the(:teacher_check_work_history_page)
+      and_i_see_the_work_history_information
+
+      when_i_click_continue
+      then_i_see_the(:teacher_add_another_work_history_page)
+      and_i_see_the_heading_with_the_number_of_months
+
+      when_i_dont_add_another_work_history
+      then_i_see_the(:teacher_meets_criteria_other_england_work_history_page)
+    end
+
+    context "with the other work experience in England already completed" do
+      before do
+        application_form.update!(
+          other_england_work_history_status: :completed,
+          has_other_england_work_history: false,
+        )
+      end
+
+      it "records work history and goes back to application task list" do
+        when_i_visit_the(:teacher_application_page)
+        then_i_see_the(:teacher_application_page)
+        and_i_see_the_work_history_task
+
+        when_i_click_the_work_history_task
+        then_i_see_the(:teacher_new_work_history_page)
+
+        when_i_fill_in_the_school_information
+        then_i_see_the(:teacher_edit_work_history_contact_page)
+
+        when_i_fill_in_the_contact_information
+        then_i_see_the(:teacher_check_work_history_page)
+        and_i_see_the_work_history_information
+
+        when_i_click_continue
+        then_i_see_the(:teacher_add_another_work_history_page)
+        and_i_see_the_heading_with_the_number_of_months
+
+        when_i_dont_add_another_work_history
+        then_i_see_the(:teacher_application_page)
+      end
+    end
+  end
+
   private
 
   def given_an_application_form_exists

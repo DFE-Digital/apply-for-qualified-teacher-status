@@ -193,6 +193,18 @@ RSpec.describe "Assessor check submitted details", type: :system do
     and_i_see_check_work_history_completed
   end
 
+  it "does not display other England work history records" do
+    given_some_other_england_work_history_exists
+
+    when_i_visit_the(
+      :assessor_check_work_history_page,
+      reference:,
+      assessment_id:,
+      section_id: section_id("work_history"),
+    )
+    then_i_see_the_work_history_without_other_england_work_history
+  end
+
   it "allows viewing work history once submitted" do
     given_there_are_selected_failure_reasons("work_history")
     when_i_visit_the(
@@ -428,10 +440,20 @@ RSpec.describe "Assessor check submitted details", type: :system do
   end
 
   def then_i_see_the_work_history
-    most_recent_role = application_form.work_histories.first
+    most_recent_role = application_form.work_histories.teaching_role.first
     expect(
       assessor_check_work_history_page.most_recent_role.school_name.text,
     ).to eq(most_recent_role.school_name)
+  end
+
+  def then_i_see_the_work_history_without_other_england_work_history
+    then_i_see_the_work_history
+
+    other_england_work_history_role =
+      application_form.work_histories.other_england_educational_role.first
+    expect(assessor_check_work_history_page).not_to eq(
+      other_england_work_history_role.school_name,
+    )
   end
 
   def when_i_choose_check_work_history_yes
@@ -581,6 +603,18 @@ RSpec.describe "Assessor check submitted details", type: :system do
       :selected_failure_reason,
       assessment_section_id: section_id(key),
       key: "identification_document_expired",
+    )
+  end
+
+  def given_some_other_england_work_history_exists
+    application_form.update!(has_other_england_work_history: true)
+    create(
+      :work_history,
+      :other_england_role,
+      :completed,
+      application_form:,
+      country_code: "GB-ENG",
+      school_name: "Other England school",
     )
   end
 end

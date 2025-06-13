@@ -24,11 +24,14 @@
 #  family_name                                   :text             default(""), not null
 #  given_names                                   :text             default(""), not null
 #  has_alternative_name                          :boolean
+#  has_other_england_work_history                :boolean
 #  has_work_history                              :boolean
 #  identification_document_status                :string           default("not_started"), not null
+#  includes_prioritisation_features              :boolean          default(FALSE), not null
 #  needs_registration_number                     :boolean          not null
 #  needs_work_history                            :boolean          not null
 #  needs_written_statement                       :boolean          not null
+#  other_england_work_history_status             :string           default("not_started"), not null
 #  passport_country_of_issue_code                :string
 #  passport_document_status                      :string           default("not_started"), not null
 #  passport_expiry_date                          :date

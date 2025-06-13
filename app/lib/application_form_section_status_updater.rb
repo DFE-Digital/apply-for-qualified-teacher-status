@@ -17,6 +17,7 @@ class ApplicationFormSectionStatusUpdater
       subjects_status:,
       english_language_status:,
       work_history_status:,
+      other_england_work_history_status:,
       registration_number_status:,
       written_statement_status:,
     )
@@ -49,6 +50,7 @@ class ApplicationFormSectionStatusUpdater
            :english_language_provider_other,
            :english_language_provider_reference,
            :has_work_history,
+           :has_other_england_work_history,
            :work_histories,
            :registration_number,
            :passport_country_of_issue_code,
@@ -174,19 +176,21 @@ class ApplicationFormSectionStatusUpdater
   end
 
   def work_history_status
-    all_work_histories_complete = work_histories.all?(&:complete?)
+    teaching_work_histories = work_histories.teaching_role
+
+    all_work_histories_complete = teaching_work_histories.all?(&:complete?)
 
     if application_form.created_under_old_regulations?
       return :not_started if has_work_history.nil?
 
       if !has_work_history ||
-           (!work_histories.empty? && all_work_histories_complete)
+           (!teaching_work_histories.empty? && all_work_histories_complete)
         :completed
       else
         :in_progress
       end
     else
-      return :not_started if work_histories.empty?
+      return :not_started if teaching_work_histories.empty?
       return :in_progress unless all_work_histories_complete
 
       enough_for_submission =
@@ -196,6 +200,21 @@ class ApplicationFormSectionStatusUpdater
 
       enough_for_submission ? :completed : :in_progress
     end
+  end
+
+  def other_england_work_history_status
+    other_england_work_histories = work_histories.other_england_educational_role
+
+    all_work_histories_complete =
+      !other_england_work_histories.empty? &&
+        other_england_work_histories.all?(&:complete?)
+
+    return :not_started if has_other_england_work_history.nil?
+    if !has_other_england_work_history || all_work_histories_complete
+      return :completed
+    end
+
+    :in_progress
   end
 
   def registration_number_status

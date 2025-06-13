@@ -32,10 +32,21 @@
     <h2 class="govuk-heading-m">Your work history</h2>
 
     <%= render "shared/application_form/work_history_summary",
-               work_histories: @application_form.work_histories.order_by_user,
+               work_histories: @application_form.work_histories.teaching_role.order_by_user,
                highlighted_contact_emails: [],
                changeable: true %>
   </section>
+
+  <% if @application_form.has_other_england_work_history? %>
+    <section id="app-application-form-other-england-work-history">
+      <h2 class="govuk-heading-m">Other work experience in England</h2>
+
+      <%= render "shared/application_form/work_history_summary",
+                work_histories: @application_form.work_histories.other_england_educational_role.order_by_user,
+                highlighted_contact_emails: [],
+                changeable: true %>
+    </section>
+  <% end %>
 <% end %>
 
 <% if @application_form.needs_written_statement || @application_form.needs_registration_number %>

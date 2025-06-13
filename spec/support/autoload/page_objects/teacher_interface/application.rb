@@ -47,6 +47,10 @@ module PageObjects
         find_task_list_item("Add your work history")
       end
 
+      def other_england_work_history_task_item
+        find_task_list_item("Add other work experience in England")
+      end
+
       def registration_number_task_item
         find_task_list_item("Enter your registration number")
       end

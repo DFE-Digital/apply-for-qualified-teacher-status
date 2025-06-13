@@ -4,29 +4,30 @@
 #
 # Table name: work_histories
 #
-#  id                      :bigint           not null, primary key
-#  address_line1           :string
-#  address_line2           :string
-#  canonical_contact_email :text             default(""), not null
-#  city                    :text             default(""), not null
-#  contact_email           :text             default(""), not null
-#  contact_email_domain    :text             default(""), not null
-#  contact_job             :string           default(""), not null
-#  contact_name            :text             default(""), not null
-#  country_code            :text             default(""), not null
-#  end_date                :date
-#  end_date_is_estimate    :boolean          default(FALSE), not null
-#  hours_per_week          :integer
-#  job                     :text             default(""), not null
-#  postcode                :string
-#  school_name             :text             default(""), not null
-#  school_website          :string
-#  start_date              :date
-#  start_date_is_estimate  :boolean          default(FALSE), not null
-#  still_employed          :boolean
-#  created_at              :datetime         not null
-#  updated_at              :datetime         not null
-#  application_form_id     :bigint           not null
+#  id                                :bigint           not null, primary key
+#  address_line1                     :string
+#  address_line2                     :string
+#  canonical_contact_email           :text             default(""), not null
+#  city                              :text             default(""), not null
+#  contact_email                     :text             default(""), not null
+#  contact_email_domain              :text             default(""), not null
+#  contact_job                       :string           default(""), not null
+#  contact_name                      :text             default(""), not null
+#  country_code                      :text             default(""), not null
+#  end_date                          :date
+#  end_date_is_estimate              :boolean          default(FALSE), not null
+#  hours_per_week                    :integer
+#  is_other_england_educational_role :boolean          default(FALSE), not null
+#  job                               :text             default(""), not null
+#  postcode                          :string
+#  school_name                       :text             default(""), not null
+#  school_website                    :string
+#  start_date                        :date
+#  start_date_is_estimate            :boolean          default(FALSE), not null
+#  still_employed                    :boolean
+#  created_at                        :datetime         not null
+#  updated_at                        :datetime         not null
+#  application_form_id               :bigint           not null
 #
 # Indexes
 #
@@ -64,9 +65,9 @@ RSpec.describe WorkHistory, type: :model do
     it { is_expected.to eq([oldest, newest]) }
   end
 
-  describe "#current_or_most_recent_role?" do
-    subject(:current_or_most_recent_role?) do
-      work_history.current_or_most_recent_role?
+  describe "#current_or_most_recent_teaching_role?" do
+    subject(:current_or_most_recent_teaching_role?) do
+      work_history.current_or_most_recent_teaching_role?
     end
 
     let(:work_history) { build(:work_history) }
@@ -92,6 +93,56 @@ RSpec.describe WorkHistory, type: :model do
 
       it { is_expected.to be(false) }
     end
+
+    context "when there are saved other England work histories" do
+      before do
+        create(
+          :work_history,
+          :other_england_role,
+          application_form: work_history.application_form,
+        )
+      end
+
+      it { is_expected.to be(true) }
+    end
+  end
+
+  describe "#initial_other_england_educational_role_by_user?" do
+    subject(:initial_other_england_educational_role_by_user?) do
+      work_history.initial_other_england_educational_role_by_user?
+    end
+
+    let(:work_history) { build(:work_history, :other_england_role) }
+
+    context "when there are no saved other England work histories" do
+      it { is_expected.to be(true) }
+    end
+
+    context "when there are saved other England work histories and this is the first" do
+      before { work_history.save! }
+
+      it { is_expected.to be(true) }
+    end
+
+    context "when there are saved other England work histories and this is not the first" do
+      before do
+        create(
+          :work_history,
+          :other_england_role,
+          application_form: work_history.application_form,
+        )
+      end
+
+      it { is_expected.to be(false) }
+    end
+
+    context "when there are saved teaching work histories" do
+      before do
+        create(:work_history, application_form: work_history.application_form)
+      end
+
+      it { is_expected.to be(true) }
+    end
   end
 
   describe "#complete?" do
@@ -99,16 +150,51 @@ RSpec.describe WorkHistory, type: :model do
 
     it { is_expected.to be false }
 
-    context "with a partially complete qualification" do
+    context "with a partially complete work history" do
       before { work_history.update!(school_name: "School name") }
 
       it { is_expected.to be false }
     end
 
-    context "with a complete qualification" do
+    context "with a complete work history" do
       let(:work_history) { create(:work_history, :completed) }
 
       it { is_expected.to be true }
+    end
+
+    context "with postcode is not present" do
+      let(:work_history) { create(:work_history, :completed, postcode: nil) }
+
+      it { is_expected.to be true }
+
+      context "when the work history is other England role" do
+        let(:work_history) do
+          create(:work_history, :other_england_role, :completed, postcode: nil)
+        end
+
+        it { is_expected.to be false }
+      end
+    end
+
+    context "with hours worked is not present" do
+      let(:work_history) do
+        create(:work_history, :completed, hours_per_week: nil)
+      end
+
+      it { is_expected.to be false }
+
+      context "when the work history is other England role" do
+        let(:work_history) do
+          create(
+            :work_history,
+            :other_england_role,
+            :completed,
+            hours_per_week: nil,
+          )
+        end
+
+        it { is_expected.to be true }
+      end
     end
 
     context "without contact information" do
@@ -156,6 +242,49 @@ RSpec.describe WorkHistory, type: :model do
         end
 
         it { is_expected.to be true }
+      end
+    end
+
+    context "with not still employed and end date present" do
+      let(:work_history) do
+        create(:work_history, :completed, still_employed: false, end_date:)
+      end
+      let(:end_date) { 11.months.ago.beginning_of_month }
+
+      it { is_expected.to be true }
+
+      context "when the work history is other England role" do
+        let(:work_history) do
+          create(
+            :work_history,
+            :other_england_role,
+            :completed,
+            still_employed: false,
+            end_date:,
+          )
+        end
+
+        it { is_expected.to be true }
+      end
+
+      context "with the end date being over 12 months ago" do
+        let(:end_date) { 13.months.ago.beginning_of_month }
+
+        it { is_expected.to be true }
+
+        context "when the work history is other England role" do
+          let(:work_history) do
+            create(
+              :work_history,
+              :other_england_role,
+              :completed,
+              still_employed: false,
+              end_date:,
+            )
+          end
+
+          it { is_expected.to be false }
+        end
       end
     end
   end

@@ -4,29 +4,30 @@
 #
 # Table name: work_histories
 #
-#  id                      :bigint           not null, primary key
-#  address_line1           :string
-#  address_line2           :string
-#  canonical_contact_email :text             default(""), not null
-#  city                    :text             default(""), not null
-#  contact_email           :text             default(""), not null
-#  contact_email_domain    :text             default(""), not null
-#  contact_job             :string           default(""), not null
-#  contact_name            :text             default(""), not null
-#  country_code            :text             default(""), not null
-#  end_date                :date
-#  end_date_is_estimate    :boolean          default(FALSE), not null
-#  hours_per_week          :integer
-#  job                     :text             default(""), not null
-#  postcode                :string
-#  school_name             :text             default(""), not null
-#  school_website          :string
-#  start_date              :date
-#  start_date_is_estimate  :boolean          default(FALSE), not null
-#  still_employed          :boolean
-#  created_at              :datetime         not null
-#  updated_at              :datetime         not null
-#  application_form_id     :bigint           not null
+#  id                                :bigint           not null, primary key
+#  address_line1                     :string
+#  address_line2                     :string
+#  canonical_contact_email           :text             default(""), not null
+#  city                              :text             default(""), not null
+#  contact_email                     :text             default(""), not null
+#  contact_email_domain              :text             default(""), not null
+#  contact_job                       :string           default(""), not null
+#  contact_name                      :text             default(""), not null
+#  country_code                      :text             default(""), not null
+#  end_date                          :date
+#  end_date_is_estimate              :boolean          default(FALSE), not null
+#  hours_per_week                    :integer
+#  is_other_england_educational_role :boolean          default(FALSE), not null
+#  job                               :text             default(""), not null
+#  postcode                          :string
+#  school_name                       :text             default(""), not null
+#  school_website                    :string
+#  start_date                        :date
+#  start_date_is_estimate            :boolean          default(FALSE), not null
+#  still_employed                    :boolean
+#  created_at                        :datetime         not null
+#  updated_at                        :datetime         not null
+#  application_form_id               :bigint           not null
 #
 # Indexes
 #
@@ -51,6 +52,7 @@ FactoryBot.define do
       contact_name { Faker::Name.name }
       contact_email { Faker::Internet.email }
       hours_per_week { Faker::Number.between(from: 20, to: 40) }
+      postcode { Faker::Address.postcode }
       job { Faker::Job.title }
       school_name { Faker::Educator.primary_school }
       sequence :country_code, Country::CODES.cycle
@@ -65,6 +67,10 @@ FactoryBot.define do
     trait :not_still_employed do
       end_date { Faker::Date.between(from: start_date, to: 3.months.ago) }
       still_employed { false }
+    end
+
+    trait :other_england_role do
+      is_other_england_educational_role { true }
     end
   end
 end

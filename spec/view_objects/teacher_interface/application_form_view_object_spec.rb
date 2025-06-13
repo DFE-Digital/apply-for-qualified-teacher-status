@@ -168,6 +168,55 @@ RSpec.describe TeacherInterface::ApplicationFormViewObject do
           "Add your work history",
         )
       end
+
+      it do
+        expect(subject).not_to include_task_list_item(
+          "Your work history",
+          "Add other work experience in England",
+        )
+      end
+
+      context "when work history is completed" do
+        before { application_form.update!(work_history_status: :completed) }
+
+        it do
+          expect(subject).not_to include_task_list_item(
+            "Your work history",
+            "Add other work experience in England",
+          )
+        end
+      end
+
+      context "when the application form includes prioritisation features" do
+        before do
+          application_form.update!(includes_prioritisation_features: true)
+        end
+
+        it do
+          expect(subject).to include_task_list_item(
+            "Your work history",
+            "Add your work history",
+          )
+        end
+
+        it do
+          expect(subject).not_to include_task_list_item(
+            "Your work history",
+            "Add other work experience in England",
+          )
+        end
+
+        context "when work history is completed" do
+          before { application_form.update!(work_history_status: :completed) }
+
+          it do
+            expect(subject).to include_task_list_item(
+              "Your work history",
+              "Add other work experience in England",
+            )
+          end
+        end
+      end
     end
 
     context "with needs written statement" do

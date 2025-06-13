@@ -1,0 +1,16 @@
+<% content_for :page_title, t(".title") %>
+<% content_for :back_link_url, back_history_path(origin: true, default: teacher_interface_application_form_other_england_work_histories_path) %>
+
+<span class="govuk-caption-l"><%= t("application_form.tasks.sections.other_england_work_history") %></span>
+<h1 class="govuk-heading-l"><%= t(".title") %></h1>
+
+<%= render "shared/application_form/work_history_summary",
+           work_histories: [@work_history],
+           highlighted_contact_emails: [],
+           changeable: true %>
+
+<% if @next_work_history %>
+  <%= govuk_button_link_to "Continue", school_teacher_interface_application_form_other_england_work_history_path(@next_work_history) %>
+<% else %>
+  <%= govuk_button_link_to "Continue", add_another_teacher_interface_application_form_other_england_work_histories_path %>
+<% end %>

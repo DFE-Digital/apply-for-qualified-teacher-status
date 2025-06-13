@@ -1,0 +1,40 @@
+<% content_for :page_title, title_with_error_prefix(t("application_form.other_england_work_history.contact.heading"), error: @form.errors.any?) %>
+<% content_for :back_link_url, back_history_path(default: teacher_interface_application_form_other_england_work_histories_path) %>
+
+<%= form_with model: @form, url: contact_teacher_interface_application_form_other_england_work_history_path(@work_history) do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <span class="govuk-caption-l"><%= I18n.t("application_form.tasks.sections.other_england_work_history") %></span>
+
+  <h1 class="govuk-heading-l"><%= t("application_form.other_england_work_history.contact.heading") %></h1>
+
+  <p class="govuk-body">We will contact this person to check what you have told us and confirm whether your application should be prioritised. You may want to let them know that you have provided their details.</p>
+
+  <p class="govuk-body">The person you choose must:</p>
+
+  <ul class="govuk-list govuk-list--bullet">
+    <li>be a senior member of staff at this school (either a headteacher/principal, an assistant/deputy head, or a school business manager)</li>
+    <li>be able to provide a reference in English</li>
+    <li>only comment on teaching work that you did <strong>after</strong> becoming a qualified teacher</li>
+  </ul>
+
+  <p class="govuk-body">It’s important to provide the correct job title for this person, as we’ll check that information with them.</p>
+
+  <%= govuk_warning_text(text: "You cannot act as your own reference.") %>
+
+  <%= govuk_details(summary_text: "Choosing someone to verify this role") do %>
+    <p>A senior member of staff means either a headteacher/principal, an assistant/deputy head or a school business manager.</p>
+
+    <p>Make sure you have an up-to-date email address for the person you choose, because the reference they provide will be important to your application.</p>
+
+    <p>We’ll ask them to confirm that you worked at the school for the period you’ve told us about.</p>
+  <% end %>
+
+  <%= f.govuk_text_field :contact_name %>
+
+  <%= f.govuk_text_field :contact_job %>
+
+  <%= f.govuk_email_field :contact_email %>
+
+  <%= render "shared/save_submit_buttons", f: %>
+<% end %>
