@@ -3,9 +3,17 @@
 require "rails_helper"
 
 RSpec.describe "Teacher work history in England", type: :system do
+  let!(:application_form) do
+    create(
+      :application_form,
+      teacher:,
+      needs_work_history: true,
+      includes_prioritisation_features: true,
+    )
+  end
+
   before do
     given_i_am_authorized_as_a_user(teacher)
-    given_an_application_form_exists
     given_some_work_history_exists
     given_malware_scanning_is_enabled
   end
@@ -169,9 +177,9 @@ RSpec.describe "Teacher work history in England", type: :system do
       .second
       .choose
     teacher_new_other_england_work_history_page.form.end_date_month_input.fill_in with:
-      "12"
+      Date.current.month
     teacher_new_other_england_work_history_page.form.end_date_year_input.fill_in with:
-      "2021"
+      Date.current.year
     teacher_new_other_england_work_history_page.form.continue_button.click
   end
 
@@ -221,7 +229,9 @@ RSpec.describe "Teacher work history in England", type: :system do
     expect(summary_list_rows[8].value.text).to eq("January 2020")
 
     expect(summary_list_rows[9].key.text).to eq("Role end date")
-    expect(summary_list_rows[9].value.text).to eq("December 2021")
+    expect(summary_list_rows[9].value.text).to eq(
+      Date.current.to_fs(:month_and_year),
+    )
 
     expect(summary_list_rows[10].key.text).to eq(
       "Reference contact’s full name",
@@ -287,15 +297,5 @@ RSpec.describe "Teacher work history in England", type: :system do
 
   def teacher
     @teacher ||= create(:teacher)
-  end
-
-  def application_form
-    @application_form ||=
-      create(
-        :application_form,
-        teacher:,
-        needs_work_history: true,
-        includes_prioritisation_features: true,
-      )
   end
 end
