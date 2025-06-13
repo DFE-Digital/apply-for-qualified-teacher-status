@@ -70,7 +70,7 @@ RSpec.shared_examples_for "an age range subjects form" do
     it { is_expected.not_to validate_presence_of(:age_range_note) }
 
     it { is_expected.to validate_presence_of(:subject_1) }
-    it { is_expected.to validate_presence_of(:subject_1_raw) }
+    it { is_expected.not_to validate_presence_of(:subject_1_raw) }
     it { is_expected.not_to validate_presence_of(:subject_2) }
     it { is_expected.not_to validate_presence_of(:subject_3) }
     it { is_expected.not_to validate_presence_of(:subjects_note) }
