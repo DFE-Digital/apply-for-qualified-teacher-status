@@ -113,7 +113,15 @@ module TeacherInterface
 
           if came_from_check_collection ||
                application_form.work_histories.teaching_role.count == 1
-            redirect_to %i[teacher_interface application_form]
+            if application_form.other_england_work_history_status_not_started?
+              redirect_to %i[
+                            teacher_interface
+                            application_form
+                            other_england_work_histories
+                          ]
+            else
+              redirect_to %i[teacher_interface application_form]
+            end
           else
             redirect_to %i[
                           check
