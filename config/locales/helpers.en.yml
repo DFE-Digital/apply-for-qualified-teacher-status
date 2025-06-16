@@ -339,7 +339,7 @@ en:
       assessor_interface_filter_form:
         action_required_by: Action required by
         assessor_ids: Assessor name
-        date_of_birth: Date of birth
+        date_of_birth: Applicant date of birth
         states: Status of application
         submitted_at: Created date
         submitted_at_after: Start date
