@@ -317,6 +317,10 @@ en:
           attributes:
             has_work_history:
               inclusion: Select whether you have worked professionally as a teacher
+        teacher_interface/other_england_work_history_meets_criteria_form:
+          attributes:
+            has_other_england_work_history:
+              inclusion: Select whether you have more work experience in England that meets this criteria
         teacher_interface/further_information_request_item_text_form:
           attributes:
             response:

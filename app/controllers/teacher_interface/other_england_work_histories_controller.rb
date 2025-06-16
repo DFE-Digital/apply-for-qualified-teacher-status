@@ -179,7 +179,7 @@ module TeacherInterface
           else
             %i[teacher_interface application_form]
           end,
-        if_failure_then_render: :meets_criteria,
+        if_failure_then_render: :edit_meets_criteria,
       )
     end
 
