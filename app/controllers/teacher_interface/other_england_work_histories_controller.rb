@@ -279,6 +279,12 @@ module TeacherInterface
 
       if @form.save(validate: true)
         if application_form.work_histories.other_england_educational_role.empty?
+          history_stack.replace_self(
+            path: teacher_interface_application_form_path,
+            origin: false,
+            check: false,
+          )
+
           redirect_to %i[
                         meets_criteria
                         teacher_interface

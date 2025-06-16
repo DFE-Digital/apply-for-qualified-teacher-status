@@ -1,5 +1,5 @@
 <% content_for :page_title, title_with_error_prefix(t("application_form.other_england_work_history.meets_criteria.heading"), error: @form.errors.any?) %>
-<% content_for :back_link_url, teacher_interface_application_form_path %>
+<% content_for :back_link_url, back_history_path(default: teacher_interface_application_form_path) %>
 
 <%= form_with model: @form, url: [:meets_criteria, :teacher_interface, :application_form, :other_england_work_histories] do |f| %>
   <%= f.govuk_error_summary %>
