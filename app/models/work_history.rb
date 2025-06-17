@@ -102,7 +102,7 @@ class WorkHistory < ApplicationRecord
 
     values.append(postcode) if is_other_england_educational_role?
 
-    unless application_form.reduced_evidence_accepted?
+    if requires_contact_information?
       unless contact_email.match?(ValidForNotifyValidator::EMAIL_REGEX)
         return false
       end
@@ -113,9 +113,7 @@ class WorkHistory < ApplicationRecord
     unless application_form.created_under_old_regulations?
       values.append(hours_per_week) unless is_other_england_educational_role?
 
-      unless application_form.reduced_evidence_accepted?
-        values.append(contact_job)
-      end
+      values.append(contact_job) if requires_contact_information?
     end
 
     values.all?(&:present?)
@@ -123,5 +121,19 @@ class WorkHistory < ApplicationRecord
 
   def incomplete?
     !complete?
+  end
+
+  def requires_contact_information?
+    !application_form.reduced_evidence_accepted? ||
+      (
+        application_form.includes_prioritisation_features &&
+          country_code_england?
+      )
+  end
+
+  private
+
+  def country_code_england?
+    CountryCode.england?(country_code)
   end
 end

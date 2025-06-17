@@ -178,7 +178,9 @@ module TeacherInterface
       handle_application_form_section(
         form: @form,
         check_identifier: check_member_identifier,
-        if_success_then_redirect: after_school_path(work_history),
+        if_success_then_redirect: ->(_check_path) do
+          after_school_path(work_history)
+        end,
         if_failure_then_render: :edit_school,
       )
     end
@@ -303,10 +305,10 @@ module TeacherInterface
     end
 
     def after_school_path(work_history)
-      if application_form.reduced_evidence_accepted
-        [:check, :teacher_interface, :application_form, work_history]
-      else
+      if work_history.requires_contact_information?
         [:contact, :teacher_interface, :application_form, work_history]
+      else
+        [:check, :teacher_interface, :application_form, work_history]
       end
     end
   end
