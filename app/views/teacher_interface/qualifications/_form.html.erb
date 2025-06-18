@@ -21,7 +21,7 @@
 
     <p class="govuk-body">You can add more qualifications later.</p>
 
-    <%= render "shared/teaching_qualification_information", region: @application_form.region %>
+    <%= render "shared/teaching_qualification_information", application_form: @application_form, region: @application_form.region %>
   <% elsif qualification.is_bachelor_degree? %>
     <h1 class="govuk-heading-l">Bachelor’s degree</h1>
     <p class="govuk-body">Add details of your bachelor’s degree if your teaching qualification was separate.</p>

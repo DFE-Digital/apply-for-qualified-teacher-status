@@ -39,7 +39,7 @@
 
   <p class="govuk-body">We accept any of the above as evidence you are qualified to teach a specific subject.</p>
 
-  <% if FeatureFlags::FeatureFlag.active?(:prioritisation) %>
+  <% if (FeatureFlags::FeatureFlag.active?(:prioritisation) && application_form.nil?) || (application_form.present? && application_form.includes_prioritisation_features?) %>
     <h3 class="govuk-heading-s">If you have valid work experience in England</h3>
 
     <p class="govuk-body">
