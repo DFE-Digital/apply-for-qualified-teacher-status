@@ -26,7 +26,11 @@
       <% end %>
 
       <% if AssessorInterface::StaffPolicy.new(current_staff, Staff).index? %>
-        <% service_navigation.with_navigation_item(text: "Manage access", href: main_app.assessor_interface_staff_index_path) %>
+        <% service_navigation.with_navigation_item(
+          text: "Manage access",
+          href: main_app.assessor_interface_staff_index_path,
+          active: current_page?(main_app.assessor_interface_staff_index_path)
+        ) %>
       <% end %>
       <% service_navigation.with_navigation_item(text: "Sign out", href: main_app.destroy_staff_session_path) %>
     <% end %>
