@@ -35,7 +35,7 @@ module AssessorInterface::AgeRangeSubjectsForm
     attribute :subject_3_raw, :string
     attribute :subjects_note, :string
 
-    validates :subject_1, presence: true
+    validate :subject_1_is_present
   end
 
   def save
@@ -73,5 +73,11 @@ module AssessorInterface::AgeRangeSubjectsForm
 
     application_form.age_range_min != age_range_min ||
       application_form.age_range_max != age_range_max
+  end
+
+  def subject_1_is_present
+    return if subject_1.present? && subject_1_raw.present?
+
+    errors.add(:subject_1, :blank)
   end
 end
