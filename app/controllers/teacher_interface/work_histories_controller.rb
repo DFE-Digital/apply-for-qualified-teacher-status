@@ -178,8 +178,12 @@ module TeacherInterface
       handle_application_form_section(
         form: @form,
         check_identifier: check_member_identifier,
-        if_success_then_redirect: ->(_check_path) do
-          after_school_path(work_history)
+        if_success_then_redirect: ->(check_path) do
+          if check_path && work_history.complete?
+            check_path
+          else
+            after_school_path(work_history)
+          end
         end,
         if_failure_then_render: :edit_school,
       )
