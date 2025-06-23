@@ -75,6 +75,11 @@ en:
         hours_per_week: This means all the hours you spent working per week for this role (not just the hours you spent teaching students). In roles where you worked under 30 hours per week we may need to ask for more information when we assess your application.
         start_date: For example, 3 2020, If you cannot remember the exact month or year, enter an estimate.
         end_date: For example, 3 2020, If you cannot remember the exact month or year, enter an estimate.
+      teacher_interface_other_england_work_history_school_form:
+        postcode: This helps assessors to verify the institution you worked in.
+        school_website: If this institution does not have a webpage, the assessor may need to ask you for further information to verify it.
+        start_date: For example, 3 2020, If you cannot remember the exact month or year, enter an estimate.
+        end_date: For example, 3 2020, If you cannot remember the exact month or year, enter an estimate.
     label:
       assessor_interface_application_form_name_form:
         given_names: Change given names
@@ -204,6 +209,10 @@ en:
         add_another_options:
           true: "Yes"
           false: "No"
+      teacher_interface_add_another_other_england_work_history_form:
+        add_another_options:
+          true: "Yes"
+          false: "No"
       teacher_interface_add_another_upload_form:
         add_another_options:
           true: "Yes"
@@ -250,6 +259,10 @@ en:
         email: Email address
       teacher_interface_reference_request_additional_information_response_form:
         additional_information_response: Do you have any other concerns about this applicant? (optional)
+      teacher_interface_other_england_work_history_meets_criteria_form:
+        has_other_england_work_history_options:
+          true: "Yes, I have other work experience in England that meets this criteria"
+          false: "No"
       teacher_interface_reference_request_children_response_form:
         children_response_options:
           true: "Yes"
@@ -319,6 +332,18 @@ en:
         still_employed_options:
           true: "Yes"
           false: "No"
+      teacher_interface_other_england_work_history_school_form:
+        school_name: Name of institution
+        address_line1: Address line 1
+        address_line2: Address line 2 (optional)
+        city: Town or city
+        country_location: Country
+        postcode: Postcode
+        school_website: Institution webpage (optional)
+        job: What was the job title or role?
+        still_employed_options:
+          true: "Yes"
+          false: "No"
     placeholder:
       assessor_interface_assessment_section_form:
         failure_reason_notes:
@@ -375,6 +400,8 @@ en:
         provider_id: Select your approved provider from the list
       teacher_interface_has_work_history_form:
         has_work_history: Have you worked professionally as a teacher?
+      teacher_interface_other_england_work_history_meets_criteria_form:
+        has_other_england_work_history: Do you have other educational work experience in England that meets our criteria?
       teacher_interface_reference_request_children_response_form:
         children_response: Did the applicant teach children aged somewhere between 5 and 16 years?
       teacher_interface_reference_request_contact_response_form:
@@ -400,4 +427,8 @@ en:
       teacher_interface_work_history_school_form:
         start_date: When did you start this role?
         still_employed: Are you still employed at this school?
+        end_date: Your end date
+      teacher_interface_other_england_work_history_school_form:
+        start_date: When did you start this role?
+        still_employed: Are you still employed at this institution?
         end_date: Your end date

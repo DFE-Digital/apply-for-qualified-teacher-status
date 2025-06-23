@@ -19,11 +19,13 @@ module TeacherInterface
     def index
       if application_form.work_history_status_completed?
         redirect_to %i[check teacher_interface application_form work_histories]
-      elsif application_form.work_histories.empty?
+      elsif application_form.work_histories.teaching_role.empty?
         redirect_to %i[new teacher_interface application_form work_history]
       elsif (
             work_history =
-              application_form.work_histories.order_by_user.find(&:incomplete?)
+              application_form.work_histories.teaching_role.order_by_user.find(
+                &:incomplete?
+              )
           )
         redirect_to [
                       :school,
@@ -42,7 +44,8 @@ module TeacherInterface
     end
 
     def check_collection
-      @work_histories = application_form.work_histories.order_by_user
+      @work_histories =
+        application_form.work_histories.teaching_role.order_by_user
       @came_from_add_another =
         history_stack.last_entry&.fetch(:path) ==
           add_another_teacher_interface_application_form_work_histories_path
@@ -109,8 +112,16 @@ module TeacherInterface
               check_teacher_interface_application_form_work_histories_path
 
           if came_from_check_collection ||
-               application_form.work_histories.count == 1
-            redirect_to %i[teacher_interface application_form]
+               application_form.work_histories.teaching_role.count == 1
+            if application_form.other_england_work_history_status_not_started?
+              redirect_to %i[
+                            teacher_interface
+                            application_form
+                            other_england_work_histories
+                          ]
+            else
+              redirect_to %i[teacher_interface application_form]
+            end
           else
             redirect_to %i[
                           check
@@ -208,7 +219,8 @@ module TeacherInterface
     def check_member
       @work_history = work_history
 
-      work_histories = application_form.work_histories.order_by_user.to_a
+      work_histories =
+        application_form.work_histories.teaching_role.order_by_user.to_a
       @next_work_history =
         work_histories[work_histories.index(work_history) + 1]
     end
@@ -247,7 +259,8 @@ module TeacherInterface
     private
 
     def work_history
-      @work_history ||= application_form.work_histories.find(params[:id])
+      @work_history ||=
+        application_form.work_histories.teaching_role.find(params[:id])
     end
 
     def work_history_school_form_params

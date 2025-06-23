@@ -4,7 +4,10 @@ class WorkHistoryDuration
   def initialize(application_form:, relation:)
     @application_form = application_form
     @relation =
-      relation.where.not(start_date: nil).where.not(hours_per_week: nil)
+      relation
+        .teaching_role
+        .where.not(start_date: nil)
+        .where.not(hours_per_week: nil)
   end
 
   def self.for_application_form(application_form)

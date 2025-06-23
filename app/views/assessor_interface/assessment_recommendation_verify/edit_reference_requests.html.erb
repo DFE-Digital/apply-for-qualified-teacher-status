@@ -11,7 +11,7 @@
   <p class="govuk-body">You will be able to check your selection before submitting.</p>
 
   <%= f.govuk_check_boxes_fieldset :work_history_ids do %>
-    <% @application_form.work_histories.order_by_role.each_with_index do |work_history, index| %>
+    <% @application_form.work_histories.teaching_role.order_by_role.each_with_index do |work_history, index| %>
       <%= f.govuk_check_box :work_history_ids, work_history.id.to_s, label: { text: work_history_name_and_duration(work_history) }, link_errors: index.zero? %>
     <% end %>
   <% end %>

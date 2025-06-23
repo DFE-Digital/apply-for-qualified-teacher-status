@@ -39,6 +39,12 @@ var loadCountryAutoComplete = () => {
       "teacher-interface-work-history-school-form-country-location-field-error"
     ) ??
     document.getElementById(
+      "teacher-interface-other-england-work-history-school-form-country-location-field"
+    ) ??
+    document.getElementById(
+      "teacher-interface-other-england-work-history-school-form-country-location-field-error"
+    ) ??
+    document.getElementById(
       "teacher-interface-qualification-form-institution-country-location-field"
     ) ??
     document.getElementById(

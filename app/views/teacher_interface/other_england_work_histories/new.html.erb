@@ -1,0 +1,4 @@
+<% content_for :page_title, title_with_error_prefix(t("application_form.other_england_work_history.school.heading.#{@work_history.locale_key}"), error: @form.errors.any?) %>
+<% content_for :back_link_url, back_history_path(default: teacher_interface_application_form_other_england_work_histories_path) %>
+
+<%= render "school_form", form: @form %>

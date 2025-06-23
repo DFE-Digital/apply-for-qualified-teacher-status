@@ -424,6 +424,32 @@ Rails.application.routes.draw do
         end
       end
 
+      resources :other_england_work_histories, except: %i[show edit update] do
+        collection do
+          get "check", to: "other_england_work_histories#check_collection"
+
+          get "meets-criteria",
+              to: "other_england_work_histories#edit_meets_criteria"
+          post "meets-criteria",
+               to: "other_england_work_histories#update_meets_criteria"
+
+          get "add-another"
+          post "add-another",
+               to: "other_england_work_histories#submit_add_another"
+        end
+
+        member do
+          get "school", to: "other_england_work_histories#edit_school"
+          post "school", to: "other_england_work_histories#update_school"
+
+          get "contact", to: "other_england_work_histories#edit_contact"
+          post "contact", to: "other_england_work_histories#update_contact"
+
+          get "check", to: "other_england_work_histories#check_member"
+          get "delete"
+        end
+      end
+
       resource :written_statement, only: %i[edit update]
 
       resources :documents, only: %i[show edit update] do
