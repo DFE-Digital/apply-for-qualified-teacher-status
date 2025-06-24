@@ -69,8 +69,48 @@ RSpec.shared_examples_for "an age range subjects form" do
 
     it { is_expected.not_to validate_presence_of(:age_range_note) }
 
-    it { is_expected.to validate_presence_of(:subject_1) }
-    it { is_expected.to validate_presence_of(:subject_1_raw) }
+    context "when subject_1 is present but subject_1_raw is missing" do
+      before do
+        age_range_subjects_attributes[:subject_1] = "Math"
+        age_range_subjects_attributes[:subject_1_raw] = ""
+      end
+
+      it { is_expected.to be_invalid }
+
+      it "adds an error to subject_1" do
+        form.valid?
+        expect(form.errors[:subject_1]).to include("Enter the subject")
+      end
+    end
+
+    context "when subject_1 is missing but subject_1_raw is present" do
+      before do
+        age_range_subjects_attributes[:subject_1] = ""
+        age_range_subjects_attributes[:subject_1_raw] = "Mathematics"
+      end
+
+      it { is_expected.to be_invalid }
+
+      it "adds an error to subject_1" do
+        form.valid?
+        expect(form.errors[:subject_1]).to include("Enter the subject")
+      end
+    end
+
+    context "when both subject_1 and subject_1_raw are missing" do
+      before do
+        age_range_subjects_attributes[:subject_1] = ""
+        age_range_subjects_attributes[:subject_1_raw] = ""
+      end
+
+      it { is_expected.to be_invalid }
+
+      it "adds an error to subject_1" do
+        form.valid?
+        expect(form.errors[:subject_1]).to include("Enter the subject")
+      end
+    end
+
     it { is_expected.not_to validate_presence_of(:subject_2) }
     it { is_expected.not_to validate_presence_of(:subject_3) }
     it { is_expected.not_to validate_presence_of(:subjects_note) }

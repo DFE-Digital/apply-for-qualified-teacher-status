@@ -15,18 +15,40 @@
 <p class="govuk-hint">You can enter up to three</p>
 <p class="govuk-body">Based on the evidence the applicant has provided, you can either copy the subjects they entered if you agree, or edit them.</p>
 
-<% (1..3).map { |i| "subject_#{i}" }.each do |field| %>
-  <%= render DfE::Autocomplete::View.new(
-    f,
-    attribute_name: field,
-    form_field: f.govuk_select(
-      field,
-      options_for_select(
-        dfe_autocomplete_options(Subject.all),
-        f.object.send(field),
-      )
+<%= render DfE::Autocomplete::View.new(
+  f,
+  attribute_name: :subject_1,
+  form_field: f.govuk_select(
+    :subject_1,
+    options_for_select(
+      dfe_autocomplete_options(Subject.all),
+      f.object.send(:subject_1),
     )
-  ) %>
-<% end %>
+  )
+) %>
+
+<%= render DfE::Autocomplete::View.new(
+  f,
+  attribute_name: :subject_2,
+  form_field: f.govuk_select(
+    :subject_2,
+    options_for_select(
+      dfe_autocomplete_options(Subject.all),
+      f.object.send(:subject_2),
+    )
+  )
+) %>
+
+<%= render DfE::Autocomplete::View.new(
+  f,
+  attribute_name: :subject_3,
+  form_field: f.govuk_select(
+    :subject_3,
+    options_for_select(
+      dfe_autocomplete_options(Subject.all),
+      f.object.send(:subject_3),
+    )
+  )
+) %>
 
 <%= f.govuk_text_area :subjects_note, label: { text: t("helpers.label.assessor_interface_assessment_section_form.subjects_note").html_safe } %>
