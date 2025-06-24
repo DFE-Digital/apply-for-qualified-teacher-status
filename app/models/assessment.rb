@@ -40,6 +40,7 @@
 class Assessment < ApplicationRecord
   belongs_to :application_form
 
+  has_many :prioritisation_work_history_checks, dependent: :destroy
   has_many :sections, class_name: "AssessmentSection", dependent: :destroy
 
   has_many :consent_requests, dependent: :destroy
