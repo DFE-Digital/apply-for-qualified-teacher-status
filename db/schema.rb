@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_10_141518) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_24_101758) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -293,6 +293,18 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_10_141518) do
     t.datetime "updated_at", null: false
     t.index ["application_form_id"], name: "index_notes_on_application_form_id"
     t.index ["author_id"], name: "index_notes_on_author_id"
+  end
+
+  create_table "prioritisation_work_history_checks", force: :cascade do |t|
+    t.bigint "assessment_id", null: false
+    t.bigint "work_history_id", null: false
+    t.boolean "passed"
+    t.string "checks", default: [], array: true
+    t.string "failure_reasons", default: [], array: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["assessment_id"], name: "index_prioritisation_work_history_checks_on_assessment_id"
+    t.index ["work_history_id"], name: "index_prioritisation_work_history_checks_on_work_history_id"
   end
 
   create_table "professional_standing_requests", force: :cascade do |t|
@@ -645,6 +657,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_10_141518) do
   add_foreign_key "further_information_request_items", "work_histories"
   add_foreign_key "notes", "application_forms"
   add_foreign_key "notes", "staff", column: "author_id"
+  add_foreign_key "prioritisation_work_history_checks", "assessments"
+  add_foreign_key "prioritisation_work_history_checks", "work_histories"
   add_foreign_key "professional_standing_requests", "assessments"
   add_foreign_key "qualification_requests", "assessments"
   add_foreign_key "qualification_requests", "qualifications"
