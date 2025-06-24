@@ -79,7 +79,7 @@ RSpec.shared_examples_for "an age range subjects form" do
 
       it "adds an error to subject_1" do
         form.valid?
-        expect(form.errors[:subject_1]).to include(I18n.t("Enter the subject"))
+        expect(form.errors[:subject_1]).to include("Enter the subject")
       end
     end
 
@@ -93,7 +93,7 @@ RSpec.shared_examples_for "an age range subjects form" do
 
       it "adds an error to subject_1" do
         form.valid?
-        expect(form.errors[:subject_1]).to include(I18n.t("Enter the subject"))
+        expect(form.errors[:subject_1]).to include("Enter the subject")
       end
     end
 
@@ -107,7 +107,7 @@ RSpec.shared_examples_for "an age range subjects form" do
 
       it "adds an error to subject_1" do
         form.valid?
-        expect(form.errors[:subject_1]).to include(I18n.t("Enter the subject"))
+        expect(form.errors[:subject_1]).to include("Enter the subject")
       end
     end
 
