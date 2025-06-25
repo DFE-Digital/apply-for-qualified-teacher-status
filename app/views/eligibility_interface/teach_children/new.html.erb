@@ -4,8 +4,8 @@
           For example, you might be qualified to teach children aged 5 to 11, or 14 to 16."
 
   if @form.eligibility_check.qualified_for_subject_required? && !@eligibility_check.eligible_work_experience_in_england?
-    legend = "Are you qualified to teach children aged 11-16 years?"
-    hint = "You must be qualified to teach children aged 11-16 to be eligible for QTS."
+    legend = "Are you qualified to teach children who are aged anywhere between 11 and 16 years?"
+    hint = "You must be qualified to teach children between 11 and 16 years."
   end
 
   if @form.eligibility_check.qualified_for_subject_required? && @eligibility_check.eligible_work_experience_in_england?
