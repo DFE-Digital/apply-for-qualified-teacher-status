@@ -46,7 +46,7 @@ en:
           degree: You do not have a degree. As teaching in England is a graduate profession, you must have an undergraduate degree.
           misconduct: To teach in England, you must not have any findings of misconduct or restrictions on your employment record.
           qualification: You have not completed a formal teaching qualification in %{country_name}, for example, an undergraduate teaching degree or postgraduate teaching qualification.
-          teach_children: You are not qualified to teach children who are aged somewhere between 5 and 16 years.
+          teach_children: You are not qualified to teach children who are aged anywhere between 5 and 16 years.
           teach_children_secondary: You are not qualified to teach children aged 11-16 years.
           qualified_for_subject: You are not qualified to teach one of the subjects for which we currently accept applications.
           work_experience: You do not have sufficient work experience as a teacher.
