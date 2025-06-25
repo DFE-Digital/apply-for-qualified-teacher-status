@@ -72,5 +72,12 @@ FactoryBot.define do
     trait :other_england_role do
       is_other_england_educational_role { true }
     end
+
+    trait :current_role_in_england do
+      completed
+
+      country_code { "GB-ENG" }
+      still_employed { true }
+    end
   end
 end

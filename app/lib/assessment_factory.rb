@@ -8,19 +8,27 @@ class AssessmentFactory
   end
 
   def call
-    sections =
-      [
-        personal_information_section,
-        qualifications_section,
-        age_range_subjects_section,
-        english_language_proficiency_section,
-        work_history_section,
-        professional_standing_section,
-      ].compact + PreliminaryAssessmentSectionsFactory.call(application_form:)
+    prioritisation_work_history_checks =
+      PrioritisationWorkHistoryChecksFactory.call(application_form:)
+
+    sections = [
+      personal_information_section,
+      qualifications_section,
+      age_range_subjects_section,
+      english_language_proficiency_section,
+      work_history_section,
+      professional_standing_section,
+    ].compact
+
+    sections +=
+      PreliminaryAssessmentSectionsFactory.call(
+        application_form:,
+      ) if prioritisation_work_history_checks.empty?
 
     Assessment.create!(
       application_form:,
       sections:,
+      prioritisation_work_history_checks:,
       age_range_min: application_form.age_range_min,
       age_range_max: application_form.age_range_max,
     )
