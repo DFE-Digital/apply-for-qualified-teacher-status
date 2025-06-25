@@ -171,6 +171,7 @@
     - contact_job
     - contact_name
     - created_at
+    - failure_reason_assessor_feedback
     - failure_reason_key
     - further_information_request_id
     - id

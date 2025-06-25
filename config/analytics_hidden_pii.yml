@@ -12,6 +12,7 @@
   :assessments:
     - recommendation_assessor_note
   :further_information_request_items:
+    - failure_reason_assessor_feedback
     - contact_email
     - contact_name
     - review_decision_note
