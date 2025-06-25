@@ -41,7 +41,6 @@
   :further_information_requests:
     - review_note
   :further_information_request_items:
-    - failure_reason_assessor_feedback
     - response
   :notes:
     - text
