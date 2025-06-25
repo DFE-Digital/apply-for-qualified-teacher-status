@@ -620,7 +620,7 @@ RSpec.describe AssessmentFactory do
       end
     end
 
-    context "with application form requiring passport as identity proof" do
+    context "when application form requires passport as identity proof" do
       let(:requires_passport_as_identity_proof) { true }
 
       describe "sections" do
@@ -677,6 +677,122 @@ RSpec.describe AssessmentFactory do
               expect(section.failure_reasons).to include(
                 "english_language_exemption_by_citizenship_not_confirmed_via_passport",
               )
+            end
+          end
+        end
+      end
+    end
+
+    context "when application form includes prioritisation features" do
+      let(:sections) { call.sections }
+      let(:prioritisation_work_history_checks) do
+        call.prioritisation_work_history_checks
+      end
+
+      before do
+        application_form.update!(
+          needs_work_history: true,
+          includes_prioritisation_features: true,
+        )
+      end
+
+      context "with valid work history in England" do
+        let!(:work_history) do
+          create :work_history, :current_role_in_england, application_form:
+        end
+
+        describe "prioritisation work history checks" do
+          it "is created" do
+            expect(prioritisation_work_history_checks.count).to eq(1)
+          end
+
+          it "has the right checks and failure reasons" do
+            prioritisation_work_history_check =
+              prioritisation_work_history_checks.first
+            expect(prioritisation_work_history_check.checks).to eq %w[
+                 role_in_state_school
+                 role_in_independent_school
+                 role_in_ofsted_further_education_and_skills_setting
+                 role_in_english_further_education_setting
+                 role_in_ofsted_early_years_setting
+                 work_history_in_england
+                 work_history_reference_email
+                 work_history_reference_job
+               ]
+            expect(
+              prioritisation_work_history_check.failure_reasons,
+            ).to be_empty
+          end
+        end
+
+        describe "preliminary qualifications section" do
+          it "is not created" do
+            expect(sections.preliminary.qualifications.count).to eq(0)
+          end
+
+          context "when application form requires a preliminary check" do
+            before { application_form.requires_preliminary_check = true }
+
+            it "is not created" do
+              expect(sections.preliminary.qualifications.count).to eq(0)
+            end
+          end
+        end
+      end
+
+      context "without valid work history in England" do
+        let!(:work_history) do
+          create :work_history,
+                 :completed,
+                 application_form:,
+                 country_code: "UA"
+        end
+
+        describe "prioritisation work history checks" do
+          it "is not created" do
+            expect(prioritisation_work_history_checks.count).to eq(0)
+          end
+        end
+
+        describe "preliminary qualifications section" do
+          it "is not created" do
+            expect(sections.preliminary.qualifications.count).to eq(0)
+          end
+
+          context "when application form requires a preliminary check" do
+            before { application_form.requires_preliminary_check = true }
+
+            it "is created" do
+              expect(sections.preliminary.qualifications.count).to eq(1)
+            end
+
+            it "has the right checks and failure reasons" do
+              section = sections.preliminary.qualifications.first
+              expect(section.checks).to be_empty
+              expect(section.failure_reasons).to eq(
+                %w[teaching_qualifications_not_at_required_level],
+              )
+            end
+
+            context "with an application form with subject criteria" do
+              before { application_form.subject_limited = true }
+
+              it "has the right checks and failure reasons" do
+                section = sections.preliminary.qualifications.first
+
+                expect(section.checks).to eq(
+                  %w[
+                    qualifications_meet_level_6_or_equivalent
+                    teaching_qualification_subjects_criteria
+                  ],
+                )
+                expect(section.failure_reasons).to eq(
+                  %w[
+                    teaching_qualifications_not_at_required_level
+                    teaching_qualification_subjects_criteria
+                  ],
+                )
+              end
             end
           end
         end
