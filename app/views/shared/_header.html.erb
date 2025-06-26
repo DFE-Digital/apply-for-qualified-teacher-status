@@ -1,59 +1,68 @@
 <%= govuk_header(
-      homepage_url: "https://www.gov.uk",
-      service_name: t(current_namespace, scope: %i[service name]),
-      service_url: "/#{current_namespace}",
+      homepage_url: "https://www.education.gov.uk",
       classes: "app-header--#{HostingEnvironment.name}"
     ) do |header| %>
+  <% header.with_custom_logo do %>
+    <%= image_tag "/images/dfe-logo-white.png", alt: "Department for Education", class: "govuk-header__logotype" %>
+  <% end %>
+<% end %>
+
+<%= govuk_service_navigation(service_name: t(current_namespace, scope: %i[service name]), service_url: "/#{current_namespace}") do |service_navigation| %>
   <% case current_namespace %>
   <% when "assessor" %>
     <% if current_staff %>
-      <% header.with_navigation_item(
+      <% service_navigation.with_navigation_item(
          text: "Search",
          href: main_app.assessor_interface_application_forms_path,
          active: current_page?(main_app.assessor_interface_application_forms_path)
        ) %>
 
       <% if FeatureFlags::FeatureFlag.active?(:suitability) %>
-        <% header.with_navigation_item(text: "Suitability records", href: main_app.assessor_interface_suitability_records_path) %>
+        <% service_navigation.with_navigation_item(text: "Suitability records", href: main_app.assessor_interface_suitability_records_path) %>
       <% end %>
 
       <% if SupportInterface::CountryPolicy.new(current_staff, Country).index? %>
-        <% header.with_navigation_item(text: "Support console", href: main_app.support_interface_root_path) %>
+        <% service_navigation.with_navigation_item(text: "Support console", href: main_app.support_interface_root_path) %>
       <% end %>
-      
+
       <% if AssessorInterface::StaffPolicy.new(current_staff, Staff).index? %>
-        <% header.with_navigation_item(text: "Manage access", href: main_app.assessor_interface_staff_index_path) %>
+        <% service_navigation.with_navigation_item(
+          text: "Manage access",
+          href: main_app.assessor_interface_staff_index_path,
+          active: current_page?(main_app.assessor_interface_staff_index_path)
+        ) %>
       <% end %>
-      <% header.with_navigation_item(text: "Sign out", href: main_app.destroy_staff_session_path) %>
+      <% service_navigation.with_navigation_item(text: "Sign out", href: main_app.destroy_staff_session_path) %>
     <% end %>
   <% when "support" %>
     <% if current_staff %>
-      <% header.with_navigation_item(
+      <% service_navigation.with_navigation_item(
          text: "Features",
          href: main_app.support_interface_feature_flags_path,
          active: current_page?(main_app.support_interface_feature_flags_path)
        ) %>
-      <% header.with_navigation_item(
+      <% service_navigation.with_navigation_item(
          text: "Countries",
          href: main_app.support_interface_countries_path,
          active: request.path.start_with?("/support/countries") || request.path.start_with?("/support/regions")
        ) %>
-      <% header.with_navigation_item(
+      <% service_navigation.with_navigation_item(
          text: "English language test providers",
          href: main_app.support_interface_english_language_providers_path,
          active: request.path.start_with?("/support/english_language_providers")
       ) %>
-      <% header.with_navigation_item(text: "Sidekiq", href: main_app.support_interface_sidekiq_web_path) %>
-      <% header.with_navigation_item(text: "Assessor case management", href: main_app.assessor_interface_root_path) %>
-      <% header.with_navigation_item(text: "Sign out", href: main_app.destroy_staff_session_path) %>
+      <% service_navigation.with_navigation_item(text: "Sidekiq", href: main_app.support_interface_sidekiq_web_path) %>
+      <% service_navigation.with_navigation_item(text: "Assessor case management", href: main_app.assessor_interface_root_path) %>
+      <% service_navigation.with_navigation_item(text: "Sign out", href: main_app.destroy_staff_session_path) %>
     <% end %>
   <% when "teacher" %>
     <% if current_teacher %>
       <% if FeatureFlags::FeatureFlag.active?(:gov_one_applicant_login) %>
-        <% header.with_navigation_item(text: "Sign out", href: logout_uri) %>
+        <%= service_navigation.with_navigation_item(text: "Sign out", href: logout_uri) %>
       <% else %>
-        <% header.with_navigation_item(text: "Sign out", href: main_app.destroy_teacher_session_path) %>
+        <% service_navigation.with_navigation_item(text: "Sign out", href: main_app.destroy_teacher_session_path) %>
       <% end %>
     <% end %>
   <% end %>
+
 <% end %>

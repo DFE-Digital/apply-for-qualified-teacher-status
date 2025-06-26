@@ -93,3 +93,12 @@ ul.autocomplete__menu {
 .app-white-space-nowrap {
   white-space: nowrap;
 }
+
+.govuk-header__link .govuk-header__logotype {
+  height: 30px;
+}
+
+.govuk-header__link:focus .govuk-header__logotype {
+  content: url(/images/dfe-logo-black.png);
+  height: 30px;
+}
