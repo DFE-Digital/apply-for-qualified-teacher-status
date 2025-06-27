@@ -371,7 +371,7 @@ RSpec.describe "Eligibility check (With prioritisation enabled)",
 
   def and_i_see_the_ineligible_teach_children_text
     expect(eligibility_ineligible_page.reasons).to have_content(
-      "You are not qualified to teach children who are aged somewhere between 5 and 16 years.",
+      "You are not qualified to teach children who are aged anywhere between 5 and 16 years.",
     )
   end
 
