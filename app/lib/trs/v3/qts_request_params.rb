@@ -24,7 +24,7 @@ module TRS
         {
           routeToProfessionalStatusTypeId: route_type_id,
           status: AWARDED_QTS_STATUS,
-          awardedDate: awarded_at.to_date.iso8601,
+          holdsFrom: awarded_at.to_date.iso8601,
           trainingStartDate: teaching_qualification.start_date.iso8601,
           trainingEndDate: teaching_qualification.complete_date.iso8601,
           trainingSubjectReferences: subjects,
