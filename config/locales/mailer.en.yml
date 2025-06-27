@@ -7,6 +7,12 @@ en:
           1: Please complete reference request for %{name}’s application for QTS
       reference_requested:
         subject: Reference request for %{name}’s application for qualified teacher status (QTS)
+      prioritisation_reference_reminder:
+        subject:
+          0: Waiting on reference request for %{name}’s application for QTS
+          1: Please complete reference request for %{name}’s application for QTS
+      prioritisation_reference_requested:
+        subject: Confirming work history for a QTS application
     teacher:
       application_awarded:
         subject: Your QTS application was successful

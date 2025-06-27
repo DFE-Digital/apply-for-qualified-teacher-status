@@ -9,6 +9,8 @@
 #  age_range_min                                           :integer
 #  age_range_note                                          :text             default(""), not null
 #  induction_required                                      :boolean
+#  prioritisation_decision_at                              :datetime
+#  prioritised                                             :boolean
 #  qualifications_assessor_note                            :text             default(""), not null
 #  recommendation                                          :string           default("unknown"), not null
 #  recommendation_assessor_note                            :text             default(""), not null
@@ -648,6 +650,28 @@ RSpec.describe Assessment, type: :model do
         expect(assessment.reload.latest_further_information_request).to eq(
           latest_further_information_request,
         )
+      end
+    end
+  end
+
+  describe "#prioritisation_checks_incomplete?" do
+    subject(:prioritisation_checks_incomplete?) do
+      assessment.prioritisation_checks_incomplete?
+    end
+
+    context "when assessment has no prioritisation work history checks" do
+      it { is_expected.to be false }
+    end
+
+    context "when assessment has prioritisation work history checks" do
+      before { create :prioritisation_work_history_check, assessment: }
+
+      it { is_expected.to be true }
+
+      context "with the prioritisation decision timestamp present" do
+        before { assessment.update!(prioritisation_decision_at: Time.current) }
+
+        it { is_expected.to be false }
       end
     end
   end
