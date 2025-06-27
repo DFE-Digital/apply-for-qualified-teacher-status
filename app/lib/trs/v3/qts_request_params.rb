@@ -5,7 +5,7 @@ module TRS
     class QTSRequestParams
       include ServicePattern
 
-      AWARDED_QTS_STATUS = "Approved"
+      AWARDED_QTS_STATUS = "Holds"
 
       SCOTLAND_RECOGNITION_ROUTE_TYPE_ID =
         "52835b1f-1f2e-4665-abc6-7fb1ef0a80bb"
