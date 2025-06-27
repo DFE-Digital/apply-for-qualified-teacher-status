@@ -219,6 +219,34 @@ RSpec.describe WorkHistory, type: :model do
         end
 
         it { is_expected.to be true }
+
+        context "when the application form includes prioritisation features" do
+          let(:application_form) do
+            create(
+              :application_form,
+              reduced_evidence_accepted: true,
+              includes_prioritisation_features: true,
+            )
+          end
+
+          it { is_expected.to be true }
+
+          context "with work history from England" do
+            let(:work_history) do
+              build(
+                :work_history,
+                :completed,
+                application_form:,
+                contact_name: "",
+                contact_job: "",
+                contact_email: "",
+                country_code: "GB-ENG",
+              )
+            end
+
+            it { is_expected.to be false }
+          end
+        end
       end
     end
 
