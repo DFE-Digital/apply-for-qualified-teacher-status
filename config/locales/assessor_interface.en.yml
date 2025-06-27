@@ -22,6 +22,7 @@ en:
             assessment_decision: Assessment decision
             await_professional_standing_request: Awaiting third-party professional standing
             prioritisation_work_history_checks: Check role, institution and referee details
+            prioritisation_work_history_references: Check work history with referee
             initial_assessment_recommendation: Initial assessment recommendation
             professional_standing_request: Verify LoPS
             qualification_requests: Verify qualifications
