@@ -55,7 +55,7 @@ RSpec.describe TRS::V3::QTSRequestParams do
         {
           routeToProfessionalStatusTypeId:
             "6f27bdeb-d00a-4ef9-b0ea-26498ce64713",
-          status: "Approved",
+          status: "Holds",
           holdsFrom: awarded_at.to_date.iso8601,
           trainingStartDate: "1990-01-01",
           trainingEndDate: "1995-01-01",
@@ -81,7 +81,7 @@ RSpec.describe TRS::V3::QTSRequestParams do
           {
             routeToProfessionalStatusTypeId:
               "52835b1f-1f2e-4665-abc6-7fb1ef0a80bb",
-            status: "Approved",
+            status: "Holds",
             holdsFrom: awarded_at.to_date.iso8601,
             trainingStartDate: "1990-01-01",
             trainingEndDate: "1995-01-01",
@@ -108,7 +108,7 @@ RSpec.describe TRS::V3::QTSRequestParams do
           {
             routeToProfessionalStatusTypeId:
               "3604ef30-8f11-4494-8b52-a2f9c5371e03",
-            status: "Approved",
+            status: "Holds",
             holdsFrom: awarded_at.to_date.iso8601,
             trainingStartDate: "1990-01-01",
             trainingEndDate: "1995-01-01",
@@ -135,7 +135,7 @@ RSpec.describe TRS::V3::QTSRequestParams do
           {
             routeToProfessionalStatusTypeId:
               "6f27bdeb-d00a-4ef9-b0ea-26498ce64713",
-            status: "Approved",
+            status: "Holds",
             holdsFrom: awarded_at.to_date.iso8601,
             trainingStartDate: "1990-01-01",
             trainingEndDate: "1995-01-01",
@@ -161,7 +161,7 @@ RSpec.describe TRS::V3::QTSRequestParams do
             {
               routeToProfessionalStatusTypeId:
                 "6f27bdeb-d00a-4ef9-b0ea-26498ce64713",
-              status: "Approved",
+              status: "Holds",
               holdsFrom: awarded_at.to_date.iso8601,
               trainingStartDate: "1990-01-01",
               trainingEndDate: "1995-01-01",
