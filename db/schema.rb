@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_27_084350) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_27_093129) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -295,6 +295,29 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_27_084350) do
     t.datetime "updated_at", null: false
     t.index ["application_form_id"], name: "index_notes_on_application_form_id"
     t.index ["author_id"], name: "index_notes_on_author_id"
+  end
+
+  create_table "prioritisation_reference_requests", force: :cascade do |t|
+    t.string "slug", null: false
+    t.bigint "assessment_id", null: false
+    t.bigint "work_history_id", null: false
+    t.bigint "prioritisation_work_history_check_id", null: false
+    t.boolean "contact_response"
+    t.text "contact_comment", default: "", null: false
+    t.boolean "confirm_applicant_response"
+    t.text "confirm_applicant_comment", default: "", null: false
+    t.datetime "received_at"
+    t.datetime "requested_at"
+    t.datetime "expired_at"
+    t.boolean "review_passed"
+    t.datetime "reviewed_at"
+    t.text "review_note", default: "", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["assessment_id"], name: "index_prioritisation_reference_requests_on_assessment_id"
+    t.index ["prioritisation_work_history_check_id"], name: "idx_on_prioritisation_work_history_check_id_179105c28e"
+    t.index ["slug"], name: "index_prioritisation_reference_requests_on_slug", unique: true
+    t.index ["work_history_id"], name: "index_prioritisation_reference_requests_on_work_history_id"
   end
 
   create_table "prioritisation_work_history_checks", force: :cascade do |t|
@@ -659,6 +682,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_27_084350) do
   add_foreign_key "further_information_request_items", "work_histories"
   add_foreign_key "notes", "application_forms"
   add_foreign_key "notes", "staff", column: "author_id"
+  add_foreign_key "prioritisation_reference_requests", "assessments"
+  add_foreign_key "prioritisation_reference_requests", "prioritisation_work_history_checks"
+  add_foreign_key "prioritisation_reference_requests", "work_histories"
   add_foreign_key "prioritisation_work_history_checks", "assessments"
   add_foreign_key "prioritisation_work_history_checks", "work_histories"
   add_foreign_key "professional_standing_requests", "assessments"
