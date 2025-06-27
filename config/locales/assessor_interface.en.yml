@@ -21,6 +21,7 @@ en:
           items:
             assessment_decision: Assessment decision
             await_professional_standing_request: Awaiting third-party professional standing
+            prioritisation_work_history_checks: Check role, institution and referee details
             initial_assessment_recommendation: Initial assessment recommendation
             professional_standing_request: Verify LoPS
             qualification_requests: Verify qualifications
@@ -258,6 +259,17 @@ en:
         failure_assessor_note: This is an internal note. It will not be seen by the applicant.
       edit_follow_up:
         title: Request further information
+
+    prioritisation_work_history_checks:
+      checks:
+        role_in_state_school: the role is a teacher, supply teacher, cover supervisor or teaching assistant in a state school
+        role_in_independent_school: the role is a teacher in an independent school
+        role_in_ofsted_further_education_and_skills_setting: the role is a teacher, tutor or lecturer in an Ofsted registered Further Education and Skills setting (for example, a college)
+        role_in_english_further_education_setting: the role is a lecturer or tutor in an English Higher Education provider registered with the Office for Students (for example, a university)
+        role_in_ofsted_early_years_setting: the role is a teacher in an Ofsted registered Early Years setting (for example, a nursery)
+        work_history_in_england: the institution is recognised in England
+        work_history_reference_email: the referee’s email is valid
+        work_history_reference_job: the referee is qualified to verify this applicant’s work history (the referee must be a Headteacher, HR personnel or senior staff member)
 
     qualifications:
       edit:

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_24_101758) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_27_084350) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -161,6 +161,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_24_101758) do
     t.datetime "verification_started_at"
     t.integer "working_days_between_started_and_verification_started"
     t.integer "working_days_between_submitted_and_verification_started"
+    t.datetime "prioritisation_decision_at"
+    t.boolean "prioritised"
     t.index ["application_form_id"], name: "index_assessments_on_application_form_id"
   end
 

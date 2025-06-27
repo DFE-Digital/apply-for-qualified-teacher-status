@@ -84,6 +84,8 @@
     - created_at
     - id
     - induction_required
+    - prioritisation_decision_at
+    - prioritised
     - recommendation
     - recommendation_assessor_note
     - recommended_at

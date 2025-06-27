@@ -181,6 +181,10 @@ Rails.application.routes.draw do
           end
         end
 
+        resources :prioritisation_work_history_checks,
+                  path: "/prioritisation-work-history-checks",
+                  only: %i[index edit update]
+
         resources :qualification_requests,
                   path: "/qualification-requests",
                   only: %i[index] do

@@ -443,5 +443,54 @@ RSpec.describe ApplicationFormStatusUpdater do
         end
       end
     end
+
+    context "when prioritisation check is required" do
+      before do
+        create(:prioritisation_work_history_check, assessment:)
+
+        application_form.update!(
+          submitted_at: Time.zone.now,
+          includes_prioritisation_features: true,
+        )
+      end
+
+      let(:assessment) { create(:assessment, application_form:) }
+
+      include_examples "changes action required by", "assessor"
+      include_examples "changes stage", "pre_assessment"
+      include_examples "changes statuses", %w[prioritisation_check]
+
+      context "when the prioritsation decision has been made" do
+        before { assessment.update!(prioritisation_decision_at: Time.current) }
+
+        include_examples "changes action required by", "assessor"
+        include_examples "changes stage", "not_started"
+        include_examples "changes statuses", %w[assessment_not_started]
+      end
+
+      context "when teaching authority provides written statement" do
+        before do
+          application_form.update!(
+            teaching_authority_provides_written_statement: true,
+          )
+          create(:requested_professional_standing_request, assessment:)
+        end
+
+        include_examples "changes action required by", "assessor"
+        include_examples "changes stage", "pre_assessment"
+        include_examples "changes statuses",
+                         %w[prioritisation_check waiting_on_lops]
+
+        context "when the prioritsation decision has been made" do
+          before do
+            assessment.update!(prioritisation_decision_at: Time.current)
+          end
+
+          include_examples "changes action required by", "external"
+          include_examples "changes stage", "pre_assessment"
+          include_examples "changes statuses", %w[waiting_on_lops]
+        end
+      end
+    end
   end
 end

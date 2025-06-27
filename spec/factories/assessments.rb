@@ -9,6 +9,8 @@
 #  age_range_min                                           :integer
 #  age_range_note                                          :text             default(""), not null
 #  induction_required                                      :boolean
+#  prioritisation_decision_at                              :datetime
+#  prioritised                                             :boolean
 #  qualifications_assessor_note                            :text             default(""), not null
 #  recommendation                                          :string           default("unknown"), not null
 #  recommendation_assessor_note                            :text             default(""), not null

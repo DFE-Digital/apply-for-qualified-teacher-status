@@ -1,0 +1,28 @@
+<% content_for :page_title, "Check role, institution and referee details" %>
+<% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
+
+<h1 class="govuk-heading-xl">Check role, institution and referee details</h1>
+
+<p class="govuk-body">
+  You must check whether each work history in England submitted by this applicant meets the criteria for prioritisation.
+</p>
+
+<h2 class="govuk-heading-m">Work history to check</h2>
+
+<%= govuk_task_list do |task_list|
+  @prioritisation_work_history_checks.each do |prioritisation_work_history_check|
+    task_list.with_item(
+      title: prioritisation_work_history_check.work_history.school_name,
+      href: [:edit, :assessor_interface, @application_form, @assessment, prioritisation_work_history_check],
+      status: if prioritisation_work_history_check.passed.nil?
+        render(StatusTag::Component.new("not_started"))
+      elsif prioritisation_work_history_check.passed?
+        render(StatusTag::Component.new("accepted"))
+      else
+        render(StatusTag::Component.new("rejected"))
+      end
+    )
+  end
+end %>
+
+<%= govuk_button_link_to "Back to overview", [:assessor_interface, @application_form] %>
