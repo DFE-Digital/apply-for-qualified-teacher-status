@@ -20,7 +20,7 @@ RSpec.describe TRS::Client::V3::UpdateQTSRequest do
     before do
       stub_request(
         :put,
-        "https://test-teacher-qualifications-api.education.gov.uk/v3/persons/#{trn}/professional-statuses/#{application_form.reference}",
+        "https://test-teacher-qualifications-api.education.gov.uk/v3/persons/#{trn}/routes-to-professional-statuses/#{application_form.reference}",
       ).with(
         body: "body",
         headers: {
@@ -44,7 +44,7 @@ RSpec.describe TRS::Client::V3::UpdateQTSRequest do
     before do
       stub_request(
         :put,
-        "https://test-teacher-qualifications-api.education.gov.uk/v3/persons/#{trn}/professional-statuses/#{application_form.reference}",
+        "https://test-teacher-qualifications-api.education.gov.uk/v3/persons/#{trn}/routes-to-professional-statuses/#{application_form.reference}",
       ).with(
         body: "body",
         headers: {
