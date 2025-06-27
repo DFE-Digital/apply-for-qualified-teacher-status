@@ -232,6 +232,10 @@ Rails.application.routes.draw do
             get "resend-email", to: "reference_requests#resend_email"
           end
         end
+
+        resources :prioritisation_reference_requests,
+                  path: "/prioritisation-reference-requests",
+                  only: %i[index new create edit update]
       end
     end
 

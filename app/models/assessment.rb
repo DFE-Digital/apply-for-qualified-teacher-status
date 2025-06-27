@@ -50,6 +50,7 @@ class Assessment < ApplicationRecord
   has_one :professional_standing_request, dependent: :destroy, required: false
   has_many :qualification_requests, dependent: :destroy
   has_many :reference_requests, dependent: :destroy
+  has_many :prioritisation_reference_requests, dependent: :destroy
 
   enum :recommendation,
        {
