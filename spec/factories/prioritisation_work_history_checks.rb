@@ -23,15 +23,9 @@
 #  fk_rails_...  (assessment_id => assessments.id)
 #  fk_rails_...  (work_history_id => work_histories.id)
 #
-class PrioritisationWorkHistoryCheck < ApplicationRecord
-  belongs_to :assessment
-  belongs_to :work_history
-
-  def complete?
-    !incomplete?
-  end
-
-  def incomplete?
-    passed.nil?
+FactoryBot.define do
+  factory :prioritisation_work_history_check do
+    work_history
+    assessment
   end
 end

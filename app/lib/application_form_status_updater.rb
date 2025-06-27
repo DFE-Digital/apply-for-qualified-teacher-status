@@ -51,8 +51,9 @@ class ApplicationFormStatusUpdater
            application_form.declined_at.present? ||
            application_form.awarded_at.present?
         "none"
-      elsif trs_trn_request.present? || assessment_in_review? ||
-            overdue_further_information || received_further_information
+      elsif prioritisation_check? || trs_trn_request.present? ||
+            assessment_in_review? || overdue_further_information ||
+            received_further_information
         "assessor"
       elsif preliminary_check? || need_to_request_lops? ||
             need_to_request_consent? || need_to_request_ecctis? ||
@@ -78,7 +79,7 @@ class ApplicationFormStatusUpdater
         "completed"
       elsif assessment_in_review? || trs_trn_request.present?
         "review"
-      elsif preliminary_check? ||
+      elsif preliminary_check? || prioritisation_check? ||
             (teaching_authority_provides_written_statement && waiting_on_lops)
         "pre_assessment"
       elsif assessment_in_verify? || need_to_request_lops? ||
@@ -116,6 +117,8 @@ class ApplicationFormStatusUpdater
       elsif assessment.present?
         if preliminary_check?
           %w[preliminary_check] + requestable_statuses
+        elsif prioritisation_check?
+          %w[prioritisation_check] + requestable_statuses
         elsif assessment_in_review?
           %w[review]
         elsif requestable_statuses.present?
@@ -147,6 +150,13 @@ class ApplicationFormStatusUpdater
         assessment.any_preliminary_section_failed? ||
           !assessment.all_preliminary_sections_passed?
       )
+  end
+
+  def prioritisation_check?
+    return false if assessment.nil?
+
+    assessment.prioritisation_work_history_checks.present? &&
+      assessment.prioritisation_decision_at.nil?
   end
 
   def assessment_in_review?

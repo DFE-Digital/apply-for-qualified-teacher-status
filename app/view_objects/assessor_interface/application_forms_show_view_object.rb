@@ -110,6 +110,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
           "assessor_interface.application_forms.show.assessment_tasks.sections.pre_assessment_tasks",
         ),
       items: [
+        *prioritisation_checks_task_list_items,
         *assessment_section_task_list_items(preliminary: true),
         await_professional_standing_task_list_item,
       ].compact,
@@ -143,6 +144,33 @@ class AssessorInterface::ApplicationFormsShowViewObject
           :cannot_start
         end,
     }
+  end
+
+  def prioritisation_checks_task_list_items
+    return if assessment.prioritisation_work_history_checks.blank?
+
+    [
+      {
+        name:
+          I18n.t(
+            "assessor_interface.application_forms.show.assessment_tasks.items.prioritisation_work_history_checks",
+          ),
+        link: [
+          :assessor_interface,
+          application_form,
+          assessment,
+          :prioritisation_work_history_checks,
+        ],
+        status:
+          if assessment.prioritisation_work_history_checks.all?(&:complete?)
+            :completed
+          elsif assessment.prioritisation_work_history_checks.any?(&:complete?)
+            :in_progress
+          else
+            :not_started
+          end,
+      },
+    ]
   end
 
   def assessment_task_list_section
@@ -475,6 +503,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
 
   def pre_assessment_complete?
     return false unless assessment.all_preliminary_sections_passed?
+    return false if assessment.prioritisation_checks_incomplete?
 
     if teaching_authority_provides_written_statement
       professional_standing_request.received?

@@ -697,7 +697,7 @@ RSpec.describe AssessmentFactory do
       end
 
       context "with valid work history in England" do
-        let!(:work_history) do
+        before do
           create :work_history, :current_role_in_england, application_form:
         end
 
@@ -741,7 +741,7 @@ RSpec.describe AssessmentFactory do
       end
 
       context "without valid work history in England" do
-        let!(:work_history) do
+        before do
           create :work_history,
                  :completed,
                  application_form:,
