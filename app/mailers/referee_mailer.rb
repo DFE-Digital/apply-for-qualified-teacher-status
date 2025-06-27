@@ -33,6 +33,32 @@ class RefereeMailer < ApplicationMailer
     )
   end
 
+  def prioritisation_reference_reminder
+    @number_of_reminders_sent = params[:number_of_reminders_sent]
+
+    view_mail(
+      GOVUK_NOTIFY_TEMPLATE_ID,
+      to: work_history.contact_email,
+      subject:
+        I18n.t(
+          "mailer.referee.prioritisation_reference_reminder.subject.#{@number_of_reminders_sent}",
+          name: application_form_full_name(application_form),
+        ),
+    )
+  end
+
+  def prioritisation_reference_requested
+    view_mail(
+      GOVUK_NOTIFY_TEMPLATE_ID,
+      to: work_history.contact_email,
+      subject:
+        I18n.t(
+          "mailer.referee.prioritisation_reference_requested.subject",
+          name: application_form_full_name(application_form),
+        ),
+    )
+  end
+
   private
 
   def reference_request

@@ -48,6 +48,8 @@
     - location_note
     - review_note
     - verify_note
+  :prioritisation_reference_requests:
+    - slug
   :qualification_requests:
     - review_note
     - verify_note
