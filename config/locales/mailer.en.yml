@@ -46,6 +46,12 @@ en:
         subject: "Your QTS application: %{certificate} received"
       professional_standing_requested:
         subject: "Your QTS application: Request your %{certificate}"
+      prioritisation_references_requested:
+        subject: We’ve contacted your references to confirm you have valid work experience in England
+      prioritisation_references_reminder:
+        subject:
+          0: Waiting on references – QTS application
+          1: Your references only have two weeks left to respond
       references_requested:
         subject: We’ve contacted your references – QTS application
       references_reminder:

@@ -174,6 +174,33 @@ class TeacherMailer < ApplicationMailer
     )
   end
 
+  def prioritisation_references_reminder
+    @number_of_reminders_sent = params[:number_of_reminders_sent]
+    @prioritisation_reference_requests =
+      params[:prioritisation_reference_requests]
+
+    view_mail(
+      GOVUK_NOTIFY_TEMPLATE_ID,
+      to: teacher.email,
+      subject:
+        I18n.t(
+          "mailer.teacher.prioritisation_references_reminder.subject.#{@number_of_reminders_sent}",
+        ),
+    )
+  end
+
+  def prioritisation_references_requested
+    @prioritisation_reference_requests =
+      params[:prioritisation_reference_requests]
+
+    view_mail(
+      GOVUK_NOTIFY_TEMPLATE_ID,
+      to: teacher.email,
+      subject:
+        I18n.t("mailer.teacher.prioritisation_references_requested.subject"),
+    )
+  end
+
   private
 
   def application_form

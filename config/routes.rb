@@ -525,6 +525,21 @@ Rails.application.routes.draw do
              to: "reference_requests#update_additional_information"
       end
     end
+
+    resources :prioritisation_reference_requests,
+              path: "/prioritisation-references",
+              param: :slug,
+              only: %i[show edit update] do
+      member do
+        get "contact", to: "prioritisation_reference_requests#edit_contact"
+        post "contact", to: "prioritisation_reference_requests#update_contact"
+
+        get "confirm-applicant",
+            to: "prioritisation_reference_requests#edit_confirm_applicant"
+        post "confirm-applicant",
+             to: "prioritisation_reference_requests#update_confirm_applicant"
+      end
+    end
   end
 
   devise_for :teachers,

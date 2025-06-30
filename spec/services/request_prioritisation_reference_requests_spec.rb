@@ -32,8 +32,6 @@ RSpec.describe RequestPrioritisationReferenceRequests do
            work_history: work_history_in_england_three,
            assessment:,
            passed: false
-    allow(RequestRequestable).to receive(:call)
-    allow(ApplicationFormStatusUpdater).to receive(:call)
   end
 
   it "changes generates reference requests for all prioritisation work history checks that have passed" do
@@ -50,23 +48,29 @@ RSpec.describe RequestPrioritisationReferenceRequests do
     )
   end
 
-  it "calls RequestRequestable for all passed prioritisation requests generated" do
+  it "Requests for all passed prioritisation requests generated" do
     call
 
     assessment.reload.prioritisation_reference_requests.each do |requestable|
-      expect(RequestRequestable).to have_received(:call).with(
-        requestable:,
-        user:,
-      )
+      expect(requestable.requested_at).not_to be_nil
     end
   end
 
   it "calls ApplicationFormStatusUpdater" do
+    allow(ApplicationFormStatusUpdater).to receive(:call)
+
     call
 
     expect(ApplicationFormStatusUpdater).to have_received(:call).with(
       application_form:,
       user:,
+    )
+  end
+
+  it "sends an email to the applicant" do
+    expect { call }.to have_enqueued_mail(
+      TeacherMailer,
+      :prioritisation_references_requested,
     )
   end
 
