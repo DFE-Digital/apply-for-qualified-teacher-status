@@ -35,6 +35,7 @@ en:
       received_further_information: Received further information
       received_lops: Received LoPS
       received_reference: Received reference
+      received_prioritisation_reference: Received prioritisation reference
       rejected: Rejected
       requested: Waiting on
       review: Review
@@ -49,6 +50,7 @@ en:
       waiting_on_further_information: Waiting on further information
       waiting_on_lops: Waiting on LoPS
       waiting_on_reference: Waiting on reference
+      waiting_on_prioritisation_reference: Waiting on prioritisation reference
       withdrawn: Withdrawn
 
     timeline_entry:

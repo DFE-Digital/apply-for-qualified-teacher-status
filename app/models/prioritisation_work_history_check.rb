@@ -27,6 +27,8 @@ class PrioritisationWorkHistoryCheck < ApplicationRecord
   belongs_to :assessment
   belongs_to :work_history
 
+  scope :passed, -> { where(passed: true) }
+
   def complete?
     !incomplete?
   end

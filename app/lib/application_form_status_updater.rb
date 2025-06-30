@@ -51,9 +51,9 @@ class ApplicationFormStatusUpdater
            application_form.declined_at.present? ||
            application_form.awarded_at.present?
         "none"
-      elsif prioritisation_check? || trs_trn_request.present? ||
-            assessment_in_review? || overdue_further_information ||
-            received_further_information
+      elsif (prioritisation_check? && !waiting_on_prioritisation_reference) ||
+            trs_trn_request.present? || assessment_in_review? ||
+            overdue_further_information || received_further_information
         "assessor"
       elsif preliminary_check? || need_to_request_lops? ||
             need_to_request_consent? || need_to_request_ecctis? ||
@@ -62,7 +62,8 @@ class ApplicationFormStatusUpdater
             overdue_reference || received_reference
         "admin"
       elsif waiting_on_consent || waiting_on_further_information ||
-            waiting_on_lops || waiting_on_ecctis || waiting_on_reference
+            waiting_on_lops || waiting_on_ecctis || waiting_on_reference ||
+            waiting_on_prioritisation_reference
         "external"
       elsif application_form.submitted_at.present?
         "assessor"
@@ -198,7 +199,16 @@ class ApplicationFormStatusUpdater
   def requestable_statuses
     @requestable_statuses ||=
       %w[overdue received waiting_on]
-        .product(%w[consent ecctis further_information lops reference])
+        .product(
+          %w[
+            consent
+            ecctis
+            further_information
+            lops
+            reference
+            prioritisation_reference
+          ],
+        )
         .map { |status, requestable| "#{status}_#{requestable}" }
         .filter { |column| send(column) }
   end
@@ -222,6 +232,10 @@ class ApplicationFormStatusUpdater
 
   def overdue_reference
     overdue?(requestables: reference_requests)
+  end
+
+  def overdue_prioritisation_reference
+    overdue?(requestables: prioritisation_reference_requests)
   end
 
   def received_consent
@@ -265,6 +279,10 @@ class ApplicationFormStatusUpdater
     end
   end
 
+  def received_prioritisation_reference
+    received?(requestables: prioritisation_reference_requests)
+  end
+
   def waiting_on_consent
     waiting_on?(requestables: consent_requests)
   end
@@ -283,6 +301,10 @@ class ApplicationFormStatusUpdater
 
   def waiting_on_reference
     waiting_on?(requestables: reference_requests)
+  end
+
+  def waiting_on_prioritisation_reference
+    waiting_on?(requestables: prioritisation_reference_requests)
   end
 
   def consent_requests
@@ -306,6 +328,11 @@ class ApplicationFormStatusUpdater
 
   def reference_requests
     @reference_requests ||= assessment&.reference_requests.to_a
+  end
+
+  def prioritisation_reference_requests
+    @prioritisation_reference_requests ||=
+      assessment&.prioritisation_reference_requests.to_a
   end
 
   def overdue?(requestables:)

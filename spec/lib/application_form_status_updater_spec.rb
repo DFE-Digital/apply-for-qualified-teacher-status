@@ -445,20 +445,67 @@ RSpec.describe ApplicationFormStatusUpdater do
     end
 
     context "when prioritisation check is required" do
-      before do
+      let!(:prioritisation_work_history_check) do
         create(:prioritisation_work_history_check, assessment:)
+      end
+      let(:assessment) { create(:assessment, application_form:) }
 
+      before do
         application_form.update!(
           submitted_at: Time.zone.now,
           includes_prioritisation_features: true,
         )
       end
 
-      let(:assessment) { create(:assessment, application_form:) }
-
       include_examples "changes action required by", "assessor"
       include_examples "changes stage", "pre_assessment"
       include_examples "changes statuses", %w[prioritisation_check]
+
+      context "when prioritisation checks have completed and have gone for references" do
+        let!(:prioritisation_reference_request) do
+          create(
+            :requested_prioritisation_reference_request,
+            assessment:,
+            prioritisation_work_history_check:,
+          )
+        end
+
+        before { prioritisation_work_history_check.update!(passed: true) }
+
+        include_examples "changes action required by", "external"
+        include_examples "changes stage", "pre_assessment"
+        include_examples "changes statuses",
+                         %w[
+                           prioritisation_check
+                           waiting_on_prioritisation_reference
+                         ]
+
+        context "with the reference received" do
+          before { prioritisation_reference_request.received! }
+
+          include_examples "changes action required by", "assessor"
+          include_examples "changes stage", "pre_assessment"
+          include_examples "changes statuses",
+                           %w[
+                             prioritisation_check
+                             received_prioritisation_reference
+                           ]
+        end
+
+        context "with the reference expired" do
+          before do
+            prioritisation_reference_request.update!(expired_at: Time.current)
+          end
+
+          include_examples "changes action required by", "assessor"
+          include_examples "changes stage", "pre_assessment"
+          include_examples "changes statuses",
+                           %w[
+                             prioritisation_check
+                             overdue_prioritisation_reference
+                           ]
+        end
+      end
 
       context "when the prioritsation decision has been made" do
         before { assessment.update!(prioritisation_decision_at: Time.current) }

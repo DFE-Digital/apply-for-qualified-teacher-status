@@ -1,0 +1,48 @@
+<% work_history = prioritisation_reference_request.work_history %>
+
+<%= render(CheckYourAnswersSummary::Component.new(
+  id: "prioritisation-reference-request-#{prioritisation_reference_request.id}",
+  model: prioritisation_reference_request,
+  title: "Work history check requested",
+  fields: {
+    contact_name: !changeable ? {
+      title: t("helpers.label.teacher_interface_prioritisation_reference_request_contact_response_form.contact_name"),
+      value: work_history.contact_name,
+    } : nil,
+    contact_job: !changeable ? {
+      title: t("helpers.label.teacher_interface_prioritisation_reference_request_contact_response_form.contact_job"),
+      value: work_history.contact_job,
+    } : nil,
+    school_name: !changeable ? {
+      title: t("helpers.label.teacher_interface_prioritisation_reference_request_contact_response_form.school_name"),
+      value: work_history.contact_job,
+    } : nil,
+    contact_response: !changeable ? {
+      title: t("helpers.legend.teacher_interface_prioritisation_reference_request_contact_response_form.contact_response"),
+    } : nil,
+    contact_name: prioritisation_reference_request.contact_response && !changeable ? nil : {
+      title: t("helpers.label.teacher_interface_prioritisation_reference_request_contact_response_form.contact_name"),
+      value: prioritisation_reference_request.contact_name.presence || work_history.contact_name,
+      href: contact_teacher_interface_prioritisation_reference_request_path(prioritisation_reference_request.slug),
+    },
+    contact_job: prioritisation_reference_request.contact_response && !changeable ? nil : {
+      title: t("helpers.label.teacher_interface_prioritisation_reference_request_contact_response_form.contact_job"),
+      value: prioritisation_reference_request.contact_job.presence || work_history.contact_job,
+      href: contact_teacher_interface_prioritisation_reference_request_path(prioritisation_reference_request.slug),
+    },
+    contact_comment: prioritisation_reference_request.contact_response ? nil : {
+      title: t("helpers.label.teacher_interface_prioritisation_reference_request_contact_response_form.contact_comment"),
+      href: contact_teacher_interface_prioritisation_reference_request_path(prioritisation_reference_request.slug),
+    },
+    confirm_applicant_response: {
+      title: t("helpers.legend.teacher_interface_prioritisation_reference_request_confirm_applicant_response_form.confirm_applicant_response"),
+      value: prioritisation_reference_request.confirm_applicant_response ? "Yes" : "No",
+      href: confirm_applicant_teacher_interface_prioritisation_reference_request_path(prioritisation_reference_request.slug),
+    },
+    confirm_applicant_comment: prioritisation_reference_request.confirm_applicant_response ? : {
+      title: t("helpers.label.teacher_interface_prioritisation_reference_request_confirm_applicant_response_form.confirm_applicant_comment"),
+      href: confirm_applicant_teacher_interface_prioritisation_reference_request_path(prioritisation_reference_request.slug),
+    } : nil,
+  },
+  changeable:
+)) %>
