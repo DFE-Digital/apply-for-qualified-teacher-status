@@ -11,11 +11,11 @@ class TRS::Client::V3::UpdateQTSRequest
   end
 
   def call
-    path = "/v3/persons/#{trn}/professional-statuses/#{reference}"
+    path = "/v3/persons/#{trn}/routes-to-professional-statuses/#{reference}"
     body = TRS::V3::QTSRequestParams.call(application_form:, awarded_at:)
     response =
       connection.put(path) do |req|
-        req.headers["X-Api-Version"] = "20250425"
+        req.headers["X-Api-Version"] = "20250627"
         req.body = body
       end
 
