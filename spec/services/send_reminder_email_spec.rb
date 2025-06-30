@@ -59,6 +59,24 @@ RSpec.describe SendReminderEmail do
       end
     end
 
+    shared_examples "sends a prioritisation reference reminder email" do
+      include_examples "sends an email", "expiration"
+
+      it "sends an email" do
+        expect { subject }.to have_enqueued_mail(
+          RefereeMailer,
+          :prioritisation_reference_reminder,
+        ).with(
+          params: {
+            application_form:,
+            reference_request: remindable,
+            number_of_reminders_sent: a_kind_of(Integer),
+          },
+          args: [],
+        )
+      end
+    end
+
     shared_examples "sends an application not submitted email" do
       include_examples "sends an email", "expiration"
 
@@ -88,6 +106,26 @@ RSpec.describe SendReminderEmail do
             application_form: remindable,
             number_of_reminders_sent: a_kind_of(Integer),
             reference_requests: [reference_request],
+          },
+          args: [],
+        )
+      end
+    end
+
+    shared_examples "sends an application prioritisation references reminder email" do
+      include_examples "sends an email", "prioritisation_references"
+
+      it "sends an email" do
+        expect { subject }.to have_enqueued_mail(
+          TeacherMailer,
+          :prioritisation_references_reminder,
+        ).with(
+          params: {
+            application_form: remindable,
+            number_of_reminders_sent: a_kind_of(Integer),
+            prioritisation_reference_requests: [
+              prioritisation_reference_request,
+            ],
           },
           args: [],
         )
@@ -396,6 +434,122 @@ RSpec.describe SendReminderEmail do
       context "with an expired reference request" do
         before do
           create(:reference_request, :expired, requested_at: Time.zone.now)
+        end
+
+        include_examples "doesn't send an email"
+      end
+    end
+
+    context "with a requested prioritisation reference request" do
+      let(:application_form) { create(:application_form, :submitted, region:) }
+      let(:assessment) { create(:assessment, application_form:) }
+      let(:region) { create(:region, :in_country, country_code: "FR") }
+      let(:work_history) { remindable.work_history }
+
+      let(:remindable) do
+        create(
+          :prioritisation_reference_request,
+          requested_at: reference_requested_at,
+          assessment:,
+        )
+      end
+
+      context "with less than four weeks remaining" do
+        let(:reference_requested_at) { (6.weeks - 27.days).ago }
+
+        include_examples "first reminder email",
+                         "sends a prioritisation reference reminder email",
+                         "expiration"
+      end
+
+      context "with less than two weeks remaining" do
+        let(:reference_requested_at) { (6.weeks - 13.days).ago }
+
+        include_examples "second reminder email",
+                         "sends a prioritisation reference reminder email",
+                         "expiration"
+      end
+    end
+
+    context "with a received prioritisation reference request" do
+      let(:remindable) do
+        create(
+          :received_prioritisation_reference_request,
+          requested_at: Time.zone.now,
+        )
+      end
+
+      include_examples "doesn't send an email"
+    end
+
+    context "with an expired prioritisation reference request" do
+      let(:remindable) do
+        create(
+          :prioritisation_reference_request,
+          :expired,
+          requested_at: Time.zone.now,
+        )
+      end
+
+      include_examples "doesn't send an email"
+    end
+
+    context "with a teacher with an remindable prioritisation reference request" do
+      let(:remindable) { create(:application_form, :submitted) }
+      let(:assessment) { create(:assessment, application_form: remindable) }
+
+      context "with a requested prioritisation reference request" do
+        # rubocop:disable RSpec/LetSetup
+        let!(:prioritisation_reference_request) do
+          create(
+            :prioritisation_reference_request,
+            requested_at: reference_requested_at,
+            assessment:,
+          )
+        end
+        # rubocop:enable RSpec/LetSetup
+
+        context "with less than four weeks remaining" do
+          let(:reference_requested_at) { (6.weeks - 27.days).ago }
+
+          include_examples "first reminder email",
+                           "sends an application prioritisation references reminder email",
+                           "prioritisation_references"
+        end
+
+        context "with less than two weeks remaining" do
+          let(:reference_requested_at) { (6.weeks - 13.days).ago }
+
+          include_examples "second reminder email",
+                           "sends an application prioritisation references reminder email",
+                           "prioritisation_references"
+        end
+
+        context "with more than four weeks remaining" do
+          let(:reference_requested_at) { 2.days.ago }
+
+          include_examples "doesn't send an email"
+        end
+      end
+
+      context "with a received prioritisation reference request" do
+        before do
+          create(
+            :received_prioritisation_reference_request,
+            requested_at: Time.zone.now,
+          )
+        end
+
+        include_examples "doesn't send an email"
+      end
+
+      context "with an expired prioritisation reference request" do
+        before do
+          create(
+            :prioritisation_reference_request,
+            :expired,
+            requested_at: Time.zone.now,
+          )
         end
 
         include_examples "doesn't send an email"
