@@ -15,7 +15,7 @@ class TRS::Client::V3::UpdateQTSRequest
     body = TRS::V3::QTSRequestParams.call(application_form:, awarded_at:)
     response =
       connection.put(path) do |req|
-        req.headers["X-Api-Version"] = "20250425"
+        req.headers["X-Api-Version"] = "20250627"
         req.body = body
       end
 
