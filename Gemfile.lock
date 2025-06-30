@@ -185,7 +185,7 @@ GEM
     devise-passwordless (1.1.0)
       devise
       globalid
-    devise_invitable (2.0.9)
+    devise_invitable (2.0.11)
       actionmailer (>= 5.0)
       devise (>= 4.6)
     diff-lcs (1.6.2)
@@ -358,7 +358,7 @@ GEM
     mutex_m (0.3.0)
     net-http-persistent (4.0.2)
       connection_pool (~> 2.2)
-    net-imap (0.5.7)
+    net-imap (0.5.9)
       date
       net-protocol
     net-pop (0.1.2)
