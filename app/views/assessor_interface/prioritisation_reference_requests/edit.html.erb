@@ -35,9 +35,9 @@
   end %>
 
   <% if (@prioritisation_reference_request.received? || @prioritisation_reference_request.expired?) && policy([:assessor_interface, @prioritisation_reference_request]).update? %>
-    <%= render "shared/reference_request_summary", reference_request: @reference_request, changeable: false %>
-
-    <% if @reference_request.expired? %>
+    <% if @reference_request.received? %>
+      <%= render "shared/reference_request_summary", reference_request: @reference_request, changeable: false %>
+    <% elsif @reference_request.expired? %>
       <%= govuk_warning_text(text: "This reference is overdue.") %>
     <% end %>
 
@@ -50,5 +50,4 @@
 
     <%= render "shared/assessor_interface/continue_cancel_button", f: %>
   <% end %>
-
 <% end %>

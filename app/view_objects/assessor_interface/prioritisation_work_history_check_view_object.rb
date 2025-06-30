@@ -15,8 +15,7 @@ module AssessorInterface
     attr_reader :prioritisation_work_history_check
 
     def disable_form?
-      # TODO: Once the prioritisation reference requests have been made, form will be disabled.
-      false
+      assessment.prioritisation_reference_requests.present?
     end
   end
 end
