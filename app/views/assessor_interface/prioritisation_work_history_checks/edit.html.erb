@@ -4,7 +4,7 @@
 <%= form_with model: @form, url: [:assessor_interface, @view_object.application_form, @view_object.assessment, @prioritisation_work_history_check], method: :put do |f| %>
   <%= f.govuk_error_summary %>
 
-  <h1 class="govuk-heading-xl">View role, institution and referee details</h1>
+  <h1 class="govuk-heading-xl"><%= t(".title") %></h1>
 
   <%= render(CheckYourAnswersSummary::Component.new(
     id: "work-history-#{@view_object.work_history.id}",

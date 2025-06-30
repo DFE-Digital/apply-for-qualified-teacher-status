@@ -1,0 +1,17 @@
+<% content_for :page_title, t(".title") %>
+<% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
+
+<h1 class="govuk-heading-xl"><%= t(".title") %></h1>
+
+<p class="govuk-body">
+  You have submitted a work history check request to all referees.
+</p>
+
+<p class="govuk-body">
+  You do not need to do anything further with this application.
+</p>
+
+<div class="govuk-button-group">
+  <%= govuk_button_link_to "Back to application list", %i[assessor_interface application_forms] %>
+  <%= govuk_button_link_to "See application overview", [:assessor_interface, @application_form], secondary: true %>
+</div>

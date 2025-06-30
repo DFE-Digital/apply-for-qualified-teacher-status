@@ -57,6 +57,7 @@ module StatusTag
       received_further_information: "purple",
       received_lops: "purple",
       received_reference: "purple",
+      received_prioritisation_reference: "purple",
       rejected: "red",
       requested: "yellow",
       review: "pink",
@@ -71,6 +72,7 @@ module StatusTag
       waiting_on_further_information: "yellow",
       waiting_on_lops: "yellow",
       waiting_on_reference: "yellow",
+      waiting_on_prioritisation_reference: "yellow",
       withdrawn: "red",
     }.freeze
   end

@@ -279,6 +279,7 @@ RSpec.describe TimelineEvent do
             ProfessionalStandingRequest
             QualificationRequest
             ReferenceRequest
+            PrioritisationReferenceRequest
           ],
         )
       end

@@ -261,7 +261,18 @@ en:
       edit_follow_up:
         title: Request further information
 
+    prioritisation_reference_requests:
+      confirmation:
+        title: Work history checks requested
+      index:
+        title: Check references
+      new:
+        title: Request work history confirmation from referees
     prioritisation_work_history_checks:
+      index:
+        title: Check role, institution and referee details
+      edit:
+        title: View role, institution and referee details
       checks:
         role_in_state_school: the role is a teacher, supply teacher, cover supervisor or teaching assistant in a state school
         role_in_independent_school: the role is a teacher in an independent school

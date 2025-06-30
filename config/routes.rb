@@ -235,7 +235,12 @@ Rails.application.routes.draw do
 
         resources :prioritisation_reference_requests,
                   path: "/prioritisation-reference-requests",
-                  only: %i[index new create edit update]
+                  only: %i[index new create edit update] do
+          collection do
+            get "confirmation",
+                to: "prioritisation_reference_requests#confirmation"
+          end
+        end
       end
     end
 
