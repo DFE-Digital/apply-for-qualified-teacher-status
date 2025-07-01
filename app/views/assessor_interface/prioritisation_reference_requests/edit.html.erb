@@ -42,12 +42,14 @@
     <% end %>
 
     <%= f.govuk_radio_buttons_fieldset :passed, legend: { text: "Are you satisfied with this reference for the applicant’s work history?", size: "s" } do %>
-      <%= f.govuk_radio_button :passed, :true, link_errors: true %>
-      <%= f.govuk_radio_button :passed, :false do %>
-        <%= f.govuk_text_area :note, label: { text: "Optional reason (the applicant may see this)" } %>
+      <%= f.govuk_radio_button :passed, :true, link_errors: true, disabled: @assessment.prioritisation_decision_at.present? %>
+      <%= f.govuk_radio_button :passed, :false, disabled: @assessment.prioritisation_decision_at.present? do %>
+        <%= f.govuk_text_area :note, label: { text: "Note to the applicant (optional)" } %>
       <% end %>
     <% end %>
 
-    <%= render "shared/assessor_interface/continue_cancel_button", f: %>
+    <%= f.govuk_submit disabled: @assessment.prioritisation_decision_at.present? do %>
+      <%= render "shared/assessor_interface/cancel_link" %>
+    <% end %>
   <% end %>
 <% end %>

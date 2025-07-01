@@ -25,7 +25,7 @@
 </ul>
 
 <%= form_with model: false, url: [:assessor_interface, @assessment.application_form, @assessment, :prioritisation_reference_requests], method: :post do |f| %>
-  <%= f.govuk_submit do %>
+  <%= f.govuk_submit "Submit" do %>
     <%= render "shared/assessor_interface/cancel_link" %>
   <% end %>
 <% end %>
