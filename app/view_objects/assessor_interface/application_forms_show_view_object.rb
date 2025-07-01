@@ -199,14 +199,9 @@ class AssessorInterface::ApplicationFormsShowViewObject
         status:
           if assessment.prioritisation_reference_requests.empty?
             :not_started
-          elsif assessment.prioritisation_reference_requests.any?(
-                &:reviewed?
-              ) &&
-                assessment.prioritisation_reference_requests.any?(
-                  &:review_passed?
-                )
+          elsif prioritisation_reference_requests_reviewed_and_passed_or_all_failed?
             :completed
-          elsif assessment.prioritisation_reference_requests.any?(&:received?)
+          elsif prioritisation_reference_requests_received_and_awaiting_review?
             :received
           else
             :waiting_on
@@ -613,6 +608,23 @@ class AssessorInterface::ApplicationFormsShowViewObject
       "not_started"
     else
       "in_progress"
+    end
+  end
+
+  def prioritisation_reference_requests_reviewed_and_passed_or_all_failed?
+    assessment.prioritisation_reference_requests.any?(&:reviewed?) &&
+      (
+        assessment.prioritisation_reference_requests.any?(&:review_passed?) ||
+          assessment.prioritisation_reference_requests.all?(&:review_failed?)
+      )
+  end
+
+  def prioritisation_reference_requests_received_and_awaiting_review?
+    assessment
+      .prioritisation_reference_requests
+      .any? do |prioritisation_reference_request|
+      prioritisation_reference_request.received? &&
+        !prioritisation_reference_request.reviewed?
     end
   end
 

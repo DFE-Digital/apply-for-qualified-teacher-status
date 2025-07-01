@@ -190,10 +190,40 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
         end
       end
 
-      context "when all checks are complete and passed" do
+      context "when all checks are complete and only one passed" do
         before do
           first_prioritisation_work_history_check.update!(passed: true)
           second_prioritisation_work_history_check.update!(passed: false)
+        end
+
+        it do
+          expect(subject).to include_task_list_item(
+            "Pre-assessment tasks",
+            "Check role, institution and referee details",
+            status: :completed,
+          )
+        end
+
+        it do
+          expect(subject).to include_task_list_item(
+            "Pre-assessment tasks",
+            "Check work history with referee",
+            status: :not_started,
+            link: [
+              :new,
+              :assessor_interface,
+              application_form,
+              assessment,
+              :prioritisation_reference_request,
+            ],
+          )
+        end
+      end
+
+      context "when all checks are complete and passed" do
+        before do
+          first_prioritisation_work_history_check.update!(passed: true)
+          second_prioritisation_work_history_check.update!(passed: true)
         end
 
         it do
@@ -225,6 +255,10 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
                    assessment:,
                    prioritisation_work_history_check:
                      first_prioritisation_work_history_check
+            create :requested_prioritisation_reference_request,
+                   assessment:,
+                   prioritisation_work_history_check:
+                     second_prioritisation_work_history_check
           end
 
           it do
@@ -242,12 +276,16 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
           end
         end
 
-        context "with prioritisation references received" do
+        context "with one prioritisation references received" do
           before do
-            create :received_prioritisation_reference_request,
+            create :requested_prioritisation_reference_request,
                    assessment:,
                    prioritisation_work_history_check:
                      first_prioritisation_work_history_check
+            create :received_prioritisation_reference_request,
+                   assessment:,
+                   prioritisation_work_history_check:
+                     second_prioritisation_work_history_check
           end
 
           it do
@@ -265,13 +303,44 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
           end
         end
 
-        context "with prioritisation references received and passed review" do
+        context "with both prioritisation references received" do
           before do
+            create :received_prioritisation_reference_request,
+                   assessment:,
+                   prioritisation_work_history_check:
+                     first_prioritisation_work_history_check
+            create :received_prioritisation_reference_request,
+                   assessment:,
+                   prioritisation_work_history_check:
+                     second_prioritisation_work_history_check
+          end
+
+          it do
+            expect(subject).to include_task_list_item(
+              "Pre-assessment tasks",
+              "Check work history with referee",
+              status: :received,
+              link: [
+                :assessor_interface,
+                application_form,
+                assessment,
+                :prioritisation_reference_requests,
+              ],
+            )
+          end
+        end
+
+        context "with one prioritisation references received and passed review" do
+          before do
+            create :requested_prioritisation_reference_request,
+                   assessment:,
+                   prioritisation_work_history_check:
+                     first_prioritisation_work_history_check
             create :received_prioritisation_reference_request,
                    :review_passed,
                    assessment:,
                    prioritisation_work_history_check:
-                     first_prioritisation_work_history_check
+                     second_prioritisation_work_history_check
           end
 
           it do
@@ -289,7 +358,35 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
           end
         end
 
-        context "with multiple prioritisation references received passed review on one" do
+        context "with one prioritisation references received and failed review" do
+          before do
+            create :requested_prioritisation_reference_request,
+                   assessment:,
+                   prioritisation_work_history_check:
+                     first_prioritisation_work_history_check
+            create :received_prioritisation_reference_request,
+                   :review_failed,
+                   assessment:,
+                   prioritisation_work_history_check:
+                     second_prioritisation_work_history_check
+          end
+
+          it do
+            expect(subject).to include_task_list_item(
+              "Pre-assessment tasks",
+              "Check work history with referee",
+              status: :waiting_on,
+              link: [
+                :assessor_interface,
+                application_form,
+                assessment,
+                :prioritisation_reference_requests,
+              ],
+            )
+          end
+        end
+
+        context "with both prioritisation references received and passed review on one" do
           before do
             create :received_prioritisation_reference_request,
                    assessment:,
@@ -317,7 +414,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
           end
         end
 
-        context "with multiple prioritisation references received did not passed review on one" do
+        context "with both prioritisation references received and did not failed review on one" do
           before do
             create :received_prioritisation_reference_request,
                    assessment:,
@@ -335,6 +432,35 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
               "Pre-assessment tasks",
               "Check work history with referee",
               status: :received,
+              link: [
+                :assessor_interface,
+                application_form,
+                assessment,
+                :prioritisation_reference_requests,
+              ],
+            )
+          end
+        end
+
+        context "with both prioritisation references received and did not failed review on all" do
+          before do
+            create :received_prioritisation_reference_request,
+                   :review_failed,
+                   assessment:,
+                   prioritisation_work_history_check:
+                     first_prioritisation_work_history_check
+            create :received_prioritisation_reference_request,
+                   :review_failed,
+                   assessment:,
+                   prioritisation_work_history_check:
+                     second_prioritisation_work_history_check
+          end
+
+          it do
+            expect(subject).to include_task_list_item(
+              "Pre-assessment tasks",
+              "Check work history with referee",
+              status: :completed,
               link: [
                 :assessor_interface,
                 application_form,
