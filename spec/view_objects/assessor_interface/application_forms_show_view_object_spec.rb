@@ -145,6 +145,13 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
         )
       end
 
+      it do
+        expect(subject).not_to include_task_list_item(
+          "Pre-assessment tasks",
+          "Confirm prioritisation decision",
+        )
+      end
+
       context "when some checks are complete" do
         before do
           assessment.prioritisation_work_history_checks.first.update!(
@@ -164,6 +171,13 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
           expect(subject).not_to include_task_list_item(
             "Pre-assessment tasks",
             "Check work history with referee",
+          )
+        end
+
+        it do
+          expect(subject).not_to include_task_list_item(
+            "Pre-assessment tasks",
+            "Confirm prioritisation decision",
           )
         end
       end
@@ -186,6 +200,20 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
           expect(subject).not_to include_task_list_item(
             "Pre-assessment tasks",
             "Check work history with referee",
+          )
+        end
+
+        it do
+          expect(subject).to include_task_list_item(
+            "Pre-assessment tasks",
+            "Confirm prioritisation decision",
+            status: :not_started,
+            link: [
+              :edit_prioritisation,
+              :assessor_interface,
+              application_form,
+              assessment,
+            ]
           )
         end
       end
@@ -216,6 +244,13 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
               assessment,
               :prioritisation_reference_request,
             ],
+          )
+        end
+
+        it do
+          expect(subject).not_to include_task_list_item(
+            "Pre-assessment tasks",
+            "Confirm prioritisation decision",
           )
         end
       end
@@ -249,6 +284,13 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
           )
         end
 
+        it do
+          expect(subject).not_to include_task_list_item(
+            "Pre-assessment tasks",
+            "Confirm prioritisation decision",
+          )
+        end
+
         context "with prioritisation references requested" do
           before do
             create :requested_prioritisation_reference_request,
@@ -272,6 +314,13 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
                 assessment,
                 :prioritisation_reference_requests,
               ],
+            )
+          end
+
+          it do
+            expect(subject).not_to include_task_list_item(
+              "Pre-assessment tasks",
+              "Confirm prioritisation decision",
             )
           end
         end
@@ -301,6 +350,13 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
               ],
             )
           end
+
+          it do
+            expect(subject).not_to include_task_list_item(
+              "Pre-assessment tasks",
+              "Confirm prioritisation decision",
+            )
+          end
         end
 
         context "with both prioritisation references received" do
@@ -326,6 +382,13 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
                 assessment,
                 :prioritisation_reference_requests,
               ],
+            )
+          end
+
+          it do
+            expect(subject).not_to include_task_list_item(
+              "Pre-assessment tasks",
+              "Confirm prioritisation decision",
             )
           end
         end
@@ -356,6 +419,20 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
               ],
             )
           end
+
+          it do
+            expect(subject).to include_task_list_item(
+              "Pre-assessment tasks",
+              "Confirm prioritisation decision",
+              status: :not_started,
+              link: [
+                :edit_prioritisation,
+                :assessor_interface,
+                application_form,
+                assessment,
+              ]
+            )
+          end
         end
 
         context "with one prioritisation references received and failed review" do
@@ -382,6 +459,13 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
                 assessment,
                 :prioritisation_reference_requests,
               ],
+            )
+          end
+
+          it do
+            expect(subject).not_to include_task_list_item(
+              "Pre-assessment tasks",
+              "Confirm prioritisation decision",
             )
           end
         end
@@ -412,9 +496,23 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
               ],
             )
           end
+
+          it do
+            expect(subject).to include_task_list_item(
+              "Pre-assessment tasks",
+              "Confirm prioritisation decision",
+              status: :not_started,
+              link: [
+                :edit_prioritisation,
+                :assessor_interface,
+                application_form,
+                assessment,
+              ]
+            )
+          end
         end
 
-        context "with both prioritisation references received and did not failed review on one" do
+        context "with both prioritisation references received and failed review on one" do
           before do
             create :received_prioritisation_reference_request,
                    assessment:,
@@ -440,9 +538,16 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
               ],
             )
           end
+
+          it do
+            expect(subject).not_to include_task_list_item(
+              "Pre-assessment tasks",
+              "Confirm prioritisation decision",
+            )
+          end
         end
 
-        context "with both prioritisation references received and did not failed review on all" do
+        context "with both prioritisation references received and failed review on all" do
           before do
             create :received_prioritisation_reference_request,
                    :review_failed,
@@ -467,6 +572,20 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
                 assessment,
                 :prioritisation_reference_requests,
               ],
+            )
+          end
+
+          it do
+            expect(subject).to include_task_list_item(
+              "Pre-assessment tasks",
+              "Confirm prioritisation decision",
+              status: :not_started,
+              link: [
+                :edit_prioritisation,
+                :assessor_interface,
+                application_form,
+                assessment,
+              ]
             )
           end
         end

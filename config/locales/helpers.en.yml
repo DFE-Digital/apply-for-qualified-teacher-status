@@ -101,6 +101,10 @@ en:
         confirmation_options:
           true: "Yes"
           false: "No"
+      assessor_interface_assessment_prioritisation_decision_form:
+        passed_options:
+          true: "Prioritise this application"
+          false: "Confirm application is not valid for prioritisation"
       assessor_interface_assessment_section_form:
         age_range_max: To
         age_range_min: From

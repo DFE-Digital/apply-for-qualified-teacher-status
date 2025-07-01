@@ -69,6 +69,11 @@ Rails.application.routes.draw do
         member do
           get "review"
           get "rollback"
+
+          get "edit-prioritisation", to: "assessments#edit_prioritisation"
+          post "update-prioritisation", to: "assessments#update_prioritisation"
+
+          get "confirm-prioritisation", to: "assessments#confirm_prioritisation"
         end
 
         resources :assessment_sections, path: "/sections", only: %i[show update]
