@@ -23,6 +23,7 @@ en:
             await_professional_standing_request: Awaiting third-party professional standing
             prioritisation_work_history_checks: Check role, institution and referee details
             prioritisation_work_history_references: Check work history with referee
+            prioritisation_decision: Confirm prioritisation decision
             initial_assessment_recommendation: Initial assessment recommendation
             professional_standing_request: Verify LoPS
             qualification_requests: Verify qualifications
@@ -34,6 +35,8 @@ en:
             verification_decision: Verification decision
 
     assessments:
+      edit_prioritisation:
+        title: Prioritisation decision
       edit:
         legend:
           other: QTS review complete

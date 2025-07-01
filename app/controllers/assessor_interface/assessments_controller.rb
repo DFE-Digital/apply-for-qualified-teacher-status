@@ -12,6 +12,9 @@ module AssessorInterface
       authorize [:assessor_interface, assessment]
     end
 
+    before_action :ensure_can_make_prioritisation_decision,
+                  only: %i[edit_prioritisation update_prioritisation]
+
     def review
       @professional_standing_request =
         assessment.professional_standing_request if assessment.professional_standing_request&.verify_failed?
@@ -70,6 +73,37 @@ module AssessorInterface
     def rollback
     end
 
+    def edit_prioritisation
+      @form = AssessmentPrioritisationDecisionForm.new(assessment:)
+    end
+
+    def update_prioritisation
+      @form =
+        AssessmentPrioritisationDecisionForm.new(
+          assessment:,
+          user: current_staff,
+          passed:
+            params.dig(
+              :assessor_interface_assessment_prioritisation_decision_form,
+              :passed,
+            ),
+        )
+
+      if @form.save
+        redirect_to [
+                      :confirm_prioritisation,
+                      :assessor_interface,
+                      application_form,
+                      assessment,
+                    ]
+      else
+        render :edit_prioritisation, status: :unprocessable_entity
+      end
+    end
+
+    def confirm_prioritisation
+    end
+
     def destroy
       RollbackAssessment.call(assessment:, user: current_staff)
       redirect_to [:assessor_interface, application_form]
@@ -116,6 +150,12 @@ module AssessorInterface
           :"assessment_recommendation_#{recommendation}",
         ]
       end
+    end
+
+    def ensure_can_make_prioritisation_decision
+      return if @assessment.can_update_prioritisation_decision?
+
+      redirect_to [:assessor_interface, application_form]
     end
   end
 end

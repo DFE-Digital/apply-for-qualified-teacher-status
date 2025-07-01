@@ -143,6 +143,26 @@ class Assessment < ApplicationRecord
     end
   end
 
+  def can_update_prioritisation_decision?
+    return false if prioritisation_work_history_checks.empty?
+
+    if prioritisation_work_history_checks.all?(&:complete?) &&
+         prioritisation_work_history_checks.none?(&:passed?)
+      return true
+    end
+
+    prioritisation_reference_requests.present? &&
+      (
+        prioritisation_reference_requests.any?(&:review_passed?) ||
+          prioritisation_reference_requests.all?(&:review_failed?)
+      )
+  end
+
+  def can_prioritise?
+    prioritisation_reference_requests.present? &&
+      prioritisation_reference_requests.any?(&:review_passed?)
+  end
+
   def can_request_further_information?
     if unknown?
       all_sections_assessed? && any_section_failed? && no_section_declines?

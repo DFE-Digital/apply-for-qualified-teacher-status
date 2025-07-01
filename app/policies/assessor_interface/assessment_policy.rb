@@ -14,4 +14,22 @@ class AssessorInterface::AssessmentPolicy < ApplicationPolicy
   def rollback?
     destroy? && !user.archived?
   end
+
+  def edit_prioritisation?
+    return false if user.archived?
+
+    user.assess_permission
+  end
+
+  def update_prioritisation?
+    return false if user.archived?
+
+    user.assess_permission
+  end
+
+  def confirm_prioritisation?
+    return false if user.archived?
+
+    user.assess_permission
+  end
 end
