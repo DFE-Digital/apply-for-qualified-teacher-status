@@ -3,7 +3,7 @@
 
 <% work_history = @prioritisation_reference_request.work_history %>
 
-<%= form_with model: @form, url: [:assessor_interface, @assessment.application_form, @assessment, @prioritisation_reference_request] do |f| %>
+<%= form_with model: @form, url: [:assessor_interface, @assessment.application_form, @assessment, @prioritisation_reference_request], method: :put do |f| %>
   <%= f.govuk_error_summary %>
 
   <h1 class="govuk-heading-xl">View reference</h1>
@@ -35,9 +35,9 @@
   end %>
 
   <% if (@prioritisation_reference_request.received? || @prioritisation_reference_request.expired?) && policy([:assessor_interface, @prioritisation_reference_request]).update? %>
-    <% if @reference_request.received? %>
-      <%= render "shared/reference_request_summary", reference_request: @reference_request, changeable: false %>
-    <% elsif @reference_request.expired? %>
+    <% if @prioritisation_reference_request.received? %>
+      <%= render "shared/prioritisation_reference_request_summary", prioritisation_reference_request: @prioritisation_reference_request, changeable: false %>
+    <% elsif @prioritisation_reference_request.expired? %>
       <%= govuk_warning_text(text: "This reference is overdue.") %>
     <% end %>
 
