@@ -1,0 +1,50 @@
+<% content_for :page_title, title_with_error_prefix(t(".title"), error: @form.errors.any?) %>
+<% content_for :back_link_url, back_history_path(default: contact_teacher_interface_prioritisation_reference_request_path) %>
+
+<%= form_with model: @form, url: confirm_applicant_teacher_interface_prioritisation_reference_request_path do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <h2 class="govuk-heading-l"><%= t(".title") %></h2>
+
+  <p class="body-text">
+    These are the details that <%= application_form_full_name(@application_form) %> has provided about their work history.
+    Take a moment to check that they’re correct.
+  </p>
+
+  <%= render(CheckYourAnswersSummary::Component.new(
+    id: "work-history-confirm-applicant",
+    model: @work_history,
+    title: t(".title"),
+    fields: {
+      full_name: {
+        title: t("helpers.label.teacher_interface_prioritisation_reference_request_confirm_applicant_response_form.full_name"),
+        value: application_form_full_name(@application_form)
+      },
+      job: {
+        title: t("helpers.label.teacher_interface_prioritisation_reference_request_confirm_applicant_response_form.job")
+      },
+      school_name: {
+        title: t("helpers.label.teacher_interface_prioritisation_reference_request_confirm_applicant_response_form.school_name")
+      },
+      start_date: {
+        title: t("helpers.label.teacher_interface_prioritisation_reference_request_confirm_applicant_response_form.start_date"),
+        format: :without_day
+      },
+      end_date: {
+        title: t("helpers.label.teacher_interface_prioritisation_reference_request_confirm_applicant_response_form.end_date"),
+        value: @work_history.still_employed ? "Current job" : @work_history.end_date,
+        format: :without_day
+      },
+    },
+    changeable: false
+  )) %>
+
+  <%= f.govuk_radio_buttons_fieldset :confirm_applicant_response do %>
+    <%= f.govuk_radio_button :confirm_applicant_response, :true, link_errors: true %>
+    <%= f.govuk_radio_button :confirm_applicant_response, :false do %>
+      <%= f.govuk_text_area :confirm_applicant_comment %>
+    <% end %>
+  <% end %>
+
+  <%= f.govuk_submit %>
+<% end %>

@@ -517,6 +517,11 @@ module PageHelpers
       PageObjects::TeacherInterface::CheckReferenceRequestAnswers.new
   end
 
+  def teacher_check_prioritisation_reference_request_answers_page
+    @teacher_check_prioritisation_reference_request_answers_page ||=
+      PageObjects::TeacherInterface::CheckPrioritisationReferenceRequestAnswers.new
+  end
+
   def teacher_check_uploaded_files_page
     @teacher_check_uploaded_files_page =
       PageObjects::TeacherInterface::CheckUploadedFiles.new
@@ -764,6 +769,26 @@ module PageHelpers
   def teacher_reference_requested_page
     @teacher_reference_requested_page ||=
       PageObjects::TeacherInterface::ReferenceRequested.new
+  end
+
+  def teacher_prioritisation_reference_received_page
+    @teacher_prioritisation_reference_received_page ||=
+      PageObjects::TeacherInterface::PrioritisationReferenceReceived.new
+  end
+
+  def teacher_prioritisation_reference_requested_page
+    @teacher_prioritisation_reference_requested_page ||=
+      PageObjects::TeacherInterface::PrioritisationReferenceRequested.new
+  end
+
+  def teacher_edit_prioritisation_reference_request_contact_page
+    @teacher_edit_prioritisation_reference_request_contact_page ||=
+      PageObjects::TeacherInterface::EditPrioritisationReferenceRequestContact.new
+  end
+
+  def teacher_edit_prioritisation_reference_request_confirm_applicant_page
+    @teacher_edit_prioritisation_reference_request_confirm_applicant_page ||=
+      PageObjects::TeacherInterface::EditPrioritisationReferenceRequestConfirmApplicant.new
   end
 
   def teacher_registration_number_page

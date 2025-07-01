@@ -118,6 +118,15 @@ en:
         title: Check your answers
       edit_contact:
         title: About you
+    prioritisation_reference_requests:
+      show:
+        title: You’ve been asked to act as a reference
+      edit:
+        title: Check your answers
+      edit_contact:
+        title: About you
+      edit_confirm_applicant:
+        title: About the applicant
     work_histories:
       add_another:
         title: Add another role
