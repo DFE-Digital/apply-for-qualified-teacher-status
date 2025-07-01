@@ -1,0 +1,35 @@
+<% content_for :page_title, t(".title") %>
+
+<% if @prioritisation_reference_request.received? %>
+  <%= govuk_panel(title_text: "You’ve successfully submitted your response") %>
+
+  <h2 class="govuk-heading-m">Thank you for submitting your response.</h2>
+
+  <p class="govuk-body">The QTS assessor will now review your response and continue their review of the applicant.</p>
+
+  <p class="govuk-body">You do not need to do anything else.</p>
+
+  <h2 class="govuk-heading-m">What happens next</h2>
+
+  <p class="govuk-body">We may reach out to you again for a full reference check for this applicant.</p>
+<% else %>
+  <h1 class="govuk-heading-xl"><%= t("service.name.teacher") %></h1>
+
+  <h2 class="govuk-heading-m"><%= t(".title") %></h2>
+
+  <p class="govuk-body"><%= application_form_full_name(@application_form) %> is applying for qualified teacher status (QTS) in England.</p>
+
+  <p class="govuk-body">Their application for QTS means we’ll assess their qualifications and teaching experience. It is not an application for a teaching job. We need to confirm whether they have worked in an eligible role in England,</p>
+
+  <p class="govuk-body">They’ve provided your details to help us verify that they have worked at:</p>
+
+  <%= govuk_inset_text do %>
+    <p class="govuk-body">
+      <%= @work_history.school_name %> from <%= @work_history.start_date.to_fs(:month_and_year) %> to <%= (@work_history.end_date || Date.today).to_fs(:month_and_year) %>
+    </p>
+  <% end %>
+
+  <p class="govuk-body">We need to ask you a few questions about the applicant’s role. It should take no longer than 5 minutes.</p>
+
+  <%= govuk_start_button(text: "Start now", href: contact_teacher_interface_prioritisation_reference_request_path) %>
+<% end %>

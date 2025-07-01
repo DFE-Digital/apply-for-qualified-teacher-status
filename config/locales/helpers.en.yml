@@ -305,6 +305,24 @@ en:
           true: "Yes"
           false: "No"
         satisfied_comment: Tell us why you answered ‘No’ to this question.
+      teacher_interface_prioritisation_reference_request_contact_response_form:
+        contact_response_options:
+          true: "Yes"
+          false: "No"
+        contact_name: Your full name
+        contact_job: Your job title
+        school_name: Where you work
+        contact_comment: Provide a reason
+      teacher_interface_prioritisation_reference_request_confirm_applicant_response_form:
+        full_name: Applicant’s full name
+        job: Applicant’s  job title
+        school_name: Applicant’s place of work
+        start_date: Start date
+        end_date: End date
+        confirm_applicant_response_options:
+          true: "Yes"
+          false: "No"
+        confirm_applicant_comment: Provide a reason
       teacher_interface_registration_number_form:
         registration_number: What is your registration number?
       teacher_interface_subjects_form:
@@ -422,6 +440,10 @@ en:
         reports_response: Was the applicant responsible for assessing and reporting on the progress of the students?
       teacher_interface_reference_request_satisfied_response_form:
         satisfied_response: Are you satisfied that the applicant is suitable to work with children?
+      teacher_interface_prioritisation_reference_request_contact_response_form:
+        contact_response: Are these details correct?
+      teacher_interface_prioritisation_reference_request_confirm_applicant_response_form:
+        confirm_applicant_response: Can you confirm the applicant’s work history?
       teacher_interface_teaching_qualification_part_of_degree_form:
         teaching_qualification_part_of_degree: Is your teaching qualification part of your bachelor’s degree?
       teacher_interface_work_history_school_form:

@@ -5,30 +5,21 @@
   model: prioritisation_reference_request,
   title: "Work history check requested",
   fields: {
-    contact_name: !changeable ? {
+    contact_name: {
       title: t("helpers.label.teacher_interface_prioritisation_reference_request_contact_response_form.contact_name"),
       value: work_history.contact_name,
-    } : nil,
-    contact_job: !changeable ? {
-      title: t("helpers.label.teacher_interface_prioritisation_reference_request_contact_response_form.contact_job"),
-      value: work_history.contact_job,
-    } : nil,
-    school_name: !changeable ? {
-      title: t("helpers.label.teacher_interface_prioritisation_reference_request_contact_response_form.school_name"),
-      value: work_history.contact_job,
-    } : nil,
-    contact_response: !changeable ? {
-      title: t("helpers.legend.teacher_interface_prioritisation_reference_request_contact_response_form.contact_response"),
-    } : nil,
-    contact_name: prioritisation_reference_request.contact_response && !changeable ? nil : {
-      title: t("helpers.label.teacher_interface_prioritisation_reference_request_contact_response_form.contact_name"),
-      value: prioritisation_reference_request.contact_name.presence || work_history.contact_name,
-      href: contact_teacher_interface_prioritisation_reference_request_path(prioritisation_reference_request.slug),
     },
-    contact_job: prioritisation_reference_request.contact_response && !changeable ? nil : {
+    contact_job: {
       title: t("helpers.label.teacher_interface_prioritisation_reference_request_contact_response_form.contact_job"),
-      value: prioritisation_reference_request.contact_job.presence || work_history.contact_job,
-      href: contact_teacher_interface_prioritisation_reference_request_path(prioritisation_reference_request.slug),
+      value: work_history.contact_job,
+    },
+    school_name: {
+      title: t("helpers.label.teacher_interface_prioritisation_reference_request_contact_response_form.school_name"),
+      value: work_history.school_name,
+    },
+    contact_response: {
+      title: t("helpers.legend.teacher_interface_prioritisation_reference_request_contact_response_form.contact_response"),
+      href: contact_teacher_interface_prioritisation_reference_request_path(prioritisation_reference_request.slug)
     },
     contact_comment: prioritisation_reference_request.contact_response ? nil : {
       title: t("helpers.label.teacher_interface_prioritisation_reference_request_contact_response_form.contact_comment"),
@@ -39,10 +30,10 @@
       value: prioritisation_reference_request.confirm_applicant_response ? "Yes" : "No",
       href: confirm_applicant_teacher_interface_prioritisation_reference_request_path(prioritisation_reference_request.slug),
     },
-    confirm_applicant_comment: prioritisation_reference_request.confirm_applicant_response ? : {
+    confirm_applicant_comment: prioritisation_reference_request.confirm_applicant_response ? nil : {
       title: t("helpers.label.teacher_interface_prioritisation_reference_request_confirm_applicant_response_form.confirm_applicant_comment"),
       href: confirm_applicant_teacher_interface_prioritisation_reference_request_path(prioritisation_reference_request.slug),
-    } : nil,
+    },
   },
   changeable:
 )) %>
