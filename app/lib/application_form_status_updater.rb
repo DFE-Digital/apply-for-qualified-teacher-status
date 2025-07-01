@@ -235,6 +235,9 @@ class ApplicationFormStatusUpdater
   end
 
   def overdue_prioritisation_reference
+    return false if received_prioritisation_reference
+    return false if prioritisation_reference_requests.any?(&:review_passed?)
+
     overdue?(requestables: prioritisation_reference_requests)
   end
 
@@ -280,6 +283,8 @@ class ApplicationFormStatusUpdater
   end
 
   def received_prioritisation_reference
+    return false if prioritisation_reference_requests.any?(&:review_passed?)
+
     received?(requestables: prioritisation_reference_requests)
   end
 
@@ -304,6 +309,9 @@ class ApplicationFormStatusUpdater
   end
 
   def waiting_on_prioritisation_reference
+    return false if received_prioritisation_reference
+    return false if prioritisation_reference_requests.any?(&:review_passed?)
+
     waiting_on?(requestables: prioritisation_reference_requests)
   end
 
