@@ -481,7 +481,13 @@ RSpec.describe ApplicationFormStatusUpdater do
                          ]
 
         context "with the reference received" do
-          before { prioritisation_reference_request.received! }
+          before do
+            prioritisation_reference_request.update!(
+              contact_response: true,
+              confirm_applicant_response: true,
+            )
+            prioritisation_reference_request.received!
+          end
 
           include_examples "changes action required by", "assessor"
           include_examples "changes stage", "pre_assessment"
@@ -495,6 +501,193 @@ RSpec.describe ApplicationFormStatusUpdater do
         context "with the reference expired" do
           before do
             prioritisation_reference_request.update!(expired_at: Time.current)
+          end
+
+          include_examples "changes action required by", "assessor"
+          include_examples "changes stage", "pre_assessment"
+          include_examples "changes statuses",
+                           %w[
+                             prioritisation_check
+                             overdue_prioritisation_reference
+                           ]
+        end
+      end
+
+      context "when prioritisation checks have completed and have gone for multiple references" do
+        let(:prioritisation_work_history_check_two) do
+          create(:prioritisation_work_history_check, assessment:)
+        end
+
+        let!(:prioritisation_reference_request) do
+          create(
+            :requested_prioritisation_reference_request,
+            assessment:,
+            prioritisation_work_history_check:,
+          )
+        end
+
+        let!(:prioritisation_reference_request_two) do
+          create(
+            :requested_prioritisation_reference_request,
+            assessment:,
+            prioritisation_work_history_check:
+              prioritisation_work_history_check_two,
+          )
+        end
+
+        before do
+          prioritisation_work_history_check.update!(passed: true)
+          prioritisation_work_history_check_two.update!(passed: true)
+        end
+
+        include_examples "changes action required by", "external"
+        include_examples "changes stage", "pre_assessment"
+        include_examples "changes statuses",
+                         %w[
+                           prioritisation_check
+                           waiting_on_prioritisation_reference
+                         ]
+
+        context "with one of the references received" do
+          before do
+            prioritisation_reference_request.update!(
+              contact_response: true,
+              confirm_applicant_response: true,
+            )
+            prioritisation_reference_request.received!
+          end
+
+          include_examples "changes action required by", "assessor"
+          include_examples "changes stage", "pre_assessment"
+          include_examples "changes statuses",
+                           %w[
+                             prioritisation_check
+                             received_prioritisation_reference
+                           ]
+        end
+
+        context "with one of the references received and passed review" do
+          before do
+            prioritisation_reference_request.update!(
+              contact_response: true,
+              confirm_applicant_response: true,
+              review_passed: true,
+            )
+            prioritisation_reference_request.received!
+          end
+
+          include_examples "changes action required by", "assessor"
+          include_examples "changes stage", "pre_assessment"
+          include_examples "changes statuses", %w[prioritisation_check]
+        end
+
+        context "with one of the references received and failed review" do
+          before do
+            prioritisation_reference_request.update!(
+              contact_response: true,
+              confirm_applicant_response: true,
+              review_passed: false,
+            )
+            prioritisation_reference_request.received!
+          end
+
+          include_examples "changes action required by", "external"
+          include_examples "changes stage", "pre_assessment"
+          include_examples "changes statuses",
+                           %w[
+                             prioritisation_check
+                             waiting_on_prioritisation_reference
+                           ]
+        end
+
+        context "with both of the references received" do
+          before do
+            prioritisation_reference_request.update!(
+              contact_response: true,
+              confirm_applicant_response: true,
+            )
+            prioritisation_reference_request.received!
+
+            prioritisation_reference_request_two.update!(
+              contact_response: true,
+              confirm_applicant_response: true,
+            )
+            prioritisation_reference_request_two.received!
+          end
+
+          include_examples "changes action required by", "assessor"
+          include_examples "changes stage", "pre_assessment"
+          include_examples "changes statuses",
+                           %w[
+                             prioritisation_check
+                             received_prioritisation_reference
+                           ]
+        end
+
+        context "with one of the reference expired with another received" do
+          before do
+            prioritisation_reference_request.update!(expired_at: Time.current)
+
+            prioritisation_reference_request_two.update!(
+              contact_response: true,
+              confirm_applicant_response: true,
+            )
+            prioritisation_reference_request_two.received!
+          end
+
+          include_examples "changes action required by", "assessor"
+          include_examples "changes stage", "pre_assessment"
+          include_examples "changes statuses",
+                           %w[
+                             prioritisation_check
+                             received_prioritisation_reference
+                           ]
+        end
+
+        context "with one of the reference expired with another received and passed review" do
+          before do
+            prioritisation_reference_request.update!(expired_at: Time.current)
+
+            prioritisation_reference_request_two.update!(
+              contact_response: true,
+              confirm_applicant_response: true,
+              review_passed: true,
+            )
+            prioritisation_reference_request_two.received!
+          end
+
+          include_examples "changes action required by", "assessor"
+          include_examples "changes stage", "pre_assessment"
+          include_examples "changes statuses", %w[prioritisation_check]
+        end
+
+        context "with one of the reference expired with another received and failed review" do
+          before do
+            prioritisation_reference_request.update!(expired_at: Time.current)
+
+            prioritisation_reference_request_two.update!(
+              contact_response: true,
+              confirm_applicant_response: true,
+              review_passed: false,
+            )
+            prioritisation_reference_request_two.received!
+          end
+
+          include_examples "changes action required by", "assessor"
+          include_examples "changes stage", "pre_assessment"
+          include_examples "changes statuses",
+                           %w[
+                             prioritisation_check
+                             overdue_prioritisation_reference
+                           ]
+        end
+
+        context "with both of the references expired" do
+          before do
+            prioritisation_reference_request.update!(expired_at: Time.current)
+            prioritisation_reference_request_two.update!(
+              expired_at: Time.current,
+            )
           end
 
           include_examples "changes action required by", "assessor"
