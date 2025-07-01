@@ -49,10 +49,19 @@ module AssessorInterface
     end
 
     def edit
-      @form = RequestableReviewForm.new(requestable:)
+      @application_form = assessment.application_form
+
+      @form =
+        RequestableReviewForm.new(
+          requestable:,
+          passed: prioritisation_reference_request.review_passed,
+          note: prioritisation_reference_request.review_note,
+        )
     end
 
     def update
+      @application_form = assessment.application_form
+
       @form =
         RequestableReviewForm.new(
           requestable:,
@@ -61,12 +70,16 @@ module AssessorInterface
         )
 
       if @form.save
-        redirect_to [
-                      :assessor_interface,
-                      application_form,
-                      assessment,
-                      :prioritisation_reference_requests,
-                    ]
+        if @form.passed
+          redirect_to [:assessor_interface, @application_form]
+        else
+          redirect_to [
+                        :assessor_interface,
+                        @application_form,
+                        assessment,
+                        :prioritisation_reference_requests,
+                      ]
+        end
       else
         render :edit, status: :unprocessable_entity
       end
