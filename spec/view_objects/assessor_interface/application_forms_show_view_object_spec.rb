@@ -213,7 +213,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
               :assessor_interface,
               application_form,
               assessment,
-            ]
+            ],
           )
         end
       end
@@ -430,7 +430,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
                 :assessor_interface,
                 application_form,
                 assessment,
-              ]
+              ],
             )
           end
         end
@@ -507,7 +507,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
                 :assessor_interface,
                 application_form,
                 assessment,
-              ]
+              ],
             )
           end
         end
@@ -585,7 +585,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
                 :assessor_interface,
                 application_form,
                 assessment,
-              ]
+              ],
             )
           end
         end

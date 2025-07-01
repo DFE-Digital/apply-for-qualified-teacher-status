@@ -5,9 +5,17 @@ require "rails_helper"
 RSpec.describe ApplicationFormSearchResult::Component, type: :component do
   subject(:component) do
     render_inline(
-      described_class.new(application_form, current_staff:, unsuitable: false),
+      described_class.new(
+        application_form,
+        current_staff:,
+        unsuitable:,
+        prioritised:,
+      ),
     )
   end
+
+  let(:unsuitable) { false }
+  let(:prioritised) { false }
 
   let(:application_form) do
     create(
@@ -33,6 +41,22 @@ RSpec.describe ApplicationFormSearchResult::Component, type: :component do
       expect(subject).to eq(
         "/assessor/applications/#{application_form.reference}",
       )
+    end
+  end
+
+  describe "heading flags" do
+    subject(:flag) { component.at_css("h2 .govuk-tag").text }
+
+    context "when unsuitable true" do
+      let(:unsuitable) { true }
+
+      it { expect(subject).to eq("Flagged for suitability") }
+    end
+
+    context "when prioritised true" do
+      let(:prioritised) { true }
+
+      it { expect(subject).to eq("Prioritised") }
     end
   end
 
