@@ -10,7 +10,11 @@
            changeable: true %>
 
 <% if @came_from_add_another %>
-  <%= govuk_button_link_to "Continue", %i[teacher_interface application_form] %>
+  <% if @application_form.other_england_work_history_status_not_started? %>
+    <%= govuk_button_link_to "Continue", %i[teacher_interface application_form other_england_work_histories] %>
+  <% else %>
+    <%= govuk_button_link_to "Continue", %i[teacher_interface application_form] %>
+  <% end %>
 <% else %>
   <%= govuk_button_link_to "Continue", %i[add_another teacher_interface application_form work_histories] %>
 <% end %>

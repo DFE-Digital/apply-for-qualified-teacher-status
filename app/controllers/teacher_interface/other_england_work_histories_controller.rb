@@ -166,21 +166,20 @@ module TeacherInterface
           meets_criteria_form_params.merge(application_form:),
         )
 
-      handle_application_form_section(
-        form: @form,
-        if_success_then_redirect:
-          if @form.has_other_england_work_history
-            %i[
-              new
-              teacher_interface
-              application_form
-              other_england_work_history
-            ]
-          else
-            %i[teacher_interface application_form]
-          end,
-        if_failure_then_render: :edit_meets_criteria,
-      )
+      if @form.save(validate: params[:button] != "save_and_return")
+        if @form.has_other_england_work_history
+          redirect_to %i[
+                        new
+                        teacher_interface
+                        application_form
+                        other_england_work_history
+                      ]
+        else
+          redirect_to %i[teacher_interface application_form]
+        end
+      else
+        render :edit_meets_criteria, status: :unprocessable_entity
+      end
     end
 
     def edit_school
