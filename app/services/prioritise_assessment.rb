@@ -19,6 +19,12 @@ class PrioritiseAssessment
 
       ApplicationFormStatusUpdater.call(application_form:, user:)
     end
+
+    DeliverEmail.call(
+      application_form:,
+      mailer: TeacherMailer,
+      action: :application_prioritised,
+    )
   end
 
   class InvalidState < StandardError
