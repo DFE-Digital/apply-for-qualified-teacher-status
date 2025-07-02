@@ -9,6 +9,8 @@
 #  age_range_min                                           :integer
 #  age_range_note                                          :text             default(""), not null
 #  induction_required                                      :boolean
+#  prioritisation_decision_at                              :datetime
+#  prioritised                                             :boolean
 #  qualifications_assessor_note                            :text             default(""), not null
 #  recommendation                                          :string           default("unknown"), not null
 #  recommendation_assessor_note                            :text             default(""), not null
@@ -40,6 +42,7 @@
 class Assessment < ApplicationRecord
   belongs_to :application_form
 
+  has_many :prioritisation_work_history_checks, dependent: :destroy
   has_many :sections, class_name: "AssessmentSection", dependent: :destroy
 
   has_many :consent_requests, dependent: :destroy
@@ -47,6 +50,7 @@ class Assessment < ApplicationRecord
   has_one :professional_standing_request, dependent: :destroy, required: false
   has_many :qualification_requests, dependent: :destroy
   has_many :reference_requests, dependent: :destroy
+  has_many :prioritisation_reference_requests, dependent: :destroy
 
   enum :recommendation,
        {
@@ -139,6 +143,26 @@ class Assessment < ApplicationRecord
     end
   end
 
+  def can_update_prioritisation_decision?
+    return false if prioritisation_work_history_checks.empty?
+
+    if prioritisation_work_history_checks.all?(&:complete?) &&
+         prioritisation_work_history_checks.none?(&:passed?)
+      return true
+    end
+
+    prioritisation_reference_requests.present? &&
+      (
+        prioritisation_reference_requests.any?(&:review_passed?) ||
+          prioritisation_reference_requests.all?(&:review_failed?)
+      )
+  end
+
+  def can_prioritise?
+    prioritisation_reference_requests.present? &&
+      prioritisation_reference_requests.any?(&:review_passed?)
+  end
+
   def can_request_further_information?
     if unknown?
       all_sections_assessed? && any_section_failed? && no_section_declines?
@@ -200,6 +224,11 @@ class Assessment < ApplicationRecord
 
   def any_not_preliminary_section_assessed?
     sections.not_preliminary.any?(&:assessed?)
+  end
+
+  def prioritisation_checks_incomplete?
+    prioritisation_work_history_checks.present? &&
+      prioritisation_decision_at.nil?
   end
 
   def enough_reference_requests_verify_passed?

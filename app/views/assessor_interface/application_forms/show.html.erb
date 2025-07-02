@@ -40,6 +40,12 @@
 
 <%= render "shared/assessor_header", title: "Application", application_form: %>
 
+<% if @view_object.assessment.prioritised?  %>
+  <div class="govuk-!-margin-bottom-5">
+    <%= govuk_tag(text: "Prioritised", colour: "purple") %>
+  </div>
+<% end %>
+
 <%= render(ApplicationFormOverview::Component.new(
   application_form, current_staff:, highlight_email: @view_object.highlight_email?
 )) %>

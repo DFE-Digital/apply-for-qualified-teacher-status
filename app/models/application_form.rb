@@ -283,7 +283,7 @@ class ApplicationForm < ApplicationRecord
   end
 
   def reminder_email_names
-    %w[consent expiration references]
+    %w[consent expiration references prioritisation_references]
   end
 
   def should_send_reminder_email?(name, number_of_reminders_sent)
@@ -303,6 +303,13 @@ class ApplicationForm < ApplicationRecord
     when "references"
       reference_requests_not_yet_received_or_rejected.any? do |reference_request|
         reference_request.should_send_reminder_email?(
+          "expiration",
+          number_of_reminders_sent,
+        )
+      end
+    when "prioritisation_references"
+      prioritisation_reference_requests_not_yet_received_or_rejected.any? do |prioritisation_reference_request|
+        prioritisation_reference_request.should_send_reminder_email?(
           "expiration",
           number_of_reminders_sent,
         )
@@ -334,6 +341,15 @@ class ApplicationForm < ApplicationRecord
         reference_requests:
           reference_requests_not_yet_received_or_rejected.to_a,
       )
+    when "prioritisation_references"
+      DeliverEmail.call(
+        application_form: self,
+        mailer: TeacherMailer,
+        action: :prioritisation_references_reminder,
+        number_of_reminders_sent:,
+        prioritisation_reference_requests:
+          prioritisation_reference_requests_not_yet_received_or_rejected.to_a,
+      )
     end
   end
 
@@ -361,6 +377,14 @@ class ApplicationForm < ApplicationRecord
       .where(work_histories: { application_form_id: id })
       .where.not(requested_at: nil)
       .where(received_at: nil, verify_passed: nil, review_passed: nil)
+  end
+
+  def prioritisation_reference_requests_not_yet_received_or_rejected
+    PrioritisationReferenceRequest
+      .joins(:work_history)
+      .where(work_histories: { application_form_id: id })
+      .where.not(requested_at: nil)
+      .where(received_at: nil, review_passed: nil)
   end
 
   def consent_requests_not_yet_received_or_rejected

@@ -1,0 +1,31 @@
+<% content_for :page_title, t(".title") %>
+<% content_for :back_link_url, assessor_interface_application_form_path(@assessment.application_form) %>
+
+<h1 class="govuk-heading-xl"><%= t(".title") %></h1>
+
+<p class="govuk-body">
+  You must request a work history check from all referees to confirm the applicant’s work experience in England. You only need to review and accept one reference to prioritise this application.
+</p>
+
+<h2 class="govuk-heading-s">Institutions</h2>
+<ul class="govuk-list govuk-list--bullet">
+  <% @passed_prioritisation_work_history_checks.each do |passed_prioritisation_work_history_check| %>
+    <li><%= passed_prioritisation_work_history_check.work_history.school_name %></li>
+  <% end %>
+</ul>
+
+<h2 class="govuk-heading-s">Submit your request to check references</h2>
+<p class="govuk-body">
+  Select submit to:
+</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>email reference requests to all referees</li>
+  <li>email the applicant to let them know you have requested references from all referees</li>
+  <li>move this application into ‘waiting on prioritisation reference’</li>
+</ul>
+
+<%= form_with model: false, url: [:assessor_interface, @assessment.application_form, @assessment, :prioritisation_reference_requests], method: :post do |f| %>
+  <%= f.govuk_submit "Submit" do %>
+    <%= render "shared/assessor_interface/cancel_link" %>
+  <% end %>
+<% end %>

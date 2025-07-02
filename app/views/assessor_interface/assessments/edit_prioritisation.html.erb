@@ -1,0 +1,42 @@
+<% content_for :page_title, title_with_error_prefix(t(".title"), error: @form.errors.any?) %>
+<% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
+
+<%= form_with model: @form, url: [:update_prioritisation, :assessor_interface, @application_form, @assessment], method: :post do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <h1 class="govuk-heading-xl"><%= t(".title") %></h1>
+
+  <% if @assessment.can_prioritise? %>
+    <p class="govuk-body">You have indicated that this applicant has valid work history in England to be prioritised and have accepted at least one reference that confirms their work history in England.</p>
+
+    <%= f.govuk_collection_radio_buttons :passed,
+                                       %i[true],
+                                       :itself,
+                                       legend: { text: "You can:", size: "s" } %>
+
+    <p class="govuk-body">Select Confirm decision to:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>email the applicant to confirm their application is being prioritised</li>
+      <li>move this application to assessment</li>
+    </ul>
+  <% else %>
+    <p class="govuk-body">You have indicated that this applicant doesn’t have any work history in England that meets the criteria for prioritisation.</p>
+
+    <%= f.govuk_collection_radio_buttons :passed,
+                                       %i[false],
+                                       :itself,
+                                       legend: { text: "You can:", size: "s" } %>
+
+    <p class="govuk-body">Select Confirm decision to:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>email the applicant to confirm their application is not valid for prioritisation</li>
+      <li>move this application to assessment</li>
+    </ul>
+  <% end %>
+
+  <div class="govuk-!-margin-top-9">
+    <%= f.govuk_submit "Confirm decision" do %>
+      <%= render "shared/assessor_interface/cancel_link" %>
+    <% end %>
+  </div>
+<% end %>

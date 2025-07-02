@@ -46,6 +46,7 @@ class WorkHistory < ApplicationRecord
           required: false,
           dependent: :destroy
 
+  scope :within_england, -> { where(country_code: "GB-ENG") }
   scope :teaching_role, -> { where(is_other_england_educational_role: false) }
   scope :other_england_educational_role,
         -> { where(is_other_england_educational_role: true) }

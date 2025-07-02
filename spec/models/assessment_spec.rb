@@ -9,6 +9,8 @@
 #  age_range_min                                           :integer
 #  age_range_note                                          :text             default(""), not null
 #  induction_required                                      :boolean
+#  prioritisation_decision_at                              :datetime
+#  prioritised                                             :boolean
 #  qualifications_assessor_note                            :text             default(""), not null
 #  recommendation                                          :string           default("unknown"), not null
 #  recommendation_assessor_note                            :text             default(""), not null
@@ -648,6 +650,228 @@ RSpec.describe Assessment, type: :model do
         expect(assessment.reload.latest_further_information_request).to eq(
           latest_further_information_request,
         )
+      end
+    end
+  end
+
+  describe "#prioritisation_checks_incomplete?" do
+    subject(:prioritisation_checks_incomplete?) do
+      assessment.prioritisation_checks_incomplete?
+    end
+
+    context "when assessment has no prioritisation work history checks" do
+      it { is_expected.to be false }
+    end
+
+    context "when assessment has prioritisation work history checks" do
+      before { create :prioritisation_work_history_check, assessment: }
+
+      it { is_expected.to be true }
+
+      context "with the prioritisation decision timestamp present" do
+        before { assessment.update!(prioritisation_decision_at: Time.current) }
+
+        it { is_expected.to be false }
+      end
+    end
+  end
+
+  describe "#can_update_prioritisation_decision?" do
+    subject(:can_update_prioritisation_decision?) do
+      assessment.can_update_prioritisation_decision?
+    end
+
+    context "when assessment does not have any prioritisation checks" do
+      it { is_expected.to be false }
+    end
+
+    context "when assessment has prioritisation checks" do
+      let(:prioritisation_work_history_check_one) do
+        create(:prioritisation_work_history_check, assessment:)
+      end
+
+      let(:prioritisation_work_history_check_two) do
+        create(:prioritisation_work_history_check, assessment:)
+      end
+
+      context "with work history checks all passing" do
+        before do
+          prioritisation_work_history_check_one.update!(passed: true)
+          prioritisation_work_history_check_two.update!(passed: true)
+        end
+
+        it { is_expected.to be false }
+
+        context "with reference requests waiting" do
+          before do
+            create(:prioritisation_reference_request, assessment:)
+            create(:prioritisation_reference_request, assessment:)
+          end
+
+          it { is_expected.to be false }
+        end
+
+        context "with reference requests received" do
+          let!(:prioritisation_reference_request_one) do
+            create :prioritisation_reference_request, assessment:
+          end
+
+          let!(:prioritisation_reference_request_two) do
+            create :prioritisation_reference_request, assessment:
+          end
+
+          it { is_expected.to be false }
+
+          context "with one passing review" do
+            before do
+              prioritisation_reference_request_one.update!(review_passed: true)
+            end
+
+            it { is_expected.to be true }
+          end
+
+          context "with all passing review" do
+            before do
+              prioritisation_reference_request_one.update!(review_passed: true)
+              prioritisation_reference_request_two.update!(review_passed: true)
+            end
+
+            it { is_expected.to be true }
+          end
+
+          context "with one passing review and one failing review" do
+            before do
+              prioritisation_reference_request_one.update!(review_passed: true)
+              prioritisation_reference_request_two.update!(review_passed: false)
+            end
+
+            it { is_expected.to be true }
+          end
+
+          context "with one failing review" do
+            before do
+              prioritisation_reference_request_one.update!(review_passed: false)
+            end
+
+            it { is_expected.to be false }
+          end
+
+          context "with all failing review" do
+            before do
+              prioritisation_reference_request_one.update!(review_passed: false)
+              prioritisation_reference_request_two.update!(review_passed: false)
+            end
+
+            it { is_expected.to be true }
+          end
+        end
+      end
+
+      context "with work history checks some failing and some passing" do
+        before do
+          prioritisation_work_history_check_one.update!(passed: true)
+          prioritisation_work_history_check_two.update!(passed: false)
+        end
+
+        it { is_expected.to be false }
+      end
+
+      context "with work history checks all failing" do
+        before do
+          prioritisation_work_history_check_one.update!(passed: false)
+          prioritisation_work_history_check_two.update!(passed: false)
+        end
+
+        it { is_expected.to be true }
+      end
+    end
+  end
+
+  describe "#can_prioritise?" do
+    subject(:can_prioritise?) { assessment.can_prioritise? }
+
+    context "when assessment has no prioritisation reference requests" do
+      it { is_expected.to be false }
+    end
+
+    context "when assessment has prioritisation reference requests" do
+      let!(:prioritisation_reference_request_one) do
+        create :prioritisation_reference_request, assessment:
+      end
+
+      let!(:prioritisation_reference_request_two) do
+        create :prioritisation_reference_request, assessment:
+      end
+
+      it { is_expected.to be false }
+
+      context "with prioritisation reference requests some received" do
+        let!(:prioritisation_reference_request_one) do
+          create :received_prioritisation_reference_request, assessment:
+        end
+
+        context "with it passing review" do
+          before do
+            prioritisation_reference_request_one.update(review_passed: true)
+          end
+
+          it { is_expected.to be true }
+        end
+
+        context "with it failing review" do
+          before do
+            prioritisation_reference_request_one.update(review_passed: false)
+          end
+
+          it { is_expected.to be false }
+        end
+      end
+
+      context "with prioritisation reference requests all received" do
+        let!(:prioritisation_reference_request_one) do
+          create :received_prioritisation_reference_request, assessment:
+        end
+
+        let!(:prioritisation_reference_request_two) do
+          create :received_prioritisation_reference_request, assessment:
+        end
+
+        it { is_expected.to be false }
+
+        context "with one passing review" do
+          before do
+            prioritisation_reference_request_one.update(review_passed: true)
+          end
+
+          it { is_expected.to be true }
+        end
+
+        context "with both passing review" do
+          before do
+            prioritisation_reference_request_one.update!(review_passed: true)
+            prioritisation_reference_request_two.update!(review_passed: true)
+          end
+
+          it { is_expected.to be true }
+        end
+
+        context "with one passing review and one failing review" do
+          before do
+            prioritisation_reference_request_one.update!(review_passed: true)
+            prioritisation_reference_request_two.update!(review_passed: false)
+          end
+
+          it { is_expected.to be true }
+        end
+
+        context "with both failing review" do
+          before do
+            prioritisation_reference_request_one.update!(review_passed: false)
+            prioritisation_reference_request_two.update!(review_passed: false)
+          end
+
+          it { is_expected.to be false }
+        end
       end
     end
   end

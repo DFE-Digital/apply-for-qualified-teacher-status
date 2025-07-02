@@ -24,9 +24,11 @@ en:
       overdue_further_information: Overdue further information
       overdue_lops: Overdue LoPS
       overdue_reference: Overdue reference
+      overdue_prioritisation_reference: Overdue prioritisation reference
       potential_duplicate_in_dqt: Potential duplication in DQT
       pre_assessment: Pre-assessment
       preliminary_check: Preliminary check
+      prioritisation_check: Waiting on prioritisation checks
       received: Received
       received_and_overdue: Received (overdue)
       received_consent: Received consent
@@ -34,6 +36,7 @@ en:
       received_further_information: Received further information
       received_lops: Received LoPS
       received_reference: Received reference
+      received_prioritisation_reference: Received prioritisation reference
       rejected: Rejected
       requested: Waiting on
       review: Review
@@ -48,6 +51,7 @@ en:
       waiting_on_further_information: Waiting on further information
       waiting_on_lops: Waiting on LoPS
       waiting_on_reference: Waiting on reference
+      waiting_on_prioritisation_reference: Waiting on prioritisation reference
       withdrawn: Withdrawn
 
     timeline_entry:
@@ -76,24 +80,28 @@ en:
           ProfessionalStandingRequest: Professional standing requested
           QualificationRequest: Qualification requested
           ReferenceRequest: Reference requested
+          PrioritisationReferenceRequest: Prioritisation reference requested
         requestable_received:
           ConsentRequest: Consent received
           FurtherInformationRequest: Further information received
           ProfessionalStandingRequest: Professional standing received
           QualificationRequest: Qualification received
           ReferenceRequest: Reference received
+          PrioritisationReferenceRequest: Prioritisation reference received
         requestable_expired:
           ConsentRequest: Consent expired
           FurtherInformationRequest: Further information expired
           ProfessionalStandingRequest: Professional standing expired
           QualificationRequest: Qualification expired
           ReferenceRequest: Reference expired
+          PrioritisationReferenceRequest: Prioritisation reference expired
         requestable_reviewed:
           ConsentRequest: Consent reviewed
           FurtherInformationRequest: Further information assessed
           ProfessionalStandingRequest: Professional standing reviewed
           QualificationRequest: Qualification reviewed
           ReferenceRequest: Reference reviewed
+          PrioritisationReferenceRequest: Prioritisation reference reviewed
         requestable_verified:
           ConsentRequest: Consent verified
           FurtherInformationRequest: Further information verified
@@ -114,18 +122,21 @@ en:
           ProfessionalStandingRequest: The professional standing has been requested.
           QualificationRequest: A qualification has been requested.
           ReferenceRequest: A reference has been requested.
+          PrioritisationReferenceRequest: A prioritisation reference has been requested.
         requestable_received:
           ConsentRequest: A consent request has been received.
           FurtherInformationRequest: Further information requested on %{requested_at} has been received.
           ProfessionalStandingRequest: "The professional standing has been received: %{location_note}"
           QualificationRequest: A qualification has been received.
           ReferenceRequest: A reference has been received.
+          PrioritisationReferenceRequest: A prioritisation reference has been received.
         requestable_expired:
           ConsentRequest: A consent request has expired.
           FurtherInformationRequest: Further information requested on %{requested_at} has expired. Application has been declined.
           ProfessionalStandingRequest: The professional standing request has expired.
           QualificationRequest: A qualification request has expired.
           ReferenceRequest: A reference has expired.
+          PrioritisationReferenceRequest: A prioritisation reference has expired.
         stage_changed: Stage changed from %{old_stage} to %{new_stage}.
         status_changed: Status changed from %{old_status} to %{new_status}.
       columns:

@@ -1,0 +1,32 @@
+<% content_for :page_title, t(".title") %>
+<% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
+
+<h1 class="govuk-heading-xl"><%= t(".title")  %></h1>
+
+<p class="govuk-body">
+  Review received references for this applicant. You only need to accept one reference to prioritise this application.
+</p>
+
+<h2 class="govuk-heading-m">References to check</h2>
+
+<%= govuk_task_list do |task_list|
+  @prioritisation_reference_requests.each do |prioritisation_reference_request|
+    task_list.with_item(
+      title: prioritisation_reference_request.work_history.school_name,
+      href: [:edit, :assessor_interface, @application_form, @assessment, prioritisation_reference_request],
+      status: if prioritisation_reference_request.expired?
+        render(StatusTag::Component.new("overdue"))
+      elsif prioritisation_reference_request.received_at.nil?
+        render(StatusTag::Component.new("waiting_on"))
+      elsif prioritisation_reference_request.review_passed.nil?
+        render(StatusTag::Component.new("received"))
+      elsif prioritisation_reference_request.review_passed?
+        render(StatusTag::Component.new("accepted"))
+      else
+        render(StatusTag::Component.new("rejected"))
+      end
+    )
+  end
+end %>
+
+<%= govuk_button_link_to "Back to overview", [:assessor_interface, @application_form] %>

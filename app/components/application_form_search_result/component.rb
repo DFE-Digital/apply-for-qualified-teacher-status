@@ -2,11 +2,12 @@
 
 module ApplicationFormSearchResult
   class Component < ViewComponent::Base
-    def initialize(application_form, current_staff:, unsuitable:)
+    def initialize(application_form, current_staff:, unsuitable:, prioritised:)
       super
       @application_form = application_form
       @current_staff = current_staff
       @unsuitable = unsuitable
+      @prioritised = prioritised
     end
 
     def full_name
@@ -27,7 +28,7 @@ module ApplicationFormSearchResult
       )
     end
 
-    attr_reader :unsuitable
+    attr_reader :unsuitable, :prioritised
 
     private
 
