@@ -281,7 +281,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
 
     stub_request(
       :put,
-      "https://test-teacher-qualifications-api.education.gov.uk/v3/persons/abcdef/professional-statuses/#{application_form.reference}",
+      "https://test-teacher-qualifications-api.education.gov.uk/v3/persons/abcdef/routes-to-professional-statuses/#{application_form.reference}",
     ).to_return(
       status: 200,
       body: "",

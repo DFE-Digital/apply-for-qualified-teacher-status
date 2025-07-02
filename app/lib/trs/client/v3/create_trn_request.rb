@@ -14,7 +14,7 @@ class TRS::Client::V3::CreateTRNRequest
     body = TRS::V3::TRNRequestParams.call(request_id:, application_form:)
     response =
       connection.post(path) do |req|
-        req.headers["X-Api-Version"] = "20250425"
+        req.headers["X-Api-Version"] = "20250627"
         req.body = body
       end
 

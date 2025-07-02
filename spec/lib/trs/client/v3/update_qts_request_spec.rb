@@ -20,11 +20,11 @@ RSpec.describe TRS::Client::V3::UpdateQTSRequest do
     before do
       stub_request(
         :put,
-        "https://test-teacher-qualifications-api.education.gov.uk/v3/persons/#{trn}/professional-statuses/#{application_form.reference}",
+        "https://test-teacher-qualifications-api.education.gov.uk/v3/persons/#{trn}/routes-to-professional-statuses/#{application_form.reference}",
       ).with(
         body: "body",
         headers: {
-          "X-Api-Version" => "20250425",
+          "X-Api-Version" => "20250627",
           "Authorization" => "Bearer test-api-key",
           "Content-Type" => "application/json",
         },
@@ -44,11 +44,11 @@ RSpec.describe TRS::Client::V3::UpdateQTSRequest do
     before do
       stub_request(
         :put,
-        "https://test-teacher-qualifications-api.education.gov.uk/v3/persons/#{trn}/professional-statuses/#{application_form.reference}",
+        "https://test-teacher-qualifications-api.education.gov.uk/v3/persons/#{trn}/routes-to-professional-statuses/#{application_form.reference}",
       ).with(
         body: "body",
         headers: {
-          "X-Api-Version" => "20250425",
+          "X-Api-Version" => "20250627",
           "Authorization" => "Bearer test-api-key",
           "Content-Type" => "application/json",
         },
