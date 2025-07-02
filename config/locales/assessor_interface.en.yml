@@ -271,6 +271,8 @@ en:
         title: Check references
       new:
         title: Request work history confirmation from referees
+      edit:
+        title: View reference
     prioritisation_work_history_checks:
       index:
         title: Check role, institution and referee details
@@ -476,6 +478,10 @@ en:
               inclusion: Select whether you received a response about this letter of professional standing
             expired:
               inclusion: Select whether you want to mark this for review
+        assessor_interface/prioritisation_work_history_check_form:
+          attributes:
+            passed:
+              inclusion: Select if the applicant’s work history meets the criteria for prioritisation
         assessor_interface/qualification_update_form:
           attributes:
             start_date:
