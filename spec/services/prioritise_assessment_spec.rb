@@ -33,6 +33,13 @@ RSpec.describe PrioritiseAssessment do
         user:,
       )
     end
+
+    it "sends the prioritised email to the applicant" do
+      expect { call }.to have_enqueued_mail(
+        TeacherMailer,
+        :application_prioritised,
+      ).with(params: { application_form: }, args: [])
+    end
   end
 
   context "when assessment cannot be prioritised" do

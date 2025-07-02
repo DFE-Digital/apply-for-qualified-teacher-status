@@ -24,6 +24,8 @@ en:
         subject:
           0: Your draft QTS application has not been submitted
           1: Your draft QTS application is about to be deleted
+      application_prioritised:
+        subject: Your application is being prioritised
       application_received:
         subject:
           without_document: Your QTS application has been received
