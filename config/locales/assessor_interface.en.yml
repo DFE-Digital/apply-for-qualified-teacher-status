@@ -430,6 +430,10 @@ en:
               blank: Enter a note to the applicant
             written_statement_recent_notes:
               blank: Enter a note to the applicant
+        assessor_interface/assessment_prioritisation_decision_form:
+          attributes:
+            passed:
+              inclusion: Select your prioritisation decision
         assessor_interface/check_age_range_subjects_form:
           attributes:
             age_range_min:
