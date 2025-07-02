@@ -68,6 +68,7 @@ RSpec.describe "Assessor filtering application forms", type: :system do
     create(
       :application_form,
       :submitted,
+      :with_assessment,
       region: create(:region, :in_country, country_code: "US"),
       given_names: "Cher",
       family_name: "Bert",
@@ -80,6 +81,7 @@ RSpec.describe "Assessor filtering application forms", type: :system do
     create(
       :application_form,
       :submitted,
+      :with_assessment,
       :action_required_by_admin,
       region: create(:region, :in_country, country_code: "FR"),
       given_names: "Emma",
@@ -92,6 +94,7 @@ RSpec.describe "Assessor filtering application forms", type: :system do
     create(
       :application_form,
       :submitted,
+      :with_assessment,
       :action_required_by_assessor,
       region: create(:region, :in_country, country_code: "ES"),
       given_names: "Arnold",
@@ -103,6 +106,7 @@ RSpec.describe "Assessor filtering application forms", type: :system do
     create(
       :application_form,
       :awarded,
+      :with_assessment,
       awarded_at: 2.days.ago,
       region: create(:region, :in_country, country_code: "PT"),
       given_names: "John",
@@ -114,6 +118,7 @@ RSpec.describe "Assessor filtering application forms", type: :system do
     create(
       :application_form,
       :awarded,
+      :with_assessment,
       awarded_at: 6.months.ago,
       region: create(:region, :in_country, country_code: "DE"),
       given_names: "Nick",
