@@ -59,6 +59,41 @@ module PageHelpers
       PageObjects::AssessorInterface::AssignReviewer.new
   end
 
+  def assessor_prioritisation_work_history_checks_page
+    @assessor_prioritisation_work_history_checks_page ||=
+      PageObjects::AssessorInterface::PrioritisationWorkHistoryChecks.new
+  end
+
+  def assessor_prioritisation_work_history_check_page
+    @assessor_prioritisation_work_history_check_page ||=
+      PageObjects::AssessorInterface::PrioritisationWorkHistoryCheck.new
+  end
+
+  def new_assessor_prioritisation_references_page
+    @new_assessor_prioritisation_references_page ||=
+      PageObjects::AssessorInterface::PrioritisationReferencesNew.new
+  end
+
+  def assessor_prioritisation_references_page
+    @assessor_prioritisation_references_page ||=
+      PageObjects::AssessorInterface::PrioritisationReferences.new
+  end
+
+  def confirmation_assessor_prioritisation_references_page
+    @confirmation_assessor_prioritisation_references_page ||=
+      PageObjects::AssessorInterface::PrioritisationReferencesConfirmation.new
+  end
+
+  def review_assessor_prioritisation_reference_page
+    @review_assessor_prioritisation_reference_page ||=
+      PageObjects::AssessorInterface::PrioritisationReferenceReview.new
+  end
+
+  def assessor_prioritisation_decision_page
+    @assessor_prioritisation_decision_page ||=
+      PageObjects::AssessorInterface::PrioritisationDecision.new
+  end
+
   def assessor_check_english_language_proficiency_page
     @assessor_check_english_language_proficiency_page ||=
       PageObjects::AssessorInterface::CheckEnglishLanguageProficiency.new
