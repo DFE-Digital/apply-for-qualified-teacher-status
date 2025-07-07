@@ -72,15 +72,15 @@
         title: "Months in this role",
         value: work_history_count_in_months(work_history),
       } : nil,
-      contact_name: !application_form.reduced_evidence_accepted ? {
+      contact_name: work_history.requires_contact_information? ? {
         title: "Reference contact’s full name",
         href: contact_change_link_to,
       } : nil,
-      contact_job: !application_form.reduced_evidence_accepted ? {
+      contact_job: work_history.requires_contact_information? ? {
         title: "Reference contact’s job title",
         href: contact_change_link_to,
       } : nil,
-      contact_email: !application_form.reduced_evidence_accepted ? {
+      contact_email: work_history.requires_contact_information? ? {
         title: "Reference contact’s email address",
         href: contact_change_link_to,
         highlight: highlighted_contact_emails.include?(work_history)
