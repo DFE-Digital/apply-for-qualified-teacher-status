@@ -710,11 +710,8 @@ RSpec.describe AssessmentFactory do
             prioritisation_work_history_check =
               prioritisation_work_history_checks.first
             expect(prioritisation_work_history_check.checks).to eq %w[
-                 role_in_state_school
-                 role_in_independent_school
-                 role_in_ofsted_further_education_and_skills_setting
-                 role_in_english_further_education_setting
-                 role_in_ofsted_early_years_setting
+                 work_history_role
+                 work_history_setting
                  work_history_in_england
                  work_history_reference_email
                  work_history_reference_job
