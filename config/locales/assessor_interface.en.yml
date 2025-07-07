@@ -272,7 +272,7 @@ en:
       new:
         title: Request work history confirmation from referees
       edit:
-        title: View reference
+        title: Review reference
     prioritisation_work_history_checks:
       index:
         title: Check role, institution and referee details
