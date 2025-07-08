@@ -6,6 +6,7 @@ class PrioritiseAssessment
   def initialize(assessment:, user:)
     @assessment = assessment
     @user = user
+    @professional_standing_requested = nil
   end
 
   def call
@@ -17,14 +18,18 @@ class PrioritiseAssessment
         prioritised: true,
       )
 
+      request_professional_standing
+
       ApplicationFormStatusUpdater.call(application_form:, user:)
     end
 
-    DeliverEmail.call(
-      application_form:,
-      mailer: TeacherMailer,
-      action: :application_prioritised,
-    )
+    unless professional_standing_requested
+      DeliverEmail.call(
+        application_form:,
+        mailer: TeacherMailer,
+        action: :application_prioritised,
+      )
+    end
   end
 
   class InvalidState < StandardError
@@ -32,7 +37,17 @@ class PrioritiseAssessment
 
   private
 
+  attr_accessor :professional_standing_requested
   attr_reader :assessment, :user
+
+  def request_professional_standing
+    requestable = assessment.professional_standing_request
+    return if requestable.nil? || requestable.requested?
+
+    RequestRequestable.call(requestable:, user:)
+
+    @professional_standing_requested = true
+  end
 
   delegate :application_form, to: :assessment
 end
