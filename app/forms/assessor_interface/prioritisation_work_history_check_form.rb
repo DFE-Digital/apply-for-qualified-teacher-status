@@ -14,7 +14,16 @@ class AssessorInterface::PrioritisationWorkHistoryCheckForm
     return false if invalid?
 
     prioritisation_work_history_check.update!(passed:)
+    update_assessment_started_at
 
     true
   end
+
+  private
+
+  def update_assessment_started_at
+    assessment.update!(started_at: Time.zone.now) if assessment.started_at.nil?
+  end
+
+  delegate :assessment, to: :prioritisation_work_history_check
 end
