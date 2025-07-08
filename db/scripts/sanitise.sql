@@ -64,6 +64,7 @@ UPDATE "feature_flags_features"
 UPDATE "further_information_request_items"
 SET
   failure_reason_assessor_feedback = CASE WHEN failure_reason_assessor_feedback IS NULL THEN NULL ELSE '[sanitised]' END,
+  review_decision_note = CASE WHEN review_decision_note IS NULL THEN NULL ELSE '[sanitised]' END,
   response = CASE WHEN response IS NULL THEN NULL ELSE '[sanitised]' END,
   contact_email = CASE WHEN contact_email IS NULL THEN NULL ELSE 'sanitised@example.com' END,
   contact_name = CASE WHEN contact_name IS NULL THEN NULL ELSE '[sanitised]' END;
@@ -122,6 +123,14 @@ SET
   verify_note = CASE WHEN verify_note IS NULL THEN NULL ELSE '[sanitised]' END,
   slug = CASE WHEN slug IS NULL THEN NULL ELSE concat('slug-', id) END;
 
+-- PrioritisationReferenceRequest
+UPDATE "prioritisation_reference_requests"
+SET
+  contact_comment = CASE WHEN contact_comment IS NULL THEN NULL ELSE '[sanitised]' END,
+  confirm_applicant_comment = CASE WHEN confirm_applicant_comment IS NULL THEN NULL ELSE '[sanitised]' END,
+  review_note = CASE WHEN review_note IS NULL THEN NULL ELSE '[sanitised]' END,
+  slug = CASE WHEN slug IS NULL THEN NULL ELSE concat('slug-', id) END;
+
 -- ReminderEmail
 -- no update required
 
@@ -137,7 +146,7 @@ SET
     encrypted_password = '',
     azure_ad_uid = '',
     unlock_token = '',
-    reset_password_token = '';
+    reset_password_token = id;
 
 -- SuitabilityRecord
 
