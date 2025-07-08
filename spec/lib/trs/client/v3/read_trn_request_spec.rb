@@ -15,7 +15,7 @@ RSpec.describe TRS::Client::V3::ReadTRNRequest do
       ).with(
         headers: {
           "Authorization" => "Bearer test-api-key",
-          "X-Api-Version" => "20250425",
+          "X-Api-Version" => "20250627",
         },
       ).to_return(
         status: 200,
@@ -49,7 +49,7 @@ RSpec.describe TRS::Client::V3::ReadTRNRequest do
       ).with(
         headers: {
           "Authorization" => "Bearer test-api-key",
-          "X-Api-Version" => "20250425",
+          "X-Api-Version" => "20250627",
         },
       ).to_return(
         status: 400,

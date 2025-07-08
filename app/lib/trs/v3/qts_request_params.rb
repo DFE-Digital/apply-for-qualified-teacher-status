@@ -5,7 +5,7 @@ module TRS
     class QTSRequestParams
       include ServicePattern
 
-      AWARDED_QTS_STATUS = "Approved"
+      AWARDED_QTS_STATUS = "Holds"
 
       SCOTLAND_RECOGNITION_ROUTE_TYPE_ID =
         "52835b1f-1f2e-4665-abc6-7fb1ef0a80bb"
@@ -22,9 +22,9 @@ module TRS
 
       def call
         {
-          routeTypeId: route_type_id,
+          routeToProfessionalStatusTypeId: route_type_id,
           status: AWARDED_QTS_STATUS,
-          awardedDate: awarded_at.to_date.iso8601,
+          holdsFrom: awarded_at.to_date.iso8601,
           trainingStartDate: teaching_qualification.start_date.iso8601,
           trainingEndDate: teaching_qualification.complete_date.iso8601,
           trainingSubjectReferences: subjects,

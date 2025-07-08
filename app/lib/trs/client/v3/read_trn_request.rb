@@ -12,7 +12,7 @@ class TRS::Client::V3::ReadTRNRequest
     path = "/v3/trn-requests"
     response =
       connection.get(path) do |req|
-        req.headers["X-Api-Version"] = "20250425"
+        req.headers["X-Api-Version"] = "20250627"
         req.params["requestId"] = request_id
       end
 
