@@ -1,0 +1,89 @@
+<% content_for :page_title, title_with_error_prefix(t(".title"), error: @form.errors.any?) %>
+<% content_for :back_link_url, assessor_interface_application_form_assessment_prioritisation_work_history_checks_path(@view_object.application_form, @view_object.assessment) %>
+
+<%= form_with model: @form, url: [:assessor_interface, @view_object.application_form, @view_object.assessment, @prioritisation_work_history_check], method: :put do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <h1 class="govuk-heading-xl"><%= t(".title") %></h1>
+
+  <%= render(CheckYourAnswersSummary::Component.new(
+    id: "work-history-#{@view_object.work_history.id}",
+    model: @view_object.work_history,
+    title: @view_object.work_history.school_name,
+    fields: {
+      school_name: {
+        title: "Name of institution",
+      },
+      address_line1: {
+        title: "Address line 1 of institution",
+      },
+      address_line2: {
+        title: "Address line 2 of institution",
+      },
+      city: {
+        title: "Town or city of institution",
+      },
+      country_name: {
+        title: "Country of institution",
+      },
+      postcode: {
+        title: "Postcode of institution",
+      },
+      school_website: {
+        title: "Institution webpage",
+      },
+      job: {
+        title: "Your job role",
+      },
+      start_date: {
+        title: "Role start date",
+        format: :without_day,
+      },
+      end_date: {
+        title: "Role end date",
+        value: @view_object.work_history.still_employed ? "Current job" : @view_object.work_history.end_date,
+        format: :without_day,
+      },
+      contact_name: {
+        title: "Reference contact’s full name",
+      },
+      contact_job: {
+        title: "Reference contact’s job title",
+      },
+      contact_email: {
+        title: "Reference contact’s email address",
+      },
+    },
+    changeable: false,
+  )) %>
+
+  <%= govuk_details(summary_text: "View roles and settings for prioritisation") do %>
+    <p class="govuk-body">We will only consider the following settings and roles worked in England within the last 12 months:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>a teacher, supply teacher, cover supervisor or teaching assistant in a <%= govuk_link_to('state school', 'https://get-information-schools.service.gov.uk/Search?SelectedTab=Establishments') %></li>
+      <li>a teacher in an <%= govuk_link_to('independent school', 'https://get-information-schools.service.gov.uk/Search?SelectedTab=Establishments') %></li>
+      <li>a teacher, tutor or lecturer in an <%= govuk_link_to('Ofsted registered Further Education and Skills setting', 'https://reports.ofsted.gov.uk/search?latest_report_date_end=&latest_report_date_start=&level_1_types=1&level_2_types=3&location=&q=&radius=&status%5B%5D=1&status%5B%5D=4') %> (for example, a college)</li>
+      <li>a lecturer or tutor in an <%= govuk_link_to('English Higher Education provider registered with the Office for Students', 'https://www.officeforstudents.org.uk/for-providers/regulatory-resources/the-ofs-register/?#/') %> (for example, a university)</li>
+      <li>a teacher in an <%= govuk_link_to('Ofsted registered Early Years setting', 'https://reports.ofsted.gov.uk/search?q=&location=&radius=&level_1_types=2&latest_report_date_start=&latest_report_date_end=&status%5B%5D=1&status%5B%5D=4') %> (for example, a nursery)</li>
+    </ul>
+  <% end %>
+
+  <% if (checks = @view_object.checks).present? %>
+    <h2 class="govuk-heading-s">Check:</h2>
+    <ul class="govuk-list govuk-list--bullet">
+      <% checks.each do |check| %>
+        <li><%= t(check, scope: %i[assessor_interface prioritisation_work_history_checks checks]) %></li>
+      <% end %>
+    </ul>
+  <% end %>
+
+  <%= f.govuk_radio_buttons_fieldset :passed, legend: { text: "Does the applicant’s work history meet the criteria for prioritisation?" } do %>
+    <%= f.govuk_radio_button :passed, true, label: { text: "Yes" }, link_errors: true, disabled: @view_object.disable_form? %>
+    <%= f.govuk_radio_button :passed, false, label: { text: "No" }, disabled: @view_object.disable_form? %>
+  <% end %>
+
+  <%= f.govuk_submit disabled: @view_object.disable_form? do %>
+    <%= render "shared/assessor_interface/cancel_link" %>
+  <% end %>
+<% end %>

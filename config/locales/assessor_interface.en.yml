@@ -21,6 +21,9 @@ en:
           items:
             assessment_decision: Assessment decision
             await_professional_standing_request: Awaiting third-party professional standing
+            prioritisation_work_history_checks: Check role, institution and referee details
+            prioritisation_work_history_references: Check work history with referee
+            prioritisation_decision: Confirm prioritisation decision
             initial_assessment_recommendation: Initial assessment recommendation
             professional_standing_request: Verify LoPS
             qualification_requests: Verify qualifications
@@ -32,6 +35,8 @@ en:
             verification_decision: Verification decision
 
     assessments:
+      edit_prioritisation:
+        title: Prioritisation decision
       edit:
         legend:
           other: QTS review complete
@@ -259,6 +264,27 @@ en:
       edit_follow_up:
         title: Request further information
 
+    prioritisation_reference_requests:
+      confirmation:
+        title: Work history checks requested
+      index:
+        title: Check references
+      new:
+        title: Request work history confirmation from referees
+      edit:
+        title: Review reference
+    prioritisation_work_history_checks:
+      index:
+        title: Check role, institution and referee details
+      edit:
+        title: View role, institution and referee details
+      checks:
+        work_history_role: the applicant’s role is valid for prioritisation
+        work_history_setting: the setting the applicant worked in is valid for prioritisation
+        work_history_in_england: the institution is recognised in England
+        work_history_reference_email: the referee’s email is valid
+        work_history_reference_job: the referee is qualified to verify this applicant’s work history (the referee must be a Headteacher, HR personnel or senior staff member)
+
     qualifications:
       edit:
         title: "Change details for ‘%{qualification_title}’ teaching qualification"
@@ -401,6 +427,10 @@ en:
               blank: Enter a note to the applicant
             written_statement_recent_notes:
               blank: Enter a note to the applicant
+        assessor_interface/assessment_prioritisation_decision_form:
+          attributes:
+            passed:
+              inclusion: Select your prioritisation decision
         assessor_interface/check_age_range_subjects_form:
           attributes:
             age_range_min:
@@ -449,6 +479,10 @@ en:
               inclusion: Select whether you received a response about this letter of professional standing
             expired:
               inclusion: Select whether you want to mark this for review
+        assessor_interface/prioritisation_work_history_check_form:
+          attributes:
+            passed:
+              inclusion: Select if the applicant’s work history meets the criteria for prioritisation
         assessor_interface/qualification_update_form:
           attributes:
             start_date:

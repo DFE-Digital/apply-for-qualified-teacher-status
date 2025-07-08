@@ -64,6 +64,20 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
     it do
       expect(subject).not_to include_task_list_item(
         "Pre-assessment tasks",
+        "Check role, institution and referee details",
+      )
+    end
+
+    it do
+      expect(subject).not_to include_task_list_item(
+        "Pre-assessment tasks",
+        "Check work history with referee",
+      )
+    end
+
+    it do
+      expect(subject).not_to include_task_list_item(
+        "Pre-assessment tasks",
         "Awaiting third-party professional standing",
       )
     end
@@ -106,6 +120,477 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
 
     it { is_expected.not_to include_task_list_section("Verification") }
     it { is_expected.not_to include_task_list_section("Review") }
+
+    context "with prioritisation checks" do
+      let!(:first_prioritisation_work_history_check) do
+        create(:prioritisation_work_history_check, assessment:)
+      end
+
+      let!(:second_prioritisation_work_history_check) do
+        create(:prioritisation_work_history_check, assessment:)
+      end
+
+      it do
+        expect(subject).to include_task_list_item(
+          "Pre-assessment tasks",
+          "Check role, institution and referee details",
+          status: :not_started,
+        )
+      end
+
+      it do
+        expect(subject).not_to include_task_list_item(
+          "Pre-assessment tasks",
+          "Check work history with referee",
+        )
+      end
+
+      it do
+        expect(subject).not_to include_task_list_item(
+          "Pre-assessment tasks",
+          "Confirm prioritisation decision",
+        )
+      end
+
+      context "when some checks are complete" do
+        before do
+          assessment.prioritisation_work_history_checks.first.update!(
+            passed: true,
+          )
+        end
+
+        it do
+          expect(subject).to include_task_list_item(
+            "Pre-assessment tasks",
+            "Check role, institution and referee details",
+            status: :in_progress,
+          )
+        end
+
+        it do
+          expect(subject).not_to include_task_list_item(
+            "Pre-assessment tasks",
+            "Check work history with referee",
+          )
+        end
+
+        it do
+          expect(subject).not_to include_task_list_item(
+            "Pre-assessment tasks",
+            "Confirm prioritisation decision",
+          )
+        end
+      end
+
+      context "when all checks are complete and not passed" do
+        before do
+          first_prioritisation_work_history_check.update!(passed: false)
+          second_prioritisation_work_history_check.update!(passed: false)
+        end
+
+        it do
+          expect(subject).to include_task_list_item(
+            "Pre-assessment tasks",
+            "Check role, institution and referee details",
+            status: :completed,
+          )
+        end
+
+        it do
+          expect(subject).not_to include_task_list_item(
+            "Pre-assessment tasks",
+            "Check work history with referee",
+          )
+        end
+
+        it do
+          expect(subject).to include_task_list_item(
+            "Pre-assessment tasks",
+            "Confirm prioritisation decision",
+            status: :not_started,
+            link: [
+              :edit_prioritisation,
+              :assessor_interface,
+              application_form,
+              assessment,
+            ],
+          )
+        end
+      end
+
+      context "when all checks are complete and only one passed" do
+        before do
+          first_prioritisation_work_history_check.update!(passed: true)
+          second_prioritisation_work_history_check.update!(passed: false)
+        end
+
+        it do
+          expect(subject).to include_task_list_item(
+            "Pre-assessment tasks",
+            "Check role, institution and referee details",
+            status: :completed,
+          )
+        end
+
+        it do
+          expect(subject).to include_task_list_item(
+            "Pre-assessment tasks",
+            "Check work history with referee",
+            status: :not_started,
+            link: [
+              :new,
+              :assessor_interface,
+              application_form,
+              assessment,
+              :prioritisation_reference_request,
+            ],
+          )
+        end
+
+        it do
+          expect(subject).not_to include_task_list_item(
+            "Pre-assessment tasks",
+            "Confirm prioritisation decision",
+          )
+        end
+      end
+
+      context "when all checks are complete and passed" do
+        before do
+          first_prioritisation_work_history_check.update!(passed: true)
+          second_prioritisation_work_history_check.update!(passed: true)
+        end
+
+        it do
+          expect(subject).to include_task_list_item(
+            "Pre-assessment tasks",
+            "Check role, institution and referee details",
+            status: :completed,
+          )
+        end
+
+        it do
+          expect(subject).to include_task_list_item(
+            "Pre-assessment tasks",
+            "Check work history with referee",
+            status: :not_started,
+            link: [
+              :new,
+              :assessor_interface,
+              application_form,
+              assessment,
+              :prioritisation_reference_request,
+            ],
+          )
+        end
+
+        it do
+          expect(subject).not_to include_task_list_item(
+            "Pre-assessment tasks",
+            "Confirm prioritisation decision",
+          )
+        end
+
+        context "with prioritisation references requested" do
+          before do
+            create :requested_prioritisation_reference_request,
+                   assessment:,
+                   prioritisation_work_history_check:
+                     first_prioritisation_work_history_check
+            create :requested_prioritisation_reference_request,
+                   assessment:,
+                   prioritisation_work_history_check:
+                     second_prioritisation_work_history_check
+          end
+
+          it do
+            expect(subject).to include_task_list_item(
+              "Pre-assessment tasks",
+              "Check work history with referee",
+              status: :waiting_on,
+              link: [
+                :assessor_interface,
+                application_form,
+                assessment,
+                :prioritisation_reference_requests,
+              ],
+            )
+          end
+
+          it do
+            expect(subject).not_to include_task_list_item(
+              "Pre-assessment tasks",
+              "Confirm prioritisation decision",
+            )
+          end
+        end
+
+        context "with one prioritisation references received" do
+          before do
+            create :requested_prioritisation_reference_request,
+                   assessment:,
+                   prioritisation_work_history_check:
+                     first_prioritisation_work_history_check
+            create :received_prioritisation_reference_request,
+                   assessment:,
+                   prioritisation_work_history_check:
+                     second_prioritisation_work_history_check
+          end
+
+          it do
+            expect(subject).to include_task_list_item(
+              "Pre-assessment tasks",
+              "Check work history with referee",
+              status: :received,
+              link: [
+                :assessor_interface,
+                application_form,
+                assessment,
+                :prioritisation_reference_requests,
+              ],
+            )
+          end
+
+          it do
+            expect(subject).not_to include_task_list_item(
+              "Pre-assessment tasks",
+              "Confirm prioritisation decision",
+            )
+          end
+        end
+
+        context "with both prioritisation references received" do
+          before do
+            create :received_prioritisation_reference_request,
+                   assessment:,
+                   prioritisation_work_history_check:
+                     first_prioritisation_work_history_check
+            create :received_prioritisation_reference_request,
+                   assessment:,
+                   prioritisation_work_history_check:
+                     second_prioritisation_work_history_check
+          end
+
+          it do
+            expect(subject).to include_task_list_item(
+              "Pre-assessment tasks",
+              "Check work history with referee",
+              status: :received,
+              link: [
+                :assessor_interface,
+                application_form,
+                assessment,
+                :prioritisation_reference_requests,
+              ],
+            )
+          end
+
+          it do
+            expect(subject).not_to include_task_list_item(
+              "Pre-assessment tasks",
+              "Confirm prioritisation decision",
+            )
+          end
+        end
+
+        context "with one prioritisation references received and passed review" do
+          before do
+            create :requested_prioritisation_reference_request,
+                   assessment:,
+                   prioritisation_work_history_check:
+                     first_prioritisation_work_history_check
+            create :received_prioritisation_reference_request,
+                   :review_passed,
+                   assessment:,
+                   prioritisation_work_history_check:
+                     second_prioritisation_work_history_check
+          end
+
+          it do
+            expect(subject).to include_task_list_item(
+              "Pre-assessment tasks",
+              "Check work history with referee",
+              status: :completed,
+              link: [
+                :assessor_interface,
+                application_form,
+                assessment,
+                :prioritisation_reference_requests,
+              ],
+            )
+          end
+
+          it do
+            expect(subject).to include_task_list_item(
+              "Pre-assessment tasks",
+              "Confirm prioritisation decision",
+              status: :not_started,
+              link: [
+                :edit_prioritisation,
+                :assessor_interface,
+                application_form,
+                assessment,
+              ],
+            )
+          end
+        end
+
+        context "with one prioritisation references received and failed review" do
+          before do
+            create :requested_prioritisation_reference_request,
+                   assessment:,
+                   prioritisation_work_history_check:
+                     first_prioritisation_work_history_check
+            create :received_prioritisation_reference_request,
+                   :review_failed,
+                   assessment:,
+                   prioritisation_work_history_check:
+                     second_prioritisation_work_history_check
+          end
+
+          it do
+            expect(subject).to include_task_list_item(
+              "Pre-assessment tasks",
+              "Check work history with referee",
+              status: :waiting_on,
+              link: [
+                :assessor_interface,
+                application_form,
+                assessment,
+                :prioritisation_reference_requests,
+              ],
+            )
+          end
+
+          it do
+            expect(subject).not_to include_task_list_item(
+              "Pre-assessment tasks",
+              "Confirm prioritisation decision",
+            )
+          end
+        end
+
+        context "with both prioritisation references received and passed review on one" do
+          before do
+            create :received_prioritisation_reference_request,
+                   assessment:,
+                   prioritisation_work_history_check:
+                     first_prioritisation_work_history_check
+            create :received_prioritisation_reference_request,
+                   :review_passed,
+                   assessment:,
+                   prioritisation_work_history_check:
+                     second_prioritisation_work_history_check
+          end
+
+          it do
+            expect(subject).to include_task_list_item(
+              "Pre-assessment tasks",
+              "Check work history with referee",
+              status: :completed,
+              link: [
+                :assessor_interface,
+                application_form,
+                assessment,
+                :prioritisation_reference_requests,
+              ],
+            )
+          end
+
+          it do
+            expect(subject).to include_task_list_item(
+              "Pre-assessment tasks",
+              "Confirm prioritisation decision",
+              status: :not_started,
+              link: [
+                :edit_prioritisation,
+                :assessor_interface,
+                application_form,
+                assessment,
+              ],
+            )
+          end
+        end
+
+        context "with both prioritisation references received and failed review on one" do
+          before do
+            create :received_prioritisation_reference_request,
+                   assessment:,
+                   prioritisation_work_history_check:
+                     first_prioritisation_work_history_check
+            create :received_prioritisation_reference_request,
+                   :review_failed,
+                   assessment:,
+                   prioritisation_work_history_check:
+                     second_prioritisation_work_history_check
+          end
+
+          it do
+            expect(subject).to include_task_list_item(
+              "Pre-assessment tasks",
+              "Check work history with referee",
+              status: :received,
+              link: [
+                :assessor_interface,
+                application_form,
+                assessment,
+                :prioritisation_reference_requests,
+              ],
+            )
+          end
+
+          it do
+            expect(subject).not_to include_task_list_item(
+              "Pre-assessment tasks",
+              "Confirm prioritisation decision",
+            )
+          end
+        end
+
+        context "with both prioritisation references received and failed review on all" do
+          before do
+            create :received_prioritisation_reference_request,
+                   :review_failed,
+                   assessment:,
+                   prioritisation_work_history_check:
+                     first_prioritisation_work_history_check
+            create :received_prioritisation_reference_request,
+                   :review_failed,
+                   assessment:,
+                   prioritisation_work_history_check:
+                     second_prioritisation_work_history_check
+          end
+
+          it do
+            expect(subject).to include_task_list_item(
+              "Pre-assessment tasks",
+              "Check work history with referee",
+              status: :completed,
+              link: [
+                :assessor_interface,
+                application_form,
+                assessment,
+                :prioritisation_reference_requests,
+              ],
+            )
+          end
+
+          it do
+            expect(subject).to include_task_list_item(
+              "Pre-assessment tasks",
+              "Confirm prioritisation decision",
+              status: :not_started,
+              link: [
+                :edit_prioritisation,
+                :assessor_interface,
+                application_form,
+                assessment,
+              ],
+            )
+          end
+        end
+      end
+    end
 
     context "when teaching authority provides written statement and a professional standing request" do
       let!(:professional_standing_request) do

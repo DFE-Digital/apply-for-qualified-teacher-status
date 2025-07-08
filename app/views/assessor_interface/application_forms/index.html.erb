@@ -89,7 +89,7 @@
   <% if (records = @view_object.application_forms_records).present? %>
     <ul class="app-search-results">
       <% records.each do |application_form| %>
-        <%= render(ApplicationFormSearchResult::Component.new(application_form, current_staff:, unsuitable: @view_object.flag_as_unsuitable?(application_form))) %>
+        <%= render(ApplicationFormSearchResult::Component.new(application_form, current_staff:, unsuitable: @view_object.flag_as_unsuitable?(application_form), prioritised: application_form.assessment.prioritised?)) %>
       <% end %>
     </ul>
 

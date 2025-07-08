@@ -141,6 +141,7 @@ class TimelineEvent < ApplicationRecord
               ProfessionalStandingRequest
               QualificationRequest
               ReferenceRequest
+              PrioritisationReferenceRequest
             ],
             if: :requestable_event_type?
   validates :requestable_id,

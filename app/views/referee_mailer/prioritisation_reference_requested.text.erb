@@ -1,0 +1,19 @@
+Dear <%= @work_history.contact_name %>
+
+<%= application_form_full_name(@application_form) %> has applied for qualified teacher status (QTS) in England.
+
+They have given your name and email address to confirm the information they provided as part of their application.
+
+# What you need to do
+
+We need you to answer a few questions about <%= application_form_full_name(@application_form) %> by <%= @reference_request.expires_at.to_date.to_fs %>. It should take no more than 5 minutes.
+
+<%= teacher_interface_prioritisation_reference_request_url(@reference_request.slug) %>
+
+Please complete this by the deadline.
+
+If you have any questions or haven’t received the reference form, please contact us at [<%= t("service.email.enquiries") %>](mailto:<%= t("service.email.enquiries") %>).
+
+Kind regards,
+The Professional Recognition team, Apply for QTS in England
+(an executive agency sponsored by the Department for Education, England)

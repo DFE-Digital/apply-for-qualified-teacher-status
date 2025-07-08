@@ -110,6 +110,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
           "assessor_interface.application_forms.show.assessment_tasks.sections.pre_assessment_tasks",
         ),
       items: [
+        *prioritisation_checks_task_list_items,
         *assessment_section_task_list_items(preliminary: true),
         await_professional_standing_task_list_item,
       ].compact,
@@ -143,6 +144,23 @@ class AssessorInterface::ApplicationFormsShowViewObject
           :cannot_start
         end,
     }
+  end
+
+  def prioritisation_checks_task_list_items
+    return if assessment.prioritisation_work_history_checks.blank?
+
+    task_list_items = [prioritisation_work_history_check_task_item]
+
+    if prioritisation_work_history_checks_reviewed_and_any_passed?
+      task_list_items << prioritisation_reference_request_task_item
+    end
+
+    if prioritisation_work_history_checks_reviewed_and_all_failed? ||
+         prioritisation_reference_requests_reviewed_and_passed_or_all_failed?
+      task_list_items << prioritisation_decision_task_item
+    end
+
+    task_list_items
   end
 
   def assessment_task_list_section
@@ -473,8 +491,92 @@ class AssessorInterface::ApplicationFormsShowViewObject
     }
   end
 
+  def prioritisation_work_history_check_task_item
+    {
+      name:
+        I18n.t(
+          "assessor_interface.application_forms.show.assessment_tasks.items.prioritisation_work_history_checks",
+        ),
+      link: [
+        :assessor_interface,
+        application_form,
+        assessment,
+        :prioritisation_work_history_checks,
+      ],
+      status:
+        if assessment.prioritisation_work_history_checks.all?(&:complete?)
+          :completed
+        elsif assessment.prioritisation_work_history_checks.any?(&:complete?)
+          :in_progress
+        else
+          :not_started
+        end,
+    }
+  end
+
+  def prioritisation_reference_request_task_item
+    {
+      name:
+        I18n.t(
+          "assessor_interface.application_forms.show.assessment_tasks.items.prioritisation_work_history_references",
+        ),
+      link:
+        if assessment.prioritisation_reference_requests.present?
+          [
+            :assessor_interface,
+            application_form,
+            assessment,
+            :prioritisation_reference_requests,
+          ]
+        else
+          [
+            :new,
+            :assessor_interface,
+            application_form,
+            assessment,
+            :prioritisation_reference_request,
+          ]
+        end,
+      status:
+        if assessment.prioritisation_reference_requests.empty?
+          :not_started
+        elsif prioritisation_reference_requests_reviewed_and_passed_or_all_failed?
+          :completed
+        elsif prioritisation_reference_requests_received_and_awaiting_review?
+          :received
+        else
+          :waiting_on
+        end,
+    }
+  end
+
+  def prioritisation_decision_task_item
+    {
+      name:
+        I18n.t(
+          "assessor_interface.application_forms.show.assessment_tasks.items.prioritisation_decision",
+        ),
+      link:
+        if assessment.prioritisation_decision_at.nil?
+          [
+            :edit_prioritisation,
+            :assessor_interface,
+            application_form,
+            assessment,
+          ]
+        end,
+      status:
+        if assessment.prioritisation_decision_at.present?
+          :completed
+        else
+          :not_started
+        end,
+    }
+  end
+
   def pre_assessment_complete?
     return false unless assessment.all_preliminary_sections_passed?
+    return false if assessment.prioritisation_checks_incomplete?
 
     if teaching_authority_provides_written_statement
       professional_standing_request.received?
@@ -540,6 +642,33 @@ class AssessorInterface::ApplicationFormsShowViewObject
       "not_started"
     else
       "in_progress"
+    end
+  end
+
+  def prioritisation_work_history_checks_reviewed_and_any_passed?
+    assessment.prioritisation_work_history_checks.all?(&:complete?) &&
+      assessment.prioritisation_work_history_checks.any?(&:passed?)
+  end
+
+  def prioritisation_work_history_checks_reviewed_and_all_failed?
+    assessment.prioritisation_work_history_checks.all?(&:complete?) &&
+      assessment.prioritisation_work_history_checks.none?(&:passed?)
+  end
+
+  def prioritisation_reference_requests_reviewed_and_passed_or_all_failed?
+    assessment.prioritisation_reference_requests.any?(&:reviewed?) &&
+      (
+        assessment.prioritisation_reference_requests.any?(&:review_passed?) ||
+          assessment.prioritisation_reference_requests.all?(&:review_failed?)
+      )
+  end
+
+  def prioritisation_reference_requests_received_and_awaiting_review?
+    assessment
+      .prioritisation_reference_requests
+      .any? do |prioritisation_reference_request|
+      prioritisation_reference_request.received? &&
+        !prioritisation_reference_request.reviewed?
     end
   end
 

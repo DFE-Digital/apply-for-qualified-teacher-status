@@ -84,6 +84,8 @@
     - created_at
     - id
     - induction_required
+    - prioritisation_decision_at
+    - prioritised
     - recommendation
     - recommendation_assessor_note
     - recommended_at
@@ -205,6 +207,30 @@
     - updated_at
     - verified_at
     - verify_passed
+  :prioritisation_reference_requests:
+    - id
+    - assessment_id
+    - work_history_id
+    - prioritisation_work_history_check_id
+    - contact_response
+    - confirm_applicant_response
+    - received_at
+    - requested_at
+    - expired_at
+    - review_passed
+    - reviewed_at
+    - review_note
+    - created_at
+    - updated_at
+  :prioritisation_work_history_checks:
+    - assessment_id
+    - work_history_id
+    - checks
+    - created_at
+    - failure_reasons
+    - id
+    - passed
+    - updated_at
   :qualifications:
     - application_form_id
     - certificate_date

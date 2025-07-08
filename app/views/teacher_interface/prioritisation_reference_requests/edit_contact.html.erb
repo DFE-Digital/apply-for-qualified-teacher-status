@@ -1,0 +1,40 @@
+<% content_for :page_title, title_with_error_prefix(t(".title"), error: @form.errors.any?) %>
+<% content_for :back_link_url, back_history_path(default: teacher_interface_prioritisation_reference_request_path) %>
+
+<%= form_with model: @form, url: contact_teacher_interface_prioritisation_reference_request_path do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <h2 class="govuk-heading-l"><%= t(".title") %></h2>
+
+  <p class="body-text">
+    These are the details that <%= application_form_full_name(@application_form) %> has provided about you.
+    Take a moment to check that they’re correct.
+  </p>
+
+  <%= render(CheckYourAnswersSummary::Component.new(
+    id: "work-history-contact",
+    model: @work_history,
+    title: t(".title"),
+    fields: {
+      contact_name: {
+        title: t("helpers.label.teacher_interface_prioritisation_reference_request_contact_response_form.contact_name")
+      },
+      contact_job: {
+        title: t("helpers.label.teacher_interface_prioritisation_reference_request_contact_response_form.contact_job")
+      },
+      school_name: {
+        title: t("helpers.label.teacher_interface_prioritisation_reference_request_contact_response_form.school_name")
+      },
+    },
+    changeable: false
+  )) %>
+
+  <%= f.govuk_radio_buttons_fieldset :contact_response do %>
+    <%= f.govuk_radio_button :contact_response, :true, link_errors: true %>
+    <%= f.govuk_radio_button :contact_response, :false do %>
+      <%= f.govuk_text_area :contact_comment %>
+    <% end %>
+  <% end %>
+
+  <%= f.govuk_submit %>
+<% end %>

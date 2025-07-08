@@ -48,6 +48,10 @@
     - location_note
     - review_note
     - verify_note
+  :prioritisation_reference_requests:
+    - slug
+    - contact_comment
+    - confirm_applicant_comment
   :qualification_requests:
     - review_note
     - verify_note

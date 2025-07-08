@@ -1,8 +1,11 @@
 <li class="app-search-results__item">
   <h2 class="app-search-result__item-title">
     <%= govuk_link_to full_name, href %>
-    <% if unsuitable %>
-      <br /><%= govuk_tag(text: "Flagged for suitability", colour: "red") %>
+    <% if unsuitable || prioritised %>
+      <br />
+
+      <%= govuk_tag(text: "Flagged for suitability", colour: "red") if unsuitable %>
+      <%= govuk_tag(text: "Prioritised", colour: "purple") if prioritised %>
     <% end %>
   </h2>
 

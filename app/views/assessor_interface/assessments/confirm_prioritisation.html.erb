@@ -1,0 +1,18 @@
+<%
+  title = if @assessment.prioritised
+    "QTS application #{@application_form.reference} will be prioritised"
+  else
+    "QTS application #{@application_form.reference} won’t be prioritised"
+  end
+%>
+
+<% content_for :page_title, title %>
+<% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
+
+<h1 class="govuk-heading-xl"><%= title %></h1>
+<p class="govuk-body">The application will move to assessment.</p>
+
+<div class="govuk-button-group govuk-!-margin-top-9">
+  <%= govuk_button_link_to "Back to application list", %i[assessor_interface application_forms] %>
+  <%= govuk_button_link_to "See application overview", [:assessor_interface, @application_form], secondary: true %>
+</div>

@@ -1,0 +1,20 @@
+Dear <%= application_form_full_name(@application_form) %>,
+
+## We’ve contacted your references to confirm you have valid work experience in England
+
+<%= render "shared/teacher_mailer/reference_number" %>
+
+To confirm if your application can be prioritised, we've contacted the following references you named in your application:
+<% @prioritisation_reference_requests.each do |prioritisation_reference_request| %>
+* <%= prioritisation_reference_request.work_history.school_name %>, <%= prioritisation_reference_request.work_history.job %>, <%= prioritisation_reference_request.work_history.school_name %>,
+<% end %>
+
+They need to respond by <%= @prioritisation_reference_requests.first.expires_at.to_date.to_fs %>.
+
+To help avoid delays:
+* contact your references to make sure they’ve received the request
+* ask them to check their junk or spam folder if they haven’t seen it
+
+If they have not received the request, email [<%= t("service.email.enquiries") %>](mailto:<%= t("service.email.enquiries") %>).
+
+<%= render "shared/teacher_mailer/footer" %>

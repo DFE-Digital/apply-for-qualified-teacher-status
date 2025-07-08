@@ -69,6 +69,11 @@ Rails.application.routes.draw do
         member do
           get "review"
           get "rollback"
+
+          get "edit-prioritisation", to: "assessments#edit_prioritisation"
+          post "update-prioritisation", to: "assessments#update_prioritisation"
+
+          get "confirm-prioritisation", to: "assessments#confirm_prioritisation"
         end
 
         resources :assessment_sections, path: "/sections", only: %i[show update]
@@ -181,6 +186,10 @@ Rails.application.routes.draw do
           end
         end
 
+        resources :prioritisation_work_history_checks,
+                  path: "/prioritisation-work-history-checks",
+                  only: %i[index edit update]
+
         resources :qualification_requests,
                   path: "/qualification-requests",
                   only: %i[index] do
@@ -226,6 +235,15 @@ Rails.application.routes.draw do
             get "verify-failed", to: "reference_requests#edit_verify_failed"
             post "verify-failed", to: "reference_requests#update_verify_failed"
             get "resend-email", to: "reference_requests#resend_email"
+          end
+        end
+
+        resources :prioritisation_reference_requests,
+                  path: "/prioritisation-reference-requests",
+                  only: %i[index new create edit update] do
+          collection do
+            get "confirmation",
+                to: "prioritisation_reference_requests#confirmation"
           end
         end
       end
@@ -510,6 +528,21 @@ Rails.application.routes.draw do
             to: "reference_requests#edit_additional_information"
         post "additional-information",
              to: "reference_requests#update_additional_information"
+      end
+    end
+
+    resources :prioritisation_reference_requests,
+              path: "/prioritisation-references",
+              param: :slug,
+              only: %i[show edit update] do
+      member do
+        get "contact", to: "prioritisation_reference_requests#edit_contact"
+        post "contact", to: "prioritisation_reference_requests#update_contact"
+
+        get "confirm-applicant",
+            to: "prioritisation_reference_requests#edit_confirm_applicant"
+        post "confirm-applicant",
+             to: "prioritisation_reference_requests#update_confirm_applicant"
       end
     end
   end

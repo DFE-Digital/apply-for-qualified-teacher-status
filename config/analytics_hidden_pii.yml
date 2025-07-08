@@ -11,6 +11,8 @@
     - trs_match
   :assessments:
     - recommendation_assessor_note
+  :prioritisation_reference_requests:
+    - review_note
   :further_information_request_items:
     - failure_reason_assessor_feedback
     - contact_email

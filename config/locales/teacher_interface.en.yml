@@ -118,6 +118,15 @@ en:
         title: Check your answers
       edit_contact:
         title: About you
+    prioritisation_reference_requests:
+      show:
+        title: You’ve been asked to act as a reference
+      edit:
+        title: Check your answers
+      edit_contact:
+        title: About you
+      edit_confirm_applicant:
+        title: About the applicant
     work_histories:
       add_another:
         title: Add another role
@@ -353,6 +362,18 @@ en:
               blank: Select whether you have used the service before
             email:
               blank: Enter your email address
+        teacher_interface/prioritisation_reference_request_contact_response_form:
+          attributes:
+            contact_response:
+              inclusion: Select if the details about you are correct
+            contact_comment:
+              blank: Provide a reason for why you can’t confirm the details about you
+        teacher_interface/prioritisation_reference_request_confirm_applicant_response_form:
+          attributes:
+            confirm_applicant_response:
+              inclusion: Select if you can confirm the applicant’s work history
+            confirm_applicant_comment:
+              blank: Provide a reason for why you can’t confirm the applicant’s work history
         teacher_interface/passport_expiry_date_form:
           attributes:
             passport_expiry_date:

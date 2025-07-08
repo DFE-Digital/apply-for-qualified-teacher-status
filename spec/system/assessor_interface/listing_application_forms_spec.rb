@@ -63,6 +63,7 @@ RSpec.describe "Assessor listing application forms", type: :system do
         :application_form,
         25,
         :with_personal_information,
+        :with_assessment,
         :submitted,
         region: create(:region, :in_country, country_code: "FR"),
       ).sort_by(&:submitted_at)

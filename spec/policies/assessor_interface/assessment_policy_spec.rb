@@ -63,4 +63,22 @@ RSpec.describe AssessorInterface::AssessmentPolicy do
 
     it_behaves_like "a policy method requiring the reverse decision permission"
   end
+
+  describe "#edit_prioritisation?" do
+    subject(:edit_prioritisation?) { policy.edit_prioritisation? }
+
+    it_behaves_like "a policy method requiring the assess permission"
+  end
+
+  describe "#update_prioritisation?" do
+    subject(:update_prioritisation?) { policy.update_prioritisation? }
+
+    it_behaves_like "a policy method requiring the assess permission"
+  end
+
+  describe "#confirm_prioritisation?" do
+    subject(:confirm_prioritisation?) { policy.confirm_prioritisation? }
+
+    it_behaves_like "a policy method requiring the assess permission"
+  end
 end
