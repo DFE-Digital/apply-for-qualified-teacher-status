@@ -12,8 +12,6 @@
   :assessments:
     - recommendation_assessor_note
   :prioritisation_reference_requests:
-    - contact_comment
-    - confirm_applicant_comment
     - review_note
   :further_information_request_items:
     - failure_reason_assessor_feedback
