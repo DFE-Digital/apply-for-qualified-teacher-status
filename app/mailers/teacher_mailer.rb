@@ -134,6 +134,14 @@ class TeacherMailer < ApplicationMailer
     )
   end
 
+  def prioritisation_checks_required
+    view_mail(
+      GOVUK_NOTIFY_TEMPLATE_ID,
+      to: teacher.email,
+      subject: I18n.t("mailer.teacher.prioritisation_checks_required.subject"),
+    )
+  end
+
   def professional_standing_received
     view_mail(
       GOVUK_NOTIFY_TEMPLATE_ID,

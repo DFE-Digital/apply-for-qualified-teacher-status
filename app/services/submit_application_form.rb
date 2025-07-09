@@ -56,11 +56,19 @@ class SubmitApplicationForm
     requestable = ProfessionalStandingRequest.create!(assessment:)
 
     if application_form.requires_preliminary_check
-      DeliverEmail.call(
-        application_form:,
-        mailer: TeacherMailer,
-        action: :initial_checks_required,
-      )
+      if assessment.prioritisation_work_history_checks.present?
+        DeliverEmail.call(
+          application_form:,
+          mailer: TeacherMailer,
+          action: :prioritisation_checks_required,
+        )
+      else
+        DeliverEmail.call(
+          application_form:,
+          mailer: TeacherMailer,
+          action: :initial_checks_required,
+        )
+      end
     else
       RequestRequestable.call(requestable:, user:)
     end
