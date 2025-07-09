@@ -13,6 +13,111 @@ RSpec.describe "teacher_interface/application_forms/show.html.erb",
     )
   end
 
+  context "when in draft" do
+    let(:application_form) { create(:application_form) }
+
+    it do
+      expect(subject).to match(/Applications must be completed within 6 months/)
+    end
+  end
+
+  context "when submitted" do
+    let(:application_form) do
+      create(:application_form, :submitted, :with_assessment)
+    end
+
+    it { is_expected.to match(/Application received/) }
+
+    it do
+      expect(subject).to match(
+        /Your application will be assessed by a trained assessor./,
+      )
+    end
+
+    it do
+      expect(subject).not_to match(
+        /First, we’ll confirm if your experience in England is valid and if your application can be prioritised./,
+      )
+    end
+
+    context "when the application assessment is pending prioritisation checks" do
+      before do
+        create(
+          :prioritisation_work_history_check,
+          assessment: application_form.assessment,
+        )
+      end
+
+      it { is_expected.to match(/Application received/) }
+
+      it do
+        expect(subject).not_to match(
+          /We have confirmed your work experience in England./,
+        )
+      end
+
+      it do
+        expect(subject).to match(
+          /First, we’ll confirm if your experience in England is valid and if your application can be prioritised./,
+        )
+      end
+    end
+
+    context "when the application assessment has been prioritised" do
+      before do
+        create(
+          :prioritisation_work_history_check,
+          assessment: application_form.assessment,
+        )
+        application_form.assessment.update!(
+          prioritised: true,
+          prioritisation_decision_at: Time.current,
+        )
+      end
+
+      it { is_expected.to match(/Application received/) }
+
+      it do
+        expect(subject).to match(
+          /We have confirmed your work experience in England./,
+        )
+      end
+
+      it do
+        expect(subject).not_to match(
+          /First, we’ll confirm if your experience in England is valid and if your application can be prioritised./,
+        )
+      end
+    end
+
+    context "when the application assessment has not been prioritised" do
+      before do
+        create(
+          :prioritisation_work_history_check,
+          assessment: application_form.assessment,
+        )
+        application_form.assessment.update!(
+          prioritised: false,
+          prioritisation_decision_at: Time.current,
+        )
+      end
+
+      it { is_expected.to match(/Application received/) }
+
+      it do
+        expect(subject).not_to match(
+          /We have confirmed your work experience in England./,
+        )
+      end
+
+      it do
+        expect(subject).not_to match(
+          /First, we’ll confirm if your experience in England is valid and if your application can be prioritised./,
+        )
+      end
+    end
+  end
+
   context "when request further information" do
     let(:application_form) { create(:application_form, :submitted) }
 
@@ -50,14 +155,6 @@ RSpec.describe "teacher_interface/application_forms/show.html.erb",
       before { create :received_consent_request, application_form: }
 
       it { is_expected.to match(/Consent documents successfully submitted/) }
-    end
-  end
-
-  context "when in draft" do
-    let(:application_form) { create(:application_form) }
-
-    it do
-      expect(subject).to match(/Applications must be completed within 6 months/)
     end
   end
 
@@ -139,26 +236,52 @@ RSpec.describe "teacher_interface/application_forms/show.html.erb",
         )
       end
     end
+
+    context "with application assessment being prioritised" do
+      before { application_form.assessment.update!(prioritised: true) }
+
+      it { is_expected.to match(/Your application is being prioritised/) }
+
+      it do
+        expect(subject).to match(
+          /Your application cannot proceed until we receive your Letter of Professional Standing/,
+        )
+      end
+
+      it do
+        expect(subject).to match(
+          /We have confirmed your work experience in England. This means your application is being prioritised./,
+        )
+      end
+    end
   end
 
-  context "when requiring preliminary check" do
+  context "when requires preliminary check but is going through prioritisation checks" do
     let(:application_form) do
       create :application_form,
              :with_assessment,
+             :teaching_authority_provides_written_statement,
              :requires_preliminary_check,
              :submitted
     end
 
     before do
+      application_form.region.update!(
+        teaching_authority_provides_written_statement: true,
+      )
       create(
-        :assessment_section,
-        :preliminary,
+        :prioritisation_work_history_check,
         assessment: application_form.assessment,
       )
     end
 
-    it { is_expected.to match(/Application received/) }
-    it { is_expected.to match(/We’ve received your application for QTS/) }
+    it { is_expected.to match(/Application submitted/) }
+
+    it do
+      expect(subject).to match(
+        /First, we’ll confirm if your experience in England is valid and if your application can be prioritised./,
+      )
+    end
   end
 
   context "when from ineligible country" do
@@ -173,7 +296,7 @@ RSpec.describe "teacher_interface/application_forms/show.html.erb",
 
   context "when awarded pending checks" do
     let(:application_form) do
-      create(:application_form, :awarded_pending_checks)
+      create(:application_form, :with_assessment, :awarded_pending_checks)
     end
 
     it { is_expected.to match(/Application received/) }

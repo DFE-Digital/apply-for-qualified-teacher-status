@@ -12,6 +12,8 @@
   <%= render "teacher_interface/application_forms/show/preliminary_check_pending", view_object: @view_object %>
 <% elsif @view_object.request_professional_standing_certificate? %>
   <%= render "teacher_interface/application_forms/show/request_professional_standing_certificate", view_object: @view_object %>
+<% elsif @view_object.teaching_authority_provides_written_statement? && @view_object.requires_preliminary_check && @view_object.prioritisation_checks_pending? %>
+  <%= render "teacher_interface/application_forms/show/prioritisation_checks_pending", view_object: @view_object %>
 <% elsif @view_object.request_qualification_consent? %>
   <%= render "teacher_interface/application_forms/show/request_qualification_consent", view_object: @view_object %>
 <% elsif @view_object.application_form.submitted? %>

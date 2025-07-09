@@ -1,10 +1,8 @@
 <h2 class="govuk-heading-l">
-  <% if view_object.application_form.requires_preliminary_check? && view_object.application_form.assessment.all_preliminary_sections_passed? %>
-    <% if view_object.application_form.assessment.prioritised? %>
-      Your application is being prioritised
-    <% else %>
-      Your application has passed initial checks
-    <% end %>
+  <% if view_object.application_form.assessment.prioritised? %>
+    Your application is being prioritised
+  <% elsif view_object.application_form.requires_preliminary_check? && view_object.application_form.assessment.all_preliminary_sections_passed? %>
+    Your application has passed initial checks
   <% else %>
     Application submitted
   <% end %>
