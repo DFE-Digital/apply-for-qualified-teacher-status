@@ -28,6 +28,7 @@ class PrioritisationWorkHistoryCheck < ApplicationRecord
     WORK_HISTORY_ROLE = "work_history_role",
     WORK_HISTORY_SETTING = "work_history_setting",
     WORK_HISTORY_IN_ENGLAND = "work_history_in_england",
+    WORK_HISTORY_INSTITUTION_NOT_FOUND = "work_history_institution_not_found",
     WORK_HISTORY_REFERENCE_EMAIL = "work_history_reference_email",
     WORK_HISTORY_REFERENCE_JOB = "work_history_reference_job",
   ].freeze
