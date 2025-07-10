@@ -2,21 +2,46 @@ Dear <%= application_form_full_name(@application_form) %>,
 
 The assessor reviewing your QTS application needs more information.
 
-The assessor needs this information by <%= @further_information_request.expires_at.to_date.to_fs %> for your application to proceed.
-
 # What you need to do
+
+You need to sign in to your application to submit the information.
+
+**You must submit this information by <%= @further_information_request.expires_at.to_date.to_fs %> or your application will be declined.**
+
 <% if FeatureFlags::FeatureFlag.active?(:gov_one_applicant_login) %>
-You will need to sign in to your application to see what information is needed and add it.
-
 # Signing in to your application
-You’ll now need a GOV.UK One Login to sign in. If you don't have one you can create one, but you must use the same email as your QTS sign in to access your application.
 
-[Create your GOV.UK One Login or sign in](<%= new_teacher_session_url %>)
+You will need a DfE Sign-in login to sign in. If you don’t have one you can create one. You must use the same email as your QTS sign-in to access your application.
+
+[Create your DfE Sign-in login or sign in](<%= new_teacher_session_url %>)
 <% else %>
 [Sign in to your application](<%= new_teacher_session_url %>)
 <% end %>
 
-Your application is on hold until this information is received. Once you respond with all the information requested, the assessor will be able to continue reviewing your application.
+Your application is on hold until this information is received. Once you submit all the information requested, the assessor will be able to continue reviewing your application.
+
+# The information we need
+
+## About you
+
+**There’s a problem with your passport. For example, it is incorrect, illegible, or incomplete.**
+
+^ We cannot accept the passport you provided because we cannot see all the details clearly. You need to upload another copy of your passport.
+
+## Your qualifications
+
+**There is a problem with your university degree transcript (or translation).**
+
+^ We cannot see all the details clearly on the transcript you provided for your Bachelor of Science obtained at Anhui University.
+
+^ You need to upload a clearer version of your Bachelor of Science transcript
+
+## Your English language proficiency
+
+**The country/territory qualifications we issued is not exempt from English language requirements.**
+
+^ Your course was taught entirely or mostly in English; this needs to cover both years studied for both degrees Bachelor’s and Master’s.
+
 
 <%= render "shared/teacher_mailer/any_questions_contact" %>
 
