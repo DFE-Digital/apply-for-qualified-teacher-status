@@ -24,6 +24,14 @@
 #  fk_rails_...  (work_history_id => work_histories.id)
 #
 class PrioritisationWorkHistoryCheck < ApplicationRecord
+  FAILURE_REASONS = [
+    WORK_HISTORY_ROLE = "work_history_role",
+    WORK_HISTORY_SETTING = "work_history_setting",
+    WORK_HISTORY_IN_ENGLAND = "work_history_in_england",
+    WORK_HISTORY_REFERENCE_EMAIL = "work_history_reference_email",
+    WORK_HISTORY_REFERENCE_JOB = "work_history_reference_job",
+  ].freeze
+
   belongs_to :assessment
   belongs_to :work_history
 
