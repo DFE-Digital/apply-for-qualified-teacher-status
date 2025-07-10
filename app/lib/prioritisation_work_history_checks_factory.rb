@@ -40,7 +40,13 @@ class PrioritisationWorkHistoryChecksFactory
   end
 
   def failure_reasons
-    []
+    %w[
+      work_history_role
+      work_history_setting
+      work_history_in_england
+      work_history_reference_email
+      work_history_reference_job
+    ]
   end
 
   def valid_work_histories_for_prioritisation
