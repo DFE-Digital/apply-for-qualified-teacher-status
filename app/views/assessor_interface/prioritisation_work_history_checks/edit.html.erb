@@ -80,7 +80,18 @@
 
   <%= f.govuk_radio_buttons_fieldset :passed, legend: { text: "Does the applicant’s work history meet the criteria for prioritisation?" } do %>
     <%= f.govuk_radio_button :passed, true, label: { text: "Yes" }, link_errors: true, disabled: @view_object.disable_form? %>
-    <%= f.govuk_radio_button :passed, false, label: { text: "No" }, disabled: @view_object.disable_form? %>
+    <%= f.govuk_radio_button :passed, false, label: { text: "No" }, disabled: @view_object.disable_form? do %>
+      <div id="assessor-interface-prioritisation-work-history-check-form-selected-failure-reasons-field-error"></div>
+      <%= f.govuk_check_boxes_fieldset :selected_prioritisation_failure_reasons, legend: { size: "s" } do %>
+        <% @view_object.failure_reasons.each do |failure_reason| %>
+          <%= f.govuk_check_box :"#{failure_reason}_checked", true, label: { text: t(failure_reason, scope: %i[assessor_interface prioritisation_work_history_checks failure_reasons as_statement]) }, disabled: @view_object.disable_form? do %>
+            <%= f.govuk_text_area :"#{failure_reason}_notes",
+                                  label: { text: "Note to the applicant (optional)", size: "s" },
+                                  disabled: @view_object.disable_form? %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
   <% end %>
 
   <%= f.govuk_submit disabled: @view_object.disable_form? do %>

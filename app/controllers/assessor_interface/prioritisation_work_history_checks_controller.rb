@@ -20,9 +20,9 @@ module AssessorInterface
       @application_form = @view_object.application_form
 
       @form =
-        PrioritisationWorkHistoryCheckForm.new(
+        form.new(
           prioritisation_work_history_check:,
-          passed: prioritisation_work_history_check.passed,
+          **form.initial_attributes(prioritisation_work_history_check),
         )
     end
 
@@ -33,10 +33,7 @@ module AssessorInterface
         )
       @application_form = @view_object.application_form
 
-      @form =
-        PrioritisationWorkHistoryCheckForm.new(
-          form_params.merge(prioritisation_work_history_check:),
-        )
+      @form = form.new(form_params.merge(prioritisation_work_history_check:))
 
       if @form.save
         redirect_to [
@@ -52,14 +49,18 @@ module AssessorInterface
 
     private
 
-    def form_params
-      unless params[:assessor_interface_prioritisation_work_history_check_form]
-        return {}
-      end
+    def form
+      PrioritisationWorkHistoryCheckForm.for_prioritisation_work_history_check(
+        prioritisation_work_history_check,
+      )
+    end
 
-      params.require(
-        :assessor_interface_prioritisation_work_history_check_form,
-      ).permit(:passed)
+    def form_params
+      form.permit_parameters(
+        params.require(
+          :assessor_interface_prioritisation_work_history_check_form,
+        ),
+      )
     end
 
     def prioritisation_work_history_checks

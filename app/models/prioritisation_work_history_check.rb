@@ -33,6 +33,8 @@ class PrioritisationWorkHistoryCheck < ApplicationRecord
     WORK_HISTORY_REFERENCE_JOB = "work_history_reference_job",
   ].freeze
 
+  has_many :selected_prioritisation_failure_reasons, dependent: :destroy
+
   belongs_to :assessment
   belongs_to :work_history
 
