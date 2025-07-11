@@ -70,6 +70,14 @@ class TeacherMailer < ApplicationMailer
     )
   end
 
+  def application_not_prioritised
+    view_mail(
+      GOVUK_NOTIFY_TEMPLATE_ID,
+      to: teacher.email,
+      subject: I18n.t("mailer.teacher.application_not_prioritised.subject"),
+    )
+  end
+
   def consent_reminder
     @expires_at = assessment.consent_requests.map(&:expires_at).max
 

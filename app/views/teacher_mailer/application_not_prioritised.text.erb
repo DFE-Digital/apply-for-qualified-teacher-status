@@ -1,0 +1,49 @@
+Dear <%= application_form_full_name(@application_form) %>
+
+<%= render "shared/teacher_mailer/reference_number" %>
+
+We’ve reviewed your work experience in England and found that it does not meet the criteria for your application to be prioritised. This means your application will be assessed within our standard timelines.
+
+<% if @application_form.teaching_authority_provides_written_statement && @application_form.assessment.professional_standing_request&.requested? && !@application_form.assessment.professional_standing_request&.received? %>
+# What you need to do
+
+If you have not requested your <%= region_certificate_name(@application_form.region) %> from <%= region_teaching_authority_name_phrase(@application_form.region) %> yet, you need to request it now.
+
+<%= render "shared/teacher_mailer/regional_content" %>
+# What happens next
+
+Once the <%= region_certificate_name(@application_form.region) %> is received and checked, your application will be assessed by a trained assessor. They will check all the information you have submitted. Some information may need verification by third parties.
+
+If we need more information we will email you. You do not need to contact us.
+<% elsif @application_form.requires_preliminary_check %>
+# What happens next
+
+We need to carry out some initial checks on your application. We will email you to let you know if your application passes these initial checks. Because we were not able to confirm that you have valid work experience in England, your application will be assessed against additional requirements.
+
+We require you to be qualified to teach:
+- children aged 11 to 16
+- one or more specific subjects including Maths, Science, Biology, Chemistry, Physics, French, German, Italian, Japanese, Latin, Mandarin, Russian, Spanish
+
+We do not accept related subjects, for example economics instead of maths, agricultural science instead of biology or engineering instead of physics
+
+<% if @application_form.teaching_authority_provides_written_statement %>
+If initial checks are passed you will need to request a <%= region_certificate_name(@application_form.region) %> from <%= region_teaching_authority_name_phrase(@application_form.region) %>.
+
+Do not request your <%= region_certificate_name(@application_form.region) %> until you have received confirmation from us. You do not need to contact us.
+<% end %>
+<% else %>
+
+# What happens next
+
+Your application will be assessed by a trained assessor within our standard timelines.
+
+We assess 90 per cent of applications within 12 months. Information correct as of July 2025. Timelines are based on total applications completed since February 2023.
+
+It may take longer if we need to ask for further information or if external factors, or third parties, cause delays. This includes waiting for references, or verification of qualifications or professional standing. The time it takes to assess applications is regularly reviewed and subject to change.
+
+If we need more information, we will email you. You do not need to contact us.
+<% end %>
+
+<%= render "shared/teacher_mailer/help_us_to_improve_this_service" %>
+
+<%= render "shared/teacher_mailer/footer" %>

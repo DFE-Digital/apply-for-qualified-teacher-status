@@ -18,7 +18,7 @@ class AssessorInterface::AssessmentPrioritisationDecisionForm
     if passed
       PrioritiseAssessment.call(assessment:, user:)
     else
-      raise "Not Implemented"
+      DeprioritiseAssessment.call(assessment:, user:)
     end
 
     true
