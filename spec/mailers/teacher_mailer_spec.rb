@@ -512,8 +512,11 @@ RSpec.describe TeacherMailer, type: :mailer do
         end
 
         it do
-          is_expected.to include("You will need a DfE Sign-in login to sign in")
+          expect(subject).to include(
+            "You will need a DfE Sign-in login to sign in",
+          )
         end
+
         it { is_expected.not_to include("Sign in to your application") }
       end
     end
