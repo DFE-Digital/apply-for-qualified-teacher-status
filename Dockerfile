@@ -3,7 +3,7 @@
 # production: runs the actual app
 
 # Build builder image
-FROM ruby:3.3.0-alpine as builder
+FROM ruby:3.4.3-alpine3.21 as builder
 
 WORKDIR /app
 
@@ -22,7 +22,7 @@ RUN apk upgrade --no-cache openssl libssl3 libcrypto3 curl expat
 # vips-dev: dependencies for ruby-vips (image processing library)
 # imagemagick-dev: dependencies for rmagick (image conversion library)
 # poppler-utils: for analysing PDF files
-RUN apk add --update --no-cache build-base yarn postgresql14-dev git vips-dev imagemagick-dev poppler-utils
+RUN apk add --update --no-cache build-base yarn postgresql-dev git vips-dev imagemagick-dev poppler-utils yaml-dev
 
 # Install gems defined in Gemfile
 COPY Gemfile Gemfile.lock ./
@@ -62,7 +62,7 @@ RUN rm -rf node_modules log/* tmp/* /tmp && \
     find /usr/local/bundle/gems -name "*.html" -delete
 
 # Build runtime image
-FROM ruby:3.3.0-alpine as production
+FROM ruby:3.4.3-alpine3.21 as production
 
 # The application runs from /app
 WORKDIR /app
