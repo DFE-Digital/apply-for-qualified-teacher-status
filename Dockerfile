@@ -22,7 +22,7 @@ RUN apk upgrade --no-cache openssl libssl3 libcrypto3 curl expat
 # vips-dev: dependencies for ruby-vips (image processing library)
 # imagemagick-dev: dependencies for rmagick (image conversion library)
 # poppler-utils: for analysing PDF files
-RUN apk add --update --no-cache build-base yarn postgresql15-dev git vips-dev imagemagick-dev poppler-utils yaml-dev
+RUN apk add --update --no-cache build-base yarn postgresql-dev git vips-dev imagemagick-dev poppler-utils yaml-dev
 
 # Install gems defined in Gemfile
 COPY Gemfile Gemfile.lock ./
