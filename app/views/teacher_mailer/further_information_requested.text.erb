@@ -6,7 +6,7 @@ The assessor reviewing your QTS application needs more information.
 
 You need to sign in to your application to submit the information.
 
-**You must submit this information by <%= @further_information_request.expires_at.to_date.to_fs %> or your application will be declined.**
+You must submit this information by <%= @further_information_request.expires_at.strftime('%d %B %Y') %> or your application will be declined.
 
 <% if FeatureFlags::FeatureFlag.active?(:gov_one_applicant_login) %>
 # Signing in to your application
@@ -24,24 +24,22 @@ Your application is on hold until this information is received. Once you submit 
 
 ## About you
 
-**There’s a problem with your passport. For example, it is incorrect, illegible, or incomplete.**
-
+There’s a problem with your passport. For example, it is incorrect, illegible, or incomplete.
 ^ We cannot accept the passport you provided because we cannot see all the details clearly. You need to upload another copy of your passport.
 
 ## Your qualifications
 
-**There is a problem with your university degree transcript (or translation).**
-
+There is a problem with your university degree transcript (or translation).
 ^ We cannot see all the details clearly on the transcript you provided for your Bachelor of Science obtained at Anhui University.
 
 ^ You need to upload a clearer version of your Bachelor of Science transcript
 
 ## Your English language proficiency
 
-**The country/territory qualifications we issued is not exempt from English language requirements.**
-
+The country/territory qualifications we issued is not exempt from English language requirements.
 ^ Your course was taught entirely or mostly in English; this needs to cover both years studied for both degrees Bachelor’s and Master’s.
 
+# If you have a question
 
 <%= render "shared/teacher_mailer/any_questions_contact" %>
 
