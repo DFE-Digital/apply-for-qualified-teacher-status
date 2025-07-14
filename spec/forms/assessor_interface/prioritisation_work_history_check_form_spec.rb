@@ -16,7 +16,10 @@ RSpec.describe AssessorInterface::PrioritisationWorkHistoryCheckForm,
     create(
       :prioritisation_work_history_check,
       assessment:,
-      failure_reasons: %w[work_history_role work_history_setting],
+      failure_reasons: %w[
+        prioritisation_work_history_role
+        prioritisation_work_history_setting
+      ],
     )
   end
 
@@ -46,8 +49,8 @@ RSpec.describe AssessorInterface::PrioritisationWorkHistoryCheckForm,
         let(:attributes) do
           {
             passed: false,
-            work_history_role_checked: true,
-            work_history_setting_checked: true,
+            prioritisation_work_history_role_checked: true,
+            prioritisation_work_history_setting_checked: true,
           }
         end
 
@@ -56,10 +59,8 @@ RSpec.describe AssessorInterface::PrioritisationWorkHistoryCheckForm,
     end
   end
 
-  describe "#selected_prioritisation_failure_reasons" do
-    subject(:selected_prioritisation_failure_reasons) do
-      form.selected_prioritisation_failure_reasons
-    end
+  describe "#selected_failure_reasons" do
+    subject(:selected_failure_reasons) { form.selected_failure_reasons }
 
     context "when passed" do
       let(:attributes) { { passed: true } }
@@ -71,13 +72,15 @@ RSpec.describe AssessorInterface::PrioritisationWorkHistoryCheckForm,
       let(:attributes) do
         {
           passed: false,
-          work_history_role_checked: true,
-          work_history_role_notes: "Notes",
+          prioritisation_work_history_role_checked: true,
+          prioritisation_work_history_role_notes: "Notes",
         }
       end
 
       it do
-        expect(subject).to eq({ "work_history_role" => { notes: "Notes" } })
+        expect(subject).to eq(
+          { "prioritisation_work_history_role" => { notes: "Notes" } },
+        )
       end
     end
   end
@@ -105,7 +108,7 @@ RSpec.describe AssessorInterface::PrioritisationWorkHistoryCheckForm,
 
       it "does not set any selected prioritisation failure reasons" do
         expect { save }.not_to change(
-          prioritisation_work_history_check.selected_prioritisation_failure_reasons,
+          prioritisation_work_history_check.selected_failure_reasons,
           :count,
         )
       end
@@ -115,8 +118,8 @@ RSpec.describe AssessorInterface::PrioritisationWorkHistoryCheckForm,
       let(:attributes) do
         {
           passed: false,
-          work_history_role_checked: true,
-          work_history_role_notes: "Notes",
+          prioritisation_work_history_role_checked: true,
+          prioritisation_work_history_role_notes: "Notes",
         }
       end
 
@@ -137,14 +140,14 @@ RSpec.describe AssessorInterface::PrioritisationWorkHistoryCheckForm,
 
       it "sets selected prioritisation failure reasons" do
         expect { save }.to change(
-          prioritisation_work_history_check.selected_prioritisation_failure_reasons,
+          prioritisation_work_history_check.selected_failure_reasons,
           :count,
         ).from(0).to(1)
 
         expect(
-          prioritisation_work_history_check.selected_prioritisation_failure_reasons.first,
+          prioritisation_work_history_check.selected_failure_reasons.first,
         ).to have_attributes(
-          key: "work_history_role",
+          key: "prioritisation_work_history_role",
           assessor_feedback: "Notes",
         )
       end
@@ -167,21 +170,21 @@ RSpec.describe AssessorInterface::PrioritisationWorkHistoryCheckForm,
     end
 
     context "when failed" do
-      let!(:selected_prioritisation_failure_reason) do
-        create :selected_prioritisation_failure_reason,
+      before do
+        prioritisation_work_history_check.update!(passed: false)
+        create :selected_failure_reason,
                prioritisation_work_history_check:,
+               key: "prioritisation_work_history_role",
                assessor_feedback: "Note"
       end
-
-      before { prioritisation_work_history_check.update!(passed: false) }
 
       it "sets the correct attributes" do
         expect(initial_attributes).to eq(
           {
             prioritisation_work_history_check:,
             passed: false,
-            "#{selected_prioritisation_failure_reason.key}_checked" => true,
-            "#{selected_prioritisation_failure_reason.key}_notes" => "Note",
+            "prioritisation_work_history_role_checked" => true,
+            "prioritisation_work_history_role_notes" => "Note",
           },
         )
       end

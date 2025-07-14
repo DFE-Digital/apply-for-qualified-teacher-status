@@ -457,26 +457,19 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_10_093344) do
   end
 
   create_table "selected_failure_reasons", force: :cascade do |t|
-    t.bigint "assessment_section_id", null: false
+    t.bigint "assessment_section_id"
     t.string "key", null: false
     t.text "assessor_feedback"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "prioritisation_work_history_check_id"
     t.index ["assessment_section_id"], name: "index_as_failure_reason_assessment_section_id"
+    t.index ["prioritisation_work_history_check_id"], name: "index_as_failure_reason_prioritisation_work_history_check_id"
   end
 
   create_table "selected_failure_reasons_work_histories", id: false, force: :cascade do |t|
     t.bigint "work_history_id", null: false
     t.bigint "selected_failure_reason_id", null: false
-  end
-
-  create_table "selected_prioritisation_failure_reasons", force: :cascade do |t|
-    t.bigint "prioritisation_work_history_check_id", null: false
-    t.string "key", null: false
-    t.text "assessor_feedback"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["prioritisation_work_history_check_id"], name: "index_as_prioritisation_failure_reason_work_history_check_id"
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -704,7 +697,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_10_093344) do
   add_foreign_key "reference_requests", "work_histories"
   add_foreign_key "regions", "countries"
   add_foreign_key "selected_failure_reasons", "assessment_sections"
-  add_foreign_key "selected_prioritisation_failure_reasons", "prioritisation_work_history_checks"
+  add_foreign_key "selected_failure_reasons", "prioritisation_work_history_checks"
   add_foreign_key "suitability_record_emails", "suitability_records"
   add_foreign_key "suitability_record_names", "suitability_records"
   add_foreign_key "suitability_records", "staff", column: "archived_by_id"

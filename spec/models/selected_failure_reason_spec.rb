@@ -4,20 +4,23 @@
 #
 # Table name: selected_failure_reasons
 #
-#  id                    :bigint           not null, primary key
-#  assessor_feedback     :text
-#  key                   :string           not null
-#  created_at            :datetime         not null
-#  updated_at            :datetime         not null
-#  assessment_section_id :bigint           not null
+#  id                                   :bigint           not null, primary key
+#  assessor_feedback                    :text
+#  key                                  :string           not null
+#  created_at                           :datetime         not null
+#  updated_at                           :datetime         not null
+#  assessment_section_id                :bigint
+#  prioritisation_work_history_check_id :bigint
 #
 # Indexes
 #
-#  index_as_failure_reason_assessment_section_id  (assessment_section_id)
+#  index_as_failure_reason_assessment_section_id                 (assessment_section_id)
+#  index_as_failure_reason_prioritisation_work_history_check_id  (prioritisation_work_history_check_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (assessment_section_id => assessment_sections.id)
+#  fk_rails_...  (prioritisation_work_history_check_id => prioritisation_work_history_checks.id)
 #
 
 require "rails_helper"

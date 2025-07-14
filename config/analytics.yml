@@ -312,13 +312,7 @@
     - created_at
     - id
     - key
-    - updated_at
-  :selected_prioritisation_failure_reasons:
     - prioritisation_work_history_check_id
-    - assessor_feedback
-    - created_at
-    - id
-    - key
     - updated_at
   :selected_failure_reasons_work_histories:
     - selected_failure_reason_id

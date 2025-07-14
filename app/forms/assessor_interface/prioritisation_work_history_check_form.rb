@@ -10,11 +10,11 @@ class AssessorInterface::PrioritisationWorkHistoryCheckForm
   attribute :passed, :boolean
   validates :passed, inclusion: [true, false]
 
-  validates :selected_prioritisation_failure_reasons,
+  validates :selected_failure_reasons,
             presence: true,
             if: -> { passed == false }
 
-  def selected_prioritisation_failure_reasons
+  def selected_failure_reasons
     return {} if passed
 
     prioritisation_work_history_check
@@ -31,7 +31,7 @@ class AssessorInterface::PrioritisationWorkHistoryCheckForm
     ActiveRecord::Base.transaction do
       prioritisation_work_history_check.update!(passed:)
 
-      update_selected_prioritisation_failure_reasons
+      update_selected_failure_reasons
       update_assessment_started_at
     end
 
@@ -63,7 +63,7 @@ class AssessorInterface::PrioritisationWorkHistoryCheckForm
 
       selected_failure_reasons_hash =
         prioritisation_work_history_check
-          .selected_prioritisation_failure_reasons
+          .selected_failure_reasons
           .each_with_object({}) do |failure_reason, memo|
             memo[failure_reason.key] = {
               assessor_feedback: failure_reason.assessor_feedback,
@@ -113,17 +113,17 @@ class AssessorInterface::PrioritisationWorkHistoryCheckForm
     assessment.update!(started_at: Time.zone.now) if assessment.started_at.nil?
   end
 
-  def update_selected_prioritisation_failure_reasons
-    selected_keys = selected_prioritisation_failure_reasons.keys
+  def update_selected_failure_reasons
+    selected_keys = selected_failure_reasons.keys
 
     prioritisation_work_history_check
-      .selected_prioritisation_failure_reasons
+      .selected_failure_reasons
       .where.not(key: selected_keys)
       .destroy_all
 
-    selected_prioritisation_failure_reasons.each do |key, assessor_feedback|
+    selected_failure_reasons.each do |key, assessor_feedback|
       failure_reason =
-        prioritisation_work_history_check.selected_prioritisation_failure_reasons.find_or_initialize_by(
+        prioritisation_work_history_check.selected_failure_reasons.find_or_initialize_by(
           key:,
         )
 

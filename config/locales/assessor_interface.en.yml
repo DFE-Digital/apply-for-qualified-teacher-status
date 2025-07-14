@@ -279,19 +279,19 @@ en:
       edit:
         title: View role, institution and referee details
       checks:
-        work_history_role: the applicant’s role is valid for prioritisation
-        work_history_setting: the setting the applicant worked in is valid for prioritisation
-        work_history_in_england: the institution is recognised in England
-        work_history_reference_email: the referee’s email is valid
-        work_history_reference_job: the referee is qualified to verify this applicant’s work history (the referee must be a Headteacher, HR personnel or senior staff member)
+        prioritisation_work_history_role: the applicant’s role is valid for prioritisation
+        prioritisation_work_history_setting: the setting the applicant worked in is valid for prioritisation
+        prioritisation_work_history_in_england: the institution is recognised in England
+        prioritisation_work_history_reference_email: the referee’s email is valid
+        prioritisation_work_history_reference_job: the referee is qualified to verify this applicant’s work history (the referee must be a Headteacher, HR personnel or senior staff member)
       failure_reasons:
         as_statement:
-          work_history_role: The applicant's role is not valid for prioritisation.
-          work_history_setting: The setting the applicant worked in is not valid for prioritisation.
-          work_history_in_england: The institution the applicant has submitted is not in England.
-          work_history_institution_not_found: We could not find the institution the applicant has submitted.
-          work_history_reference_email: The referee’s email is invalid.
-          work_history_reference_job: The referee isn’t qualified to verify the applicant’s work history.
+          prioritisation_work_history_role: The applicant's role is not valid for prioritisation.
+          prioritisation_work_history_setting: The setting the applicant worked in is not valid for prioritisation.
+          prioritisation_work_history_in_england: The institution the applicant has submitted is not in England.
+          prioritisation_work_history_institution_not_found: We could not find the institution the applicant has submitted.
+          prioritisation_work_history_reference_email: The referee’s email is invalid.
+          prioritisation_work_history_reference_job: The referee isn’t qualified to verify the applicant’s work history.
 
     qualifications:
       edit:
@@ -491,7 +491,7 @@ en:
           attributes:
             passed:
               inclusion: Select if the applicant’s work history meets the criteria for prioritisation
-            selected_prioritisation_failure_reasons:
+            selected_failure_reasons:
               blank: Select the reason the applicant’s work history doesn’t meet the criteria for prioritisation
         assessor_interface/qualification_update_form:
           attributes:
