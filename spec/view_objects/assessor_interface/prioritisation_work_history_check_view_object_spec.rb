@@ -22,5 +22,16 @@ RSpec.describe AssessorInterface::PrioritisationWorkHistoryCheckViewObject do
 
       it { is_expected.to be true }
     end
+
+    context "when the assessment has prioritisation decision already made" do
+      before do
+        assessment.update!(
+          prioritisation_decision_at: Time.current,
+          prioritised: false,
+        )
+      end
+
+      it { is_expected.to be true }
+    end
   end
 end
