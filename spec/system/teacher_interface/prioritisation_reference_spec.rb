@@ -80,11 +80,25 @@ RSpec.describe "Teacher prioritisation reference", type: :system do
   end
 
   context "when the prioritisation request is not found" do
-    it "lets the referee know that the reference has been submitted" do
+    it "lets the referee know that the reference is no longer required" do
       when_i_visit_the(
         :teacher_prioritisation_reference_requested_page,
         slug: "INVALID",
       )
+      then_i_see_not_found_page
+    end
+  end
+
+  context "when the prioritisation has already been made" do
+    before do
+      prioritisation_reference_request.assessment.update!(
+        prioritisation_decision_at: Time.current,
+        prioritised: true,
+      )
+    end
+
+    it "lets the referee know that the reference is no longer required" do
+      when_i_visit_the(:teacher_prioritisation_reference_requested_page, slug:)
       then_i_see_not_found_page
     end
   end
