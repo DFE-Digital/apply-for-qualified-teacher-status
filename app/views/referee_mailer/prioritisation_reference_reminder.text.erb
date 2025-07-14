@@ -1,0 +1,25 @@
+Dear <%= @work_history.contact_name %>
+
+<% if @number_of_reminders_sent == 1 %>
+You have just 2 weeks to complete the reference request for <%= application_form_full_name(@application_form) %>.
+<% end %>
+
+<%= application_form_full_name(@application_form) %> has applied for qualified teacher status (QTS) in England.
+
+<% if @number_of_reminders_sent == 0 %>
+We recently asked you to confirm the information they’ve provided about their work history and experience. We have not yet received a response from you.
+<% elsif @number_of_reminders_sent == 1 %>
+They have given us your name and email address to confirm the information they’ve provided about their work history and experience.
+<% end %>
+
+# What you need to do
+
+You need to answer a few questions about <%= application_form_full_name(@application_form) %> by <%= @reference_request.expires_at.to_date.to_fs %>. This should take no longer than 5 minutes.
+
+Follow the link below to start.
+
+<%= teacher_interface_prioritisation_reference_request_url(@reference_request.slug) %>
+
+Kind regards,
+The Professional Recognition team, Apply for QTS in England
+(an executive agency sponsored by the Department for Education, England)
