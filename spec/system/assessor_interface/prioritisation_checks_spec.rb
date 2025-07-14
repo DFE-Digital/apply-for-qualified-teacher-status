@@ -118,6 +118,14 @@ RSpec.describe "Assessor prioritisation checks", type: :system do
       assessment_id:,
     )
     and_i_see_content_for_application_being_deprioritised
+
+    when_i_confirm_deprioritisation
+    then_i_see_content_for_confirming_application_deprioritised
+
+    when_i_click_on_see_application_overview
+    then_i_see_the(:assessor_application_page, reference:)
+    and_i_see_prioritisation_decision_task_as_completed
+    and_i_see_dont_see_flag_for_application_prioritised
   end
 
   context "when the assessment has received prioritisation reference requests" do
@@ -233,6 +241,14 @@ RSpec.describe "Assessor prioritisation checks", type: :system do
         assessment_id:,
       )
       and_i_see_content_for_application_being_deprioritised
+
+      when_i_confirm_deprioritisation
+      then_i_see_content_for_confirming_application_deprioritised
+
+      when_i_click_on_see_application_overview
+      then_i_see_the(:assessor_application_page, reference:)
+      and_i_see_prioritisation_decision_task_as_completed
+      and_i_see_dont_see_flag_for_application_prioritised
     end
   end
 
@@ -265,7 +281,18 @@ RSpec.describe "Assessor prioritisation checks", type: :system do
   end
 
   def when_i_submit_no_on_the_work_history_check_form
-    assessor_prioritisation_work_history_check_page.submit_no
+    assessor_prioritisation_work_history_check_page.form.false_radio_item.choose
+    assessor_prioritisation_work_history_check_page
+      .form
+      .failure_reason_checkbox_items
+      .first
+      .checkbox
+      .click
+    assessor_prioritisation_work_history_check_page
+      .form
+      .failure_reason_note_textareas
+      .first.fill_in with: "Note."
+    assessor_prioritisation_work_history_check_page.form.continue_button.click
   end
 
   def and_i_see_the_prioritisation_work_history_check_as_accepted(
@@ -397,14 +424,6 @@ RSpec.describe "Assessor prioritisation checks", type: :system do
     assessor_prioritisation_references_page.click_on prioritisation_reference_request.work_history.school_name
   end
 
-  def when_i_submit_yes_on_the_work_history_check_form
-    assessor_prioritisation_work_history_check_page.submit_yes
-  end
-
-  def when_i_submit_no_on_the_work_history_check_form
-    assessor_prioritisation_work_history_check_page.submit_no
-  end
-
   def when_i_submit_yes_on_the_prioritisation_reference_review_form
     review_assessor_prioritisation_reference_page.submit_yes
   end
@@ -417,14 +436,28 @@ RSpec.describe "Assessor prioritisation checks", type: :system do
     assessor_prioritisation_decision_page.submit_yes
   end
 
+  def when_i_confirm_deprioritisation
+    assessor_prioritisation_decision_page.submit_no
+  end
+
   def then_i_see_content_for_confirming_application_prioritised
     expect(page).to have_content(
       "QTS application #{application_form.reference} will be prioritised",
     )
   end
 
+  def then_i_see_content_for_confirming_application_deprioritised
+    expect(page).to have_content(
+      "QTS application #{application_form.reference} won’t be prioritised",
+    )
+  end
+
   def and_i_see_a_flag_for_application_prioritised
     expect(page).to have_content("Prioritised")
+  end
+
+  def and_i_see_dont_see_flag_for_application_prioritised
+    expect(page).not_to have_content("Prioritised")
   end
 
   def application_form

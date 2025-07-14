@@ -27,5 +27,7 @@ FactoryBot.define do
   factory :prioritisation_work_history_check do
     work_history
     assessment
+    checks { FailureReasons::PRIORITISATION_FAILURE_REASONS }
+    failure_reasons { FailureReasons::PRIORITISATION_FAILURE_REASONS }
   end
 end
