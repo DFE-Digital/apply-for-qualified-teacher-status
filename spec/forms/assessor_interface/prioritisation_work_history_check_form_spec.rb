@@ -8,8 +8,10 @@ RSpec.describe AssessorInterface::PrioritisationWorkHistoryCheckForm,
     described_class.new(prioritisation_work_history_check:, passed:)
   end
 
+  let(:assessment) { create(:assessment) }
+
   let(:prioritisation_work_history_check) do
-    create(:prioritisation_work_history_check)
+    create(:prioritisation_work_history_check, assessment:)
   end
 
   let(:passed) { "" }
@@ -32,6 +34,12 @@ RSpec.describe AssessorInterface::PrioritisationWorkHistoryCheckForm,
           :passed,
         ).from(nil).to(true)
       end
+
+      it "sets the assessment started_at" do
+        expect { save }.to change(assessment, :started_at)
+
+        expect(assessment.started_at).not_to be_nil
+      end
     end
 
     context "when not passed" do
@@ -44,6 +52,12 @@ RSpec.describe AssessorInterface::PrioritisationWorkHistoryCheckForm,
           prioritisation_work_history_check,
           :passed,
         ).from(nil).to(false)
+      end
+
+      it "sets the assessment started_at" do
+        expect { save }.to change(assessment, :started_at)
+
+        expect(assessment.started_at).not_to be_nil
       end
     end
   end

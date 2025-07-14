@@ -10,7 +10,11 @@
 <% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
 
 <h1 class="govuk-heading-xl"><%= title %></h1>
-<p class="govuk-body">The application will move to assessment.</p>
+<% if @application_form.pre_assessment_stage? %>
+  <p class="govuk-body">The application will remain in pre-assessment.</p>
+<% else %>
+  <p class="govuk-body">The application will move to assessment.</p>
+<% end %>
 
 <div class="govuk-button-group govuk-!-margin-top-9">
   <%= govuk_button_link_to "Back to application list", %i[assessor_interface application_forms] %>

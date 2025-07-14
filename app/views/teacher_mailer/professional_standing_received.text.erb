@@ -6,7 +6,11 @@ We’ve received and checked your <%= region_certificate_name(@application_form.
 
 # What happens next
 
+<% if @application_form.assessment.prioritisation_checks_incomplete? %>
+We’re confirming if your work experience in England is valid and if your application can be prioritised. We’ll email you to confirm if your application will be prioritised or not.
+<% else %>
 Your application will be assessed by a trained assessor. They will check all the information you have submitted. Some information may need verification by third parties.
+<% end %>
 
 If we need more information, we will email you. You do not need to contact us.
 
@@ -14,7 +18,13 @@ If we need more information, we will email you. You do not need to contact us.
 
 Your teaching qualifications and experience will be assessed against strict requirements. These requirements are mandatory and must be met in full. The process is designed to ensure we only award QTS to the highest quality teachers. Your application will be assessed as soon as possible, but it can take time.
 
+<% if @application_form.assessment.prioritised? %>
+We assess 90 per cent of applications within 12 months. However, because your application has been prioritised you will receive a faster response.
+<% elsif @application_form.assessment.prioritisation_checks_incomplete? %>
+We assess 90 per cent of applications within 12 months. However, if we can confirm that you have [valid work experience in England](https://www.gov.uk/government/publications/awarding-qualified-teacher-status-to-overseas-teachers/a-fairer-approach-to-awarding-qts-to-overseas-teachers--2), we will prioritise your application. This means you will receive a faster response.
+<% else %>
 We assess 90 per cent of applications within 12 months.
+<% end %>
 
 Information correct as of July 2025. Timelines are based on total applications completed since February 2023.
 

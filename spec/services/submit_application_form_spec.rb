@@ -328,6 +328,47 @@ RSpec.describe SubmitApplicationForm do
               .requested_at,
           ).to be_nil
         end
+
+        context "when application assessment is going through prioritisation checks" do
+          before do
+            application_form.update!(includes_prioritisation_features: true)
+
+            create :work_history, :current_role_in_england, application_form:
+          end
+
+          it "enqueues an email job for prioritisation checks required" do
+            expect { call }.to have_enqueued_mail(
+              TeacherMailer,
+              :prioritisation_checks_required,
+            ).with(params: { application_form: }, args: [])
+          end
+
+          it "doesn't queue an email job for initial checks required" do
+            expect { call }.not_to have_enqueued_mail(
+              TeacherMailer,
+              :initial_checks_required,
+            )
+          end
+
+          it "doesn't queue an email job for professional standing request" do
+            expect { call }.not_to have_enqueued_mail(
+              TeacherMailer,
+              :professional_standing_requested,
+            )
+          end
+
+          it "does not mark the professional standing request as requested" do
+            call
+
+            expect(
+              application_form
+                .assessment
+                .reload
+                .professional_standing_request
+                .requested_at,
+            ).to be_nil
+          end
+        end
       end
     end
   end

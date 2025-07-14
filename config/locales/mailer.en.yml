@@ -48,6 +48,8 @@ en:
         subject: "Your QTS application: %{certificate} received"
       professional_standing_requested:
         subject: "Your QTS application: Request your %{certificate}"
+      prioritisation_checks_required:
+        subject: Confirming if your application is valid to be prioritised
       prioritisation_references_requested:
         subject: We’ve contacted your references to confirm you have valid work experience in England
       prioritisation_references_reminder:

@@ -11,20 +11,22 @@ class PrioritiseAssessment
   def call
     raise InvalidState unless assessment.can_prioritise?
 
-    ActiveRecord::Base.transaction do
-      assessment.update!(
-        prioritisation_decision_at: Time.current,
-        prioritised: true,
-      )
+    assessment.update!(
+      prioritisation_decision_at: Time.current,
+      prioritised: true,
+    )
 
-      ApplicationFormStatusUpdater.call(application_form:, user:)
+    if request_professional_standing?
+      RequestRequestable.call(requestable: professional_standing_request, user:)
+    else
+      DeliverEmail.call(
+        application_form:,
+        mailer: TeacherMailer,
+        action: :application_prioritised,
+      )
     end
 
-    DeliverEmail.call(
-      application_form:,
-      mailer: TeacherMailer,
-      action: :application_prioritised,
-    )
+    ApplicationFormStatusUpdater.call(application_form:, user:)
   end
 
   class InvalidState < StandardError
@@ -33,6 +35,15 @@ class PrioritiseAssessment
   private
 
   attr_reader :assessment, :user
+
+  def request_professional_standing?
+    professional_standing_request.present? &&
+      !professional_standing_request.requested?
+  end
+
+  def professional_standing_request
+    @professional_standing_request ||= assessment.professional_standing_request
+  end
 
   delegate :application_form, to: :assessment
 end

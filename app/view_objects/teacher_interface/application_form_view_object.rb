@@ -181,6 +181,12 @@ class TeacherInterface::ApplicationFormViewObject
     requires_preliminary_check && !assessment.all_preliminary_sections_passed?
   end
 
+  def prioritisation_checks_pending?
+    return false if assessment.nil?
+
+    assessment.prioritisation_checks_incomplete?
+  end
+
   def request_professional_standing_certificate?
     teaching_authority_provides_written_statement &&
       professional_standing_request&.requested? &&

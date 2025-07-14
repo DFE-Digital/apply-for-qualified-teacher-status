@@ -1,5 +1,7 @@
 <h2 class="govuk-heading-l">
-  <% if view_object.application_form.requires_preliminary_check? && view_object.application_form.assessment.all_preliminary_sections_passed? %>
+  <% if view_object.application_form.assessment.prioritised? %>
+    Your application is being prioritised
+  <% elsif view_object.application_form.requires_preliminary_check? && view_object.application_form.assessment.all_preliminary_sections_passed? %>
     Your application has passed initial checks
   <% else %>
     Application submitted
@@ -13,6 +15,12 @@
 <%= govuk_warning_text(text: "Your application cannot proceed until we receive your #{region_certificate_name(view_object.region)}.") %>
 
 <h2 class="govuk-heading-m">What you need to do</h2>
+
+<% if view_object.application_form.assessment.prioritised? %>
+  <p class="govuk-body">
+    We have confirmed your work experience in England. This means your application is being prioritised.
+  </p>
+<% end %>
 
 <p class="govuk-body">
   You must now get your <%= region_certificate_name(view_object.region) %> from <%= region_teaching_authority_name_phrase(view_object.region) %>.
@@ -63,9 +71,19 @@
 
 <h2 class="govuk-heading-m">What happens next</h2>
 
-<p class="govuk-body">
-  Once the <%= region_certificate_name(view_object.region) %> is received and checked, your application will be assessed by a trained assessor. They will check all the information you have submitted. Some information may need verification by third parties.
-</p>
+<% if view_object.application_form.assessment.prioritisation_work_history_checks.present? && !view_object.application_form.assessment.prioritised? %>
+  <p class="govuk-body">
+    First, we’ll confirm if your experience in England is valid and if your application can be prioritised. We’ll email you to confirm if your application will be prioritised or not.
+  </p>
+
+  <p class="govuk-body">
+    Once this has been confirmed and your <%= region_certificate_name(view_object.region) %> is received and checked, your application will be assessed by a trained assessor. They will check all the information you have submitted. Some information may need verification by third parties.
+  </p>
+<% else %>
+  <p class="govuk-body">
+    Once the <%= region_certificate_name(view_object.region) %> is received and checked, your application will be assessed by a trained assessor. They will check all the information you have submitted. Some information may need verification by third parties.
+  </p>
+<% end %>
 
 <p class="govuk-body">
   If we need more information, we will email you. You do not need to contact us.

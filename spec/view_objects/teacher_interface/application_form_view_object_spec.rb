@@ -636,4 +636,35 @@ RSpec.describe TeacherInterface::ApplicationFormViewObject do
       it { is_expected.to be false }
     end
   end
+
+  describe "#prioritisation_checks_pending?" do
+    subject(:prioritisation_checks_pending?) do
+      view_object.prioritisation_checks_pending?
+    end
+
+    let(:application_form) { create(:application_form, region:) }
+
+    let(:assessment) { create(:assessment, application_form:) }
+
+    context "when assessment has no prioritisation work history checks" do
+      it { is_expected.to be false }
+    end
+
+    context "when assessment has prioritisation work history checks" do
+      before { create :prioritisation_work_history_check, assessment: }
+
+      it { is_expected.to be true }
+
+      context "when prioritisation decision has been is made" do
+        before do
+          assessment.update!(
+            prioritisation_decision_at: Time.current,
+            prioritised: true,
+          )
+        end
+
+        it { is_expected.to be false }
+      end
+    end
+  end
 end
