@@ -70,7 +70,8 @@ module AssessorInterface
         )
 
       if @form.save
-        if @form.passed
+        if @form.passed ||
+             assessment.prioritisation_reference_requests.all?(&:review_failed?)
           redirect_to [:assessor_interface, @application_form]
         else
           redirect_to [

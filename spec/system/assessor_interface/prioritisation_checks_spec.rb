@@ -206,7 +206,7 @@ RSpec.describe "Assessor prioritisation checks", type: :system do
 
       assessment
         .prioritisation_reference_requests
-        .each do |prioritisation_reference_request|
+        .each_with_index do |prioritisation_reference_request, index|
         when_i_select_prioritisation_reference_to_review(
           prioritisation_reference_request,
         )
@@ -219,6 +219,9 @@ RSpec.describe "Assessor prioritisation checks", type: :system do
         )
 
         when_i_submit_no_on_the_prioritisation_reference_review_form
+
+        next if index == assessment.prioritisation_reference_requests.count - 1
+
         then_i_see_the(
           :assessor_prioritisation_references_page,
           reference:,
@@ -229,7 +232,6 @@ RSpec.describe "Assessor prioritisation checks", type: :system do
         )
       end
 
-      when_i_click_on_back_to_overview
       then_i_see_the(:assessor_application_page, reference:)
       and_i_see_prioritisation_reference_task_as_completed
       and_i_see_prioritisation_decision_task_as_not_started
