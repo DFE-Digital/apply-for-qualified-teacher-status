@@ -14,16 +14,16 @@
     task_list.with_item(
       title: prioritisation_reference_request.work_history.school_name,
       href: [:edit, :assessor_interface, @application_form, @assessment, prioritisation_reference_request],
-      status: if prioritisation_reference_request.expired?
-        render(StatusTag::Component.new("overdue"))
-      elsif prioritisation_reference_request.received_at.nil?
-        render(StatusTag::Component.new("waiting_on"))
-      elsif prioritisation_reference_request.review_passed.nil?
-        render(StatusTag::Component.new("received"))
-      elsif prioritisation_reference_request.review_passed?
+      status: if prioritisation_reference_request.review_passed?
         render(StatusTag::Component.new("accepted"))
-      else
+      elsif prioritisation_reference_request.review_failed?
         render(StatusTag::Component.new("rejected"))
+      elsif prioritisation_reference_request.received?
+        render(StatusTag::Component.new("received"))
+      elsif prioritisation_reference_request.expired?
+        render(StatusTag::Component.new("overdue"))
+      else
+        render(StatusTag::Component.new("waiting_on"))
       end
     )
   end

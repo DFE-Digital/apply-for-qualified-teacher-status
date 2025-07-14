@@ -544,6 +544,8 @@ class AssessorInterface::ApplicationFormsShowViewObject
           :completed
         elsif prioritisation_reference_requests_received_and_awaiting_review?
           :received
+        elsif prioritisation_reference_requests_all_overdue_and_none_passed?
+          :overdue
         else
           :waiting_on
         end,
@@ -669,6 +671,15 @@ class AssessorInterface::ApplicationFormsShowViewObject
       .any? do |prioritisation_reference_request|
       prioritisation_reference_request.received? &&
         !prioritisation_reference_request.reviewed?
+    end
+  end
+
+  def prioritisation_reference_requests_all_overdue_and_none_passed?
+    assessment
+      .prioritisation_reference_requests
+      .all? do |prioritisation_reference_request|
+      prioritisation_reference_request.expired? &&
+        !prioritisation_reference_request.review_passed?
     end
   end
 
