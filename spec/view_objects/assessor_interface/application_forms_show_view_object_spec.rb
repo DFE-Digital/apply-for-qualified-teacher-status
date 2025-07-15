@@ -824,6 +824,42 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
             )
           end
         end
+
+        context "with one prioritisation references overdue and one received and failed" do
+          before do
+            create :requested_prioritisation_reference_request,
+                   assessment:,
+                   expired_at: Time.current,
+                   prioritisation_work_history_check:
+                     first_prioritisation_work_history_check
+            create :received_prioritisation_reference_request,
+                   :review_failed,
+                   assessment:,
+                   prioritisation_work_history_check:
+                     second_prioritisation_work_history_check
+          end
+
+          it do
+            expect(subject).to include_task_list_item(
+              "Pre-assessment tasks",
+              "Check work history with referee",
+              status: :overdue,
+              link: [
+                :assessor_interface,
+                application_form,
+                assessment,
+                :prioritisation_reference_requests,
+              ],
+            )
+          end
+
+          it do
+            expect(subject).not_to include_task_list_item(
+              "Pre-assessment tasks",
+              "Confirm prioritisation decision",
+            )
+          end
+        end
       end
     end
 
