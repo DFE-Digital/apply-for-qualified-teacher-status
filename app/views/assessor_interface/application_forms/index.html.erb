@@ -25,7 +25,19 @@
       </div>
     </section>
 
-    <section id="app-applications-filters-country">
+    <section id="app-applications-filters-statuses" class="app-checkbox-filter app-checkbox-filter--enhanced govuk-!-margin-top-6">
+      <div class="app-checkbox-filter__container">
+        <div class="app-checkbox-filter__container-inner">
+          <%= f.govuk_check_boxes_fieldset :statuses, legend: { size: "s", text: "" }, small: true do %>
+            <% @view_object.status_filter_options.each do |option| %>
+              <%= f.govuk_check_box :statuses, option.id, label: { text: option.label }, checked: @view_object.filter_form.statuses&.include?(option.id) %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </section>
+
+    <section id="app-applications-filters-country" class="govuk-!-margin-top-6">
       <%= f.govuk_select :location, @view_object.country_filter_options, label: { size: "s" }, options: { include_blank: true } %>
     </section>
 
@@ -71,15 +83,6 @@
     <section id="app-applications-show-all-applicants">
       <%= f.govuk_check_boxes_fieldset :show_all, legend: nil, multiple: false, small: true do %>
         <%= f.govuk_check_box :show_all, :true, multiple: false, label: { text: "Show applications completed over 90 days ago" }, checked: @view_object.filter_form.show_all == "true" %>
-      <% end %>
-    </section>
-
-
-    <section id="app-applications-filters-fi-requests">
-      <%= f.govuk_check_boxes_fieldset :fi_request_statuses, legend: { size: "s" }, small: true do %>
-        <% @view_object.fi_request_statuses_filter_options.each do |option| %>
-          <%= f.govuk_check_box :fi_request_statuses, option.id, label: { text: option.label }, checked: @view_object.filter_form.fi_request_statuses&.include?(option.id) %>
-        <% end %>
       <% end %>
     </section>
   <% end %>

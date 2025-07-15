@@ -49,8 +49,8 @@ class AssessorInterface::ApplicationFormsIndexViewObject
     STAGE_FILTER_OPTIONS.map { |name| stage_filter_entry(name) }
   end
 
-  def fi_request_statuses_filter_options
-    FI_REQUESTS_FILTER_OPTIONS.map { |name| statuses_filter_entry(name) }
+  def status_filter_options
+    STATUS_FILTER_OPTIONS.map { |name| statuses_filter_entry(name) }
   end
 
   def flag_as_unsuitable?(application_form)
@@ -71,9 +71,36 @@ class AssessorInterface::ApplicationFormsIndexViewObject
     completed
   ].freeze
 
-  FI_REQUESTS_FILTER_OPTIONS = %w[
-    waiting_on_further_information
+  STATUS_FILTER_OPTIONS = %w[
+    assessment_in_progress
+    assessment_not_started
+    awarded
+    awarded_pending_checks
+    declined
+    overdue_consent
+    overdue_ecctis
+    overdue_further_information
+    overdue_lops
+    overdue_reference
+    overdue_prioritisation_reference
+    potential_duplicate_in_dqt
+    preliminary_check
+    prioritisation_check
+    received_consent
+    received_ecctis
     received_further_information
+    received_lops
+    received_reference
+    received_prioritisation_reference
+    review
+    verification_in_progress
+    waiting_on_consent
+    waiting_on_ecctis
+    waiting_on_further_information
+    waiting_on_lops
+    waiting_on_reference
+    waiting_on_prioritisation_reference
+    withdrawn
   ].freeze
 
   def filter_params
@@ -201,7 +228,7 @@ class AssessorInterface::ApplicationFormsIndexViewObject
 
     OpenStruct.new(
       id: name,
-      label: "#{readable_name} (#{statuses_filter_counts.fetch(name, 0)})",
+      label: readable_name,
     )
   end
 

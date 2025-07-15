@@ -86,7 +86,7 @@ function CheckboxSearchFilter(params) {
   };
 
   this.isCheckboxInView = function (checkbox) {
-    var initialOptionContainerHeight = this.checkboxesContainer.style.height;
+    var initialOptionContainerHeight = this.checkboxesContainer.offsetHeight;
     var optionListOffsetTop = this.checkboxesInnerContainer.offsetTop;
     var distanceFromTopOfContainer = checkbox.offsetTop - optionListOffsetTop;
     return distanceFromTopOfContainer < initialOptionContainerHeight;

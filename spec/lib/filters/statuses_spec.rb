@@ -5,8 +5,8 @@ require "rails_helper"
 RSpec.describe Filters::Statuses do
   subject(:filtered_scope) { described_class.apply(scope:, params:) }
 
-  context "the params includes fi_request_statuses" do
-    let(:params) { { fi_request_statuses: "waiting_on_further_information" } }
+  context "the params includes statuses" do
+    let(:params) { { statuses: ["waiting_on_further_information"] } }
     let(:scope) { ApplicationForm.all }
 
     let!(:included) do
@@ -40,10 +40,10 @@ RSpec.describe Filters::Statuses do
     end
   end
 
-  context "the params include multiple fi_request_statuses" do
+  context "the params include multiple statuses" do
     let(:params) do
       {
-        fi_request_statuses: %w[
+        statuses: %w[
           waiting_on_further_information
           received_further_information
         ],
@@ -90,7 +90,7 @@ RSpec.describe Filters::Statuses do
     end
   end
 
-  context "the params don't include fi_request_statuses" do
+  context "the params don't include statuses" do
     let(:params) { {} }
     let(:scope) { double }
 
