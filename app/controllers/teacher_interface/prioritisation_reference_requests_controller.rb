@@ -18,7 +18,7 @@ module TeacherInterface
     def show
       @prioritisation_reference_request =
         PrioritisationReferenceRequest
-          .joins(:application_form)
+          .joins(:assessment)
           .received
           .or(PrioritisationReferenceRequest.respondable)
           .includes(:work_history, :application_form)
@@ -114,7 +114,7 @@ module TeacherInterface
     def load_prioritisation_requested_reference_request
       @prioritisation_reference_request =
         PrioritisationReferenceRequest
-          .joins(:application_form)
+          .joins(:assessment)
           .respondable
           .includes(:work_history, :application_form)
           .find_by!(slug: params[:slug])

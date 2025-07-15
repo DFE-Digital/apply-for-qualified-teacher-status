@@ -44,6 +44,14 @@ class PrioritisationReferenceRequest < ApplicationRecord
   belongs_to :work_history
   belongs_to :prioritisation_work_history_check
 
+  scope :respondable,
+        -> do
+          joins(:assessment).requested.not_received.where(
+            assessment: {
+              prioritisation_decision_at: nil,
+            },
+          )
+        end
   scope :remindable,
         -> do
           where

@@ -35,6 +35,11 @@ expire_reference_requests:
   class: ExpireRequestablesJob
   args: ["ReferenceRequest"]
 
+expire_prioritisation_reference_requests:
+  cron: "48 2 * * *"
+  class: ExpireRequestablesJob
+  args: ["PrioritisationReferenceRequest"]
+
 send_application_form_reminders:
   cron: "0 3 * * *"
   class: SendReminderEmailsJob
@@ -49,6 +54,11 @@ send_reference_request_reminders:
   cron: "40 3 * * *"
   class: SendReminderEmailsJob
   args: ["ReferenceRequest"]
+
+send_prioritisation_reference_request_reminders:
+  cron: "40 3 * * *"
+  class: SendReminderEmailsJob
+  args: ["PrioritisationReferenceRequest"]
 
 analytics_entity_table_check:
   cron: "0 4 * * *"

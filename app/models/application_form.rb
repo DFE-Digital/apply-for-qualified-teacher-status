@@ -198,15 +198,22 @@ class ApplicationForm < ApplicationRecord
 
   scope :remindable,
         -> do
-          joins(region: :country).verification_stage.or(
-            where(
-              countries: {
-                eligibility_enabled: true,
-              },
-              created_at: ...5.months.ago,
-              submitted_at: nil,
-            ),
-          )
+          joins(region: :country)
+            .verification_stage
+            .or(
+              where(
+                countries: {
+                  eligibility_enabled: true,
+                },
+                created_at: ...5.months.ago,
+                submitted_at: nil,
+              ),
+            )
+            .or(
+              pre_assessment_stage.where(
+                includes_prioritisation_features: true,
+              ),
+            )
         end
 
   scope :from_ineligible_country,
