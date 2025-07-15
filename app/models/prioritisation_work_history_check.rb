@@ -30,6 +30,7 @@ class PrioritisationWorkHistoryCheck < ApplicationRecord
   belongs_to :work_history
 
   scope :passed, -> { where(passed: true) }
+  scope :not_passed, -> { where(passed: false) }
 
   def complete?
     !incomplete?

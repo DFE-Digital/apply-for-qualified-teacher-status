@@ -118,6 +118,7 @@ RSpec.describe "Assessor prioritisation checks", type: :system do
       assessment_id:,
     )
     and_i_see_content_for_application_being_deprioritised
+    and_i_see_content_for_reasons_for_deprioritisation_due_to_role
 
     when_i_confirm_deprioritisation
     then_i_see_content_for_confirming_application_deprioritised
@@ -243,6 +244,7 @@ RSpec.describe "Assessor prioritisation checks", type: :system do
         assessment_id:,
       )
       and_i_see_content_for_application_being_deprioritised
+      and_i_see_content_for_reasons_for_deprioritisation_due_to_references
 
       when_i_confirm_deprioritisation
       then_i_see_content_for_confirming_application_deprioritised
@@ -410,6 +412,46 @@ RSpec.describe "Assessor prioritisation checks", type: :system do
     expect(assessor_prioritisation_decision_page).to have_content(
       "You have indicated that this applicant doesn’t have any work history in England " \
         "that meets the criteria for prioritisation",
+    )
+  end
+
+  def and_i_see_content_for_reasons_for_deprioritisation_due_to_role
+    expect(assessor_prioritisation_decision_page).to have_content(
+      "Reason for decision",
+    )
+    expect(assessor_prioritisation_decision_page).to have_content(
+      assessment
+        .prioritisation_work_history_checks
+        .first
+        .work_history
+        .school_name,
+    )
+    expect(assessor_prioritisation_decision_page).to have_content(
+      assessment
+        .prioritisation_work_history_checks
+        .second
+        .work_history
+        .school_name,
+    )
+    expect(assessor_prioritisation_decision_page).to have_content(
+      "The applicant's role is not valid for prioritisation.",
+    )
+  end
+
+  def and_i_see_content_for_reasons_for_deprioritisation_due_to_references
+    expect(assessor_prioritisation_decision_page).to have_content(
+      "Reason for decision",
+    )
+    expect(assessor_prioritisation_decision_page).to have_content(
+      "The applicant's information or the referee's information was not confirmed by the reference",
+    )
+    expect(assessor_prioritisation_decision_page).to have_content(
+      assessment
+        .prioritisation_reference_requests
+        .review_failed
+        .first
+        .work_history
+        .school_name,
     )
   end
 
