@@ -16,6 +16,8 @@ class PrioritiseAssessment
       prioritised: true,
     )
 
+    create_timeline_event
+
     if request_professional_standing?
       RequestRequestable.call(requestable: professional_standing_request, user:)
     else
@@ -43,6 +45,16 @@ class PrioritiseAssessment
 
   def professional_standing_request
     @professional_standing_request ||= assessment.professional_standing_request
+  end
+
+  def create_timeline_event
+    CreateTimelineEvent.call(
+      "prioritisation_decision_made",
+      application_form:,
+      user:,
+      old_value: "not_started",
+      new_value: "prioritised",
+    )
   end
 
   delegate :application_form, to: :assessment

@@ -51,6 +51,14 @@
           </ul>
         <% end %>
       <% end %>
+    <% elsif timeline_event.prioritisation_decision_made? %>
+      <p class="govuk-body">
+        <% if description_vars[:prioritised] %>
+          Application flagged as <%= render StatusTag::Component.new(description_vars[:status]) %>
+        <% else %>
+          Application is not valid for prioritisation.
+        <% end %>
+      </p>
     <% elsif timeline_event.requestable_reviewed? %>
       <p class="govuk-body">
         Status has changed to <%= render(StatusTag::Component.new(description_vars[:new_status])) %>

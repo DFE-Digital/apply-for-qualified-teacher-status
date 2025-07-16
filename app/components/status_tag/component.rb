@@ -50,6 +50,7 @@ module StatusTag
       potential_duplicate_in_dqt: "pink",
       pre_assessment: "pink",
       preliminary_check: "pink",
+      prioritised: "purple",
       prioritisation_check: "yellow",
       received: "purple",
       received_and_overdue: "pink",

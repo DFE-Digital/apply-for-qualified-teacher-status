@@ -145,6 +145,13 @@ module TimelineEntry
       }
     end
 
+    def prioritisation_decision_made_vars
+      {
+        prioritised: timeline_event.new_value == "prioritised",
+        status: timeline_event.new_value,
+      }
+    end
+
     def note_created_vars
       { text: timeline_event.note.text }
     end

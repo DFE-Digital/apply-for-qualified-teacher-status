@@ -81,6 +81,7 @@ class TimelineEvent < ApplicationRecord
          note_created: "note_created",
          prioritisation_work_history_check_recorded:
            "prioritisation_work_history_check_recorded",
+         prioritisation_decision_made: "prioritisation_decision_made",
          requestable_expired: "requestable_expired",
          requestable_received: "requestable_received",
          requestable_requested: "requestable_requested",
@@ -162,7 +163,8 @@ class TimelineEvent < ApplicationRecord
               action_required_by_changed? || assessment_section_recorded? ||
                 information_changed? || requestable_reviewed? ||
                 requestable_verified? || stage_changed? || status_changed? ||
-                prioritisation_work_history_check_recorded?
+                prioritisation_work_history_check_recorded? ||
+                prioritisation_decision_made?
             end
   validates :old_value,
             :new_value,
@@ -171,7 +173,8 @@ class TimelineEvent < ApplicationRecord
               action_required_by_changed? || assessment_section_recorded? ||
                 information_changed? || requestable_reviewed? ||
                 requestable_verified? || stage_changed? || status_changed? ||
-                prioritisation_work_history_check_recorded?
+                prioritisation_work_history_check_recorded? ||
+                prioritisation_decision_made?
             end
 
   validates :note_text,

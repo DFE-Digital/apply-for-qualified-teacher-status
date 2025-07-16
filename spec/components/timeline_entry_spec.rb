@@ -204,6 +204,45 @@ RSpec.describe TimelineEntry::Component, type: :component do
     end
   end
 
+  context "prioritisation decision made" do
+    let(:timeline_event) do
+      create(
+        :timeline_event,
+        :prioritisation_decision_made,
+        old_value: "not_started",
+        new_value: "prioritised",
+      )
+    end
+
+    it "describes the event" do
+      expect(component.text).to include("Prioritisation decision made")
+      expect(component.text).to include("Application flagged as")
+      expect(component.text).to include("Prioritised")
+    end
+
+    it "attributes to the creator" do
+      expect(component.text).to include(creator.name)
+    end
+
+    context "when the prioritisation decision did not succeed" do
+      let(:timeline_event) do
+        create(
+          :timeline_event,
+          :prioritisation_decision_made,
+          old_value: "not_started",
+          new_value: "not_prioritised",
+        )
+      end
+
+      it "describes the event" do
+        expect(component.text).to include("Prioritisation decision made")
+        expect(component.text).to include(
+          "Application is not valid for prioritisation.",
+        )
+      end
+    end
+  end
+
   context "note created" do
     let(:timeline_event) { create(:timeline_event, :note_created) }
     let(:text) { timeline_event.note.text }

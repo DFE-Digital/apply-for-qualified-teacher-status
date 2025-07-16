@@ -45,6 +45,15 @@ RSpec.describe DeprioritiseAssessment do
       expect { call }.not_to change(assessment.sections.preliminary, :count)
     end
 
+    it "records a timeline event" do
+      expect { call }.to have_recorded_timeline_event(
+        :prioritisation_decision_made,
+        old_value: "not_started",
+        new_value: "not_prioritised",
+        creator: user,
+      )
+    end
+
     context "when the application form requires preliminary checks" do
       let(:application_form) do
         create(:application_form, :requires_preliminary_check)
@@ -56,7 +65,7 @@ RSpec.describe DeprioritiseAssessment do
     end
   end
 
-  context "when assessment can be prioritised" do
+  context "when assessment can only be prioritised" do
     before do
       create :received_prioritisation_reference_request,
              assessment:,

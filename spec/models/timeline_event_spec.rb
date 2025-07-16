@@ -94,6 +94,9 @@ RSpec.describe TimelineEvent do
         email_sent: "email_sent",
         information_changed: "information_changed",
         note_created: "note_created",
+        prioritisation_work_history_check_recorded:
+          "prioritisation_work_history_check_recorded",
+        prioritisation_decision_made: "prioritisation_decision_made",
         requestable_reviewed: "requestable_reviewed",
         requestable_expired: "requestable_expired",
         requestable_received: "requestable_received",
