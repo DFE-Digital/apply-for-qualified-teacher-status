@@ -53,6 +53,17 @@ class AssessorInterface::ApplicationFormsIndexViewObject
     STATUS_FILTER_OPTIONS.map { |name| statuses_filter_entry(name) }
   end
 
+  def prioritised_filter_option_label
+    readable_name =
+      I18n.t(
+        :prioritised,
+        scope: %i[components status_tag],
+        default: :prioritised.to_s.humanize,
+      )
+
+    "#{readable_name} (#{prioritised_filter_counts})"
+  end
+
   def flag_as_unsuitable?(application_form)
     suitability_active? &&
       suitability_matcher.flag_as_unsuitable?(application_form:)
@@ -112,6 +123,7 @@ class AssessorInterface::ApplicationFormsIndexViewObject
       begin
         filters = [
           ::Filters::Assessor,
+          ::Filters::Statuses,
           ::Filters::Country,
           ::Filters::Name,
           ::Filters::Email,
@@ -129,7 +141,7 @@ class AssessorInterface::ApplicationFormsIndexViewObject
   def application_forms_with_pagy
     @application_forms_with_pagy ||=
       pagy(
-        ::Filters::Statuses.apply(
+        ::Filters::Prioritised.apply(
           scope:
             ::Filters::Stage.apply(
               scope:
@@ -148,11 +160,7 @@ class AssessorInterface::ApplicationFormsIndexViewObject
     @action_required_by_filter_counts ||=
       ::Filters::Stage
         .apply(
-          scope:
-            ::Filters::Statuses.apply(
-              scope: application_forms_without_counted_filters,
-              params: filter_params,
-            ),
+          scope: application_forms_without_counted_filters,
           params: filter_params,
         )
         .group(:action_required_by)
@@ -171,11 +179,7 @@ class AssessorInterface::ApplicationFormsIndexViewObject
     @stage_filter_counts ||=
       ::Filters::ActionRequiredBy
         .apply(
-          scope:
-            ::Filters::Statuses.apply(
-              scope: application_forms_without_counted_filters,
-              params: filter_params,
-            ),
+          scope: application_forms_without_counted_filters,
           params: filter_params,
         )
         .group(:stage)
@@ -196,26 +200,22 @@ class AssessorInterface::ApplicationFormsIndexViewObject
     )
   end
 
-  def statuses_filter_counts
-    @statuses_filter_counts ||=
-      ::Filters::Statuses
-        .apply(
-          scope:
-            ::Filters::Stage.apply(
-              scope:
-                ::Filters::ActionRequiredBy.apply(
-                  scope: application_forms_without_counted_filters,
-                  params: filter_params,
-                ),
-              params: filter_params,
-            ),
-          params: {
-          },
-        )
-        .map(&:statuses)
-        .flatten
-        .compact
-        .tally
+  def prioritised_filter_counts
+    @prioritised_filter_counts ||=
+      ::Filters::Prioritised.apply(
+        scope:
+          ::Filters::Stage.apply(
+            scope:
+              ::Filters::ActionRequiredBy.apply(
+                scope: application_forms_without_counted_filters,
+                params: filter_params,
+              ),
+            params: filter_params,
+          ),
+        params: {
+          prioritised: true,
+        },
+      ).count
   end
 
   def statuses_filter_entry(name)
@@ -226,10 +226,7 @@ class AssessorInterface::ApplicationFormsIndexViewObject
         default: name.to_s.humanize,
       )
 
-    OpenStruct.new(
-      id: name,
-      label: readable_name,
-    )
+    OpenStruct.new(id: name, label: readable_name)
   end
 
   attr_reader :params, :session

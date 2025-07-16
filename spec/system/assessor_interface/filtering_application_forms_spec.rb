@@ -26,6 +26,10 @@ RSpec.describe "Assessor filtering application forms", type: :system do
     then_i_see_a_list_of_applications_filtered_by_assessor
 
     when_i_clear_the_filters
+    and_i_apply_the_statuses_filter
+    then_i_see_a_list_of_applications_filtered_by_status
+
+    when_i_clear_the_filters
     and_i_apply_the_country_filter
     then_i_see_a_list_of_applications_filtered_by_country
 
@@ -52,6 +56,10 @@ RSpec.describe "Assessor filtering application forms", type: :system do
     when_i_clear_the_filters
     and_i_apply_the_stage_filter
     then_i_see_a_list_of_applications_filtered_by_stage
+
+    when_i_clear_the_filters
+    and_i_apply_the_prioritised_filter
+    then_i_see_a_list_of_applications_filtered_by_prioritised
 
     when_i_clear_the_filters
     and_i_apply_the_show_all_filter
@@ -117,6 +125,19 @@ RSpec.describe "Assessor filtering application forms", type: :system do
 
     create(
       :application_form,
+      :submitted,
+      :with_assessment,
+      region: create(:region, :in_country, country_code: "DE"),
+      given_names: "Prioritised",
+      family_name: "Applicant",
+      assessor: assessors.second,
+      submitted_at: 20.days.ago,
+    ).tap do |application_form|
+      application_form.assessment.update!(prioritised: true)
+    end
+
+    create(
+      :application_form,
       :awarded,
       :with_assessment,
       awarded_at: 6.months.ago,
@@ -137,7 +158,7 @@ RSpec.describe "Assessor filtering application forms", type: :system do
   end
 
   def then_i_see_applications_in_the_last_90_days
-    expect(assessor_applications_page.search_results.count).to eq(4)
+    expect(assessor_applications_page.search_results.count).to eq(5)
   end
 
   def and_i_apply_the_assessor_filter
@@ -146,10 +167,23 @@ RSpec.describe "Assessor filtering application forms", type: :system do
     assessor_applications_page.apply_filters.click
   end
 
+  def and_i_apply_the_statuses_filter
+    expect(assessor_applications_page.statuses_filter.statuses.count).to eq(29)
+    assessor_applications_page.statuses_filter.statuses.third.checkbox.click
+    assessor_applications_page.apply_filters.click
+  end
+
   def then_i_see_a_list_of_applications_filtered_by_assessor
     expect(assessor_applications_page.search_results.count).to eq(1)
     expect(assessor_applications_page.search_results.first.name.text).to eq(
       "Arnold Drummond",
+    )
+  end
+
+  def then_i_see_a_list_of_applications_filtered_by_status
+    expect(assessor_applications_page.search_results.count).to eq(1)
+    expect(assessor_applications_page.search_results.first.name.text).to eq(
+      "John Smith",
     )
   end
 
@@ -258,6 +292,13 @@ RSpec.describe "Assessor filtering application forms", type: :system do
     )
   end
 
+  def then_i_see_a_list_of_applications_filtered_by_prioritised
+    expect(assessor_applications_page.search_results.count).to eq(1)
+    expect(
+      assessor_applications_page.search_results.first.name.text,
+    ).to include("Prioritised Applicant")
+  end
+
   def and_i_apply_the_show_all_filter
     show_all_item =
       assessor_applications_page.show_all_filter.items.find do |item|
@@ -269,8 +310,19 @@ RSpec.describe "Assessor filtering application forms", type: :system do
     assessor_applications_page.apply_filters.click
   end
 
+  def and_i_apply_the_prioritised_filter
+    prioritised_item =
+      assessor_applications_page.flags_filter.items.find do |item|
+        item.label.text == "Prioritised (1)"
+      rescue Capybara::ElementNotFound
+        false
+      end
+    prioritised_item.checkbox.click
+    assessor_applications_page.apply_filters.click
+  end
+
   def then_i_see_a_list_of_all_applications
-    expect(assessor_applications_page.search_results.count).to eq(5)
+    expect(assessor_applications_page.search_results.count).to eq(6)
   end
 
   def then_i_see_a_list_of_applications_filtered_by_date_of_birth

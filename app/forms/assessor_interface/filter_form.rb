@@ -15,5 +15,6 @@ class AssessorInterface::FilterForm
                 :stage,
                 :submitted_at_after,
                 :submitted_at_before,
-                :statuses
+                :statuses,
+                :prioritised
 end

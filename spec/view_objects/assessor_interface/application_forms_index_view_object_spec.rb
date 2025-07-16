@@ -249,9 +249,7 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
   end
 
   describe "#status_filter_options" do
-    subject(:status_filter_options) do
-      view_object.status_filter_options
-    end
+    subject(:status_filter_options) { view_object.status_filter_options }
 
     it do
       expect(subject).to eq(
@@ -264,38 +262,17 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
             id: "assessment_not_started",
             label: "Assessment not started",
           ),
-          OpenStruct.new(
-            id: "awarded",
-            label: "Awarded",
-          ),
-          OpenStruct.new(
-            id: "awarded_pending_checks",
-            label: "Award pending",
-          ),
-          OpenStruct.new(
-            id: "declined",
-            label: "Declined",
-          ),
-          OpenStruct.new(
-            id: "overdue_consent",
-            label: "Overdue consent",
-          ),
-          OpenStruct.new(
-            id: "overdue_ecctis",
-            label: "Overdue Ecctis",
-          ),
+          OpenStruct.new(id: "awarded", label: "Awarded"),
+          OpenStruct.new(id: "awarded_pending_checks", label: "Award pending"),
+          OpenStruct.new(id: "declined", label: "Declined"),
+          OpenStruct.new(id: "overdue_consent", label: "Overdue consent"),
+          OpenStruct.new(id: "overdue_ecctis", label: "Overdue Ecctis"),
           OpenStruct.new(
             id: "overdue_further_information",
             label: "Overdue further information",
           ),
-          OpenStruct.new(
-            id: "overdue_lops",
-            label: "Overdue LoPS",
-          ),
-          OpenStruct.new(
-            id: "overdue_reference",
-            label: "Overdue reference",
-          ),
+          OpenStruct.new(id: "overdue_lops", label: "Overdue LoPS"),
+          OpenStruct.new(id: "overdue_reference", label: "Overdue reference"),
           OpenStruct.new(
             id: "overdue_prioritisation_reference",
             label: "Overdue prioritisation reference",
@@ -304,62 +281,35 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
             id: "potential_duplicate_in_dqt",
             label: "Potential duplication in DQT",
           ),
-          OpenStruct.new(
-            id: "preliminary_check",
-            label: "Preliminary check",
-          ),
+          OpenStruct.new(id: "preliminary_check", label: "Preliminary check"),
           OpenStruct.new(
             id: "prioritisation_check",
             label: "Waiting on prioritisation checks",
           ),
-          OpenStruct.new(
-            id: "received_consent",
-            label: "Received consent",
-          ),
-          OpenStruct.new(
-            id: "received_ecctis",
-            label: "Received Ecctis",
-          ),
+          OpenStruct.new(id: "received_consent", label: "Received consent"),
+          OpenStruct.new(id: "received_ecctis", label: "Received Ecctis"),
           OpenStruct.new(
             id: "received_further_information",
             label: "Received further information",
           ),
-          OpenStruct.new(
-            id: "received_lops",
-            label: "Received LoPS",
-          ),
-          OpenStruct.new(
-            id: "received_reference",
-            label: "Received reference",
-          ),
+          OpenStruct.new(id: "received_lops", label: "Received LoPS"),
+          OpenStruct.new(id: "received_reference", label: "Received reference"),
           OpenStruct.new(
             id: "received_prioritisation_reference",
             label: "Received prioritisation reference",
           ),
-          OpenStruct.new(
-            id: "review",
-            label: "Review",
-          ),
+          OpenStruct.new(id: "review", label: "Review"),
           OpenStruct.new(
             id: "verification_in_progress",
             label: "Verification in progress",
           ),
-          OpenStruct.new(
-            id: "waiting_on_consent",
-            label: "Waiting on consent",
-          ),
-          OpenStruct.new(
-            id: "waiting_on_ecctis",
-            label: "Waiting on Ecctis",
-          ),
+          OpenStruct.new(id: "waiting_on_consent", label: "Waiting on consent"),
+          OpenStruct.new(id: "waiting_on_ecctis", label: "Waiting on Ecctis"),
           OpenStruct.new(
             id: "waiting_on_further_information",
             label: "Waiting on further information",
           ),
-          OpenStruct.new(
-            id: "waiting_on_lops",
-            label: "Waiting on LoPS",
-          ),
+          OpenStruct.new(id: "waiting_on_lops", label: "Waiting on LoPS"),
           OpenStruct.new(
             id: "waiting_on_reference",
             label: "Waiting on reference",
@@ -368,12 +318,33 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
             id: "waiting_on_prioritisation_reference",
             label: "Waiting on prioritisation reference",
           ),
-          OpenStruct.new(
-            id: "withdrawn",
-            label: "Withdrawn",
-          ),
+          OpenStruct.new(id: "withdrawn", label: "Withdrawn"),
         ],
       )
+    end
+  end
+
+  describe "#prioritised_filter_option_label" do
+    subject(:prioritised_filter_option_label) do
+      view_object.prioritised_filter_option_label
+    end
+
+    it { expect(subject).to eq("Prioritised (0)") }
+
+    context "when there are application forms" do
+      before do
+        non_prioritised_application_form = create(:application_form, :submitted)
+        create :assessment,
+               application_form: non_prioritised_application_form,
+               prioritised: false
+
+        prioritised_application_form = create(:application_form, :submitted)
+        create :assessment,
+               application_form: prioritised_application_form,
+               prioritised: true
+      end
+
+      it { expect(subject).to eq("Prioritised (1)") }
     end
   end
 end
