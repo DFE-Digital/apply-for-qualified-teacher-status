@@ -79,6 +79,8 @@ class TimelineEvent < ApplicationRecord
          email_sent: "email_sent",
          information_changed: "information_changed",
          note_created: "note_created",
+         prioritisation_work_history_check_recorded:
+           "prioritisation_work_history_check_recorded",
          requestable_expired: "requestable_expired",
          requestable_received: "requestable_received",
          requestable_requested: "requestable_requested",
@@ -159,7 +161,8 @@ class TimelineEvent < ApplicationRecord
             if: -> do
               action_required_by_changed? || assessment_section_recorded? ||
                 information_changed? || requestable_reviewed? ||
-                requestable_verified? || stage_changed? || status_changed?
+                requestable_verified? || stage_changed? || status_changed? ||
+                prioritisation_work_history_check_recorded?
             end
   validates :old_value,
             :new_value,
@@ -167,7 +170,8 @@ class TimelineEvent < ApplicationRecord
             unless: -> do
               action_required_by_changed? || assessment_section_recorded? ||
                 information_changed? || requestable_reviewed? ||
-                requestable_verified? || stage_changed? || status_changed?
+                requestable_verified? || stage_changed? || status_changed? ||
+                prioritisation_work_history_check_recorded?
             end
 
   validates :note_text,

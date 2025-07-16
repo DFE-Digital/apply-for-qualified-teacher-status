@@ -33,7 +33,13 @@ module AssessorInterface
         )
       @application_form = @view_object.application_form
 
-      @form = form.new(form_params.merge(prioritisation_work_history_check:))
+      @form =
+        form.new(
+          form_params.merge(
+            prioritisation_work_history_check:,
+            user: current_staff,
+          ),
+        )
 
       if @form.save
         redirect_to [

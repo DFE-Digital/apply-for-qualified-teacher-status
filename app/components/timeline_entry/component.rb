@@ -114,6 +114,37 @@ module TimelineEntry
       }
     end
 
+    def prioritisation_work_history_check_recorded_vars
+      prioritisation_work_history_check =
+        timeline_event.prioritisation_work_history_check
+
+      is_most_recent =
+        timeline_event
+          .application_form
+          .timeline_events
+          .prioritisation_work_history_check_recorded
+          .order(created_at: :desc)
+          .find_by(prioritisation_work_history_check:) == timeline_event
+
+      # We can only show failure reasons for the most recent timeline
+      # event as we pull them direct from the assessment section.
+      selected_failure_reasons =
+        (
+          if is_most_recent
+            prioritisation_work_history_check.selected_failure_reasons.to_a
+          else
+            []
+          end
+        )
+
+      {
+        institution_name:
+          prioritisation_work_history_check.work_history.school_name,
+        status: timeline_event.new_value,
+        failure_reasons: selected_failure_reasons,
+      }
+    end
+
     def note_created_vars
       { text: timeline_event.note.text }
     end

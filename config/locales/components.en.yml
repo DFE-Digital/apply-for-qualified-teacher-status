@@ -73,6 +73,7 @@ en:
         email_sent: Email sent
         information_changed: Information changed after submission
         note_created: Note created
+        prioritisation_work_history_check_recorded: Prioritisation role, institution and referee check completed
         reviewer_assigned: Reviewer assigned
         requestable_requested:
           ConsentRequest: Consent requested
@@ -115,6 +116,7 @@ en:
         assessor_assigned: "%{assignee_name} is assigned as the assessor."
         email_sent: "%{subject}"
         note_created: "%{text}"
+        prioritisation_work_history_check_recorded: "%{institution_name} status change to"
         reviewer_assigned: "%{assignee_name} is assigned as the reviewer."
         requestable_requested:
           ConsentRequest: Consent has been requested.

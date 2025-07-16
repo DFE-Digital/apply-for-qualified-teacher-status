@@ -7,8 +7,10 @@ RSpec.describe AssessorInterface::PrioritisationWorkHistoryCheckForm,
   subject(:form) do
     described_class.for_prioritisation_work_history_check(
       prioritisation_work_history_check,
-    ).new(prioritisation_work_history_check:, **attributes)
+    ).new(prioritisation_work_history_check:, user:, **attributes)
   end
+
+  let(:user) { create(:staff) }
 
   let(:assessment) { create(:assessment) }
 
@@ -31,6 +33,8 @@ RSpec.describe AssessorInterface::PrioritisationWorkHistoryCheckForm,
         :prioritisation_work_history_check,
       )
     end
+
+    it { is_expected.to validate_presence_of(:user) }
 
     it { is_expected.to allow_values(true, false).for(:passed) }
 
@@ -112,6 +116,16 @@ RSpec.describe AssessorInterface::PrioritisationWorkHistoryCheckForm,
           :count,
         )
       end
+
+      it "records a timeline event" do
+        expect { save }.to have_recorded_timeline_event(
+          :prioritisation_work_history_check_recorded,
+          prioritisation_work_history_check:,
+          old_value: "not_started",
+          new_value: "accepted",
+          creator: user,
+        )
+      end
     end
 
     context "when not passed" do
@@ -149,6 +163,16 @@ RSpec.describe AssessorInterface::PrioritisationWorkHistoryCheckForm,
         ).to have_attributes(
           key: "prioritisation_work_history_role",
           assessor_feedback: "Notes",
+        )
+      end
+
+      it "records a timeline event" do
+        expect { save }.to have_recorded_timeline_event(
+          :prioritisation_work_history_check_recorded,
+          prioritisation_work_history_check:,
+          old_value: "not_started",
+          new_value: "rejected",
+          creator: user,
         )
       end
     end
