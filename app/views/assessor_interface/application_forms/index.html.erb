@@ -64,14 +64,6 @@
       <% end %>
     </section>
 
-    <section id="app-applications-filters-action-required-by">
-      <%= f.govuk_check_boxes_fieldset :action_required_by, legend: { size: "s" }, small: true do %>
-        <% @view_object.action_required_by_filter_options.each do |option| %>
-          <%= f.govuk_check_box :action_required_by, option.id, label: { text: option.label }, checked: @view_object.filter_form.action_required_by&.include?(option.id) %>
-        <% end %>
-      <% end %>
-    </section>
-
     <section id="app-applications-filters-stage">
       <%= f.govuk_check_boxes_fieldset :stage, legend: { size: "s" }, small: true do %>
         <% @view_object.stage_filter_options.each do |option| %>

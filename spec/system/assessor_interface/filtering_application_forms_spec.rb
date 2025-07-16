@@ -50,10 +50,6 @@ RSpec.describe "Assessor filtering application forms", type: :system do
     then_i_see_a_list_of_applications_filtered_by_submitted_at
 
     when_i_clear_the_filters
-    and_i_apply_the_action_required_by_filter
-    then_i_see_a_list_of_applications_filtered_by_action_required_by
-
-    when_i_clear_the_filters
     and_i_apply_the_stage_filter
     then_i_see_a_list_of_applications_filtered_by_stage
 
@@ -253,24 +249,6 @@ RSpec.describe "Assessor filtering application forms", type: :system do
     expect(assessor_applications_page.search_results.count).to eq(1)
     expect(assessor_applications_page.search_results.first.name.text).to eq(
       "John Smith",
-    )
-  end
-
-  def and_i_apply_the_action_required_by_filter
-    admin_action_item =
-      assessor_applications_page.action_required_by_filter.items.find do |item|
-        item.label.text == "Admin (1)"
-      rescue Capybara::ElementNotFound
-        false
-      end
-    admin_action_item.checkbox.click
-    assessor_applications_page.apply_filters.click
-  end
-
-  def then_i_see_a_list_of_applications_filtered_by_action_required_by
-    expect(assessor_applications_page.search_results.count).to eq(1)
-    expect(assessor_applications_page.search_results.first.name.text).to eq(
-      "Emma Dubois",
     )
   end
 

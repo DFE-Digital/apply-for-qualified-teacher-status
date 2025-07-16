@@ -4,8 +4,7 @@ class AssessorInterface::FilterForm
   include ActiveModel::Model
   include ActiveRecord::AttributeAssignment
 
-  attr_accessor :action_required_by,
-                :assessor_ids,
+  attr_accessor :assessor_ids,
                 :date_of_birth,
                 :email,
                 :location,

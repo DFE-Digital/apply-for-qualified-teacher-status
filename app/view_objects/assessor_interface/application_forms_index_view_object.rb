@@ -39,12 +39,6 @@ class AssessorInterface::ApplicationFormsIndexViewObject
     )
   end
 
-  def action_required_by_filter_options
-    ACTION_REQUIRED_BY_OPTIONS.map do |name|
-      action_required_by_filter_entry(name)
-    end
-  end
-
   def stage_filter_options
     STAGE_FILTER_OPTIONS.map { |name| stage_filter_entry(name) }
   end
@@ -70,8 +64,6 @@ class AssessorInterface::ApplicationFormsIndexViewObject
   end
 
   private
-
-  ACTION_REQUIRED_BY_OPTIONS = %w[admin assessor external].freeze
 
   STAGE_FILTER_OPTIONS = %w[
     pre_assessment
@@ -144,11 +136,7 @@ class AssessorInterface::ApplicationFormsIndexViewObject
         ::Filters::Prioritised.apply(
           scope:
             ::Filters::Stage.apply(
-              scope:
-                ::Filters::ActionRequiredBy.apply(
-                  scope: application_forms_without_counted_filters,
-                  params: filter_params,
-                ),
+              scope: application_forms_without_counted_filters,
               params: filter_params,
             ),
           params: filter_params,
@@ -156,34 +144,9 @@ class AssessorInterface::ApplicationFormsIndexViewObject
       )
   end
 
-  def action_required_by_filter_counts
-    @action_required_by_filter_counts ||=
-      ::Filters::Stage
-        .apply(
-          scope: application_forms_without_counted_filters,
-          params: filter_params,
-        )
-        .group(:action_required_by)
-        .count
-  end
-
-  def action_required_by_filter_entry(name)
-    OpenStruct.new(
-      id: name,
-      label:
-        "#{name.humanize} (#{action_required_by_filter_counts.fetch(name, 0)})",
-    )
-  end
-
   def stage_filter_counts
     @stage_filter_counts ||=
-      ::Filters::ActionRequiredBy
-        .apply(
-          scope: application_forms_without_counted_filters,
-          params: filter_params,
-        )
-        .group(:stage)
-        .count
+      application_forms_without_counted_filters.group(:stage).count
   end
 
   def stage_filter_entry(name)
@@ -205,11 +168,7 @@ class AssessorInterface::ApplicationFormsIndexViewObject
       ::Filters::Prioritised.apply(
         scope:
           ::Filters::Stage.apply(
-            scope:
-              ::Filters::ActionRequiredBy.apply(
-                scope: application_forms_without_counted_filters,
-                params: filter_params,
-              ),
+            scope: application_forms_without_counted_filters,
             params: filter_params,
           ),
         params: {

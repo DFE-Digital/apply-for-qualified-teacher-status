@@ -53,11 +53,6 @@ module PageObjects
         element :year, "#assessor_interface_filter_form_date_of_birth_1i"
       end
 
-      section :action_required_by_filter,
-              "#app-applications-filters-action-required-by" do
-        sections :items, GovukCheckboxItem, ".govuk-checkboxes__item"
-      end
-
       section :stage_filter, "#app-applications-filters-stage" do
         sections :items, GovukCheckboxItem, ".govuk-checkboxes__item"
       end
