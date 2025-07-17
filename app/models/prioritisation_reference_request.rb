@@ -52,6 +52,8 @@ class PrioritisationReferenceRequest < ApplicationRecord
             },
           )
         end
+  scope :review_failed,
+        -> { where.not(reviewed_at: nil).where(review_passed: false) }
   scope :remindable,
         -> do
           where

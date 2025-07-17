@@ -1,0 +1,27 @@
+<% if @application_form.region.status_check_online? %>
+<% if @application_form.region.status_information.present? %>
+<%= @application_form.region.status_information %>
+<% end %>
+
+<% if @application_form.region.country.status_information.present? %>
+<%= @application_form.region.country.status_information %>
+<% end %>
+<% end %>
+
+<% if @application_form.region.sanction_check_online? %>
+<% if @application_form.region.sanction_information.present? %>
+<%= @application_form.region.sanction_information %>
+<% end %>
+
+<% if @application_form.region.country.sanction_information.present? %>
+<%= @application_form.region.country.sanction_information %>
+<% end %>
+<% end %>
+
+<% if @application_form.region.other_information.present? %>
+<%= @application_form.region.other_information %>
+<% end %>
+
+<% if @application_form.region.country.other_information.present? %>
+<%= @application_form.region.country.other_information %>
+<% end %>

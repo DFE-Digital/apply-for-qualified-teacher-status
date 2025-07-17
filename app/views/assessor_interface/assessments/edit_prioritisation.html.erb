@@ -17,7 +17,7 @@
     <p class="govuk-body">Select Confirm decision to:</p>
     <ul class="govuk-list govuk-list--bullet">
       <li>email the applicant to confirm their application is being prioritised</li>
-      <li>move this application to assessment</li>
+      <li>flag this application as prioritised</li>
     </ul>
   <% else %>
     <p class="govuk-body">You have indicated that this applicant doesn’t have any work history in England that meets the criteria for prioritisation.</p>
@@ -27,10 +27,45 @@
                                        :itself,
                                        legend: { text: "You can:", size: "s" } %>
 
+    <h2 class="govuk-heading-l">Reason for decision</h2>
+
+    <% if @assessment.prioritisation_reference_requests.present? %>
+      <ul class="govuk-list govuk-list--bullet">
+        <li class="govuk-!-font-weight-bold">The applicant's information or the referee's information was not confirmed by the reference</li>
+      </ul>
+
+      <% @assessment.prioritisation_reference_requests.review_failed.each do |prioritisation_reference_request| %>
+        <h3 class="govuk-heading-m govuk-!-margin-top-5"><%= prioritisation_reference_request.work_history.school_name %></h3>
+        <% if prioritisation_reference_request.review_note.present? %>
+          <p class="govuk-body govuk-!-margin-top-5">Your note (the applicant may see this):</p>
+          <%= govuk_inset_text do %>
+            <p><%= prioritisation_reference_request.review_note %></p>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% else %>
+      <% @assessment.prioritisation_work_history_checks.not_passed.each do |prioritisation_work_history_check| %>
+        <h3 class="govuk-heading-m govuk-!-margin-top-5"><%= prioritisation_work_history_check.work_history.school_name %></h3>
+        <ul class="govuk-list govuk-list--bullet">
+          <% prioritisation_work_history_check.selected_failure_reasons.each do |selected_failure_reason| %>
+            <li class="govuk-!-font-weight-bold"><%= t(selected_failure_reason.key, scope: %i[assessor_interface prioritisation_work_history_checks failure_reasons as_statement]) %></li>
+            <% if selected_failure_reason.assessor_feedback.present? %>
+              <p class="govuk-body govuk-!-margin-top-5">Your note (the applicant may see this):</p>
+              <%= govuk_inset_text do %>
+                <p><%= selected_failure_reason.assessor_feedback %></p>
+              <% end %>
+            <% end %>
+          <% end %>
+        </ul>
+      <% end %>
+    <% end %>
+
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible" />
+
     <p class="govuk-body">Select Confirm decision to:</p>
     <ul class="govuk-list govuk-list--bullet">
       <li>email the applicant to confirm their application is not valid for prioritisation</li>
-      <li>move this application to assessment</li>
+      <li>assess the application within our standard timelines</li>
     </ul>
   <% end %>
 

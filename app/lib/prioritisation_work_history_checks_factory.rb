@@ -31,16 +31,23 @@ class PrioritisationWorkHistoryChecksFactory
 
   def checks
     %w[
-      work_history_role
-      work_history_setting
-      work_history_in_england
-      work_history_reference_email
-      work_history_reference_job
+      prioritisation_work_history_role
+      prioritisation_work_history_setting
+      prioritisation_work_history_in_england
+      prioritisation_work_history_reference_email
+      prioritisation_work_history_reference_job
     ]
   end
 
   def failure_reasons
-    []
+    %w[
+      prioritisation_work_history_role
+      prioritisation_work_history_setting
+      prioritisation_work_history_in_england
+      prioritisation_work_history_institution_not_found
+      prioritisation_work_history_reference_email
+      prioritisation_work_history_reference_job
+    ]
   end
 
   def valid_work_histories_for_prioritisation

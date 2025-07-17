@@ -26,6 +26,8 @@ RSpec.describe AssessorInterface::AssessmentPrioritisationDecisionForm,
     context "when passed" do
       let(:passed) { "true" }
 
+      before { allow(PrioritiseAssessment).to receive(:call) }
+
       it { is_expected.to be true }
 
       it "calls the PrioritiseAssessment service" do
@@ -41,8 +43,17 @@ RSpec.describe AssessorInterface::AssessmentPrioritisationDecisionForm,
     context "when not passed" do
       let(:passed) { "false" }
 
-      it "raises 'Not Implemented' error" do
-        expect { save }.to raise_error("Not Implemented")
+      before { allow(DeprioritiseAssessment).to receive(:call) }
+
+      it { is_expected.to be true }
+
+      it "calls the DerioritiseAssessment service" do
+        subject
+
+        expect(DeprioritiseAssessment).to have_received(:call).with(
+          assessment:,
+          user:,
+        )
       end
     end
   end

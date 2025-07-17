@@ -312,6 +312,7 @@
     - created_at
     - id
     - key
+    - prioritisation_work_history_check_id
     - updated_at
   :selected_failure_reasons_work_histories:
     - selected_failure_reason_id

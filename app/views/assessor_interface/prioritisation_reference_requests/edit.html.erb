@@ -44,7 +44,7 @@
     <%= f.govuk_radio_buttons_fieldset :passed, legend: { text: "Are you satisfied with this reference for the applicant’s work history?", size: "s" } do %>
       <%= f.govuk_radio_button :passed, :true, link_errors: true, disabled: @assessment.prioritisation_decision_at.present? %>
       <%= f.govuk_radio_button :passed, :false, disabled: @assessment.prioritisation_decision_at.present? do %>
-        <%= f.govuk_text_area :note, label: { text: "Note to the applicant (optional)" } %>
+        <%= f.govuk_text_area :note, label: { text: "Note to the applicant" } %>
       <% end %>
     <% end %>
 

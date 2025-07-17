@@ -114,13 +114,20 @@ RSpec.describe PrioritisationWorkHistoryChecksFactory do
           prioritisation_work_history_check =
             prioritisation_work_history_checks.first
           expect(prioritisation_work_history_check.checks).to eq %w[
-               work_history_role
-               work_history_setting
-               work_history_in_england
-               work_history_reference_email
-               work_history_reference_job
+               prioritisation_work_history_role
+               prioritisation_work_history_setting
+               prioritisation_work_history_in_england
+               prioritisation_work_history_reference_email
+               prioritisation_work_history_reference_job
              ]
-          expect(prioritisation_work_history_check.failure_reasons).to be_empty
+          expect(prioritisation_work_history_check.failure_reasons).to eq %w[
+               prioritisation_work_history_role
+               prioritisation_work_history_setting
+               prioritisation_work_history_in_england
+               prioritisation_work_history_institution_not_found
+               prioritisation_work_history_reference_email
+               prioritisation_work_history_reference_job
+             ]
           expect(prioritisation_work_history_check.work_history).to eq(
             work_history,
           )
@@ -138,13 +145,20 @@ RSpec.describe PrioritisationWorkHistoryChecksFactory do
           prioritisation_work_history_check =
             prioritisation_work_history_checks.first
           expect(prioritisation_work_history_check.checks).to eq %w[
-               work_history_role
-               work_history_setting
-               work_history_in_england
-               work_history_reference_email
-               work_history_reference_job
+               prioritisation_work_history_role
+               prioritisation_work_history_setting
+               prioritisation_work_history_in_england
+               prioritisation_work_history_reference_email
+               prioritisation_work_history_reference_job
              ]
-          expect(prioritisation_work_history_check.failure_reasons).to be_empty
+          expect(prioritisation_work_history_check.failure_reasons).to eq %w[
+               prioritisation_work_history_role
+               prioritisation_work_history_setting
+               prioritisation_work_history_in_england
+               prioritisation_work_history_institution_not_found
+               prioritisation_work_history_reference_email
+               prioritisation_work_history_reference_job
+             ]
           expect(prioritisation_work_history_check.work_history).to eq(
             work_history,
           )

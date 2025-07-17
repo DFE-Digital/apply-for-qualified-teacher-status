@@ -118,6 +118,15 @@ RSpec.describe "Assessor prioritisation checks", type: :system do
       assessment_id:,
     )
     and_i_see_content_for_application_being_deprioritised
+    and_i_see_content_for_reasons_for_deprioritisation_due_to_role
+
+    when_i_confirm_deprioritisation
+    then_i_see_content_for_confirming_application_deprioritised
+
+    when_i_click_on_see_application_overview
+    then_i_see_the(:assessor_application_page, reference:)
+    and_i_see_prioritisation_decision_task_as_completed
+    and_i_see_dont_see_flag_for_application_prioritised
   end
 
   context "when the assessment has received prioritisation reference requests" do
@@ -198,7 +207,7 @@ RSpec.describe "Assessor prioritisation checks", type: :system do
 
       assessment
         .prioritisation_reference_requests
-        .each do |prioritisation_reference_request|
+        .each_with_index do |prioritisation_reference_request, index|
         when_i_select_prioritisation_reference_to_review(
           prioritisation_reference_request,
         )
@@ -211,6 +220,9 @@ RSpec.describe "Assessor prioritisation checks", type: :system do
         )
 
         when_i_submit_no_on_the_prioritisation_reference_review_form
+
+        next if index == assessment.prioritisation_reference_requests.count - 1
+
         then_i_see_the(
           :assessor_prioritisation_references_page,
           reference:,
@@ -221,7 +233,6 @@ RSpec.describe "Assessor prioritisation checks", type: :system do
         )
       end
 
-      when_i_click_on_back_to_overview
       then_i_see_the(:assessor_application_page, reference:)
       and_i_see_prioritisation_reference_task_as_completed
       and_i_see_prioritisation_decision_task_as_not_started
@@ -233,6 +244,15 @@ RSpec.describe "Assessor prioritisation checks", type: :system do
         assessment_id:,
       )
       and_i_see_content_for_application_being_deprioritised
+      and_i_see_content_for_reasons_for_deprioritisation_due_to_references
+
+      when_i_confirm_deprioritisation
+      then_i_see_content_for_confirming_application_deprioritised
+
+      when_i_click_on_see_application_overview
+      then_i_see_the(:assessor_application_page, reference:)
+      and_i_see_prioritisation_decision_task_as_completed
+      and_i_see_dont_see_flag_for_application_prioritised
     end
   end
 
@@ -265,7 +285,18 @@ RSpec.describe "Assessor prioritisation checks", type: :system do
   end
 
   def when_i_submit_no_on_the_work_history_check_form
-    assessor_prioritisation_work_history_check_page.submit_no
+    assessor_prioritisation_work_history_check_page.form.false_radio_item.choose
+    assessor_prioritisation_work_history_check_page
+      .form
+      .failure_reason_checkbox_items
+      .first
+      .checkbox
+      .click
+    assessor_prioritisation_work_history_check_page
+      .form
+      .failure_reason_note_textareas
+      .first.fill_in with: "Note."
+    assessor_prioritisation_work_history_check_page.form.continue_button.click
   end
 
   def and_i_see_the_prioritisation_work_history_check_as_accepted(
@@ -384,6 +415,46 @@ RSpec.describe "Assessor prioritisation checks", type: :system do
     )
   end
 
+  def and_i_see_content_for_reasons_for_deprioritisation_due_to_role
+    expect(assessor_prioritisation_decision_page).to have_content(
+      "Reason for decision",
+    )
+    expect(assessor_prioritisation_decision_page).to have_content(
+      assessment
+        .prioritisation_work_history_checks
+        .first
+        .work_history
+        .school_name,
+    )
+    expect(assessor_prioritisation_decision_page).to have_content(
+      assessment
+        .prioritisation_work_history_checks
+        .second
+        .work_history
+        .school_name,
+    )
+    expect(assessor_prioritisation_decision_page).to have_content(
+      "The applicant's role is not valid for prioritisation.",
+    )
+  end
+
+  def and_i_see_content_for_reasons_for_deprioritisation_due_to_references
+    expect(assessor_prioritisation_decision_page).to have_content(
+      "Reason for decision",
+    )
+    expect(assessor_prioritisation_decision_page).to have_content(
+      "The applicant's information or the referee's information was not confirmed by the reference",
+    )
+    expect(assessor_prioritisation_decision_page).to have_content(
+      assessment
+        .prioritisation_reference_requests
+        .review_failed
+        .first
+        .work_history
+        .school_name,
+    )
+  end
+
   def and_i_see_content_for_application_being_prioritised
     expect(assessor_prioritisation_decision_page).to have_content(
       "You have indicated that this applicant has valid work history in England " \
@@ -395,14 +466,6 @@ RSpec.describe "Assessor prioritisation checks", type: :system do
     prioritisation_reference_request
   )
     assessor_prioritisation_references_page.click_on prioritisation_reference_request.work_history.school_name
-  end
-
-  def when_i_submit_yes_on_the_work_history_check_form
-    assessor_prioritisation_work_history_check_page.submit_yes
-  end
-
-  def when_i_submit_no_on_the_work_history_check_form
-    assessor_prioritisation_work_history_check_page.submit_no
   end
 
   def when_i_submit_yes_on_the_prioritisation_reference_review_form
@@ -417,14 +480,28 @@ RSpec.describe "Assessor prioritisation checks", type: :system do
     assessor_prioritisation_decision_page.submit_yes
   end
 
+  def when_i_confirm_deprioritisation
+    assessor_prioritisation_decision_page.submit_no
+  end
+
   def then_i_see_content_for_confirming_application_prioritised
     expect(page).to have_content(
       "QTS application #{application_form.reference} will be prioritised",
     )
   end
 
+  def then_i_see_content_for_confirming_application_deprioritised
+    expect(page).to have_content(
+      "QTS application #{application_form.reference} won’t be prioritised",
+    )
+  end
+
   def and_i_see_a_flag_for_application_prioritised
     expect(page).to have_content("Prioritised")
+  end
+
+  def and_i_see_dont_see_flag_for_application_prioritised
+    expect(page).not_to have_content("Prioritised")
   end
 
   def application_form

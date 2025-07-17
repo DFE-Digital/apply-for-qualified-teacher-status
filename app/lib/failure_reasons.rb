@@ -93,7 +93,23 @@ class FailureReasons
 
   WORK_HISTORY_REFERENCE_FAILURE_REASONS = [UNRECOGNISED_REFERENCES].freeze
 
-  ALL = (DECLINABLE + FURTHER_INFORMATIONABLE).freeze
+  PRIORITISATION_FAILURE_REASONS = [
+    PRIORITISATION_WORK_HISTORY_ROLE = "prioritisation_work_history_role",
+    PRIORITISATION_WORK_HISTORY_SETTING = "prioritisation_work_history_setting",
+    PRIORITISATION_WORK_HISTORY_IN_ENGLAND =
+      "prioritisation_work_history_in_england",
+    PRIORITISATION_WORK_HISTORY_INSTITUTION_NOT_FOUND =
+      "prioritisation_work_history_institution_not_found",
+    PRIORITISATION_WORK_HISTORY_REFERENCE_EMAIL =
+      "prioritisation_work_history_reference_email",
+    PRIORITISATION_WORK_HISTORY_REFERENCE_JOB =
+      "prioritisation_work_history_reference_job",
+  ].freeze
+
+  ALL =
+    (
+      DECLINABLE + FURTHER_INFORMATIONABLE + PRIORITISATION_FAILURE_REASONS
+    ).freeze
 
   DOCUMENT_FAILURE_REASONS = {
     ADDITIONAL_DEGREE_CERTIFICATE_ILLEGIBLE => :qualification_certificate,

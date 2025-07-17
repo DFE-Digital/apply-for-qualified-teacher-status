@@ -13,6 +13,11 @@ module PageObjects
         element :false_radio_item,
                 "#assessor-interface-prioritisation-work-history-check-form-passed-field",
                 visible: false
+        sections :failure_reason_checkbox_items,
+                 PageObjects::GovukCheckboxItem,
+                 ".govuk-checkboxes__item"
+        elements :failure_reason_note_textareas,
+                 ".govuk-checkboxes__conditional .govuk-textarea"
         element :continue_button, ".govuk-button"
       end
 

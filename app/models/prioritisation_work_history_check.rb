@@ -24,10 +24,13 @@
 #  fk_rails_...  (work_history_id => work_histories.id)
 #
 class PrioritisationWorkHistoryCheck < ApplicationRecord
+  has_many :selected_failure_reasons, dependent: :destroy
+
   belongs_to :assessment
   belongs_to :work_history
 
   scope :passed, -> { where(passed: true) }
+  scope :not_passed, -> { where(passed: false) }
 
   def complete?
     !incomplete?
