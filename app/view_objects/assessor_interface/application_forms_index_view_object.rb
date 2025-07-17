@@ -44,7 +44,9 @@ class AssessorInterface::ApplicationFormsIndexViewObject
   end
 
   def status_filter_options
-    STATUS_FILTER_OPTIONS.map { |name| statuses_filter_entry(name) }
+    STATUS_FILTER_OPTIONS
+      .map { |name| statuses_filter_entry(name) }
+      .sort_by(&:label)
   end
 
   def prioritised_filter_option_label
