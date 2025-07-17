@@ -11,6 +11,10 @@ module PageObjects
         sections :assessors, GovukCheckboxItem, ".govuk-checkboxes__item"
       end
 
+      section :statuses_filter, "#app-applications-filters-statuses" do
+        sections :statuses, GovukCheckboxItem, ".govuk-checkboxes__item"
+      end
+
       section :country_filter, "#app-applications-filters-country" do
         element :country, "input"
       end
@@ -49,12 +53,11 @@ module PageObjects
         element :year, "#assessor_interface_filter_form_date_of_birth_1i"
       end
 
-      section :action_required_by_filter,
-              "#app-applications-filters-action-required-by" do
+      section :stage_filter, "#app-applications-filters-stage" do
         sections :items, GovukCheckboxItem, ".govuk-checkboxes__item"
       end
 
-      section :stage_filter, "#app-applications-filters-stage" do
+      section :flags_filter, "#app-applications-filters-flags" do
         sections :items, GovukCheckboxItem, ".govuk-checkboxes__item"
       end
 

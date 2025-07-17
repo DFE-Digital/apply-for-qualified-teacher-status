@@ -10,6 +10,6 @@ class Filters::Statuses < Filters::Base
   private
 
   def statuses
-    Array(params[:fi_request_statuses]).compact_blank
+    Array(params[:statuses]).compact_blank
   end
 end

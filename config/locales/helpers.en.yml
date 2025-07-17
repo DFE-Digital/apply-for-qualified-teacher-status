@@ -387,11 +387,12 @@ en:
         action_required_by: Action required by
         assessor_ids: Assessor name
         date_of_birth: Applicant date of birth
+        flags: Flagged as
         states: Status of application
         submitted_at: Created date
         submitted_at_after: Start date
         submitted_at_before: End date
-        fi_request_statuses: FI requests
+        statuses: Status
       assessor_interface_prioritisation_work_history_check_form:
         selected_failure_reasons: "Select all reasons for your answer:"
       assessor_interface_qualification_update_form:

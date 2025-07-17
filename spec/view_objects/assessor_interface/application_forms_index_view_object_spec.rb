@@ -75,16 +75,6 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
         it { is_expected.to be_empty }
       end
 
-      context "with an action required by filter" do
-        before do
-          allow_any_instance_of(Filters::ActionRequiredBy).to receive(
-            :apply,
-          ).and_return(ApplicationForm.none)
-        end
-
-        it { is_expected.to be_empty }
-      end
-
       context "with a stage filter" do
         before do
           allow_any_instance_of(Filters::ShowAll).to receive(:apply).and_return(
@@ -95,7 +85,7 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
         it { is_expected.to be_empty }
       end
 
-      context "with a fi_request_statuses filter" do
+      context "with a statuses filter" do
         before do
           allow_any_instance_of(Filters::Statuses).to receive(
             :apply,
@@ -248,58 +238,97 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
     end
   end
 
-  describe "#fi_request_statuses_filter_options" do
-    subject(:fi_request_statuses_filter_options) do
-      view_object.fi_request_statuses_filter_options
-    end
+  describe "#status_filter_options" do
+    subject(:status_filter_options) { view_object.status_filter_options }
 
     it do
       expect(subject).to eq(
         [
           OpenStruct.new(
-            id: "waiting_on_further_information",
-            label: "Waiting on further information (0)",
+            id: "assessment_in_progress",
+            label: "Assessment in progress",
           ),
           OpenStruct.new(
-            id: "received_further_information",
-            label: "Received further information (0)",
+            id: "assessment_not_started",
+            label: "Assessment not started",
           ),
+          OpenStruct.new(id: "awarded_pending_checks", label: "Award pending"),
+          OpenStruct.new(id: "awarded", label: "Awarded"),
+          OpenStruct.new(id: "declined", label: "Declined"),
+          OpenStruct.new(id: "overdue_ecctis", label: "Overdue Ecctis"),
+          OpenStruct.new(id: "overdue_lops", label: "Overdue LoPS"),
+          OpenStruct.new(id: "overdue_consent", label: "Overdue consent"),
+          OpenStruct.new(
+            id: "overdue_prioritisation_reference",
+            label: "Overdue prioritisation reference",
+          ),
+          OpenStruct.new(id: "overdue_reference", label: "Overdue reference"),
+          OpenStruct.new(
+            id: "potential_duplicate_in_dqt",
+            label: "Potential duplication in DQT",
+          ),
+          OpenStruct.new(id: "preliminary_check", label: "Preliminary check"),
+          OpenStruct.new(id: "received_consent", label: "Received consent"),
+          OpenStruct.new(
+            id: "received_further_information",
+            label: "Received further information",
+          ),
+          OpenStruct.new(
+            id: "received_prioritisation_reference",
+            label: "Received prioritisation reference",
+          ),
+          OpenStruct.new(id: "received_reference", label: "Received reference"),
+          OpenStruct.new(id: "review", label: "Review"),
+          OpenStruct.new(
+            id: "verification_in_progress",
+            label: "Verification in progress",
+          ),
+          OpenStruct.new(id: "waiting_on_ecctis", label: "Waiting on Ecctis"),
+          OpenStruct.new(id: "waiting_on_lops", label: "Waiting on LoPS"),
+          OpenStruct.new(id: "waiting_on_consent", label: "Waiting on consent"),
+          OpenStruct.new(
+            id: "waiting_on_further_information",
+            label: "Waiting on further information",
+          ),
+          OpenStruct.new(
+            id: "prioritisation_check",
+            label: "Waiting on prioritisation checks",
+          ),
+          OpenStruct.new(
+            id: "waiting_on_prioritisation_reference",
+            label: "Waiting on prioritisation reference",
+          ),
+          OpenStruct.new(
+            id: "waiting_on_reference",
+            label: "Waiting on reference",
+          ),
+          OpenStruct.new(id: "withdrawn", label: "Withdrawn"),
         ],
       )
     end
+  end
 
-    context "with application forms" do
+  describe "#prioritised_filter_option_label" do
+    subject(:prioritised_filter_option_label) do
+      view_object.prioritised_filter_option_label
+    end
+
+    it { expect(subject).to eq("Prioritised (0)") }
+
+    context "when there are application forms" do
       before do
-        create_list(
-          :application_form,
-          2,
-          :submitted,
-          :assessment_stage,
-          statuses: [:waiting_on_further_information],
-        )
-        create_list(
-          :application_form,
-          3,
-          :submitted,
-          :assessment_stage,
-          statuses: [:received_further_information],
-        )
+        non_prioritised_application_form = create(:application_form, :submitted)
+        create :assessment,
+               application_form: non_prioritised_application_form,
+               prioritised: false
+
+        prioritised_application_form = create(:application_form, :submitted)
+        create :assessment,
+               application_form: prioritised_application_form,
+               prioritised: true
       end
 
-      it do
-        expect(subject).to eq(
-          [
-            OpenStruct.new(
-              id: "waiting_on_further_information",
-              label: "Waiting on further information (2)",
-            ),
-            OpenStruct.new(
-              id: "received_further_information",
-              label: "Received further information (3)",
-            ),
-          ],
-        )
-      end
+      it { expect(subject).to eq("Prioritised (1)") }
     end
   end
 end

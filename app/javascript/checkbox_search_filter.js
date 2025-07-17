@@ -31,7 +31,7 @@ function CheckboxSearchFilter(params) {
       if (labelValue.search(textValue) === -1) {
         allCheckboxes[i].style.display = "none";
       } else {
-        allCheckboxes[i].style.display = "block";
+        allCheckboxes[i].style.display = "flex";
       }
     }
 
@@ -86,7 +86,7 @@ function CheckboxSearchFilter(params) {
   };
 
   this.isCheckboxInView = function (checkbox) {
-    var initialOptionContainerHeight = this.checkboxesContainer.style.height;
+    var initialOptionContainerHeight = this.checkboxesContainer.offsetHeight;
     var optionListOffsetTop = this.checkboxesInnerContainer.offsetTop;
     var distanceFromTopOfContainer = checkbox.offsetTop - optionListOffsetTop;
     return distanceFromTopOfContainer < initialOptionContainerHeight;

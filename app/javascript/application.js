@@ -89,5 +89,6 @@ loadPassportCountryOfIssueAutoComplete();
 dfeAutocomplete({ rawAttribute: true });
 
 checkboxSearchFilter("app-applications-filters-assessor", "Search assessors");
+checkboxSearchFilter("app-applications-filters-statuses", "Search statuses");
 
 suitabilityRecordForm("app-suitability-record-form");
