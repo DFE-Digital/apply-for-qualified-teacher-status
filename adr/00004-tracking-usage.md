@@ -15,7 +15,6 @@ Options considered:
 
 - Google Analytics - we can tailor the settings to ensure that usage of Google Analytics is compliant
   with GDPR. This will require:
-
   - enabling the anonymise IP setting
   - enabling pseudonymisation of IDs
   - including Google as a data processor in the privacy policy
@@ -25,14 +24,12 @@ Options considered:
   - ensure we have an agreement with Google Ireland Ltd and not Google LLC to ensure data is processed in Europe not the US
 
 - Ahoy + Blazer - keep all tracking local and anonymous. This will require:
-
   - storing all events in a local database
   - configuring without cookies and with IP masking
   - creating dashboards/queries in Blazer to visualise the usage
   - creating a recurring task to delete data at the end of the retention period
 
 - [DfE Analytics](https://github.com/DFE-Digital/dfe-analytics) - preferred option within DfE. This will require:
-
   - sending all events to a BigQuery database using the `dfe-analytics` Gem
   - configuring without cookies and with IP masking
   - creating dashboards/queries in Data Studio to visualise the usage
