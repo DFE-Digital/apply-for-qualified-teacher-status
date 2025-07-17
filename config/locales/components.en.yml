@@ -29,6 +29,7 @@ en:
       pre_assessment: Pre-assessment
       preliminary_check: Preliminary check
       prioritisation_check: Waiting on prioritisation checks
+      prioritised: Prioritised
       received: Received
       received_and_overdue: Received (overdue)
       received_consent: Received consent
@@ -73,6 +74,8 @@ en:
         email_sent: Email sent
         information_changed: Information changed after submission
         note_created: Note created
+        prioritisation_decision_made: Prioritisation decision made
+        prioritisation_work_history_check_recorded: Prioritisation role, institution and referee check completed
         reviewer_assigned: Reviewer assigned
         requestable_requested:
           ConsentRequest: Consent requested

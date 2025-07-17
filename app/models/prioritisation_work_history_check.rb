@@ -39,4 +39,22 @@ class PrioritisationWorkHistoryCheck < ApplicationRecord
   def incomplete?
     passed.nil?
   end
+
+  def passed?
+    passed == true
+  end
+
+  def failed?
+    passed == false
+  end
+
+  def status
+    if passed?
+      "accepted"
+    elsif failed?
+      "rejected"
+    else
+      "not_started"
+    end
+  end
 end

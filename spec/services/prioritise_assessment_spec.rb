@@ -43,6 +43,15 @@ RSpec.describe PrioritiseAssessment do
       ).with(params: { application_form: }, args: [])
     end
 
+    it "records a timeline event" do
+      expect { call }.to have_recorded_timeline_event(
+        :prioritisation_decision_made,
+        old_value: "not_started",
+        new_value: "prioritised",
+        creator: user,
+      )
+    end
+
     context "when the assessment has professional standing request" do
       context "when the professional standing request is already requested" do
         let!(:professional_standing_request) do

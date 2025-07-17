@@ -32,6 +32,33 @@
           </ul>
         <% end %>
       <% end %>
+    <% elsif timeline_event.prioritisation_work_history_check_recorded? %>
+      <p class="govuk-body">
+        <%= description_vars[:institution_name] %> status changed to <%= render StatusTag::Component.new(description_vars[:status]) %>
+      </p>
+
+      <% if (failure_reasons = description_vars[:failure_reasons]).present? %>
+        <%= govuk_details(summary_text: "View details") do %>
+          <ul class="govuk-list--bullet">
+            <% failure_reasons.each do |failure_reason| %>
+              <li>
+                <p class="govuk-body govuk-!-margin-bottom-0">
+                  <%= t(failure_reason.key, scope: %i[assessor_interface prioritisation_work_history_checks failure_reasons as_statement]) %>
+                </p>
+                <%= simple_format failure_reason.assessor_feedback, class: "govuk-hint" %>
+              </li>
+            <% end %>
+          </ul>
+        <% end %>
+      <% end %>
+    <% elsif timeline_event.prioritisation_decision_made? %>
+      <p class="govuk-body">
+        <% if description_vars[:prioritised] %>
+          Application flagged as <%= render StatusTag::Component.new(description_vars[:status]) %>
+        <% else %>
+          Application is not valid for prioritisation.
+        <% end %>
+      </p>
     <% elsif timeline_event.requestable_reviewed? %>
       <p class="govuk-body">
         Status has changed to <%= render(StatusTag::Component.new(description_vars[:new_status])) %>

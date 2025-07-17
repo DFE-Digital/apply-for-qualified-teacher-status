@@ -125,6 +125,124 @@ RSpec.describe TimelineEntry::Component, type: :component do
     end
   end
 
+  context "prioritisation work history check recorded" do
+    let(:prioritisation_work_history_check) do
+      create(:prioritisation_work_history_check, passed: true)
+    end
+
+    let(:timeline_event) do
+      create(
+        :timeline_event,
+        :prioritisation_work_history_check_recorded,
+        old_value: "not_started",
+        new_value: "accepted",
+        prioritisation_work_history_check:,
+      )
+    end
+
+    it "describes the event" do
+      expect(component.text).to include(
+        "Prioritisation role, institution and referee check completed",
+      )
+      expect(component.text).to include("Accepted")
+      expect(component.text).to include(
+        prioritisation_work_history_check.work_history.school_name,
+      )
+    end
+
+    it "attributes to the creator" do
+      expect(component.text).to include(creator.name)
+    end
+
+    context "when the prioritisation check has not passed" do
+      let(:timeline_event) do
+        create(
+          :timeline_event,
+          :prioritisation_work_history_check_recorded,
+          old_value: "not_started",
+          new_value: "rejected",
+          prioritisation_work_history_check:,
+        )
+      end
+
+      let(:prioritisation_work_history_check) do
+        create(:prioritisation_work_history_check, passed: false)
+      end
+
+      let(:failure_reason) do
+        prioritisation_work_history_check.selected_failure_reasons.first
+      end
+      let(:expected_failure_reason_text) do
+        I18n.t(
+          failure_reason.key,
+          scope: %i[
+            assessor_interface
+            prioritisation_work_history_checks
+            failure_reasons
+            as_statement
+          ],
+        )
+      end
+
+      before do
+        create :selected_failure_reason,
+               prioritisation_work_history_check:,
+               key: :prioritisation_work_history_role
+      end
+
+      it "describes the event" do
+        expect(component.text).to include(
+          "Prioritisation role, institution and referee check completed",
+        )
+        expect(component.text).to include("Rejected")
+        expect(component.text).to include(
+          prioritisation_work_history_check.work_history.school_name,
+        )
+        expect(component.text).to include(expected_failure_reason_text)
+        expect(component.text).to include(failure_reason.assessor_feedback)
+      end
+    end
+  end
+
+  context "prioritisation decision made" do
+    let(:timeline_event) do
+      create(
+        :timeline_event,
+        :prioritisation_decision_made,
+        old_value: "not_started",
+        new_value: "prioritised",
+      )
+    end
+
+    it "describes the event" do
+      expect(component.text).to include("Prioritisation decision made")
+      expect(component.text).to include("Application flagged as")
+      expect(component.text).to include("Prioritised")
+    end
+
+    it "attributes to the creator" do
+      expect(component.text).to include(creator.name)
+    end
+
+    context "when the prioritisation decision did not succeed" do
+      let(:timeline_event) do
+        create(
+          :timeline_event,
+          :prioritisation_decision_made,
+          old_value: "not_started",
+          new_value: "not_prioritised",
+        )
+      end
+
+      it "describes the event" do
+        expect(component.text).to include("Prioritisation decision made")
+        expect(component.text).to include(
+          "Application is not valid for prioritisation.",
+        )
+      end
+    end
+  end
+
   context "note created" do
     let(:timeline_event) { create(:timeline_event, :note_created) }
     let(:text) { timeline_event.note.text }
@@ -258,6 +376,26 @@ RSpec.describe TimelineEntry::Component, type: :component do
     end
   end
 
+  context "prioritisation reference request requested" do
+    let(:timeline_event) do
+      create(
+        :timeline_event,
+        :requestable_requested,
+        requestable: create(:prioritisation_reference_request),
+      )
+    end
+
+    it "describes the event" do
+      expect(component.text).to include(
+        "A prioritisation reference has been requested.",
+      )
+    end
+
+    it "attributes to the creator" do
+      expect(component.text).to include(creator.name)
+    end
+  end
+
   context "further information request received" do
     let(:timeline_event) do
       create(
@@ -323,6 +461,26 @@ RSpec.describe TimelineEntry::Component, type: :component do
   end
 
   context "reference request received" do
+    let(:timeline_event) do
+      create(
+        :timeline_event,
+        :requestable_received,
+        requestable: create(:prioritisation_reference_request),
+      )
+    end
+
+    it "describes the event" do
+      expect(component.text).to include(
+        "A prioritisation reference has been received.",
+      )
+    end
+
+    it "attributes to the creator" do
+      expect(component.text).to include(creator.name)
+    end
+  end
+
+  context "prioritisation reference request received" do
     let(:timeline_event) do
       create(
         :timeline_event,
@@ -401,6 +559,26 @@ RSpec.describe TimelineEntry::Component, type: :component do
   end
 
   context "reference request expired" do
+    let(:timeline_event) do
+      create(
+        :timeline_event,
+        :requestable_expired,
+        requestable: create(:prioritisation_reference_request),
+      )
+    end
+
+    it "describes the event" do
+      expect(component.text).to include(
+        "A prioritisation reference has expired.",
+      )
+    end
+
+    it "attributes to the creator" do
+      expect(component.text).to include(creator.name)
+    end
+  end
+
+  context "prioritisation reference request expired" do
     let(:timeline_event) do
       create(
         :timeline_event,
@@ -487,6 +665,25 @@ RSpec.describe TimelineEntry::Component, type: :component do
         :timeline_event,
         :requestable_reviewed,
         requestable: create(:reference_request),
+        new_value: "accepted",
+      )
+    end
+
+    it "describes the event" do
+      expect(component.text).to include("Status has changed to Accepted")
+    end
+
+    it "attributes to the creator" do
+      expect(component.text).to include(creator.name)
+    end
+  end
+
+  context "prioritisation reference request reviewed" do
+    let(:timeline_event) do
+      create(
+        :timeline_event,
+        :requestable_reviewed,
+        requestable: create(:prioritisation_reference_request),
         new_value: "accepted",
       )
     end

@@ -4,8 +4,8 @@ class AssessorInterface::PrioritisationWorkHistoryCheckForm
   include ActiveModel::Model
   include ActiveModel::Attributes
 
-  attr_accessor :prioritisation_work_history_check
-  validates :prioritisation_work_history_check, presence: true
+  attr_accessor :prioritisation_work_history_check, :user
+  validates :prioritisation_work_history_check, :user, presence: true
 
   attribute :passed, :boolean
   validates :passed, inclusion: [true, false]
@@ -28,11 +28,14 @@ class AssessorInterface::PrioritisationWorkHistoryCheckForm
   def save
     return false if invalid?
 
+    old_status = prioritisation_work_history_check.status
+
     ActiveRecord::Base.transaction do
       prioritisation_work_history_check.update!(passed:)
 
       update_selected_failure_reasons
       update_assessment_started_at
+      create_timeline_event(old_status:)
     end
 
     true
@@ -108,6 +111,7 @@ class AssessorInterface::PrioritisationWorkHistoryCheckForm
   private
 
   delegate :assessment, to: :prioritisation_work_history_check
+  delegate :application_form, to: :assessment
 
   def update_assessment_started_at
     assessment.update!(started_at: Time.zone.now) if assessment.started_at.nil?
@@ -129,5 +133,16 @@ class AssessorInterface::PrioritisationWorkHistoryCheckForm
 
       failure_reason.update!(assessor_feedback: assessor_feedback[:notes])
     end
+  end
+
+  def create_timeline_event(old_status:)
+    CreateTimelineEvent.call(
+      "prioritisation_work_history_check_recorded",
+      application_form:,
+      user:,
+      prioritisation_work_history_check:,
+      old_value: old_status,
+      new_value: prioritisation_work_history_check.status,
+    )
   end
 end

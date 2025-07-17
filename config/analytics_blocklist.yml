@@ -114,6 +114,7 @@
     - note_id
     - note_text
     - old_value
+    - prioritisation_work_history_check_id
     - qualification_id
     - requestable_id
     - requestable_type

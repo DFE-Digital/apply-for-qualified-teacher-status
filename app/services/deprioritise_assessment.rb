@@ -24,6 +24,8 @@ class DeprioritiseAssessment
         create_preliminary_check_assessment_section
       end
 
+      create_timeline_event
+
       ApplicationFormStatusUpdater.call(application_form:, user:)
     end
 
@@ -51,5 +53,15 @@ class DeprioritiseAssessment
       preliminary_assessment_section.assessment = assessment
       preliminary_assessment_section.save!
     end
+  end
+
+  def create_timeline_event
+    CreateTimelineEvent.call(
+      "prioritisation_decision_made",
+      application_form:,
+      user:,
+      old_value: "not_started",
+      new_value: "not_prioritised",
+    )
   end
 end

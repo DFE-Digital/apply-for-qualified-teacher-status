@@ -77,4 +77,26 @@ RSpec.describe PrioritisationWorkHistoryCheck, type: :model do
       it { is_expected.to be false }
     end
   end
+
+  describe "#status" do
+    subject(:status) { prioritisation_work_history_check.status }
+
+    context "with a passed check" do
+      before { prioritisation_work_history_check.passed = true }
+
+      it { is_expected.to eq("accepted") }
+    end
+
+    context "with a failed check" do
+      before { prioritisation_work_history_check.passed = false }
+
+      it { is_expected.to eq("rejected") }
+    end
+
+    context "with no check yet" do
+      before { prioritisation_work_history_check.passed = nil }
+
+      it { is_expected.to eq("not_started") }
+    end
+  end
 end
