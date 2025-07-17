@@ -34,6 +34,7 @@
 # Indexes
 #
 #  index_assessments_on_application_form_id  (application_form_id)
+#  index_assessments_on_prioritised          (prioritised)
 #
 # Foreign Keys
 #
