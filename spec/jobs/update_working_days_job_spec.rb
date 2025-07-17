@@ -312,6 +312,38 @@ RSpec.describe UpdateWorkingDaysJob, type: :job do
       end
     end
 
+    describe "assessment working days from application form submitted to assessment prioritisation decision" do
+      let(:assessment_without_prioritisation_flow) do
+        create(:assessment, application_form: friday_application_form)
+      end
+
+      let(:wednesday_assessment_prioritised) do
+        create(
+          :assessment,
+          started_at: wednesday_today,
+          prioritisation_decision_at: wednesday_today,
+          application_form: friday_application_form,
+        )
+      end
+      let(:friday_application_form) do
+        create(:application_form, submitted_at: friday_previous)
+      end
+
+      it "ignores assessment without prioritisation flow" do
+        expect { perform }.not_to(
+          change do
+            assessment_without_prioritisation_flow.reload.working_days_between_submitted_and_prioritisation_decision
+          end,
+        )
+      end
+
+      it "sets the working days for assessment that has prioritisation decision" do
+        expect { perform }.to change {
+          wednesday_assessment_prioritised.reload.working_days_between_submitted_and_prioritisation_decision
+        }.to(2)
+      end
+    end
+
     describe "assessment working days from application form started to verification" do
       let(:not_started_assessment) do
         create(:assessment, application_form: friday_application_form)

@@ -101,6 +101,7 @@
     - working_days_between_submitted_and_started
     - working_days_between_started_and_verification_started
     - working_days_between_submitted_and_verification_started
+    - working_days_between_submitted_and_prioritisation_decision
   :consent_requests:
     - assessment_id
     - created_at

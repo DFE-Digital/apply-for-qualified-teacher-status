@@ -10,6 +10,7 @@ class UpdateWorkingDaysJob < ApplicationJob
     update_assessments_submission_to_started
     update_assessment_started_to_verification
     update_assessment_submission_to_verification
+    update_assessment_submission_to_prioritisation_decision
 
     update_further_information_requests_assessment_started_to_requested
   end
@@ -126,6 +127,23 @@ class UpdateWorkingDaysJob < ApplicationJob
             calendar.business_days_between(
               assessment.application_form.submitted_at,
               assessment.verification_started_at,
+            ),
+        )
+      end
+  end
+
+  def update_assessment_submission_to_prioritisation_decision
+    Assessment
+      .joins(:application_form)
+      .includes(:application_form)
+      .where.not(application_form: { submitted_at: nil })
+      .where.not(prioritisation_decision_at: nil)
+      .find_each do |assessment|
+        assessment.update!(
+          working_days_between_submitted_and_prioritisation_decision:
+            calendar.business_days_between(
+              assessment.application_form.submitted_at,
+              assessment.prioritisation_decision_at,
             ),
         )
       end

@@ -4,36 +4,38 @@
 #
 # Table name: assessments
 #
-#  id                                                      :bigint           not null, primary key
-#  age_range_max                                           :integer
-#  age_range_min                                           :integer
-#  age_range_note                                          :text             default(""), not null
-#  induction_required                                      :boolean
-#  prioritisation_decision_at                              :datetime
-#  prioritised                                             :boolean
-#  qualifications_assessor_note                            :text             default(""), not null
-#  recommendation                                          :string           default("unknown"), not null
-#  recommendation_assessor_note                            :text             default(""), not null
-#  recommended_at                                          :datetime
-#  references_verified                                     :boolean
-#  scotland_full_registration                              :boolean
-#  started_at                                              :datetime
-#  subjects                                                :text             default([]), not null, is an Array
-#  subjects_note                                           :text             default(""), not null
-#  unsigned_consent_document_generated                     :boolean          default(FALSE), not null
-#  verification_started_at                                 :datetime
-#  working_days_between_started_and_completed              :integer
-#  working_days_between_started_and_today                  :integer
-#  working_days_between_started_and_verification_started   :integer
-#  working_days_between_submitted_and_started              :integer
-#  working_days_between_submitted_and_verification_started :integer
-#  created_at                                              :datetime         not null
-#  updated_at                                              :datetime         not null
-#  application_form_id                                     :bigint           not null
+#  id                                                         :bigint           not null, primary key
+#  age_range_max                                              :integer
+#  age_range_min                                              :integer
+#  age_range_note                                             :text             default(""), not null
+#  induction_required                                         :boolean
+#  prioritisation_decision_at                                 :datetime
+#  prioritised                                                :boolean
+#  qualifications_assessor_note                               :text             default(""), not null
+#  recommendation                                             :string           default("unknown"), not null
+#  recommendation_assessor_note                               :text             default(""), not null
+#  recommended_at                                             :datetime
+#  references_verified                                        :boolean
+#  scotland_full_registration                                 :boolean
+#  started_at                                                 :datetime
+#  subjects                                                   :text             default([]), not null, is an Array
+#  subjects_note                                              :text             default(""), not null
+#  unsigned_consent_document_generated                        :boolean          default(FALSE), not null
+#  verification_started_at                                    :datetime
+#  working_days_between_started_and_completed                 :integer
+#  working_days_between_started_and_today                     :integer
+#  working_days_between_started_and_verification_started      :integer
+#  working_days_between_submitted_and_prioritisation_decision :integer
+#  working_days_between_submitted_and_started                 :integer
+#  working_days_between_submitted_and_verification_started    :integer
+#  created_at                                                 :datetime         not null
+#  updated_at                                                 :datetime         not null
+#  application_form_id                                        :bigint           not null
 #
 # Indexes
 #
 #  index_assessments_on_application_form_id  (application_form_id)
+#  index_assessments_on_prioritised          (prioritised)
 #
 # Foreign Keys
 #
