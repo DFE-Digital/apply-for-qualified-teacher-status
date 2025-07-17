@@ -259,10 +259,6 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
           OpenStruct.new(id: "overdue_lops", label: "Overdue LoPS"),
           OpenStruct.new(id: "overdue_consent", label: "Overdue consent"),
           OpenStruct.new(
-            id: "overdue_further_information",
-            label: "Overdue further information",
-          ),
-          OpenStruct.new(
             id: "overdue_prioritisation_reference",
             label: "Overdue prioritisation reference",
           ),
@@ -272,8 +268,6 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
             label: "Potential duplication in DQT",
           ),
           OpenStruct.new(id: "preliminary_check", label: "Preliminary check"),
-          OpenStruct.new(id: "received_ecctis", label: "Received Ecctis"),
-          OpenStruct.new(id: "received_lops", label: "Received LoPS"),
           OpenStruct.new(id: "received_consent", label: "Received consent"),
           OpenStruct.new(
             id: "received_further_information",

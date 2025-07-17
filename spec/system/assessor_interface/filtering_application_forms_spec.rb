@@ -164,7 +164,7 @@ RSpec.describe "Assessor filtering application forms", type: :system do
   end
 
   def and_i_apply_the_statuses_filter
-    expect(assessor_applications_page.statuses_filter.statuses.count).to eq(29)
+    expect(assessor_applications_page.statuses_filter.statuses.count).to eq(26)
     assessor_applications_page.statuses_filter.statuses.fourth.checkbox.click
     assessor_applications_page.apply_filters.click
   end

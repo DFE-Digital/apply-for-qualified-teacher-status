@@ -84,7 +84,6 @@ class AssessorInterface::ApplicationFormsIndexViewObject
     declined
     overdue_consent
     overdue_ecctis
-    overdue_further_information
     overdue_lops
     overdue_reference
     overdue_prioritisation_reference
@@ -92,9 +91,7 @@ class AssessorInterface::ApplicationFormsIndexViewObject
     preliminary_check
     prioritisation_check
     received_consent
-    received_ecctis
     received_further_information
-    received_lops
     received_reference
     received_prioritisation_reference
     review
