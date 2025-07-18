@@ -4,7 +4,7 @@ class AssessorInterface::RequestableRequestForm
   include ActiveModel::Model
   include ActiveModel::Attributes
 
-  attr_accessor :requestable, :user, :application_form, :assessment
+  attr_accessor :requestable, :user
   validates :requestable, :user, presence: true
 
   attribute :passed, :boolean

@@ -175,8 +175,6 @@ module AssessorInterface
 
     attr_reader :params
 
-    delegate :professional_standing_request, to: :assessment
-
     def build_key(failure_reason, key_section)
       key =
         if FailureReasons.passport_expired?(failure_reason)
