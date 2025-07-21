@@ -59,6 +59,10 @@ module TeacherInterface
         end
     end
 
+    def application_form
+      @application_form ||= current_teacher.application_form
+    end
+
     private
 
     attr_reader :current_teacher, :params
@@ -73,9 +77,6 @@ module TeacherInterface
          Contact job: #{item.contact_job}<br/>
          Contact email: #{item.contact_email}".html_safe
       end
-    end
-    def application_form
-      @application_form ||= current_teacher.application_form
     end
 
     def item_name(item)
