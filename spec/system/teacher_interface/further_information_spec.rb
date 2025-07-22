@@ -73,6 +73,23 @@ RSpec.describe "Teacher further information", type: :system do
     and_i_receive_a_further_information_received_email
   end
 
+  context "when the further information request has already expired" do
+    before do
+      application_form.assessment.further_information_requests.first.expired!
+      application_form.update!(declined_at: Time.current)
+    end
+
+    it "does not allow submission" do
+      when_i_visit_the(
+        :teacher_further_information_requested_page,
+        request_id: further_information_request.id,
+      )
+
+      then_i_see_the(:teacher_submitted_application_page)
+      and_i_see_the_declined_information
+    end
+  end
+
   def given_there_is_an_application_form
     application_form
   end
@@ -194,6 +211,16 @@ RSpec.describe "Teacher further information", type: :system do
     )
     expect(teacher_submitted_application_page.panel.body.text).to eq(
       "Your application reference number\n#{@application_form.reference}",
+    )
+  end
+
+  def and_i_see_the_declined_information
+    expect(teacher_submitted_application_page).to have_content(
+      "Your QTS application has been declined",
+    )
+    expect(teacher_submitted_application_page).to have_content(
+      "Your application has been declined as you did not respond to the assessor’s " \
+        "request for further information within the specified time.",
     )
   end
 

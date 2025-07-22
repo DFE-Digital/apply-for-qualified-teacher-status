@@ -5,6 +5,7 @@ module TeacherInterface
     include HistoryTrackable
 
     before_action :load_view_object
+    before_action :ensure_application_form_not_declined
 
     define_history_origin :show
     define_history_check :edit
@@ -29,6 +30,12 @@ module TeacherInterface
     def load_view_object
       @view_object =
         FurtherInformationRequestViewObject.new(current_teacher:, params:)
+    end
+
+    def ensure_application_form_not_declined
+      if @view_object.application_form.declined?
+        redirect_to %i[teacher_interface application_form]
+      end
     end
   end
 end
