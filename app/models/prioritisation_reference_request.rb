@@ -46,7 +46,7 @@ class PrioritisationReferenceRequest < ApplicationRecord
 
   scope :respondable,
         -> do
-          joins(:assessment).requested.not_received.where(
+          joins(:assessment).requested.not_received.not_reviewed.where(
             assessment: {
               prioritisation_decision_at: nil,
             },

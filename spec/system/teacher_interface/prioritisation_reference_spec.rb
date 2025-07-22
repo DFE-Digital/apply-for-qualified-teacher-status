@@ -89,7 +89,23 @@ RSpec.describe "Teacher prioritisation reference", type: :system do
     end
   end
 
-  context "when the prioritisation has already been made" do
+  context "when the reference was overdue and already reviewed" do
+    before do
+      prioritisation_reference_request.update!(
+        expired_at: 1.day.ago,
+        reviewed_at: Time.current,
+        review_passed: false,
+        review_note: "Failed",
+      )
+    end
+
+    it "lets the referee know that the reference is no longer required" do
+      when_i_visit_the(:teacher_prioritisation_reference_requested_page, slug:)
+      then_i_see_not_found_page
+    end
+  end
+
+  context "when the prioritisation decision has already been made" do
     before do
       prioritisation_reference_request.assessment.update!(
         prioritisation_decision_at: Time.current,
