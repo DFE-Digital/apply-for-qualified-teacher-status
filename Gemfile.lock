@@ -324,7 +324,7 @@ GEM
       aes_key_wrap
       bindata
       httpclient
-    jwt (2.10.1)
+    jwt (2.10.2)
       base64
     language_server-protocol (3.17.0.5)
     libreconv (0.9.5)
@@ -338,7 +338,7 @@ GEM
       net-imap
       net-pop
       net-smtp
-    mail-notify (2.0.0)
+    mail-notify (2.1.0)
       actionmailer (>= 5.2.8.1)
       actionpack (>= 5.2.8.1)
       actionview (>= 5.2.8.1)
@@ -377,7 +377,7 @@ GEM
       racc (~> 1.4)
     nokogiri (1.18.9-x86_64-linux-gnu)
       racc (~> 1.4)
-    notifications-ruby-client (6.0.0)
+    notifications-ruby-client (6.2.0)
       jwt (>= 1.5, < 3)
     oauth2 (2.0.9)
       faraday (>= 0.17.3, < 3.0)
