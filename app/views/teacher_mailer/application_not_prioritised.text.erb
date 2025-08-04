@@ -18,7 +18,11 @@ Once the <%= region_certificate_name(@application_form.region) %> is received an
 <% elsif @application_form.requires_preliminary_check %>
 # What happens next
 
+<% if @application_form.teaching_authority_provides_written_statement %>
 We need to carry out some initial checks on your application. We will email you to let you know if your application passes these initial checks. Because we were not able to confirm that you have valid work experience in England, your application will be assessed against additional requirements.
+<% else %>
+Because we were not able to confirm that you have valid work experience in England, your application will be assessed against additional requirements.
+<% end %>
 
 We require you to be qualified to teach:
 - children aged 11 to 16
