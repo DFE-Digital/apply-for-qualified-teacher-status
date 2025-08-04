@@ -3,7 +3,7 @@
 # production: runs the actual app
 
 # Build builder image
-FROM ruby:3.4.3-alpine3.21 as builder
+FROM ruby:3.4.5-alpine3.21 as builder
 
 WORKDIR /app
 
@@ -62,7 +62,7 @@ RUN rm -rf node_modules log/* tmp/* /tmp && \
     find /usr/local/bundle/gems -name "*.html" -delete
 
 # Build runtime image
-FROM ruby:3.4.3-alpine3.21 as production
+FROM ruby:3.4.5-alpine3.21 as production
 
 # The application runs from /app
 WORKDIR /app
