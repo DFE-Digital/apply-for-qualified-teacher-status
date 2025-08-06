@@ -311,11 +311,11 @@ RSpec.describe "Eligibility check (With prioritisation enabled)",
   end
 
   def when_i_have_work_experience_in_england
-    eligibility_degree_page.submit_yes
+    eligibility_work_experience_in_england_page.submit_yes
   end
 
   def when_i_do_not_have_work_experience_in_england
-    eligibility_degree_page.submit_no
+    eligibility_work_experience_in_england_page.submit_no
   end
 
   def when_i_dont_have_a_degree
