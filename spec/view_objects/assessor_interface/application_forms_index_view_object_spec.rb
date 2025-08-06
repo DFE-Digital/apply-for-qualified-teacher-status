@@ -268,6 +268,10 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
             label: "Potential duplication in DQT",
           ),
           OpenStruct.new(id: "preliminary_check", label: "Preliminary check"),
+          OpenStruct.new(
+            id: "prioritisation_check",
+            label: "Prioritisation check",
+          ),
           OpenStruct.new(id: "received_consent", label: "Received consent"),
           OpenStruct.new(
             id: "received_further_information",
@@ -289,10 +293,6 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
           OpenStruct.new(
             id: "waiting_on_further_information",
             label: "Waiting on further information",
-          ),
-          OpenStruct.new(
-            id: "prioritisation_check",
-            label: "Waiting on prioritisation checks",
           ),
           OpenStruct.new(
             id: "waiting_on_prioritisation_reference",
