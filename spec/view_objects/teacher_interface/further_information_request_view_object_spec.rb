@@ -81,12 +81,18 @@ RSpec.describe TeacherInterface::FurtherInformationRequestViewObject do
   describe "#can_check_answers?" do
     subject(:can_check_answers?) { view_object.can_check_answers? }
 
-    context "with uncomplete items" do
+    context "with incomplete items" do
       before do
         create(:further_information_request_item, further_information_request:)
       end
 
       it { is_expected.to be false }
+
+      it "disables check your answers in task list" do
+        check_answers_item = view_object.task_list_items.last
+        expect(check_answers_item[:status]).to eq("cannot_start")
+        expect(check_answers_item[:href]).to be_nil
+      end
     end
 
     context "with complete items" do
@@ -100,6 +106,19 @@ RSpec.describe TeacherInterface::FurtherInformationRequestViewObject do
       end
 
       it { is_expected.to be true }
+
+      it "enables check your answers in task list" do
+        check_answers_item = view_object.task_list_items.last
+        expect(check_answers_item[:status]).to eq("not_started")
+        expect(check_answers_item[:href]).to eq(
+          [
+            :edit,
+            :teacher_interface,
+            :application_form,
+            further_information_request,
+          ],
+        )
+      end
     end
   end
 
