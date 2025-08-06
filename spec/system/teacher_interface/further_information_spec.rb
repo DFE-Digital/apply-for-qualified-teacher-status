@@ -122,11 +122,15 @@ RSpec.describe "Teacher further information", type: :system do
   end
 
   def i_see_the_cannot_start_check_your_answers_list_item
-    expect(check_your_answers_task_list_item.status_tag.text).to eq("Cannot start")
+    expect(check_your_answers_task_list_item.status_tag.text).to eq(
+      "Cannot start",
+    )
   end
 
   def i_see_the_not_started_check_your_answers_list_item
-    expect(check_your_answers_task_list_item.status_tag.text).to eq("Not started")
+    expect(check_your_answers_task_list_item.status_tag.text).to eq(
+      "Not started",
+    )
   end
 
   def when_i_click_the_text_task_list_item
