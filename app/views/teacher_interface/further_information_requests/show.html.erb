@@ -9,16 +9,11 @@
   @view_object.task_list_items.each do |item|
     task_list.with_item do |row|
       row.with_title(text: item[:title], href: item[:href])
-      row.with_status(text: render(StatusTag::Component.new(item[:status])), classes: "app-white-space-nowrap")
-    end
-  end
-  task_list.with_item do |row|
-    if @view_object.can_check_answers?
-      row.with_title(text: "Check your answers before submitting", href: [:edit, :teacher_interface, :application_form, @view_object.further_information_request])
-      row.with_status(text: govuk_tag(text: "Not started", colour: "grey"))
-    else
-      row.with_title(text: "Check your answers before submitting")
-      row.with_status(text: govuk_tag(text: "Cannot start", colour: "grey"))
+      if item[:status] == "cannot_start"
+        row.with_status(text: govuk_tag(text: "Cannot start", colour: "grey"))
+      else
+        row.with_status(text: render(StatusTag::Component.new(item[:status])), classes: "app-white-space-nowrap")
+      end
     end
   end
 end %>

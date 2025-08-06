@@ -16,7 +16,7 @@ module TeacherInterface
     end
 
     def task_list_items
-      further_information_request
+      items = further_information_request
         .items
         .order(:created_at)
         .map do |item|
@@ -32,6 +32,16 @@ module TeacherInterface
             status: item.status,
           }
         end
+
+      items << {
+        title: "Check your answers before submitting",
+        href: can_check_answers? ? 
+          [:edit, :teacher_interface, :application_form, further_information_request] : 
+          nil,
+        status: can_check_answers? ? "not_started" : "cannot_start"
+      }
+
+      items
     end
 
     def can_check_answers?
