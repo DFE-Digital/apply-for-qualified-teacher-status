@@ -28,6 +28,8 @@ RSpec.describe "Teacher further information", type: :system do
       request_id: further_information_request.id,
     )
 
+    i_see_the_cannot_start_check_your_answers_list_item
+
     when_i_click_the_text_task_list_item
     then_i_see_the(:teacher_further_information_required_page)
 
@@ -54,7 +56,8 @@ RSpec.describe "Teacher further information", type: :system do
     and_i_click_continue
     and_i_see_the_completed_work_history_contact_list_item
 
-    when_i_click_the_check_your_answers_button
+    i_see_the_not_started_check_your_answers_list_item
+    when_i_click_the_check_your_answers_task_list_item
     then_i_see_the(:teacher_check_further_information_request_answers_page)
     and_i_see_the_check_your_answers_items
 
@@ -118,6 +121,14 @@ RSpec.describe "Teacher further information", type: :system do
     expect(work_history_task_list_item.status_tag.text).to eq("Completed")
   end
 
+  def i_see_the_cannot_start_check_your_answers_list_item
+    expect(check_your_answers_task_list_item.status_tag.text).to eq("Cannot start")
+  end
+
+  def i_see_the_not_started_check_your_answers_list_item
+    expect(check_your_answers_task_list_item.status_tag.text).to eq("Not started")
+  end
+
   def when_i_click_the_text_task_list_item
     text_task_list_item.click
     expect(
@@ -175,8 +186,14 @@ RSpec.describe "Teacher further information", type: :system do
     teacher_further_information_requested_page.save_and_sign_out_button.click
   end
 
-  def when_i_click_the_check_your_answers_button
-    teacher_further_information_requested_page.check_your_answers_button.click
+  def when_i_click_the_check_your_answers_task_list_item
+    check_your_answers_task_list_item.click
+  end
+
+  def check_your_answers_task_list_item
+    teacher_further_information_requested_page.task_list.find_item(
+      "Check your answers before submitting",
+    )
   end
 
   def and_i_see_the_check_your_answers_items
