@@ -16,7 +16,7 @@
   <li>Use this service to check if you’re eligible to apply for QTS.</li>
   <li>If you’re eligible, you’ll be able to submit an application.</li>
   <% if FeatureFlags::FeatureFlag.active?(:prioritisation) %>
-    <li>Your application will be prioritised if you have <%= govuk_link_to "valid work experience in England", "https://www.gov.uk/government/publications/overseas-trained-teachers-apply-for-qualified-teacher-status-in-england/overseas-trained-teachers-apply-for-qualified-teacher-status-in-england#if-you-are-already-working-in-a-valid-teaching-role-in-england" %> that we can confirm with your references.</li>
+    <li>Your application will be prioritised if you have <%= govuk_link_to "valid work experience in England", "https://www.gov.uk/government/publications/overseas-trained-teachers-apply-for-qualified-teacher-status-in-england/overseas-trained-teachers-apply-for-qualified-teacher-status-in-england#if-you-are-already-working-in-a-valid-teaching-role-in-england", new_tab: true %> that we can confirm with your references.</li>
   <% end %>
   <li>Each application will be assessed by a trained assessor.</li>
   <li>They will check all the information submitted.</li>
