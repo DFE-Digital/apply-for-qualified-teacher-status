@@ -97,6 +97,7 @@ en:
         heading: English language proficiency
     further_information_request:
       show:
+        check: Check your answers before submitting
         failure_reason:
           age_range: Tell us more about the age range you can teach
           applicant_already_dqt: Additional personal information

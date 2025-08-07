@@ -35,7 +35,7 @@ module TeacherInterface
           end
 
       items << {
-        title: "Check your answers before submitting",
+        title: I18n.t("teacher_interface.further_information_request.show.check"),
         href:
           if can_check_answers?
             [

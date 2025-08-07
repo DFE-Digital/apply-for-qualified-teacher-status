@@ -9,11 +9,7 @@
   @view_object.task_list_items.each do |item|
     task_list.with_item do |row|
       row.with_title(text: item[:title], href: item[:href])
-      if item[:status] == "cannot_start"
-        row.with_status(text: govuk_tag(text: "Cannot start", colour: "grey"))
-      else
-        row.with_status(text: render(StatusTag::Component.new(item[:status])), classes: "app-white-space-nowrap")
-      end
+      row.with_status(text: render(StatusTag::Component.new(item[:status])), classes: "app-white-space-nowrap")
     end
   end
 end %>
