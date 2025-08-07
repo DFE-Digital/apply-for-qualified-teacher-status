@@ -26,7 +26,7 @@
     <p class="govuk-body">If you are recognised as a teacher in <%= CountryName.from_eligibility_check(@eligibility_check, with_definite_article: true) %> you are not currently eligible to use this service.</p>
 
     <p class="govuk-body">
-      We will update this page should there be any <%= govuk_link_to "changes to eligibility for QTS", "https://www.gov.uk/government/publications/awarding-qualified-teacher-status-to-overseas-teachers/a-fairer-approach-to-awarding-qts-to-overseas-teachers--2#changes-to-eligibility-for-qts" %>.
+      We will update this page should there be any <%= govuk_link_to "changes to eligibility for QTS", "https://www.gov.uk/government/publications/overseas-trained-teachers-apply-for-qualified-teacher-status-in-england#changes-to-eligibility-for-qts" %>.
     </p>
   <% end %>
 <% else %>
@@ -51,7 +51,7 @@
   <ul class="govuk-list govuk-list--bullet">
     <li><%= govuk_link_to "apply for QTS using alternative routes", "https://www.gov.uk/government/publications/apply-for-qualified-teacher-status-qts-if-you-teach-outside-the-uk/routes-to-qualified-teacher-status-qts-for-teachers-and-those-with-teaching-experience-outside-the-uk#qts-exemption-for-teachers-from-outside-the-uk" %></li>
     <li><%= govuk_link_to "learn more about teaching in England", "https://getintoteaching.education.gov.uk/non-uk-teachers/teach-in-england-if-you-trained-overseas" %></li>
-    <li><%= govuk_link_to "learn more about the new QTS regulations", "https://www.gov.uk/government/publications/awarding-qualified-teacher-status-to-overseas-teachers/a-fairer-approach-to-awarding-qts-to-overseas-teachers--2" %></li>
+    <li><%= govuk_link_to "learn more about the new QTS regulations", "https://www.gov.uk/government/publications/overseas-trained-teachers-apply-for-qualified-teacher-status-in-england" %></li>
   </ul>
 
   <% if @eligibility_check.ineligible_reasons.include?(:work_experience) %>
