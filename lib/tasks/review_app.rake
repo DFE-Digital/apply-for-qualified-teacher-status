@@ -12,6 +12,7 @@ namespace :review_app do
       suitability
       teacher_applications
       use_passport_for_identity_verification
+      prioritisation
     ].each { |feature| FeatureFlags::FeatureFlag.activate(feature) }
   end
 end
