@@ -76,6 +76,27 @@ RSpec.describe TeacherInterface::FurtherInformationRequestViewObject do
         },
       )
     end
+
+    context "when items are incomplete" do
+      it "disables check your answers in task list" do
+        check_answers_item = task_list_items.last
+        expect(check_answers_item[:status]).to eq("cannot_start")
+        expect(check_answers_item[:href]).to be_nil
+      end
+    end
+
+    context "when items are complete" do
+      before do
+        # stub method to force `completed?` to return true
+        allow_any_instance_of(FurtherInformationRequestItem).to receive(:completed?).and_return(true)
+      end
+
+      it "enables check your answers in task list" do
+        check_answers_item = task_list_items.last
+        expect(check_answers_item[:status]).to eq("not_started")
+        expect(check_answers_item[:href]).to be_present
+      end
+    end
   end
 
   describe "#can_check_answers?" do
@@ -87,12 +108,6 @@ RSpec.describe TeacherInterface::FurtherInformationRequestViewObject do
       end
 
       it { is_expected.to be false }
-
-      it "disables check your answers in task list" do
-        check_answers_item = view_object.task_list_items.last
-        expect(check_answers_item[:status]).to eq("cannot_start")
-        expect(check_answers_item[:href]).to be_nil
-      end
     end
 
     context "with complete items" do
