@@ -100,7 +100,7 @@ RUN apk add font-terminus font-bitstream-100dpi font-bitstream-75dpi font-bitstr
 COPY --from=builder /app /app
 COPY --from=builder /usr/local/bundle/ /usr/local/bundle/
 
-RUN chown -R appuser:appgroup /app
+RUN chown -R appuser:appgroup /app/tmp /app/log
 
 # Use non-root user
 USER 10001
