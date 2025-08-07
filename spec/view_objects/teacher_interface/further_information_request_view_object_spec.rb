@@ -88,7 +88,12 @@ RSpec.describe TeacherInterface::FurtherInformationRequestViewObject do
     context "when items are complete" do
       before do
         text_item.update!(response: "Response")
-        create(:upload, :clean, document: document_item.document, filename: "upload.pdf")
+        create(
+          :upload,
+          :clean,
+          document: document_item.document,
+          filename: "upload.pdf",
+        )
       end
 
       it "enables check your answers in task list" do

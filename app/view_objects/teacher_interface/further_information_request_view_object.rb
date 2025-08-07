@@ -35,7 +35,8 @@ module TeacherInterface
           end
 
       items << {
-        title: I18n.t("teacher_interface.further_information_request.show.check"),
+        title:
+          I18n.t("teacher_interface.further_information_request.show.check"),
         href:
           if can_check_answers?
             [
