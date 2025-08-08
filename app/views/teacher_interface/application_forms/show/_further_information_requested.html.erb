@@ -3,7 +3,7 @@
 <p class="govuk-body">The assessor needs you to provide more information so they can continue reviewing your application.</p>
 
 <% if view_object.further_information_request.third_request? %>
-  <%= govuk_warning_text(text: "This is your final opportunity to provide the required information. You must submit this information by 11:59pm (BST) on #{view_object.further_information_request.expires_at.to_date.to_fs} or your application will be declined.") %>
+  <%= govuk_warning_text(text: "This is your final opportunity to provide the required information. You must submit this information by 11:59pm (#{view_object.further_information_request.expires_at.in_time_zone('Europe/London').strftime('%Z')}) on #{view_object.further_information_request.expires_at.to_date.to_fs} or your application will be declined.") %>
 <% else %>
   <%= govuk_warning_text(text: "You must submit this information by 11:59pm (#{view_object.further_information_request.expires_at.in_time_zone('Europe/London').strftime('%Z')}) on #{view_object.further_information_request.expires_at.to_date.to_fs} or your application will be declined.") %>
 <% end %>
