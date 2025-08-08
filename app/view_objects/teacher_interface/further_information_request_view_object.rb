@@ -16,22 +16,40 @@ module TeacherInterface
     end
 
     def task_list_items
-      further_information_request
-        .items
-        .order(:created_at)
-        .map do |item|
-          {
-            title: item_name(item),
-            href: [
+      items =
+        further_information_request
+          .items
+          .order(:created_at)
+          .map do |item|
+            {
+              title: item_name(item),
+              href: [
+                :edit,
+                :teacher_interface,
+                :application_form,
+                further_information_request,
+                item,
+              ],
+              status: item.status,
+            }
+          end
+
+      items << {
+        title:
+          I18n.t("teacher_interface.further_information_request.show.check"),
+        href:
+          if can_check_answers?
+            [
               :edit,
               :teacher_interface,
               :application_form,
               further_information_request,
-              item,
-            ],
-            status: item.status,
-          }
-        end
+            ]
+          end,
+        status: can_check_answers? ? "not_started" : "cannot_start",
+      }
+
+      items
     end
 
     def can_check_answers?
