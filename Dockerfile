@@ -79,6 +79,9 @@ RUN apk add --update --no-cache tzdata && \
     cp /usr/share/zoneinfo/Europe/London /etc/localtime && \
     echo "Europe/London" > /etc/timezone
 
+# Create non-root user and group
+RUN addgroup -S appgroup -g 20001 && adduser -S appuser -G appgroup -u 10001
+
 # Upgrade ssl, crypto and curl libraries to latest version
 RUN apk upgrade --no-cache openssl libssl3 libcrypto3 curl expat
 
@@ -96,6 +99,11 @@ RUN apk add font-terminus font-bitstream-100dpi font-bitstream-75dpi font-bitstr
 # Copy files generated in the builder image
 COPY --from=builder /app /app
 COPY --from=builder /usr/local/bundle/ /usr/local/bundle/
+
+RUN chown -R appuser:appgroup /app/tmp /app/log
+
+# Use non-root user
+USER 10001
 
 CMD bundle exec rails db:migrate:ignore_concurrent_migration_exceptions && \
     bundle exec rails server -b 0.0.0.0

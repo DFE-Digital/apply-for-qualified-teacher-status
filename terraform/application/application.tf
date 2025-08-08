@@ -52,9 +52,10 @@ module "web_application" {
   kubernetes_config_map_name = module.application_configuration.kubernetes_config_map_name
   kubernetes_secret_name     = module.application_configuration.kubernetes_secret_name
 
-  docker_image = var.docker_image
-  replicas     = var.app_replicas
-  enable_logit = var.enable_logit
+  docker_image    = var.docker_image
+  replicas        = var.app_replicas
+  enable_logit    = var.enable_logit
+  run_as_non_root = var.run_as_non_root
 }
 
 module "worker_application" {
@@ -76,6 +77,7 @@ module "worker_application" {
   command       = ["bundle", "exec", "sidekiq", "-C", "./config/sidekiq.yml"]
   probe_command = ["pgrep", "-f", "sidekiq"]
 
-  enable_logit   = var.enable_logit
-  enable_gcp_wif = var.bigquery_federated_auth ? true : null
+  enable_logit    = var.enable_logit
+  enable_gcp_wif  = var.bigquery_federated_auth ? true : null
+  run_as_non_root = var.run_as_non_root
 }
