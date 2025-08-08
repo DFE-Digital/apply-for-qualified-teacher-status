@@ -22,6 +22,17 @@ RSpec.describe "Teacher further information", type: :system do
     then_i_see_the(:teacher_signed_out_page)
   end
 
+  context "when it's the first request" do
+    it "shows the standard warning text" do
+      when_i_visit_the(:teacher_further_information_requested_start_page)
+
+      expect(page).to have_content("You must submit this information by")
+      expect(page).not_to have_content(
+        "This is your final opportunity to provide the required information.",
+      )
+    end
+  end
+
   it "check your answers" do
     when_i_visit_the(
       :teacher_further_information_requested_page,
