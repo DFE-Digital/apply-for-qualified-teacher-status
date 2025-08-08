@@ -23,18 +23,7 @@ RSpec.describe "Teacher further information", type: :system do
   end
 
   context "when it's the third request" do
-    before do
-      create(
-        :received_further_information_request,
-        assessment: application_form.assessment,
-        requested_at: 6.weeks.ago,
-      )
-      create(
-        :received_further_information_request,
-        assessment: application_form.assessment,
-        requested_at: 3.weeks.ago,
-      )
-    end
+    before { given_there_have_been_two_prior_requests }
 
     it "shows the standard warning text" do
       when_i_visit_the(:teacher_further_information_requested_start_page)
@@ -320,6 +309,20 @@ RSpec.describe "Teacher further information", type: :system do
     expect(page).to have_content("You must submit this information by")
     expect(page).not_to have_content(
       "This is your final opportunity to provide the required information.",
+    )
+  end
+
+  def given_there_have_been_two_prior_requests
+    assessment = application_form.assessment
+    create(
+      :received_further_information_request,
+      assessment:,
+      requested_at: 6.weeks.ago,
+    )
+    create(
+      :received_further_information_request,
+      assessment:,
+      requested_at: 3.weeks.ago,
     )
   end
 end
