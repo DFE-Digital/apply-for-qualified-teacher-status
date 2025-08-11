@@ -10,6 +10,7 @@
 #  b2_level_requirement_prefix :string           default(""), not null
 #  check_url                   :string
 #  name                        :string           not null
+#  other_information           :text             default(""), not null
 #  reference_hint              :text             not null
 #  reference_name              :string           not null
 #  url                         :string           default(""), not null
