@@ -597,5 +597,10 @@ Rails.application.routes.draw do
   get "email/:key", to: "static#email", as: "email"
   get "english-language-guidance", to: "static#english_language_guidance"
 
+    # Sentry test route (do not enable in production)
+    if !Rails.env.production?
+      get "sentry_test/error", to: "sentry_test#error"
+    end
+
   root to: redirect("/eligibility")
 end
