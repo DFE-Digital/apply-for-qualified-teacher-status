@@ -8,6 +8,10 @@
   <h1 class="govuk-heading-l"><%= t(".heading") %> – <%= @provider.name %></h1>
   <p class="govuk-body">For <%= @provider.name %>, B2 level requires <%= @provider.b2_level_requirement_prefix %> <%= @provider.b2_level_requirement %> in all 4 disciplines (reading, writing, listening and speaking).</p>
 
+  <% if @provider.other_information.present? %>
+    <p class="govuk-body"><%= @provider.other_information.html_safe %></p>
+  <% end %>
+
   <%= f.govuk_text_field :reference,
                          label: { text: "Enter your #{@provider.reference_name}", size: "m" },
                          hint: { text: @provider.reference_hint } %>
