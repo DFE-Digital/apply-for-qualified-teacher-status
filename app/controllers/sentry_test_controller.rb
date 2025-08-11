@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This controller is for testing Sentry integration only. Do not enable in production.
 class SentryTestController < ApplicationController
   # GET /sentry_test/error
