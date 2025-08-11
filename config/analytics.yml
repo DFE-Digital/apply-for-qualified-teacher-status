@@ -154,6 +154,7 @@
     - created_at
     - id
     - name
+    - other_information
     - reference_hint
     - reference_name
     - updated_at

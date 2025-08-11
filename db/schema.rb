@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_17_131247) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_11_145745) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -238,6 +238,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_17_131247) do
     t.string "accepted_tests", default: "", null: false
     t.string "url", default: "", null: false
     t.string "b2_level_requirement_prefix", default: "", null: false
+    t.text "other_information", default: "", null: false
   end
 
   create_table "feature_flags_features", force: :cascade do |t|
