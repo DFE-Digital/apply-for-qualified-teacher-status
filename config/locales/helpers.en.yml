@@ -203,6 +203,7 @@ en:
         reference_hint: Reference hint
         accepted_tests: Accepted tests (we can accept)
         check_url: Check website
+        other_information: Other information
       teacher:
         email: Email address
       teacher_interface_add_another_qualification_form:
