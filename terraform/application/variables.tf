@@ -91,6 +91,12 @@ variable "bigquery_federated_auth" {
   description = "Configure environment variable to let dfe-analytics use federated authentication"
 }
 
+variable "run_as_non_root" {
+  type        = bool
+  default     = true
+  description = "Whether to enforce that containers must run as non-root user"
+}
+
 locals {
   environment_variables = yamldecode(file("${path.module}/config/${var.app_environment}/variables.yml"))
 }
