@@ -6,10 +6,10 @@ The assessor reviewing your QTS application needs more information.
 
 You need to sign in to your application to submit the information.
 
-You must submit this information by <%= @further_information_request.expires_at.to_date.to_fs %> or your application will be declined.
+You must submit this information by 11:59pm <%= @further_information_request.expires_at.in_time_zone('Europe/London').strftime('%Z') %> on <%= @further_information_request.expires_at.to_date.to_fs %> or your application will be declined.
 
-<% if FeatureFlags::FeatureFlag.active?(:gov_one_applicant_login) %>
 ## Signing in to your application
+<% if FeatureFlags::FeatureFlag.active?(:gov_one_applicant_login) %>
 
 You’ll now need a GOV.UK One Login to sign in. If you don't have one you can create one, but you must use the same email as your QTS sign in to access your application.
 
