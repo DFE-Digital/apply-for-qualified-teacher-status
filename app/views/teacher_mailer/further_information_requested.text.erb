@@ -2,13 +2,15 @@ Dear <%= application_form_full_name(@application_form) %>,
 
 The assessor reviewing your QTS application needs more information.
 
-The assessor needs this information by <%= @further_information_request.expires_at.to_date.to_fs %> for your application to proceed.
-
 # What you need to do
-<% if FeatureFlags::FeatureFlag.active?(:gov_one_applicant_login) %>
-You will need to sign in to your application to see what information is needed and add it.
 
-# Signing in to your application
+You need to sign in to your application to submit the information.
+
+You must submit this information by <%= @further_information_request.expires_at.to_date.to_fs %> or your application will be declined.
+
+<% if FeatureFlags::FeatureFlag.active?(:gov_one_applicant_login) %>
+## Signing in to your application
+
 You’ll now need a GOV.UK One Login to sign in. If you don't have one you can create one, but you must use the same email as your QTS sign in to access your application.
 
 [Create your GOV.UK One Login or sign in](<%= new_teacher_session_url %>)
@@ -16,7 +18,7 @@ You’ll now need a GOV.UK One Login to sign in. If you don't have one you can c
 [Sign in to your application](<%= new_teacher_session_url %>)
 <% end %>
 
-Your application is on hold until this information is received. Once you respond with all the information requested, the assessor will be able to continue reviewing your application.
+Your application is on hold until this information is received. Once submit all the information requested, the assessor will be able to continue reviewing your application.
 
 <%= render "shared/teacher_mailer/any_questions_contact" %>
 
