@@ -48,7 +48,13 @@
         <% row.with_cell do %>
           <%= govuk_link_to provider.name, provider.url %>
         <% end %>
-        <% row.with_cell(text: provider.accepted_tests) %>
+        <% row.with_cell do %>
+          <%= provider.accepted_tests %>
+          <% if provider.other_information.present? %>
+            <br /><br />
+            <%= provider.other_information.html_safe %>
+          <% end %>
+        <% end %>
         <% row.with_cell do %>
           Listening:&nbsp;<%= provider.b2_level_requirement %><br>
           Speaking:&nbsp;<%= provider.b2_level_requirement %><br>
