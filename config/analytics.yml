@@ -12,6 +12,7 @@
     - created_at
     - date_of_birth
     - declined_at
+    - eligibility_check_id
     - english_language_citizenship_exempt
     - english_language_proof_method
     - english_language_provider_id
