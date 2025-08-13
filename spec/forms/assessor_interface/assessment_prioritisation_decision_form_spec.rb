@@ -21,7 +21,7 @@ RSpec.describe AssessorInterface::AssessmentPrioritisationDecisionForm,
   describe "#save" do
     subject(:save) { form.save }
 
-    before { allow(PrioritiseAssessment).to receive(:call) }
+    before { allow(AssignApplicationFormAssessor).to receive(:call) }
 
     context "when passed" do
       let(:passed) { "true" }
@@ -36,6 +36,16 @@ RSpec.describe AssessorInterface::AssessmentPrioritisationDecisionForm,
         expect(PrioritiseAssessment).to have_received(:call).with(
           assessment:,
           user:,
+        )
+      end
+
+      it "unassigns the assessor" do
+        subject
+
+        expect(AssignApplicationFormAssessor).to have_received(:call).with(
+          application_form: assessment.application_form,
+          user:,
+          assessor: nil,
         )
       end
     end
@@ -53,6 +63,16 @@ RSpec.describe AssessorInterface::AssessmentPrioritisationDecisionForm,
         expect(DeprioritiseAssessment).to have_received(:call).with(
           assessment:,
           user:,
+        )
+      end
+
+      it "unassigns the assessor" do
+        subject
+
+        expect(AssignApplicationFormAssessor).to have_received(:call).with(
+          application_form: assessment.application_form,
+          user:,
+          assessor: nil,
         )
       end
     end
