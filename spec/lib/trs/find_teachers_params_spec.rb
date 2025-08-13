@@ -26,6 +26,27 @@ RSpec.describe TRS::FindTeachersParams do
       )
     end
 
+    context "when family name includes whitespace around the sides" do
+      let(:application_form) do
+        create(
+          :application_form,
+          date_of_birth: Date.new(1960, 1, 1),
+          given_names: "Rowdy Roddy",
+          family_name: " Piper Unknown  ",
+        )
+      end
+
+      it "returns camel case params with lastName trimmed" do
+        expect(call).to eq(
+          {
+            dateOfBirth: "1960-01-01",
+            findBy: "LastNameAndDateOfBirth",
+            lastName: "Piper Unknown",
+          },
+        )
+      end
+    end
+
     context "when reverse_name is true" do
       let(:reverse_name) { true }
 

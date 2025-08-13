@@ -20,7 +20,7 @@ module TRS
             if reverse_name
               application_form.given_names.split(" ").first
             else
-              application_form.family_name
+              application_form.family_name.strip
             end
           ),
       }
