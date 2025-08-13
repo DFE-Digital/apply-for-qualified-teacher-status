@@ -335,15 +335,18 @@ RSpec.describe "Teacher further information", type: :system do
 
   def given_there_have_been_two_prior_requests
     assessment = application_form.assessment
+    latest_further_information_request =
+      assessment.further_information_requests.first
+
     create(
       :received_further_information_request,
       assessment:,
-      requested_at: 6.weeks.ago,
+      requested_at: latest_further_information_request.requested_at - 2.weeks,
     )
     create(
       :received_further_information_request,
       assessment:,
-      requested_at: 3.weeks.ago,
+      requested_at: latest_further_information_request.requested_at - 4.weeks,
     )
   end
 end
