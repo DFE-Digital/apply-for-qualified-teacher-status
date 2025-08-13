@@ -12,7 +12,7 @@ RSpec.describe "Teacher further information", type: :system do
   it "save and sign out" do
     when_i_visit_the(:teacher_further_information_requested_start_page)
     then_i_see_the(:teacher_further_information_requested_start_page)
-
+    then_i_see_the_warning_text
     when_i_click_the_start_button
     then_i_see_the(:teacher_further_information_requested_page)
     and_i_see_the_text_task_list_item
@@ -20,6 +20,19 @@ RSpec.describe "Teacher further information", type: :system do
 
     when_i_click_the_save_and_sign_out_button
     then_i_see_the(:teacher_signed_out_page)
+  end
+
+  context "when it's the third request" do
+    before { given_there_have_been_two_prior_requests }
+
+    it "shows the standard warning text" do
+      when_i_visit_the(:teacher_further_information_requested_start_page)
+
+      expect(page).to have_content("You must submit this information by")
+      expect(page).to have_content(
+        "This is your final opportunity to provide the required information.",
+      )
+    end
   end
 
   it "check your answers" do
@@ -290,5 +303,26 @@ RSpec.describe "Teacher further information", type: :system do
       .summary_list
       .rows
       .last
+  end
+
+  def then_i_see_the_warning_text
+    expect(page).to have_content("You must submit this information by")
+    expect(page).not_to have_content(
+      "This is your final opportunity to provide the required information.",
+    )
+  end
+
+  def given_there_have_been_two_prior_requests
+    assessment = application_form.assessment
+    create(
+      :received_further_information_request,
+      assessment:,
+      requested_at: 6.weeks.ago,
+    )
+    create(
+      :received_further_information_request,
+      assessment:,
+      requested_at: 3.weeks.ago,
+    )
   end
 end
