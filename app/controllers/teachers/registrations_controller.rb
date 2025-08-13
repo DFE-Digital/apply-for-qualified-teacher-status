@@ -38,6 +38,7 @@ class Teachers::RegistrationsController < Devise::RegistrationsController
     if valid_eligibility_check? && teacher_requires_application_form?
       ApplicationFormFactory.call(
         teacher: resource,
+        eligibility_check:,
         region: eligibility_check.region,
       )
     end

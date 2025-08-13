@@ -63,6 +63,7 @@
 #  created_at                                    :datetime         not null
 #  updated_at                                    :datetime         not null
 #  assessor_id                                   :bigint
+#  eligibility_check_id                          :bigint
 #  english_language_provider_id                  :bigint
 #  region_id                                     :bigint           not null
 #  reviewer_id                                   :bigint
@@ -72,6 +73,7 @@
 #
 #  index_application_forms_on_action_required_by            (action_required_by)
 #  index_application_forms_on_assessor_id                   (assessor_id)
+#  index_application_forms_on_eligibility_check_id          (eligibility_check_id)
 #  index_application_forms_on_english_language_provider_id  (english_language_provider_id)
 #  index_application_forms_on_family_name                   (family_name)
 #  index_application_forms_on_given_names                   (given_names)
@@ -84,6 +86,7 @@
 # Foreign Keys
 #
 #  fk_rails_...  (assessor_id => staff.id)
+#  fk_rails_...  (eligibility_check_id => eligibility_checks.id)
 #  fk_rails_...  (english_language_provider_id => english_language_providers.id)
 #  fk_rails_...  (region_id => regions.id)
 #  fk_rails_...  (reviewer_id => staff.id)

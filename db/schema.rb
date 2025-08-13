@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_17_131247) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_12_142312) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -106,8 +106,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_17_131247) do
     t.boolean "includes_prioritisation_features", default: false, null: false
     t.boolean "has_other_england_work_history"
     t.string "other_england_work_history_status", default: "not_started", null: false
+    t.bigint "eligibility_check_id"
     t.index ["action_required_by"], name: "index_application_forms_on_action_required_by"
     t.index ["assessor_id"], name: "index_application_forms_on_assessor_id"
+    t.index ["eligibility_check_id"], name: "index_application_forms_on_eligibility_check_id"
     t.index ["english_language_provider_id"], name: "index_application_forms_on_english_language_provider_id"
     t.index ["family_name"], name: "index_application_forms_on_family_name"
     t.index ["given_names"], name: "index_application_forms_on_given_names"
@@ -675,6 +677,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_17_131247) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "application_forms", "eligibility_checks"
   add_foreign_key "application_forms", "english_language_providers"
   add_foreign_key "application_forms", "regions"
   add_foreign_key "application_forms", "staff", column: "assessor_id"

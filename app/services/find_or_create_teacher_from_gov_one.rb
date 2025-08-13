@@ -39,7 +39,11 @@ class FindOrCreateTeacherFromGovOne
 
   def create_application_form!
     if valid_eligibility_check?
-      ApplicationFormFactory.call(teacher:, region: eligibility_check.region)
+      ApplicationFormFactory.call(
+        teacher:,
+        region: eligibility_check.region,
+        eligibility_check:,
+      )
     end
   end
 
