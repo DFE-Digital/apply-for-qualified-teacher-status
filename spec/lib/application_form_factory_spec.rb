@@ -162,6 +162,18 @@ RSpec.describe ApplicationFormFactory do
       end
     end
 
+    context "with eligibility check record provided" do
+      subject(:call) do
+        described_class.call(teacher:, region:, eligibility_check:)
+      end
+
+      let(:eligibility_check) { create :eligibility_check }
+
+      it "sets requires passport document as identity proof" do
+        expect(application_form.eligibility_check).to eq(eligibility_check)
+      end
+    end
+
     context "when the feature for passport upload is released" do
       before do
         FeatureFlags::FeatureFlag.activate(

@@ -3,14 +3,16 @@
 class ApplicationFormFactory
   include ServicePattern
 
-  def initialize(teacher:, region:)
+  def initialize(teacher:, region:, eligibility_check: nil)
     @teacher = teacher
     @region = region
+    @eligibility_check = eligibility_check
   end
 
   def call
     ActiveRecord::Base.transaction do
       ApplicationForm.create!(
+        eligibility_check:,
         needs_registration_number:,
         needs_work_history:,
         needs_written_statement:,
@@ -30,7 +32,7 @@ class ApplicationFormFactory
 
   private
 
-  attr_reader :teacher, :region
+  attr_reader :teacher, :region, :eligibility_check
 
   delegate :reduced_evidence_accepted,
            :requires_preliminary_check,

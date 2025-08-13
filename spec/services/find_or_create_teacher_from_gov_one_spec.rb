@@ -33,6 +33,9 @@ RSpec.describe FindOrCreateTeacherFromGovOne do
         teacher = call
 
         expect(teacher.application_forms).not_to be_empty
+        expect(teacher.application_forms.first.eligibility_check).to eq(
+          eligibility_check,
+        )
         expect(teacher.application_forms.first.region.country.code).to eq(
           eligibility_check.country_code,
         )
