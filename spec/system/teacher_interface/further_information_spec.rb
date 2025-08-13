@@ -314,7 +314,8 @@ RSpec.describe "Teacher further information", type: :system do
 
   def given_there_have_been_two_prior_requests
     assessment = application_form.assessment
-    latest_further_information_request = assessment.further_information_requests.first
+    latest_further_information_request =
+      assessment.further_information_requests.first
 
     create(
       :received_further_information_request,
