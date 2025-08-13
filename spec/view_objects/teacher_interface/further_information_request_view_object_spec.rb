@@ -76,12 +76,38 @@ RSpec.describe TeacherInterface::FurtherInformationRequestViewObject do
         },
       )
     end
+
+    context "when items are incomplete" do
+      it "disables check your answers in task list" do
+        check_answers_item = task_list_items.last
+        expect(check_answers_item[:status]).to eq("cannot_start")
+        expect(check_answers_item[:href]).to be_nil
+      end
+    end
+
+    context "when items are complete" do
+      before do
+        text_item.update!(response: "Response")
+        create(
+          :upload,
+          :clean,
+          document: document_item.document,
+          filename: "upload.pdf",
+        )
+      end
+
+      it "enables check your answers in task list" do
+        check_answers_item = task_list_items.last
+        expect(check_answers_item[:status]).to eq("not_started")
+        expect(check_answers_item[:href]).to be_present
+      end
+    end
   end
 
   describe "#can_check_answers?" do
     subject(:can_check_answers?) { view_object.can_check_answers? }
 
-    context "with uncomplete items" do
+    context "with incomplete items" do
       before do
         create(:further_information_request_item, further_information_request:)
       end

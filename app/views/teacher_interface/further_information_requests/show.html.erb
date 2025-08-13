@@ -14,11 +14,6 @@
   end
 end %>
 
-<% if @view_object.can_check_answers? %>
-  <p class="govuk-body"> Once you’ve checked your response on the next screen, you’ll be able to submit it. </p>
-  <%= govuk_button_link_to t("teacher_interface.further_information_request.show.check"), [:edit, :teacher_interface, :application_form, @view_object.further_information_request] %>
-<% end %>
-
 <% if FeatureFlags::FeatureFlag.active?(:gov_one_applicant_login) %>
   <%= govuk_button_link_to t("teacher_interface.application_forms.show.draft.save"), logout_uri, secondary: true %>
 <% else %>
