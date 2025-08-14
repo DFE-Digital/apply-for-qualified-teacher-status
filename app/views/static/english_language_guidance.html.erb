@@ -14,9 +14,9 @@
   <li>within the last 2 years</li>
 </ul>
 
-<p class="govuk-body">Your test must be at level B2 or above of the <a
-  href="https://www.coe.int/en/web/common-european-framework-reference-languages/level-descriptions"
-  class="govuk-link">Common European Framework of Reference for Languages (CEFR)</a>.
+<p class="govuk-body">
+  Your test must be at level B2 or above of the
+  <%= govuk_link_to "Common European Framework of Reference for Languages (CEFR)", "https://www.coe.int/en/web/common-european-framework-reference-languages/table-1-cefr-3.3-common-reference-levels-global-scale", new_tab: true %>
 </p>
 
 <h3 class="govuk-heading-m">Approved providers and tests</h3>
@@ -48,7 +48,13 @@
         <% row.with_cell do %>
           <%= govuk_link_to provider.name, provider.url %>
         <% end %>
-        <% row.with_cell(text: provider.accepted_tests) %>
+        <% row.with_cell do %>
+          <%= provider.accepted_tests %>
+          <% if provider.other_information.present? %>
+            <br /><br />
+            <%= provider.other_information.html_safe %>
+          <% end %>
+        <% end %>
         <% row.with_cell do %>
           Listening:&nbsp;<%= provider.b2_level_requirement %><br>
           Speaking:&nbsp;<%= provider.b2_level_requirement %><br>

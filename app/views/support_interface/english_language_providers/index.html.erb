@@ -41,6 +41,11 @@
         row.with_key { t("helpers.label.english_language_provider.check_url") }
         row.with_value { english_language_provider.check_url }
       end
+
+      summary_list.with_row do |row|
+        row.with_key { t("helpers.label.english_language_provider.other_information") }
+        row.with_value { english_language_provider.other_information.html_safe }
+      end
     end %>
   </article>
 <% end %>

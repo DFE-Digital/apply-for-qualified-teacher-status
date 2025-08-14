@@ -8,6 +8,10 @@
       <p class="govuk-body">Check the applicant’s <%= provider.reference_name %> at:</p>
       <p class="govuk-body"><%= govuk_link_to provider.check_url, provider.check_url, new_tab: true %></p>
     <% end %>
+
+    <% if provider.other_information.present? %>
+      <p class="govuk-body"><%= provider.other_information.html_safe %></p>
+    <% end %>
   <% else %>
     <p class="govuk-body">
       Applicants from <%= CountryName.from_region(region, with_definite_article: true) %> can provide evidence from a wider range of approved providers.

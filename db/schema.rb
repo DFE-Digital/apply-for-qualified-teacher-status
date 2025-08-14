@@ -240,6 +240,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_12_142312) do
     t.string "accepted_tests", default: "", null: false
     t.string "url", default: "", null: false
     t.string "b2_level_requirement_prefix", default: "", null: false
+    t.text "other_information", default: "", null: false
   end
 
   create_table "feature_flags_features", force: :cascade do |t|
