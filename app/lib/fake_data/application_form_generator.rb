@@ -130,6 +130,7 @@ class FakeData::ApplicationFormGenerator
       FactoryBot.create(
         :application_form,
         *traits,
+        includes_prioritisation_features: true,
         created_at: date_generator.date,
         region:,
       )
