@@ -8,6 +8,6 @@ class AssessorInterface::PrioritisationWorkHistoryCheckPolicy < ApplicationPolic
   end
 
   def update?
-    user.assess_permission && !user.archived?
+    (user.assess_permission || user.verify_permission) && !user.archived?
   end
 end

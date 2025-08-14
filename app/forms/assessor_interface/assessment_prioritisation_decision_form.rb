@@ -21,6 +21,18 @@ class AssessorInterface::AssessmentPrioritisationDecisionForm
       DeprioritiseAssessment.call(assessment:, user:)
     end
 
+    unassign_assessor
+
     true
+  end
+
+  private
+
+  def unassign_assessor
+    AssignApplicationFormAssessor.call(
+      application_form: assessment.application_form,
+      user:,
+      assessor: nil,
+    )
   end
 end

@@ -18,18 +18,18 @@ class AssessorInterface::AssessmentPolicy < ApplicationPolicy
   def edit_prioritisation?
     return false if user.archived?
 
-    user.assess_permission
+    user.assess_permission || user.verify_permission
   end
 
   def update_prioritisation?
     return false if user.archived?
 
-    user.assess_permission
+    user.assess_permission || user.verify_permission
   end
 
   def confirm_prioritisation?
     return false if user.archived?
 
-    user.assess_permission
+    user.assess_permission || user.verify_permission
   end
 end

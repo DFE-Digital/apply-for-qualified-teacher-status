@@ -14,10 +14,10 @@ class AssessorInterface::PrioritisationReferenceRequestPolicy < ApplicationPolic
   end
 
   def create?
-    user.assess_permission && !user.archived?
+    (user.assess_permission || user.verify_permission) && !user.archived?
   end
 
   def update?
-    user.assess_permission && !user.archived?
+    (user.assess_permission || user.verify_permission) && !user.archived?
   end
 end
