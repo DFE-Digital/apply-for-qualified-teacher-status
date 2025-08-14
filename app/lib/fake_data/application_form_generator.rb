@@ -114,6 +114,10 @@ class FakeData::ApplicationFormGenerator
       traits << :with_work_history
     end
 
+    unless params.prioritisation_check?
+      traits << :with_other_england_work_history
+    end
+
     if region.status_check_written? || region.sanction_check_written?
       traits << :with_written_statement
     end

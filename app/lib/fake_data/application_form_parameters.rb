@@ -3,6 +3,7 @@
 class FakeData::ApplicationFormParameters
   def initialize(
     submitted: false,
+    prioritisation_check: false,
     pre_assessment: false,
     assessment: false,
     further_information: false,
@@ -15,6 +16,7 @@ class FakeData::ApplicationFormParameters
     declined: false
   )
     @submitted = submitted
+    @prioritisation_check = prioritisation_check
     @pre_assessment = pre_assessment
     @assessment = assessment
     @further_information = further_information
@@ -32,6 +34,10 @@ class FakeData::ApplicationFormParameters
   def submit?
     @submitted || @pre_assessment || @assessment || @further_information ||
       @verification || @review || @awarded || @declined
+  end
+
+  def prioritisation_check?
+    @prioritisation_check
   end
 
   def pre_assess?

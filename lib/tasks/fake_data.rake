@@ -78,6 +78,10 @@ def application_form_params_for_region(region)
     ]
   end
 
+  unless region.application_form_skip_work_history
+    params += [{ prioritisation_check: true }]
+  end
+
   if rand(5).zero?
     params += [
       { further_information: true },
