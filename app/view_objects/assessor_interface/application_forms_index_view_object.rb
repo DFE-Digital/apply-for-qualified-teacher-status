@@ -139,7 +139,7 @@ class AssessorInterface::ApplicationFormsIndexViewObject
               params: filter_params,
             ),
           params: filter_params,
-        ).order(submitted_at: :asc),
+        ).order(submitted_at: :desc),
       )
   end
 
