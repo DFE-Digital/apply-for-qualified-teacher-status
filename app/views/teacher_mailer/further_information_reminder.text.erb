@@ -9,9 +9,9 @@ We haven’t received the information requested. Your application cannot proceed
 You need to sign in to your application to submit the information.
 
 <% if @further_information_request.third_request? %>
-  You must submit this information by 11:59pm <%= @further_information_request.expires_at.in_time_zone('Europe/London').strftime('%Z') %> on <%= @further_information_request.expires_at.to_date.to_fs %> or your application will be declined.
-<% else %>
   This is your final opportunity to provide the required information. You must submit this information by 11:59pm <%= @further_information_request.expires_at.in_time_zone('Europe/London').strftime('%Z') %> on <%= @further_information_request.expires_at.to_date.to_fs %> or your application will be declined.
+<% else %>
+  You must submit this information by 11:59pm <%= @further_information_request.expires_at.in_time_zone('Europe/London').strftime('%Z') %> on <%= @further_information_request.expires_at.to_date.to_fs %> or your application will be declined.
 <% end %>
 
 <% if FeatureFlags::FeatureFlag.active?(:gov_one_applicant_login) %>

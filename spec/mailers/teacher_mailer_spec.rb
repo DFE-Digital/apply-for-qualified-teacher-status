@@ -506,6 +506,7 @@ RSpec.describe TeacherMailer, type: :mailer do
         expect(subject).to include(
           "You must submit this information by 11:59pm ",
         )
+        expect(mail.body.encoded).not_to include("This is your final opportunity")
       end
 
       it { is_expected.to include("http://localhost:3000/teacher/sign_in") }
@@ -567,6 +568,7 @@ RSpec.describe TeacherMailer, type: :mailer do
         expect(subject).to include(
           "You must submit this information by 11:59pm ",
         )
+        expect(mail.body.encoded).not_to include("This is your final opportunity")
       end
 
       it { is_expected.to include("http://localhost:3000/teacher/sign_in") }
