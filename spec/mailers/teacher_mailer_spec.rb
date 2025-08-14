@@ -559,8 +559,7 @@ RSpec.describe TeacherMailer, type: :mailer do
 
       it do
         expect(subject).to include(
-          "If you do not respond by 12 February 2020 " \
-            "then your QTS application will be declined.",
+          "You must submit this information by 11:59pm ",
         )
       end
 
