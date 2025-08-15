@@ -104,7 +104,7 @@ module TeacherInterface
           "teacher_interface.further_information_request.show.failure_reason.#{item.failure_reason_key}",
         )
       when "work_history_contact"
-        "Add work history details"
+        "Update reference details for #{item.work_history.school_name}"
       when "document"
         if item.document.document_type == "passport"
           "Upload your #{I18n.t("document.document_type.#{item.document.document_type}")}"
