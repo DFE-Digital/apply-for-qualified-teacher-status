@@ -53,6 +53,8 @@ namespace :fake_data do
     ReferenceRequest.delete_all
     SelectedFailureReason.delete_all
     AssessmentSection.delete_all
+    PrioritisationReferenceRequest.delete_all
+    PrioritisationWorkHistoryCheck.delete_all
     Assessment.delete_all
     Qualification.delete_all
     WorkHistory.delete_all
