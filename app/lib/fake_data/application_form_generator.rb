@@ -15,7 +15,9 @@ class FakeData::ApplicationFormGenerator
 
     submit_application_form
 
-    return application_form if params.prioritisation_check?
+    if application_form.reload.assessment.prioritisation_checks_incomplete?
+      return application_form
+    end
     return application_form unless params.pre_assess?
 
     if application_form.requires_preliminary_check
