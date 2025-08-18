@@ -15,6 +15,9 @@ class FakeData::ApplicationFormGenerator
 
     submit_application_form
 
+    if application_form.reload.assessment.prioritisation_checks_incomplete?
+      return application_form
+    end
     return application_form unless params.pre_assess?
 
     if application_form.requires_preliminary_check
@@ -114,6 +117,10 @@ class FakeData::ApplicationFormGenerator
       traits << :with_work_history
     end
 
+    unless params.prioritisation_check?
+      traits << :with_other_england_work_history
+    end
+
     if region.status_check_written? || region.sanction_check_written?
       traits << :with_written_statement
     end
@@ -126,6 +133,7 @@ class FakeData::ApplicationFormGenerator
       FactoryBot.create(
         :application_form,
         *traits,
+        includes_prioritisation_features: true,
         created_at: date_generator.date,
         region:,
       )

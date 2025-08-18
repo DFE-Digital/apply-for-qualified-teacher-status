@@ -53,6 +53,8 @@ namespace :fake_data do
     ReferenceRequest.delete_all
     SelectedFailureReason.delete_all
     AssessmentSection.delete_all
+    PrioritisationReferenceRequest.delete_all
+    PrioritisationWorkHistoryCheck.delete_all
     Assessment.delete_all
     Qualification.delete_all
     WorkHistory.delete_all
@@ -76,6 +78,10 @@ def application_form_params_for_region(region)
       { pre_assessment: true, declined: true },
       { pre_assessment: true, received: true },
     ]
+  end
+
+  unless region.application_form_skip_work_history
+    params += [{ prioritisation_check: true }]
   end
 
   if rand(5).zero?
