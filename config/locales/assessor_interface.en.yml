@@ -156,7 +156,7 @@ en:
           age_range: The age range the applicant is qualified to teach does not fall within the requirements of QTS.
           applicant_already_dqt: There’s a potential existing match for this applicant. We need to ask for an additional identifier.
           applicant_already_qts: The applicant already holds QTS and induction exemption.
-          application_and_qualification_names_do_not_match: The name on the application is different from 1 or more qualification documents, but no evidence of change of name was provided.
+          application_and_qualification_names_do_not_match: The name on the application is different from one or more qualification documents, but no evidence of change of name was provided.
           authorisation_to_teach: Sanctions or restrictions were detected on professional record.
           confirm_age_range_subjects: We were not provided with sufficient evidence to confirm qualification to teach the age ranges and subjects entered on the online application form.
           degree_certificate_illegible: There is a problem with the university degree certificate (or translation), for example, it’s incorrect, illegible, or incomplete.
@@ -210,7 +210,7 @@ en:
           teaching_qualifications_from_ineligible_country: The teaching qualifications were completed in a different country to where they are recognised as a teacher.​
           teaching_qualifications_not_at_required_level: The teaching qualifications do not meet the required academic level (level 6).
           teaching_transcript_illegible: There is a problem with the teaching qualification transcript (or translation), for example, it’s incorrect, illegible, or incomplete.
-          unrecognised_references: We could not verify 1 or more references entered by the applicant.
+          unrecognised_references: We could not verify one or more references entered by the applicant.
           work_history_break: There is an unexplained break in the applicant’s work history.
           work_history_information: There is a problem with the applicant’s work history, for example the job role, hours worked per week, or the start and end date.
           work_history_duration: The applicant’s work experience does not meet the minimum duration requirements.
