@@ -192,7 +192,7 @@ RSpec.describe SendReminderEmail do
       end
 
       context "with less than two weeks remaining" do
-        let(:application_created_at) { (6.months - 12.days).ago }
+        let(:application_created_at) { (6.months - 9.days).ago }
 
         include_examples "first reminder email",
                          "sends an application not submitted email",
