@@ -85,6 +85,7 @@ RSpec.describe TeacherInterface::FurtherInformationRequestViewObject do
             status: "not_started",
             value: nil,
             value_title: "Your response",
+            assessor_note: text_item.failure_reason_assessor_feedback,
           ],
         },
       )
@@ -108,6 +109,7 @@ RSpec.describe TeacherInterface::FurtherInformationRequestViewObject do
             status: "not_started",
             value: document_item.document,
             value_title: "Identity documents",
+            assessor_note: document_item.failure_reason_assessor_feedback,
           ],
         },
       )

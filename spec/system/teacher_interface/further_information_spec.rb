@@ -3,9 +3,20 @@
 require "rails_helper"
 
 RSpec.describe "Teacher further information", type: :system do
+  let(:teacher) { create(:teacher) }
+  let!(:application_form) do
+    create(
+      :application_form,
+      :submitted,
+      :with_work_history,
+      statuses: %w[waiting_on_further_information],
+      teacher:,
+    )
+  end
+
   before do
     given_i_am_authorized_as_a_user(teacher)
-    given_there_is_an_application_form
+    given_there_is_an_application_form_with_assessment
     given_malware_scanning_is_enabled
   end
 
@@ -106,10 +117,6 @@ RSpec.describe "Teacher further information", type: :system do
     end
   end
 
-  def given_there_is_an_application_form
-    application_form
-  end
-
   def when_i_click_the_start_button
     teacher_further_information_requested_start_page.start_button.click
   end
@@ -151,7 +158,7 @@ RSpec.describe "Teacher further information", type: :system do
     expect(
       teacher_further_information_required_page.failure_reason_heading.text,
     ).to eq(
-      "The subjects you entered are acceptable for QTS, but the uploaded qualifications do not match them.",
+      "The subjects you entered are acceptable for QTS, but the uploaded qualifications do not match them",
     )
   end
 
@@ -166,7 +173,7 @@ RSpec.describe "Teacher further information", type: :system do
     document_task_list_item.click
     expect(
       teacher_further_information_required_page.failure_reason_heading.text,
-    ).to eq("Your ID document is illegible or in a format we cannot accept.")
+    ).to eq("Your ID document is illegible or in a format we cannot accept")
   end
 
   def when_i_fill_in_the_response
@@ -208,25 +215,21 @@ RSpec.describe "Teacher further information", type: :system do
   end
 
   def check_your_answers_task_list_item
-    teacher_further_information_requested_page.task_list.find_item(
+    teacher_further_information_requested_page.task_lists.last.find_item(
       "Check your answers before submitting",
     )
   end
 
   def and_i_see_the_check_your_answers_items
-    rows =
-      teacher_check_further_information_request_answers_page.summary_list.rows
+    lists = teacher_check_further_information_request_answers_page.summary_lists
 
-    expect(rows.count).to eq(3)
+    expect(lists.count).to eq(3)
 
-    expect(rows.first.key.text).to eq(
-      "Tell us more about the subjects you can teach",
-    )
-    expect(rows.second.key.text).to eq(
-      "Update reference details for #{application_form.work_histories.first.school_name}",
-    )
-
-    expect(rows.last.key.text).to eq("Upload your identity document")
+    expect(
+      teacher_check_further_information_request_answers_page,
+    ).to have_content("Your response").and have_content(
+            "Reference details",
+          ).and have_content("Identity documents")
   end
 
   def when_i_click_the_text_check_your_answers_item
@@ -246,7 +249,7 @@ RSpec.describe "Teacher further information", type: :system do
       "Further information successfully submitted",
     )
     expect(teacher_submitted_application_page.panel.body.text).to eq(
-      "Your application reference number\n#{@application_form.reference}",
+      "Your application reference number\n#{application_form.reference}",
     )
   end
 
@@ -268,64 +271,56 @@ RSpec.describe "Teacher further information", type: :system do
     expect(message.to).to include(application_form.teacher.email)
   end
 
-  def teacher
-    @teacher ||= create(:teacher)
-  end
-
-  def application_form
-    @application_form ||=
-      begin
-        application_form =
-          create(
-            :application_form,
-            :submitted,
-            :with_work_history,
-            statuses: %w[waiting_on_further_information],
-            teacher:,
-          )
-        create(
-          :assessment,
-          :with_further_information_request,
-          application_form:,
-        )
-        application_form
-      end
+  def given_there_is_an_application_form_with_assessment
+    assessment =
+      create(:assessment, :with_further_information_request, application_form:)
+    assessment_section =
+      create(:assessment_section, :personal_information, assessment:)
+    assessment.further_information_requests.first.items.each do |item|
+      create(
+        :selected_failure_reason,
+        assessment_section: assessment_section,
+        key: item.failure_reason_key,
+      )
+    end
   end
 
   def further_information_request
-    application_form.assessment.further_information_requests.first
+    application_form.reload.assessment.further_information_requests.first
   end
 
   def text_task_list_item
-    teacher_further_information_requested_page.task_list.find_item(
+    teacher_further_information_requested_page.task_lists.first.find_item(
       "Tell us more about the subjects you can teach",
     )
   end
 
   def text_check_answers_item
     teacher_check_further_information_request_answers_page
-      .summary_list
+      .summary_lists
+      .second
       .rows
       .first
   end
 
   def work_history_task_list_item
-    teacher_further_information_requested_page.task_list.find_item(
+    teacher_further_information_requested_page.task_lists.first.find_item(
       "Update reference details for #{application_form.work_histories.first.school_name}",
     )
   end
 
   def document_task_list_item
-    teacher_further_information_requested_page.task_list.find_item(
+    teacher_further_information_requested_page.task_lists.first.find_item(
       "Upload your identity document",
     )
   end
 
   def document_check_answers_item
     teacher_check_further_information_request_answers_page
-      .summary_list
+      .summary_lists
+      .first
       .rows
-      .last
+      .first
   end
 
   def then_i_see_the_warning_text
