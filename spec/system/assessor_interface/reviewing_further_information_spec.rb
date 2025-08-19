@@ -192,7 +192,7 @@ RSpec.describe "Assessor reviewing further information", type: :system do
       "Subjects entered are acceptable for QTS, but the uploaded qualifications do not match them.",
     )
     expect(items.last).to have_content(
-      "We could not verify 1 or more references entered by the applicant for " \
+      "We could not verify one or more references entered by the applicant for " \
         "#{application_form.work_histories.first.school_name}.",
     )
   end
