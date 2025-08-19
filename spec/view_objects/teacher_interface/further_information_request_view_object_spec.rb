@@ -83,6 +83,8 @@ RSpec.describe TeacherInterface::FurtherInformationRequestViewObject do
               text_item,
             ],
             status: "not_started",
+            value: nil,
+            value_title: "Your response",
           ],
         },
       )
@@ -104,38 +106,11 @@ RSpec.describe TeacherInterface::FurtherInformationRequestViewObject do
               document_item,
             ],
             status: "not_started",
+            value: document_item.document,
+            value_title: "Identity documents",
           ],
         },
       )
-    end
-
-    context "when items are incomplete" do
-      it "disables check your answers in task list group" do
-        check_answers_items = grouped_task_list_items.last
-        expect(check_answers_items[:heading]).to eq("Check your answers")
-        expect(check_answers_items[:items].first[:status]).to eq("cannot_start")
-        expect(check_answers_items[:items].first[:href]).to be_nil
-      end
-    end
-
-    context "when items are complete" do
-      before do
-        text_item.update!(response: "Response")
-        create(
-          :upload,
-          :clean,
-          document: document_item.document,
-          filename: "upload.pdf",
-        )
-      end
-
-      it "enables check your answers in task list group" do
-        check_answers_items = grouped_task_list_items.last
-
-        expect(check_answers_items[:heading]).to eq("Check your answers")
-        expect(check_answers_items[:items].first[:status]).to eq("not_started")
-        expect(check_answers_items[:items].first[:href]).to be_present
-      end
     end
   end
 
@@ -164,94 +139,58 @@ RSpec.describe TeacherInterface::FurtherInformationRequestViewObject do
     end
   end
 
-  describe "#check_your_answers_fields" do
-    subject(:check_your_answers_fields) do
-      view_object.check_your_answers_fields
+  describe "#check_your_answers_task_group" do
+    subject(:check_your_answers_task_group) do
+      view_object.check_your_answers_task_group
     end
 
     let!(:text_item) do
       create(
         :further_information_request_item,
         :with_text_response,
-        :completed,
         further_information_request:,
       )
     end
+
     let!(:document_item) do
       create(
         :further_information_request_item,
         :with_document_response,
-        :completed,
         further_information_request:,
       )
     end
 
-    it do
-      expect(subject).to eq(
-        {
-          text_item.id => {
-            title: "Tell us more about the subjects you can teach",
-            href: [
-              :edit,
-              :teacher_interface,
-              :application_form,
-              further_information_request,
-              text_item,
-            ],
-            value: text_item.response,
-          },
-          document_item.id => {
-            title: "Upload your identity document",
-            href: [
-              :edit,
-              :teacher_interface,
-              :application_form,
-              further_information_request,
-              document_item,
-            ],
-            value: document_item.document,
-          },
-        },
-      )
+    context "when items are incomplete" do
+      it "disables check your answers in task list group" do
+        expect(check_your_answers_task_group[:heading]).to eq(
+          "Check your answers",
+        )
+        expect(check_your_answers_task_group[:items].first[:status]).to eq(
+          "cannot_start",
+        )
+        expect(check_your_answers_task_group[:items].first[:href]).to be_nil
+      end
     end
 
-    context "when the document item is passport" do
-      let!(:document_item) do
+    context "when items are complete" do
+      before do
+        text_item.update!(response: "Response")
         create(
-          :further_information_request_item,
-          :with_passport_document_response,
-          :completed,
-          further_information_request:,
+          :upload,
+          :clean,
+          document: document_item.document,
+          filename: "upload.pdf",
         )
       end
 
-      it do
-        expect(subject).to eq(
-          {
-            text_item.id => {
-              title: "Tell us more about the subjects you can teach",
-              href: [
-                :edit,
-                :teacher_interface,
-                :application_form,
-                further_information_request,
-                text_item,
-              ],
-              value: text_item.response,
-            },
-            document_item.id => {
-              title: "Upload your passport",
-              href: [
-                :edit,
-                :teacher_interface,
-                :application_form,
-                further_information_request,
-                document_item,
-              ],
-              value: document_item.document,
-            },
-          },
+      it "enables check your answers in task list group" do
+        expect(check_your_answers_task_group[:heading]).to eq(
+          "Check your answers",
         )
+        expect(check_your_answers_task_group[:items].first[:status]).to eq(
+          "not_started",
+        )
+        expect(check_your_answers_task_group[:items].first[:href]).to be_present
       end
     end
   end

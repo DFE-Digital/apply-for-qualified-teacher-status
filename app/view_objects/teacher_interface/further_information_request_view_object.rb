@@ -16,24 +16,25 @@ module TeacherInterface
     end
 
     def grouped_task_list_items
-      grouped_items =
-        items_by_assessment_section.map do |assessment_section, items|
-          {
-            heading:
-              I18n.t(
-                assessment_section.key,
-                scope: %i[
-                  teacher_interface
-                  further_information_request
-                  show
-                  section
-                ],
-              ),
-            items: task_list_items(items),
-          }
-        end
+      items_by_assessment_section.map do |assessment_section, items|
+        {
+          heading:
+            I18n.t(
+              assessment_section.key,
+              scope: %i[
+                teacher_interface
+                further_information_request
+                show
+                section
+              ],
+            ),
+          items: task_list_items(items),
+        }
+      end
+    end
 
-      grouped_items << {
+    def check_your_answers_task_group
+      {
         heading:
           I18n.t(
             :check_your_answers,
@@ -63,8 +64,6 @@ module TeacherInterface
           },
         ],
       }
-
-      grouped_items
     end
 
     def can_check_answers?
@@ -72,25 +71,6 @@ module TeacherInterface
     end
 
     alias_method :can_submit?, :can_check_answers?
-
-    def check_your_answers_fields
-      further_information_request
-        .items
-        .order(:created_at)
-        .each_with_object({}) do |item, memo|
-          memo[item.id] = {
-            title: item_name(item),
-            value: item_value(item),
-            href: [
-              :edit,
-              :teacher_interface,
-              :application_form,
-              further_information_request,
-              item,
-            ],
-          }
-        end
-    end
 
     def application_form
       @application_form ||= current_teacher.application_form
@@ -112,6 +92,9 @@ module TeacherInterface
         {
           title: item_name(item),
           description: item_description(item),
+          value_title: item_value_title(item),
+          value: item_value(item),
+          assessor_note: item.failure_reason_assessor_feedback,
           href: [
             :edit,
             :teacher_interface,
@@ -121,6 +104,22 @@ module TeacherInterface
           ],
           status: item.status,
         }
+      end
+    end
+
+    def item_value_title(item)
+      if item.text?
+        "Your response"
+      elsif item.document?
+        if item.document.document_type == "passport"
+          I18n.t(
+            "document.document_type.#{item.document.document_type}",
+          ).capitalize
+        else
+          "#{I18n.t("document.document_type.#{item.document.document_type}").capitalize} documents"
+        end
+      elsif item.work_history_contact?
+        "Reference details"
       end
     end
 
