@@ -111,6 +111,14 @@ en:
           work_history_break: Tell us more about your work history
           work_history_information: Tell us more about your work history
           written_statement_mismatch: Tell us more about your written statement
+        section:
+          check_your_answers: Check your answers
+          personal_information: About you
+          qualifications: Your qualifications
+          age_range_subjects: The age range and subjects you can teach
+          english_language_proficiency: Your English language proficiency
+          work_history: Your work history
+          professional_standing: Proof that you’re recognised as a teacher
     reference_requests:
       show:
         title: You’ve been asked to act as a reference

@@ -4,14 +4,17 @@
 <span class="govuk-caption-l">Your application</span>
 <h1 class="govuk-heading-l">Review the information we’ve asked for</h1>
 
-<%= govuk_task_list do |task_list|
-  @view_object.task_list_items.each do |item|
-    task_list.with_item do |row|
-      row.with_title(text: item[:title], href: item[:href])
-      row.with_status(text: render(StatusTag::Component.new(item[:status])), classes: "app-white-space-nowrap")
+<% @view_object.grouped_task_list_items.each do |grouped_task_list_item| %>
+  <h2 class="govuk-heading-m"><%= grouped_task_list_item[:heading] %></h2>
+  <%= govuk_task_list do |task_list|
+    grouped_task_list_item[:items].each do |item|
+      task_list.with_item do |row|
+        row.with_title(text: item[:title], hint: item[:description], href: item[:href])
+        row.with_status(text: render(StatusTag::Component.new(item[:status])), classes: "app-white-space-nowrap")
+      end
     end
-  end
-end %>
+  end %>
+<% end %>
 
 <% if @view_object.further_information_request.third_request? %>
   <%= govuk_warning_text(text: "This is your final opportunity to provide the required information. You must submit this information by 11:59pm (#{@view_object.further_information_request.expires_at.in_time_zone('Europe/London').strftime('%Z')}) on #{@view_object.further_information_request.expires_at.to_date.to_fs} or your application will be declined.") %>

@@ -222,7 +222,9 @@ RSpec.describe "Teacher further information", type: :system do
     expect(rows.first.key.text).to eq(
       "Tell us more about the subjects you can teach",
     )
-    expect(rows.second.key.text).to eq("Update reference details for #{application_form.work_histories.first.school_name}")
+    expect(rows.second.key.text).to eq(
+      "Update reference details for #{application_form.work_histories.first.school_name}",
+    )
 
     expect(rows.last.key.text).to eq("Upload your identity document")
   end

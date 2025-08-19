@@ -2,9 +2,22 @@
   <%= f.govuk_error_summary %>
 <% end %>
 
-<h1 class="govuk-heading-l">Further information required</h1>
-
-<h2 class="govuk-heading-s"><%= I18n.t("teacher_interface.application_forms.show.declined.failure_reasons.#{@further_information_request_item.failure_reason_key}") %></h2>
+<%
+  section_name = @further_information_request_item
+    .further_information_request
+    .assessment
+    .sections
+    .includes(:selected_failure_reasons)
+    .find_by(selected_failure_reasons: { key: @further_information_request_item.failure_reason_key })
+    .key
+%>
+<span class="govuk-caption-l"><%= I18n.t("teacher_interface.further_information_request.show.section.#{section_name}") %></span>
+<% if @further_information_request_item.document? %>
+  <h1 class="govuk-heading-l">Review note from assessor</h1>
+<% else %>
+  <h1 class="govuk-heading-l"><%= @view_object.item_name %></h1>
+<% end %>
+<h2 class="govuk-heading-s"><%= @view_object.item_description %></h2>
 
 <%= govuk_inset_text do %>
   <%= simple_format @further_information_request_item.failure_reason_assessor_feedback %>

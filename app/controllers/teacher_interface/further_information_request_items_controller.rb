@@ -21,6 +21,12 @@ module TeacherInterface
     def load_further_information_request_and_item
       @further_information_request_item = further_information_request_item
       @further_information_request = further_information_request
+      @view_object = view_object
+    end
+
+    def view_object
+      @view_object ||=
+        FurtherInformationRequestItemViewObject.new(current_teacher:, params:)
     end
 
     def edit_text

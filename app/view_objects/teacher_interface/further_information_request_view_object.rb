@@ -15,41 +15,56 @@ module TeacherInterface
           .find(params[:id])
     end
 
-    def task_list_items
-      items =
-        further_information_request
-          .items
-          .order(:created_at)
-          .map do |item|
-            {
-              title: item_name(item),
-              href: [
-                :edit,
-                :teacher_interface,
-                :application_form,
-                further_information_request,
-                item,
-              ],
-              status: item.status,
-            }
-          end
+    def grouped_task_list_items
+      grouped_items =
+        items_by_assessment_section.map do |assessment_section, items|
+          {
+            heading:
+              I18n.t(
+                assessment_section.key,
+                scope: %i[
+                  teacher_interface
+                  further_information_request
+                  show
+                  section
+                ],
+              ),
+            items: task_list_items(items),
+          }
+        end
 
-      items << {
-        title:
-          I18n.t("teacher_interface.further_information_request.show.check"),
-        href:
-          if can_check_answers?
-            [
-              :edit,
-              :teacher_interface,
-              :application_form,
-              further_information_request,
-            ]
-          end,
-        status: can_check_answers? ? "not_started" : "cannot_start",
+      grouped_items << {
+        heading:
+          I18n.t(
+            :check_your_answers,
+            scope: %i[
+              teacher_interface
+              further_information_request
+              show
+              section
+            ],
+          ),
+        items: [
+          {
+            title:
+              I18n.t(
+                "teacher_interface.further_information_request.show.check",
+              ),
+            href:
+              if can_check_answers?
+                [
+                  :edit,
+                  :teacher_interface,
+                  :application_form,
+                  further_information_request,
+                ]
+              end,
+            status: can_check_answers? ? "not_started" : "cannot_start",
+          },
+        ],
       }
 
-      items
+      grouped_items
     end
 
     def can_check_answers?
@@ -85,6 +100,30 @@ module TeacherInterface
 
     attr_reader :current_teacher, :params
 
+    def items_by_assessment_section
+      @items_by_assessment_section ||=
+        FurtherInformationRequestItemsByAssessmentSection.call(
+          further_information_request:,
+        )
+    end
+
+    def task_list_items(items)
+      items.map do |item|
+        {
+          title: item_name(item),
+          description: item_description(item),
+          href: [
+            :edit,
+            :teacher_interface,
+            :application_form,
+            further_information_request,
+            item,
+          ],
+          status: item.status,
+        }
+      end
+    end
+
     def item_value(item)
       if item.text?
         item.response
@@ -112,6 +151,19 @@ module TeacherInterface
           "Upload your #{I18n.t("document.document_type.#{item.document.document_type}")} document"
         end
       end
+    end
+
+    def item_description(item)
+      I18n.t(
+        item.failure_reason_key,
+        scope: %i[
+          teacher_interface
+          application_forms
+          show
+          declined
+          failure_reasons
+        ],
+      ).gsub(".", "")
     end
   end
 end
