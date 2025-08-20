@@ -88,23 +88,26 @@ module TeacherInterface
     end
 
     def task_list_items(items)
-      items.map do |item|
-        {
-          title: item_name(item),
-          description: item_description(item),
-          value_title: item_value_title(item),
-          value: item_value(item),
-          assessor_note: item.failure_reason_assessor_feedback,
-          href: [
-            :edit,
-            :teacher_interface,
-            :application_form,
-            further_information_request,
-            item,
-          ],
-          status: item.status,
-        }
-      end
+      list_items =
+        items.map do |item|
+          {
+            title: item_name(item),
+            description: item_description(item),
+            value_title: item_value_title(item),
+            value: item_value(item),
+            assessor_note: item.failure_reason_assessor_feedback,
+            href: [
+              :edit,
+              :teacher_interface,
+              :application_form,
+              further_information_request,
+              item,
+            ],
+            status: item.status,
+          }
+        end
+
+      list_items.sort_by { |item| item[:title] }
     end
 
     def item_value_title(item)

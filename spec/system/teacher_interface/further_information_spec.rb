@@ -298,7 +298,7 @@ RSpec.describe "Teacher further information", type: :system do
   def text_check_answers_item
     teacher_check_further_information_request_answers_page
       .summary_lists
-      .second
+      .first
       .rows
       .first
   end
@@ -318,7 +318,7 @@ RSpec.describe "Teacher further information", type: :system do
   def document_check_answers_item
     teacher_check_further_information_request_answers_page
       .summary_lists
-      .first
+      .third
       .rows
       .first
   end
