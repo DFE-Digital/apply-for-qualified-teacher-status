@@ -132,9 +132,9 @@ module TeacherInterface
       elsif item.document?
         item.document
       elsif item.work_history_contact?
-        "Contact name: #{item.contact_name}<br/>
-         Contact job: #{item.contact_job}<br/>
-         Contact email: #{item.contact_email}".html_safe
+        "#{item.contact_name}<br/>
+         #{item.contact_job}<br/>
+         #{item.contact_email}".html_safe
       end
     end
 
