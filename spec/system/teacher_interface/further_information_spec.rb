@@ -159,7 +159,7 @@ RSpec.describe "Teacher further information", type: :system do
     work_history_task_list_item.click
     expect(
       teacher_further_information_required_page.failure_reason_heading.text,
-    ).to eq("We could not verify 1 or more references you provided.")
+    ).to eq("We could not verify one or more references you provided.")
   end
 
   def when_i_click_the_document_task_list_item
