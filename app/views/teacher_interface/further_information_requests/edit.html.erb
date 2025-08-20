@@ -1,6 +1,7 @@
 <% content_for :page_title, "Check your answers before submitting" %>
 <% content_for :back_link_url, back_history_path(origin: true, default: teacher_interface_application_form_further_information_request_path(@view_object.further_information_request)) %>
 
+<span class="govuk-caption-l">Your application</span>
 <h1 class="govuk-heading-xl">Check your answers before submitting</h1>
 
 <% @view_object.grouped_task_list_items.each do |grouped_task_list_item| %>
