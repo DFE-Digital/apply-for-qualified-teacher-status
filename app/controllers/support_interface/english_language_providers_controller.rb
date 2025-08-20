@@ -40,6 +40,7 @@ class SupportInterface::EnglishLanguageProvidersController < SupportInterface::B
       :reference_hint,
       :accepted_tests,
       :check_url,
+      :other_information,
     )
   end
 end
