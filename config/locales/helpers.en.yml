@@ -30,8 +30,6 @@ en:
         location: This means you have all the qualifications needed to teach in a state school.<br /><br />You’ll need to show that you completed your teaching training at level 6 or equivalent in the country that you select.
       eligibility_interface_region_form:
         region_id: This means you have all the qualifications needed to teach in a state school.<br /><br />You’ll need to show that you completed your teaching training at level 6 or equivalent in the country that you select.
-      eligibility_interface_work_experience_form:
-        work_experience: Your teaching work experience can be gained in any country but must be from after you qualified as a teacher.
       teacher:
         email: We’ll use this to send you an email with a link to continue with your QTS application. Do not use a work or university email that you might lose access to.
       teacher_interface_add_another_qualification_form:

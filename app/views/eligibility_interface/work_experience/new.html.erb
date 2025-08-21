@@ -1,3 +1,18 @@
+<%
+  hint = "
+    Your teaching work experience can be gained in any country but must be from after you qualified as a teacher.
+    <br /><br />
+    A recognised teacher is someone who meets all of the following criteria:
+    <ul class='govuk-list govuk-list--bullet govuk-hint'>
+      <li>worked in the role after becoming qualified as a teacher</li>
+      <li>worked in a school that delivers mandatory education</li>
+      <li>worked unsupervised with children aged between 5 and 16 years</li>
+      <li>were solely responsible for planning, preparing, and delivering lessons to at least 4 students at a time</li>
+      <li>were solely responsible for assessing and reporting on the progress of those students</li>
+    </ul>
+  ".html_safe
+%>
+
 <% content_for :page_title, title_with_error_prefix(t("helpers.legend.eligibility_interface_work_experience_form.work_experience"), error: @form.errors.any?) %>
 <% content_for :back_link_url, eligibility_interface_degree_path %>
 
@@ -9,7 +24,7 @@
     EligibilityCheck.work_experiences.keys,
     :itself,
     legend: { size: "l", tag: "h1" },
-    hint: { text: t("helpers.hint.eligibility_interface_work_experience_form.work_experience").html_safe }
+    hint: { text: hint.html_safe }
   ) %>
 
   <% unless @region.reduced_evidence_accepted %>
