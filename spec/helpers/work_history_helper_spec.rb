@@ -8,7 +8,7 @@ RSpec.describe WorkHistoryHelper do
 
     let(:work_history) { build(:work_history) }
 
-    it { is_expected.to eq("Your current or most recent role") }
+    it { is_expected.to eq("Your current or most recent role as a teacher") }
 
     context "with a school name" do
       before { work_history.school_name = "Name" }
