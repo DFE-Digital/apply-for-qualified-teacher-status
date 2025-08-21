@@ -211,12 +211,12 @@ en:
       heading: What subjects are you qualified to teach?
       hint: Enter up to 3 subjects. The assessor will compare what you enter to the subjects that appear on the curriculum in England.
     work_history:
-      current_or_most_recent_role: Your current or most recent role
-      previous_role: Previous role
+      current_or_most_recent_role: Your current or most recent role as a teacher
+      previous_role: Previous role as a teacher
       school:
         heading:
-          current_or_most_recent_role: Add your current or most recent role
-          previous_role: Add another role
+          current_or_most_recent_role: Add your current or most recent role as a teacher
+          previous_role: Add another role as a teacher
       contact:
         heading: Who should we contact to verify this role?
     other_england_work_history:

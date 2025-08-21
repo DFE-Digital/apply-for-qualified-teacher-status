@@ -21,6 +21,12 @@
         <li>solely responsible for assessing and reporting on the progress of those students</li>
       </ul>
 
+      <% if form.work_history.application_form.includes_prioritisation_features %>
+        <p class="govuk-body">
+          Only include your roles as a teacher that meet the above requirements here. We’ll ask about other educational work experience gained in England later, for example, as a cover supervisor, teaching assistant, lecturer or tutor.
+        </p>
+      <% end %>
+
       <%= govuk_warning_text(text: "Any teaching work experience gained before you were qualified as a teacher will not be considered.") %>
 
       <% unless form.work_history.application_form.reduced_evidence_accepted %>

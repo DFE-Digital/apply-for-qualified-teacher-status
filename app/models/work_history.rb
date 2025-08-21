@@ -132,8 +132,6 @@ class WorkHistory < ApplicationRecord
       )
   end
 
-  private
-
   def country_code_england?
     CountryCode.england?(country_code)
   end

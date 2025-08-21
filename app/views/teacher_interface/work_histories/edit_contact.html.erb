@@ -13,7 +13,7 @@
   <p class="govuk-body">The person you choose must:</p>
 
   <ul class="govuk-list govuk-list--bullet">
-    <li>be a senior member of staff at this school (either a headteacher/principal, an assistant/deputy head, or a school business manager)</li>
+    <li>be a senior member of staff at this school (either a headteacher/principal, an assistant/deputy head, or a school business manager)<%= ", we will also accept a head of department for schools in England" if @form.work_history.country_code_england? %></li>
     <li>be able to provide a reference in English</li>
     <li>only comment on teaching work that you did <strong>after</strong> becoming a qualified teacher</li>
   </ul>
@@ -24,7 +24,7 @@
 
   <%= govuk_details(summary_text: "Choosing someone to verify this role") do %>
 
-    <p>A senior member of staff means either a headteacher/principal, an assistant/deputy head or a school business manager.</p>
+    <p>A senior member of staff means either a headteacher/principal, an assistant/deputy head or a school business manager. <%= "We will also accept a head of department for schools in England." if @form.work_history.country_code_england? %></p>
 
     <p>Make sure you have an up-to-date email address for the person you choose, because the reference they provide will be important to your application.</p>
 

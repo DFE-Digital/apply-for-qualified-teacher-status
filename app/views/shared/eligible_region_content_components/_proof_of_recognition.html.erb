@@ -145,3 +145,7 @@
     <%= raw GovukMarkdown.render(region.country.other_information) %>
   <% end %>
 <% end %>
+
+<p class="govuk-body">
+  Your <%= region_certificate_name(region) %> must be dated within 6 months of you applying for QTS.
+</p>
