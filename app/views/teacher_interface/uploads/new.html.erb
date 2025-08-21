@@ -148,7 +148,7 @@
             <li><%= requirement %></li>
           <% end %>
         </ul>
-        <p class="govuk-body">This written confirmation must be dated within 6 months of you applying for QTS.</p>
+        <%= govuk_warning_text(text: "This written confirmation must be dated within 6 months of you applying for QTS.") %>
 
         <% if @application_form.region.status_check_written? %>
           <% if @application_form.region.status_information.present? %>
