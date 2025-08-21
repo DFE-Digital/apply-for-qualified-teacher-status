@@ -7,6 +7,7 @@ module EligibilityInterface
     def new
       @form =
         WorkExperienceInEnglandForm.new(
+          eligibility_check: eligibility_check,
           eligible: eligibility_check.eligible_work_experience_in_england,
         )
     end
