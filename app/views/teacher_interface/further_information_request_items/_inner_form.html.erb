@@ -33,9 +33,7 @@
 
 <% if @further_information_request_item.work_history_contact? %>
   <% work_history = @further_information_request_item.work_history %>
-    <p class="govuk-body">Enter the contact details of a suitable referee who can verify your time spent working at <%= work_history.school_name %> from <%= work_history.start_date.to_fs(:month_and_year) %> <% if work_history.end_date.present? %>
-        to <%= work_history.end_date.to_fs(:month_and_year) %>
-    <% end %></p>
+    <p class="govuk-body">Enter the contact details of a suitable referee who can verify your time spent working at <%= work_history.school_name %> from <%= work_history.start_date.to_fs(:month_and_year) %><% if work_history.end_date.present? %> to <%= work_history.end_date.to_fs(:month_and_year) %><% end %>.</p>
 
     <%= f.govuk_text_field :contact_name, label: {text: "Contact’s name"} %>
 
