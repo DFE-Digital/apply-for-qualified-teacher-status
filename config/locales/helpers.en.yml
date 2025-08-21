@@ -73,6 +73,7 @@ en:
         hours_per_week: This means all the hours you spent working per week for this role (not just the hours you spent teaching students). In roles where you worked under 30 hours per week we may need to ask for more information when we assess your application.
         start_date: For example, 3 2020, If you cannot remember the exact month or year, enter an estimate.
         end_date: For example, 3 2020, If you cannot remember the exact month or year, enter an estimate.
+        job: This is the job title for your role as a teacher that meets the requirements above. This does not include cover supervisor, teaching assistant, lecturer or tutor roles.
       teacher_interface_other_england_work_history_school_form:
         postcode: This helps assessors to verify the institution you worked in.
         school_website: If this institution does not have a webpage, the assessor may need to ask you for further information to verify it.
