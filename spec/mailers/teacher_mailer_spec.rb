@@ -502,6 +502,15 @@ RSpec.describe TeacherMailer, type: :mailer do
         )
       end
 
+      it do
+        expect(subject).to include(
+          "You must submit this information by 11:59pm ",
+        )
+        expect(mail.body.encoded).not_to include(
+          "This is your final opportunity",
+        )
+      end
+
       it { is_expected.to include("http://localhost:3000/teacher/sign_in") }
 
       context "with the GOV.UK One Login feature enabled" do
@@ -559,8 +568,10 @@ RSpec.describe TeacherMailer, type: :mailer do
 
       it do
         expect(subject).to include(
-          "If you do not respond by 12 February 2020 " \
-            "then your QTS application will be declined.",
+          "You must submit this information by 11:59pm ",
+        )
+        expect(mail.body.encoded).not_to include(
+          "This is your final opportunity",
         )
       end
 
