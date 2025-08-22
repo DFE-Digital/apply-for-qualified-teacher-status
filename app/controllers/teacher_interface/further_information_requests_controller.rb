@@ -14,6 +14,7 @@ module TeacherInterface
     end
 
     def edit
+      render layout: "full_from_desktop"
     end
 
     def update

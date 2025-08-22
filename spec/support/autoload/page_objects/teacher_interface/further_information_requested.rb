@@ -6,7 +6,7 @@ module PageObjects
       set_url "/teacher/application/further_information_requests/{request_id}"
 
       element :heading, ".govuk-heading-l"
-      section :task_list, GovukTaskList, ".govuk-task-list"
+      sections :task_lists, GovukTaskList, ".govuk-task-list"
 
       element :check_your_answers_button,
               ".govuk-button:not(.govuk-button--secondary)"
