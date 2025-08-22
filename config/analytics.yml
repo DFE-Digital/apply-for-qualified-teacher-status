@@ -64,9 +64,6 @@
     - written_statement_confirmation
     - written_statement_optional
     - written_statement_status
-  :application_forms_suitability_records:
-    - application_form_id
-    - suitability_record_id
   :assessment_sections:
     - assessed_at
     - assessment_id

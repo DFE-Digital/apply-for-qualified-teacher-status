@@ -20,6 +20,9 @@
     - name
     - record_id
     - record_type
+  :application_forms_suitability_records:
+    - application_form_id
+    - suitability_record_id
   :assessments:
     - age_range_note
     - qualifications_assessor_note
