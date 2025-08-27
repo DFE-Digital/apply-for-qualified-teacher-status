@@ -598,7 +598,7 @@ Rails.application.routes.draw do
   get "english-language-guidance", to: "static#english_language_guidance"
 
   # Sentry test route (do not enable in production)
-  get "sentry_test/error", to: "sentry_test#error" unless Rails.env.production?
+  get "sentry_test/error", to: "sentry_test#error"
 
   root to: redirect("/eligibility")
 end
