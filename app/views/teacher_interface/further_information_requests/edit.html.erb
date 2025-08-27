@@ -11,7 +11,18 @@
       card.with_summary_list do |summary_list|
         summary_list.with_row do |row|
           row.with_key { item[:value_title] }
-          row.with_value { item[:value] }
+          row.with_value do
+            if item[:value].is_a?(Document)
+              tag.ul(class: "govuk-list") do
+                item[:value]
+                  .uploads
+                  .order(:created_at)
+                  .each { |upload| concat(tag.li(upload_link_to(upload))) }
+              end
+            else
+              item[:value]
+            end
+          end
           row.with_action(
             href: item[:href],
             visually_hidden_text: item[:title].downcase
