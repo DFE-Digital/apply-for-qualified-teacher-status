@@ -26,7 +26,7 @@ An application will go through prioritisation checks only if the application has
 
 This step assessors go through:
 
-1. Check on the specific work history roles to ensure they are eligible for prioritision. These [failure reasons](https://github.com/DFE-Digital/apply-for-qualified-teacher-status/blob/076de2dfb1fab8583df6dd9222eb19f50d6f2a9a/app/lib/failure_reasons.rb#L96) represent why a role might not be eligible for prioritisation.
+1. Check on the specific work history roles to ensure they are eligible for prioritision. These [failure reasons](https://github.com/DFE-Digital/apply-for-qualified-teacher-status/blob/main/app/lib/failure_reasons.rb#L96) represent why a role might not be eligible for prioritisation.
 2. Eligible roles then have references sent out to confirm the applicant works there.
 3. Final decision on prioritisation.
 
