@@ -34,18 +34,18 @@ end
 Within `FailureReason` module, we now have a new list of failure reasons.
 
 ```rb
-  PRIORITISATION_FAILURE_REASONS = [
-    PRIORITISATION_WORK_HISTORY_ROLE = "prioritisation_work_history_role",
-    PRIORITISATION_WORK_HISTORY_SETTING = "prioritisation_work_history_setting",
-    PRIORITISATION_WORK_HISTORY_IN_ENGLAND =
-      "prioritisation_work_history_in_england",
-    PRIORITISATION_WORK_HISTORY_INSTITUTION_NOT_FOUND =
-      "prioritisation_work_history_institution_not_found",
-    PRIORITISATION_WORK_HISTORY_REFERENCE_EMAIL =
-      "prioritisation_work_history_reference_email",
-    PRIORITISATION_WORK_HISTORY_REFERENCE_JOB =
-      "prioritisation_work_history_reference_job",
-  ].freeze
+PRIORITISATION_FAILURE_REASONS = [
+  PRIORITISATION_WORK_HISTORY_ROLE = "prioritisation_work_history_role",
+  PRIORITISATION_WORK_HISTORY_SETTING = "prioritisation_work_history_setting",
+  PRIORITISATION_WORK_HISTORY_IN_ENGLAND =
+    "prioritisation_work_history_in_england",
+  PRIORITISATION_WORK_HISTORY_INSTITUTION_NOT_FOUND =
+    "prioritisation_work_history_institution_not_found",
+  PRIORITISATION_WORK_HISTORY_REFERENCE_EMAIL =
+    "prioritisation_work_history_reference_email",
+  PRIORITISATION_WORK_HISTORY_REFERENCE_JOB =
+    "prioritisation_work_history_reference_job",
+].freeze
 ```
 
 Once `PrioritisationWorkHistoryCheck` has passed, references will be generated which utilises the `Requestable` and `Remindable` modules. Given that the flow of these prioritisation references and ensuring that support is in place in the future to change their expiry and reminder email frequency, it has been decided to not re-use `ReferenceRequest` and instead introduce a new model specific for prioritisation `PrioritisationReferenceRequest`.
