@@ -10,7 +10,7 @@ module PageObjects
     end
 
     def find_item(text)
-      items.find { |item| item.name_and_hint.text == text }
+      items.find { |item| item.name_and_hint.text.include?(text) }
     end
 
     def click_item(link_text)

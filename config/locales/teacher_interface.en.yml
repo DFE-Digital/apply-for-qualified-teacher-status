@@ -100,7 +100,7 @@ en:
         check: Check your answers before submitting
         failure_reason:
           age_range: Tell us more about the age range you can teach
-          applicant_already_dqt: Additional personal information
+          applicant_already_dqt: Provide additional personal information
           english_language_unverifiable_reference_number: Tell us more about your English language proficiency
           qualifications_dont_match_other_details: Tell us more about your qualifications
           qualifications_dont_match_subjects: Tell us more about the subjects you can teach
@@ -111,6 +111,14 @@ en:
           work_history_break: Tell us more about your work history
           work_history_information: Tell us more about your work history
           written_statement_mismatch: Tell us more about your written statement
+        section:
+          check_your_answers: Check your answers
+          personal_information: About you
+          qualifications: Your qualifications
+          age_range_subjects: The age range and subjects you can teach
+          english_language_proficiency: Your English language proficiency
+          work_history: Your work history
+          professional_standing: Proof that you’re recognised as a teacher
     reference_requests:
       show:
         title: You’ve been asked to act as a reference

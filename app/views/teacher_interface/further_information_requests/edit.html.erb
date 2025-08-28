@@ -1,16 +1,48 @@
 <% content_for :page_title, "Check your answers before submitting" %>
 <% content_for :back_link_url, back_history_path(origin: true, default: teacher_interface_application_form_further_information_request_path(@view_object.further_information_request)) %>
 
+<span class="govuk-caption-l">Your application</span>
 <h1 class="govuk-heading-xl">Check your answers before submitting</h1>
 
-<%= render(CheckYourAnswersSummary::Component.new(
-  id: "check-your-answers",
-  model: @view_object.further_information_request,
-  title: t(".check_your_answers"),
-  fields: @view_object.check_your_answers_fields
-)) %>
+<% @view_object.grouped_task_list_items.each do |grouped_task_list_item| %>
+  <h2 class="govuk-heading-m"><%= grouped_task_list_item[:heading] %></h2>
+  <% grouped_task_list_item[:items].each do |item| %>
+    <%= govuk_summary_card(title: item[:title] ) do |card|
+      card.with_summary_list do |summary_list|
+        summary_list.with_row do |row|
+          row.with_key { item[:value_title] }
+          row.with_value do
+            if item[:value].is_a?(Document)
+              tag.ul(class: "govuk-list") do
+                item[:value]
+                  .uploads
+                  .order(:created_at)
+                  .each { |upload| concat(tag.li(upload_link_to(upload))) }
+              end
+            else
+              item[:value]
+            end
+          end
+          row.with_action(
+            href: item[:href],
+            visually_hidden_text: item[:title].downcase
+          )
+        end
+        summary_list.with_row do |row|
+          row.with_key { "Note from assessor" }
+          row.with_value do
+            govuk_details(summary_text: "View note", text: item[:assessor_note])
+          end
+        end
+      end
+    end %>
+  <% end %>
+<% end %>
 
 <% if @view_object.can_submit? %>
+  <h3 class="govuk-heading-m">How we handle your data</h3>
+  <p class="govuk-body">You can read about the data we collect from you, how we use it and how it’s stored, in our <%= govuk_link_to "privacy policy", "https://www.gov.uk/government/publications/privacy-information-education-providers-workforce-including-teachers/5a254207-a566-44f7-ac77-6ba59fd26e04#using-your-data-when-you-use-the-apply-for-qualified-teacher-status-qts-in-england-service" %>.</p>
+
   <h3 class="govuk-heading-m">Submitting your further information</h3>
   <p class="govuk-body">By selecting the ‘Submit your response’ button you confirm that, to the best of your knowledge, the details you’ve provided are correct.</p>
   <p class="govuk-body">You will not be able to change your response, add new documents or delete anything once you submit it.</p>
