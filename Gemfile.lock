@@ -197,7 +197,7 @@ GEM
     email_address (0.2.5)
       base64
       simpleidn
-    erb (5.0.1)
+    erb (5.0.2)
     erubi (1.13.1)
     et-orbi (1.2.11)
       tzinfo
@@ -311,7 +311,7 @@ GEM
       concurrent-ruby (~> 1.0)
     indefinite_article (0.2.5)
       activesupport
-    io-console (0.8.0)
+    io-console (0.8.1)
     irb (1.15.2)
       pp (>= 0.6.0)
       rdoc (>= 4.0.0)
@@ -435,11 +435,10 @@ GEM
     prettier_print (1.2.1)
     prettyprint (0.2.0)
     prism (1.4.0)
-    propshaft (1.1.0)
+    propshaft (1.2.1)
       actionpack (>= 7.0.0)
       activesupport (>= 7.0.0)
       rack
-      railties (>= 7.0.0)
     pry (0.15.2)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -514,13 +513,13 @@ GEM
     rake (13.3.0)
     rbs (3.4.4)
       abbrev
-    rdoc (6.14.1)
+    rdoc (6.14.2)
       erb
       psych (>= 4.0.0)
     redcarpet (3.6.1)
     redis (4.8.1)
     regexp_parser (2.10.0)
-    reline (0.6.1)
+    reline (0.6.2)
       io-console (~> 0.5)
     representable (3.2.0)
       declarative (< 0.1.0)
