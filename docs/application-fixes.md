@@ -17,7 +17,7 @@ In a production console:
 application_form = ApplicationForm.find(...)
 user = Staff.find_by(name: ...)
 
-# set the awarded at date to that provided by the assessor. This is sent to DQT and will form part of the teacher record
+# set the awarded at date to that provided by the assessor. This is sent to TRS and will form part of the teacher record
 
 application_form.assessment.update(assessment_recommended_at: <date>)
 

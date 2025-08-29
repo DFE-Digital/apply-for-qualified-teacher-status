@@ -7,11 +7,11 @@ RSpec.describe "Assessor views duplicate applicant's application form",
   it "displays information about the duplicate applicant" do
     given_i_am_authorized_as_an_assessor_user
     given_there_is_an_application_form
-    and_the_applicant_matches_a_record_in_dqt
+    and_the_applicant_matches_a_record_in_trs
 
     when_i_visit_the(:assessor_application_page, reference:)
     then_i_see_the_application
-    and_i_see_the_warning_of_an_existing_record_in_dqt
+    and_i_see_the_warning_of_an_existing_record_in_trs
   end
 
   private
@@ -30,14 +30,14 @@ RSpec.describe "Assessor views duplicate applicant's application form",
     )
   end
 
-  def and_i_see_the_warning_of_an_existing_record_in_dqt
+  def and_i_see_the_warning_of_an_existing_record_in_trs
     expect(assessor_application_page).to have_content(
-      "Application details match DQT record(s)",
+      "Application details match TRS record(s)",
     )
     expect(assessor_application_page).to have_content("John Smith, TRN 7654322")
   end
 
-  def and_the_applicant_matches_a_record_in_dqt
+  def and_the_applicant_matches_a_record_in_trs
     application_form.update!(trs_match:)
   end
 

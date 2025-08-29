@@ -9,11 +9,11 @@ RSpec.describe TimelineEntry::Component, type: :component do
 
   context "with a creator name" do
     let(:timeline_event) do
-      create(:timeline_event, :stage_changed, creator_name: "DQT", creator: nil)
+      create(:timeline_event, :stage_changed, creator_name: "TRS", creator: nil)
     end
 
     it "describes the event" do
-      expect(component.text).to include("by DQT")
+      expect(component.text).to include("by TRS")
     end
   end
 

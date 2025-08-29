@@ -107,7 +107,7 @@ en:
 
       checks:
         age_range_subjects_matches: that the age range and subjects information the applicant has entered matches the qualifications they’ve provided
-        applicant_already_dqt: applicant does not already appear in DQT
+        applicant_already_dqt: applicant does not already appear in TRS
         applicant_already_qts: applicant does not already hold QTS and induction exemption
         authorisation_to_teach: confirmation that authorisation to teach has never been suspended, barred, cancelled, revoked or restricted, and there are no sanctions present
         confirm_age_range_subjects: confirmation of the age ranges and subjects the applicant is qualified to teach
