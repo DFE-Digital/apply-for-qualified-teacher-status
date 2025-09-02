@@ -191,13 +191,18 @@ COUNTRIES = {
       },
     ],
   },
-  "GI" => [
-    {
-      status_check: "written",
-      sanction_check: "written",
-      teaching_authority_certificate: "Schedule 3 Certificate of Registration",
-    },
-  ],
+  "GI" => {
+    eligibility_skip_questions: true,
+    regions: [
+      {
+        status_check: "written",
+        sanction_check: "written",
+        application_form_skip_work_history: true,
+        teaching_authority_certificate:
+          "Schedule 3 Certificate of Registration",
+      },
+    ],
+  },
   "GR" => [
     {
       status_check: "written",
