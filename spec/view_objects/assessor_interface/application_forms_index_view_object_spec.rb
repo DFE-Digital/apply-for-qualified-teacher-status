@@ -265,7 +265,7 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
           OpenStruct.new(id: "overdue_reference", label: "Overdue reference"),
           OpenStruct.new(
             id: "potential_duplicate_in_dqt",
-            label: "Potential duplication in DQT",
+            label: "Potential duplication in TRS",
           ),
           OpenStruct.new(id: "preliminary_check", label: "Preliminary check"),
           OpenStruct.new(
