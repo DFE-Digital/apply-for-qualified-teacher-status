@@ -80,6 +80,7 @@ module AssessorInterface
               reference: params[:application_form_reference],
             },
           )
+          .order("work_histories.school_name")
     end
 
     def prioritisation_work_history_check

@@ -103,7 +103,10 @@ module AssessorInterface
 
     def prioritisation_reference_requests
       @prioritisation_reference_requests ||=
-        assessment.prioritisation_reference_requests
+        assessment
+          .prioritisation_reference_requests
+          .includes(:work_history)
+          .order("work_histories.school_name")
     end
 
     def assessment
