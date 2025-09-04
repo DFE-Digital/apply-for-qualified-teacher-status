@@ -143,6 +143,7 @@
     - teach_children
     - updated_at
     - work_experience
+    - work_experience_referee
     - eligible_work_experience_in_england
   :english_language_providers:
     - accepted_tests

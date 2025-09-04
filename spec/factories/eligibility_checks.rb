@@ -14,6 +14,7 @@
 #  qualified_for_subject               :boolean
 #  teach_children                      :boolean
 #  work_experience                     :string
+#  work_experience_referee             :boolean
 #  created_at                          :datetime         not null
 #  updated_at                          :datetime         not null
 #  region_id                           :bigint

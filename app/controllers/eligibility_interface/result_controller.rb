@@ -6,6 +6,6 @@ class EligibilityInterface::ResultController < EligibilityInterface::BaseControl
   def show
     eligibility_check.complete! if eligibility_check.persisted?
 
-    render eligibility_check.eligible? ? "eligible" : "ineligible"
+    render eligibility_check.eligible?(includes_email_domains_for_referees: true) ? "eligible" : "ineligible"
   end
 end

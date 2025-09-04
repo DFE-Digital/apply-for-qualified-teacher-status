@@ -43,4 +43,8 @@ feature_flags:
     author: Hassan Mir
     description: New prioritisation flows for applicants that have work experience in England.
 
+  email_domains_for_referees:
+    author: Hassan Mir
+    description: New feature to block public email domains being submitted for referees by applicants.
+
 parent_controller: SupportInterface::FeatureFlagsController

@@ -14,7 +14,11 @@ module EligibilityInterface
     def create
       @form = WorkExperienceForm.new(form_params.merge(eligibility_check:))
       if @form.save
-        redirect_to %i[eligibility_interface misconduct]
+        if FeatureFlags::FeatureFlag.active?(:email_domains_for_referees)
+          redirect_to %i[eligibility_interface work_experience_referee]
+        else
+          redirect_to %i[eligibility_interface misconduct]
+        end
       else
         render :new, status: :unprocessable_entity
       end
