@@ -3,7 +3,14 @@
 require "rails_helper"
 
 RSpec.describe "Eligibility check", type: :system do
-  before { given_countries_exist }
+  around do |example|
+    FeatureFlags::FeatureFlag.activate(:prioritisation)
+
+    given_countries_exist
+    example.run
+
+    FeatureFlags::FeatureFlag.deactivate(:prioritisation)
+  end
 
   it "happy path" do
     when_i_visit_the(:eligibility_start_page)
@@ -25,6 +32,9 @@ RSpec.describe "Eligibility check", type: :system do
     then_i_see_the(:eligibility_misconduct_page)
 
     when_i_dont_have_a_misconduct_record
+    then_i_see_the(:eligibility_work_experience_in_england_page)
+
+    when_i_have_work_experience_in_england
     then_i_see_the(:eligibility_teach_children_page)
 
     when_i_can_teach_children
@@ -58,6 +68,9 @@ RSpec.describe "Eligibility check", type: :system do
     then_i_see_the(:eligibility_misconduct_page)
 
     when_i_have_a_misconduct_record
+    then_i_see_the(:eligibility_work_experience_in_england_page)
+
+    when_i_have_work_experience_in_england
     then_i_see_the(:eligibility_teach_children_page)
 
     when_i_cant_teach_children
@@ -67,24 +80,6 @@ RSpec.describe "Eligibility check", type: :system do
     and_i_see_the_ineligible_teach_children_text
     and_i_see_the_ineligible_work_experience_text
     and_i_see_the_ineligible_misconduct_text
-  end
-
-  it "ineligible countries" do
-    when_i_visit_the(:eligibility_start_page)
-
-    when_i_press_start_now
-    when_i_select_england
-    then_i_see_the(:eligibility_ineligible_page)
-    and_i_see_the_ineligible_england_or_wales_text
-
-    when_i_press_back
-    when_i_select_wales
-    then_i_see_the(:eligibility_ineligible_page)
-    and_i_see_the_ineligible_england_or_wales_text
-
-    when_i_press_back
-    when_i_select_nigeria
-    then_i_see_the(:eligibility_ineligible_page)
   end
 
   it "trying to skip steps" do
@@ -124,56 +119,26 @@ RSpec.describe "Eligibility check", type: :system do
     when_i_have_more_than_20_months_work_experience
     then_i_see_the(:eligibility_misconduct_page)
 
-    when_i_visit_the(:eligibility_teach_children_page)
+    when_i_visit_the(:eligibility_work_experience_in_england_page)
     then_i_see_the(:eligibility_misconduct_page)
 
-    when_i_can_teach_children
+    when_i_dont_have_a_misconduct_record
+    then_i_see_the(:eligibility_work_experience_in_england_page)
+
+    when_i_visit_the(:eligibility_teach_children_page)
+    then_i_see_the(:eligibility_work_experience_in_england_page)
+
+    when_i_have_work_experience_in_england
     then_i_see_the(:eligibility_teach_children_page)
-  end
 
-  it "handles the country picker error" do
-    when_i_visit_the(:eligibility_start_page)
-    when_i_press_start_now
-    when_i_dont_select_a_country
-    then_i_see_the_country_error_message
+    when_i_visit_the(:eligibility_eligible_page)
+    then_i_see_the(:eligibility_teach_children_page)
 
-    when_i_select_an_eligible_country
-    then_i_see_the(:eligibility_qualification_page)
-  end
-
-  it "can skip questions with qualification" do
-    when_i_visit_the(:eligibility_start_page)
-    when_i_press_start_now
-    when_i_select_a_skip_questions_country
-    then_i_see_the(:eligibility_qualification_page)
-
-    when_i_have_a_qualification
+    when_i_can_teach_children
     then_i_see_the(:eligibility_eligible_page)
   end
 
-  it "can skip questions without qualification" do
-    when_i_visit_the(:eligibility_start_page)
-    when_i_press_start_now
-    when_i_select_a_skip_questions_country
-    then_i_see_the(:eligibility_qualification_page)
-
-    when_i_dont_have_a_qualification
-    then_i_see_the(:eligibility_ineligible_page)
-
-    and_i_see_the_ineligible_qualification_text_with_skip_questions_country
-  end
-
-  it "handles countries with multiple regions" do
-    when_i_visit_the(:eligibility_start_page)
-    when_i_press_start_now
-    when_i_select_a_multiple_region_country
-    then_i_see_the_region_page
-
-    when_i_select_a_region
-    then_i_see_the(:eligibility_qualification_page)
-  end
-
-  it "happy path when filtering by country requiring qualification for subject" do
+  it "happy path when filtering by country requiring qualification for subject without England work" do
     when_i_visit_the(:eligibility_start_page)
     then_i_see_the(:eligibility_start_page)
 
@@ -193,6 +158,9 @@ RSpec.describe "Eligibility check", type: :system do
     then_i_see_the(:eligibility_misconduct_page)
 
     when_i_dont_have_a_misconduct_record
+    then_i_see_the(:eligibility_work_experience_in_england_page)
+
+    when_i_do_not_have_work_experience_in_england
     then_i_see_the(:eligibility_teach_children_page)
 
     when_i_can_teach_children
@@ -202,7 +170,7 @@ RSpec.describe "Eligibility check", type: :system do
     then_i_see_the(:eligibility_eligible_page)
   end
 
-  it "ineligible path when filtering by country, not qualified for UK secondary" do
+  it "ineligible path when filtering by country requiring qualification for subject, not qualified for UK secondary" do
     when_i_visit_the(:eligibility_start_page)
     then_i_see_the(:eligibility_start_page)
 
@@ -222,6 +190,9 @@ RSpec.describe "Eligibility check", type: :system do
     then_i_see_the(:eligibility_misconduct_page)
 
     when_i_dont_have_a_misconduct_record
+    then_i_see_the(:eligibility_work_experience_in_england_page)
+
+    when_i_do_not_have_work_experience_in_england
     then_i_see_the(:eligibility_teach_children_page)
 
     when_i_cant_teach_children
@@ -251,6 +222,9 @@ RSpec.describe "Eligibility check", type: :system do
     then_i_see_the(:eligibility_misconduct_page)
 
     when_i_dont_have_a_misconduct_record
+    then_i_see_the(:eligibility_work_experience_in_england_page)
+
+    when_i_do_not_have_work_experience_in_england
     then_i_see_the(:eligibility_teach_children_page)
 
     when_i_can_teach_children
@@ -260,25 +234,36 @@ RSpec.describe "Eligibility check", type: :system do
     then_i_see_the(:eligibility_ineligible_page)
   end
 
-  it "ineligible path when filtering by ineligible country and not qualified in relevant subject" do
+  it "happy path when filtering by country requiring qualification for subject with England work" do
     when_i_visit_the(:eligibility_start_page)
     then_i_see_the(:eligibility_start_page)
 
     when_i_press_start_now
     then_i_see_the(:eligibility_country_page)
 
-    when_i_select_an_ineligible_country
-    then_i_see_the(:eligibility_ineligible_page)
+    when_i_select_a_qualified_for_subject_country
+    then_i_see_the(:eligibility_qualification_page)
 
-    when_i_visit_the(:eligibility_qualification_page)
-    then_i_see_the(:eligibility_ineligible_page)
+    when_i_have_a_qualification
+    then_i_see_the(:eligibility_degree_page)
+
+    when_i_have_a_degree
+    then_i_see_the(:eligibility_work_experience_page)
+
+    when_i_have_more_than_20_months_work_experience
+    then_i_see_the(:eligibility_misconduct_page)
+
+    when_i_dont_have_a_misconduct_record
+    then_i_see_the(:eligibility_work_experience_in_england_page)
+
+    when_i_have_work_experience_in_england
+    then_i_see_the(:eligibility_teach_children_page)
+
+    when_i_can_teach_children
+    then_i_see_the(:eligibility_eligible_page)
   end
 
   private
-
-  def then_access_is_denied
-    expect(page).to have_content("HTTP Basic: Access denied")
-  end
 
   def given_countries_exist
     create(:country, :with_national_region, code: "GB-SCT")
@@ -296,10 +281,6 @@ RSpec.describe "Eligibility check", type: :system do
     create(:country, :with_national_region, :subject_limited, code: "JM")
   end
 
-  def then_i_do_not_see_the_start_page
-    expect(eligibility_start_page).not_to be_displayed
-  end
-
   def when_i_press_start_now
     eligibility_start_page.start_button.click
   end
@@ -312,56 +293,8 @@ RSpec.describe "Eligibility check", type: :system do
     eligibility_country_page.submit(country: "Spain")
   end
 
-  def when_i_select_a_skip_questions_country
-    eligibility_country_page.submit(country: "Portugal")
-  end
-
-  def when_i_select_a_multiple_region_country
-    eligibility_country_page.submit(country: "Italy")
-  end
-
-  def when_i_select_england
-    eligibility_country_page.submit(country: "England")
-  end
-
-  def when_i_select_wales
-    eligibility_country_page.submit(country: "Wales")
-  end
-
-  def when_i_select_nigeria
-    eligibility_country_page.submit(country: "Nigeria")
-  end
-
-  def when_i_select_laos
-    eligibility_country_page.submit(country: "Laos")
-  end
-
-  def when_i_dont_select_a_country
-    eligibility_country_page.form.continue_button.click
-  end
-
   def when_i_select_a_qualified_for_subject_country
     eligibility_country_page.submit(country: "Jamaica")
-  end
-
-  def then_i_see_the_country_error_message
-    expect(eligibility_country_page).to have_error_summary
-    expect(eligibility_country_page.error_summary.body).to have_content(
-      "Tell us where you’re currently recognised as a teacher",
-    )
-  end
-
-  def then_i_see_the_region_page
-    expect(eligibility_region_page).to have_title(
-      "In which state/territory are you currently recognised as a teacher?",
-    )
-    expect(eligibility_region_page.heading).to have_content(
-      "In which state/territory are you currently recognised as a teacher?",
-    )
-  end
-
-  def when_i_select_a_region
-    eligibility_region_page.submit(region: "Region")
   end
 
   def when_i_have_a_qualification
@@ -374,6 +307,14 @@ RSpec.describe "Eligibility check", type: :system do
 
   def when_i_have_a_degree
     eligibility_degree_page.submit_yes
+  end
+
+  def when_i_have_work_experience_in_england
+    eligibility_work_experience_in_england_page.submit_yes
+  end
+
+  def when_i_do_not_have_work_experience_in_england
+    eligibility_work_experience_in_england_page.submit_no
   end
 
   def when_i_dont_have_a_degree
@@ -412,25 +353,12 @@ RSpec.describe "Eligibility check", type: :system do
     eligibility_misconduct_page.submit_no
   end
 
-  def when_i_press_apply
-    eligibility_eligible_page.apply_button.click
-  end
-
   def and_i_see_the_ineligible_country_text
     expect(eligibility_ineligible_page.heading.text).to eq(
       "You’re not eligible to apply for qualified teacher status (QTS) in England",
     )
     expect(eligibility_ineligible_page.body).to have_content(
       "If you are recognised as a teacher in Spain you are not currently eligible to use this service.",
-    )
-  end
-
-  def and_i_see_the_ineligible_england_or_wales_text
-    expect(eligibility_ineligible_page.heading.text).to eq(
-      "You’re not eligible to apply for qualified teacher status (QTS) in England",
-    )
-    expect(eligibility_ineligible_page.body).to have_content(
-      "This service is for qualified teachers who trained to teach outside of England",
     )
   end
 

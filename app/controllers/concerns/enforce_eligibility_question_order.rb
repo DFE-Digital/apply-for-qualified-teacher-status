@@ -39,6 +39,8 @@ module EnforceEligibilityQuestionOrder
       qualification: eligibility_interface_qualifications_path,
       degree: eligibility_interface_degree_path,
       work_experience: eligibility_interface_work_experience_path,
+      work_experience_referee:
+        eligibility_interface_work_experience_referee_path,
       misconduct: eligibility_interface_misconduct_path,
       work_experience_in_england:
         eligibility_interface_work_experience_in_england_path,

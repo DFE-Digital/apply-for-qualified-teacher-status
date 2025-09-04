@@ -127,13 +127,17 @@ class EligibilityCheck < ApplicationRecord
     ].compact
   end
 
-  def eligible?
+  def eligible?(includes_email_domains_for_referees: false)
     if skip_additional_questions? && region.present? && qualification
       return true
     end
 
     region.present? && qualification && degree && teach_children? &&
-      free_of_sanctions && !work_experience_under_9_months?
+      free_of_sanctions && !work_experience_under_9_months? &&
+      (
+        work_experience_referee? || reduced_evidence_accepted? ||
+          !includes_email_domains_for_referees
+      )
   end
 
   def country_eligibility_status
