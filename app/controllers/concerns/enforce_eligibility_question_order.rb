@@ -8,14 +8,26 @@ module EnforceEligibilityQuestionOrder
   def redirect_by_status
     return if current_page_is_allowed?
 
-    expected_path = paths[eligibility_check.status(includes_prioritisation:)]
+    expected_path =
+      paths[
+        eligibility_check.status(
+          includes_prioritisation:,
+          includes_email_domains_for_referees:,
+        )
+      ]
     redirect_to(expected_path) if expected_path && expected_path != request.path
   end
 
   private
 
   def current_page_is_allowed?
-    order = paths.keys.index(eligibility_check.status(includes_prioritisation:))
+    order =
+      paths.keys.index(
+        eligibility_check.status(
+          includes_prioritisation:,
+          includes_email_domains_for_referees:,
+        ),
+      )
     current_position = paths.values.index(request.path)
     current_position && order && current_position <= order
   end
@@ -33,10 +45,19 @@ module EnforceEligibilityQuestionOrder
       teach_children: eligibility_interface_teach_children_path,
       qualified_for_subject: eligibility_interface_qualified_for_subject_path,
       result: eligibility_interface_result_path,
-    }.slice(*eligibility_check.status_route(includes_prioritisation:))
+    }.slice(
+      *eligibility_check.status_route(
+        includes_prioritisation:,
+        includes_email_domains_for_referees:,
+      ),
+    )
   end
 
   def includes_prioritisation
     FeatureFlags::FeatureFlag.active?(:prioritisation)
+  end
+
+  def includes_email_domains_for_referees
+    FeatureFlags::FeatureFlag.active?(:email_domains_for_referees)
   end
 end

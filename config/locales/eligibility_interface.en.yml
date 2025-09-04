@@ -35,6 +35,10 @@ en:
             work_experience:
               blank: Tell us how long you have worked as a recognised teacher
               inclusion: Tell us how long you have worked as a recognised teacher
+        eligibility_interface/work_experience_referee_form:
+          attributes:
+            work_experience_referee:
+              inclusion: Tell us if your employment references meet all of the following requirements
         eligibility_interface/work_experience_in_england_form:
           attributes:
             eligible:
