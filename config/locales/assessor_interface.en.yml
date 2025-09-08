@@ -228,6 +228,7 @@ en:
       induction_required:
         GB-NIR: Has applicant provided proof that they’ve completed an induction period?
         GB-SCT: Has the applicant completed an induction period?
+        GI: Has the applicant completed an induction period?
 
       english_language_proficiency:
         passed:
