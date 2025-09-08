@@ -104,11 +104,7 @@ RSpec.describe "Eligible region content", type: :view do
   context "with work experience" do
     let(:region) { create(:region, reduced_evidence_accepted: false) }
 
-    it do
-      expect(subject).to match(
-        /You must provide evidence that you have been employed/,
-      )
-    end
+    it { expect(subject).to match(/You must provide evidence that you have/) }
 
     it do
       expect(subject).not_to match(
@@ -157,11 +153,7 @@ RSpec.describe "Eligible region content", type: :view do
     context "with a region which does not accept reduced evidence" do
       let(:region) { create(:region, reduced_evidence_accepted: false) }
 
-      it do
-        expect(subject).to match(
-          /You must provide evidence that you have been employed/,
-        )
-      end
+      it { expect(subject).to match(/You must provide evidence that you have/) }
     end
   end
 

@@ -1,4 +1,15 @@
-<p class="govuk-body">You must provide evidence that you have been employed as a qualified teacher for at least 9 months or more.</p>
+<p class="govuk-body">You must provide evidence that you have:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>been employed as a qualified teacher for at least 9 months or more</li>
+  <li>worked in a school that delivers mandatory education</li>
+  <% if eligibility_check&.qualified_for_subject_required? && !eligibility_check&.eligible_work_experience_in_england? %>
+    <li>worked unsupervised with children aged between 11 and 16 years</li>
+  <% else %>
+    <li>worked unsupervised with children aged between 5 and 16 years</li>
+  <% end %>
+  <li>been solely responsible for planning, preparing, and delivering lessons to at least 4 students at a time</li>
+  <li>been solely responsible for assessing and reporting on the progress of those students</li>
+</ul>
 
 <p class="govuk-inset-text">Teaching work experience can be gained in any country but must be from after you qualified as a teacher.</p>
 
@@ -7,20 +18,24 @@
   <p class="govuk-body"><%= govuk_link_to "Learn more about statutory induction periods for early career teachers in England.", "https://www.gov.uk/government/publications/induction-for-early-career-teachers-england" %></p>
 <% end %>
 
-<h3 class="govuk-heading-s">References</h3>
-
-<p class="govuk-body">You must provide the names and email addresses of references who can confirm that during your teaching work experience you:</p>
-
-<ul class="govuk-list govuk-list--bullet">
-  <li>worked in the role after becoming qualified as a teacher</li>
-  <li>worked in a school that delivers mandatory education</li>
-  <li>worked unsupervised with children aged between 5 and 16 years</li>
-  <li>were solely responsible for planning, preparing, and delivering lessons to at least 4 students at a time</li>
-  <li>were solely responsible for assessing and reporting on the progress of those students</li>
-</ul>
-
 <% unless region.reduced_evidence_accepted %>
-  <p class="govuk-body">We will contact the references you’ve provided to confirm your teaching work history before we award QTS.</p>
+  <h3 class="govuk-heading-s">References</h3>
+
+  <p class="govuk-body">You’ll need to provide references from your places of employment so we can verify your teaching work history. They must:</p>
+  <ul class="govuk-list govuk-list--bullet">
+    <% if FeatureFlags::FeatureFlag.active?(:email_domains_for_referees) %>
+      <li>have an email address that uses the institution’s domain, for example, name@institution.edu</li>
+    <% end %>
+    <li>be a senior member of staff that is still working at this institution (either a headteacher/principal, an assistant/deputy head, or a institution business manager)</li>
+    <li>be able to provide a reference in English</li>
+    <li>only comment on teaching work that you did after becoming a qualified teacher</li>
+  </ul>
+
+  <% if FeatureFlags::FeatureFlag.active?(:email_domains_for_referees) %>
+    <p class="govuk-body">A domain is the part of an email address that shows who provides it. It comes after the @ symbol. For example, in name@institution.edu the domain is institution.edu</p>
+
+    <p class="govuk-body">We only accept references from official email addresses to verify they are genuine staff members of a recognised institution. To verify your work history, we will also check that the email domain is listed on the institution’s website.</p>
+  <% end %>
 <% end %>
 
 <% if eligibility_check&.eligible_work_experience_in_england? %>
