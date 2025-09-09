@@ -1,5 +1,6 @@
 <% content_for :page_title, title_with_error_prefix("Record LoPS response", error: @form.errors.any?) %>
 <% content_for :back_link_url, assessor_interface_application_form_assessment_professional_standing_request_path %>
+<% can_update_verify_lops_request = @assessment.verify? && policy([:assessor_interface, @professional_standing_request]).update_verify? %>
 
 <%= form_with model: @form, url: [:verify, :assessor_interface, @application_form, @assessment, :professional_standing_request] do |f| %>
   <%= f.govuk_error_summary %>
@@ -23,17 +24,19 @@
                 "Does the response confirm that the LoPS is valid?" %>
 
   <%= f.govuk_radio_buttons_fieldset :passed, legend: { text: legend, size: "s" } do %>
-    <%= f.govuk_radio_button :passed, :true, link_errors: true %>
+    <%= f.govuk_radio_button :passed, :true, link_errors: true, disabled: !can_update_verify_lops_request %>
 
     <% if @professional_standing_request.expired? %>
-      <%= f.govuk_radio_button :passed, :false do %>
-        <%= f.govuk_radio_button :received, :true %>
-        <%= f.govuk_radio_button :received, :false %>
+      <%= f.govuk_radio_button :passed, :false, disabled: !can_update_verify_lops_request do %>
+        <%= f.govuk_radio_button :received, :true, disabled: !can_update_verify_lops_request %>
+        <%= f.govuk_radio_button :received, :false, disabled: !can_update_verify_lops_request %>
       <% end %>
     <% else %>
-      <%= f.govuk_radio_button :passed, :false %>
+      <%= f.govuk_radio_button :passed, :false, disabled: !can_update_verify_lops_request %>
     <% end %>
   <% end %>
 
-  <%= render "shared/assessor_interface/continue_cancel_button", f: %>
+  <%= f.govuk_submit disabled: !can_update_verify_lops_request do %>
+    <%= render "shared/assessor_interface/cancel_link" %>
+  <% end %>
 <% end %>
