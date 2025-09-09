@@ -1,5 +1,5 @@
 <%
-  back_link_url = FeatureFlags::FeatureFlag.active?(:email_domains_for_referees) ? eligibility_interface_work_experience_referee_path : eligibility_interface_work_experience_path
+  back_link_url = FeatureFlags::FeatureFlag.active?(:email_domains_for_referees) && !@region.reduced_evidence_accepted ? eligibility_interface_work_experience_referee_path : eligibility_interface_work_experience_path
 %>
 
 <% content_for :page_title, title_with_error_prefix("Do you have any sanctions or restrictions on your employment record?", error: @form.errors.any?) %>
