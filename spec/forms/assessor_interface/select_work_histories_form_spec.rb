@@ -52,6 +52,48 @@ RSpec.describe AssessorInterface::SelectWorkHistoriesForm, type: :model do
 
       it { is_expected.not_to be_valid }
     end
+
+    context "when there is a most recent other England work history" do
+      let!(:work_history_3) do
+        create(
+          :work_history,
+          :completed,
+          :other_england_role,
+          application_form:,
+          start_date: Date.new(2024, 1, 1),
+        )
+      end
+
+      it do
+        expect(subject).to validate_inclusion_of(:work_history_ids).in_array(
+          [work_history_1.id.to_s, work_history_2.id.to_s],
+        )
+      end
+
+      context "with other England work history being submitted" do
+        let(:work_history_ids) do
+          [
+            work_history_1.id.to_s,
+            work_history_2.id.to_s,
+            work_history_3.id.to_s,
+          ]
+        end
+
+        it { is_expected.not_to be_valid }
+      end
+
+      context "with latest teaching work history" do
+        let(:work_history_ids) { [work_history_1.id.to_s] }
+
+        it { is_expected.to be_valid }
+      end
+
+      context "without latest teaching work history" do
+        let(:work_history_ids) { [work_history_2.id.to_s] }
+
+        it { is_expected.not_to be_valid }
+      end
+    end
   end
 
   describe "#save" do

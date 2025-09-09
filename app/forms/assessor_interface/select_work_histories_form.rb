@@ -15,6 +15,7 @@ class AssessorInterface::SelectWorkHistoriesForm
                 form
                   .application_form
                   &.work_histories
+                  &.teaching_role
                   &.pluck(:id)
                   &.map(&:to_s) || []
               end,
@@ -46,7 +47,7 @@ class AssessorInterface::SelectWorkHistoriesForm
     return if application_form.region.checks_available?
 
     most_recent_work_history_id =
-      application_form.work_histories.order_by_role.first.id.to_s
+      application_form.work_histories.teaching_role.order_by_role.first.id.to_s
 
     unless work_history_ids.include?(most_recent_work_history_id)
       errors.add(:work_history_ids, :most_recent_not_selected)
