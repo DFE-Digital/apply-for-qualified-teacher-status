@@ -12,12 +12,33 @@ A number of pieces of information from applicants requires them to upload docume
 
 ## Pre-assessment stage
 
-Once submitted, an application will move in to the pre-assessment stage only if `requires_preliminary_check` or `teaching_authority_provides_written_statement` is set to `true` (which itself comes from the `region`).
+Once submitted, an application will go through some pre-assessment tasks if it requires preliminary checks or prioritisation checks.
 
-Pre-assessment requires the assessor to either:
+### Preliminary checks
 
-- perform a preliminary check against some basic pieces of information
-- wait for the letter of professional standing to be received from the teaching authority
+An application will go through preliminary checks only if `requires_preliminary_check` is set to `true` (which itself comes from the `region`).
+
+These checks requires the assessor to perform a preliminary check against some basic pieces of information and either pass this stage or decline the application.
+
+### Prioritisation checks
+
+An application will go through prioritisation checks only if the application has any work history that is in England which has either ended in the last 12 months of them submitting their application or they currently work there.
+
+This step assessors go through:
+
+1. Check on the specific work history roles to ensure they are eligible for prioritision. These [failure reasons](https://github.com/DFE-Digital/apply-for-qualified-teacher-status/blob/main/app/lib/failure_reasons.rb#L96) represent why a role might not be eligible for prioritisation.
+2. Eligible roles then have references sent out to confirm the applicant works there.
+3. Final decision on prioritisation.
+
+If an application has been determined by the system to go through prioritisation checks, any preliminary checks, if relevant, will no longer be required unless prioritisation checks do not pass due to not being eligible roles for prioritisation. The need for any preliminary checks is removed at this stage since subject restrictions which apply to specific countries and regions no longer apply.
+
+Once an application is prioritised, it will have `prioritised` column set to `true` on the `assessments` table which can be used later on by assessors to identify prioritised applications.
+
+### Awaiting letter of professional standing (LoPS)
+
+An application will await LoPS if `teaching_authority_provides_written_statement` is set to `true` (which itself comes from the `region`).
+
+This step requires the assessor to wait for the letter of professional standing to be received from the teaching authority and then mark it as received in order to start the assessment stage.
 
 ## Not started stage
 
