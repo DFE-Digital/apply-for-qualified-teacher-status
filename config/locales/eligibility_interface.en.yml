@@ -35,6 +35,10 @@ en:
             work_experience:
               blank: Tell us how long you have worked as a recognised teacher
               inclusion: Tell us how long you have worked as a recognised teacher
+        eligibility_interface/work_experience_referee_form:
+          attributes:
+            work_experience_referee:
+              inclusion: Tell us if your employment references meet all of the following requirements
         eligibility_interface/work_experience_in_england_form:
           attributes:
             eligible:
@@ -50,3 +54,4 @@ en:
           teach_children_secondary: You are not qualified to teach children aged anywhere between 11 and 16 years.
           qualified_for_subject: You are not qualified to teach one of the subjects for which we currently accept applications.
           work_experience: You do not have sufficient work experience as a teacher.
+          work_experience_referee: You do not have references that meet our requirements.

@@ -276,7 +276,7 @@ RSpec.describe "Assessor change teaching qualification", type: :system do
 
   def when_i_update_the_qualification_details_with_certificate_date_resulting_work_history_error
     assessor_edit_teaching_qualification_page.form.certificate_date_month_field.fill_in with:
-      "01"
+      Date.current.month
     assessor_edit_teaching_qualification_page.form.certificate_date_year_field.fill_in with:
       Date.current.year
 

@@ -41,5 +41,11 @@ FactoryBot.define do
         create(:region, :national, country:)
       end
     end
+
+    trait :with_reduced_evidence_region do
+      after(:create) do |country, _evaluator|
+        create(:region, :reduced_evidence_accepted, country:)
+      end
+    end
   end
 end

@@ -408,6 +408,8 @@ en:
         region_id: In which state/territory are you currently recognised as a teacher?
       eligibility_interface_work_experience_form:
         work_experience: How long have you worked as a recognised teacher?
+      eligibility_interface_work_experience_referee_form:
+        work_experience_referee: Do your employment references meet all of the following requirements?
       teacher_interface_add_another_qualification_form:
         add_another: Do you want to add another qualification?
       teacher_interface_add_another_upload_form:
