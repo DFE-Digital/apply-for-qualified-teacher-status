@@ -15,7 +15,12 @@ module AssessorInterface
     end
 
     def edit_review
-      @form = RequestableReviewForm.new(requestable:)
+      @form =
+        RequestableReviewForm.new(
+          requestable:,
+          passed: requestable.review_passed,
+          note: requestable.review_note,
+        )
     end
 
     def update_review

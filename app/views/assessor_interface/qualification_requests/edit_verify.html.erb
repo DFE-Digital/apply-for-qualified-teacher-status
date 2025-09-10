@@ -1,4 +1,5 @@
 <% title = "Record Ecctis response" %>
+<% can_update_verify_qualification_request = @assessment.verify? && policy([:assessor_interface, @qualification_request]).update_verify? %>
 
 <% content_for :page_title, title_with_error_prefix(title, error: @form.errors.any?) %>
 <% content_for :back_link_url, back_history_path(default: assessor_interface_application_form_path(@application_form)) %>
@@ -30,17 +31,19 @@
                 "Does the response confirm that the qualification is valid?" %>
 
   <%= f.govuk_radio_buttons_fieldset :passed, legend: { text: legend } do %>
-    <%= f.govuk_radio_button :passed, :true, link_errors: true %>
+    <%= f.govuk_radio_button :passed, :true, link_errors: true, disabled: !can_update_verify_qualification_request %>
 
     <% if @qualification_request.expired? %>
-      <%= f.govuk_radio_button :passed, :false do %>
-        <%= f.govuk_radio_button :received, :true %>
-        <%= f.govuk_radio_button :received, :false %>
+      <%= f.govuk_radio_button :passed, :false, disabled: !can_update_verify_qualification_request do %>
+        <%= f.govuk_radio_button :received, :true, disabled: !can_update_verify_qualification_request %>
+        <%= f.govuk_radio_button :received, :false, disabled: !can_update_verify_qualification_request %>
       <% end %>
     <% else %>
-      <%= f.govuk_radio_button :passed, :false %>
+      <%= f.govuk_radio_button :passed, :false, disabled: !can_update_verify_qualification_request %>
     <% end %>
   <% end %>
 
-  <%= render "shared/assessor_interface/continue_cancel_button", f: %>
+  <%= f.govuk_submit disabled: !can_update_verify_qualification_request do %>
+    <%= render "shared/assessor_interface/cancel_link" %>
+  <% end %>
 <% end %>
