@@ -130,6 +130,18 @@ RSpec.describe ApplicationFormFactory do
       expect(application_form.includes_prioritisation_features).to be false
     end
 
+    it "doesn't set started_with_private_email_for_referee" do
+      expect(
+        application_form.started_with_private_email_for_referee,
+      ).to be false
+    end
+
+    it "doesn't set requires_private_email_for_referee" do
+      expect(
+        application_form.requires_private_email_for_referee,
+      ).to be false
+    end
+
     context "when reduced evidence is accepted" do
       let(:region) { create(:region, :reduced_evidence_accepted) }
 
@@ -200,6 +212,25 @@ RSpec.describe ApplicationFormFactory do
       it "sets requires passport document as identity proof" do
         expect(application_form.includes_prioritisation_features).to be true
       end
+    end
+
+    context "when the feature for private email domain for referees is released" do
+      before { FeatureFlags::FeatureFlag.activate(:email_domains_for_referees) }
+
+      after { FeatureFlags::FeatureFlag.deactivate(:email_domains_for_referees) }
+
+      it "sets started_with_private_email_for_referee" do
+        expect(
+          application_form.started_with_private_email_for_referee,
+        ).to be true
+      end
+
+      it "sets requires_private_email_for_referee" do
+        expect(
+          application_form.requires_private_email_for_referee,
+        ).to be true
+      end
+
     end
   end
 end
