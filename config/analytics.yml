@@ -45,8 +45,10 @@
     - registration_number_status
     - requires_passport_as_identity_proof
     - requires_preliminary_check
+    - requires_private_email_for_referee
     - reviewer_id
     - stage
+    - started_with_private_email_for_referee
     - statuses
     - subject_limited
     - subjects
