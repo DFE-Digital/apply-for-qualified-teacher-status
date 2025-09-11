@@ -236,7 +236,7 @@ en:
         others:
           heading: Add more valid educational work experience in England
       contact:
-        heading: Who should we contact to verify this role?
+        heading: Who should we contact to verify this role at %{school_name}?
     summary:
       name: Name
       country: Country trained in
