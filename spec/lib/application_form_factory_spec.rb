@@ -137,9 +137,7 @@ RSpec.describe ApplicationFormFactory do
     end
 
     it "doesn't set requires_private_email_for_referee" do
-      expect(
-        application_form.requires_private_email_for_referee,
-      ).to be false
+      expect(application_form.requires_private_email_for_referee).to be false
     end
 
     context "when reduced evidence is accepted" do
@@ -217,7 +215,9 @@ RSpec.describe ApplicationFormFactory do
     context "when the feature for private email domain for referees is released" do
       before { FeatureFlags::FeatureFlag.activate(:email_domains_for_referees) }
 
-      after { FeatureFlags::FeatureFlag.deactivate(:email_domains_for_referees) }
+      after do
+        FeatureFlags::FeatureFlag.deactivate(:email_domains_for_referees)
+      end
 
       it "sets started_with_private_email_for_referee" do
         expect(
@@ -226,11 +226,8 @@ RSpec.describe ApplicationFormFactory do
       end
 
       it "sets requires_private_email_for_referee" do
-        expect(
-          application_form.requires_private_email_for_referee,
-        ).to be true
+        expect(application_form.requires_private_email_for_referee).to be true
       end
-
     end
   end
 end

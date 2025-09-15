@@ -362,21 +362,61 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
       context "with an incomplete work history" do
         let(:application_form) do
           create(:application_form).tap do |application_form|
-            create(:work_history, application_form:)
+            create(:work_history, application_form:, contact_email:)
           end
         end
+        let(:contact_email) { "test@gmail.com" }
 
         it { is_expected.to eq("in_progress") }
+
+        # TODO: Once all existing draft applications have gone through post release,
+        # we no longer need to do this check on any of the above. This would mean that
+        # all existing draft application have started_with_private_email_for_referee is true
+        context "when private email domain for referee feature is enabled" do
+          before do
+            FeatureFlags::FeatureFlag.activate(:email_domains_for_referees)
+            described_class.call(application_form:)
+          end
+
+          after do
+            FeatureFlags::FeatureFlag.deactivate(:email_domains_for_referees)
+          end
+
+          it { is_expected.to eq("in_progress") }
+        end
       end
 
       context "with a complete work history" do
         let(:application_form) do
           create(:application_form).tap do |application_form|
-            create(:work_history, :completed, application_form:)
+            create(:work_history, :completed, application_form:, contact_email:)
           end
         end
+        let(:contact_email) { "test@gmail.com" }
 
         it { is_expected.to eq("completed") }
+
+        # TODO: Once all existing draft applications have gone through post release,
+        # we no longer need to do this check on any of the above. This would mean that
+        # all existing draft application have started_with_private_email_for_referee is true
+        context "when private email domain for referee feature is enabled" do
+          before do
+            FeatureFlags::FeatureFlag.activate(:email_domains_for_referees)
+            described_class.call(application_form:)
+          end
+
+          after do
+            FeatureFlags::FeatureFlag.deactivate(:email_domains_for_referees)
+          end
+
+          it { is_expected.to eq("update_needed") }
+
+          context "with contact email having a private email domain" do
+            let(:contact_email) { "test@private.com" }
+
+            it { is_expected.to eq("completed") }
+          end
+        end
 
         context "when there is also other England work history role that is incomplete" do
           let(:application_form) do

@@ -184,6 +184,7 @@ class ApplicationForm < ApplicationRecord
     completed: "completed",
     error: "error",
     in_progress: "in_progress",
+    update_needed: "update_needed",
     not_started: "not_started",
   }.freeze
 

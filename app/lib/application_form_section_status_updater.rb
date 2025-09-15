@@ -179,13 +179,20 @@ class ApplicationFormSectionStatusUpdater
     teaching_work_histories = work_histories.teaching_role
 
     all_work_histories_complete = teaching_work_histories.all?(&:complete?)
+    any_work_histories_with_invalid_contact_email_domain =
+      requires_private_email_for_referee? &&
+        teaching_work_histories.any?(&:invalid_email_domain_for_contact?)
 
     if application_form.created_under_old_regulations?
       return :not_started if has_work_history.nil?
 
       if !has_work_history ||
            (!teaching_work_histories.empty? && all_work_histories_complete)
+        if any_work_histories_with_invalid_contact_email_domain
+          :update_needed
+        else
         :completed
+        end
       else
         :in_progress
       end
@@ -198,7 +205,15 @@ class ApplicationFormSectionStatusUpdater
           application_form,
         ).enough_for_submission?
 
-      enough_for_submission ? :completed : :in_progress
+      if enough_for_submission
+        if any_work_histories_with_invalid_contact_email_domain
+          :update_needed
+        else
+          :completed
+        end
+      else
+        :in_progress
+      end
     end
   end
 
@@ -243,5 +258,9 @@ class ApplicationFormSectionStatusUpdater
     return :not_started if values.all?(&:blank?)
     return :completed if values.all?(&:present?)
     :in_progress
+  end
+
+  def requires_private_email_for_referee?
+    FeatureFlags::FeatureFlag.active?(:email_domains_for_referees)
   end
 end

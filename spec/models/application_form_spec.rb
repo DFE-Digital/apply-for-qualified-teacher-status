@@ -154,6 +154,7 @@ RSpec.describe ApplicationForm, type: :model do
           error: "error",
           in_progress: "in_progress",
           not_started: "not_started",
+          update_needed: "update_needed",
         )
         .with_prefix(:personal_information_status)
         .backed_by_column_of_type(:string)
@@ -166,6 +167,7 @@ RSpec.describe ApplicationForm, type: :model do
           error: "error",
           in_progress: "in_progress",
           not_started: "not_started",
+          update_needed: "update_needed",
         )
         .with_prefix(:identification_document_status)
         .backed_by_column_of_type(:string)
@@ -178,6 +180,7 @@ RSpec.describe ApplicationForm, type: :model do
           error: "error",
           in_progress: "in_progress",
           not_started: "not_started",
+          update_needed: "update_needed",
         )
         .with_prefix(:qualifications_status)
         .backed_by_column_of_type(:string)
@@ -190,6 +193,7 @@ RSpec.describe ApplicationForm, type: :model do
           error: "error",
           in_progress: "in_progress",
           not_started: "not_started",
+          update_needed: "update_needed",
         )
         .with_prefix(:age_range_status)
         .backed_by_column_of_type(:string)
@@ -202,6 +206,7 @@ RSpec.describe ApplicationForm, type: :model do
           error: "error",
           in_progress: "in_progress",
           not_started: "not_started",
+          update_needed: "update_needed",
         )
         .with_prefix(:subjects_status)
         .backed_by_column_of_type(:string)
@@ -214,6 +219,7 @@ RSpec.describe ApplicationForm, type: :model do
           error: "error",
           in_progress: "in_progress",
           not_started: "not_started",
+          update_needed: "update_needed",
         )
         .with_prefix(:english_language_status)
         .backed_by_column_of_type(:string)
@@ -226,6 +232,7 @@ RSpec.describe ApplicationForm, type: :model do
           error: "error",
           in_progress: "in_progress",
           not_started: "not_started",
+          update_needed: "update_needed",
         )
         .with_prefix(:work_history_status)
         .backed_by_column_of_type(:string)
@@ -238,6 +245,7 @@ RSpec.describe ApplicationForm, type: :model do
           error: "error",
           in_progress: "in_progress",
           not_started: "not_started",
+          update_needed: "update_needed",
         )
         .with_prefix(:registration_number_status)
         .backed_by_column_of_type(:string)
@@ -250,6 +258,7 @@ RSpec.describe ApplicationForm, type: :model do
           error: "error",
           in_progress: "in_progress",
           not_started: "not_started",
+          update_needed: "update_needed",
         )
         .with_prefix(:written_statement_status)
         .backed_by_column_of_type(:string)
