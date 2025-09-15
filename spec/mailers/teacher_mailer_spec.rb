@@ -512,8 +512,9 @@ RSpec.describe TeacherMailer, type: :mailer do
       end
 
       it do
-        expect(subject).to include(
-          "Once you submit all the information requested, the assessor will be able to continue reviewing your application.",
+        include(
+          "Once you submit all the information requested, the assessor will be able to continue " \
+            "reviewing your application.",
         )
       end
 
