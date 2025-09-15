@@ -511,6 +511,12 @@ RSpec.describe TeacherMailer, type: :mailer do
         )
       end
 
+      it do
+        expect(subject).to include(
+          "Once you submit all the information requested, the assessor will be able to continue reviewing your application.",
+        )
+      end
+
       it { is_expected.to include("http://localhost:3000/teacher/sign_in") }
 
       context "with the GOV.UK One Login feature enabled" do
