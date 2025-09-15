@@ -9,7 +9,9 @@ RSpec.describe "GET /assessor/applications/:reference/assign-reviewer",
   end
 
   let(:application_form) { create :application_form, :submitted }
-  let(:signed_in_staff) { create(:staff, :with_assess_permission) }
+  let(:signed_in_staff) do
+    create(:staff, :with_assess_permission, name: "Charlie Reviewer")
+  end
 
   before do
     create(:staff, :with_assess_permission, name: "Zachary Reviewer")
@@ -51,9 +53,9 @@ RSpec.describe "GET /assessor/applications/:reference/assign-reviewer",
     expected_names = [
       "Aaron Reviewer",
       "Bernard Reviewer",
+      "Charlie Reviewer",
       "Zachary Reviewer",
-      signed_in_staff.name,
-    ].sort
+    ]
 
     expect(reviewer_names).to eq(expected_names)
   end
