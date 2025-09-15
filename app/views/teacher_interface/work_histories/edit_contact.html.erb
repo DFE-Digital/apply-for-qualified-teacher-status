@@ -23,21 +23,16 @@
 
   <p class="govuk-body">It’s important to provide the correct job title for this person, as we’ll check that information with them.</p>
 
-  <%= govuk_warning_text(text: "You cannot act as your own reference. If your references do not meet all of the above requirements, you are not eligible to apply for QTS in England.") %>
+  <% if FeatureFlags::FeatureFlag.active?(:email_domains_for_referees) %>
+    <%= govuk_warning_text(text: "You cannot act as your own reference.") %>
+  <% else %>
+    <%= govuk_warning_text(text: "You cannot act as your own reference. If your references do not meet all of the above requirements, you are not eligible to apply for QTS in England.") %>
+  <% end %>
 
   <% if FeatureFlags::FeatureFlag.active?(:email_domains_for_referees) %>
     <%= govuk_details(summary_text: "About your references’ email addresses") do %>
       <p>A domain is the part of an email address that shows who provides it. It comes after the @ symbol. For example, in name@institution.edu the domain is institution.edu.</p>
       <p>We only accept references from official email addresses to verify they are genuine staff members of a recognised institution. To verify your work history, we will also check that the email domain is listed on the school’s website.</p>
-    <% end %>
-  <% else %>
-    <%= govuk_details(summary_text: "Choosing someone to verify this role") do %>
-
-      <p>A senior member of staff means either a headteacher/principal, an assistant/deputy head or a school business manager. <%= "We will also accept a head of department for schools in England." if @form.work_history.country_code_england? %></p>
-
-      <p>Make sure you have an up-to-date email address for the person you choose, because the reference they provide will be important to your application.</p>
-
-      <p>We’ll ask them to confirm that you worked at the school for the period you’ve told us about.</p>
     <% end %>
   <% end %>
 

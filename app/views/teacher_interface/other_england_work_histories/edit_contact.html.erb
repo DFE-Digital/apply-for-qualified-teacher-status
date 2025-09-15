@@ -30,14 +30,6 @@
       <p>A domain is the part of an email address that shows who provides it. It comes after the @ symbol. For example, in name@institution.edu the domain is institution.edu.</p>
       <p>We only accept references from official email addresses to verify they are genuine staff members of a recognised institution. To verify your work history, we will also check that the email domain is listed on the institution’s website.</p>
     <% end %>
-  <% else %>
-    <%= govuk_details(summary_text: "Choosing someone to verify this role") do %>
-      <p>A senior member of staff means either a headteacher/principal, an assistant/deputy head, a head of department, or an institution business manager.</p>
-
-      <p>Make sure you have an up-to-date email address for the person you choose, because the reference they provide will be important to your application.</p>
-
-      <p>We’ll ask them to confirm that you worked at the institution for the period you’ve told us about.</p>
-    <% end %>
   <% end %>
 
   <%= f.govuk_text_field :contact_name %>
