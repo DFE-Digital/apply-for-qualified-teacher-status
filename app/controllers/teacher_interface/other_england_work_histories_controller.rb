@@ -50,6 +50,17 @@ module TeacherInterface
         redirect_to school_teacher_interface_application_form_other_england_work_history_path(
                       work_history,
                     )
+      elsif (
+            work_history =
+              application_form
+                .work_histories
+                .other_england_educational_role
+                .order_by_user
+                .find(&:invalid_email_domain_for_contact?)
+          )
+        redirect_to contact_teacher_interface_application_form_other_england_work_history_path(
+                      work_history,
+                    )
       else
         redirect_to %i[
                       add_another

@@ -102,6 +102,35 @@ RSpec.describe "Teacher work history in England", type: :system do
     then_i_see_the(:teacher_meets_criteria_other_england_work_history_page)
   end
 
+  context "when the work history has update needed as status with email domain feature enabled" do
+    before do
+      FeatureFlags::FeatureFlag.activate(:email_domains_for_referees)
+
+      given_some_other_england_work_history_exists_with_public_email_domain
+    end
+
+    after { FeatureFlags::FeatureFlag.deactivate(:email_domains_for_referees) }
+
+    it "navigates user to update referee information" do
+      when_i_visit_the(:teacher_application_page)
+      then_i_see_the(:teacher_application_page)
+      and_i_see_the_other_england_work_history_task_with_update_needed
+
+      when_i_click_the_other_england_work_history_task
+      then_i_see_the(:teacher_edit_other_england_work_history_contact_page)
+
+      when_i_fill_in_the_contact_information
+      then_i_see_the(:teacher_check_other_england_work_history_page)
+
+      when_i_click_continue
+      then_i_see_the(:teacher_add_another_other_england_work_history_page)
+
+      when_i_dont_add_another_other_england_work_history
+      then_i_see_the(:teacher_application_page)
+      and_i_see_the_other_england_work_history_task_as_completed
+    end
+  end
+
   private
 
   def given_an_application_form_exists
@@ -126,10 +155,41 @@ RSpec.describe "Teacher work history in England", type: :system do
     ApplicationFormSectionStatusUpdater.call(application_form:)
   end
 
+  def given_some_other_england_work_history_exists_with_public_email_domain
+    create(
+      :work_history,
+      :other_england_role,
+      :completed,
+      application_form:,
+      country_code: "GB-ENG",
+      contact_email: "test@gmail.com",
+    )
+    application_form.update!(has_other_england_work_history: true)
+    ApplicationFormSectionStatusUpdater.call(application_form:)
+  end
+
   def and_i_see_the_other_england_work_history_task
     expect(
       teacher_application_page.other_england_work_history_task_item,
     ).not_to be_nil
+  end
+
+  def and_i_see_the_other_england_work_history_task_with_update_needed
+    expect(
+      teacher_application_page
+        .other_england_work_history_task_item
+        .status_tag
+        .text,
+    ).to eq("Update needed")
+  end
+
+  def and_i_see_the_other_england_work_history_task_as_completed
+    expect(
+      teacher_application_page
+        .other_england_work_history_task_item
+        .status_tag
+        .text,
+    ).to eq("Completed")
   end
 
   def when_i_click_the_other_england_work_history_task

@@ -191,7 +191,7 @@ class ApplicationFormSectionStatusUpdater
         if any_work_histories_with_invalid_contact_email_domain
           :update_needed
         else
-        :completed
+          :completed
         end
       else
         :in_progress
@@ -224,9 +224,21 @@ class ApplicationFormSectionStatusUpdater
       !other_england_work_histories.empty? &&
         other_england_work_histories.all?(&:complete?)
 
+    any_work_histories_with_invalid_contact_email_domain =
+      requires_private_email_for_referee? &&
+        other_england_work_histories.any?(&:invalid_email_domain_for_contact?)
+
     return :not_started if has_other_england_work_history.nil?
     if !has_other_england_work_history || all_work_histories_complete
-      return :completed
+      return(
+        (
+          if any_work_histories_with_invalid_contact_email_domain
+            :update_needed
+          else
+            :completed
+          end
+        )
+      )
     end
 
     :in_progress

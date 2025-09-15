@@ -533,7 +533,7 @@ en:
               blank: Enter this person’s job title
             contact_email:
               blank: Enter this person’s email address
-              invalid_email_domain: Enter an official email address that uses the school’s domain
+              invalid_email_domain: Enter an official email address that uses the institution’s domain
         teacher_interface/work_history_school_form:
           attributes:
             meets_all_requirements:
