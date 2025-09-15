@@ -9,7 +9,7 @@ RSpec.describe "GET /assessor/applications/:reference/assign-assessor",
   end
 
   let(:application_form) { create :application_form, :submitted }
-  let(:signed_in_staff) { create(:staff, :with_assess_permission) }
+  let(:signed_in_staff) { create(:staff, :with_assess_permission, name: "Charlie Assessor") }
 
   before do
     create(:staff, :with_assess_permission, name: "Zachary Assessor")
@@ -51,9 +51,9 @@ RSpec.describe "GET /assessor/applications/:reference/assign-assessor",
     expected_names = [
       "Aaron Assessor",
       "Bernard Assessor",
+      "Charlie Assessor",
       "Zachary Assessor",
-      signed_in_staff.name,
-    ].sort
+    ]
 
     expect(assessor_names).to eq(expected_names)
   end
