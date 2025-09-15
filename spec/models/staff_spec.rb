@@ -79,8 +79,8 @@ RSpec.describe Staff, type: :model do
   end
 
   describe "scopes" do
-    describe ".assessors" do
-      subject { described_class.assessors }
+    describe ".assessors_by_name_by_name" do
+      subject { described_class.assessors_by_name_by_name }
 
       context "when assess_permission == true" do
         let(:with_assess_permission) { create(:staff, :with_assess_permission) }
