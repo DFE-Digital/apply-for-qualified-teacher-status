@@ -4,16 +4,15 @@ class AddRequiresPrivateEmailForRefereeToApplicationForm < ActiveRecord::Migrati
   8.0
 ]
   def change
-    add_column :application_forms,
-               :requires_private_email_for_referee,
+    change_table :application_forms, bulk: true do |t|
+      t.column :requires_private_email_for_referee,
                :boolean,
-               null: false,
-               default: false
-
-    add_column :application_forms,
-               :started_with_private_email_for_referee,
+               default: false,
+               null: false
+      t.column :started_with_private_email_for_referee,
                :boolean,
-               null: false,
-               default: false
+               default: false,
+               null: false
+    end
   end
 end
