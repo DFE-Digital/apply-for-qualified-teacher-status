@@ -139,8 +139,9 @@ RSpec.describe "Teacher work history", type: :system do
 
       when_i_click_the_work_history_task
       then_i_see_the(:teacher_edit_work_history_contact_page)
+      and_i_see_error_message_for_email_address_using_public_domain
 
-      when_i_fill_in_the_contact_information
+      when_i_update_the_contact_email_with_error
       then_i_see_the(:teacher_check_work_history_page)
 
       when_i_click_continue
@@ -343,6 +344,12 @@ RSpec.describe "Teacher work history", type: :system do
     teacher_edit_work_history_contact_page.form.name_input.fill_in with: "Name"
     teacher_edit_work_history_contact_page.form.job_input.fill_in with: "Job"
     teacher_edit_work_history_contact_page.form.email_input.fill_in with:
+      "contact@example.com"
+    teacher_edit_work_history_contact_page.form.continue_button.click
+  end
+
+  def when_i_update_the_contact_email_with_error
+    teacher_edit_work_history_contact_page.form.email_input_with_error.fill_in with:
       "contact@example.com"
     teacher_edit_work_history_contact_page.form.continue_button.click
   end
@@ -581,6 +588,12 @@ RSpec.describe "Teacher work history", type: :system do
 
   def and_i_see_one_work_history
     expect(teacher_check_work_histories_page.summary_cards.count).to eq(1)
+  end
+
+  def and_i_see_error_message_for_email_address_using_public_domain
+    expect(teacher_edit_work_history_contact_page).to have_content(
+      "Enter an official email address that uses the institution’s domain",
+    )
   end
 
   def teacher

@@ -242,6 +242,8 @@ module TeacherInterface
           contact_job: work_history.contact_job,
           contact_email: work_history.contact_email,
         )
+
+      @form.validate if @work_history.invalid_email_domain_for_contact?
     end
 
     def update_contact
