@@ -7,7 +7,7 @@
   <%= f.govuk_error_summary %>
 
   <%= f.govuk_collection_radio_buttons :reviewer_id,
-                                       [OpenStruct.new(id: "", name: t("application_form.summary.unassigned"))] + Staff.assessors.not_archived,
+                                       [OpenStruct.new(id: "", name: t("application_form.summary.unassigned"))] + Staff.assessors_by_name.not_archived,
                                        :id,
                                        :name,
                                        legend: nil %>

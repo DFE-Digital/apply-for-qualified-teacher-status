@@ -74,7 +74,7 @@ class Staff < ApplicationRecord
 
   validates :name, presence: true
 
-  scope :assessors, -> { where(assess_permission: true) }
+  scope :assessors_by_name, -> { where(assess_permission: true).order(:name) }
   scope :not_archived, -> { where(archived: false) }
   scope :archived, -> { where(archived: true) }
 
