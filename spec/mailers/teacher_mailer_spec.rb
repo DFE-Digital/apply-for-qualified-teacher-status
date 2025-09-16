@@ -512,7 +512,9 @@ RSpec.describe TeacherMailer, type: :mailer do
       end
 
       it do
-        expect(subject).to include("Once you submit all the information requested")
+        expect(subject).to include(
+          "Once you submit all the information requested",
+        )
       end
 
       it { is_expected.to include("http://localhost:3000/teacher/sign_in") }
