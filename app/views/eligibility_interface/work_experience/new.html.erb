@@ -27,7 +27,7 @@
     hint: { text: hint.html_safe }
   ) %>
 
-  <% unless @region.reduced_evidence_accepted %>
+  <% unless @region.reduced_evidence_accepted || FeatureFlags::FeatureFlag.active?(:email_domains_for_referees) %>
     <p class="govuk-body">You’ll need to provide references from your places of employment so we can verify your teaching work history.</p>
   <% end %>
 

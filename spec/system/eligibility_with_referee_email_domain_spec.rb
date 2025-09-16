@@ -2,15 +2,17 @@
 
 require "rails_helper"
 
-RSpec.describe "Eligibility check (With prioritisation enabled)",
+RSpec.describe "Eligibility check (With email domains for referees enabled)",
                type: :system do
   around do |example|
     FeatureFlags::FeatureFlag.activate(:prioritisation)
+    FeatureFlags::FeatureFlag.activate(:email_domains_for_referees)
 
     given_countries_exist
     example.run
 
     FeatureFlags::FeatureFlag.deactivate(:prioritisation)
+    FeatureFlags::FeatureFlag.deactivate(:email_domains_for_referees)
   end
 
   it "happy path" do
@@ -30,6 +32,9 @@ RSpec.describe "Eligibility check (With prioritisation enabled)",
     then_i_see_the(:eligibility_work_experience_page)
 
     when_i_have_more_than_20_months_work_experience
+    then_i_see_the(:eligibility_work_experience_referee_page)
+
+    when_i_have_valid_work_experience_referee
     then_i_see_the(:eligibility_misconduct_page)
 
     when_i_dont_have_a_misconduct_record
@@ -66,6 +71,9 @@ RSpec.describe "Eligibility check (With prioritisation enabled)",
     then_i_see_the(:eligibility_work_experience_page)
 
     when_i_have_under_9_months_work_experience
+    then_i_see_the(:eligibility_work_experience_referee_page)
+
+    when_i_dont_have_valid_work_experience_referee
     then_i_see_the(:eligibility_misconduct_page)
 
     when_i_have_a_misconduct_record
@@ -80,6 +88,7 @@ RSpec.describe "Eligibility check (With prioritisation enabled)",
     and_i_see_the_ineligible_qualification_text_with_eligible_country
     and_i_see_the_ineligible_teach_children_text
     and_i_see_the_ineligible_work_experience_text
+    and_i_see_the_ineligible_work_experience_referee_text
     and_i_see_the_ineligible_misconduct_text
   end
 
@@ -114,10 +123,16 @@ RSpec.describe "Eligibility check (With prioritisation enabled)",
     when_i_have_a_degree
     then_i_see_the(:eligibility_work_experience_page)
 
-    when_i_visit_the(:eligibility_misconduct_page)
+    when_i_visit_the(:eligibility_work_experience_referee_page)
     then_i_see_the(:eligibility_work_experience_page)
 
     when_i_have_more_than_20_months_work_experience
+    then_i_see_the(:eligibility_work_experience_referee_page)
+
+    when_i_visit_the(:eligibility_misconduct_page)
+    then_i_see_the(:eligibility_work_experience_referee_page)
+
+    when_i_have_valid_work_experience_referee
     then_i_see_the(:eligibility_misconduct_page)
 
     when_i_visit_the(:eligibility_work_experience_in_england_page)
@@ -139,6 +154,40 @@ RSpec.describe "Eligibility check (With prioritisation enabled)",
     then_i_see_the(:eligibility_eligible_page)
   end
 
+  it "happy path when selecting country with reduced evidence required" do
+    when_i_visit_the(:eligibility_start_page)
+    then_i_see_the(:eligibility_start_page)
+
+    when_i_press_start_now
+    then_i_see_the(:eligibility_country_page)
+
+    when_i_select_a_reduced_evidence_required_country
+    then_i_see_the(:eligibility_qualification_page)
+
+    when_i_have_a_qualification
+    then_i_see_the(:eligibility_degree_page)
+
+    when_i_have_a_degree
+    then_i_see_the(:eligibility_work_experience_page)
+
+    when_i_have_more_than_20_months_work_experience
+    then_i_see_the(:eligibility_misconduct_page)
+
+    when_i_dont_have_a_misconduct_record
+    then_i_see_the(:eligibility_work_experience_in_england_page)
+
+    when_i_have_work_experience_in_england
+    then_i_see_the(:eligibility_teach_children_page)
+
+    when_i_can_teach_children
+    then_i_see_the(:eligibility_eligible_page)
+
+    when_i_visit_the(:eligibility_start_page)
+    then_i_see_the(:eligibility_start_page)
+    when_i_press_start_now
+    then_i_have_two_eligibility_checks
+  end
+
   it "happy path when filtering by country requiring qualification for subject without England work" do
     when_i_visit_the(:eligibility_start_page)
     then_i_see_the(:eligibility_start_page)
@@ -156,6 +205,9 @@ RSpec.describe "Eligibility check (With prioritisation enabled)",
     then_i_see_the(:eligibility_work_experience_page)
 
     when_i_have_more_than_20_months_work_experience
+    then_i_see_the(:eligibility_work_experience_referee_page)
+
+    when_i_have_valid_work_experience_referee
     then_i_see_the(:eligibility_misconduct_page)
 
     when_i_dont_have_a_misconduct_record
@@ -188,6 +240,9 @@ RSpec.describe "Eligibility check (With prioritisation enabled)",
     then_i_see_the(:eligibility_work_experience_page)
 
     when_i_have_more_than_20_months_work_experience
+    then_i_see_the(:eligibility_work_experience_referee_page)
+
+    when_i_have_valid_work_experience_referee
     then_i_see_the(:eligibility_misconduct_page)
 
     when_i_dont_have_a_misconduct_record
@@ -220,6 +275,9 @@ RSpec.describe "Eligibility check (With prioritisation enabled)",
     then_i_see_the(:eligibility_work_experience_page)
 
     when_i_have_more_than_20_months_work_experience
+    then_i_see_the(:eligibility_work_experience_referee_page)
+
+    when_i_have_valid_work_experience_referee
     then_i_see_the(:eligibility_misconduct_page)
 
     when_i_dont_have_a_misconduct_record
@@ -252,6 +310,9 @@ RSpec.describe "Eligibility check (With prioritisation enabled)",
     then_i_see_the(:eligibility_work_experience_page)
 
     when_i_have_more_than_20_months_work_experience
+    then_i_see_the(:eligibility_work_experience_referee_page)
+
+    when_i_have_valid_work_experience_referee
     then_i_see_the(:eligibility_misconduct_page)
 
     when_i_dont_have_a_misconduct_record
@@ -279,11 +340,17 @@ RSpec.describe "Eligibility check (With prioritisation enabled)",
     it = create(:country, code: "IT")
     create(:region, country: it, name: "Region")
     create(:region, country: it, name: "Other Region")
+
     create(:country, :with_national_region, :subject_limited, code: "JM")
+    create(:country, :with_reduced_evidence_region, code: "UA")
   end
 
   def when_i_press_start_now
     eligibility_start_page.start_button.click
+  end
+
+  def when_i_select_a_reduced_evidence_required_country
+    eligibility_country_page.submit(country: "Ukraine")
   end
 
   def when_i_select_an_eligible_country
@@ -308,6 +375,14 @@ RSpec.describe "Eligibility check (With prioritisation enabled)",
 
   def when_i_have_a_degree
     eligibility_degree_page.submit_yes
+  end
+
+  def when_i_have_valid_work_experience_referee
+    eligibility_work_experience_referee_page.submit_yes
+  end
+
+  def when_i_dont_have_valid_work_experience_referee
+    eligibility_work_experience_referee_page.submit_no
   end
 
   def when_i_have_work_experience_in_england
@@ -378,6 +453,12 @@ RSpec.describe "Eligibility check (With prioritisation enabled)",
   def and_i_see_the_ineligible_work_experience_text
     expect(eligibility_ineligible_page.reasons).to have_content(
       "You do not have sufficient work experience as a teacher.",
+    )
+  end
+
+  def and_i_see_the_ineligible_work_experience_referee_text
+    expect(eligibility_ineligible_page.reasons).to have_content(
+      "You do not have references that meet our requirements.",
     )
   end
 

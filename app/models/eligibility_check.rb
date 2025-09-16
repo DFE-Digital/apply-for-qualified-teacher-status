@@ -14,6 +14,7 @@
 #  qualified_for_subject               :boolean
 #  teach_children                      :boolean
 #  work_experience                     :string
+#  work_experience_referee             :boolean
 #  created_at                          :datetime         not null
 #  updated_at                          :datetime         not null
 #  region_id                           :bigint
@@ -89,6 +90,10 @@ class EligibilityCheck < ApplicationRecord
     country&.eligibility_skip_questions || false
   end
 
+  def reduced_evidence_accepted?
+    region&.reduced_evidence_accepted || false
+  end
+
   def ineligible_reasons
     work_experience_ineligible = work_experience_under_9_months?
 
@@ -118,16 +123,21 @@ class EligibilityCheck < ApplicationRecord
       (:qualified_for_subject if qualified_for_subject_ineligible),
       (:misconduct if free_of_sanctions == false),
       (:work_experience if work_experience_ineligible),
+      (:work_experience_referee if work_experience_referee == false),
     ].compact
   end
 
-  def eligible?
+  def eligible?(includes_email_domains_for_referees: false)
     if skip_additional_questions? && region.present? && qualification
       return true
     end
 
     region.present? && qualification && degree && teach_children? &&
-      free_of_sanctions && !work_experience_under_9_months?
+      free_of_sanctions && !work_experience_under_9_months? &&
+      (
+        work_experience_referee? || reduced_evidence_accepted? ||
+          !includes_email_domains_for_referees
+      )
   end
 
   def country_eligibility_status
@@ -155,7 +165,10 @@ class EligibilityCheck < ApplicationRecord
     completed_at.present?
   end
 
-  def status(includes_prioritisation: false)
+  def status(
+    includes_prioritisation: false,
+    includes_email_domains_for_referees: false
+  )
     return :country if country_code.blank?
 
     return :result if country_eligibility_status == :ineligible
@@ -167,6 +180,12 @@ class EligibilityCheck < ApplicationRecord
       return :degree if degree.nil?
 
       return :work_experience if work_experience.blank?
+
+      if includes_email_domains_for_referees && !reduced_evidence_accepted? &&
+           work_experience_referee.nil?
+        return :work_experience_referee
+      end
+
       return :misconduct if free_of_sanctions.nil?
 
       if includes_prioritisation && eligible_work_experience_in_england.nil?
@@ -184,13 +203,23 @@ class EligibilityCheck < ApplicationRecord
     :result
   end
 
-  def status_route(includes_prioritisation: false)
+  def status_route(
+    includes_prioritisation: false,
+    includes_email_domains_for_referees: false
+  )
     if country_code.present? && country_eligibility_status == :ineligible
       %i[country result]
     elsif skip_additional_questions? && qualification
       %i[country region qualification result]
     else
-      %i[country region qualification degree work_experience misconduct] +
+      %i[country region qualification degree work_experience] +
+        (
+          if includes_email_domains_for_referees && !reduced_evidence_accepted?
+            %i[work_experience_referee]
+          else
+            []
+          end
+        ) + %i[misconduct] +
         (
           if includes_prioritisation
             %i[work_experience_in_england]

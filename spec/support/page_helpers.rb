@@ -457,6 +457,11 @@ module PageHelpers
       PageObjects::EligibilityInterface::WorkExperience.new
   end
 
+  def eligibility_work_experience_referee_page
+    @eligibility_work_experience_referee_page ||=
+      PageObjects::EligibilityInterface::WorkExperienceReferee.new
+  end
+
   def eligibility_work_experience_in_england_page
     @eligibility_work_experience_in_england_page ||=
       PageObjects::EligibilityInterface::WorkExperienceInEngland.new

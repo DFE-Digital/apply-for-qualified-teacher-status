@@ -1,0 +1,37 @@
+<%
+  hint = "
+    You’ll need to provide references from your places of employment so we can verify your teaching work history. They must meet all of the following requirements:
+    <ul class='govuk-list govuk-list--bullet govuk-hint'>
+      <li>they have an email address that uses the institution’s domain, for example, name@institution.edu</li>
+      <li>they are a senior member of staff that is still working at this institution (either a headteacher/principal, an assistant/deputy head, or an institution business manager)</li>
+      <li>they are able to provide a reference in English</li>
+      <li>they only comment on teaching work that you did after becoming a qualified teacher</li>
+    </ul>
+  ".html_safe
+%>
+
+<% content_for :page_title, title_with_error_prefix(t("helpers.legend.eligibility_interface_work_experience_referee_form.work_experience_referee"), error: @form.errors.any?) %>
+<% content_for :back_link_url, eligibility_interface_work_experience_path %>
+
+<%= form_with model: @form, url: [:eligibility_interface, :work_experience_referee] do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <%= f.govuk_collection_radio_buttons(
+    :work_experience_referee,
+    [
+      OpenStruct.new(label: 'Yes', value: true),
+      OpenStruct.new(label: 'No', value: false)
+    ],
+    :value,
+    :label,
+    legend: { size: 'l', tag: 'h1' },
+    hint: { text: hint.html_safe }
+  ) %>
+
+  <%= govuk_details(summary_text: "About your references’ email addresses") do %>
+    <p>A domain is the part of an email address that shows who provides it. It comes after the @ symbol. For example, in name@institution.edu the domain is institution.edu.</p>
+    <p>We only accept references from official email addresses to verify they are genuine staff members of a recognised institution. To verify your work history, we will also check that the email domain is listed on the institution’s website.</p>
+  <% end %>
+
+  <%= f.govuk_submit %>
+<% end %>

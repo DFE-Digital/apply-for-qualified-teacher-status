@@ -43,6 +43,9 @@
   <li>completed all mandatory induction processes to gain full teacher registration in the country where you qualified</li>
   <li>qualifications to show you can teach children aged anywhere between 5 and 16 years old</li>
   <li>at least one school year (9 months) of experience employed as a teacher in any country, but must be from after you first became qualified to teach</li>
+  <% if FeatureFlags::FeatureFlag.active?(:email_domains_for_referees) %>
+    <li>references that can confirm your work history and have an email address that uses the school’s domain, for example, name@school.edu</li>
+  <% end %>
 </ul>
 
 <p class="govuk-body">Depending on the country that you trained to teach in, you may be required to have:</p>

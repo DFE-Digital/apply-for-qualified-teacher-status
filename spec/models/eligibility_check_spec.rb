@@ -14,6 +14,7 @@
 #  qualified_for_subject               :boolean
 #  teach_children                      :boolean
 #  work_experience                     :string
+#  work_experience_referee             :boolean
 #  created_at                          :datetime         not null
 #  updated_at                          :datetime         not null
 #  region_id                           :bigint
@@ -596,6 +597,43 @@ RSpec.describe EligibilityCheck, type: :model do
       end
     end
 
+    context "when work experience is present with email domain for referee feature included" do
+      subject do
+        eligibility_check.status(includes_email_domains_for_referees: true)
+      end
+
+      let(:attributes) do
+        {
+          country_code: country.code,
+          region: create(:region, country:),
+          qualification: true,
+          degree: true,
+          work_experience: "under_9_months",
+        }
+      end
+
+      it { is_expected.to eq(:work_experience_referee) }
+    end
+
+    context "when work experience referee is present with email domain for referee feature included" do
+      subject do
+        eligibility_check.status(includes_email_domains_for_referees: true)
+      end
+
+      let(:attributes) do
+        {
+          country_code: country.code,
+          region: create(:region, country:),
+          qualification: true,
+          degree: true,
+          work_experience: "under_9_months",
+          work_experience_referee: true,
+        }
+      end
+
+      it { is_expected.to eq(:misconduct) }
+    end
+
     context "with an ineligible country" do
       let(:attributes) { { country_code: "XX" } }
 
@@ -731,6 +769,165 @@ RSpec.describe EligibilityCheck, type: :model do
               ],
             )
           end
+        end
+      end
+    end
+
+    context "when email domain for referees flow is included" do
+      subject(:status_route) do
+        eligibility_check.status_route(
+          includes_email_domains_for_referees: true,
+        )
+      end
+
+      it "returns default flow with referee question" do
+        expect(status_route).to eq(
+          %i[
+            country
+            region
+            qualification
+            degree
+            work_experience
+            work_experience_referee
+            misconduct
+            teach_children
+            result
+          ],
+        )
+      end
+
+      context "when the country is subject limited" do
+        let(:country) { create(:country, subject_limited: true) }
+
+        it "returns subject limited flow" do
+          expect(status_route).to eq(
+            %i[
+              country
+              region
+              qualification
+              degree
+              work_experience
+              work_experience_referee
+              misconduct
+              teach_children
+              qualified_for_subject
+              result
+            ],
+          )
+        end
+      end
+
+      context "when the country can provide reduced evidence" do
+        let(:region) { create(:region, :reduced_evidence_accepted, country:) }
+
+        it "returns flow without the referee step" do
+          expect(status_route).to eq(
+            %i[
+              country
+              region
+              qualification
+              degree
+              work_experience
+              misconduct
+              teach_children
+              result
+            ],
+          )
+        end
+      end
+    end
+
+    context "when both prioritisation and email domain for referees flow is included" do
+      subject(:status_route) do
+        eligibility_check.status_route(
+          includes_prioritisation: true,
+          includes_email_domains_for_referees: true,
+        )
+      end
+
+      it "returns default flow with work experience in england route and referee question" do
+        expect(status_route).to eq(
+          %i[
+            country
+            region
+            qualification
+            degree
+            work_experience
+            work_experience_referee
+            misconduct
+            work_experience_in_england
+            teach_children
+            result
+          ],
+        )
+      end
+
+      context "when the country is subject limited" do
+        let(:country) { create(:country, subject_limited: true) }
+
+        it "returns subject limited flow" do
+          expect(status_route).to eq(
+            %i[
+              country
+              region
+              qualification
+              degree
+              work_experience
+              work_experience_referee
+              misconduct
+              work_experience_in_england
+              teach_children
+              qualified_for_subject
+              result
+            ],
+          )
+        end
+
+        context "with work experience in England being true" do
+          let(:attributes) do
+            {
+              country_code: country.code,
+              region: region,
+              eligible_work_experience_in_england: true,
+            }
+          end
+
+          it "returns prioritisation flow with subject restriction question" do
+            expect(status_route).to eq(
+              %i[
+                country
+                region
+                qualification
+                degree
+                work_experience
+                work_experience_referee
+                misconduct
+                work_experience_in_england
+                teach_children
+                result
+              ],
+            )
+          end
+        end
+      end
+
+      context "when the country can provide reduced evidence" do
+        let(:region) { create(:region, :reduced_evidence_accepted, country:) }
+
+        it "returns flow without the referee step" do
+          expect(status_route).to eq(
+            %i[
+              country
+              region
+              qualification
+              degree
+              work_experience
+              misconduct
+              work_experience_in_england
+              teach_children
+              result
+            ],
+          )
         end
       end
     end
