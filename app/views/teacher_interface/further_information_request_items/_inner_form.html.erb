@@ -35,11 +35,15 @@
   <% work_history = @further_information_request_item.work_history %>
     <p class="govuk-body">Enter the contact details of a suitable referee who can verify your time spent working at <%= work_history.school_name %> from <%= work_history.start_date.to_fs(:month_and_year) %><% if work_history.end_date.present? %> to <%= work_history.end_date.to_fs(:month_and_year) %><% end %>.</p>
 
-    <%= f.govuk_text_field :contact_name, label: {text: "Contact’s name"} %>
+    <%= f.govuk_text_field :contact_name, label: { text: "Contact’s name" } %>
 
-    <%= f.govuk_text_field :contact_job, label: {text: "Contact’s job title"} %>
+    <%= f.govuk_text_field :contact_job, label: { text: "Contact’s job title" } %>
 
-    <%= f.govuk_email_field :contact_email, label: {text: "Contact’s email address"} %>
+    <% if @further_information_request_item.application_form.requires_private_email_for_referee? %>
+      <%= f.govuk_email_field :contact_email, label: { text: "Contact’s email address" }, hint: { text: "The email address must use the school’s domain, for example, name@school.edu" } %>
+    <% else %>
+      <%= f.govuk_email_field :contact_email, label: { text: "Contact’s email address" } %>
+    <% end %>
 
     <%= govuk_details(summary_text: "Choosing someone to verify this role") do %>
 
@@ -48,6 +52,10 @@
       <p>Make sure you have an up-to-date email address for the person you choose, because the reference they provide will be important to your application.</p>
 
       <p>We’ll ask them to confirm that you worked at the school for the period you’ve told us about.</p>
+
+      <% if @further_information_request_item.application_form.requires_private_email_for_referee? %>
+        <p>Your references need to have an email address that uses the schools domain, which is the part of an email address that shows who provides it. It comes after the @ symbol. For example, in name@school.edu the domain is school.edu.</p>
+      <% end %>
     <% end %>
 <% end %>
 
