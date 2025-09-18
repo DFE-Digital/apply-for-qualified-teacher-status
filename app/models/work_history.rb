@@ -124,6 +124,10 @@ class WorkHistory < ApplicationRecord
     !complete?
   end
 
+  def invalid_email_domain_for_contact?
+    EmailDomain.public?(contact_email_domain)
+  end
+
   def requires_contact_information?
     !application_form.reduced_evidence_accepted? ||
       (

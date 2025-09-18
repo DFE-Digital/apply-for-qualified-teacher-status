@@ -26,6 +26,8 @@ class ApplicationFormFactory
         written_statement_optional:,
         requires_passport_as_identity_proof:,
         includes_prioritisation_features:,
+        requires_private_email_for_referee:,
+        started_with_private_email_for_referee:,
       )
     end
   end
@@ -73,5 +75,13 @@ class ApplicationFormFactory
 
   def includes_prioritisation_features
     FeatureFlags::FeatureFlag.active?(:prioritisation)
+  end
+
+  def requires_private_email_for_referee
+    FeatureFlags::FeatureFlag.active?(:email_domains_for_referees)
+  end
+
+  def started_with_private_email_for_referee
+    FeatureFlags::FeatureFlag.active?(:email_domains_for_referees)
   end
 end

@@ -110,7 +110,7 @@ RSpec.describe "Teacher submitting", type: :system do
     end
   end
 
-  context "when the application required passport as a form of identity proof" do
+  context "when the application requires passport as a form of identity proof" do
     let(:application_form) do
       create(
         :application_form,
@@ -169,6 +169,29 @@ RSpec.describe "Teacher submitting", type: :system do
         and_i_see_the_in_progress_passport_document_task
         and_i_see_content_that_my_passport_has_expired
       end
+    end
+  end
+
+  context "when the application requires private email domain for all referees" do
+    before do
+      FeatureFlags::FeatureFlag.activate(:email_domains_for_referees)
+      application_form.work_histories.last.update!(
+        contact_email: "test@gmail.com",
+        contact_email_domain: "gmail.com",
+      )
+    end
+
+    after { FeatureFlags::FeatureFlag.deactivate(:email_domains_for_referees) }
+
+    it "redirects back to application task list with work history spoke to update needed" do
+      when_i_visit_the(:teacher_application_page)
+      then_i_see_the(:teacher_application_page)
+      and_i_see_the_completed_work_history_task
+
+      when_i_click_check_your_answers
+      then_i_see_the(:teacher_application_page)
+      and_i_see_the_update_needed_work_history_task
+      and_i_see_content_that_referee_requirements_have_changed
     end
   end
 
@@ -321,6 +344,18 @@ RSpec.describe "Teacher submitting", type: :system do
     ).to eq("Completed")
   end
 
+  def and_i_see_the_completed_work_history_task
+    expect(
+      teacher_application_page.work_history_task_item.status_tag.text,
+    ).to eq("Completed")
+  end
+
+  def and_i_see_the_update_needed_work_history_task
+    expect(
+      teacher_application_page.work_history_task_item.status_tag.text,
+    ).to eq("Update needed")
+  end
+
   def and_i_see_the_in_progress_passport_document_task
     expect(
       teacher_application_page.passport_document_task_item.status_tag.text,
@@ -330,6 +365,12 @@ RSpec.describe "Teacher submitting", type: :system do
   def and_i_see_content_that_my_passport_has_expired
     expect(teacher_application_page).to have_content(
       "Your passport has expired",
+    )
+  end
+
+  def and_i_see_content_that_referee_requirements_have_changed
+    expect(teacher_application_page).to have_content(
+      "Requirements for your references have changed",
     )
   end
 

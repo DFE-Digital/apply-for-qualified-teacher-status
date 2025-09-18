@@ -24,6 +24,18 @@ module TeacherInterface
       elsif (
             work_history =
               application_form.work_histories.teaching_role.order_by_user.find(
+                &:invalid_email_domain_for_contact?
+              )
+          )
+        redirect_to [
+                      :contact,
+                      :teacher_interface,
+                      :application_form,
+                      work_history,
+                    ]
+      elsif (
+            work_history =
+              application_form.work_histories.teaching_role.order_by_user.find(
                 &:incomplete?
               )
           )
@@ -199,6 +211,8 @@ module TeacherInterface
           contact_job: work_history.contact_job,
           contact_email: work_history.contact_email,
         )
+
+      @form.validate if @work_history.invalid_email_domain_for_contact?
     end
 
     def update_contact

@@ -102,6 +102,36 @@ RSpec.describe "Teacher work history in England", type: :system do
     then_i_see_the(:teacher_meets_criteria_other_england_work_history_page)
   end
 
+  context "when the work history has update needed as status with email domain feature enabled" do
+    before do
+      FeatureFlags::FeatureFlag.activate(:email_domains_for_referees)
+
+      given_some_other_england_work_history_exists_with_public_email_domain
+    end
+
+    after { FeatureFlags::FeatureFlag.deactivate(:email_domains_for_referees) }
+
+    it "navigates user to update referee information" do
+      when_i_visit_the(:teacher_application_page)
+      then_i_see_the(:teacher_application_page)
+      and_i_see_the_other_england_work_history_task_with_update_needed
+
+      when_i_click_the_other_england_work_history_task
+      then_i_see_the(:teacher_edit_other_england_work_history_contact_page)
+      and_i_see_error_message_for_email_address_using_public_domain
+
+      when_i_update_the_contact_email_with_error
+      then_i_see_the(:teacher_check_other_england_work_history_page)
+
+      when_i_click_continue
+      then_i_see_the(:teacher_add_another_other_england_work_history_page)
+
+      when_i_dont_add_another_other_england_work_history
+      then_i_see_the(:teacher_application_page)
+      and_i_see_the_other_england_work_history_task_as_completed
+    end
+  end
+
   private
 
   def given_an_application_form_exists
@@ -126,10 +156,41 @@ RSpec.describe "Teacher work history in England", type: :system do
     ApplicationFormSectionStatusUpdater.call(application_form:)
   end
 
+  def given_some_other_england_work_history_exists_with_public_email_domain
+    create(
+      :work_history,
+      :other_england_role,
+      :completed,
+      application_form:,
+      country_code: "GB-ENG",
+      contact_email: "test@gmail.com",
+    )
+    application_form.update!(has_other_england_work_history: true)
+    ApplicationFormSectionStatusUpdater.call(application_form:)
+  end
+
   def and_i_see_the_other_england_work_history_task
     expect(
       teacher_application_page.other_england_work_history_task_item,
     ).not_to be_nil
+  end
+
+  def and_i_see_the_other_england_work_history_task_with_update_needed
+    expect(
+      teacher_application_page
+        .other_england_work_history_task_item
+        .status_tag
+        .text,
+    ).to eq("Update needed")
+  end
+
+  def and_i_see_the_other_england_work_history_task_as_completed
+    expect(
+      teacher_application_page
+        .other_england_work_history_task_item
+        .status_tag
+        .text,
+    ).to eq("Completed")
   end
 
   def when_i_click_the_other_england_work_history_task
@@ -189,6 +250,15 @@ RSpec.describe "Teacher work history in England", type: :system do
     teacher_edit_other_england_work_history_contact_page.form.job_input.fill_in with:
       "Job"
     teacher_edit_other_england_work_history_contact_page.form.email_input.fill_in with:
+      "contact@example.com"
+    teacher_edit_other_england_work_history_contact_page
+      .form
+      .continue_button
+      .click
+  end
+
+  def when_i_update_the_contact_email_with_error
+    teacher_edit_other_england_work_history_contact_page.form.email_input_with_error.fill_in with:
       "contact@example.com"
     teacher_edit_other_england_work_history_contact_page
       .form
@@ -293,6 +363,12 @@ RSpec.describe "Teacher work history in England", type: :system do
   def when_i_delete_work_history
     teacher_delete_other_england_work_history_page.form.true_radio_item.choose
     teacher_delete_other_england_work_history_page.form.continue_button.click
+  end
+
+  def and_i_see_error_message_for_email_address_using_public_domain
+    expect(teacher_edit_work_history_contact_page).to have_content(
+      "Enter an official email address that uses the institution’s domain",
+    )
   end
 
   def teacher

@@ -42,6 +42,7 @@ en:
       requested: Waiting on
       review: Review
       submitted: Not started
+      update_needed: Update needed
       valid: Valid
       verification: Verification
       verification_in_progress: Verification in progress

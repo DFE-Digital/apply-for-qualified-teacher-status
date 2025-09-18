@@ -11,6 +11,8 @@ module TeacherInterface
     before_action :load_application_form, except: %i[new create]
     before_action :update_application_and_redirect_if_passport_expired,
                   only: %i[edit update]
+    before_action :update_application_and_redirect_if_any_referee_has_public_email_domain,
+                  only: %i[edit update]
 
     define_history_origin :show
     define_history_reset :show
@@ -119,6 +121,21 @@ module TeacherInterface
 
         redirect_to teacher_interface_application_form_path
       end
+    end
+
+    def update_application_and_redirect_if_any_referee_has_public_email_domain
+      if requires_private_email_for_referee? &&
+           application_form.work_histories.any?(
+             &:invalid_email_domain_for_contact?
+           )
+        ApplicationFormSectionStatusUpdater.call(application_form:)
+
+        redirect_to teacher_interface_application_form_path
+      end
+    end
+
+    def requires_private_email_for_referee?
+      FeatureFlags::FeatureFlag.active?(:email_domains_for_referees)
     end
   end
 end

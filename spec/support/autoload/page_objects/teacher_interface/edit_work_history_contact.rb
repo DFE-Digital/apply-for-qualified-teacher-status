@@ -12,6 +12,8 @@ module PageObjects
                 "#teacher-interface-work-history-contact-form-contact-job-field"
         element :email_input,
                 "#teacher-interface-work-history-contact-form-contact-email-field"
+        element :email_input_with_error,
+                "#teacher-interface-work-history-contact-form-contact-email-field-error"
 
         element :continue_button, ".govuk-button:not(.govuk-button--secondary)"
         element :save_and_come_back_later_button,
