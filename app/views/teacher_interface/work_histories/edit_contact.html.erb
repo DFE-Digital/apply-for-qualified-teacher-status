@@ -24,9 +24,9 @@
   <p class="govuk-body">It’s important to provide the correct job title for this person, as we’ll check that information with them.</p>
 
   <% if FeatureFlags::FeatureFlag.active?(:email_domains_for_referees) %>
-    <%= govuk_warning_text(text: "You cannot act as your own reference.") %>
-  <% else %>
     <%= govuk_warning_text(text: "You cannot act as your own reference. If your references do not meet all of the above requirements, you are not eligible to apply for QTS in England.") %>
+  <% else %>
+    <%= govuk_warning_text(text: "You cannot act as your own reference.") %>
   <% end %>
 
   <% if FeatureFlags::FeatureFlag.active?(:email_domains_for_referees) %>
