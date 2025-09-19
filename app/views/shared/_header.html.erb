@@ -31,6 +31,11 @@
           href: main_app.assessor_interface_staff_index_path,
           active: current_page?(main_app.assessor_interface_staff_index_path)
         ) %>
+        <% service_navigation.with_navigation_item(
+          text: "SLA Status",
+          href: main_app.assessor_interface_service_level_agreements_path,
+          active: current_page?(main_app.assessor_interface_service_level_agreements_path)
+        ) %>
       <% end %>
       <% service_navigation.with_navigation_item(text: "Sign out", href: main_app.destroy_staff_session_path) %>
     <% end %>
