@@ -293,9 +293,7 @@ Rails.application.routes.draw do
   end
 
   namespace :support_interface, path: "/support" do
-    root to: redirect("/support/features")
-
-    mount FeatureFlags::Engine, at: "features"
+    root to: redirect("/support/countries")
 
     resources :countries, only: %i[index edit update] do
       get "preview", on: :member
