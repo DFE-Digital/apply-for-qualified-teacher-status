@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_04_102410) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_10_124806) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -107,6 +107,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_04_102410) do
     t.boolean "has_other_england_work_history"
     t.string "other_england_work_history_status", default: "not_started", null: false
     t.bigint "eligibility_check_id"
+    t.boolean "requires_private_email_for_referee", default: false, null: false
+    t.boolean "started_with_private_email_for_referee", default: false, null: false
     t.index ["action_required_by"], name: "index_application_forms_on_action_required_by"
     t.index ["assessor_id"], name: "index_application_forms_on_assessor_id"
     t.index ["eligibility_check_id"], name: "index_application_forms_on_eligibility_check_id"

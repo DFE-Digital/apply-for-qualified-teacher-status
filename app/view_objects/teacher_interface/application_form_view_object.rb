@@ -225,6 +225,15 @@ class TeacherInterface::ApplicationFormViewObject
       !work_history_duration.enough_to_skip_induction?
   end
 
+  def show_new_requirements_for_work_history_references_banner?
+    FeatureFlags::FeatureFlag.active?(:email_domains_for_referees) &&
+      !started_with_private_email_for_referee? &&
+      (
+        !work_history_status_completed? ||
+          !other_england_work_history_status_completed?
+      )
+  end
+
   private
 
   delegate :needs_work_history,
@@ -234,6 +243,8 @@ class TeacherInterface::ApplicationFormViewObject
            :requires_preliminary_check,
            :includes_prioritisation_features,
            :work_history_status_completed?,
+           :other_england_work_history_status_completed?,
+           :started_with_private_email_for_referee?,
            to: :application_form
 
   delegate :consent_requests,

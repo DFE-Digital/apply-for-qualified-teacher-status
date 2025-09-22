@@ -123,6 +123,36 @@ RSpec.describe "Teacher work history", type: :system do
     end
   end
 
+  context "when the work history has update needed as status with email domain feature enabled" do
+    before do
+      FeatureFlags::FeatureFlag.activate(:email_domains_for_referees)
+
+      given_some_work_history_exists_with_public_email_domain
+    end
+
+    after { FeatureFlags::FeatureFlag.deactivate(:email_domains_for_referees) }
+
+    it "navigates user to update referee information" do
+      when_i_visit_the(:teacher_application_page)
+      then_i_see_the(:teacher_application_page)
+      and_i_see_the_work_history_task_with_update_needed
+
+      when_i_click_the_work_history_task
+      then_i_see_the(:teacher_edit_work_history_contact_page)
+      and_i_see_error_message_for_email_address_using_public_domain
+
+      when_i_update_the_contact_email_with_error
+      then_i_see_the(:teacher_check_work_history_page)
+
+      when_i_click_continue
+      then_i_see_the(:teacher_add_another_work_history_page)
+
+      when_i_dont_add_another_work_history
+      then_i_see_the(:teacher_application_page)
+      and_i_see_the_work_history_task_as_completed
+    end
+  end
+
   context "when the application form accepts reduced evidence" do
     before { given_the_application_accepts_reduced_evidence }
 
@@ -233,8 +263,31 @@ RSpec.describe "Teacher work history", type: :system do
     ApplicationFormSectionStatusUpdater.call(application_form:)
   end
 
+  def given_some_work_history_exists_with_public_email_domain
+    create(
+      :work_history,
+      :completed,
+      application_form:,
+      contact_email: "test@gmail.com",
+      contact_email_domain: "gmail.com",
+    )
+    ApplicationFormSectionStatusUpdater.call(application_form:)
+  end
+
   def and_i_see_the_work_history_task
     expect(teacher_application_page.work_history_task_item).not_to be_nil
+  end
+
+  def and_i_see_the_work_history_task_with_update_needed
+    expect(
+      teacher_application_page.work_history_task_item.status_tag.text,
+    ).to eq("Update needed")
+  end
+
+  def and_i_see_the_work_history_task_as_completed
+    expect(
+      teacher_application_page.work_history_task_item.status_tag.text,
+    ).to eq("Completed")
   end
 
   def when_i_click_the_work_history_task
@@ -291,6 +344,12 @@ RSpec.describe "Teacher work history", type: :system do
     teacher_edit_work_history_contact_page.form.name_input.fill_in with: "Name"
     teacher_edit_work_history_contact_page.form.job_input.fill_in with: "Job"
     teacher_edit_work_history_contact_page.form.email_input.fill_in with:
+      "contact@example.com"
+    teacher_edit_work_history_contact_page.form.continue_button.click
+  end
+
+  def when_i_update_the_contact_email_with_error
+    teacher_edit_work_history_contact_page.form.email_input_with_error.fill_in with:
       "contact@example.com"
     teacher_edit_work_history_contact_page.form.continue_button.click
   end
@@ -529,6 +588,12 @@ RSpec.describe "Teacher work history", type: :system do
 
   def and_i_see_one_work_history
     expect(teacher_check_work_histories_page.summary_cards.count).to eq(1)
+  end
+
+  def and_i_see_error_message_for_email_address_using_public_domain
+    expect(teacher_edit_work_history_contact_page).to have_content(
+      "Enter an official email address that uses the institution’s domain",
+    )
   end
 
   def teacher

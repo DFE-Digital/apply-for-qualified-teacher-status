@@ -44,7 +44,9 @@
 #  registration_number_status                    :string           default("not_started"), not null
 #  requires_passport_as_identity_proof           :boolean          default(FALSE), not null
 #  requires_preliminary_check                    :boolean          default(FALSE), not null
+#  requires_private_email_for_referee            :boolean          default(FALSE), not null
 #  stage                                         :string           default("draft"), not null
+#  started_with_private_email_for_referee        :boolean          default(FALSE), not null
 #  statuses                                      :string           default(["draft"]), not null, is an Array
 #  subject_limited                               :boolean          default(FALSE), not null
 #  subjects                                      :text             default([]), not null, is an Array
@@ -182,6 +184,7 @@ class ApplicationForm < ApplicationRecord
     completed: "completed",
     error: "error",
     in_progress: "in_progress",
+    update_needed: "update_needed",
     not_started: "not_started",
   }.freeze
 

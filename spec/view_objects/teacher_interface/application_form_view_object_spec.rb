@@ -667,4 +667,79 @@ RSpec.describe TeacherInterface::ApplicationFormViewObject do
       end
     end
   end
+
+  describe "#show_new_requirements_for_work_history_references_banner?" do
+    subject(:show_new_requirements_for_work_history_references_banner?) do
+      view_object.show_new_requirements_for_work_history_references_banner?
+    end
+
+    context "when the feature flag email domains for referees is enabled" do
+      before { FeatureFlags::FeatureFlag.activate(:email_domains_for_referees) }
+
+      after do
+        FeatureFlags::FeatureFlag.deactivate(:email_domains_for_referees)
+      end
+
+      it { is_expected.to be true }
+
+      context "when the application form started after the release of the feature" do
+        before do
+          application_form.update!(started_with_private_email_for_referee: true)
+        end
+
+        it { is_expected.to be false }
+      end
+
+      context "when the application form has in progress status for work history" do
+        before { application_form.update!(work_history_status: "in_progress") }
+
+        it { is_expected.to be true }
+      end
+
+      context "when the application form has update needed status for work history" do
+        before do
+          application_form.update!(work_history_status: "update_needed")
+        end
+
+        it { is_expected.to be true }
+      end
+
+      context "when the application form has completed work history and in progress other England work history" do
+        before do
+          application_form.update!(
+            work_history_status: "completed",
+            other_england_work_history_status: "in_progress",
+          )
+        end
+
+        it { is_expected.to be true }
+      end
+
+      context "when the application form has completed work history and update needed other England work history" do
+        before do
+          application_form.update!(
+            work_history_status: "completed",
+            other_england_work_history_status: "update_needed",
+          )
+        end
+
+        it { is_expected.to be true }
+      end
+
+      context "when the application form has completed work history and other England work history" do
+        before do
+          application_form.update!(
+            work_history_status: "completed",
+            other_england_work_history_status: "completed",
+          )
+        end
+
+        it { is_expected.to be false }
+      end
+    end
+
+    context "when the feature flag email domains for referees is disabled" do
+      it { is_expected.to be false }
+    end
+  end
 end

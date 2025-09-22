@@ -316,4 +316,24 @@ RSpec.describe WorkHistory, type: :model do
       end
     end
   end
+
+  describe "#invalid_email_domain_for_contact?" do
+    subject(:invalid_email_domain_for_contact?) do
+      work_history.invalid_email_domain_for_contact?
+    end
+
+    it { is_expected.to be false }
+
+    context "with contact email having a public email domain" do
+      before { work_history.update!(contact_email_domain: "gmail.com") }
+
+      it { is_expected.to be true }
+    end
+
+    context "with contact email having a private email domain" do
+      before { work_history.update!(contact_email: "private.com") }
+
+      it { is_expected.to be false }
+    end
+  end
 end
