@@ -118,7 +118,15 @@ class AssessorInterface::ServiceLevelAgreementIndexViewObject
   def application_forms_prioritised_but_assessment_not_completed
     ApplicationForm
       .joins(:assessment)
-      .where(assessment: { verification_started_at: nil, prioritised: true })
+      .where(
+        awarded_at: nil,
+        declined_at: nil,
+        withdrawn_at: nil,
+        assessment: {
+          verification_started_at: nil,
+          prioritised: true,
+        },
+      )
       .distinct
   end
 

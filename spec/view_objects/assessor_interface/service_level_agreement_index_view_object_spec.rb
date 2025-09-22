@@ -124,6 +124,26 @@ RSpec.describe AssessorInterface::ServiceLevelAgreementIndexViewObject do
     end
   end
 
+  before do
+    # Including some already completed application forms to ensure they never show
+    create(:application_form, :with_assessment, :awarded) do |application_form|
+      application_form.assessment.update!(
+        prioritised: true,
+        verification_started_at: Time.current,
+      )
+    end
+    create(:application_form, :with_assessment, :declined) do |application_form|
+      application_form.assessment.update!(prioritised: true)
+    end
+    create(
+      :application_form,
+      :with_assessment,
+      :withdrawn,
+    ) do |application_form|
+      application_form.assessment.update!(prioritised: true)
+    end
+  end
+
   describe "#application_forms_pagy" do
     subject(:application_forms_pagy) { view_object.application_forms_pagy }
 
