@@ -4,6 +4,12 @@ class AssessorInterface::ServiceLevelAgreementIndexViewObject
   include ActionView::Helpers::FormOptionsHelper
   include Pagy::Backend
 
+  WORKING_DAYS_TO_START_PRIORITISATION_CHECKS = 10
+  WORKING_DAYS_NEARING_START_PRIORITISATION_CHECKS_DEADLINE = 8
+
+  WORKING_DAYS_TO_FINISH_ASSESSMENT_FOR_PRIORITISED = 40
+  WORKING_DAYS_NEARING_FINISH_ASSESSMENT_FOR_PRIORITISED_DEADLINE = 35
+
   def initialize(params:)
     @params = params
   end
@@ -84,12 +90,6 @@ class AssessorInterface::ServiceLevelAgreementIndexViewObject
 
   private
 
-  WORKING_DAYS_TO_START_PRIORITISATION_CHECKS = 10
-  WORKING_DAYS_NEARING_START_PRIORITISATION_CHECKS_DEADLINE = 8
-
-  WORKING_DAYS_TO_FINISH_ASSESSMENT_FOR_PRIORITISED = 40
-  WORKING_DAYS_NEARING_FINISH_ASSESSMENT_FOR_PRIORITISED_DEADLINE = 35
-
   def application_forms_with_pagy
     @application_forms_with_pagy ||=
       pagy(
@@ -112,7 +112,6 @@ class AssessorInterface::ServiceLevelAgreementIndexViewObject
     ApplicationForm
       .joins(assessment: :prioritisation_work_history_checks)
       .where(assessment: { started_at: nil })
-      .where.not(assessment: { prioritisation_work_history_checks: nil })
       .distinct
   end
 
