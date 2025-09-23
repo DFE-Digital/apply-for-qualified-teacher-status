@@ -17,6 +17,12 @@
 
   <h1 class="govuk-heading-xl"><%= title %></h1>
 
+  <% if FeatureFlags::FeatureFlag.active?(:email_domains_for_referees) && !@application_form.requires_private_email_for_referee? %>
+    <%= govuk_inset_text do %>
+      <p>This application was submitted before the email domain requirements changed. Any updated referee email addresses do not need to meet the new requirements.</p>
+    <% end %>
+  <% end %>
+
   <h2 class="govuk-heading-m">Current reference contact</h2>
 
   <%= govuk_summary_list(actions: false) do |summary_list|
