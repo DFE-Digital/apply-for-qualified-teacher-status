@@ -7,6 +7,14 @@
 <%= form_with model: @form, url: [:assessor_interface, @application_form, @work_history], method: :put do |f| %>
   <%= f.govuk_error_summary %>
 
+  <% if @application_form.requires_private_email_for_referee? %>
+    <%= govuk_notification_banner(title_text: "Important") do |notification_banner| %>
+      <% notification_banner.with_heading(text: "Email domain requirements apply to this application") %>
+
+      <p class="govuk-body">Any updated referee email addresses must use the school’s domain, for example, name@school.edu.</p>
+    <% end %>
+  <% end %>
+
   <h1 class="govuk-heading-xl"><%= title %></h1>
 
   <h2 class="govuk-heading-m">Current reference contact</h2>
