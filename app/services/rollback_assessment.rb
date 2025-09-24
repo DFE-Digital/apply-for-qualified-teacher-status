@@ -33,11 +33,12 @@ class RollbackAssessment
 
   def has_submitted_another_application_form?
     teacher.application_form != application_form &&
-      teacher.application_form.submitted?
+      teacher.application_form&.submitted?
   end
 
   def valid_assessment_state?
     assessment.award? || assessment.decline? ||
+      application_form.withdrawn_at.present? ||
       (assessment.unknown? && application_form.declined_at.present?)
   end
 
@@ -69,6 +70,10 @@ class RollbackAssessment
 
     if application_form.declined_at.present?
       application_form.update!(declined_at: nil)
+    end
+
+    if application_form.withdrawn_at.present?
+      application_form.update!(withdrawn_at: nil)
     end
 
     ApplicationFormStatusUpdater.call(application_form:, user:)
