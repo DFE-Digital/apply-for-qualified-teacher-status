@@ -350,6 +350,7 @@ en:
               blank: Enter this person’s job title
             contact_email:
               blank: Enter this person’s email address
+              invalid_email_domain: Enter an official email address that uses the school’s domain
         teacher_interface/name_and_date_of_birth_form:
           attributes:
             date_of_birth:
