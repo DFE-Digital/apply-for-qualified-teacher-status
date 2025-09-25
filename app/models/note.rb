@@ -8,7 +8,7 @@
 #  text                :text             not null
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
-#  application_form_id :bigint           not null
+#  application_form_id :bigint
 #  author_id           :bigint           not null
 #
 # Indexes
@@ -23,7 +23,7 @@
 #
 
 class Note < ApplicationRecord
-  belongs_to :application_form
+  belongs_to :application_form, optional: true
   belongs_to :author, class_name: "Staff"
 
   validates :text, presence: true
