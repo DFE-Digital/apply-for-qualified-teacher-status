@@ -42,11 +42,6 @@
   <% when "support" %>
     <% if current_staff %>
       <% service_navigation.with_navigation_item(
-         text: "Features",
-         href: main_app.support_interface_feature_flags_path,
-         active: current_page?(main_app.support_interface_feature_flags_path)
-       ) %>
-      <% service_navigation.with_navigation_item(
          text: "Countries",
          href: main_app.support_interface_countries_path,
          active: request.path.start_with?("/support/countries") || request.path.start_with?("/support/regions")
