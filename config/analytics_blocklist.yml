@@ -109,6 +109,7 @@
     - creator_name
     - creator_type
     - event_type
+    - eligibility_domain_id
     - id
     - mailer_action_name
     - mailer_class_name

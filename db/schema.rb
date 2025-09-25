@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_10_124806) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_24_141911) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -230,6 +230,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_10_124806) do
     t.boolean "qualified_for_subject"
     t.boolean "eligible_work_experience_in_england"
     t.boolean "work_experience_referee"
+  end
+
+  create_table "eligibility_domains", force: :cascade do |t|
+    t.string "domain"
+    t.datetime "archived_at"
+    t.integer "application_forms_count"
+    t.bigint "created_by_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["created_by_id"], name: "index_eligibility_domains_on_created_by_id"
+    t.index ["domain"], name: "index_eligibility_domains_on_domain", unique: true
   end
 
   create_table "english_language_providers", force: :cascade do |t|
@@ -620,10 +631,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_10_124806) do
     t.text "note_text", default: "", null: false
     t.bigint "qualification_id"
     t.bigint "prioritisation_work_history_check_id"
+    t.bigint "eligibility_domain_id"
     t.index ["application_form_id"], name: "index_timeline_events_on_application_form_id"
     t.index ["assessment_id"], name: "index_timeline_events_on_assessment_id"
     t.index ["assessment_section_id"], name: "index_timeline_events_on_assessment_section_id"
     t.index ["assignee_id"], name: "index_timeline_events_on_assignee_id"
+    t.index ["eligibility_domain_id"], name: "index_timeline_events_on_eligibility_domain_id"
     t.index ["note_id"], name: "index_timeline_events_on_note_id"
     t.index ["prioritisation_work_history_check_id"], name: "index_timeline_events_on_prioritisation_work_history_check_id"
     t.index ["qualification_id"], name: "index_timeline_events_on_qualification_id"
@@ -675,8 +688,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_10_124806) do
     t.string "school_website"
     t.string "postcode"
     t.boolean "is_other_england_educational_role", default: false, null: false
+    t.bigint "eligibility_domain_id"
     t.index ["application_form_id"], name: "index_work_histories_on_application_form_id"
     t.index ["canonical_contact_email"], name: "index_work_histories_on_canonical_contact_email"
+    t.index ["eligibility_domain_id"], name: "index_work_histories_on_eligibility_domain_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
@@ -692,6 +707,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_10_124806) do
   add_foreign_key "consent_requests", "assessments"
   add_foreign_key "consent_requests", "qualifications"
   add_foreign_key "eligibility_checks", "regions"
+  add_foreign_key "eligibility_domains", "staff", column: "created_by_id"
   add_foreign_key "further_information_request_items", "work_histories"
   add_foreign_key "notes", "application_forms"
   add_foreign_key "notes", "staff", column: "author_id"
@@ -716,6 +732,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_10_124806) do
   add_foreign_key "timeline_events", "application_forms"
   add_foreign_key "timeline_events", "assessment_sections"
   add_foreign_key "timeline_events", "assessments"
+  add_foreign_key "timeline_events", "eligibility_domains"
   add_foreign_key "timeline_events", "notes"
   add_foreign_key "timeline_events", "prioritisation_work_history_checks"
   add_foreign_key "timeline_events", "qualifications"
@@ -724,4 +741,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_10_124806) do
   add_foreign_key "trs_trn_requests", "application_forms"
   add_foreign_key "uploads", "documents"
   add_foreign_key "work_histories", "application_forms"
+  add_foreign_key "work_histories", "eligibility_domains"
 end
