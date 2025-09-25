@@ -23,3 +23,11 @@
     <% end %>
   </h2>
 <% end %>
+
+<% if FeatureFlags::FeatureFlag.active?(:email_domains_for_referees) %>
+  <% if application_form.requires_private_email_for_referee? %>
+    <%= govuk_warning_text(text: "Email domain requirements apply to this application.") %>
+  <% else %>
+    <%= govuk_warning_text(text: "This application was submitted before the email domain requirements changed.") %>
+  <% end %>
+<% end %>

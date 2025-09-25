@@ -133,6 +133,7 @@ en:
         qualified_to_teach: the applicant is qualified to teach at state or government schools
         qualified_to_teach_children_11_to_16: the applicant is qualified to teach children aged 11-16
         registration_number: registration number provided and verified (where applicable)
+        referee_email_domain: that the reference’s email address is from the school’s domain, for example, name@school.edu
         satisfactory_evidence_work_history: the applicant has provided satisfactory evidence of their work history
         teaching_qualification: confirmation of the applicant’s teaching qualification
         teaching_qualification_1_year: the teaching qualification lasted at least 1 academic year
