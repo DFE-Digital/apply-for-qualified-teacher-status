@@ -253,7 +253,7 @@ en:
     overview:
       title: Overview
       application_history: Application history
-      view_timeline: View timeline of this applications actions
+      view_timeline: View timeline of this application’s actions
 
   activemodel:
     errors:
