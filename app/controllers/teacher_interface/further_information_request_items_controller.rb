@@ -40,7 +40,13 @@ module TeacherInterface
     end
 
     def edit_work_history_contact
-      @form = FurtherInformationRequestItemWorkHistoryContactForm.new
+      @form =
+        FurtherInformationRequestItemWorkHistoryContactForm.new(
+          further_information_request_item: further_information_request_item,
+          contact_name: further_information_request_item.contact_name,
+          contact_job: further_information_request_item.contact_job,
+          contact_email: further_information_request_item.contact_email,
+        )
     end
 
     def update_text

@@ -89,6 +89,11 @@ RSpec.describe "Teacher further information", type: :system do
     and_i_click_continue
     then_i_see_the(:teacher_check_further_information_request_answers_page)
 
+    when_i_click_the_work_history_check_your_answers_item
+    i_verify_that_the_work_history_contact_response_is_displayed
+    and_i_click_continue
+    then_i_see_the(:teacher_check_further_information_request_answers_page)
+
     when_i_click_the_document_check_your_answers_item
     and_i_click_continue
     when_i_dont_need_to_upload_another_file
@@ -190,6 +195,15 @@ RSpec.describe "Teacher further information", type: :system do
       "jamescarpenter@sample.com"
   end
 
+  def i_verify_that_the_work_history_contact_response_is_displayed
+    expect(page).to have_field("Contact’s name", with: "James")
+    expect(page).to have_field("Contact’s job title", with: "Carpenter")
+    expect(page).to have_field(
+      "Contact’s email address",
+      with: "jamescarpenter@sample.com",
+    )
+  end
+
   def when_i_upload_a_file
     teacher_upload_document_page.form.original_attachment.attach_file Rails.root.join(
       file_fixture("upload.pdf"),
@@ -238,6 +252,10 @@ RSpec.describe "Teacher further information", type: :system do
 
   def when_i_click_the_document_check_your_answers_item
     document_check_answers_item.actions.link.click
+  end
+
+  def when_i_click_the_work_history_check_your_answers_item
+    work_history_check_answers_item.actions.link.click
   end
 
   def when_i_submit_the_further_information
@@ -307,6 +325,14 @@ RSpec.describe "Teacher further information", type: :system do
     teacher_further_information_requested_page.task_lists.first.find_item(
       "Update reference details for #{application_form.work_histories.first.school_name}",
     )
+  end
+
+  def work_history_check_answers_item
+    teacher_check_further_information_request_answers_page
+      .summary_lists
+      .second
+      .rows
+      .first
   end
 
   def document_task_list_item
