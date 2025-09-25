@@ -147,6 +147,14 @@
     - work_experience
     - work_experience_referee
     - eligible_work_experience_in_england
+  :eligibility_domains:
+    - archived_at
+    - id
+    - created_at
+    - created_by_id
+    - domain
+    - application_forms_count
+    - updated_at
   :english_language_providers:
     - accepted_tests
     - b2_level_requirement
@@ -420,6 +428,7 @@
     - contact_name
     - country_code
     - created_at
+    - eligibility_domain_id
     - end_date
     - end_date_is_estimate
     - hours_per_week
