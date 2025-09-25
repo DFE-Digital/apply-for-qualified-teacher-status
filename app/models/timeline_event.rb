@@ -23,7 +23,7 @@
 #  subjects_note                        :text             default(""), not null
 #  created_at                           :datetime         not null
 #  updated_at                           :datetime         not null
-#  application_form_id                  :bigint           not null
+#  application_form_id                  :bigint
 #  assessment_id                        :bigint
 #  assessment_section_id                :bigint
 #  assignee_id                          :bigint
@@ -61,7 +61,7 @@
 #  fk_rails_...  (work_history_id => work_histories.id)
 #
 class TimelineEvent < ApplicationRecord
-  belongs_to :application_form
+  belongs_to :application_form, optional: true
   belongs_to :assessment, optional: true
   belongs_to :assessment_section, optional: true
   belongs_to :assignee, class_name: "Staff", optional: true

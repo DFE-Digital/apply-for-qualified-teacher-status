@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_24_141911) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_25_094851) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -604,7 +604,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_24_141911) do
 
   create_table "timeline_events", force: :cascade do |t|
     t.string "event_type", null: false
-    t.bigint "application_form_id", null: false
+    t.bigint "application_form_id"
     t.integer "creator_id"
     t.string "creator_type"
     t.datetime "created_at", null: false
