@@ -18,6 +18,8 @@ en:
           text: This FI allows the applicant to send us a typed response. Use this space to give them clear instructions on what they need to provide.
       assessor_interface_create_note_form:
         text: Use the text box to add a note to the application history. Other assessors will be able to see any notes you add, but they will not be visible to the applicant.
+      assessor_interface_create_eligibility_domain_form:
+        domain: Enter the domain without the @ symbol, for example, school.edu
       assessor_interface_filter_form:
         reference: "Example: 210245"
       assessor_interface_suitability_record_form:
@@ -141,6 +143,9 @@ en:
           none: No consent required
       assessor_interface_create_note_form:
         text: Add a note to this application
+      assessor_interface_create_eligibility_domain_form:
+        domain: Email domain
+        note: Note
       assessor_interface_filter_form:
         email: Applicant email
         location: Country trained in
