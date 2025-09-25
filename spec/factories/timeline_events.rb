@@ -23,7 +23,7 @@
 #  subjects_note                        :text             default(""), not null
 #  created_at                           :datetime         not null
 #  updated_at                           :datetime         not null
-#  application_form_id                  :bigint           not null
+#  application_form_id                  :bigint
 #  assessment_id                        :bigint
 #  assessment_section_id                :bigint
 #  assignee_id                          :bigint
