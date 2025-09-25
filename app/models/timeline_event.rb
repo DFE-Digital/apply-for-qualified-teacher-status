@@ -81,6 +81,7 @@ class TimelineEvent < ApplicationRecord
          assessment_section_recorded: "assessment_section_recorded",
          assessor_assigned: "assessor_assigned",
          email_sent: "email_sent",
+         eligibility_domain_created: "eligibility_domain_created",
          information_changed: "information_changed",
          note_created: "note_created",
          prioritisation_work_history_check_recorded:
@@ -183,7 +184,10 @@ class TimelineEvent < ApplicationRecord
 
   validates :note_text,
             absence: true,
-            unless: -> { requestable_reviewed? || requestable_verified? }
+            unless: -> do
+              requestable_reviewed? || requestable_verified? ||
+                eligibility_domain_created?
+            end
 
   validates :column_name, presence: true, if: :information_changed?
   validates :column_name,

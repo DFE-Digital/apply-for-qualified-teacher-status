@@ -98,6 +98,10 @@ FactoryBot.define do
       message_subject { "Application received" }
     end
 
+    trait :eligibility_domain_created do
+      event_type { "eligibility_domain_created" }
+    end
+
     trait :information_changed do
       event_type { "information_changed" }
       work_history

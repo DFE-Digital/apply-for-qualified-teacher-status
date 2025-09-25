@@ -21,6 +21,10 @@
         <% service_navigation.with_navigation_item(text: "Suitability records", href: main_app.assessor_interface_suitability_records_path) %>
       <% end %>
 
+      <% if SupportInterface::CountryPolicy.new(current_staff, EligibilityDomain).index? %>
+        <% service_navigation.with_navigation_item(text: "Email domain records", href: main_app.assessor_interface_eligibility_domains_path) %>
+      <% end %>
+
       <% if SupportInterface::CountryPolicy.new(current_staff, Country).index? %>
         <% service_navigation.with_navigation_item(text: "Support console", href: main_app.support_interface_root_path) %>
       <% end %>

@@ -72,6 +72,10 @@ module TimelineEntry
       }
     end
 
+    def eligibility_domain_created_vars
+      { text: timeline_event.note_text }
+    end
+
     alias_method :reviewer_assigned_vars, :assessor_assigned_vars
 
     def assessment_section_recorded_vars

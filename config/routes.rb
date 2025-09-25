@@ -259,6 +259,16 @@ Rails.application.routes.draw do
         to: "uploads#show",
         as: :application_form_document_upload
 
+    resources :eligibility_domains, path: "/eligibility-domains" do
+      member do
+        get "archive", to: "eligibility_domains#edit_archive"
+        post "archive", to: "eligibility_domains#update_archive"
+
+        get "reactivate", to: "eligibility_domains#edit_reactivate"
+        post "reactivate", to: "eligibility_domains#update_reactivate"
+      end
+    end
+
     resources :suitability_records, path: "/suitability-records" do
       get "archive", on: :member
     end
