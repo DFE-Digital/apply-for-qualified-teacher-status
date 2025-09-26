@@ -40,13 +40,14 @@ module AssessorInterface
     end
 
     def edit
-      @form = EligibilityDomainNoteForm.new(eligibility_domain:)
+      eligibility_domain
+      @form = CreateNoteForm.new
     end
 
     def update
       @form =
-        EligibilityDomainNoteForm.new(
-          form_params.merge(eligibility_domain:, user: current_staff),
+        CreateNoteForm.new(
+          form_params.merge(eligibility_domain:, author: current_staff),
         )
 
       if @form.save
