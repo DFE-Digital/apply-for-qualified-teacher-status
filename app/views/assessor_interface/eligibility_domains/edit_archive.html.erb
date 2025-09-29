@@ -1,6 +1,6 @@
 <% title = "Archive record for #{@eligibility_domain.domain}" %>
 <% content_for :page_title, title_with_error_prefix(title, error: @form.errors.any?) %>
-<% content_for :back_link_url, assessor_interface_eligibility_domain_path(@eligibility_domain) %>
+<% content_for :back_link_url, edit_assessor_interface_eligibility_domain_path(@eligibility_domain) %>
 
 <%= form_with model: @form, url: [:archive, :assessor_interface, @eligibility_domain] do |f| %>
   <%= f.govuk_error_summary %>
