@@ -75,6 +75,7 @@ en:
         email_sent: Email sent
         eligibility_domain_archived: Record archived
         eligibility_domain_created: New record added
+        eligibility_domain_reactivated: Record reactivated
         information_changed: Information changed after submission
         note_created: Note created
         prioritisation_decision_made: Prioritisation decision made

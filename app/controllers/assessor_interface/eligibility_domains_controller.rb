@@ -82,8 +82,11 @@ module AssessorInterface
 
     def update_reactivate
       @form =
-        ArchiveEligibilityDomainForm.new(
-          archive_form_params.merge(eligibility_domain:, user: current_staff),
+        ReactivateEligibilityDomainForm.new(
+          reactivate_form_params.merge(
+            eligibility_domain:,
+            reactivated_by: current_staff,
+          ),
         )
 
       if @form.save
@@ -109,6 +112,12 @@ module AssessorInterface
     def archive_form_params
       params.require(
         :assessor_interface_archive_eligibility_domain_form,
+      ).permit(:note)
+    end
+
+    def reactivate_form_params
+      params.require(
+        :assessor_interface_reactivate_eligibility_domain_form,
       ).permit(:note)
     end
 

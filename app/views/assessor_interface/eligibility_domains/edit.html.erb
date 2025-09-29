@@ -48,8 +48,10 @@
   </article>
 
   <% if @eligibility_domain.archived_at.present? %>
-    <%= govuk_link_to "Reactivate record", reactivate_assessor_interface_eligibility_domain_path(@eligibility_domain), class: "govuk-button govuk-button--secondary" %>
-    <%= govuk_link_to "Cancel", assessor_interface_eligibility_domains_path %>
+    <div class="govuk-button-group">
+      <%= govuk_link_to "Reactivate record", reactivate_assessor_interface_eligibility_domain_path(@eligibility_domain), class: "govuk-button govuk-button--primary" %>
+      <%= govuk_link_to "Cancel", assessor_interface_eligibility_domains_path %>
+    </div>
   <% else %>
     <%= f.govuk_text_area :text, label: { tag: "h3", size: "m", text: "Add a note to this record" }, rows: 5 %>
 

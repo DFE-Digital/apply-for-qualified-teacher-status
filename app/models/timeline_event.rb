@@ -83,6 +83,7 @@ class TimelineEvent < ApplicationRecord
          email_sent: "email_sent",
          eligibility_domain_archived: "eligibility_domain_archived",
          eligibility_domain_created: "eligibility_domain_created",
+         eligibility_domain_reactivated: "eligibility_domain_reactivated",
          information_changed: "information_changed",
          note_created: "note_created",
          prioritisation_work_history_check_recorded:
@@ -187,7 +188,8 @@ class TimelineEvent < ApplicationRecord
             absence: true,
             unless: -> do
               requestable_reviewed? || requestable_verified? ||
-                eligibility_domain_created? || eligibility_domain_archived?
+                eligibility_domain_created? || eligibility_domain_archived? ||
+                eligibility_domain_reactivated?
             end
 
   validates :column_name, presence: true, if: :information_changed?

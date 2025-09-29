@@ -20,7 +20,7 @@
       <% if (text = description_vars[:subjects_note]).present? %>
         <%= simple_format text %>
       <% end %>
-    <% elsif timeline_event.eligibility_domain_created? || timeline_event.eligibility_domain_archived? %>
+    <% elsif timeline_event.eligibility_domain_created? || timeline_event.eligibility_domain_archived? || timeline_event.eligibility_domain_reactivated? %>
       <p class="govuk-body"><%= description_vars[:text] %></p>
     <% elsif timeline_event.assessment_section_recorded? %>
       <p class="govuk-body">

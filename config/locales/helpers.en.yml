@@ -20,6 +20,8 @@ en:
         domain: Enter the domain without the @ symbol, for example, school.edu
       assessor_interface_archive_eligibility_domain_form:
         note: "Internal note: Briefly explain why you are archiving this record."
+      assessor_interface_reactivate_eligibility_domain_form:
+        note: "Internal note: Briefly explain why you are reactivating this record."
       assessor_interface_filter_form:
         reference: "Example: 210245"
       assessor_interface_suitability_record_form:
@@ -148,6 +150,8 @@ en:
         note: Note
       assessor_interface_archive_eligibility_domain_form:
         note: Reason for archiving
+      assessor_interface_reactivate_eligibility_domain_form:
+        note: Reason for reactivating
       assessor_interface_filter_form:
         email: Applicant email
         location: Country trained in
