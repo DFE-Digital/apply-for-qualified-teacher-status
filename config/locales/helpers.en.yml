@@ -223,8 +223,8 @@ en:
           false: "No"
       teacher_interface_alternative_name_form:
         has_alternative_name_options:
-          true: Yes – I’ll upload another document to prove this
-          false: No - my name does not appear differently
+          true: Yes, I’ll upload another document to prove this
+          false: No, my name does not appear differently
         alternative_given_names: Alternate given names
         alternative_family_name: Alternate surname
       teacher_interface_age_range_form:
