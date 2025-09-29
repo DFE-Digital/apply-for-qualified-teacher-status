@@ -5,14 +5,17 @@ class AssessorInterface::CreateNoteForm
   include ActiveModel::Attributes
   include ActiveRecord::AttributeAssignment
 
-  attr_accessor :application_form, :author
+  attr_accessor :application_form, :eligibility_domain, :author
   attribute :text, :string
 
-  validates :application_form, :author, :text, presence: true
+  validates :author, :text, presence: true
+
+  validates :application_form, presence: true, unless: :eligibility_domain
+  validates :eligibility_domain, presence: true, unless: :application_form
 
   def save
     if valid?
-      CreateNote.call(application_form:, author:, text:)
+      CreateNote.call(application_form:, eligibility_domain:, author:, text:)
       true
     else
       false

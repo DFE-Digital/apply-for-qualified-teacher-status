@@ -16,8 +16,6 @@ en:
           passport_expired: As this reason triggers a decline, you do not need to add a note, but you can use the space below to add anything you feel might be helpful, if you want to.
           suitability: This reason triggers a decline. As you are declining an applicant because of suitability reasons, you must enter the additional content agreed by the suitability panel.
           text: This FI allows the applicant to send us a typed response. Use this space to give them clear instructions on what they need to provide.
-      assessor_interface_create_note_form:
-        text: Use the text box to add a note to the application history. Other assessors will be able to see any notes you add, but they will not be visible to the applicant.
       assessor_interface_create_eligibility_domain_form:
         domain: Enter the domain without the @ symbol, for example, school.edu
       assessor_interface_filter_form:

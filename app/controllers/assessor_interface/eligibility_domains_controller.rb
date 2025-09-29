@@ -40,13 +40,13 @@ module AssessorInterface
     end
 
     def edit
-      @form = EligibilityDomainNoteForm.new(eligibility_domain:)
+      @form = CreateNoteForm.new(eligibility_domain:)
     end
 
     def update
       @form =
-        EligibilityDomainNoteForm.new(
-          form_params.merge(eligibility_domain:, user: current_staff),
+        CreateNoteForm.new(
+          note_form_params.merge(eligibility_domain:, author: current_staff),
         )
 
       if @form.save
@@ -97,6 +97,10 @@ module AssessorInterface
         :domain,
         :note,
       )
+    end
+
+    def note_form_params
+      params.require(:assessor_interface_create_note_form).permit(:text)
     end
 
     def archive_form_params
