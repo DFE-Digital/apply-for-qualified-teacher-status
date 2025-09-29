@@ -6,6 +6,9 @@ module AssessorInterface
   class EligibilityDomainsController < BaseController
     include Pagy::Backend
 
+    before_action :ensure_active, only: %i[edit_archive update_archive]
+    before_action :ensure_archived, only: %i[edit_reactivate update_reactivate]
+
     before_action only: %i[index new create] do
       authorize %i[assessor_interface eligibility_domain]
     end
@@ -124,6 +127,20 @@ module AssessorInterface
     def eligibility_domain
       @eligibility_domain ||=
         authorize [:assessor_interface, EligibilityDomain.find(params[:id])]
+    end
+
+    def ensure_active
+      return if eligibility_domain.archived_at.nil?
+
+      flash[:alert] = "Record is already archived"
+      redirect_to [:edit, :assessor_interface, eligibility_domain]
+    end
+
+    def ensure_archived
+      return if eligibility_domain.archived_at.present?
+
+      flash[:alert] = "Record is already active"
+      redirect_to [:edit, :assessor_interface, eligibility_domain]
     end
   end
 end
