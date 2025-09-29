@@ -28,7 +28,8 @@ require "rails_helper"
 
 RSpec.describe Note, type: :model do
   describe "associations" do
-    it { is_expected.to belong_to(:application_form) }
+    it { is_expected.to belong_to(:application_form).optional }
+    it { is_expected.to belong_to(:eligibility_domain).optional }
     it { is_expected.to belong_to(:author) }
   end
 

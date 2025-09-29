@@ -3,7 +3,7 @@
 class CreateNote
   include ServicePattern
 
-  def initialize(application_form:, eligibility_domain:, author:, text:)
+  def initialize(author:, text:, application_form: nil, eligibility_domain: nil)
     @application_form = application_form
     @eligibility_domain = eligibility_domain
     @author = author
