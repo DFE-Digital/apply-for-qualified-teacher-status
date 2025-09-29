@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_25_130655) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_29_094729) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -312,8 +312,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_25_130655) do
     t.text "text", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "eligibility_domain_id"
     t.index ["application_form_id"], name: "index_notes_on_application_form_id"
     t.index ["author_id"], name: "index_notes_on_author_id"
+    t.index ["eligibility_domain_id"], name: "index_notes_on_eligibility_domain_id"
   end
 
   create_table "prioritisation_reference_requests", force: :cascade do |t|

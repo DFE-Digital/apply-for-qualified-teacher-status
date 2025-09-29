@@ -204,6 +204,7 @@
     - application_form_id
     - author_id
     - created_at
+    - eligibility_domain_id
     - id
     - updated_at
   :professional_standing_requests:
