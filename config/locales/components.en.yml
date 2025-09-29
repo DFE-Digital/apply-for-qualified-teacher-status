@@ -73,6 +73,7 @@ en:
             qualifications: Preliminary check (qualifications) assessed
         assessor_assigned: Assessor assigned
         email_sent: Email sent
+        eligibility_domain_archived: Record archived
         eligibility_domain_created: New record added
         information_changed: Information changed after submission
         note_created: Note created

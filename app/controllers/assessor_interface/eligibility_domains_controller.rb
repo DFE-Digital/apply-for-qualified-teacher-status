@@ -63,13 +63,16 @@ module AssessorInterface
     def update_archive
       @form =
         ArchiveEligibilityDomainForm.new(
-          archive_form_params.merge(eligibility_domain:, user: current_staff),
+          archive_form_params.merge(
+            eligibility_domain:,
+            archived_by: current_staff,
+          ),
         )
 
       if @form.save
         redirect_to action: :index
       else
-        render :archive, status: :unprocessable_entity
+        render :edit_archive, status: :unprocessable_entity
       end
     end
 
@@ -86,7 +89,7 @@ module AssessorInterface
       if @form.save
         redirect_to action: :index
       else
-        render :archive, status: :unprocessable_entity
+        render :edit_reactivate, status: :unprocessable_entity
       end
     end
 

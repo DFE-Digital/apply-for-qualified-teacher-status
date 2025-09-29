@@ -479,6 +479,10 @@ en:
               invalid: Enter an email domain in the correct format
             note:
               blank: Enter a note
+        assessor_interface/archive_eligibility_domain_form:
+          attributes:
+            note:
+              blank: Enter a reason for archiving this record
         assessor_interface/generate_unsigned_consent_document_form:
           attributes:
             generated:

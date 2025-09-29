@@ -18,6 +18,8 @@ en:
           text: This FI allows the applicant to send us a typed response. Use this space to give them clear instructions on what they need to provide.
       assessor_interface_create_eligibility_domain_form:
         domain: Enter the domain without the @ symbol, for example, school.edu
+      assessor_interface_archive_eligibility_domain_form:
+        note: "Internal note: Briefly explain why you are archiving this record."
       assessor_interface_filter_form:
         reference: "Example: 210245"
       assessor_interface_suitability_record_form:
@@ -144,6 +146,8 @@ en:
       assessor_interface_create_eligibility_domain_form:
         domain: Email domain
         note: Note
+      assessor_interface_archive_eligibility_domain_form:
+        note: Reason for archiving
       assessor_interface_filter_form:
         email: Applicant email
         location: Country trained in

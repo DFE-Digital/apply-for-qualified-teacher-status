@@ -94,6 +94,8 @@ RSpec.describe TimelineEvent do
         application_declined: "application_declined",
         assessment_section_recorded: "assessment_section_recorded",
         assessor_assigned: "assessor_assigned",
+        eligibility_domain_archived: "eligibility_domain_archived",
+        eligibility_domain_created: "eligibility_domain_created",
         email_sent: "email_sent",
         information_changed: "information_changed",
         note_created: "note_created",
