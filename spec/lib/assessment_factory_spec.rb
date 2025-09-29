@@ -16,10 +16,12 @@ RSpec.describe AssessmentFactory do
       requires_passport_as_identity_proof:,
       english_language_citizenship_exempt:,
       english_language_qualification_exempt:,
+      requires_private_email_for_referee:,
     )
   end
 
   let(:requires_passport_as_identity_proof) { false }
+  let(:requires_private_email_for_referee) { false }
   let(:english_language_citizenship_exempt) { false }
   let(:english_language_qualification_exempt) { false }
 
@@ -485,6 +487,35 @@ RSpec.describe AssessmentFactory do
                 fraud
               ],
             )
+          end
+
+          context "with the application form requiring private email domain for referee" do
+            let(:requires_private_email_for_referee) { true }
+
+            it "has the right checks and failure reasons" do
+              section = sections.work_history.first
+
+              expect(section.checks).to eq(
+                %w[
+                  verify_school_details
+                  work_history_references
+                  referee_email_domain
+                ],
+              )
+
+              expect(section.failure_reasons).to eq(
+                %w[
+                  work_history_break
+                  school_details_cannot_be_verified
+                  unrecognised_references
+                  work_history_duration
+                  work_history_information
+                  suitability
+                  suitability_previously_declined
+                  fraud
+                ],
+              )
+            end
           end
         end
       end

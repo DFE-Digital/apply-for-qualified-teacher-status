@@ -7,7 +7,15 @@ module AssessmentFactories
     end
 
     def checks
-      %i[verify_school_details work_history_references]
+      [
+        "verify_school_details",
+        "work_history_references",
+        (
+          if application_form.requires_private_email_for_referee?
+            "referee_email_domain"
+          end
+        ),
+      ].compact
     end
 
     def failure_reasons
