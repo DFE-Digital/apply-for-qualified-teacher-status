@@ -12,6 +12,7 @@ RSpec.describe SubmitApplicationForm do
       :application_form,
       :with_personal_information,
       :with_teaching_qualification,
+      :with_work_history,
       region:,
       requires_preliminary_check: false,
       subject_limited: false,
@@ -47,6 +48,14 @@ RSpec.describe SubmitApplicationForm do
       application_form,
       :requires_preliminary_check,
     ).from(false)
+  end
+
+  it "enqueues EligibilityDomainMatchers::WorkHistoryMatchJob for each work history record" do
+    expect { call }.to have_enqueued_job(
+      EligibilityDomainMatchers::WorkHistoryMatchJob,
+    ).with(application_form.work_histories.first).and have_enqueued_job(
+            EligibilityDomainMatchers::WorkHistoryMatchJob,
+          ).with(application_form.work_histories.last)
   end
 
   context "when region requires preliminary check" do
