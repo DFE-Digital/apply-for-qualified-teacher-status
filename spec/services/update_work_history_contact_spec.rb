@@ -58,6 +58,12 @@ RSpec.describe UpdateWorkHistoryContact do
     )
   end
 
+  it "enqueues EligibilityDomainMatchers::WorkHistoryMatchJob" do
+    expect { call }.to have_enqueued_job(
+      EligibilityDomainMatchers::WorkHistoryMatchJob,
+    ).with(work_history)
+  end
+
   describe "when references already sent out" do
     before { create(:requested_reference_request, work_history:) }
 

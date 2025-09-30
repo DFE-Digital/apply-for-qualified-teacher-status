@@ -32,6 +32,8 @@ class UpdateWorkHistoryContact
         },
       )
 
+      schedule_eligibility_domain_match_job_for_new_email
+
       if reference_request.present?
         reference_request.regenerate_slug
 
@@ -78,6 +80,10 @@ class UpdateWorkHistoryContact
       old_value:,
       new_value:,
     )
+  end
+
+  def schedule_eligibility_domain_match_job_for_new_email
+    EligibilityDomainMatchers::WorkHistoryMatchJob.perform_later(work_history)
   end
 
   class InvalidState < StandardError
