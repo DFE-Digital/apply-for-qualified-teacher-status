@@ -470,7 +470,7 @@ en:
         assessor_interface/create_note_form:
           attributes:
             text:
-              blank: Enter the note
+              blank: Enter a note
         assessor_interface/create_eligibility_domain_form:
           attributes:
             domain:
