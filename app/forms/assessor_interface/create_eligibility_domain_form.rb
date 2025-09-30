@@ -19,18 +19,25 @@ class AssessorInterface::CreateEligibilityDomainForm
   def save
     return false unless valid?
 
-    ActiveRecord::Base.transaction do
-      eligibility_domain =
-        EligibilityDomain.create!(domain: domain.downcase, created_by:)
+    eligibility_domain =
+      ActiveRecord::Base.transaction do
+        eligibility_domain =
+          EligibilityDomain.create!(domain: domain.downcase, created_by:)
 
-      TimelineEvent.create!(
-        eligibility_domain:,
-        event_type: "eligibility_domain_created",
-        creator: created_by,
-        creator_name: created_by.name,
-        note_text: note,
-      )
-    end
+        TimelineEvent.create!(
+          eligibility_domain:,
+          event_type: "eligibility_domain_created",
+          creator: created_by,
+          creator_name: created_by.name,
+          note_text: note,
+        )
+
+        eligibility_domain
+      end
+
+    EligibilityDomainMatchers::EligibilityDomainMatchJob.perform_later(
+      eligibility_domain,
+    )
   end
 
   private
