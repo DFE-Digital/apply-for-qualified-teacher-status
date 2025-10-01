@@ -23,11 +23,12 @@
 #  subjects_note                        :text             default(""), not null
 #  created_at                           :datetime         not null
 #  updated_at                           :datetime         not null
-#  application_form_id                  :bigint           not null
+#  application_form_id                  :bigint
 #  assessment_id                        :bigint
 #  assessment_section_id                :bigint
 #  assignee_id                          :bigint
 #  creator_id                           :integer
+#  eligibility_domain_id                :bigint
 #  note_id                              :bigint
 #  prioritisation_work_history_check_id :bigint
 #  qualification_id                     :bigint
@@ -40,6 +41,7 @@
 #  index_timeline_events_on_assessment_id                         (assessment_id)
 #  index_timeline_events_on_assessment_section_id                 (assessment_section_id)
 #  index_timeline_events_on_assignee_id                           (assignee_id)
+#  index_timeline_events_on_eligibility_domain_id                 (eligibility_domain_id)
 #  index_timeline_events_on_note_id                               (note_id)
 #  index_timeline_events_on_prioritisation_work_history_check_id  (prioritisation_work_history_check_id)
 #  index_timeline_events_on_qualification_id                      (qualification_id)
@@ -52,13 +54,14 @@
 #  fk_rails_...  (assessment_id => assessments.id)
 #  fk_rails_...  (assessment_section_id => assessment_sections.id)
 #  fk_rails_...  (assignee_id => staff.id)
+#  fk_rails_...  (eligibility_domain_id => eligibility_domains.id)
 #  fk_rails_...  (note_id => notes.id)
 #  fk_rails_...  (prioritisation_work_history_check_id => prioritisation_work_history_checks.id)
 #  fk_rails_...  (qualification_id => qualifications.id)
 #  fk_rails_...  (work_history_id => work_histories.id)
 #
 class TimelineEvent < ApplicationRecord
-  belongs_to :application_form
+  belongs_to :application_form, optional: true
   belongs_to :assessment, optional: true
   belongs_to :assessment_section, optional: true
   belongs_to :assignee, class_name: "Staff", optional: true
@@ -67,6 +70,7 @@ class TimelineEvent < ApplicationRecord
   belongs_to :prioritisation_work_history_check, optional: true
   belongs_to :qualification, optional: true
   belongs_to :requestable, polymorphic: true, optional: true
+  belongs_to :eligibility_domain, optional: true
   belongs_to :work_history, optional: true
 
   enum :event_type,
@@ -77,6 +81,9 @@ class TimelineEvent < ApplicationRecord
          assessment_section_recorded: "assessment_section_recorded",
          assessor_assigned: "assessor_assigned",
          email_sent: "email_sent",
+         eligibility_domain_archived: "eligibility_domain_archived",
+         eligibility_domain_created: "eligibility_domain_created",
+         eligibility_domain_reactivated: "eligibility_domain_reactivated",
          information_changed: "information_changed",
          note_created: "note_created",
          prioritisation_work_history_check_recorded:
@@ -179,7 +186,11 @@ class TimelineEvent < ApplicationRecord
 
   validates :note_text,
             absence: true,
-            unless: -> { requestable_reviewed? || requestable_verified? }
+            unless: -> do
+              requestable_reviewed? || requestable_verified? ||
+                eligibility_domain_created? || eligibility_domain_archived? ||
+                eligibility_domain_reactivated?
+            end
 
   validates :column_name, presence: true, if: :information_changed?
   validates :column_name,

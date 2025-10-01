@@ -1,0 +1,15 @@
+<% title = "Reactivate record for #{@eligibility_domain.domain}" %>
+<% content_for :page_title, title_with_error_prefix(title, error: @form.errors.any?) %>
+<% content_for :back_link_url, edit_assessor_interface_eligibility_domain_path(@eligibility_domain) %>
+
+<%= form_with model: @form, url: [:reactivate, :assessor_interface, @eligibility_domain] do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <h1 class="govuk-heading-xl"><%= title %></h1>
+
+  <%= f.govuk_text_area :note, rows: 5 %>
+
+  <%= f.govuk_submit "Reactivate record" do %>
+    <%= govuk_link_to "Cancel", assessor_interface_eligibility_domains_path %>
+  <% end %>
+<% end %>

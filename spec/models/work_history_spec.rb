@@ -28,15 +28,18 @@
 #  created_at                        :datetime         not null
 #  updated_at                        :datetime         not null
 #  application_form_id               :bigint           not null
+#  eligibility_domain_id             :bigint
 #
 # Indexes
 #
 #  index_work_histories_on_application_form_id      (application_form_id)
 #  index_work_histories_on_canonical_contact_email  (canonical_contact_email)
+#  index_work_histories_on_eligibility_domain_id    (eligibility_domain_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (application_form_id => application_forms.id)
+#  fk_rails_...  (eligibility_domain_id => eligibility_domains.id)
 #
 require "rails_helper"
 

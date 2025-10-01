@@ -28,18 +28,22 @@
 #  created_at                        :datetime         not null
 #  updated_at                        :datetime         not null
 #  application_form_id               :bigint           not null
+#  eligibility_domain_id             :bigint
 #
 # Indexes
 #
 #  index_work_histories_on_application_form_id      (application_form_id)
 #  index_work_histories_on_canonical_contact_email  (canonical_contact_email)
+#  index_work_histories_on_eligibility_domain_id    (eligibility_domain_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (application_form_id => application_forms.id)
+#  fk_rails_...  (eligibility_domain_id => eligibility_domains.id)
 #
 class WorkHistory < ApplicationRecord
   belongs_to :application_form
+  belongs_to :eligibility_domain, optional: true
   has_one :reference_request, required: false
   has_and_belongs_to_many :selected_failure_reasons
   has_one :further_information_request_item,

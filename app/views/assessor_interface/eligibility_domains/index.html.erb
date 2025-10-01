@@ -1,0 +1,69 @@
+<% title = "Referee email domain records" %>
+
+<% content_for :page_title, title %>
+
+<h1 class="govuk-heading-xl govuk-!-margin-bottom-5"><%= title %></h1>
+
+<p class="govuk-body govuk-!-margin-bottom-8">The following references email domains have been flagged with eligibility concerns</p>
+
+<%= govuk_button_link_to "Add a new record", %i[new assessor_interface eligibility_domain] %>
+
+<div class="govuk-!-padding-bottom-5"></div>
+
+<% @records.each_with_index do |eligibility_domain, index| %>
+  <% unless index.zero? %>
+    <div class="govuk-!-padding-bottom-3"></div>
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
+    <div class="govuk-!-padding-bottom-4"></div>
+  <% end %>
+
+  <article>
+    <ul class="govuk-summary-card__actions app-float-right">
+      <li class="govuk-summary-card__action">
+        <%= govuk_link_to "Change", [:edit, :assessor_interface, eligibility_domain] %>
+      </li>
+    </ul>
+
+    <h2 class="govuk-heading-m"><%= govuk_link_to eligibility_domain.domain, [:edit, :assessor_interface, eligibility_domain] %></h2>
+
+    <hr class="govuk-section-break govuk-section-break--s govuk-section-break--visible" />
+
+    <%= govuk_summary_list(actions: false) do |summary_list| %>
+      <% summary_list.with_row do |row| %>
+        <% row.with_key { "Date flagged" } %>
+        <% row.with_value { eligibility_domain.created_at.localtime.to_fs } %>
+      <% end %>
+
+      <% summary_list.with_row do |row| %>
+        <% row.with_key { "Flagged by" } %>
+        <% row.with_value { eligibility_domain.created_by.name } %>
+      <% end %>
+
+      <% summary_list.with_row do |row| %>
+        <% row.with_key { "Status" } %>
+        <% row.with_value { render StatusTag::Component.new(eligibility_domain.archived_at.present? ? "archived" : "active") } %>
+      <% end %>
+
+      <% summary_list.with_row do |row| %>
+        <% row.with_key { "Found in" } %>
+        <% row.with_value { "#{eligibility_domain.application_forms_count.to_i} applications" } %>
+      <% end %>
+
+      <% summary_list.with_row do |row| %>
+        <% row.with_key { "History" } %>
+        <% row.with_value do %>
+          <%= govuk_details(summary_text: "View details") do %>
+            <% tag.div(class: "moj-timeline") do %>
+              <% eligibility_domain.timeline_events.order(created_at: :desc).each do |timeline_event| %>
+                <%= render(TimelineEntry::Component.new(timeline_event:)) %>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  </article>
+<% end %>
+
+
+<%= govuk_pagination(pagy: @pagy) %>

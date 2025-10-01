@@ -1,0 +1,64 @@
+<% title = "Change record for #{@eligibility_domain.domain}" %>
+
+<% content_for :back_link_url, assessor_interface_eligibility_domains_path %>
+<% content_for :page_title, title %>
+
+<%= form_with model: @form, url: [:assessor_interface, @eligibility_domain], method: :put do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <h1 class="govuk-heading-xl"><%= title %></h1>
+
+  <article>
+    <h2 class="govuk-heading-m">Current record</h2>
+
+    <%= govuk_summary_list(actions: false) do |summary_list| %>
+      <% summary_list.with_row do |row| %>
+        <% row.with_key { "Domain" } %>
+        <% row.with_value { @eligibility_domain.domain } %>
+      <% end %>
+
+      <% summary_list.with_row do |row| %>
+        <% row.with_key { "Date flagged" } %>
+        <% row.with_value { @eligibility_domain.created_at.localtime.to_fs } %>
+      <% end %>
+
+      <% summary_list.with_row do |row| %>
+        <% row.with_key { "Flagged by" } %>
+        <% row.with_value { @eligibility_domain.created_by.name } %>
+      <% end %>
+
+      <% summary_list.with_row do |row| %>
+        <% row.with_key { "Status" } %>
+        <% row.with_value { render StatusTag::Component.new(@eligibility_domain.archived_at.present? ? "archived" : "active") } %>
+      <% end %>
+
+      <% summary_list.with_row do |row| %>
+        <% row.with_key { "History" } %>
+        <% row.with_value do %>
+          <%= govuk_details(summary_text: "View details") do %>
+            <% tag.div(class: "moj-timeline") do %>
+              <% @eligibility_domain.timeline_events.order(created_at: :desc).each do |timeline_event| %>
+                <%= render(TimelineEntry::Component.new(timeline_event:)) %>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  </article>
+
+  <% if @eligibility_domain.archived_at.present? %>
+    <div class="govuk-button-group">
+      <%= govuk_link_to "Reactivate record", reactivate_assessor_interface_eligibility_domain_path(@eligibility_domain), class: "govuk-button govuk-button--primary" %>
+      <%= govuk_link_to "Cancel", assessor_interface_eligibility_domains_path %>
+    </div>
+  <% else %>
+    <%= f.govuk_text_area :text, label: { tag: "h3", size: "m", text: "Add a note to this record" }, rows: 5 %>
+
+    <%= f.govuk_submit "Add note" do %>
+      <%= govuk_link_to "Archive record", archive_assessor_interface_eligibility_domain_path(@eligibility_domain), class: "govuk-button govuk-button--secondary" %>
+      <%= govuk_link_to "Cancel", assessor_interface_eligibility_domains_path %>
+    <% end %>
+  <% end %>
+<% end %>
+

@@ -803,4 +803,19 @@ RSpec.describe TimelineEntry::Component, type: :component do
       expect(component.text).to include(creator.name)
     end
   end
+
+  context "eligibility domain created" do
+    let(:timeline_event) do
+      create(:timeline_event, :eligibility_domain_created, note_text:)
+    end
+    let(:note_text) { "Created a new email domain record" }
+
+    it "describes the event" do
+      expect(component.text).to include(note_text)
+    end
+
+    it "attributes to the creator" do
+      expect(component.text).to include(creator.name)
+    end
+  end
 end

@@ -470,7 +470,23 @@ en:
         assessor_interface/create_note_form:
           attributes:
             text:
-              blank: Enter the note
+              blank: Enter a note
+        assessor_interface/create_eligibility_domain_form:
+          attributes:
+            domain:
+              blank: Enter an email domain
+              uniqueness: You cannot add this email domain because a record with this domain already exists
+              invalid: Enter an email domain in the correct format
+            note:
+              blank: Enter a note
+        assessor_interface/archive_eligibility_domain_form:
+          attributes:
+            note:
+              blank: Enter a reason for archiving this record
+        assessor_interface/reactivate_eligibility_domain_form:
+          attributes:
+            note:
+              blank: Enter a reason for reactivating this record
         assessor_interface/generate_unsigned_consent_document_form:
           attributes:
             generated:

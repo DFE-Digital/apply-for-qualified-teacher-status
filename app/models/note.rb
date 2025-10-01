@@ -4,17 +4,19 @@
 #
 # Table name: notes
 #
-#  id                  :bigint           not null, primary key
-#  text                :text             not null
-#  created_at          :datetime         not null
-#  updated_at          :datetime         not null
-#  application_form_id :bigint           not null
-#  author_id           :bigint           not null
+#  id                    :bigint           not null, primary key
+#  text                  :text             not null
+#  created_at            :datetime         not null
+#  updated_at            :datetime         not null
+#  application_form_id   :bigint
+#  author_id             :bigint           not null
+#  eligibility_domain_id :bigint
 #
 # Indexes
 #
-#  index_notes_on_application_form_id  (application_form_id)
-#  index_notes_on_author_id            (author_id)
+#  index_notes_on_application_form_id    (application_form_id)
+#  index_notes_on_author_id              (author_id)
+#  index_notes_on_eligibility_domain_id  (eligibility_domain_id)
 #
 # Foreign Keys
 #
@@ -23,7 +25,8 @@
 #
 
 class Note < ApplicationRecord
-  belongs_to :application_form
+  belongs_to :application_form, optional: true
+  belongs_to :eligibility_domain, optional: true
   belongs_to :author, class_name: "Staff"
 
   validates :text, presence: true

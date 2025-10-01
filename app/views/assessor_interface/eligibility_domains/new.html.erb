@@ -1,0 +1,17 @@
+<% title = "Add a referee email domain record" %>
+
+<% content_for :page_title, title %>
+<% content_for :back_link_url, assessor_interface_eligibility_domains_path %>
+
+<%= form_with model: @form, url: %i[assessor_interface eligibility_domains] do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <h1 class="govuk-heading-xl"><%= title %></h1>
+
+  <%= f.govuk_text_field :domain %>
+  <%= f.govuk_text_area :note %>
+
+  <%= f.govuk_submit "Add record" do %>
+    <%= govuk_link_to "Cancel", %i[assessor_interface eligibility_domains] %>
+  <% end %>
+<% end %>

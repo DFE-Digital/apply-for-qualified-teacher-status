@@ -23,11 +23,12 @@
 #  subjects_note                        :text             default(""), not null
 #  created_at                           :datetime         not null
 #  updated_at                           :datetime         not null
-#  application_form_id                  :bigint           not null
+#  application_form_id                  :bigint
 #  assessment_id                        :bigint
 #  assessment_section_id                :bigint
 #  assignee_id                          :bigint
 #  creator_id                           :integer
+#  eligibility_domain_id                :bigint
 #  note_id                              :bigint
 #  prioritisation_work_history_check_id :bigint
 #  qualification_id                     :bigint
@@ -40,6 +41,7 @@
 #  index_timeline_events_on_assessment_id                         (assessment_id)
 #  index_timeline_events_on_assessment_section_id                 (assessment_section_id)
 #  index_timeline_events_on_assignee_id                           (assignee_id)
+#  index_timeline_events_on_eligibility_domain_id                 (eligibility_domain_id)
 #  index_timeline_events_on_note_id                               (note_id)
 #  index_timeline_events_on_prioritisation_work_history_check_id  (prioritisation_work_history_check_id)
 #  index_timeline_events_on_qualification_id                      (qualification_id)
@@ -52,6 +54,7 @@
 #  fk_rails_...  (assessment_id => assessments.id)
 #  fk_rails_...  (assessment_section_id => assessment_sections.id)
 #  fk_rails_...  (assignee_id => staff.id)
+#  fk_rails_...  (eligibility_domain_id => eligibility_domains.id)
 #  fk_rails_...  (note_id => notes.id)
 #  fk_rails_...  (prioritisation_work_history_check_id => prioritisation_work_history_checks.id)
 #  fk_rails_...  (qualification_id => qualifications.id)
@@ -91,6 +94,9 @@ RSpec.describe TimelineEvent do
         application_declined: "application_declined",
         assessment_section_recorded: "assessment_section_recorded",
         assessor_assigned: "assessor_assigned",
+        eligibility_domain_archived: "eligibility_domain_archived",
+        eligibility_domain_created: "eligibility_domain_created",
+        eligibility_domain_reactivated: "eligibility_domain_reactivated",
         email_sent: "email_sent",
         information_changed: "information_changed",
         note_created: "note_created",
