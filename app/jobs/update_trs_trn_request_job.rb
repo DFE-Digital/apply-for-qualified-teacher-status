@@ -41,7 +41,7 @@ class UpdateTRSTRNRequestJob < ApplicationJob
     end
 
     if trs_trn_request.pending?
-      UpdateTRSTRNRequestJob.set(wait: 1.hour).perform_later(trs_trn_request)
+      UpdateTRSTRNRequestJob.set(wait: 5.minutes).perform_later(trs_trn_request)
     end
   end
 
