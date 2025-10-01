@@ -16,6 +16,43 @@ RSpec.describe EligibilityDomainMatchers::WorkHistoryMatchJob, type: :job do
       end
     end
 
+    context "when the work history has existing eligibility domain and changes email" do
+      let(:eligibility_domain) do
+        create(:eligibility_domain, application_forms_count: 1)
+      end
+      let(:work_history) do
+        create :work_history, :completed, eligibility_domain:
+      end
+
+      it "does not match to any eligibility domains" do
+        perform
+
+        expect(work_history.eligibility_domain).to be_nil
+        expect(eligibility_domain.application_forms_count).to eq(0)
+      end
+
+      context "with new email matching another eligibility domain record" do
+        let(:new_eligibility_domain) do
+          create(:eligibility_domain, application_forms_count: 1)
+        end
+
+        let(:work_history) do
+          create :work_history,
+                 :completed,
+                 eligibility_domain:,
+                 contact_email_domain: new_eligibility_domain.domain
+        end
+
+        it "matches with the new eligibility domain" do
+          perform
+
+          expect(work_history.eligibility_domain).to eq(new_eligibility_domain)
+          expect(eligibility_domain.application_forms_count).to eq(0)
+          expect(new_eligibility_domain.application_forms_count).to eq(1)
+        end
+      end
+    end
+
     context "when there is a eligibility domain that is a match" do
       let!(:eligibility_domain) do
         create :eligibility_domain, domain: work_history.contact_email_domain
