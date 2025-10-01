@@ -46,7 +46,7 @@
 
       <% summary_list.with_row do |row| %>
         <% row.with_key { "Found in" } %>
-        <% row.with_value { "#{eligibility_domain.application_forms_count.to_i} applications" } %>
+        <% row.with_value { govuk_link_to "#{eligibility_domain.application_forms_count.to_i} applications", applications_assessor_interface_eligibility_domain_path(eligibility_domain) } %>
       <% end %>
 
       <% summary_list.with_row do |row| %>

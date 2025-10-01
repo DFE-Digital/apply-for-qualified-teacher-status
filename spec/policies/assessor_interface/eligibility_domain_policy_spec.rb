@@ -28,6 +28,12 @@ RSpec.describe AssessorInterface::EligibilityDomainPolicy do
     it_behaves_like "a policy method requiring the support console permission"
   end
 
+  describe "#applications?" do
+    subject(:applications?) { policy.applications? }
+
+    it_behaves_like "a policy method requiring the support console permission"
+  end
+
   describe "#update?" do
     subject(:update?) { policy.update? }
 
