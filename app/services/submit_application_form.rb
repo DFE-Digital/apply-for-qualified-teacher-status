@@ -33,7 +33,7 @@ class SubmitApplicationForm
       ApplicationFormStatusUpdater.call(application_form:, user:)
     end
 
-    schedule_eligibility_domain_match_job_for_references
+    match_eligibility_domains_with_work_history_records
 
     unless application_form.teaching_authority_provides_written_statement
       DeliverEmail.call(
@@ -76,9 +76,17 @@ class SubmitApplicationForm
     end
   end
 
-  def schedule_eligibility_domain_match_job_for_references
+  def match_eligibility_domains_with_work_history_records
     application_form.work_histories.each do |work_history|
-      EligibilityDomainMatchers::WorkHistoryMatchJob.perform_later(work_history)
+      eligibility_domain =
+        EligibilityDomain.find_by(domain: work_history.contact_email_domain)
+
+      next unless eligibility_domain
+      work_history.update!(eligibility_domain:)
+
+      EligibilityDomains::ApplicationFormsCounterJob.perform_later(
+        eligibility_domain,
+      )
     end
   end
 end

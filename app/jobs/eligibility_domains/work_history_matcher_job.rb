@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class EligibilityDomainMatchers::EligibilityDomainMatchJob < ApplicationJob
+class EligibilityDomains::WorkHistoryMatcherJob < ApplicationJob
   def perform(eligibility_domain)
     ActiveRecord::Base.transaction do
       work_histories =
@@ -12,10 +12,10 @@ class EligibilityDomainMatchers::EligibilityDomainMatchJob < ApplicationJob
       work_histories.find_each do |work_history|
         work_history.update!(eligibility_domain:)
       end
-
-      eligibility_domain.update!(
-        application_forms_count: eligibility_domain.application_forms.count,
-      )
     end
+
+    EligibilityDomains::ApplicationFormsCounterJob.perform_later(
+      eligibility_domain,
+    )
   end
 end

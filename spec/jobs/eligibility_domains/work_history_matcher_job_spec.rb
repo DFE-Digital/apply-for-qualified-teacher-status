@@ -2,8 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe EligibilityDomainMatchers::EligibilityDomainMatchJob,
-               type: :job do
+RSpec.describe EligibilityDomains::WorkHistoryMatcherJob, type: :job do
   describe "#perform" do
     subject(:perform) { described_class.new.perform(eligibility_domain) }
 
@@ -14,7 +13,12 @@ RSpec.describe EligibilityDomainMatchers::EligibilityDomainMatchJob,
         perform
 
         expect(eligibility_domain.work_histories.reload).to be_empty
-        expect(eligibility_domain.application_forms_count).to eq(0)
+      end
+
+      it "enqueues the counter job" do
+        expect { perform }.to have_enqueued_job(
+          EligibilityDomains::ApplicationFormsCounterJob,
+        ).with(eligibility_domain)
       end
     end
 
@@ -27,7 +31,12 @@ RSpec.describe EligibilityDomainMatchers::EligibilityDomainMatchJob,
         perform
 
         expect(eligibility_domain.work_histories.reload).to be_empty
-        expect(eligibility_domain.application_forms_count).to eq(0)
+      end
+
+      it "enqueues the counter job" do
+        expect { perform }.to have_enqueued_job(
+          EligibilityDomains::ApplicationFormsCounterJob,
+        ).with(eligibility_domain)
       end
     end
 
@@ -45,7 +54,12 @@ RSpec.describe EligibilityDomainMatchers::EligibilityDomainMatchJob,
         expect(eligibility_domain.work_histories.reload).to contain_exactly(
           matching_work_history,
         )
-        expect(eligibility_domain.application_forms_count).to eq(1)
+      end
+
+      it "enqueues the counter job" do
+        expect { perform }.to have_enqueued_job(
+          EligibilityDomains::ApplicationFormsCounterJob,
+        ).with(eligibility_domain)
       end
     end
 
@@ -72,7 +86,12 @@ RSpec.describe EligibilityDomainMatchers::EligibilityDomainMatchJob,
           matching_work_history_one,
           matching_work_history_two,
         )
-        expect(eligibility_domain.application_forms_count).to eq(2)
+      end
+
+      it "enqueues the counter job" do
+        expect { perform }.to have_enqueued_job(
+          EligibilityDomains::ApplicationFormsCounterJob,
+        ).with(eligibility_domain)
       end
     end
 
@@ -97,7 +116,12 @@ RSpec.describe EligibilityDomainMatchers::EligibilityDomainMatchJob,
           matching_work_history_one,
           matching_work_history_two,
         )
-        expect(eligibility_domain.application_forms_count).to eq(1)
+      end
+
+      it "enqueues the counter job" do
+        expect { perform }.to have_enqueued_job(
+          EligibilityDomains::ApplicationFormsCounterJob,
+        ).with(eligibility_domain)
       end
     end
   end

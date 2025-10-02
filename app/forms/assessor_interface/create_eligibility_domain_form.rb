@@ -35,7 +35,7 @@ class AssessorInterface::CreateEligibilityDomainForm
         eligibility_domain
       end
 
-    EligibilityDomainMatchers::EligibilityDomainMatchJob.perform_later(
+    ::EligibilityDomains::WorkHistoryMatcherJob.perform_later(
       eligibility_domain,
     )
   end
