@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_30_103221) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_02_081623) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -712,6 +712,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_30_103221) do
   add_foreign_key "eligibility_domains", "staff", column: "created_by_id"
   add_foreign_key "further_information_request_items", "work_histories"
   add_foreign_key "notes", "application_forms"
+  add_foreign_key "notes", "eligibility_domains"
   add_foreign_key "notes", "staff", column: "author_id"
   add_foreign_key "prioritisation_reference_requests", "assessments"
   add_foreign_key "prioritisation_reference_requests", "prioritisation_work_history_checks"
