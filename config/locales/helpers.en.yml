@@ -467,7 +467,7 @@ en:
       teacher_interface_reference_request_lessons_response_form:
         lessons_response: Did the applicant plan, prepare and deliver lessons to a class of at least 4 students?
       teacher_interface_reference_request_misconduct_response_form:
-        misconduct_response: Do you know of any professional misconduct by the applicant, or any disciplinary action taken against them?
+        misconduct_response: Do you know of any formal disciplinary action taken against the applicant?
       teacher_interface_reference_request_reports_response_form:
         reports_response: Was the applicant responsible for assessing and reporting on the progress of the students?
       teacher_interface_reference_request_satisfied_response_form:

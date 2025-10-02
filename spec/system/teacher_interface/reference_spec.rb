@@ -138,7 +138,7 @@ RSpec.describe "Teacher reference", type: :system do
     expect(summary_list.rows[6].value.text).to eq("Yes")
 
     expect(summary_list.rows[7].key.text).to eq(
-      "Do you know of any professional misconduct by the applicant, or any disciplinary action taken against them?",
+      "Do you know of any formal disciplinary action taken against the applicant?",
     )
     expect(summary_list.rows[7].value.text).to eq("No")
 
