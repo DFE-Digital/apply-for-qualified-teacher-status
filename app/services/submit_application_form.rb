@@ -84,9 +84,9 @@ class SubmitApplicationForm
       next unless eligibility_domain
       work_history.update!(eligibility_domain:)
 
-      EligibilityDomains::ApplicationFormsCounterJob.set(wait: 5.seconds).perform_later(
-        eligibility_domain,
-      )
+      EligibilityDomains::ApplicationFormsCounterJob.set(
+        wait: 5.seconds,
+      ).perform_later(eligibility_domain)
     end
   end
 end
