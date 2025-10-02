@@ -83,7 +83,9 @@ class UpdateWorkHistoryContact
   end
 
   def schedule_eligibility_domain_match_job_for_new_email
-    EligibilityDomainMatchers::WorkHistoryMatchJob.perform_later(work_history)
+    EligibilityDomainMatchers::WorkHistoryMatchJob.set(
+      wait: 5.seconds,
+    ).perform_later(work_history)
   end
 
   class InvalidState < StandardError
