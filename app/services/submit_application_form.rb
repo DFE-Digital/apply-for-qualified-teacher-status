@@ -31,9 +31,9 @@ class SubmitApplicationForm
       application_form.reload
 
       ApplicationFormStatusUpdater.call(application_form:, user:)
-    end
 
-    match_eligibility_domains_with_work_history_records
+      match_eligibility_domains_with_work_history_records
+    end
 
     unless application_form.teaching_authority_provides_written_statement
       DeliverEmail.call(
@@ -84,7 +84,7 @@ class SubmitApplicationForm
       next unless eligibility_domain
       work_history.update!(eligibility_domain:)
 
-      EligibilityDomains::ApplicationFormsCounterJob.perform_later(
+      EligibilityDomains::ApplicationFormsCounterJob.set(wait: 5.seconds).perform_later(
         eligibility_domain,
       )
     end
