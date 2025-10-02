@@ -30,7 +30,12 @@
 
     summary_list.with_row do |row|
       row.with_key { "Email address of reference" }
-      row.with_value { work_history.contact_email }
+      row.with_value do
+        tag.div(class: "govuk-form-group govuk-form-group--error") do
+          content_tag(:p, "This email domain has been flagged with eligibility concerns", class: "govuk-error-message") +
+            work_history.contact_email
+        end
+      end
     end
   end %>
 

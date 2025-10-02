@@ -3,6 +3,7 @@
 <% work_histories.each do |work_history| %>
   <% application_form = work_history.application_form %>
   <% as_assessor_and_can_edit_work_history = current_namespace == "assessor" && AssessorInterface::WorkHistoryPolicy.new(current_staff, work_history).edit? %>
+  <% highlight_eligibility_concern_on_email_domain = current_namespace == "assessor" && work_history.eligibility_domain.present? %>
 
   <% if work_history.is_other_england_educational_role? %>
     <% school_change_link_to = as_teacher ? school_teacher_interface_application_form_other_england_work_history_path(work_history) : nil %>
@@ -83,7 +84,9 @@
       contact_email: work_history.requires_contact_information? ? {
         title: "Reference contact’s email address",
         href: contact_change_link_to,
-        highlight: highlighted_contact_emails.include?(work_history)
+        highlight: highlighted_contact_emails.include?(work_history),
+        error: highlight_eligibility_concern_on_email_domain,
+        error_message: "This email domain has been flagged with eligibility concerns",
       } : nil,
     },
     with_action_link_to:,
