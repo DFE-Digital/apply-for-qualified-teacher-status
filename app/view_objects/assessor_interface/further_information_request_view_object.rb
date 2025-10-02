@@ -103,6 +103,8 @@ class AssessorInterface::FurtherInformationRequestViewObject
           assessor_request: item.failure_reason_assessor_feedback,
           applicant_text_response: item.response,
           applicant_contact_response: work_history_contact_response(item),
+          contact_email_domain_has_eligibility_concern:
+            work_history_contact_email_domain_has_eligibility_concern?(item),
           applicant_upload_response: item.document,
           review_decision_note: item.review_decision_note,
         }.compact
@@ -158,6 +160,14 @@ class AssessorInterface::FurtherInformationRequestViewObject
         value: item.contact_email,
       },
     }.map { |_key, value| "#{value[:title]}: #{value[:value]}" }
+  end
+
+  def work_history_contact_email_domain_has_eligibility_concern?(item)
+    return unless item.work_history_contact?
+
+    domain = EmailAddress.new(item.contact_email).host_name
+
+    EligibilityDomain.exists?(domain:)
   end
 
   def item_heading(item)

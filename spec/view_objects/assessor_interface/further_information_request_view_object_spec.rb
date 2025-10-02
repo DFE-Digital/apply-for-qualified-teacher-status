@@ -327,9 +327,61 @@ RSpec.describe AssessorInterface::FurtherInformationRequestViewObject do
               "Contact’s job: Principal",
               "Contact’s email: john@school.com",
             ],
+            contact_email_domain_has_eligibility_concern: false,
           },
         ],
       )
+    end
+
+    context "when the new contact email in the work history item matches an eligibility domain" do
+      before { create :eligibility_domain, domain: "school.com" }
+
+      it do
+        expect(subject).to eq(
+          [
+            {
+              id: document_item.id,
+              recieved_date:
+                further_information_request.received_at.to_date.to_fs,
+              requested_date:
+                further_information_request.requested_at.to_date.to_fs,
+              heading:
+                "The ID document is illegible or in a format that we cannot accept.",
+              assessor_request: document_item.failure_reason_assessor_feedback,
+              applicant_upload_response: document_item.document,
+            },
+            {
+              id: text_item.id,
+              recieved_date:
+                further_information_request.received_at.to_date.to_fs,
+              requested_date:
+                further_information_request.requested_at.to_date.to_fs,
+              heading:
+                "Subjects entered are acceptable for QTS, but the uploaded qualifications do not match them.",
+              assessor_request: text_item.failure_reason_assessor_feedback,
+              applicant_text_response: text_item.response,
+            },
+            {
+              id: work_history_contact_item.id,
+              recieved_date:
+                further_information_request.received_at.to_date.to_fs,
+              requested_date:
+                further_information_request.requested_at.to_date.to_fs,
+              heading:
+                "We could not verify one or more references entered by the applicant" \
+                  " for #{work_history_contact_item.work_history.school_name}.",
+              assessor_request:
+                work_history_contact_item.failure_reason_assessor_feedback,
+              applicant_contact_response: [
+                "Contact’s name: John Scott",
+                "Contact’s job: Principal",
+                "Contact’s email: john@school.com",
+              ],
+              contact_email_domain_has_eligibility_concern: true,
+            },
+          ],
+        )
+      end
     end
 
     context "when the review items have a decision note" do
@@ -382,6 +434,7 @@ RSpec.describe AssessorInterface::FurtherInformationRequestViewObject do
                 "Contact’s job: Principal",
                 "Contact’s email: john@school.com",
               ],
+              contact_email_domain_has_eligibility_concern: false,
               review_decision_note: "Further information required.",
             },
           ],

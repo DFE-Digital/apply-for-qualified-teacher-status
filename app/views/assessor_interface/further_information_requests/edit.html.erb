@@ -26,8 +26,15 @@
         <% end %>
 
         <% if item[:applicant_contact_response] %>
-          <%= govuk_inset_text(classes: "govuk-!-margin-top-0") do %>
-            <%= govuk_list item.fetch(:applicant_contact_response) %>
+          <% if item[:contact_email_domain_has_eligibility_concern] %>
+            <div class="govuk-form-group govuk-form-group--error govuk-!-padding-top-2 govuk-!-padding-bottom-1">
+              <%= govuk_list item.fetch(:applicant_contact_response) %>
+              <p class="govuk-error-message">This email domain has been flagged with eligibility concerns</p>
+            </div>
+          <% else %>
+            <%= govuk_inset_text(classes: "govuk-!-margin-top-0") do %>
+              <%= govuk_list item.fetch(:applicant_contact_response) %>
+            <% end %>
           <% end %>
         <% end %>
 
