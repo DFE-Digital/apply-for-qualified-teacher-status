@@ -20,6 +20,13 @@ RSpec.describe SubmitApplicationForm do
   end
   let(:user) { create(:teacher) }
 
+  let!(:work_history_one) do
+    create :work_history, :completed, application_form:
+  end
+  let!(:work_history_two) do
+    create :work_history, :completed, application_form:
+  end
+
   it "changes stage to not started" do
     expect { call }.to change(application_form, :stage).from("draft").to(
       "not_started",
@@ -47,6 +54,27 @@ RSpec.describe SubmitApplicationForm do
       application_form,
       :requires_preliminary_check,
     ).from(false)
+  end
+
+  context "when the work history records have eligibility domain matches" do
+    let!(:eligiblity_domain) do
+      create :eligibility_domain, domain: work_history_one.contact_email_domain
+    end
+
+    it "sets eligibility domain on work history that matches" do
+      call
+
+      expect(work_history_one.reload.eligibility_domain).to eq(
+        eligiblity_domain,
+      )
+      expect(work_history_two.reload.eligibility_domain).to be_nil
+    end
+
+    it "enqueues EligibilityDomains::ApplicationFormsCounterJob matched eligibility domain" do
+      expect { call }.to have_enqueued_job(
+        EligibilityDomains::ApplicationFormsCounterJob,
+      ).with(eligiblity_domain)
+    end
   end
 
   context "when region requires preliminary check" do

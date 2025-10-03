@@ -1,0 +1,16 @@
+<% title = "#{@eligibility_domain.application_forms_count} Applications using the domain #{@eligibility_domain.domain}" %>
+
+<% content_for :page_title, title %>
+<% content_for :back_link_url, assessor_interface_eligibility_domains_path %>
+
+<h1 class="govuk-heading-xl"><%= title %></h1>
+
+<% if @records.present? %>
+  <% @records.each do |application_form| %>
+    <%= render(ApplicationFormSearchResult::Component.new(application_form, current_staff:, unsuitable: @view_object.flag_as_unsuitable?(application_form), prioritised: application_form.assessment.prioritised?)) %>
+  <% end %>
+
+  <%= govuk_pagination(pagy: @pagy) %>
+<% else %>
+  <h2 class="govuk-heading-m">No applications using this domain</h2>
+<% end %>

@@ -59,6 +59,16 @@ module AssessorInterface
       end
     end
 
+    def applications
+      @view_object =
+        AssessorInterface::ApplicationFormsIndexViewObject.new(
+          params:,
+          session:,
+        )
+      @pagy, @records =
+        pagy(eligibility_domain.application_forms.order(submitted_at: :desc))
+    end
+
     def edit_archive
       @form = ArchiveEligibilityDomainForm.new(eligibility_domain:)
     end

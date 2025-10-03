@@ -5,7 +5,7 @@
 # Table name: eligibility_domains
 #
 #  id                      :bigint           not null, primary key
-#  application_forms_count :integer
+#  application_forms_count :integer          default(0)
 #  archived_at             :datetime
 #  domain                  :string
 #  created_at              :datetime         not null
@@ -26,5 +26,5 @@ class EligibilityDomain < ApplicationRecord
 
   has_many :timeline_events
   has_many :work_histories
-  has_many :application_forms, through: :work_histories
+  has_many :application_forms, -> { distinct }, through: :work_histories
 end
