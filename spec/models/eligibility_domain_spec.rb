@@ -21,14 +21,23 @@
 #
 #  fk_rails_...  (created_by_id => staff.id)
 #
-class EligibilityDomain < ApplicationRecord
-  belongs_to :created_by, class_name: "Staff"
 
-  has_many :timeline_events
-  has_many :work_histories
-  has_many :application_forms, -> { distinct }, through: :work_histories
+require "rails_helper"
 
-  def active?
-    archived_at.nil?
+RSpec.describe EligibilityDomain, type: :model do
+  let(:eligibility_domain) { build :eligibility_domain }
+
+  describe "#active?" do
+    subject(:active?) { eligibility_domain.active? }
+
+    context "when no archived_at is set on the record" do
+      it { is_expected.to be true }
+    end
+
+    context "when archived_at is set on the record" do
+      before { eligibility_domain.archived_at = Time.current }
+
+      it { is_expected.to be false }
+    end
   end
 end

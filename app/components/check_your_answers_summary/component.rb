@@ -102,7 +102,10 @@ module CheckYourAnswersSummary
           value.to_s
         end
 
-      if field[:highlight]
+      if field[:error]
+        "<div class=\"govuk-form-group govuk-form-group--error\">" \
+          "<p class=\"govuk-error-message\">#{field[:error_message]}</p>#{html}</div>".html_safe
+      elsif field[:highlight]
         "<em class=\"app-highlight\">#{html}</em>".html_safe
       else
         html

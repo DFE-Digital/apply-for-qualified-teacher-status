@@ -143,4 +143,8 @@ class WorkHistory < ApplicationRecord
   def country_code_england?
     CountryCode.england?(country_code)
   end
+
+  def activate_eligibility_domain_concern?
+    eligibility_domain.present? && eligibility_domain.active?
+  end
 end
