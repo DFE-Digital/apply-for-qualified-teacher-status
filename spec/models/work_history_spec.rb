@@ -339,4 +339,30 @@ RSpec.describe WorkHistory, type: :model do
       it { is_expected.to be false }
     end
   end
+
+  describe "#activate_eligibility_domain_concern?" do
+    subject(:activate_eligibility_domain_concern?) do
+      work_history.activate_eligibility_domain_concern?
+    end
+
+    context "when work history has no linked eligibility domain" do
+      it { is_expected.to be false }
+    end
+
+    context "when work history has a linked eligibility domain" do
+      let(:eligibility_domain) { create :eligibility_domain }
+
+      before { work_history.update!(eligibility_domain:) }
+
+      it { is_expected.to be true }
+
+      context "with the linked eligibility domain archived" do
+        let(:eligibility_domain) do
+          create :eligibility_domain, archived_at: Time.current
+        end
+
+        it { is_expected.to be false }
+      end
+    end
+  end
 end

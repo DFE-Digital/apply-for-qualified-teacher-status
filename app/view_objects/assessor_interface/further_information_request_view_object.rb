@@ -167,7 +167,7 @@ class AssessorInterface::FurtherInformationRequestViewObject
 
     domain = EmailAddress.new(item.contact_email).host_name
 
-    EligibilityDomain.exists?(domain:)
+    EligibilityDomain.exists?(domain:, archived_at: nil)
   end
 
   def item_heading(item)
