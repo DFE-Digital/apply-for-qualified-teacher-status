@@ -36,12 +36,26 @@
 
     summary_list.with_row do |row|
       row.with_key { "Certificate document" }
-      row.with_value { document_link_to(@qualification.certificate_document, translated: @qualification.certificate_document.translated_uploads.any?) }
+      row.with_value { document_link_to(@qualification.certificate_document) }
+    end
+
+    if @qualification.certificate_document.translated_uploads.any?
+      summary_list.with_row do |row|
+        row.with_key { "Certificate document translation" }
+        row.with_value { document_link_to(@qualification.certificate_document, translated: true) }
+      end
     end
 
     summary_list.with_row do |row|
       row.with_key { "Transcript document" }
-      row.with_value { document_link_to(@qualification.transcript_document, translated: @qualification.transcript_document.translated_uploads.any?) }
+      row.with_value { document_link_to(@qualification.transcript_document) }
+    end
+
+    if @qualification.transcript_document.translated_uploads.any?
+      summary_list.with_row do |row|
+        row.with_key { "Transcript document translation" }
+        row.with_value { document_link_to(@qualification.transcript_document, translated: true) }
+      end
     end
 
     summary_list.with_row do |row|
