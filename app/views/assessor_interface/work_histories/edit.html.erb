@@ -11,7 +11,7 @@
     <%= govuk_notification_banner(title_text: "Important") do |notification_banner| %>
       <% notification_banner.with_heading(text: "Email domain requirements apply to this application") %>
 
-      <p class="govuk-body">Any updated referee email addresses must use the school’s domain, for example, name@school.edu.</p>
+      <p class="govuk-body">Any updated referee email addresses must use the school’s domain, for example, name@school.edu. You should also confirm the domain has not been flagged with eligibility concerns.</p>
     <% end %>
   <% end %>
 
@@ -19,7 +19,7 @@
 
   <% if FeatureFlags::FeatureFlag.active?(:email_domains_for_referees) && !@application_form.requires_private_email_for_referee? %>
     <%= govuk_inset_text do %>
-      <p>This application was submitted before the email domain requirements changed. Any updated referee email addresses do not need to meet the new requirements.</p>
+      <p>This application was submitted before the email domain requirements changed. Any updated referee email addresses do not need to meet the new requirements. However, you should check if the email domain has been flagged for eligibility concerns.</p>
     <% end %>
   <% end %>
 

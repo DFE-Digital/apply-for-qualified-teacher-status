@@ -52,6 +52,8 @@
       },
       contact_email: {
         title: "Reference contact’s email address",
+        error: @view_object.work_history.activate_eligibility_domain_concern?,
+        error_message: "This email domain has been flagged with eligibility concerns",
       },
     },
     changeable: false,
