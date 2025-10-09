@@ -22,6 +22,7 @@
 #
 #  fk_rails_...  (application_form_id => application_forms.id)
 #  fk_rails_...  (author_id => staff.id)
+#  fk_rails_...  (eligibility_domain_id => eligibility_domains.id)
 #
 
 FactoryBot.define do

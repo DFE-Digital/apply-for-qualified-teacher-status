@@ -56,5 +56,11 @@ RSpec.describe AssessorInterface::CreateEligibilityDomainForm, type: :model do
         note_text: note,
       )
     end
+
+    it "enqueues EligibilityDomainMatchJob" do
+      expect { subject.save }.to have_enqueued_job(
+        ::EligibilityDomains::WorkHistoryMatcherJob,
+      ).with(EligibilityDomain.last)
+    end
   end
 end

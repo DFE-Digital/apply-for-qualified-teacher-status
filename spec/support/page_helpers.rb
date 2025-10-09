@@ -34,6 +34,16 @@ module PageHelpers
       PageObjects::AssessorInterface::ArchiveSuitabilityRecord.new
   end
 
+  def assessor_archive_eligibility_domain_page
+    @assessor_archive_eligibility_domain_page ||=
+      PageObjects::AssessorInterface::ArchiveEligibilityDomain.new
+  end
+
+  def assessor_reactivate_eligibility_domain_page
+    @assessor_reactivate_eligibility_domain_page ||=
+      PageObjects::AssessorInterface::ReactivateEligibilityDomain.new
+  end
+
   def assessor_assessment_recommendation_review_page
     @assessor_assessment_recommendation_review_page ||=
       PageObjects::AssessorInterface::AssessmentRecommendationReview.new
@@ -164,6 +174,11 @@ module PageHelpers
       PageObjects::AssessorInterface::CreateSuitabilityRecord.new
   end
 
+  def assessor_create_eligibility_domain_page
+    @assessor_create_eligibility_domain_page ||=
+      PageObjects::AssessorInterface::CreateEligibilityDomain.new
+  end
+
   def assessor_declare_assessment_recommendation_page
     @assessor_declare_assessment_recommendation_page ||=
       PageObjects::AssessorInterface::DeclareAssessmentRecommendation.new
@@ -187,6 +202,11 @@ module PageHelpers
   def assessor_edit_suitability_record_page
     @assessor_edit_suitability_record_page ||=
       PageObjects::AssessorInterface::EditSuitabilityRecord.new
+  end
+
+  def assessor_edit_eligibility_domain_page
+    @assessor_edit_eligibility_domain_page ||=
+      PageObjects::AssessorInterface::EditEligibilityDomain.new
   end
 
   def assessor_edit_work_history_page
@@ -341,6 +361,11 @@ module PageHelpers
   def assessor_suitability_records_page
     @assessor_suitability_records_page ||=
       PageObjects::AssessorInterface::SuitabilityRecords.new
+  end
+
+  def assessor_eligibility_domains_page
+    @assessor_eligibility_domains_page ||=
+      PageObjects::AssessorInterface::EligibilityDomains.new
   end
 
   def assessor_timeline_page

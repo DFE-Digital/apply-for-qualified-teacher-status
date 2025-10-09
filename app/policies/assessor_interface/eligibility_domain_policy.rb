@@ -5,6 +5,7 @@ class AssessorInterface::EligibilityDomainPolicy < ApplicationPolicy
     user.support_console_permission && !user.archived?
   end
 
+  alias_method :applications?, :index?
   alias_method :create?, :index?
   alias_method :edit?, :index?
   alias_method :update?, :index?

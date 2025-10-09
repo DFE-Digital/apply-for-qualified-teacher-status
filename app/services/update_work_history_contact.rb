@@ -32,6 +32,8 @@ class UpdateWorkHistoryContact
         },
       )
 
+      match_eligibility_domains_with_new_email_domain
+
       if reference_request.present?
         reference_request.regenerate_slug
 
@@ -78,6 +80,27 @@ class UpdateWorkHistoryContact
       old_value:,
       new_value:,
     )
+  end
+
+  def match_eligibility_domains_with_new_email_domain
+    existing_eligibility_domain = work_history.eligibility_domain
+
+    eligibility_domain =
+      EligibilityDomain.find_by(domain: work_history.contact_email_domain)
+
+    work_history.update!(eligibility_domain:)
+
+    if eligibility_domain
+      EligibilityDomains::ApplicationFormsCounterJob.set(
+        wait: 5.seconds,
+      ).perform_later(eligibility_domain)
+    end
+
+    if existing_eligibility_domain
+      EligibilityDomains::ApplicationFormsCounterJob.set(
+        wait: 5.seconds,
+      ).perform_later(existing_eligibility_domain)
+    end
   end
 
   class InvalidState < StandardError

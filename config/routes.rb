@@ -261,6 +261,8 @@ Rails.application.routes.draw do
 
     resources :eligibility_domains, path: "/eligibility-domains" do
       member do
+        get "applications", to: "eligibility_domains#applications"
+
         get "archive", to: "eligibility_domains#edit_archive"
         post "archive", to: "eligibility_domains#update_archive"
 
