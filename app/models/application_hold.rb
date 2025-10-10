@@ -22,5 +22,14 @@
 #  fk_rails_...  (application_form_id => application_forms.id)
 #
 class ApplicationHold < ApplicationRecord
+  enum :reason,
+      {
+        suitability_check: "suitability_check",
+        share_and_learn: "share_and_learn",
+        technical_panel: "technical_panel",
+        qualification_swap: "qualification_swap",
+        other: "other",
+      }
+
   belongs_to :application_form
 end
