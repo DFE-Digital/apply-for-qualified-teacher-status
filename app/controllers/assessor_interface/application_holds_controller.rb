@@ -42,12 +42,10 @@ module AssessorInterface
         )
 
       if @form.save
-        redirect_to [
-                      :confirmation,
-                      :assessor_interface,
+        redirect_to confirmation_assessor_interface_application_form_application_hold_path(
                       application_form,
-                      application_form.active_application_hold,
-                    ]
+                      application_form.reload.active_application_hold,
+                    )
       else
         render :new, status: :unprocessable_entity
       end

@@ -54,7 +54,9 @@ Rails.application.routes.draw do
 
       resources :notes, only: %i[new create]
 
-      resources :application_holds, only: %i[new create edit update] do
+      resources :application_holds,
+                path: "/application-holds",
+                only: %i[new create edit update] do
         collection do
           post "new-submit", to: "application_holds#new_submit"
           get "new-confirm", to: "application_holds#new_confirm"
