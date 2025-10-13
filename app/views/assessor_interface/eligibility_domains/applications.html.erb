@@ -7,7 +7,7 @@
 
 <% if @records.present? %>
   <% @records.each do |application_form| %>
-    <%= render(ApplicationFormSearchResult::Component.new(application_form, current_staff:, unsuitable: @view_object.flag_as_unsuitable?(application_form), prioritised: application_form.assessment.prioritised?)) %>
+    <%= render(ApplicationFormSearchResult::Component.new(application_form, current_staff:, unsuitable: @view_object.flag_as_unsuitable?(application_form), prioritised: application_form.assessment.prioritised?, on_hold: application_form.on_hold?)) %>
   <% end %>
 
   <%= govuk_pagination(pagy: @pagy) %>

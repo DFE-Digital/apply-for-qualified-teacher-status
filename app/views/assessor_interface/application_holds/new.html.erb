@@ -1,0 +1,22 @@
+<% title = "Why do you want to flag this application as on hold?" %>
+<% content_for :page_title, title_with_error_prefix(title, error: @form.errors.any?) %>
+<% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
+
+<%= form_with model: @form, url: [:new_submit, :assessor_interface, @application_form, :application_holds] do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <%= f.govuk_radio_buttons_fieldset :reason, legend: { text: title, tag: "h1", size: "l" } do %>
+    <% ApplicationHold.reasons.each do |_key, reason| %>
+      <% if reason == "other" %>
+        <%= f.govuk_radio_button :reason, reason do %>
+          <div id="assessor-interface-create-application-hold-form-reason-comment-error"></div>
+          <%= f.govuk_text_area :reason_comment %>
+        <% end %>
+      <% else %>
+        <%= f.govuk_radio_button :reason, reason, link_errors: true %>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <%= render "shared/assessor_interface/continue_cancel_button", f: %>
+<% end %>

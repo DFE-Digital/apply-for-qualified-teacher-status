@@ -467,6 +467,14 @@ en:
           attributes:
             consent_method:
               inclusion: Tell us which method of consent is required for this qualification
+        assessor_interface/create_application_hold_form:
+          attributes:
+            application_form:
+              invalid: Application is already on hold
+            reason:
+              blank: Select why you want to flag this application as on hold
+            reason_comment:
+              blank: Enter the reason you want to flag this application as on hold
         assessor_interface/create_note_form:
           attributes:
             text:

@@ -10,12 +10,14 @@ RSpec.describe ApplicationFormSearchResult::Component, type: :component do
         current_staff:,
         unsuitable:,
         prioritised:,
+        on_hold:,
       ),
     )
   end
 
   let(:unsuitable) { false }
   let(:prioritised) { false }
+  let(:on_hold) { false }
 
   let(:application_form) do
     create(
@@ -57,6 +59,12 @@ RSpec.describe ApplicationFormSearchResult::Component, type: :component do
       let(:prioritised) { true }
 
       it { expect(subject).to eq("Prioritised") }
+    end
+
+    context "when on_hold true" do
+      let(:on_hold) { true }
+
+      it { expect(subject).to eq("On hold") }
     end
   end
 

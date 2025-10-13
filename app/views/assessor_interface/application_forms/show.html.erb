@@ -46,6 +46,19 @@
   </div>
 <% end %>
 
+<div class="govuk-!-margin-bottom-5">
+  <% if application_form.on_hold? %>
+    <p class="govuk-body">
+      <%= govuk_tag(text: "On hold", colour: "red") %>
+      <%= govuk_link_to "Remove on hold flag", edit_assessor_interface_application_form_application_hold_path(application_form, application_form.active_application_hold), class: "govuk-!-margin-left-2" %>
+    </p>
+  <% else %>
+    <p class="govuk-body">
+      <%= govuk_link_to "Flag application as on hold", new_assessor_interface_application_form_application_hold_path(application_form) %>
+    </p>
+  <% end %>
+</div>
+
 <%= render(ApplicationFormOverview::Component.new(
   application_form, current_staff:, highlight_email: @view_object.highlight_email?
 )) %>

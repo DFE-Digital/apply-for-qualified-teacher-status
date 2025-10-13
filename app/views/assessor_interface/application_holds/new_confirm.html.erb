@@ -1,0 +1,25 @@
+<% title = "Are you sure you want to flag  this application as on hold?" %>
+<% content_for :page_title, title %>
+<% content_for :back_link_url, new_assessor_interface_application_form_application_hold_path(@application_form) %>
+
+<%= form_with model: @form, url: [:assessor_interface, @application_form, :application_holds] do |f| %>
+  <%= f.govuk_error_summary %>
+  <%= f.hidden_field :reason %>
+  <%= f.hidden_field :reason_comment %>
+
+  <h1 class="govuk-heading-xl"><%= title %></h1>
+
+  <p class="govuk-body">If you flag an application as on hold you can still view it, but you cannot progress it, request further information, or make decisions until the flag is removed.</p>
+
+  <h4 class="govuk-heading-s">Reason</h4>
+
+  <%= govuk_inset_text do %>
+    <% if @form.reason == "other" %>
+      <%= simple_format @form.reason_comment %>
+    <% else %>
+      <%= simple_format I18n.t("helpers.label.assessor_interface_create_application_hold_form.reason_options.#{@form.reason}")  %>
+    <% end %>
+  <% end %>
+
+  <%= render "shared/assessor_interface/continue_cancel_button", f: %>
+<% end %>
