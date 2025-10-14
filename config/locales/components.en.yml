@@ -61,6 +61,8 @@ en:
         action_required_by_changed: Action required by changed
         age_range_subjects_verified: Age range and subjects verified
         application_declined: Application declined
+        application_put_on_hold: Application put on hold
+        application_removed_hold: Application released
         assessment_section_recorded:
           not_preliminary:
             age_range_subjects: Age range subjects assessed

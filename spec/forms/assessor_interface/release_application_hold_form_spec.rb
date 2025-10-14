@@ -28,10 +28,21 @@ RSpec.describe AssessorInterface::ReleaseApplicationHoldForm, type: :model do
     let(:release_comment) { "Testing." }
 
     it "releases a hold for application hold" do
-      subject.save!
+      expect { subject.save }.to change(
+        application_hold,
+        :release_comment,
+      ).from(nil).to("Testing.")
 
       expect(application_hold.released_at).not_to be_nil
-      expect(application_hold.release_comment).to eq("Testing.")
+    end
+
+    it "records a timeline event" do
+      expect { subject.save }.to have_recorded_timeline_event(
+        :application_removed_hold,
+        creator: user,
+        application_form:,
+        application_hold:,
+      )
     end
   end
 end

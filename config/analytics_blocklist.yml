@@ -100,6 +100,7 @@
     - age_range_min
     - age_range_note
     - application_form_id
+    - application_hold_id
     - assessment_id
     - assessment_section_id
     - assignee_id

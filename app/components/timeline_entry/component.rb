@@ -160,6 +160,20 @@ module TimelineEntry
       }
     end
 
+    def application_put_on_hold_vars
+      {
+        reason:
+          I18n.t(
+            "helpers.label.assessor_interface_create_application_hold_form.reason_options.#{timeline_event.application_hold.reason}",
+          ),
+        reason_comment: timeline_event.application_hold.reason_comment,
+      }
+    end
+
+    def application_removed_hold_vars
+      { release_comment: timeline_event.application_hold.release_comment }
+    end
+
     def note_created_vars
       { text: timeline_event.note.text }
     end

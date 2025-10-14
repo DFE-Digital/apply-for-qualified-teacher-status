@@ -17,8 +17,19 @@ class AssessorInterface::ReleaseApplicationHoldForm
 
     ActiveRecord::Base.transaction do
       application_hold.update!(released_at: Time.current, release_comment:)
+
+      TimelineEvent.create!(
+        application_form:,
+        application_hold:,
+        event_type: "application_removed_hold",
+        creator: user,
+      )
     end
   end
+
+  private
+
+  delegate :application_form, to: :application_hold
 
   def application_hold_not_already_released
     if application_hold&.released_at.present?

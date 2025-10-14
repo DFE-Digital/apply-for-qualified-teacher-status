@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_08_132456) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_14_112124) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -645,7 +645,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_08_132456) do
     t.bigint "qualification_id"
     t.bigint "prioritisation_work_history_check_id"
     t.bigint "eligibility_domain_id"
+    t.bigint "application_hold_id"
     t.index ["application_form_id"], name: "index_timeline_events_on_application_form_id"
+    t.index ["application_hold_id"], name: "index_timeline_events_on_application_hold_id"
     t.index ["assessment_id"], name: "index_timeline_events_on_assessment_id"
     t.index ["assessment_section_id"], name: "index_timeline_events_on_assessment_section_id"
     t.index ["assignee_id"], name: "index_timeline_events_on_assignee_id"
@@ -745,6 +747,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_08_132456) do
   add_foreign_key "suitability_records", "staff", column: "archived_by_id"
   add_foreign_key "suitability_records", "staff", column: "created_by_id"
   add_foreign_key "timeline_events", "application_forms"
+  add_foreign_key "timeline_events", "application_holds"
   add_foreign_key "timeline_events", "assessment_sections"
   add_foreign_key "timeline_events", "assessments"
   add_foreign_key "timeline_events", "eligibility_domains"

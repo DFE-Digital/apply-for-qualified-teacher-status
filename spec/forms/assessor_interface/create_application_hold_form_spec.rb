@@ -39,5 +39,13 @@ RSpec.describe AssessorInterface::CreateApplicationHoldForm, type: :model do
       expect(application_form.reload.active_application_hold).not_to be_nil
       expect(application_form.active_application_hold.reason).to eq(reason)
     end
+
+    it "records a timeline event" do
+      expect { subject.save }.to have_recorded_timeline_event(
+        :application_put_on_hold,
+        creator: user,
+        application_form:,
+      )
+    end
   end
 end

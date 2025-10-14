@@ -18,9 +18,19 @@ class AssessorInterface::CreateApplicationHoldForm
     return false unless valid?
 
     ActiveRecord::Base.transaction do
-      ApplicationHold.create!(application_form:, reason:, reason_comment:)
+      application_hold =
+        ApplicationHold.create!(application_form:, reason:, reason_comment:)
+
+      TimelineEvent.create!(
+        application_form:,
+        application_hold:,
+        event_type: "application_put_on_hold",
+        creator: user,
+      )
     end
   end
+
+  private
 
   def application_form_not_already_on_hold
     errors.add(:application_form, :invalid) if application_form&.on_hold?

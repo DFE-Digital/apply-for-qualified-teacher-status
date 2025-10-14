@@ -20,6 +20,23 @@
       <% if (text = description_vars[:subjects_note]).present? %>
         <%= simple_format text %>
       <% end %>
+    <% elsif timeline_event.application_put_on_hold? %>
+      <p class="govuk-body">
+        Application flagged as <%= govuk_tag(text: "On hold", colour: "red") %>
+      </p>
+
+      <%= govuk_details(summary_text: "View details") do %>
+        <%= description_vars[:reason] %>
+        <p class="govuk-body govuk-hint"><%= description_vars[:reason_comment] %></p>
+      <% end %>
+    <% elsif timeline_event.application_removed_hold? %>
+      <p class="govuk-body">
+        <%= govuk_tag(text: "On hold", colour: "red") %> flag removed from application
+      </p>
+
+      <%= govuk_details(summary_text: "View details") do %>
+        <%= description_vars[:release_comment] %>
+      <% end %>
     <% elsif timeline_event.eligibility_domain_created? || timeline_event.eligibility_domain_archived? || timeline_event.eligibility_domain_reactivated? %>
       <p class="govuk-body"><%= description_vars[:text] %></p>
     <% elsif timeline_event.assessment_section_recorded? %>
