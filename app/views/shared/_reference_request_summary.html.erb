@@ -71,12 +71,12 @@
       value: reference_request.misconduct_response ? "Yes — #{reference_request.misconduct_comment}" : "No",
       href: misconduct_teacher_interface_reference_request_path(reference_request.slug),
     },
-    satisfied_response: {
+    satisfied_response: reference_request.excludes_suitability_and_concerns_question? ? nil : {
       title: t("helpers.legend.teacher_interface_reference_request_satisfied_response_form.satisfied_response"),
       value: reference_request.satisfied_response ? "Yes" : "No — #{reference_request.satisfied_comment}",
       href: satisfied_teacher_interface_reference_request_path(reference_request.slug),
     },
-    additional_information_response: {
+    additional_information_response: reference_request.excludes_suitability_and_concerns_question? ? nil : {
       title: t("helpers.label.teacher_interface_reference_request_additional_information_response_form.additional_information_response"),
       href: additional_information_teacher_interface_reference_request_path(reference_request.slug),
     },
