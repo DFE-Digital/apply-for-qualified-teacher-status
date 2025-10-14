@@ -81,7 +81,11 @@ class VerifyAssessment
 
     work_histories.map do |work_history|
       ReferenceRequest
-        .create!(assessment:, work_history:)
+        .create!(
+          assessment:,
+          work_history:,
+          excludes_suitability_and_concerns_question: true,
+        )
         .tap { |requestable| RequestRequestable.call(requestable:, user:) }
     end
   end
