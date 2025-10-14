@@ -39,6 +39,16 @@ module PageHelpers
       PageObjects::AssessorInterface::NewConfirmApplicationHold.new
   end
 
+  def assessor_edit_application_hold_page
+    @assessor_edit_application_hold_page ||=
+      PageObjects::AssessorInterface::EditApplicationHold.new
+  end
+
+  def assessor_edit_confirm_application_hold_page
+    @assessor_edit_confirm_application_hold_page ||=
+      PageObjects::AssessorInterface::EditConfirmApplicationHold.new
+  end
+
   def assessor_confirmation_application_hold_page
     @assessor_confirmation_application_hold_page ||=
       PageObjects::AssessorInterface::ConfirmationApplicationHold.new

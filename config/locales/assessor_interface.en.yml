@@ -475,6 +475,10 @@ en:
               blank: Select why you want to flag this application as on hold
             reason_comment:
               blank: Enter the reason you want to flag this application as on hold
+        assessor_interface/release_application_hold_form:
+          attributes:
+            release_comment:
+              blank: Enter the reason why you’re removing the on hold flag from this application
         assessor_interface/create_note_form:
           attributes:
             text:

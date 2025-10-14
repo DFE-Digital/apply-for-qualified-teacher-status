@@ -1,0 +1,20 @@
+<% title = "Are you sure you want to remove the on hold flag from this application?" %>
+<% content_for :page_title, title %>
+<% content_for :back_link_url, edit_assessor_interface_application_form_application_hold_path(@application_form, @application_hold) %>
+
+<%= form_with model: @form, url: [:assessor_interface, @application_form, @application_hold], method: :patch do |f| %>
+  <%= f.govuk_error_summary %>
+  <%= f.hidden_field :release_comment %>
+
+  <h1 class="govuk-heading-xl"><%= title %></h1>
+
+  <h4 class="govuk-heading-s">Reason</h4>
+
+  <%= govuk_inset_text do %>
+    <%= simple_format @form.release_comment %>
+  <% end %>
+
+  <%= f.govuk_submit "Confirm" do %>
+    <%= render "shared/assessor_interface/cancel_link" %>
+  <% end %>
+<% end %>

@@ -63,6 +63,7 @@ Rails.application.routes.draw do
         end
 
         member do
+          post "edit-submit", to: "application_holds#edit_submit"
           get "edit-confirm", to: "application_holds#edit_confirm"
           get "confirmation", to: "application_holds#confirmation"
         end

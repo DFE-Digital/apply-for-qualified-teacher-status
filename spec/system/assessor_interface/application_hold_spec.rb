@@ -27,10 +27,26 @@ RSpec.describe "Putting application on hold", type: :system do
 
     when_i_confirm_my_selection
     then_i_see_the(:assessor_confirmation_application_hold_page, reference:)
+    and_i_see_confirmation_of_application_on_hold
 
     when_i_go_to_application_overview
     then_i_see_the(:assessor_application_page, reference:)
     and_i_see_the_option_to_remove_on_hold_flag
+
+    when_i_click_to_remove_flag_on_hold_flag
+    then_i_see_the(:assessor_edit_application_hold_page, reference:)
+
+    when_i_comment_on_reason_to_release_hold
+    then_i_see_the(:assessor_edit_confirm_application_hold_page, reference:)
+    and_i_see_my_reason_for_releasing_hold
+
+    when_i_confirm_my_release_comment
+    then_i_see_the(:assessor_confirmation_application_hold_page, reference:)
+    and_i_see_confirmation_of_application_hold_being_removed
+
+    when_i_go_to_application_overview
+    then_i_see_the(:assessor_application_page, reference:)
+    and_i_see_the_option_to_flag_application_as_on_hold
   end
 
   it "putting application on hold with 'Other' as reason" do
@@ -48,6 +64,7 @@ RSpec.describe "Putting application on hold", type: :system do
 
     when_i_confirm_my_selection
     then_i_see_the(:assessor_confirmation_application_hold_page, reference:)
+    and_i_see_confirmation_of_application_on_hold
 
     when_i_go_to_application_overview
     then_i_see_the(:assessor_application_page, reference:)
@@ -62,6 +79,10 @@ RSpec.describe "Putting application on hold", type: :system do
 
   def when_i_click_to_flag_application_as_on_hold
     click_on "Flag application as on hold"
+  end
+
+  def when_i_click_to_remove_flag_on_hold_flag
+    click_on "Remove on hold flag"
   end
 
   def when_i_select_reason_for_hold
@@ -79,6 +100,12 @@ RSpec.describe "Putting application on hold", type: :system do
     assessor_new_application_hold_page.form.continue_button.click
   end
 
+  def when_i_comment_on_reason_to_release_hold
+    assessor_edit_application_hold_page.form.release_comment_textarea.fill_in with:
+      "Can be released."
+    assessor_edit_application_hold_page.form.continue_button.click
+  end
+
   def and_i_see_my_reason_for_hold
     expect(assessor_new_confirm_application_hold_page).to have_content(
       "The application is being taken to Suitability Panel (a suitability concern has been highlighted)",
@@ -91,8 +118,18 @@ RSpec.describe "Putting application on hold", type: :system do
     )
   end
 
+  def and_i_see_my_reason_for_releasing_hold
+    expect(assessor_edit_confirm_application_hold_page).to have_content(
+      "Can be released.",
+    )
+  end
+
   def when_i_confirm_my_selection
     assessor_new_confirm_application_hold_page.form.submit_button.click
+  end
+
+  def when_i_confirm_my_release_comment
+    assessor_edit_confirm_application_hold_page.form.submit_button.click
   end
 
   def when_i_go_to_application_overview
@@ -102,6 +139,24 @@ RSpec.describe "Putting application on hold", type: :system do
   def and_i_see_the_option_to_remove_on_hold_flag
     expect(assessor_application_page).to have_content("On hold")
     expect(assessor_application_page).to have_link("Remove on hold flag")
+  end
+
+  def and_i_see_the_option_to_flag_application_as_on_hold
+    expect(assessor_application_page).to have_link(
+      "Flag application as on hold",
+    )
+  end
+
+  def and_i_see_confirmation_of_application_on_hold
+    expect(assessor_confirmation_application_hold_page).to have_content(
+      "This application has been flagged as on hold",
+    )
+  end
+
+  def and_i_see_confirmation_of_application_hold_being_removed
+    expect(assessor_confirmation_application_hold_page).to have_content(
+      "The on hold flag has been removed from this application",
+    )
   end
 
   def application_form
