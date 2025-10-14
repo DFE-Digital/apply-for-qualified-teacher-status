@@ -4,40 +4,41 @@
 #
 # Table name: reference_requests
 #
-#  id                              :bigint           not null, primary key
-#  additional_information_response :text             default(""), not null
-#  children_comment                :text             default(""), not null
-#  children_response               :boolean
-#  contact_comment                 :text             default(""), not null
-#  contact_job                     :string           default(""), not null
-#  contact_name                    :string           default(""), not null
-#  contact_response                :boolean
-#  dates_comment                   :text             default(""), not null
-#  dates_response                  :boolean
-#  expired_at                      :datetime
-#  hours_comment                   :text             default(""), not null
-#  hours_response                  :boolean
-#  lessons_comment                 :text             default(""), not null
-#  lessons_response                :boolean
-#  misconduct_comment              :text             default(""), not null
-#  misconduct_response             :boolean
-#  received_at                     :datetime
-#  reports_comment                 :text             default(""), not null
-#  reports_response                :boolean
-#  requested_at                    :datetime
-#  review_note                     :string           default(""), not null
-#  review_passed                   :boolean
-#  reviewed_at                     :datetime
-#  satisfied_comment               :text             default(""), not null
-#  satisfied_response              :boolean
-#  slug                            :string           not null
-#  verified_at                     :datetime
-#  verify_note                     :text             default(""), not null
-#  verify_passed                   :boolean
-#  created_at                      :datetime         not null
-#  updated_at                      :datetime         not null
-#  assessment_id                   :bigint           not null
-#  work_history_id                 :bigint           not null
+#  id                                         :bigint           not null, primary key
+#  additional_information_response            :text             default(""), not null
+#  children_comment                           :text             default(""), not null
+#  children_response                          :boolean
+#  contact_comment                            :text             default(""), not null
+#  contact_job                                :string           default(""), not null
+#  contact_name                               :string           default(""), not null
+#  contact_response                           :boolean
+#  dates_comment                              :text             default(""), not null
+#  dates_response                             :boolean
+#  excludes_suitability_and_concerns_question :boolean          default(FALSE), not null
+#  expired_at                                 :datetime
+#  hours_comment                              :text             default(""), not null
+#  hours_response                             :boolean
+#  lessons_comment                            :text             default(""), not null
+#  lessons_response                           :boolean
+#  misconduct_comment                         :text             default(""), not null
+#  misconduct_response                        :boolean
+#  received_at                                :datetime
+#  reports_comment                            :text             default(""), not null
+#  reports_response                           :boolean
+#  requested_at                               :datetime
+#  review_note                                :string           default(""), not null
+#  review_passed                              :boolean
+#  reviewed_at                                :datetime
+#  satisfied_comment                          :text             default(""), not null
+#  satisfied_response                         :boolean
+#  slug                                       :string           not null
+#  verified_at                                :datetime
+#  verify_note                                :text             default(""), not null
+#  verify_passed                              :boolean
+#  created_at                                 :datetime         not null
+#  updated_at                                 :datetime         not null
+#  assessment_id                              :bigint           not null
+#  work_history_id                            :bigint           not null
 #
 # Indexes
 #
