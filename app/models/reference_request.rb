@@ -79,7 +79,9 @@ class ReferenceRequest < ApplicationRecord
     validates :lessons_response, inclusion: [true, false]
     validates :reports_response, inclusion: [true, false]
     validates :misconduct_response, inclusion: [true, false]
-    validates :satisfied_response, inclusion: [true, false]
+    validates :satisfied_response, 
+              inclusion: [true, false],
+              unless: :excludes_suitability_and_concerns_question?
   end
 
   def responses_given?
