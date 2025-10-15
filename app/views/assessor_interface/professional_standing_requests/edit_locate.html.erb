@@ -17,11 +17,13 @@
   </p>
 
   <%= f.govuk_check_boxes_fieldset :received, multiple: false, legend: nil do %>
-    <%= f.govuk_check_box :received, true, false, multiple: false, link_errors: true,
+    <%= f.govuk_check_box :received, true, false, multiple: false, link_errors: true, disabled: @application_form.on_hold?,
                           label: { text: "The letter of professional standing has been received.", size: "s" } %>
   <% end %>
 
-  <%= f.govuk_text_area :location_note, label: { text: "Where to find the response", size: "m" }, hint: nil %>
+  <%= f.govuk_text_area :location_note, label: { text: "Where to find the response", size: "m" }, hint: nil, disabled: @application_form.on_hold? %>
 
-  <%= render "shared/assessor_interface/continue_cancel_button", f: %>
+  <%= f.govuk_submit disabled: @application_form.on_hold? do %>
+    <%= render "shared/assessor_interface/cancel_link" %>
+  <% end %>
 <% end %>

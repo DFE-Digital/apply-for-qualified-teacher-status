@@ -20,6 +20,7 @@ class AssessorInterface::FurtherInformationRequestViewObject
   end
 
   delegate :application_form, :assessment, to: :further_information_request
+  delegate :on_hold?, to: :application_form
 
   def title
     key =
@@ -112,6 +113,8 @@ class AssessorInterface::FurtherInformationRequestViewObject
   end
 
   def can_update?
+    return false if on_hold?
+
     further_information_request.review_passed.nil? ||
       (
         assessment.request_further_information? &&

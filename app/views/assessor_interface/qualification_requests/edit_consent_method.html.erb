@@ -8,10 +8,13 @@
 
   <h1 class="govuk-heading-xl">Select consent method</h1>
 
-  <%= f.govuk_collection_radio_buttons :consent_method,
-                                       %i[signed_institution signed_ecctis unsigned none],
-                                       :itself,
-                                       legend: { text: legend }%>
+  <%= f.govuk_radio_buttons_fieldset :consent_method, legend: { text: legend }, disabled: @application_form.on_hold? do %>
+    <% %i[signed_institution signed_ecctis unsigned none].each do |consent_method| %>
+      <%= f.govuk_radio_button :consent_method, consent_method, link_errors: true, disabled: @application_form.on_hold? %>
+    <% end %>
+  <% end %>
 
-  <%= render "shared/assessor_interface/continue_cancel_button", f: %>
+  <%= f.govuk_submit disabled: @application_form.on_hold? do %>
+    <%= render "shared/assessor_interface/cancel_link" %>
+  <% end %>
 <% end %>

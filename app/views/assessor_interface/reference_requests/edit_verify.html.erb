@@ -91,13 +91,18 @@
     <p class="govuk-body">You must send this reference for review if any of the responses contain a comment.</p>
 
     <% if @reference_request.received? %>
-      <%= f.govuk_collection_radio_buttons :passed, %i[true false], :itself,
-                                           legend: { text: "Are you satisfied that this reference should count towards the applicant’s work experience?" } %>
+      <%= f.govuk_radio_buttons_fieldset :passed, legend: { text: "Are you satisfied that this reference should count towards the applicant’s work experience?" }, disabled: @application_form.on_hold? do %>
+        <%= f.govuk_radio_button :passed, :true, link_errors: true, disabled: @application_form.on_hold? %>
+        <%= f.govuk_radio_button :passed, :false, disabled: @application_form.on_hold? %>
+      <% end %>
     <% else %>
-      <%= f.govuk_collection_radio_buttons :passed, [OpenStruct.new(value: false, label: "Yes, send for review")], :value, :label,
-                                           legend: { text: "Do you want to send this reference for review?" } %>
+      <%= f.govuk_radio_buttons_fieldset :passed, legend: { text: "Do you want to send this reference for review?" }, disabled: @application_form.on_hold? do %>
+        <%= f.govuk_radio_button :passed, :false, link_errors: true, label: { text: "Yes, send for review" }, disabled: @application_form.on_hold? %>
+      <% end %>
     <% end %>
 
-    <%= render "shared/assessor_interface/continue_cancel_button", f: %>
+    <%= f.govuk_submit disabled: @application_form.on_hold? do %>
+      <%= render "shared/assessor_interface/cancel_link" %>
+    <% end %>
   <% end %>
 <% end %>
