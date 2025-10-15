@@ -4,6 +4,7 @@ module AssessorInterface
   class ApplicationHoldsController < BaseController
     before_action { authorize %i[assessor_interface application_hold] }
 
+    before_action :ensure_application_not_completed
     before_action :ensure_application_not_already_on_hold,
                   only: %i[new new_submit new_confirm create]
     before_action :ensure_application_not_already_released,
@@ -130,6 +131,14 @@ module AssessorInterface
       params.require(:assessor_interface_release_application_hold_form).permit(
         :release_comment,
       )
+    end
+
+    def ensure_application_not_completed
+      if application_form.completed_stage?
+        flash[:alert] = "Completed applications cannot be put on hold"
+
+        redirect_to assessor_interface_application_form_path(application_form)
+      end
     end
 
     def ensure_application_not_already_on_hold
