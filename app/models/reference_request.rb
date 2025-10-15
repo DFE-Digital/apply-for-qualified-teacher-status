@@ -83,7 +83,7 @@ class ReferenceRequest < ApplicationRecord
   end
 
   def responses_given?
-    [
+    responses = [
       contact_response,
       dates_response,
       hours_response,
@@ -91,8 +91,10 @@ class ReferenceRequest < ApplicationRecord
       lessons_response,
       reports_response,
       misconduct_response,
-      satisfied_response,
-    ].none?(&:nil?)
+    ]
+
+    responses << satisfied_response unless excludes_suitability_and_concerns_question?
+    responses.none?(&:nil?)
   end
 
   def should_send_reminder_email?(_name, number_of_reminders_sent)
