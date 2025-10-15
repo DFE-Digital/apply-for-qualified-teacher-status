@@ -79,7 +79,7 @@ class ReferenceRequest < ApplicationRecord
     validates :lessons_response, inclusion: [true, false]
     validates :reports_response, inclusion: [true, false]
     validates :misconduct_response, inclusion: [true, false]
-    validates :satisfied_response, 
+    validates :satisfied_response,
               inclusion: [true, false],
               unless: :excludes_suitability_and_concerns_question?
   end
@@ -95,7 +95,9 @@ class ReferenceRequest < ApplicationRecord
       misconduct_response,
     ]
 
-    responses << satisfied_response unless excludes_suitability_and_concerns_question?
+    unless excludes_suitability_and_concerns_question?
+      responses << satisfied_response
+    end
     responses.none?(&:nil?)
   end
 
