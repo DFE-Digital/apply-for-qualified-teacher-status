@@ -95,6 +95,8 @@ RSpec.describe TimelineEvent do
         action_required_by_changed: "action_required_by_changed",
         age_range_subjects_verified: "age_range_subjects_verified",
         application_declined: "application_declined",
+        application_put_on_hold: "application_put_on_hold",
+        application_removed_hold: "application_removed_hold",
         assessment_section_recorded: "assessment_section_recorded",
         assessor_assigned: "assessor_assigned",
         eligibility_domain_archived: "eligibility_domain_archived",
