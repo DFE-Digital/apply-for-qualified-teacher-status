@@ -17,7 +17,7 @@
 <%= form_with model: @form, url: dates_teacher_interface_reference_request_path do |f| %>
   <%= f.govuk_error_summary %>
 
-  <span class="govuk-caption-l">Question 1 of 7</span>
+  <span class="govuk-caption-l">Question 1 of <%= @reference_request.excludes_suitability_and_concerns_question? ? 6 : 7 %></span>
 
   <%= f.govuk_radio_buttons_fieldset :dates_response, legend: { tag: "h1", size: "l", text: title } do %>
     <%= f.govuk_radio_button :dates_response, :true, link_errors: true %>

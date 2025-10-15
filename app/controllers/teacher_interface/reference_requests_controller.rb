@@ -76,6 +76,7 @@ module TeacherInterface
     end
 
     def edit_dates
+      @reference_request = reference_request
       @work_history = reference_request.work_history
 
       @form =
@@ -103,6 +104,7 @@ module TeacherInterface
     end
 
     def edit_hours
+      @reference_request = reference_request
       @work_history = reference_request.work_history
 
       @form =
@@ -130,6 +132,7 @@ module TeacherInterface
     end
 
     def edit_children
+      @reference_request = reference_request
       @form =
         ReferenceRequestChildrenResponseForm.new(
           reference_request:,
@@ -153,6 +156,7 @@ module TeacherInterface
     end
 
     def edit_lessons
+      @reference_request = reference_request
       @form =
         ReferenceRequestLessonsResponseForm.new(
           reference_request:,
@@ -176,6 +180,7 @@ module TeacherInterface
     end
 
     def edit_reports
+      @reference_request = reference_request
       @form =
         ReferenceRequestReportsResponseForm.new(
           reference_request:,
@@ -199,6 +204,7 @@ module TeacherInterface
     end
 
     def edit_misconduct
+      @reference_request = reference_request
       @form =
         ReferenceRequestMisconductResponseForm.new(
           reference_request:,
