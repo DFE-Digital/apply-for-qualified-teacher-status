@@ -22,7 +22,7 @@
       <% end %>
     <% elsif timeline_event.application_put_on_hold? %>
       <p class="govuk-body">
-        Application flagged as <%= govuk_tag(text: "On hold", colour: "red") %>
+        Application flagged as <%= render StatusTag::Component.new("on_hold") %>
       </p>
 
       <%= govuk_details(summary_text: "View details") do %>
@@ -31,7 +31,7 @@
       <% end %>
     <% elsif timeline_event.application_removed_hold? %>
       <p class="govuk-body">
-        <%= govuk_tag(text: "On hold", colour: "red") %> flag removed from application
+        <%= render StatusTag::Component.new("on_hold") %> flag removed from application
       </p>
 
       <%= govuk_details(summary_text: "View details") do %>

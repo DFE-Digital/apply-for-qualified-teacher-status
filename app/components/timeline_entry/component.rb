@@ -164,7 +164,8 @@ module TimelineEntry
       {
         reason:
           I18n.t(
-            "helpers.label.assessor_interface_create_application_hold_form.reason_options.#{timeline_event.application_hold.reason}",
+            "helpers.label.assessor_interface_create_application_hold_form.reason_options." \
+              "#{timeline_event.application_hold.reason}",
           ),
         reason_comment: timeline_event.application_hold.reason_comment,
       }

@@ -42,7 +42,7 @@
 
 <% if @view_object.assessment.prioritised?  %>
   <div class="govuk-!-margin-bottom-5">
-    <%= govuk_tag(text: "Prioritised", colour: "purple") %>
+    <%= render StatusTag::Component.new("prioritised") %>
   </div>
 <% end %>
 
@@ -50,7 +50,7 @@
   <div class="govuk-!-margin-bottom-5">
     <% if application_form.on_hold? %>
       <p class="govuk-body">
-        <%= govuk_tag(text: "On hold", colour: "red") %>
+        <%= render StatusTag::Component.new("on_hold") %>
         <%= govuk_link_to "Remove on hold flag", edit_assessor_interface_application_form_application_hold_path(application_form, application_form.active_application_hold), class: "govuk-!-margin-left-2" %>
       </p>
     <% else %>

@@ -40,6 +40,7 @@ module StatusTag
       in_progress: "blue",
       invalid: "red",
       not_started: "grey",
+      on_hold: "red",
       overdue: "pink",
       overdue_consent: "pink",
       overdue_ecctis: "pink",

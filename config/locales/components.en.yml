@@ -18,6 +18,7 @@ en:
       in_progress: In progress
       invalid: Invalid
       not_started: Not started
+      on_hold: On hold
       overdue: Overdue
       overdue_consent: Overdue consent
       overdue_ecctis: Overdue Ecctis

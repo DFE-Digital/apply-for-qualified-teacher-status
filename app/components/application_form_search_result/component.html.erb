@@ -5,8 +5,8 @@
       <br />
 
       <%= govuk_tag(text: "Flagged for suitability", colour: "red") if unsuitable %>
-      <%= govuk_tag(text: "Prioritised", colour: "purple") if prioritised %>
-      <%= govuk_tag(text: "On hold", colour: "red") if on_hold %>
+      <%= render StatusTag::Component.new("prioritised") if prioritised %>
+      <%= render StatusTag::Component.new("on_hold") if on_hold %>
     <% end %>
   </h2>
 
