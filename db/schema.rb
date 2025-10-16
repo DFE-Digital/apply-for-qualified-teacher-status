@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_02_081623) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_14_112124) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -125,6 +125,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_02_081623) do
   create_table "application_forms_suitability_records", id: false, force: :cascade do |t|
     t.bigint "suitability_record_id", null: false
     t.bigint "application_form_id", null: false
+  end
+
+  create_table "application_holds", force: :cascade do |t|
+    t.datetime "released_at"
+    t.string "reason"
+    t.string "reason_comment"
+    t.string "release_comment"
+    t.bigint "application_form_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["application_form_id"], name: "index_application_holds_on_application_form_id"
   end
 
   create_table "assessment_sections", force: :cascade do |t|
@@ -634,7 +645,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_02_081623) do
     t.bigint "qualification_id"
     t.bigint "prioritisation_work_history_check_id"
     t.bigint "eligibility_domain_id"
+    t.bigint "application_hold_id"
     t.index ["application_form_id"], name: "index_timeline_events_on_application_form_id"
+    t.index ["application_hold_id"], name: "index_timeline_events_on_application_hold_id"
     t.index ["assessment_id"], name: "index_timeline_events_on_assessment_id"
     t.index ["assessment_section_id"], name: "index_timeline_events_on_assessment_section_id"
     t.index ["assignee_id"], name: "index_timeline_events_on_assignee_id"
@@ -704,6 +717,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_02_081623) do
   add_foreign_key "application_forms", "staff", column: "assessor_id"
   add_foreign_key "application_forms", "staff", column: "reviewer_id"
   add_foreign_key "application_forms", "teachers"
+  add_foreign_key "application_holds", "application_forms"
   add_foreign_key "assessment_sections", "assessments"
   add_foreign_key "assessments", "application_forms"
   add_foreign_key "consent_requests", "assessments"
@@ -733,6 +747,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_02_081623) do
   add_foreign_key "suitability_records", "staff", column: "archived_by_id"
   add_foreign_key "suitability_records", "staff", column: "created_by_id"
   add_foreign_key "timeline_events", "application_forms"
+  add_foreign_key "timeline_events", "application_holds"
   add_foreign_key "timeline_events", "assessment_sections"
   add_foreign_key "timeline_events", "assessments"
   add_foreign_key "timeline_events", "eligibility_domains"

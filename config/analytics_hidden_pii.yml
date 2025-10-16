@@ -9,6 +9,9 @@
     - passport_expiry_date
     - registration_number
     - trs_match
+  :application_holds:
+    - reason_comment
+    - release_comment
   :assessments:
     - recommendation_assessor_note
   :prioritisation_reference_requests:

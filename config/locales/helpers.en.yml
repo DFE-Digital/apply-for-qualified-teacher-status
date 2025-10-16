@@ -22,6 +22,8 @@ en:
         note: "Internal note: Briefly explain why you are archiving this record."
       assessor_interface_reactivate_eligibility_domain_form:
         note: "Internal note: Briefly explain why you are reactivating this record."
+      assessor_interface_release_application_hold_form:
+        release_comment: Briefly explain why you are removing the on hold flag from this application.
       assessor_interface_filter_form:
         reference: "Example: 210245"
       assessor_interface_suitability_record_form:
@@ -143,6 +145,16 @@ en:
           signed_institution: Institution’s custom consent document
           unsigned: Non-signed DfE consent document
           none: No consent required
+      assessor_interface_create_application_hold_form:
+        reason_comment: Briefly explain why you are flagging this application as on hold
+        reason_options:
+          suitability_check: The application is being taken to Suitability Panel (a suitability concern has been highlighted)
+          share_and_learn: The application is being taken to Share and Learn
+          technical_panel: The application is being taken to Technical Panel
+          qualification_swap: Qualification swaps - the applicant has not entered their initial teacher training as their first qualification
+          other: Other
+      assessor_interface_release_application_hold_form:
+        release_comment: Why do you want to remove the on hold flag from this application?
       assessor_interface_create_note_form:
         text: Add a note to this application
       assessor_interface_create_eligibility_domain_form:

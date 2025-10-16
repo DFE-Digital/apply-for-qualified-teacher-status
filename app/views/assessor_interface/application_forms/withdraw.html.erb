@@ -6,5 +6,7 @@
 <p class="govuk-body">This will require the applicant to reapply if they wish to receive QTS. The applicant will not be informed of the withdrawal.</p>
 
 <%= form_with url: [:assessor_interface, @application_form], method: :delete do |f| %>
-  <%= render "shared/assessor_interface/continue_cancel_button", f: %>
+  <%= f.govuk_submit disabled: @application_form.on_hold? do %>
+    <%= render "shared/assessor_interface/cancel_link" %>
+  <% end %>
 <% end %>

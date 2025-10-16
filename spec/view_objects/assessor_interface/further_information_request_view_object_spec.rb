@@ -508,6 +508,12 @@ RSpec.describe AssessorInterface::FurtherInformationRequestViewObject do
 
       it { is_expected.to be true }
 
+      context "with the application form on hold" do
+        before { create(:application_hold, application_form:) }
+
+        it { is_expected.to be false }
+      end
+
       context "with the further information request not being the latest request" do
         before do
           create :further_information_request,
@@ -526,6 +532,12 @@ RSpec.describe AssessorInterface::FurtherInformationRequestViewObject do
       end
 
       it { is_expected.to be true }
+
+      context "with the application form on hold" do
+        before { create(:application_hold, application_form:) }
+
+        it { is_expected.to be false }
+      end
     end
 
     context "when not passed and recommended" do
@@ -535,6 +547,12 @@ RSpec.describe AssessorInterface::FurtherInformationRequestViewObject do
       end
 
       it { is_expected.to be true }
+
+      context "with the application form on hold" do
+        before { create(:application_hold, application_form:) }
+
+        it { is_expected.to be false }
+      end
     end
 
     context "when passed and recommended" do

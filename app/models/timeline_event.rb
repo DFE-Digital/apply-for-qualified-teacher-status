@@ -24,6 +24,7 @@
 #  created_at                           :datetime         not null
 #  updated_at                           :datetime         not null
 #  application_form_id                  :bigint
+#  application_hold_id                  :bigint
 #  assessment_id                        :bigint
 #  assessment_section_id                :bigint
 #  assignee_id                          :bigint
@@ -38,6 +39,7 @@
 # Indexes
 #
 #  index_timeline_events_on_application_form_id                   (application_form_id)
+#  index_timeline_events_on_application_hold_id                   (application_hold_id)
 #  index_timeline_events_on_assessment_id                         (assessment_id)
 #  index_timeline_events_on_assessment_section_id                 (assessment_section_id)
 #  index_timeline_events_on_assignee_id                           (assignee_id)
@@ -51,6 +53,7 @@
 # Foreign Keys
 #
 #  fk_rails_...  (application_form_id => application_forms.id)
+#  fk_rails_...  (application_hold_id => application_holds.id)
 #  fk_rails_...  (assessment_id => assessments.id)
 #  fk_rails_...  (assessment_section_id => assessment_sections.id)
 #  fk_rails_...  (assignee_id => staff.id)
@@ -62,6 +65,7 @@
 #
 class TimelineEvent < ApplicationRecord
   belongs_to :application_form, optional: true
+  belongs_to :application_hold, optional: true
   belongs_to :assessment, optional: true
   belongs_to :assessment_section, optional: true
   belongs_to :assignee, class_name: "Staff", optional: true
@@ -78,6 +82,8 @@ class TimelineEvent < ApplicationRecord
          action_required_by_changed: "action_required_by_changed",
          age_range_subjects_verified: "age_range_subjects_verified",
          application_declined: "application_declined",
+         application_put_on_hold: "application_put_on_hold",
+         application_removed_hold: "application_removed_hold",
          assessment_section_recorded: "assessment_section_recorded",
          assessor_assigned: "assessor_assigned",
          email_sent: "email_sent",

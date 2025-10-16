@@ -23,6 +23,14 @@ RSpec.describe AssessorInterface::PrioritisationWorkHistoryCheckViewObject do
       it { is_expected.to be true }
     end
 
+    context "when the application form is on hold" do
+      before do
+        create :application_hold, application_form: assessment.application_form
+      end
+
+      it { is_expected.to be true }
+    end
+
     context "when the assessment has prioritisation decision already made" do
       before do
         assessment.update!(

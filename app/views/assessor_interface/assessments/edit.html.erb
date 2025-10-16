@@ -43,15 +43,18 @@
       <p>This application was submitted on <strong><%= @application_form.submitted_at.to_date.to_fs %></strong>.</p>
     </div>
 
-    <%= f.govuk_check_boxes_fieldset :confirmation, multiple: false, small: true, legend: nil do %>
-      <%= f.govuk_check_box :confirmation, true, false, link_errors: true, multiple: false, label: { size: "s" } %>
+    <%= f.govuk_check_boxes_fieldset :confirmation, multiple: false, small: true, legend: nil, disabled: @application_form.on_hold? do %>
+      <%= f.govuk_check_box :confirmation, true, false, link_errors: true, multiple: false, disabled: @application_form.on_hold?, label: { size: "s" } %>
     <% end %>
   <% end %>
 
-  <%= f.govuk_collection_radio_buttons :recommendation,
-                                       @assessment.available_recommendations,
-                                       :itself,
-                                       legend: { text: "You can:", size: "s" } %>
+  <%= f.govuk_radio_buttons_fieldset :recommendation, legend: { text: "You can:", size: "s" }, disabled: @application_form.on_hold? do %>
+    <% @assessment.available_recommendations.each do |recommendation| %>
+      <%= f.govuk_radio_button :recommendation, recommendation, link_errors: true, disabled: @application_form.on_hold? %>
+    <% end %>
+  <% end %>
 
-  <%= render "shared/assessor_interface/continue_cancel_button", f: %>
+  <%= f.govuk_submit disabled: @application_form.on_hold? do %>
+    <%= render "shared/assessor_interface/cancel_link" %>
+  <% end %>
 <% end %>

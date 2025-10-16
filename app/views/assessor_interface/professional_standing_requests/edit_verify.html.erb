@@ -1,6 +1,6 @@
 <% content_for :page_title, title_with_error_prefix("Record LoPS response", error: @form.errors.any?) %>
 <% content_for :back_link_url, assessor_interface_application_form_assessment_professional_standing_request_path %>
-<% can_update_verify_lops_request = @assessment.verify? && policy([:assessor_interface, @professional_standing_request]).update_verify? %>
+<% can_update_verify_lops_request = !@application_form.on_hold? && @assessment.verify? && policy([:assessor_interface, @professional_standing_request]).update_verify? %>
 
 <%= form_with model: @form, url: [:verify, :assessor_interface, @application_form, @assessment, :professional_standing_request] do |f| %>
   <%= f.govuk_error_summary %>

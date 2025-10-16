@@ -10,9 +10,11 @@
 
   <h2 class="govuk-heading-m"><%= qualification_title(@qualification_request.qualification) %></h2>
 
-  <%= f.govuk_check_boxes_fieldset :passed, multiple: false, legend: { text: "Confirm you have requested Ecctis verification for this qualification", size: "s" } do %>
-    <%= f.govuk_check_box :passed, true, false, multiple: false, link_errors: true, label: { text: "Ecctis verification has been requested." } %>
+  <%= f.govuk_check_boxes_fieldset :passed, multiple: false, legend: { text: "Confirm you have requested Ecctis verification for this qualification", size: "s" }, disabled: @application_form.on_hold? do %>
+    <%= f.govuk_check_box :passed, true, false, multiple: false, link_errors: true, label: { text: "Ecctis verification has been requested." }, disabled: @application_form.on_hold? %>
   <% end %>
 
-  <%= render "shared/assessor_interface/continue_cancel_button", f: %>
+  <%= f.govuk_submit disabled: @application_form.on_hold? do %>
+    <%= render "shared/assessor_interface/cancel_link" %>
+  <% end %>
 <% end %>

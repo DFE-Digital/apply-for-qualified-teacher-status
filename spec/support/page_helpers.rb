@@ -29,6 +29,31 @@ module PageHelpers
       PageObjects::AssessorInterface::Applications.new
   end
 
+  def assessor_new_application_hold_page
+    @assessor_new_application_hold_page ||=
+      PageObjects::AssessorInterface::NewApplicationHold.new
+  end
+
+  def assessor_new_confirm_application_hold_page
+    @assessor_new_confirm_application_hold_page ||=
+      PageObjects::AssessorInterface::NewConfirmApplicationHold.new
+  end
+
+  def assessor_edit_application_hold_page
+    @assessor_edit_application_hold_page ||=
+      PageObjects::AssessorInterface::EditApplicationHold.new
+  end
+
+  def assessor_edit_confirm_application_hold_page
+    @assessor_edit_confirm_application_hold_page ||=
+      PageObjects::AssessorInterface::EditConfirmApplicationHold.new
+  end
+
+  def assessor_confirmation_application_hold_page
+    @assessor_confirmation_application_hold_page ||=
+      PageObjects::AssessorInterface::ConfirmationApplicationHold.new
+  end
+
   def assessor_archive_suitability_record_page
     @assessor_archive_suitability_record_page ||=
       PageObjects::AssessorInterface::ArchiveSuitabilityRecord.new

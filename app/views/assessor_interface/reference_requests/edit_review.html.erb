@@ -30,12 +30,14 @@
     <% end %>
   <% end %>
 
-  <%= f.govuk_radio_buttons_fieldset :passed, legend: { text: "After review, does the response confirm that this reference is legitimate?", size: "s" } do %>
-    <%= f.govuk_radio_button :passed, :true, link_errors: true %>
-    <%= f.govuk_radio_button :passed, :false do %>
-      <%= f.govuk_text_area :note, label: { text: "Internal note: briefly explain why the reference should not be accepted." } %>
+  <%= f.govuk_radio_buttons_fieldset :passed, legend: { text: "After review, does the response confirm that this reference is legitimate?", size: "s" }, disabled: @application_form.on_hold? do %>
+    <%= f.govuk_radio_button :passed, :true, link_errors: true, disabled: @application_form.on_hold? %>
+    <%= f.govuk_radio_button :passed, :false, disabled: @application_form.on_hold? do %>
+      <%= f.govuk_text_area :note, label: { text: "Internal note: briefly explain why the reference should not be accepted." }, disabled: @application_form.on_hold? %>
     <% end %>
   <% end %>
 
-  <%= render "shared/assessor_interface/continue_cancel_button", f: %>
+  <%= f.govuk_submit disabled: @application_form.on_hold? do %>
+    <%= render "shared/assessor_interface/cancel_link" %>
+  <% end %>
 <% end %>

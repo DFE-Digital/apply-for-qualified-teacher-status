@@ -42,7 +42,22 @@
 
 <% if @view_object.assessment.prioritised?  %>
   <div class="govuk-!-margin-bottom-5">
-    <%= govuk_tag(text: "Prioritised", colour: "purple") %>
+    <%= render StatusTag::Component.new("prioritised") %>
+  </div>
+<% end %>
+
+<% unless @view_object.application_form.completed_stage? %>
+  <div class="govuk-!-margin-bottom-5">
+    <% if application_form.on_hold? %>
+      <p class="govuk-body">
+        <%= render StatusTag::Component.new("on_hold") %>
+        <%= govuk_link_to "Remove on hold flag", edit_assessor_interface_application_form_application_hold_path(application_form, application_form.active_application_hold), class: "govuk-!-margin-left-2" %>
+      </p>
+    <% else %>
+      <p class="govuk-body">
+        <%= govuk_link_to "Flag application as on hold", new_assessor_interface_application_form_application_hold_path(application_form) %>
+      </p>
+    <% end %>
   </div>
 <% end %>
 

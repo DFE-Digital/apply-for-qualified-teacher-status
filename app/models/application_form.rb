@@ -116,6 +116,10 @@ class ApplicationForm < ApplicationRecord
   has_many :work_histories, dependent: :destroy
   has_many :qualifications, dependent: :destroy
   has_many :timeline_events
+  has_many :application_holds
+  has_one :active_application_hold,
+          -> { where(released_at: nil) },
+          class_name: "ApplicationHold"
   has_one :country, through: :region
   has_one :trs_trn_request
   has_one :assessment
@@ -246,6 +250,10 @@ class ApplicationForm < ApplicationRecord
 
   def withdrawn?
     withdrawn_at.present?
+  end
+
+  def on_hold?
+    active_application_hold.present?
   end
 
   def to_param

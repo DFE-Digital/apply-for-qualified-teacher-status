@@ -27,6 +27,7 @@ module AssessorInterface
     delegate :application_form, :professional_standing_request, to: :assessment
     delegate :registration_number,
              :requires_preliminary_check,
+             :on_hold?,
              to: :application_form
     delegate :checks,
              :failure_reasons,
@@ -75,6 +76,7 @@ module AssessorInterface
     end
 
     def disable_form?
+      return true if on_hold?
       return true unless show_form?
       return true unless assessment.unknown?
 
