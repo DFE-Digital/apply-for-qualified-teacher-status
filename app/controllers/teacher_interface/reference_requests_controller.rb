@@ -213,21 +213,18 @@ module TeacherInterface
           misconduct_response_form_params.merge(reference_request:),
         )
 
-      if reference_request.excludes_suitability_and_concerns_question?
-        handle_application_form_section(
-          form: @form,
-          if_success_then_redirect:
-            edit_teacher_interface_reference_request_path,
-          if_failure_then_render: :edit_misconduct,
-        )
-      else
-        handle_application_form_section(
-          form: @form,
-          if_success_then_redirect:
-            satisfied_teacher_interface_reference_request_path,
-          if_failure_then_render: :edit_misconduct,
-        )
-      end
+      redirect_path =
+        if reference_request.excludes_suitability_and_concerns_question?
+          edit_teacher_interface_reference_request_path
+        else
+          satisfied_teacher_interface_reference_request_path
+        end
+
+      handle_application_form_section(
+        form: @form,
+        if_success_then_redirect: redirect_path,
+        if_failure_then_render: :edit_misconduct,
+      )
     end
 
     def edit_satisfied
