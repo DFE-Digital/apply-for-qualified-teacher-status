@@ -4,7 +4,7 @@
 <%= form_with model: @form, url: children_teacher_interface_reference_request_path do |f| %>
   <%= f.govuk_error_summary %>
 
-  <span class="govuk-caption-l">Question 3 of 7</span>
+  <span class="govuk-caption-l">Question 3 of <%= @reference_request.excludes_suitability_and_concerns_question? ? 6 : 7 %></span>
 
   <%= f.govuk_radio_buttons_fieldset :children_response, legend: { tag: "h1", size: "l" } do %>
     <%= f.govuk_radio_button :children_response, :true, link_errors: true %>
