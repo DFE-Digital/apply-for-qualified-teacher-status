@@ -126,16 +126,54 @@ RSpec.describe ReferenceRequest do
   describe "#responses_given?" do
     subject(:responses_given?) { reference_request.responses_given? }
 
-    context "when no responses given" do
-      let(:reference_request) { build(:reference_request) }
+    context "when excludes_suitability_and_concerns_question is true" do
+      context "when no responses given" do
+        let(:reference_request) do
+          build(
+            :reference_request,
+            excludes_suitability_and_concerns_question: true,
+          )
+        end
 
-      it { is_expected.to be false }
+        it { is_expected.to be false }
+      end
+
+      context "when all responses given" do
+        let(:reference_request) do
+          build(
+            :reference_request,
+            :with_responses,
+            excludes_suitability_and_concerns_question: true,
+          )
+        end
+
+        it { is_expected.to be true }
+      end
     end
 
-    context "when all responses given" do
-      let(:reference_request) { build(:reference_request, :with_responses) }
+    context "when excludes_suitability_and_concerns_question is false" do
+      context "when no responses given" do
+        let(:reference_request) do
+          build(
+            :reference_request,
+            excludes_suitability_and_concerns_question: false,
+          )
+        end
 
-      it { is_expected.to be true }
+        it { is_expected.to be false }
+      end
+
+      context "when all responses given" do
+        let(:reference_request) do
+          build(
+            :reference_request,
+            :with_responses,
+            excludes_suitability_and_concerns_question: false,
+          )
+        end
+
+        it { is_expected.to be true }
+      end
     end
   end
 
