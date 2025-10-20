@@ -5,7 +5,7 @@
 <%= form_with model: @form, url: [:new_submit, :assessor_interface, @application_form, :application_holds] do |f| %>
   <%= f.govuk_error_summary %>
 
-  <%= f.govuk_radio_buttons_fieldset :reason, legend: { text: title, tag: "h1", size: "l" } do %>
+  <%= f.govuk_radio_buttons_fieldset :reason, legend: { text: title, tag: "h1", size: "xl" } do %>
     <% ApplicationHold.reasons.each do |_key, reason| %>
       <% if reason == "other" %>
         <%= f.govuk_radio_button :reason, reason do %>
