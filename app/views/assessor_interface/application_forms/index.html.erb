@@ -75,6 +75,7 @@
     <section id="app-applications-filters-flags">
       <%= f.govuk_check_boxes_fieldset :flags, legend: { size: "s" }, multiple: false, small: true do %>
         <%= f.govuk_check_box :prioritised, :true, multiple: false, label: { text: @view_object.prioritised_filter_option_label }, checked: @view_object.filter_form.prioritised == "true" %>
+        <%= f.govuk_check_box :on_hold, :true, multiple: false, label: { text: @view_object.on_hold_filter_option_label }, checked: @view_object.filter_form.on_hold == "true" %>
       <% end %>
     </section>
 
@@ -90,7 +91,7 @@
   <% if (records = @view_object.application_forms_records).present? %>
     <ul class="app-search-results">
       <% records.each do |application_form| %>
-        <%= render(ApplicationFormSearchResult::Component.new(application_form, current_staff:, unsuitable: @view_object.flag_as_unsuitable?(application_form), prioritised: application_form.assessment.prioritised?)) %>
+        <%= render(ApplicationFormSearchResult::Component.new(application_form, current_staff:, unsuitable: @view_object.flag_as_unsuitable?(application_form), prioritised: application_form.assessment.prioritised?, on_hold: application_form.on_hold?)) %>
       <% end %>
     </ul>
 

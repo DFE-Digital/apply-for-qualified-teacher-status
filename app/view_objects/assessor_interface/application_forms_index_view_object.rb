@@ -60,6 +60,17 @@ class AssessorInterface::ApplicationFormsIndexViewObject
     "#{readable_name} (#{prioritised_filter_counts})"
   end
 
+  def on_hold_filter_option_label
+    readable_name =
+      I18n.t(
+        :on_hold,
+        scope: %i[components status_tag],
+        default: :on_hold.to_s.humanize,
+      )
+
+    "#{readable_name} (#{on_hold_filter_counts})"
+  end
+
   def flag_as_unsuitable?(application_form)
     suitability_active? &&
       suitability_matcher.flag_as_unsuitable?(application_form:)
@@ -132,7 +143,7 @@ class AssessorInterface::ApplicationFormsIndexViewObject
   def application_forms_with_pagy
     @application_forms_with_pagy ||=
       pagy(
-        ::Filters::Prioritised.apply(
+        ::Filters::Flags.apply(
           scope:
             ::Filters::Stage.apply(
               scope: application_forms_without_counted_filters,
@@ -164,7 +175,7 @@ class AssessorInterface::ApplicationFormsIndexViewObject
 
   def prioritised_filter_counts
     @prioritised_filter_counts ||=
-      ::Filters::Prioritised.apply(
+      ::Filters::Flags.apply(
         scope:
           ::Filters::Stage.apply(
             scope: application_forms_without_counted_filters,
@@ -172,6 +183,20 @@ class AssessorInterface::ApplicationFormsIndexViewObject
           ),
         params: {
           prioritised: true,
+        },
+      ).count
+  end
+
+  def on_hold_filter_counts
+    @on_hold_filter_counts ||=
+      ::Filters::Flags.apply(
+        scope:
+          ::Filters::Stage.apply(
+            scope: application_forms_without_counted_filters,
+            params: filter_params,
+          ),
+        params: {
+          on_hold: true,
         },
       ).count
   end

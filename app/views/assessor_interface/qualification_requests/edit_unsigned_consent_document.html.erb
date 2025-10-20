@@ -26,9 +26,11 @@
     </section>
   </article>
 
-  <%= f.govuk_check_boxes_fieldset :generated, small: true, legend: nil do %>
-    <%= f.govuk_check_box :generated, true, false, link_errors: true, multiple: false, label: { text: "I have generated and downloaded the consent document." } %>
+  <%= f.govuk_check_boxes_fieldset :generated, small: true, legend: nil, disabled: @application_form.on_hold? do %>
+    <%= f.govuk_check_box :generated, true, false, link_errors: true, multiple: false, label: { text: "I have generated and downloaded the consent document." }, disabled: @application_form.on_hold? %>
   <% end %>
 
-  <%= render "shared/assessor_interface/continue_cancel_button", f: %>
+  <%= f.govuk_submit disabled: @application_form.on_hold? do %>
+    <%= render "shared/assessor_interface/cancel_link" %>
+  <% end %>
 <% end %>

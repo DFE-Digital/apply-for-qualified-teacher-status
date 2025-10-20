@@ -1,5 +1,5 @@
 <% title = "Record Ecctis response" %>
-<% can_update_verify_qualification_request = @assessment.verify? && policy([:assessor_interface, @qualification_request]).update_verify? %>
+<% can_update_verify_qualification_request = !@application_form.on_hold? && @assessment.verify? && policy([:assessor_interface, @qualification_request]).update_verify? %>
 
 <% content_for :page_title, title_with_error_prefix(title, error: @form.errors.any?) %>
 <% content_for :back_link_url, back_history_path(default: assessor_interface_application_form_path(@application_form)) %>

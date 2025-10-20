@@ -18,9 +18,11 @@
     <li>send the email to the relevant teaching authority</li>
   </ul>
 
-  <%= f.govuk_check_boxes_fieldset :passed, multiple: false, legend: { text: "Confirm you have requested verification for this LoPS", size: "s" } do %>
-    <%= f.govuk_check_box :passed, true, false, multiple: false, link_errors: true, label: { text: "Verification has been requested." } %>
+  <%= f.govuk_check_boxes_fieldset :passed, multiple: false, legend: { text: "Confirm you have requested verification for this LoPS", size: "s" }, disabled: @application_form.on_hold? do %>
+    <%= f.govuk_check_box :passed, true, false, multiple: false, link_errors: true, label: { text: "Verification has been requested." }, disabled: @application_form.on_hold? %>
   <% end %>
 
-  <%= render "shared/assessor_interface/continue_cancel_button", f: %>
+  <%= f.govuk_submit disabled: @application_form.on_hold? do %>
+    <%= render "shared/assessor_interface/cancel_link" %>
+  <% end %>
 <% end %>

@@ -66,6 +66,15 @@
     - written_statement_confirmation
     - written_statement_optional
     - written_statement_status
+  :application_holds:
+    - id
+    - released_at
+    - reason
+    - reason_comment
+    - release_comment
+    - application_form_id
+    - created_at
+    - updated_at
   :assessment_sections:
     - assessed_at
     - assessment_id

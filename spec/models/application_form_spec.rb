@@ -476,6 +476,26 @@ RSpec.describe ApplicationForm, type: :model do
     it { is_expected.to eq(application_form.reference) }
   end
 
+  describe "#on_hold?" do
+    subject(:on_hold?) { application_form.on_hold? }
+
+    it { is_expected.to be false }
+
+    context "with an active application hold" do
+      before { create :application_hold, application_form: }
+
+      it { is_expected.to be true }
+    end
+
+    context "with a released application hold" do
+      before do
+        create :application_hold, released_at: Time.current, application_form:
+      end
+
+      it { is_expected.to be false }
+    end
+  end
+
   describe "#created_under_old_regulations?" do
     subject(:created_under_old_regulations?) do
       application_form.created_under_old_regulations?

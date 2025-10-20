@@ -1,0 +1,21 @@
+<% title = if @application_hold.released_at.present?
+    "The on hold flag has been removed from this application"
+  else
+    "This application has been flagged as on hold"
+  end
+%>
+<% content_for :page_title, title %>
+<% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
+
+<h1 class="govuk-heading-xl"><%= title %></h1>
+
+<% if @application_hold.released_at.present? %>
+  <p class="govuk-body">You can flag this application on hold again from the application overview.</p>
+<% else %>
+  <p class="govuk-body">You can remove the on hold flag from the application overview.</p>
+<% end %>
+
+<div class="govuk-button-group">
+  <%= govuk_button_link_to "Back to application list", %i[assessor_interface application_forms] %>
+  <%= govuk_button_link_to "See application overview", [:assessor_interface, @application_form], secondary: true %>
+</div>

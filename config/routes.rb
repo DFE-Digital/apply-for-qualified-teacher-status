@@ -54,6 +54,21 @@ Rails.application.routes.draw do
 
       resources :notes, only: %i[new create]
 
+      resources :application_holds,
+                path: "/application-holds",
+                only: %i[new create edit update] do
+        collection do
+          post "new-submit", to: "application_holds#new_submit"
+          get "new-confirm", to: "application_holds#new_confirm"
+        end
+
+        member do
+          post "edit-submit", to: "application_holds#edit_submit"
+          get "edit-confirm", to: "application_holds#edit_confirm"
+          get "confirmation", to: "application_holds#confirmation"
+        end
+      end
+
       resources :work_histories, path: "/work-histories", only: %i[edit update]
 
       resources :qualifications, only: %i[edit update] do

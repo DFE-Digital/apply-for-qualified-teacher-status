@@ -10,7 +10,9 @@
 
   <p class="govuk-body">You have opted to send this Ecctis response for review.</p>
 
-  <%= f.govuk_text_area :note %>
+  <%= f.govuk_text_area :note, disabled: @application_form.on_hold? %>
 
-  <%= render "shared/assessor_interface/continue_cancel_button", f: %>
+  <%= f.govuk_submit disabled: @application_form.on_hold? do %>
+    <%= render "shared/assessor_interface/cancel_link" %>
+  <% end %>
 <% end %>
