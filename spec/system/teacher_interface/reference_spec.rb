@@ -4,11 +4,7 @@ require "rails_helper"
 
 RSpec.describe "Teacher reference", type: :system do
   context "when filling in a reference request with the suitability and concerns questions" do
-    before do
-      reference_request.update!(
-        excludes_suitability_and_concerns_question: false,
-      )
-    end
+    let(:excludes_suitability_and_concerns_question) { false }
 
     it "allows filling in the reference" do
       when_i_visit_the(:teacher_reference_requested_page, slug:)
@@ -56,11 +52,7 @@ RSpec.describe "Teacher reference", type: :system do
   end
 
   context "when filling in a reference request without the suitability and concerns questions" do
-    before do
-      reference_request.update!(
-        excludes_suitability_and_concerns_question: true,
-      )
-    end
+    let(:excludes_suitability_and_concerns_question) { true }
 
     it "allows filling in the reference" do
       when_i_visit_the(:teacher_reference_requested_page, slug:)
@@ -103,6 +95,7 @@ RSpec.describe "Teacher reference", type: :system do
       create(
         :reference_request,
         :requested,
+        excludes_suitability_and_concerns_question:,
         work_history:
           create(
             :work_history,
