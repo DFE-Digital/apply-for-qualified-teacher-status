@@ -162,6 +162,7 @@ RSpec.describe "Teacher reference", type: :system do
     summary_list = teacher_check_reference_request_answers_page.summary_list
 
     expect(summary_list).to be_visible
+    expect(summary_list.rows.count).to eq(10)
 
     expect(summary_list.rows[0].key.text).to eq("Your full name")
     expect(summary_list.rows[0].value.text).to eq("John Smith")
@@ -214,6 +215,7 @@ RSpec.describe "Teacher reference", type: :system do
     summary_list = teacher_check_reference_request_answers_page.summary_list
 
     expect(summary_list).to be_visible
+    expect(summary_list.rows.count).to eq 8
 
     expect(summary_list.rows[0].key.text).to eq("Your full name")
     expect(summary_list.rows[0].value.text).to eq("John Smith")
