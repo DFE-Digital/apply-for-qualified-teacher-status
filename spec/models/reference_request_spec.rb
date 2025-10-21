@@ -120,6 +120,26 @@ RSpec.describe ReferenceRequest do
           :additional_information_response,
         )
       end
+
+      context "when excludes_suitability_and_concerns_question is true" do
+        before do
+          allow(subject).to receive(
+            :excludes_suitability_and_concerns_question?,
+          ).and_return(true)
+        end
+
+        it { is_expected.to allow_value(nil).for(:satisfied_response) }
+      end
+
+      context "when excludes_suitability_and_concerns_question is false" do
+        before do
+          allow(subject).to receive(
+            :excludes_suitability_and_concerns_question?,
+          ).and_return(false)
+        end
+
+        it { is_expected.not_to allow_value(nil).for(:satisfied_response) }
+      end
     end
   end
 
