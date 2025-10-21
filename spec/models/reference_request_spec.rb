@@ -103,7 +103,14 @@ RSpec.describe ReferenceRequest do
 
   describe "validations" do
     context "when received" do
-      subject { build(:received_reference_request) }
+      subject do
+        build(
+          :received_reference_request,
+          excludes_suitability_and_concerns_question:,
+        )
+      end
+
+      let(:excludes_suitability_and_concerns_question) { false }
 
       it { is_expected.not_to allow_value(nil).for(:dates_response) }
 
@@ -115,6 +122,8 @@ RSpec.describe ReferenceRequest do
 
       it { is_expected.not_to allow_value(nil).for(:reports_response) }
 
+      it { is_expected.not_to allow_value(nil).for(:satisfied_response) }
+
       it do
         expect(subject).not_to validate_presence_of(
           :additional_information_response,
@@ -122,29 +131,51 @@ RSpec.describe ReferenceRequest do
       end
 
       context "when excludes_suitability_and_concerns_question is true" do
-        before do
-          allow(subject).to receive(
-            :excludes_suitability_and_concerns_question?,
-          ).and_return(true)
-        end
+        let(:excludes_suitability_and_concerns_question) { true }
 
         it { is_expected.to allow_value(nil).for(:satisfied_response) }
-      end
-
-      context "when excludes_suitability_and_concerns_question is false" do
-        before do
-          allow(subject).to receive(
-            :excludes_suitability_and_concerns_question?,
-          ).and_return(false)
-        end
-
-        it { is_expected.not_to allow_value(nil).for(:satisfied_response) }
       end
     end
   end
 
   describe "#responses_given?" do
     subject(:responses_given?) { reference_request.responses_given? }
+
+    context "when no responses given" do
+      let(:reference_request) do
+        build(
+          :reference_request,
+          excludes_suitability_and_concerns_question: false,
+        )
+      end
+
+      it { is_expected.to be false }
+    end
+
+    context "when all responses given" do
+      let(:reference_request) do
+        build(
+          :reference_request,
+          :with_responses,
+          excludes_suitability_and_concerns_question: false,
+        )
+      end
+
+      it { is_expected.to be true }
+    end
+
+    context "when all responses except satisfied_response" do
+      let(:reference_request) do
+        build(
+          :reference_request,
+          :with_responses,
+          satisfied_response: nil,
+          excludes_suitability_and_concerns_question: false,
+        )
+      end
+
+      it { is_expected.to be false }
+    end
 
     context "when excludes_suitability_and_concerns_question is true" do
       context "when no responses given" do
@@ -169,26 +200,14 @@ RSpec.describe ReferenceRequest do
 
         it { is_expected.to be true }
       end
-    end
 
-    context "when excludes_suitability_and_concerns_question is false" do
-      context "when no responses given" do
-        let(:reference_request) do
-          build(
-            :reference_request,
-            excludes_suitability_and_concerns_question: false,
-          )
-        end
-
-        it { is_expected.to be false }
-      end
-
-      context "when all responses given" do
+      context "when all responses except satisfied_response" do
         let(:reference_request) do
           build(
             :reference_request,
             :with_responses,
-            excludes_suitability_and_concerns_question: false,
+            satisfied_response: nil,
+            excludes_suitability_and_concerns_question: true,
           )
         end
 
