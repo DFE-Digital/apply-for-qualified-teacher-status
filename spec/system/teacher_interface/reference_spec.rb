@@ -4,98 +4,113 @@ require "rails_helper"
 
 RSpec.describe "Teacher reference", type: :system do
   context "when filling in a legacy reference request" do
-    before { given_there_is_a_legacy_reference_request }
+    before do
+      reference_request.update!(excludes_suitability_and_concerns_question: false)
+    end
 
     it "allows filling in the reference" do
-      when_i_visit_the(:teacher_reference_requested_page, slug: legacy_reference_request.slug)
-      then_i_see_the(:teacher_reference_requested_page, slug: legacy_reference_request.slug)
+      when_i_visit_the(:teacher_reference_requested_page, slug:)
+      then_i_see_the(:teacher_reference_requested_page, slug:)
       and_i_see_the_work_history_details
 
       when_i_click_start_now
-      then_i_see_the(:teacher_edit_reference_request_contact_page, slug: legacy_reference_request.slug)
+      then_i_see_the(:teacher_edit_reference_request_contact_page, slug:)
 
       when_i_choose_yes_for_contact
-      then_i_see_the(:teacher_edit_reference_request_dates_page, slug: legacy_reference_request.slug)
+      then_i_see_the(:teacher_edit_reference_request_dates_page, slug:)
 
       when_i_choose_yes_for_dates
-      then_i_see_the(:teacher_edit_reference_request_hours_page, slug: legacy_reference_request.slug)
+      then_i_see_the(:teacher_edit_reference_request_hours_page, slug:)
 
       when_i_choose_yes_for_hours
-      then_i_see_the(:teacher_edit_reference_request_children_page, slug: legacy_reference_request.slug)
+      then_i_see_the(:teacher_edit_reference_request_children_page, slug:)
 
       when_i_choose_yes_for_children
-      then_i_see_the(:teacher_edit_reference_request_lessons_page, slug: legacy_reference_request.slug)
+      then_i_see_the(:teacher_edit_reference_request_lessons_page, slug:)
 
       when_i_choose_yes_for_lessons
-      then_i_see_the(:teacher_edit_reference_request_reports_page, slug: legacy_reference_request.slug)
+      then_i_see_the(:teacher_edit_reference_request_reports_page, slug:)
 
       when_i_choose_yes_for_reports
-      then_i_see_the(:teacher_edit_reference_request_misconduct_page, slug: legacy_reference_request.slug)
+      then_i_see_the(:teacher_edit_reference_request_misconduct_page, slug:)
 
       when_i_choose_no_for_misconduct
-      then_i_see_the(:teacher_edit_reference_request_satisfied_page, slug: legacy_reference_request.slug)
+      then_i_see_the(:teacher_edit_reference_request_satisfied_page, slug:)
 
       when_i_choose_yes_for_satisfied
       then_i_see_the(
         :teacher_edit_reference_request_additional_information_page,
-        slug: legacy_reference_request.slug,
+        slug:,
       )
 
       when_i_fill_in_additional_information
-      then_i_see_the(:teacher_check_reference_request_answers_page, slug: legacy_reference_request.slug)
+      then_i_see_the(:teacher_check_reference_request_answers_page, slug:)
       and_i_see_the_legacy_reference_request_answers
 
       when_i_submit_the_response
-      then_i_see_the(:teacher_reference_received_page, slug: legacy_reference_request.slug)
+      then_i_see_the(:teacher_reference_received_page, slug:)
       and_i_see_the_confirmation_panel
     end
   end
   
   context "when filling in a new reference request" do
-    before { given_there_is_a_new_reference_request }
+    before do
+      reference_request.update!(excludes_suitability_and_concerns_question: true)
+    end
 
     it "allows filling in the reference" do
-      when_i_visit_the(:teacher_reference_requested_page, slug: new_reference_request.slug)
-      then_i_see_the(:teacher_reference_requested_page, slug: new_reference_request.slug)
+      when_i_visit_the(:teacher_reference_requested_page, slug:)
+      then_i_see_the(:teacher_reference_requested_page, slug:)
       and_i_see_the_work_history_details
 
       when_i_click_start_now
-      then_i_see_the(:teacher_edit_reference_request_contact_page, slug: new_reference_request.slug)
+      then_i_see_the(:teacher_edit_reference_request_contact_page, slug:)
 
       when_i_choose_yes_for_contact
-      then_i_see_the(:teacher_edit_reference_request_dates_page, slug: new_reference_request.slug)
+      then_i_see_the(:teacher_edit_reference_request_dates_page, slug:)
 
       when_i_choose_yes_for_dates
-      then_i_see_the(:teacher_edit_reference_request_hours_page, slug: new_reference_request.slug)
+      then_i_see_the(:teacher_edit_reference_request_hours_page, slug:)
 
       when_i_choose_yes_for_hours
-      then_i_see_the(:teacher_edit_reference_request_children_page, slug: new_reference_request.slug)
+      then_i_see_the(:teacher_edit_reference_request_children_page, slug:)
 
       when_i_choose_yes_for_children
-      then_i_see_the(:teacher_edit_reference_request_lessons_page, slug: new_reference_request.slug)
+      then_i_see_the(:teacher_edit_reference_request_lessons_page, slug:)
 
       when_i_choose_yes_for_lessons
-      then_i_see_the(:teacher_edit_reference_request_reports_page, slug: new_reference_request.slug)
+      then_i_see_the(:teacher_edit_reference_request_reports_page, slug:)
 
       when_i_choose_yes_for_reports
-      then_i_see_the(:teacher_edit_reference_request_misconduct_page, slug: new_reference_request.slug)
+      then_i_see_the(:teacher_edit_reference_request_misconduct_page, slug:)
 
       when_i_choose_no_for_misconduct
-      then_i_see_the(:teacher_check_reference_request_answers_page, slug: new_reference_request.slug)
+      then_i_see_the(:teacher_check_reference_request_answers_page, slug:)
       and_i_see_the_new_reference_request_answers
 
       when_i_submit_the_response
-      then_i_see_the(:teacher_reference_received_page, slug: new_reference_request.slug)
+      then_i_see_the(:teacher_reference_received_page, slug:)
       and_i_see_the_confirmation_panel
     end
   end
 
-  def given_there_is_a_legacy_reference_request
-    legacy_reference_request
-  end
-
-  def given_there_is_a_new_reference_request
-    new_reference_request
+  def reference_request
+    @reference_request ||=
+      create(
+        :reference_request,
+        :requested,
+        work_history:
+          create(
+            :work_history,
+            :completed,
+            contact_job: "Headteacher",
+            contact_name: "John Smith",
+            end_date: Date.new(2023, 1, 1),
+            hours_per_week: 30,
+            school_name: "School",
+            start_date: Date.new(2020, 1, 1),
+          ),
+      )
   end
 
   def and_i_see_the_work_history_details
@@ -248,43 +263,5 @@ RSpec.describe "Teacher reference", type: :system do
     expect(teacher_reference_received_page.confirmation_panel).to be_visible
   end
 
-  def legacy_reference_request
-    @legacy_reference_request ||=
-      create(
-        :reference_request,
-        :requested,
-        excludes_suitability_and_concerns_question: false,
-        work_history:
-          create(
-            :work_history,
-            :completed,
-            contact_job: "Headteacher",
-            contact_name: "John Smith",
-            end_date: Date.new(2023, 1, 1),
-            hours_per_week: 30,
-            school_name: "School",
-            start_date: Date.new(2020, 1, 1),
-          ),
-      )
-  end
-
-  def new_reference_request
-    @new_reference_request ||=
-      create(
-        :reference_request,
-        :requested,
-        excludes_suitability_and_concerns_question: true,
-        work_history:
-          create(
-            :work_history,
-            :completed,
-            contact_job: "Headteacher",
-            contact_name: "John Smith",
-            end_date: Date.new(2023, 1, 1),
-            hours_per_week: 30,
-            school_name: "School",
-            start_date: Date.new(2020, 1, 1),
-          ),
-      )
-  end
+  delegate :slug, to: :reference_request
 end
