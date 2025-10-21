@@ -32,7 +32,7 @@
       <p class="govuk-body">You’ll need to provide references for each role so we can verify your teaching work history.</p>
     <% end %>
 
-    <%= f.govuk_check_boxes_fieldset :meets_all_requirements, legend: { text: "Does this role meet the above requirements?" }, multiple: false do %>
+    <%= f.govuk_check_boxes_fieldset :meets_all_requirements, legend: { text: "Does your role meet these requirements?" }, multiple: false do %>
       <%= f.govuk_check_box :meets_all_requirements, 1, 0, multiple: false, link_errors: true, label: {
         text: "I confirm that the role I’m about to add meets all the above requirements.", size: "s"
       } %>
