@@ -3,9 +3,11 @@
 require "rails_helper"
 
 RSpec.describe "Teacher reference", type: :system do
-  context "when filling in a legacy reference request" do
+  context "when filling in a reference request with the suitability and concerns questions" do
     before do
-      reference_request.update!(excludes_suitability_and_concerns_question: false)
+      reference_request.update!(
+        excludes_suitability_and_concerns_question: false,
+      )
     end
 
     it "allows filling in the reference" do
@@ -45,17 +47,19 @@ RSpec.describe "Teacher reference", type: :system do
 
       when_i_fill_in_additional_information
       then_i_see_the(:teacher_check_reference_request_answers_page, slug:)
-      and_i_see_the_legacy_reference_request_answers
+      and_i_see_reference_request_answers_with_suitability_and_concerns_question
 
       when_i_submit_the_response
       then_i_see_the(:teacher_reference_received_page, slug:)
       and_i_see_the_confirmation_panel
     end
   end
-  
-  context "when filling in a new reference request" do
+
+  context "when filling in a reference request without the suitability and concerns questions" do
     before do
-      reference_request.update!(excludes_suitability_and_concerns_question: true)
+      reference_request.update!(
+        excludes_suitability_and_concerns_question: true,
+      )
     end
 
     it "allows filling in the reference" do
@@ -86,7 +90,7 @@ RSpec.describe "Teacher reference", type: :system do
 
       when_i_choose_no_for_misconduct
       then_i_see_the(:teacher_check_reference_request_answers_page, slug:)
-      and_i_see_the_new_reference_request_answers
+      and_i_see_reference_request_answers_without_suitability_and_concerns_question
 
       when_i_submit_the_response
       then_i_see_the(:teacher_reference_received_page, slug:)
@@ -161,7 +165,7 @@ RSpec.describe "Teacher reference", type: :system do
     )
   end
 
-  def and_i_see_the_legacy_reference_request_answers
+  def and_i_see_reference_request_answers_with_suitability_and_concerns_question
     summary_list = teacher_check_reference_request_answers_page.summary_list
 
     expect(summary_list).to be_visible
@@ -213,7 +217,7 @@ RSpec.describe "Teacher reference", type: :system do
     expect(summary_list.rows[9].value.text).to eq("Some information.")
   end
 
-  def and_i_see_the_new_reference_request_answers
+  def and_i_see_reference_request_answers_without_suitability_and_concerns_question
     summary_list = teacher_check_reference_request_answers_page.summary_list
 
     expect(summary_list).to be_visible
