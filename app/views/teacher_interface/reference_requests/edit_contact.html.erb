@@ -4,7 +4,7 @@
 <%= form_with model: @form, url: contact_teacher_interface_reference_request_path do |f| %>
   <%= f.govuk_error_summary %>
 
-  <h2 class="govuk-heading-l">About you</h2>
+  <h1 class="govuk-heading-l"><%= t(".title") %></h1>
 
   <p class="body-text">
     This screen shows the details that <%= application_form_full_name(@application_form) %> has provided about you.
@@ -14,7 +14,7 @@
   <%= render(CheckYourAnswersSummary::Component.new(
     id: "work-history",
     model: @work_history,
-    title: t(".title"),
+    title: "Your details",
     fields: {
       contact_name: {
         title: t("helpers.label.teacher_interface_reference_request_contact_response_form.contact_name")
