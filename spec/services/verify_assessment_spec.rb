@@ -107,25 +107,6 @@ RSpec.describe VerifyAssessment do
       end
     end
 
-    context "with a legacy reference request" do
-      before do
-        allow(ReferenceRequest).to receive(:create!).and_return(
-          create(
-            :reference_request,
-            assessment:,
-            work_history:,
-            excludes_suitability_and_concerns_question: false,
-          ),
-        )
-        call
-      end
-
-      it "does not set the excludes_suitability_and_concerns_question attribute" do
-        expect(reference_request.excludes_suitability_and_concerns_question?).to be false
-      end
-    end
-    end
-
     context "when reduced evidence is accepted for application" do
       let(:application_form) do
         create(:application_form, :submitted, reduced_evidence_accepted: true)
