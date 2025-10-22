@@ -98,7 +98,7 @@ class ReferenceRequest < ApplicationRecord
     unless excludes_suitability_and_concerns_question?
       responses << satisfied_response
     end
-    
+
     responses.none?(&:nil?)
   end
 
