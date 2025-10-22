@@ -4,40 +4,41 @@
 #
 # Table name: reference_requests
 #
-#  id                              :bigint           not null, primary key
-#  additional_information_response :text             default(""), not null
-#  children_comment                :text             default(""), not null
-#  children_response               :boolean
-#  contact_comment                 :text             default(""), not null
-#  contact_job                     :string           default(""), not null
-#  contact_name                    :string           default(""), not null
-#  contact_response                :boolean
-#  dates_comment                   :text             default(""), not null
-#  dates_response                  :boolean
-#  expired_at                      :datetime
-#  hours_comment                   :text             default(""), not null
-#  hours_response                  :boolean
-#  lessons_comment                 :text             default(""), not null
-#  lessons_response                :boolean
-#  misconduct_comment              :text             default(""), not null
-#  misconduct_response             :boolean
-#  received_at                     :datetime
-#  reports_comment                 :text             default(""), not null
-#  reports_response                :boolean
-#  requested_at                    :datetime
-#  review_note                     :string           default(""), not null
-#  review_passed                   :boolean
-#  reviewed_at                     :datetime
-#  satisfied_comment               :text             default(""), not null
-#  satisfied_response              :boolean
-#  slug                            :string           not null
-#  verified_at                     :datetime
-#  verify_note                     :text             default(""), not null
-#  verify_passed                   :boolean
-#  created_at                      :datetime         not null
-#  updated_at                      :datetime         not null
-#  assessment_id                   :bigint           not null
-#  work_history_id                 :bigint           not null
+#  id                                         :bigint           not null, primary key
+#  additional_information_response            :text             default(""), not null
+#  children_comment                           :text             default(""), not null
+#  children_response                          :boolean
+#  contact_comment                            :text             default(""), not null
+#  contact_job                                :string           default(""), not null
+#  contact_name                               :string           default(""), not null
+#  contact_response                           :boolean
+#  dates_comment                              :text             default(""), not null
+#  dates_response                             :boolean
+#  excludes_suitability_and_concerns_question :boolean          default(FALSE), not null
+#  expired_at                                 :datetime
+#  hours_comment                              :text             default(""), not null
+#  hours_response                             :boolean
+#  lessons_comment                            :text             default(""), not null
+#  lessons_response                           :boolean
+#  misconduct_comment                         :text             default(""), not null
+#  misconduct_response                        :boolean
+#  received_at                                :datetime
+#  reports_comment                            :text             default(""), not null
+#  reports_response                           :boolean
+#  requested_at                               :datetime
+#  review_note                                :string           default(""), not null
+#  review_passed                              :boolean
+#  reviewed_at                                :datetime
+#  satisfied_comment                          :text             default(""), not null
+#  satisfied_response                         :boolean
+#  slug                                       :string           not null
+#  verified_at                                :datetime
+#  verify_note                                :text             default(""), not null
+#  verify_passed                              :boolean
+#  created_at                                 :datetime         not null
+#  updated_at                                 :datetime         not null
+#  assessment_id                              :bigint           not null
+#  work_history_id                            :bigint           not null
 #
 # Indexes
 #
@@ -102,7 +103,14 @@ RSpec.describe ReferenceRequest do
 
   describe "validations" do
     context "when received" do
-      subject { build(:received_reference_request) }
+      subject do
+        build(
+          :received_reference_request,
+          excludes_suitability_and_concerns_question:,
+        )
+      end
+
+      let(:excludes_suitability_and_concerns_question) { false }
 
       it { is_expected.not_to allow_value(nil).for(:dates_response) }
 
@@ -114,10 +122,18 @@ RSpec.describe ReferenceRequest do
 
       it { is_expected.not_to allow_value(nil).for(:reports_response) }
 
+      it { is_expected.not_to allow_value(nil).for(:satisfied_response) }
+
       it do
         expect(subject).not_to validate_presence_of(
           :additional_information_response,
         )
+      end
+
+      context "when excludes_suitability_and_concerns_question is true" do
+        let(:excludes_suitability_and_concerns_question) { true }
+
+        it { is_expected.to allow_value(nil).for(:satisfied_response) }
       end
     end
   end
@@ -126,15 +142,77 @@ RSpec.describe ReferenceRequest do
     subject(:responses_given?) { reference_request.responses_given? }
 
     context "when no responses given" do
-      let(:reference_request) { build(:reference_request) }
+      let(:reference_request) do
+        build(
+          :reference_request,
+          excludes_suitability_and_concerns_question: false,
+        )
+      end
 
       it { is_expected.to be false }
     end
 
     context "when all responses given" do
-      let(:reference_request) { build(:reference_request, :with_responses) }
+      let(:reference_request) do
+        build(
+          :reference_request,
+          :with_responses,
+          excludes_suitability_and_concerns_question: false,
+        )
+      end
 
       it { is_expected.to be true }
+    end
+
+    context "when all responses except satisfied_response" do
+      let(:reference_request) do
+        build(
+          :reference_request,
+          :with_responses,
+          satisfied_response: nil,
+          excludes_suitability_and_concerns_question: false,
+        )
+      end
+
+      it { is_expected.to be false }
+    end
+
+    context "when excludes_suitability_and_concerns_question is true" do
+      context "when no responses given" do
+        let(:reference_request) do
+          build(
+            :reference_request,
+            excludes_suitability_and_concerns_question: true,
+          )
+        end
+
+        it { is_expected.to be false }
+      end
+
+      context "when all responses given" do
+        let(:reference_request) do
+          build(
+            :reference_request,
+            :with_responses,
+            excludes_suitability_and_concerns_question: true,
+          )
+        end
+
+        it { is_expected.to be true }
+      end
+
+      context "when all responses except satisfied_response" do
+        let(:reference_request) do
+          build(
+            :reference_request,
+            :with_responses,
+            satisfied_response: nil,
+            excludes_suitability_and_concerns_question: true,
+          )
+        end
+
+        it { is_expected.to be true }
+      end
     end
   end
 

@@ -171,8 +171,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_14_112124) do
     t.text "recommendation_assessor_note", default: "", null: false
     t.boolean "references_verified"
     t.boolean "scotland_full_registration"
-    t.boolean "unsigned_consent_document_generated", default: false, null: false
     t.text "qualifications_assessor_note", default: "", null: false
+    t.boolean "unsigned_consent_document_generated", default: false, null: false
     t.datetime "verification_started_at"
     t.integer "working_days_between_started_and_verification_started"
     t.integer "working_days_between_submitted_and_verification_started"
@@ -447,6 +447,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_14_112124) do
     t.boolean "verify_passed"
     t.text "verify_note", default: "", null: false
     t.datetime "verified_at"
+    t.boolean "excludes_suitability_and_concerns_question", default: false, null: false
     t.index ["assessment_id"], name: "index_reference_requests_on_assessment_id"
     t.index ["slug"], name: "index_reference_requests_on_slug", unique: true
     t.index ["work_history_id"], name: "index_reference_requests_on_work_history_id"

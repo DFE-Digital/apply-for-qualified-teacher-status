@@ -101,6 +101,9 @@ RSpec.describe VerifyAssessment do
 
       it "sets the attributes correctly" do
         expect(reference_request.requested?).to be true
+        expect(
+          reference_request.excludes_suitability_and_concerns_question?,
+        ).to be true
       end
     end
 
