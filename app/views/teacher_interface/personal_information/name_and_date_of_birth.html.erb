@@ -20,12 +20,5 @@
                          legend: { text: "Date of birth" },
                          hint: { text: "For example, 27 3 1980" } %>
 
-  <%= govuk_details(summary_text: "Why do we ask for your date of birth?") do %>
-    <p>
-      We ask for your date of birth because not all forms of identification include it.
-      It also helps with security in case we need to discuss your application with you.
-    </p>
-  <% end %>
-
   <%= render "shared/save_submit_buttons", f: %>
 <% end %>
