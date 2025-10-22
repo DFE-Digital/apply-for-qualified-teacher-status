@@ -538,7 +538,7 @@ en:
         teacher_interface/work_history_school_form:
           attributes:
             meets_all_requirements:
-              blank: The role must meet all the requirements
+              blank: Select if the role you’re about to add meets all the requirements
             school_name:
               blank: Enter the school name
             address_line1:

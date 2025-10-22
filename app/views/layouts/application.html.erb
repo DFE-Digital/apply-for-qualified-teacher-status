@@ -2,7 +2,7 @@
 <html lang="en" class="govuk-template govuk-template--rebranded">
   <head>
     <meta charset="utf-8">
-    <title><%= [yield(:page_title).presence, t(current_namespace, scope: %i[service name])].compact.join(' - ') %></title>
+    <title><%= [yield(:page_title).presence, t(current_namespace, scope: %i[service name])].compact.join(' - ') %> - Department for Education</title>
 
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>

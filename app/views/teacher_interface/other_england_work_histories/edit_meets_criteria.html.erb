@@ -26,13 +26,13 @@
   <%= f.govuk_collection_radio_buttons :has_other_england_work_history, %i[true false], :itself, legend: { tag: "h1", size: "l" }, hint: { text: hint } %>
 
   <%= govuk_details(summary_text: "Definitions of these roles and settings") do %>
-    <h3 class="govuk-heading-s">State school</h3>
+    <span class="govuk-heading-s">State school</span>
     <p>State schools in England are government-funded and provide free, compulsory education to children aged 5 to 18. They include academies, free schools, community schools, grammar schools, foundation schools, voluntary-aided and voluntary-controlled schools.</p>
 
-    <h3 class="govuk-heading-s">Independent school</h3>
+    <span class="govuk-heading-s">Independent school</span>
     <p>An independent school in England is a school that is not administered or funded by the government. Instead, they charge fees to attend. They are also known as private schools.</p>
 
-    <h3 class="govuk-heading-s">Tutor or lecturer</h3>
+    <span class="govuk-heading-s">Tutor or lecturer</span>
     <p>A tutor or lecturer is someone who teaches or supports students in a college or university, including delivering lessons, running tutorials, or providing academic support as part of a course or qualification.</p>
   <% end %>
 

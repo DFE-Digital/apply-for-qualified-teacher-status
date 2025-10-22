@@ -7,7 +7,7 @@
       }) do |footer| %>
   <% if current_teacher %>
     <% footer.with_navigation do %>
-      <h1 class="govuk-heading-s">Get help</h1>
+      <span class="govuk-heading-s">Get help</span>
       <p class="govuk-body">Email: <%= govuk_link_to t("service.email.enquiries"), main_app.email_path("enquiries") %></p>
       <p class="govuk-body">Please include as much detail as possible about your query.</p>
       <p class="govuk-body">We aim to respond to you within 5 working days.</p>

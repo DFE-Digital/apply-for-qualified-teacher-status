@@ -520,7 +520,7 @@ en:
         assessor_interface/prioritisation_work_history_check_form:
           attributes:
             passed:
-              inclusion: Select if the applicant’s work history meets the criteria for prioritisation
+              inclusion: Select yes if the applicant’s work history meets the criteria for prioritisation
             selected_failure_reasons:
               blank: Select the reason the applicant’s work history doesn’t meet the criteria for prioritisation
         assessor_interface/qualification_update_form:
