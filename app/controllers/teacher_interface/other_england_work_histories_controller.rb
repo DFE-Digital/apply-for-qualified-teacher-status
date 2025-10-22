@@ -93,7 +93,11 @@ module TeacherInterface
 
       @form =
         OtherEnglandWorkHistorySchoolForm.new(
-          school_form_params.merge(work_history: @work_history),
+          transform_date_attribute_values_whitespace(
+            school_form_params,
+            :start_date,
+            :end_date,
+          ).merge(work_history: @work_history),
         )
 
       handle_application_form_section(
@@ -218,7 +222,11 @@ module TeacherInterface
 
       @form =
         OtherEnglandWorkHistorySchoolForm.new(
-          school_form_params.merge(work_history:),
+          transform_date_attribute_values_whitespace(
+            school_form_params,
+            :start_date,
+            :end_date,
+          ).merge(work_history:),
         )
 
       handle_application_form_section(

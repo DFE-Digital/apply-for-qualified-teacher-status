@@ -42,12 +42,12 @@
 
   <%= f.govuk_text_field :job, label: { size: "m" } %>
 
-  <%= f.govuk_date_field :start_date, omit_day: true, maxlength_enabled: true %>
+  <%= f.govuk_date_field :start_date, omit_day: true %>
 
   <%= f.govuk_radio_buttons_fieldset :still_employed do %>
     <%= f.govuk_radio_button :still_employed, :true, link_errors: true %>
     <%= f.govuk_radio_button :still_employed, :false do %>
-      <%= f.govuk_date_field :end_date, omit_day: true, maxlength_enabled: true %>
+      <%= f.govuk_date_field :end_date, omit_day: true %>
     <% end %>
   <% end %>
 
