@@ -46,19 +46,16 @@
 
   <%= f.govuk_date_field :start_date,
                          omit_day: true,
-                         maxlength_enabled: true,
                          legend: { text: t(qualification.locale_key, scope: %i[application_form qualifications form fields start_date]) },
                          hint: { text: "For example, 09 2004" } %>
 
   <%= f.govuk_date_field :complete_date,
                          omit_day: true,
-                         maxlength_enabled: true,
                          legend: { text: t(qualification.locale_key, scope: %i[application_form qualifications form fields complete_date]) },
                          hint: { text: "For example, 09 2004" } %>
 
   <%= f.govuk_date_field :certificate_date,
                          omit_day: true,
-                         maxlength_enabled: true,
                          legend: { text: t(qualification.locale_key, scope: %i[application_form qualifications form fields certificate_date]) },
                          hint: { text: qualification.is_teaching? ? "Enter the month and year on the certificate you received when you were awarded this qualification. Do not enter the date of your teaching licence or registration.<br /><br />For example, 09 2004".html_safe : "For example, 09 2004" } %>
 

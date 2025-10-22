@@ -65,7 +65,7 @@
 
   <%= f.govuk_number_field :hours_per_week, width: 5, label: { size: "m" } %>
 
-  <%= f.govuk_date_field :start_date, omit_day: true, maxlength_enabled: true %>
+  <%= f.govuk_date_field :start_date, omit_day: true %>
   <%= f.govuk_check_box :start_date_is_estimate, 1, 0, multiple: false, link_errors: true, label: {
     text: "This is an estimate"
   } %>
@@ -73,7 +73,7 @@
   <%= f.govuk_radio_buttons_fieldset :still_employed do %>
     <%= f.govuk_radio_button :still_employed, :true, link_errors: true %>
     <%= f.govuk_radio_button :still_employed, :false do %>
-      <%= f.govuk_date_field :end_date, omit_day: true, maxlength_enabled: true %>
+      <%= f.govuk_date_field :end_date, omit_day: true %>
       <%= f.govuk_check_box :end_date_is_estimate, 1, 0, multiple: false, link_errors: true, label: {
         text: "This is an estimate"
       } %>
