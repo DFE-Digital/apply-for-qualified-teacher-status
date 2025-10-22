@@ -44,7 +44,10 @@ module TeacherInterface
     def update_expiry_date
       @form =
         PassportExpiryDateForm.new(
-          passport_expiry_date_form_params.merge(application_form:),
+          transform_date_attribute_values_whitespace(
+            passport_expiry_date_form_params,
+            :passport_expiry_date,
+          ).merge(application_form:),
         )
 
       handle_application_form_section(

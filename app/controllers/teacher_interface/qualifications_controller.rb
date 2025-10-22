@@ -51,7 +51,14 @@ module TeacherInterface
       qualification = Qualification.new(application_form:)
 
       @form =
-        QualificationForm.new(qualification_form_params.merge(qualification:))
+        QualificationForm.new(
+          transform_date_attribute_values_whitespace(
+            qualification_form_params,
+            :start_date,
+            :complete_date,
+            :certificate_date,
+          ).merge(qualification:),
+        )
 
       handle_application_form_section(
         form: @form,
@@ -174,7 +181,14 @@ module TeacherInterface
       @qualification = qualification
 
       @form =
-        QualificationForm.new(qualification_form_params.merge(qualification:))
+        QualificationForm.new(
+          transform_date_attribute_values_whitespace(
+            qualification_form_params,
+            :start_date,
+            :complete_date,
+            :certificate_date,
+          ).merge(qualification:),
+        )
 
       handle_application_form_section(
         form: @form,

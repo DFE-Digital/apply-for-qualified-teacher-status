@@ -28,7 +28,11 @@ module TeacherInterface
     validates :city, presence: true
     validates :country_location, presence: true
     validates :job, presence: true
-    validates :hours_per_week, presence: true, numericality: { only_integer: true }
+    validates :hours_per_week,
+              presence: true,
+              numericality: {
+                only_integer: true,
+              }
     validates :start_date, date: true
     validates :still_employed, inclusion: [true, false]
     validates :end_date, date: true, if: -> { still_employed == false }
