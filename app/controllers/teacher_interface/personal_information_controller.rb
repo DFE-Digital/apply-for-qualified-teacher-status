@@ -37,6 +37,7 @@ module TeacherInterface
           given_names: application_form.given_names,
           family_name: application_form.family_name,
           date_of_birth: application_form.date_of_birth,
+          national_insurance_number: application_form.national_insurance_number,
         )
     end
 
@@ -105,6 +106,9 @@ module TeacherInterface
         :given_names,
         :family_name,
         :date_of_birth,
+        :national_insurance_number_part_one,
+        :national_insurance_number_part_two,
+        :national_insurance_number_part_three,
       )
     end
 
