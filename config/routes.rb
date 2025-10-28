@@ -628,5 +628,9 @@ Rails.application.routes.draw do
   get "email/:key", to: "static#email", as: "email"
   get "english-language-guidance", to: "static#english_language_guidance"
 
+
+  get "/test-sentry", to: "test_sentry#error"
+
+
   root to: redirect("/eligibility")
 end
