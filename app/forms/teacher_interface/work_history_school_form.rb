@@ -15,7 +15,7 @@ module TeacherInterface
     attribute :postcode, :string
     attribute :school_website, :string
     attribute :job, :string
-    attribute :hours_per_week, :integer
+    attribute :hours_per_week
     attribute :start_date
     attribute :start_date_is_estimate, :boolean
     attribute :still_employed, :boolean
