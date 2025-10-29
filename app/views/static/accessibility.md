@@ -1,32 +1,32 @@
 <% content_for :page_title, 'Accessibility statement' %>
 
-#Accessibility statement for Apply for qualified teacher status (QTS) in England
+#Accessibility statement
 
-This accessibility statement is for Apply for qualified teacher status (QTS) in England.
+This accessibility statement applies to [Apply for QTS in England](https://apply-for-qts-in-england.education.gov.uk/eligibility/start).
 
-This service is run by the Teacher Services and the Teacher and Trainee Recruitment Division (TTRD) at the Department for Education (DfE). We want as many people as possible to be able to use the service. For example, that means users should be able to:
+This website is run by the Department for Education. We want as many people as possible to be able to use this website. For example, that means you should be able to:
 
 - change colours, contrast levels and fonts
-- zoom in up to 300% without the text spilling off the screen
-- navigate most of the service using just a keyboard
-- navigate most of the service using speech recognition software
-- listen to most of the content on the service using a screen reader (including the most recent versions of JAWS, NVDA and VoiceOver)
+- zoom in up to 400% without the text spilling off the screen
+- navigate most of the website using just a keyboard
+- navigate most of the website using speech recognition software
+- listen to most of the website using a screen reader (including the most recent versions of JAWS, NVDA and VoiceOver)
 
-We’ve also made the text on the service as simple as possible to understand.
+We've also made the website text as simple as possible to understand.
 
 [AbilityNet](https://mcmw.abilitynet.org.uk/) has advice on making your device easier to use if you have a disability.
 
 ## Feedback and contact information
 
-If you need information on this service in a different format like accessible PDF, large print, easy read, audio recording or braille, contact [professional.recognition@education.gov.uk](mailto:professional.recognition@education.gov.uk).
+If you need information on this website in a different format like accessible PDF, large print, easy read, audio recording or braille: 
+
+- email: [professional.recognition@education.gov.uk](mailto:professional.recognition@education.gov.uk).
 
 We’ll consider your request and get back to you in 5 days.
 
-This service was built following GOV.UK design guidelines, which meet the [Web Content Accessibility Guidelines (WCAG) 2.2 (level AAA)](https://www.w3.org/TR/WCAG22/).
+## Reporting accessibility problems with this website
 
-## Reporting accessibility problems with Apply for qualified teacher status (QTS) in England
-
-We’re always looking to improve the accessibility of this service. If you find any problems not listed on this page or think we’re not meeting accessibility requirements, contact [professional.recognition@education.gov.uk](mailto:professional.recognition@education.gov.uk). Include ‘Accessibility’ in the subject line of your email.
+We're always looking to improve the accessibility of this website. If you find any problems not listed on this page or think we're not meeting accessibility requirements, contact: [professional.recognition@education.gov.uk](mailto:professional.recognition@education.gov.uk).
 
 ## Enforcement procedure
 
