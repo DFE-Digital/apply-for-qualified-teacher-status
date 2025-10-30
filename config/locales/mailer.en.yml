@@ -12,7 +12,7 @@ en:
           0: Waiting on reference request for %{name}’s application for QTS
           1: Please complete reference request for %{name}’s application for QTS
       prioritisation_reference_requested:
-        subject: Confirming work history for a QTS application
+        subject: Confirming work experience in England for a QTS application
     teacher:
       application_awarded:
         subject: Your QTS application was successful
