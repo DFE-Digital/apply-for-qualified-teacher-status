@@ -3,8 +3,8 @@
 module TeacherInterface
   class AgeRangeForm < BaseForm
     attr_accessor :application_form
-    attribute :minimum, :integer
-    attribute :maximum, :integer
+    attribute :minimum
+    attribute :maximum
 
     validates :application_form, presence: true
     validates :minimum,

@@ -262,14 +262,14 @@ en:
           attributes:
             minimum:
               blank: Enter the lowest age you can teach
-              not_a_number: Enter the lowest age you can teach
-              not_an_integer: Enter the lowest age you can teach
+              not_a_number: Age you are qualified to teach from must be a whole number, like 11
+              not_an_integer: Age you are qualified to teach from must be a whole number, like 11
               greater_than_or_equal_to: Age from must be 4 or more
               less_than_or_equal_to: The minimum age cannot be higher than the maximum age
             maximum:
               blank: Enter the highest age you can teach
-              not_a_number: Enter the highest age you can teach
-              not_an_integer: Enter the highest age you can teach
+              not_a_number: Age you are qualified to teach to must be a whole number, like 16
+              not_an_integer: Age you are qualified to teach to must be a whole number, like 16
               greater_than_or_equal_to: The maximum age cannot be lower than the minimum age
         teacher_interface/alternative_name_form:
           attributes:
@@ -551,6 +551,8 @@ en:
               blank: Enter the job role
             hours_per_week:
               blank: Enter the hours per week
+              not_a_number: Hours worked a week must be a whole number, like 30
+              not_an_integer: Hours worked a week must be a whole number, like 30
             start_date:
               blank: Enter the start date in the format 3 1980
               invalid: Enter the start date in the format 3 1980

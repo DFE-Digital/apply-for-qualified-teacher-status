@@ -15,7 +15,7 @@ module TeacherInterface
     attribute :postcode, :string
     attribute :school_website, :string
     attribute :job, :string
-    attribute :hours_per_week, :integer
+    attribute :hours_per_week
     attribute :start_date
     attribute :start_date_is_estimate, :boolean
     attribute :still_employed, :boolean
@@ -28,7 +28,11 @@ module TeacherInterface
     validates :city, presence: true
     validates :country_location, presence: true
     validates :job, presence: true
-    validates :hours_per_week, presence: true
+    validates :hours_per_week,
+              presence: true,
+              numericality: {
+                only_integer: true,
+              }
     validates :start_date, date: true
     validates :still_employed, inclusion: [true, false]
     validates :end_date, date: true, if: -> { still_employed == false }

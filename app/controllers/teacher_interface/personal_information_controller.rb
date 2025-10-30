@@ -45,7 +45,10 @@ module TeacherInterface
         TeacherInterface::PersonalInformationViewObject.new(application_form:)
       @form =
         NameAndDateOfBirthForm.new(
-          name_and_date_of_birth_form_params.merge(application_form:),
+          transform_date_attribute_values_whitespace(
+            name_and_date_of_birth_form_params,
+            :date_of_birth,
+          ).merge(application_form:),
         )
 
       handle_application_form_section(

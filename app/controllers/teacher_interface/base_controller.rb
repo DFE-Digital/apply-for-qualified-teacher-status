@@ -50,4 +50,17 @@ class TeacherInterface::BaseController < ApplicationController
       redirect_unless_application_form_is_draft
     end
   end
+
+  def transform_date_attribute_values_whitespace(params, *date_attributes)
+    params
+      .to_h
+      .each_with_object({}) do |(key, value), object|
+        is_date_attribute =
+          date_attributes.any? do |date_attribute|
+            key.match?(date_attribute.to_s)
+          end
+
+        object[key] = (is_date_attribute ? value.gsub(/\s/, "") : value)
+      end
+  end
 end
