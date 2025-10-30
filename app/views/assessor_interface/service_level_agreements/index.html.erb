@@ -54,6 +54,7 @@
               row.with_cell(header: true, text: "Reference")
               row.with_cell(header: true, text: "Country/Region")
               row.with_cell(header: true, text: "Working days since submission")
+              row.with_cell(header: true, text: "Status")
             end
           end
 
@@ -68,6 +69,13 @@
                   else
                     govuk_tag(text: application_form.working_days_between_submitted_and_today, colour: @view_object.sla_start_prioritisation_checks_tag_colour(application_form) )
                   end
+                end
+                row.with_cell do
+                  render(
+                    StatusTag::Component.new(
+                      application_form.statuses
+                    ),
+                  )
                 end
               end
             end
