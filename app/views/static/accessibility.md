@@ -18,7 +18,7 @@ We've also made the website text as simple as possible to understand.
 
 ## Feedback and contact information
 
-If you need information on this website in a different format like accessible PDF, large print, easy read, audio recording or braille: 
+If you need information on this website in a different format like accessible PDF, large print, easy read, audio recording or braille:
 
 - email: [professional.recognition@education.gov.uk](mailto:professional.recognition@education.gov.uk).
 
@@ -30,18 +30,22 @@ We're always looking to improve the accessibility of this website. If you find a
 
 ## Enforcement procedure
 
-The Equality and Human Rights Commission (EHRC) is responsible for enforcing the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018. If you’re not happy with how we respond to your complaint, [contact the Equality Advisory and Support Service (EASS)](https://www.equalityadvisoryservice.com/).
+The Equality and Human Rights Commission (EHRC) is responsible for enforcing the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018 (the 'accessibility regulations'). If you're not happy with how we respond to your complaint, [contact the Equality Advisory and Support Service (EASS)](https://www.equalityadvisoryservice.com/).
 
-## Technical information about this service’s accessibility
+## Technical information about this website's accessibility
 
-The TTRD is committed to making Apply for qualified teacher status (QTS) in England accessible, in accordance with the [Public Sector Bodies (Websites and Mobile Applications) (No.2) Accessibility Regulations 2018](https://www.legislation.gov.uk/uksi/2018/952/contents/made).
+The Department for Education is committed to making its websites accessible, in accordance with the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018.
 
 ## Compliance status
 
-This service is fully compliant with the [Web Content Accessibility Guidelines (WCAG) 2.2 (level AAA)](https://www.w3.org/TR/WCAG22/).
+This website is fully compliant with the WCAG version 2.2 AA standard.
 
 ## Preparation of this accessibility statement
 
-This statement was prepared on 10 April 2024.
+This statement was prepared on 28 October 2025.
 
-This service was last tested on 4 April 2024. The test was carried out by the DfE Business Engagement and Accessibility Team.
+This website was last tested on 13 October 2025. The test was carried out by DesignOps - Internal DfE Team
+
+We used this approach to deciding on a sample of pages to test, Internal Audit
+
+Accessibility statement version: 20250409_10
