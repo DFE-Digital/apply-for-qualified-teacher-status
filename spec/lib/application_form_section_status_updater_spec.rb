@@ -44,6 +44,26 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
 
         it { is_expected.to eq("completed") }
       end
+
+      context "with all fields set and national insurance number" do
+        let(:application_form) do
+          create(
+            :application_form,
+            :with_personal_information,
+            national_insurance_number:,
+          )
+        end
+
+        let(:national_insurance_number) { "QQ123456A" }
+
+        it { is_expected.to eq("completed") }
+
+        context "when the national insurance number is invalid" do
+          let(:national_insurance_number) { "QQ1A" }
+
+          it { is_expected.to eq("in_progress") }
+        end
+      end
     end
 
     describe "identification document" do

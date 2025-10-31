@@ -365,6 +365,8 @@ en:
             family_name:
               blank_passport: Enter your surname as it appears on your passport
               blank_id_documents: Enter your surname as it appears on your ID documents
+            national_insurance_number:
+              invalid: Enter a UK National Insurance number in the correct format. If you don’t have one, remove your answer and select ‘Continue’
         teacher_interface/new_session_form:
           attributes:
             sign_in_or_sign_up:

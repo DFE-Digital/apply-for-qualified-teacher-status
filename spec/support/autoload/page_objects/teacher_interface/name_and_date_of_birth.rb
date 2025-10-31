@@ -19,6 +19,13 @@ module PageObjects
         element :date_of_birth_year_field,
                 "#teacher_interface_name_and_date_of_birth_form_date_of_birth_1i"
 
+        element :national_insurance_number_part_one_field,
+                "#teacher-interface-name-and-date-of-birth-form-national-insurance-number-part-one"
+        element :national_insurance_number_part_two_field,
+                "#teacher-interface-name-and-date-of-birth-form-national-insurance-number-part-two"
+        element :national_insurance_number_part_three_field,
+                "#teacher-interface-name-and-date-of-birth-form-national-insurance-number-part-three"
+
         element :continue_button, ".govuk-button:not(.govuk-button--secondary)"
       end
     end

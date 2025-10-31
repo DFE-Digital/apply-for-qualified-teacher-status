@@ -28,6 +28,7 @@
     - id
     - identification_document_status
     - includes_prioritisation_features
+    - national_insurance_number
     - needs_registration_number
     - needs_work_history
     - needs_written_statement

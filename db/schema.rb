@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_14_112124) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_22_155357) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -109,6 +109,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_14_112124) do
     t.bigint "eligibility_check_id"
     t.boolean "requires_private_email_for_referee", default: false, null: false
     t.boolean "started_with_private_email_for_referee", default: false, null: false
+    t.string "national_insurance_number"
     t.index ["action_required_by"], name: "index_application_forms_on_action_required_by"
     t.index ["assessor_id"], name: "index_application_forms_on_assessor_id"
     t.index ["eligibility_check_id"], name: "index_application_forms_on_eligibility_check_id"
@@ -171,8 +172,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_14_112124) do
     t.text "recommendation_assessor_note", default: "", null: false
     t.boolean "references_verified"
     t.boolean "scotland_full_registration"
-    t.text "qualifications_assessor_note", default: "", null: false
     t.boolean "unsigned_consent_document_generated", default: false, null: false
+    t.text "qualifications_assessor_note", default: "", null: false
     t.datetime "verification_started_at"
     t.integer "working_days_between_started_and_verification_started"
     t.integer "working_days_between_submitted_and_verification_started"

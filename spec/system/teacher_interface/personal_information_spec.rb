@@ -17,7 +17,7 @@ RSpec.describe "Teacher personal information", type: :system do
     when_i_click_the_personal_information_task
     then_i_see_the(:teacher_name_and_date_of_birth_page)
 
-    when_i_fill_in_my_name_and_date_of_birth
+    when_i_fill_in_my_name_and_date_of_birth_and_nino
     then_i_see_the(:teacher_alternative_name_page)
 
     when_i_dont_have_an_alternative_name
@@ -37,7 +37,7 @@ RSpec.describe "Teacher personal information", type: :system do
     when_i_click_the_personal_information_task
     then_i_see_the(:teacher_name_and_date_of_birth_page)
 
-    when_i_fill_in_my_name_and_date_of_birth
+    when_i_fill_in_my_name_and_date_of_birth_and_nino
     then_i_see_the(:teacher_alternative_name_page)
 
     when_i_have_an_alternative_name
@@ -71,7 +71,7 @@ RSpec.describe "Teacher personal information", type: :system do
     teacher_application_page.personal_information_task_item.click
   end
 
-  def when_i_fill_in_my_name_and_date_of_birth
+  def when_i_fill_in_my_name_and_date_of_birth_and_nino
     teacher_name_and_date_of_birth_page.form.given_names_field.fill_in with:
       "John"
     teacher_name_and_date_of_birth_page.form.family_name_field.fill_in with:
@@ -82,6 +82,12 @@ RSpec.describe "Teacher personal information", type: :system do
       "1"
     teacher_name_and_date_of_birth_page.form.date_of_birth_year_field.fill_in with:
       "1999"
+    teacher_name_and_date_of_birth_page.form.national_insurance_number_part_one_field.fill_in with:
+      "QQ"
+    teacher_name_and_date_of_birth_page.form.national_insurance_number_part_two_field.fill_in with:
+      "123456"
+    teacher_name_and_date_of_birth_page.form.national_insurance_number_part_three_field.fill_in with:
+      "A"
     teacher_name_and_date_of_birth_page.form.continue_button.click
   end
 
@@ -114,7 +120,7 @@ RSpec.describe "Teacher personal information", type: :system do
   def and_i_see_the_check_page_with_an_alternative_name
     expect(
       teacher_check_personal_information_page.summary_list.rows.count,
-    ).to eq(7)
+    ).to eq(8)
 
     given_names_row =
       teacher_check_personal_information_page.summary_list.rows[0]
@@ -154,12 +160,19 @@ RSpec.describe "Teacher personal information", type: :system do
     expect(name_change_document_row.value.text).to eq(
       "upload.pdf (opens in new tab)",
     )
+
+    national_insurance_number_row =
+      teacher_check_personal_information_page.summary_list.rows[7]
+    expect(national_insurance_number_row.key.text).to eq(
+      "National Insurance number",
+    )
+    expect(national_insurance_number_row.value.text).to eq("QQ123456A")
   end
 
   def and_i_see_the_check_page_without_an_alternative_name
     expect(
       teacher_check_personal_information_page.summary_list.rows.count,
-    ).to eq(4)
+    ).to eq(5)
 
     given_names_row =
       teacher_check_personal_information_page.summary_list.rows.first
@@ -182,6 +195,13 @@ RSpec.describe "Teacher personal information", type: :system do
       "Name appears differently on your passport or qualifications?",
     )
     expect(has_alternative_name_row.value.text).to eq("No")
+
+    national_insurance_number_row =
+      teacher_check_personal_information_page.summary_list.rows[4]
+    expect(national_insurance_number_row.key.text).to eq(
+      "National Insurance number",
+    )
+    expect(national_insurance_number_row.value.text).to eq("QQ123456A")
   end
 
   def when_i_continue_from_check_page
