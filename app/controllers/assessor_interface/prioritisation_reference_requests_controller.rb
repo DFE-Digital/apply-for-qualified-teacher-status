@@ -49,7 +49,10 @@ module AssessorInterface
     end
 
     def edit
-      @application_form = assessment.application_form
+      @view_object =
+        PrioritisationReferenceRequestViewObject.new(
+          prioritisation_reference_request:,
+        )
 
       @form =
         RequestableReviewForm.new(
@@ -93,7 +96,10 @@ module AssessorInterface
     end
 
     def edit_resend_email
-      @prioritisation_reference_requests = prioritisation_reference_request
+      @view_object =
+        PrioritisationReferenceRequestViewObject.new(
+          prioritisation_reference_request:,
+        )
     end
 
     def update_resend_email
@@ -109,7 +115,10 @@ module AssessorInterface
     end
 
     def resend_email_confirmation
-      @prioritisation_reference_request = prioritisation_reference_request
+      @view_object =
+        PrioritisationReferenceRequestViewObject.new(
+          prioritisation_reference_request:,
+        )
     end
 
     private

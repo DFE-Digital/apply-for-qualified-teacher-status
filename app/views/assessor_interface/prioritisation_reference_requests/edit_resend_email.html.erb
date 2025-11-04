@@ -1,17 +1,15 @@
 <% title = "Are you sure you want to resend the reference request?" %>
 <% content_for :page_title, title %>
-<% content_for :back_link_url, resend_email_assessor_interface_application_form_assessment_prioritisation_reference_request_path(@assessment.application_form, @assessment, @prioritisation_reference_request) %>
+<% content_for :back_link_url, edit_assessor_interface_application_form_assessment_prioritisation_reference_request_path(@view_object.application_form, @assessment, @prioritisation_reference_request) %>
 
-<% work_history = @prioritisation_reference_request.work_history %>
+<% work_history = @view_object.work_history %>
 
-<%= form_with model: @prioritisation_reference_request, url: [:resend_email, :assessor_interface, @assessment.application_form, @assessment, @prioritisation_reference_request], method: :post do |f| %>
+<%= form_with model: @prioritisation_reference_request, url: [:resend_email, :assessor_interface, @view_object.application_form, @assessment, @prioritisation_reference_request], method: :post do |f| %>
   <h1 class="govuk-heading-xl"><%= title %></h1>
 
   <%= govuk_warning_text(text: "Only resend reference requests if you have been asked to do so.") %>
 
-  <% if (timeline_event = @assessment.application_form.timeline_events.email_sent.where(mailer_class_name: "RefereeMailer", mailer_action_name: "prioritisation_reference_requested").order(created_at: :desc).first) %>
-    <p class="govuk-body">The reference was last emailed on <%= timeline_event.created_at.localtime.to_fs %>.</p>
-  <% end %>
+  <p class="govuk-body">The reference was last emailed on <%= @view_object.last_sent_at_local_timestamp.to_fs %>.</p>
 
   <% if !@prioritisation_reference_request.expired? %>
     <p class="govuk-body">Resending this email will not affect the original reminder schedule. Reminders will be sent automatically 2 weeks and 4 weeks after the original reference request email was sent.</p>
@@ -41,6 +39,6 @@
   )) %>
 
   <%= f.govuk_submit "Confirm" do %>
-    <%= govuk_link_to "Cancel", assessor_interface_eligibility_domains_path %>
+    <%= govuk_link_to "Cancel", edit_assessor_interface_application_form_assessment_prioritisation_reference_request_path(@view_object.application_form, @assessment, @prioritisation_reference_request) %>
   <% end %>
 <% end %>

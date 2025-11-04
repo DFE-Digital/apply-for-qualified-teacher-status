@@ -1,10 +1,10 @@
 <% content_for :page_title, title_with_error_prefix(t(".title"), error: @form.errors.any?) %>
-<% content_for :back_link_url, assessor_interface_application_form_assessment_prioritisation_reference_requests_path(@assessment.application_form, @assessment) %>
+<% content_for :back_link_url, assessor_interface_application_form_assessment_prioritisation_reference_requests_path(@view_object.application_form, @assessment) %>
 
-<% work_history = @prioritisation_reference_request.work_history %>
+<% work_history = @view_object.work_history %>
 <% can_resend_email_reference_request = policy([:assessor_interface, @prioritisation_reference_request]).edit_resend_email? %>
 
-<%= form_with model: @form, url: [:assessor_interface, @assessment.application_form, @assessment, @prioritisation_reference_request], method: :put do |f| %>
+<%= form_with model: @form, url: [:assessor_interface, @view_object.application_form, @assessment, @prioritisation_reference_request], method: :put do |f| %>
   <%= f.govuk_error_summary %>
 
   <h1 class="govuk-heading-xl"><%= t(".title") %></h1>
@@ -45,9 +45,7 @@
   end %>
 
   <% if !@prioritisation_reference_request.received? %>
-    <% if (timeline_event = @assessment.application_form.timeline_events.email_sent.where(mailer_class_name: "RefereeMailer", mailer_action_name: "prioritisation_reference_requested").order(created_at: :desc).first) %>
-      <p class="govuk-body">The reference was last emailed on <%= timeline_event.created_at.localtime.to_fs %>.</p>
-    <% end %>
+    <p class="govuk-body">The reference was last emailed on <%= @view_object.last_sent_at_local_timestamp.to_fs %>.</p>
   <% end %>
 
   <% if (@prioritisation_reference_request.received? || @prioritisation_reference_request.expired?) && policy([:assessor_interface, @prioritisation_reference_request]).update? %>
@@ -58,23 +56,23 @@
     <% end %>
 
     <% if !@prioritisation_reference_request.received? %>
-      <%= govuk_button_link_to "Resend reference request email", resend_email_assessor_interface_application_form_assessment_prioritisation_reference_request_path(@assessment.application_form, @assessment, @prioritisation_reference_request), secondary: true %>
+      <%= govuk_button_link_to "Resend reference request email", resend_email_assessor_interface_application_form_assessment_prioritisation_reference_request_path(@view_object.application_form, @assessment, @prioritisation_reference_request), secondary: true %>
     <% end %>
 
     <%= f.govuk_radio_buttons_fieldset :passed, legend: { text: "Are you satisfied with this reference for the applicant’s work history?", size: "s" } do %>
-      <%= f.govuk_radio_button :passed, :true, link_errors: true, disabled: @assessment.prioritisation_decision_at.present? || @assessment.application_form.on_hold? %>
-      <%= f.govuk_radio_button :passed, :false, disabled: @assessment.prioritisation_decision_at.present? || @assessment.application_form.on_hold? do %>
+      <%= f.govuk_radio_button :passed, :true, link_errors: true, disabled: @view_object.disable_form? %>
+      <%= f.govuk_radio_button :passed, :false, disabled: @view_object.disable_form? do %>
         <%= f.govuk_text_area :note, label: { text: "Note to the applicant" } %>
       <% end %>
     <% end %>
 
-    <%= f.govuk_submit disabled: @assessment.prioritisation_decision_at.present? || @assessment.application_form.on_hold? do %>
+    <%= f.govuk_submit disabled: @view_object.disable_form? do %>
       <%= render "shared/assessor_interface/cancel_link" %>
     <% end %>
   <% else %>
     <div class="govuk-button-group">
       <%= govuk_button_link_to "Back to check references", assessor_interface_application_form_assessment_prioritisation_reference_requests_path(@assessment.application_form, @assessment) %>
-      <%= govuk_button_link_to "Resend reference request email", resend_email_assessor_interface_application_form_assessment_prioritisation_reference_request_path(@assessment.application_form, @assessment, @prioritisation_reference_request), secondary: true %>
+      <%= govuk_button_link_to "Resend reference request email", resend_email_assessor_interface_application_form_assessment_prioritisation_reference_request_path(@view_object.application_form, @assessment, @prioritisation_reference_request), secondary: true %>
     </div>
   <% end %>
 <% end %>
