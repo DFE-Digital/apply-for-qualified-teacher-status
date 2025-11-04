@@ -623,7 +623,6 @@ Rails.application.routes.draw do
   resources :autocomplete_locations, only: %i[index]
   resources :autocomplete_passport_country_of_issues, only: %i[index]
 
-  get "accessibility", to: "static#accessibility"
   get "cookies", to: "static#cookies"
   get "email/:key", to: "static#email", as: "email"
   get "english-language-guidance", to: "static#english_language_guidance"
