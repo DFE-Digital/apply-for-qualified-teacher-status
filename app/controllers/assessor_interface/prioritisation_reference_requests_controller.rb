@@ -5,6 +5,12 @@ module AssessorInterface
     before_action :ensure_checks_completed
     before_action :ensure_no_reference_requests_already_sent,
                   only: %i[new create]
+    before_action :ensure_reference_requests_not_already_received_or_reviewed,
+                  only: %i[
+                    edit_resend_email
+                    update_resend_email
+                    resend_email_confirmation
+                  ]
 
     def index
       authorize %i[assessor_interface prioritisation_reference_request]
@@ -169,6 +175,19 @@ module AssessorInterface
     def ensure_no_reference_requests_already_sent
       if prioritisation_reference_requests.present?
         redirect_to [:assessor_interface, assessment.application_form]
+      end
+    end
+
+    def ensure_reference_requests_not_already_received_or_reviewed
+      if prioritisation_reference_request.received? ||
+           assessment.prioritisation_decision_at.present?
+        redirect_to [
+                      :edit,
+                      :assessor_interface,
+                      assessment.application_form,
+                      assessment,
+                      prioritisation_reference_request,
+                    ]
       end
     end
 
