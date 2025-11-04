@@ -262,6 +262,17 @@ Rails.application.routes.draw do
             get "confirmation",
                 to: "prioritisation_reference_requests#confirmation"
           end
+
+          member do
+            get "resend-email",
+                to: "prioritisation_reference_requests#edit_resend_email"
+            post "resend-email",
+                 to: "prioritisation_reference_requests#update_resend_email"
+
+            get "resend-email-confirmation",
+                to:
+                  "prioritisation_reference_requests#resend_email_confirmation"
+          end
         end
       end
     end

@@ -20,4 +20,8 @@ class AssessorInterface::PrioritisationReferenceRequestPolicy < ApplicationPolic
   def update?
     (user.assess_permission || user.verify_permission) && !user.archived?
   end
+
+  alias_method :edit_resend_email?, :update?
+  alias_method :update_resend_email?, :update?
+  alias_method :resend_email_confirmation?, :update?
 end

@@ -37,6 +37,27 @@ RSpec.describe AssessorInterface::PrioritisationReferenceRequestPolicy do
     it_behaves_like "a policy method requiring the verify permission"
   end
 
+  describe "#edit_resend_email?" do
+    subject(:edit_resend_email?) { policy.edit_resend_email? }
+
+    it_behaves_like "a policy method requiring the assess permission"
+    it_behaves_like "a policy method requiring the verify permission"
+  end
+
+  describe "#update_resend_email?" do
+    subject(:update_resend_email?) { policy.update_resend_email? }
+
+    it_behaves_like "a policy method requiring the assess permission"
+    it_behaves_like "a policy method requiring the verify permission"
+  end
+
+  describe "#resend_email_confirmation?" do
+    subject(:resend_email_confirmation?) { policy.resend_email_confirmation? }
+
+    it_behaves_like "a policy method requiring the assess permission"
+    it_behaves_like "a policy method requiring the verify permission"
+  end
+
   describe "#new?" do
     subject(:new?) { policy.new? }
 

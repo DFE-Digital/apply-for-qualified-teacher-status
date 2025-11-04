@@ -2,6 +2,7 @@
 <% content_for :back_link_url, assessor_interface_application_form_assessment_prioritisation_reference_requests_path(@assessment.application_form, @assessment) %>
 
 <% work_history = @prioritisation_reference_request.work_history %>
+<% can_resend_email_reference_request = policy([:assessor_interface, @prioritisation_reference_request]).edit_resend_email? %>
 
 <%= form_with model: @form, url: [:assessor_interface, @assessment.application_form, @assessment, @prioritisation_reference_request], method: :put do |f| %>
   <%= f.govuk_error_summary %>
@@ -43,11 +44,21 @@
     end
   end %>
 
+  <% if !@prioritisation_reference_request.received? %>
+    <% if (timeline_event = @assessment.application_form.timeline_events.email_sent.where(mailer_class_name: "RefereeMailer", mailer_action_name: "prioritisation_reference_requested").order(created_at: :desc).first) %>
+      <p class="govuk-body">The reference was last emailed on <%= timeline_event.created_at.localtime.to_fs %>.</p>
+    <% end %>
+  <% end %>
+
   <% if (@prioritisation_reference_request.received? || @prioritisation_reference_request.expired?) && policy([:assessor_interface, @prioritisation_reference_request]).update? %>
     <% if @prioritisation_reference_request.received? %>
       <%= render "shared/prioritisation_reference_request_summary", prioritisation_reference_request: @prioritisation_reference_request, changeable: false %>
     <% elsif @prioritisation_reference_request.expired? %>
       <%= govuk_warning_text(text: "This reference is overdue.") %>
+    <% end %>
+
+    <% if !@prioritisation_reference_request.received? %>
+      <%= govuk_button_link_to "Resend reference request email", resend_email_assessor_interface_application_form_assessment_prioritisation_reference_request_path(@assessment.application_form, @assessment, @prioritisation_reference_request), secondary: true %>
     <% end %>
 
     <%= f.govuk_radio_buttons_fieldset :passed, legend: { text: "Are you satisfied with this reference for the applicant’s work history?", size: "s" } do %>
@@ -60,5 +71,10 @@
     <%= f.govuk_submit disabled: @assessment.prioritisation_decision_at.present? || @assessment.application_form.on_hold? do %>
       <%= render "shared/assessor_interface/cancel_link" %>
     <% end %>
+  <% else %>
+    <div class="govuk-button-group">
+      <%= govuk_button_link_to "Back to check references", assessor_interface_application_form_assessment_prioritisation_reference_requests_path(@assessment.application_form, @assessment) %>
+      <%= govuk_button_link_to "Resend reference request email", resend_email_assessor_interface_application_form_assessment_prioritisation_reference_request_path(@assessment.application_form, @assessment, @prioritisation_reference_request), secondary: true %>
+    </div>
   <% end %>
 <% end %>

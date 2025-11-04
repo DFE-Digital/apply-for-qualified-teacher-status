@@ -1,0 +1,46 @@
+<% title = "Are you sure you want to resend the reference request?" %>
+<% content_for :page_title, title %>
+<% content_for :back_link_url, resend_email_assessor_interface_application_form_assessment_prioritisation_reference_request_path(@assessment.application_form, @assessment, @prioritisation_reference_request) %>
+
+<% work_history = @prioritisation_reference_request.work_history %>
+
+<%= form_with model: @prioritisation_reference_request, url: [:resend_email, :assessor_interface, @assessment.application_form, @assessment, @prioritisation_reference_request], method: :post do |f| %>
+  <h1 class="govuk-heading-xl"><%= title %></h1>
+
+  <%= govuk_warning_text(text: "Only resend reference requests if you have been asked to do so.") %>
+
+  <% if (timeline_event = @assessment.application_form.timeline_events.email_sent.where(mailer_class_name: "RefereeMailer", mailer_action_name: "prioritisation_reference_requested").order(created_at: :desc).first) %>
+    <p class="govuk-body">The reference was last emailed on <%= timeline_event.created_at.localtime.to_fs %>.</p>
+  <% end %>
+
+  <% if !@prioritisation_reference_request.expired? %>
+    <p class="govuk-body">Resending this email will not affect the original reminder schedule. Reminders will be sent automatically 2 weeks and 4 weeks after the original reference request email was sent.</p>
+  <% end %>
+
+  <%= render(CheckYourAnswersSummary::Component.new(
+    id: "work-history-#{work_history.id}",
+    model: work_history,
+    title: work_history.school_name,
+    fields: {
+      school_name: {
+        title: "Name of institution",
+      },
+      contact_name: {
+        title: "Name of reference",
+      },
+      contact_job: {
+        title: "Job title of reference",
+      },
+      contact_email: {
+        title: "Email address of reference",
+        error: work_history.activate_eligibility_domain_concern?,
+        error_message: "This email domain has been flagged with eligibility concerns",
+      },
+    },
+    changeable: false,
+  )) %>
+
+  <%= f.govuk_submit "Confirm" do %>
+    <%= govuk_link_to "Cancel", assessor_interface_eligibility_domains_path %>
+  <% end %>
+<% end %>
