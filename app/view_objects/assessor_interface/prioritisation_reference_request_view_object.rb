@@ -19,6 +19,11 @@ module AssessorInterface
       prioritisation_decision_at.present? || on_hold?
     end
 
+    def can_resend_email?
+      !prioritisation_reference_request.received? &&
+        prioritisation_decision_at.nil?
+    end
+
     def last_sent_at_local_timestamp
       # TODO: Currently, our system is not designed to accurately
       # determine the last sent email of a specific prioritisation

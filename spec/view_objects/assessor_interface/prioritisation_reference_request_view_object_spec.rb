@@ -36,6 +36,43 @@ RSpec.describe AssessorInterface::PrioritisationReferenceRequestViewObject do
     end
   end
 
+  describe "#can_resend_email?" do
+    subject(:can_resend_email?) { view_object.can_resend_email? }
+
+    it { is_expected.to be true }
+
+    context "when prioritisation reference request has been expired" do
+      let(:prioritisation_reference_request) do
+        create(
+          :prioritisation_reference_request,
+          assessment:,
+          expired_at: Time.current,
+        )
+      end
+
+      it { is_expected.to be true }
+    end
+
+    context "when prioritisation reference request has been received" do
+      let(:prioritisation_reference_request) do
+        create(:received_prioritisation_reference_request, assessment:)
+      end
+
+      it { is_expected.to be false }
+    end
+
+    context "when the assessment has prioritisation decision already made" do
+      before do
+        assessment.update!(
+          prioritisation_decision_at: Time.current,
+          prioritised: false,
+        )
+      end
+
+      it { is_expected.to be false }
+    end
+  end
+
   describe "#last_sent_at_local_timestamp" do
     subject(:last_sent_at_local_timestamp) do
       view_object.last_sent_at_local_timestamp
