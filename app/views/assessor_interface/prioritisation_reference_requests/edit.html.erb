@@ -2,7 +2,6 @@
 <% content_for :back_link_url, assessor_interface_application_form_assessment_prioritisation_reference_requests_path(@view_object.application_form, @assessment) %>
 
 <% work_history = @view_object.work_history %>
-<% can_resend_email_reference_request = policy([:assessor_interface, @prioritisation_reference_request]).edit_resend_email? %>
 
 <%= form_with model: @form, url: [:assessor_interface, @view_object.application_form, @assessment, @prioritisation_reference_request], method: :put do |f| %>
   <%= f.govuk_error_summary %>
