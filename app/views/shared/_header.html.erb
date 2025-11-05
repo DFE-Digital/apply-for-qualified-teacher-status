@@ -21,7 +21,7 @@
         <% service_navigation.with_navigation_item(text: "Suitability records", href: main_app.assessor_interface_suitability_records_path) %>
       <% end %>
 
-      <% if SupportInterface::CountryPolicy.new(current_staff, EligibilityDomain).index? %>
+      <% if AssessorInterface::EligibilityDomainPolicy.new(current_staff, EligibilityDomain).index? %>
         <% service_navigation.with_navigation_item(text: "Email domain records", href: main_app.assessor_interface_eligibility_domains_path) %>
       <% end %>
 
