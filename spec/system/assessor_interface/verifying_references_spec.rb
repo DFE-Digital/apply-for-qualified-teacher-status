@@ -38,14 +38,16 @@ RSpec.describe "Assessor verifying references", type: :system do
     )
     and_i_can_resend_the_email
 
-    when_i_click_on_resend_email_summary
     and_i_click_on_send_email_button
     then_i_see_the(
-      :assessor_verify_reference_request_page,
+      :assessor_resend_email_reference_request_page,
       reference:,
       assessment_id:,
       id: reference_request.id,
     )
+
+    when_i_confirm_i_want_to_resend_email
+    then_i_see_confirmation_of_email_resent
   end
 
   it "verify received" do
@@ -239,15 +241,26 @@ RSpec.describe "Assessor verifying references", type: :system do
   end
 
   def and_i_cant_resend_the_email
-    expect(assessor_verify_reference_request_page).not_to have_css(
-      ".govuk-details",
+    expect(assessor_verify_reference_request_page).not_to have_content(
+      "Resend reference request email",
     )
   end
 
   def and_i_can_resend_the_email
     expect(
-      assessor_verify_reference_request_page.send_email_details,
+      assessor_verify_reference_request_page.send_email_button,
     ).to be_visible
+    expect(
+      assessor_verify_reference_request_page.send_email_button,
+    ).to have_content("Resend reference request email")
+  end
+
+  def when_i_confirm_i_want_to_resend_email
+    assessor_resend_email_reference_request_page.form.submit_button.click
+  end
+
+  def then_i_see_confirmation_of_email_resent
+    expect(page).to have_content("Reference request email resent")
   end
 
   def and_i_submit_yes_on_the_verify_form
@@ -278,12 +291,8 @@ RSpec.describe "Assessor verifying references", type: :system do
     ).to eq("Completed")
   end
 
-  def when_i_click_on_resend_email_summary
-    assessor_verify_reference_request_page.send_email_details.summary.click
-  end
-
   def and_i_click_on_send_email_button
-    assessor_verify_reference_request_page.send_email_details.button.click
+    assessor_verify_reference_request_page.send_email_button.click
   end
 
   def reference_request_task_item

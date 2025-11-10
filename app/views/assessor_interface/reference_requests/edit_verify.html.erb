@@ -77,7 +77,7 @@
     <%= govuk_warning_text(text: "This reference is overdue.") %>
 
     <% if can_resend_email_reference_request %>
-      <%= govuk_button_link_to "Resend reference request email", resend_email_assessor_interface_application_form_assessment_reference_request_path(@view_object.application_form, @assessment, @prioritisation_reference_request), secondary: true %>
+      <%= govuk_button_link_to "Resend reference request email", resend_email_assessor_interface_application_form_assessment_reference_request_path(@view_object.application_form, @assessment, @reference_request), secondary: true %>
     <% end %>
   <% end %>
 
