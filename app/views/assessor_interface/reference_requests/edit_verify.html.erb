@@ -1,7 +1,7 @@
 <% work_history = @reference_request.work_history %>
 <% can_edit_work_history = policy([:assessor_interface, work_history]).edit? %>
 <% can_update_verify_reference_request = @assessment.verify? && policy([:assessor_interface, @reference_request]).update_verify? %>
-<% can_resend_email_reference_request = @assessment.verify? && policy([:assessor_interface, @reference_request]).resend_email? %>
+<% can_resend_email_reference_request = @view_object.can_resend_email? && policy([:assessor_interface, @reference_request]).edit_resend_email? %>
 
 <% title = can_update_verify_reference_request ? "Review reference" : "View reference" %>
 
@@ -70,21 +70,15 @@
 
     <%= render "shared/reference_request_summary", reference_request: @reference_request, changeable: false %>
   <% elsif @reference_request.requested? && can_resend_email_reference_request %>
-    <%= govuk_details(summary_text: "Resend reference request email") do %>
-      <%= govuk_warning_text(text: "Only resend reference requests if you have been asked to do so.") %>
-
-      <% if (timeline_event = @application_form.timeline_events.email_sent.where(mailer_class_name: "RefereeMailer", mailer_action_name: "reference_requested").order(created_at: :desc).first) %>
-        <p class="govuk-body">This email was last sent on <%= timeline_event.created_at.to_fs %></p>
-      <% end %>
-
-      <%= govuk_button_link_to "Resend reference request email", [:resend_email, :assessor_interface, @application_form, @assessment, @reference_request] %>
-
-      <p class="govuk-body">Resending this email will not affect the original reminder schedule. Reminders will be sent automatically 2 weeks and 4 weeks after the original reference request email was sent.</p>
-    <% end %>
+    <p class="govuk-body">The reference was last emailed on <%= @view_object.last_sent_at_local_timestamp.to_fs %></p>
   <% end %>
 
   <% if @reference_request.expired? %>
     <%= govuk_warning_text(text: "This reference is overdue.") %>
+
+    <% if can_resend_email_reference_request %>
+      <%= govuk_button_link_to "Resend reference request email", resend_email_assessor_interface_application_form_assessment_reference_request_path(@view_object.application_form, @assessment, @prioritisation_reference_request), secondary: true %>
+    <% end %>
   <% end %>
 
   <% if can_update_verify_reference_request && (@reference_request.received? || @reference_request.expired?) %>
@@ -104,5 +98,10 @@
     <%= f.govuk_submit disabled: @application_form.on_hold? do %>
       <%= render "shared/assessor_interface/cancel_link" %>
     <% end %>
+  <% elsif can_resend_email_reference_request %>
+    <div class="govuk-button-group">
+      <%= govuk_button_link_to "Back to verify references", assessor_interface_application_form_assessment_reference_requests_path(@assessment.application_form, @assessment) %>
+      <%= govuk_button_link_to "Resend reference request email", resend_email_assessor_interface_application_form_assessment_reference_request_path(@view_object.application_form, @assessment, @reference_request), secondary: true %>
+    </div>
   <% end %>
 <% end %>

@@ -251,7 +251,12 @@ Rails.application.routes.draw do
             post "verify", to: "reference_requests#update_verify"
             get "verify-failed", to: "reference_requests#edit_verify_failed"
             post "verify-failed", to: "reference_requests#update_verify_failed"
-            get "resend-email", to: "reference_requests#resend_email"
+
+            get "resend-email", to: "reference_requests#edit_resend_email"
+            post "resend-email", to: "reference_requests#update_resend_email"
+
+            get "resend-email-confirmation",
+                to: "reference_requests#resend_email_confirmation"
           end
         end
 
