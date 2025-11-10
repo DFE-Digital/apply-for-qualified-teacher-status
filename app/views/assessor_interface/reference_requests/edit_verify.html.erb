@@ -70,7 +70,7 @@
 
     <%= render "shared/reference_request_summary", reference_request: @reference_request, changeable: false %>
   <% elsif @reference_request.requested? && can_resend_email_reference_request %>
-    <p class="govuk-body">The reference was last emailed on <%= @view_object.last_sent_at_local_timestamp.to_fs %></p>
+    <p class="govuk-body">The reference was last emailed on <%= @view_object.last_sent_at_local_timestamp.to_fs %>.</p>
   <% end %>
 
   <% if @reference_request.expired? %>
