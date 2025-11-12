@@ -22,7 +22,7 @@ class FurtherInformationRequestItemsFactory
       build_further_information_request_item(
         failure_reason.key,
         failure_reason.assessor_feedback,
-        failure_reason.work_histories,
+        failure_reason.selected_failure_reasons_work_histories,
       )
     end
   end
@@ -47,12 +47,14 @@ class FurtherInformationRequestItemsFactory
         ),
       ]
     elsif FailureReasons.chooses_work_history?(failure_reason_key)
-      failure_reason_work_histories.map do |work_history|
+      failure_reason_work_histories.map do |failure_reason_work_history|
         FurtherInformationRequestItem.new(
           information_type: :work_history_contact,
           failure_reason_key:,
-          failure_reason_assessor_feedback:,
-          work_history:,
+          failure_reason_assessor_feedback:
+            failure_reason_work_history.assessor_feedback ||
+              failure_reason_assessor_feedback,
+          work_history: failure_reason_work_history.work_history,
         )
       end
     else
