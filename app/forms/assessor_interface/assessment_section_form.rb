@@ -166,7 +166,9 @@ class AssessorInterface::AssessmentSectionForm
         if FailureReasons.chooses_work_history?(failure_reason)
           work_histories.each do |work_history|
             klass.validates "#{failure_reason}_work_history_#{work_history.id}_notes",
-                            presence: { message: "Enter a note to the applicant" },
+                            presence: {
+                              message: "Enter a note to the applicant",
+                            },
                             if:
                               :"#{failure_reason}_work_history_#{work_history.id}_checked"
           end
