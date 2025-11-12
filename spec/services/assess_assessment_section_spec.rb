@@ -24,7 +24,9 @@ RSpec.describe AssessAssessmentSection do
     { selected_failure_reason_key => selected_failure_reason_assessor_feedback }
   end
   let(:selected_failure_reason_key) { "identification_document_expired" }
-  let(:selected_failure_reason_assessor_feedback) { { notes: "Epic fail" } }
+  let(:selected_failure_reason_assessor_feedback) do
+    { assessor_feedback: "Epic fail" }
+  end
   let(:passed) { false }
 
   it "sets the status" do
@@ -80,7 +82,7 @@ RSpec.describe AssessAssessmentSection do
           SelectedFailureReason.find_by(
             key: selected_failure_reason_key,
           ).assessor_feedback
-        }.to(selected_failure_reason_assessor_feedback[:notes])
+        }.to(selected_failure_reason_assessor_feedback[:assessor_feedback])
       end
     end
 
@@ -134,6 +136,53 @@ RSpec.describe AssessAssessmentSection do
 
     it "doesn't change the assessor" do
       expect { call }.not_to change(assessment, :started_at)
+    end
+  end
+
+  context "with the failure reason requiring work history references" do
+    let!(:work_histories) { create_list :work_history, 2, application_form: }
+
+    let(:selected_failure_reason_key) do
+      FailureReasons::WORK_HISTORY_REFERENCE_FAILURE_REASONS.sample
+    end
+    let(:selected_failure_reason_assessor_feedback) do
+      {
+        work_history_failure_reasons:
+          work_histories.map do |work_history|
+            {
+              work_history_id: work_history.id,
+              assessor_feedback: "Note: #{work_history.id}",
+            }
+          end,
+      }
+    end
+
+    it "creates the assessment failure reason records with correct assessor note for each work history" do
+      expect { call }.to change {
+        SelectedFailureReason.where(
+          assessment_section:,
+          key: selected_failure_reason_key,
+        ).count
+      }.by(1)
+
+      selected_failure_reason =
+        SelectedFailureReason.find_by(
+          assessment_section:,
+          key: selected_failure_reason_key,
+        )
+
+      expect(selected_failure_reason.work_histories).to match_array(
+        work_histories,
+      )
+
+      work_histories.each do |work_history|
+        expect(
+          selected_failure_reason
+            .selected_failure_reasons_work_histories
+            .find_by(work_history:)
+            .assessor_feedback,
+        ).to eq("Note: #{work_history.id}")
+      end
     end
   end
 end
