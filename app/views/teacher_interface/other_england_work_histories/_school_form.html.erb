@@ -11,7 +11,11 @@
     <% end %>
   </h1>
 
-  <p class="govuk-body">We will consider the following settings and roles worked in England within the last 12 months:</p>
+  <p class="govuk-body">
+    Your application may be prioritised
+    <%= 'and additional subject requirements may be removed ' if @application_form.subject_limited? %>
+    if you’ve worked in one of the following valid roles or settings in England, for any length of time in the last 12 months:
+  </p>
 
   <ul class="govuk-list govuk-list--bullet">
     <li>a cover supervisor or teaching assistant in a <%= govuk_link_to('state school', 'https://get-information-schools.service.gov.uk/Search?SelectedTab=Establishments', new_tab: true) %></li>
