@@ -25,25 +25,19 @@ class AssessorInterface::AssessmentSectionForm
   def selected_failure_reasons
     return {} if passed
 
-    work_histories =
-      assessment_section
-        .assessment
-        .application_form
-        .work_histories
-        .teaching_role
-
     assessment_section
       .failure_reasons
       .each_with_object({}) do |failure_reason, memo|
         next unless send("#{failure_reason}_checked")
-        memo[failure_reason] = { notes: send("#{failure_reason}_notes") }
-        next unless FailureReasons.chooses_work_history?(failure_reason)
-        memo[failure_reason][
-          :work_histories
-        ] = work_histories.filter do |work_history|
-          send("#{failure_reason}_work_history_checked").include?(
-            work_history.id.to_s,
-          )
+        if FailureReasons.chooses_work_history?(failure_reason)
+          memo[failure_reason] = {}
+          memo[failure_reason][
+            :work_history_failure_reasons
+          ] = selected_work_histories_for_failure_reason(failure_reason)
+        else
+          memo[failure_reason] = {
+            assessor_feedback: send("#{failure_reason}_notes"),
+          }
         end
       end
   end
@@ -68,6 +62,44 @@ class AssessorInterface::AssessmentSectionForm
     true
   end
 
+  private
+
+  def selected_work_histories_for_failure_reason(failure_reason)
+    result =
+      work_histories.map do |work_history|
+        unless send("#{failure_reason}_work_history_#{work_history.id}_checked")
+          next
+        end
+
+        {
+          work_history_id: work_history.id,
+          assessor_feedback:
+            send("#{failure_reason}_work_history_#{work_history.id}_notes"),
+        }
+      end
+
+    result.compact
+  end
+
+  def ensure_atleast_one_work_history_selected
+    FailureReasons::WORK_HISTORY_REFERENCE_FAILURE_REASONS.each do |failure_reason|
+      any_work_histories_selected =
+        work_histories.any? do |work_history|
+          send("#{failure_reason}_work_history_#{work_history.id}_checked")
+        end
+
+      next if any_work_histories_selected
+
+      errors.add(
+        :"#{failure_reason}_work_history_checked",
+        :no_schools_selected,
+      )
+    end
+  end
+
+  def work_histories
+    assessment_section.assessment.application_form.work_histories.teaching_role
+  end
   class << self
     def for_assessment_section(assessment_section)
       klass =
@@ -80,6 +112,13 @@ class AssessorInterface::AssessmentSectionForm
         end
 
       klass.preliminary = assessment_section.preliminary?
+
+      work_histories =
+        assessment_section
+          .assessment
+          .application_form
+          .work_histories
+          .teaching_role
 
       assessment_section.failure_reasons.each do |failure_reason|
         selected_failure_reason =
@@ -96,23 +135,46 @@ class AssessorInterface::AssessmentSectionForm
         if FailureReasons.chooses_work_history?(failure_reason)
           klass.attribute "#{failure_reason}_work_history_checked"
 
-          klass.validates "#{failure_reason}_work_history_checked",
-                          presence: true,
-                          if: :"#{failure_reason}_checked"
+          work_histories.each do |work_history|
+            klass.attribute "#{failure_reason}_work_history_#{work_history.id}_checked",
+                            :boolean
+          end
+
+          klass.validate :ensure_atleast_one_work_history_selected,
+                         if: :"#{failure_reason}_checked"
         elsif selected_failure_reason.present? &&
               selected_failure_reason.work_histories.present?
-          klass.attribute "#{failure_reason}_work_history_checked"
+          work_histories.each do |work_history|
+            klass.attribute "#{failure_reason}_work_history_#{work_history.id}_checked",
+                            :boolean
+          end
         end
 
-        klass.attribute "#{failure_reason}_notes", :string
+        if FailureReasons.chooses_work_history?(failure_reason)
+          work_histories.each do |work_history|
+            klass.attribute "#{failure_reason}_work_history_#{work_history.id}_notes",
+                            :string
+          end
+        else
+          klass.attribute "#{failure_reason}_notes", :string
+        end
 
         next if assessment_section.preliminary?
 
         next unless FailureReasons.requires_note?(failure_reason)
 
-        klass.validates "#{failure_reason}_notes",
-                        presence: true,
-                        if: :"#{failure_reason}_checked"
+        if FailureReasons.chooses_work_history?(failure_reason)
+          work_histories.each do |work_history|
+            klass.validates "#{failure_reason}_work_history_#{work_history.id}_notes",
+                            presence: true,
+                            if:
+                              :"#{failure_reason}_work_history_#{work_history.id}_checked"
+          end
+        else
+          klass.validates "#{failure_reason}_notes",
+                          presence: true,
+                          if: :"#{failure_reason}_checked"
+        end
       end
 
       klass
@@ -127,16 +189,27 @@ class AssessorInterface::AssessmentSectionForm
           .each_with_object({}) do |failure_reason, memo|
             memo[failure_reason.key] = {
               assessor_feedback: failure_reason.assessor_feedback,
-              work_history_ids: failure_reason.work_histories.pluck(:id),
+              selected_failure_reasons_work_histories:
+                failure_reason.selected_failure_reasons_work_histories,
             }
           end
 
       selected_failure_reasons_hash.each do |key, notes|
         attributes["#{key}_checked"] = true
-        attributes["#{key}_notes"] = notes[:assessor_feedback]
         if FailureReasons.chooses_work_history?(key) ||
-             notes[:work_history_ids].present?
-          attributes["#{key}_work_history_checked"] = notes[:work_history_ids]
+             notes[:selected_failure_reasons_work_histories].present?
+          notes[
+            :selected_failure_reasons_work_histories
+          ].each do |wh_failure_reason|
+            attributes[
+              "#{key}_work_history_#{wh_failure_reason.work_history_id}_checked"
+            ] = true
+            attributes[
+              "#{key}_work_history_#{wh_failure_reason.work_history_id}_notes"
+            ] = wh_failure_reason.assessor_feedback || notes[:assessor_feedback]
+          end
+        else
+          attributes["#{key}_notes"] = notes[:assessor_feedback]
         end
       end
 
@@ -159,13 +232,7 @@ class AssessorInterface::AssessmentSectionForm
         params
           .permit(:passed, *args, **kwargs)
           .to_h
-          .map do |key, value|
-            if key.end_with?("work_history_checked")
-              [key, value.compact_blank]
-            else
-              [key, value]
-            end
-          end
+          .map { |key, value| [key, value] }
       params.to_h
     end
 

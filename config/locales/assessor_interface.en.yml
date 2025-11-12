@@ -431,6 +431,8 @@ en:
               inclusion: Select whether the applicant qualified to teach one of the subjects we currently accept
             teaching_transcript_illegible_notes:
               blank: Enter a note to the applicant
+            unrecognised_references_work_history_checked:
+              no_schools_selected: Select at least one school that we were unable to verify the reference for
             work_history_break_notes:
               blank: Enter a note to the applicant
             written_statement_illegible_notes:
