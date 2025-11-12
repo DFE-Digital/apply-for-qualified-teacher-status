@@ -10,7 +10,6 @@ on:
         type: choice
         options:
           - test
-          - preprod
           - production
       backup-file:
         description: |
