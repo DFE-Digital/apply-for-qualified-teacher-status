@@ -15,7 +15,7 @@
 <% end %>
 
 <% if country.subject_limited %>
-  <h2 class="govuk-heading-m">Age and subject restrictions</h2>
+  <h2 class="govuk-heading-m">Additional age and subject requirements</h2>
 
   <p class="govuk-body">
     We only accept applications from teachers from <%= CountryName.from_country(country, with_definite_article: true) %> who are qualified to teach children aged 11-16 in one or more of the following specific subjects:
@@ -43,11 +43,15 @@
     <h3 class="govuk-heading-s">If you have valid work experience in England</h3>
 
     <p class="govuk-body">
-      Your application will be prioritised if you have valid work experience in England within the last 12 months that we can confirm with your references. This means you must be qualified to teach children aged anywhere between 5 to 16. You do not need to meet the specific subject requirements.
+      Your application may be prioritised if you have gained valid educational work experience in England for any length of time in the last 12 months. This means you must be qualified to teach children aged anywhere between 5 to 16. You do not need to meet the additional subject requirements.
     </p>
 
     <p class="govuk-body">
-      If we can't confirm that you have valid work experience in England, the standard requirements apply. You must be qualified to teach children aged 11 to 16 in one or more of the specific subjects listed above.
+      You will need to provide references to confirm your work experience in England before your application is prioritised.
+    </p>
+
+    <p class="govuk-body">
+      If we can't confirm that you have valid work experience in England, the additional age and subject requirements above apply.
     </p>
   <% end %>
 <% end %>
