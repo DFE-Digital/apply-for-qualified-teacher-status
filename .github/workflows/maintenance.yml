@@ -8,7 +8,6 @@ on:
         type: choice
         options:
           - test
-          - preproduction
           - production
       mode:
         required: true

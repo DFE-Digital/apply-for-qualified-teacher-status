@@ -199,7 +199,7 @@ jobs:
     strategy:
       max-parallel: 1
       matrix:
-        environment: [development, test, preproduction]
+        environment: [development, test]
     environment:
       name: ${{ matrix.environment }}
       url: ${{ steps.deploy.outputs.url }}
@@ -313,7 +313,7 @@ jobs:
     strategy:
       max-parallel: 1
       matrix:
-        domain_environment: [development, test, preproduction, production]
+        domain_environment: [development, test, production]
     environment:
       name: production
     permissions:
