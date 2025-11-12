@@ -26,6 +26,8 @@
     - email_address
   :selected_failure_reasons:
     - assessor_feedback
+  :selected_failure_reasons_work_histories:
+    - assessor_feedback
   :staff:
     - current_sign_in_ip
     - email

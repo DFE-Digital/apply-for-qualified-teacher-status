@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_22_155357) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_11_154137) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -504,6 +504,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_22_155357) do
   create_table "selected_failure_reasons_work_histories", id: false, force: :cascade do |t|
     t.bigint "work_history_id", null: false
     t.bigint "selected_failure_reason_id", null: false
+    t.text "assessor_feedback"
   end
 
   create_table "sessions", force: :cascade do |t|

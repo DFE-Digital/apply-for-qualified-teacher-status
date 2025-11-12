@@ -340,6 +340,7 @@
   :selected_failure_reasons_work_histories:
     - selected_failure_reason_id
     - work_history_id
+    - assessor_feedback
   :staff:
     - archived
     - assess_permission
