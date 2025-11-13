@@ -76,7 +76,7 @@ RSpec.describe AssessorInterface::AssessmentSectionForm, type: :model do
         work_histories.each do |work_history|
           expect(subject).to validate_presence_of(
             :"#{work_history_failure_reason}_work_history_#{work_history.id}_notes",
-          )
+          ).with_message("Enter a note to the applicant")
         end
       end
 
