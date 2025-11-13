@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe "Eligibility email domains", type: :system do
-  let(:staff) { create(:staff, :with_support_console_permission) }
+  let(:staff) { create(:staff, :with_assess_permission) }
 
   it "does not allow any access if user is archived" do
     given_i_am_authorized_as_an_archived_support_user
