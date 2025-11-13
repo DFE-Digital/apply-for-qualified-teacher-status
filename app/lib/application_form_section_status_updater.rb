@@ -59,6 +59,7 @@ class ApplicationFormSectionStatusUpdater
            :teaching_authority_provides_written_statement,
            :written_statement_confirmation,
            :written_statement_document,
+           :national_insurance_number,
            to: :application_form
 
   def personal_information_status
@@ -74,6 +75,15 @@ class ApplicationFormSectionStatusUpdater
       )
     else
       values.append(true)
+    end
+
+    if national_insurance_number.present? &&
+         !NationalInsuranceNumberValidator.new(
+           national_insurance_number_part_one: national_insurance_number[0..1],
+           national_insurance_number_part_two: national_insurance_number[2..7],
+           national_insurance_number_part_three: national_insurance_number[8],
+         ).valid?
+      values.append(nil)
     end
 
     status_for_values(*values)

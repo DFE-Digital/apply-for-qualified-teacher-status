@@ -1,0 +1,57 @@
+<div class="govuk-form-group <%= 'govuk-form-group--error' if form.errors.present? %>">
+  <fieldset class="govuk-fieldset" aria-describedby="teacher-interface-name-and-date-of-birth-form-national-insurance-number-hint">
+    <label for="teacher-interface-name-and-date-of-birth-form-given-names-field" class="govuk-label govuk-label--m">
+      <%= t("helpers.label.teacher_interface_name_and_date_of_birth_form.national_insurance_number") %>
+    </label>
+    <div class="govuk-hint" id="teacher-interface-name-and-date-of-birth-form-national-insurance-number-hint">
+      <%= t("helpers.hint.teacher_interface_name_and_date_of_birth_form.national_insurance_number") %>
+    </div>
+
+    <% if form.errors.present? %>
+      <p id="teacher-interface-name-and-date-of-birth-form-national-insurance-number-field-error" class="govuk-error-message">
+        <span class="govuk-visually-hidden">Error:</span>
+        <%= form.errors.first.message %>
+      </p>
+    <% end %>
+
+    <div class="govuk-date-input">
+      <div class="govuk-date-input__item">
+        <div class="govuk-form-group">
+          <input id="teacher-interface-name-and-date-of-birth-form-national-insurance-number-part-one"
+                  class="govuk-input govuk-date-input__input govuk-input--width-2 <%= 'govuk-input--error' if form.errors.present? && !@form.national_insurance_number_validator.national_insurance_number_part_one_valid? %>"
+                  name="teacher_interface_name_and_date_of_birth_form[national_insurance_number_part_one]"
+                  type="text" inputmode="text" value=<%= form.national_insurance_number_part_one %>>
+        </div>
+      </div>
+      <div class="govuk-date-input__item">
+        <div class="govuk-form-group">
+          <input id="teacher-interface-name-and-date-of-birth-form-national-insurance-number-part-two"
+                  class="govuk-input govuk-date-input__input govuk-input--width-5 <%= 'govuk-input--error' if form.errors.present? && !@form.national_insurance_number_validator.national_insurance_number_part_two_valid? %>"
+                  name="teacher_interface_name_and_date_of_birth_form[national_insurance_number_part_two]"
+                  type="text"
+                  inputmode="numeric"
+                  value=<%= form.national_insurance_number_part_two %>>
+        </div>
+      </div>
+      <div class="govuk-date-input__item">
+        <div class="govuk-form-group">
+          <input id="teacher-interface-name-and-date-of-birth-form-national-insurance-number-part-three"
+                  class="govuk-input govuk-date-input__input govuk-input--width-2 <%= 'govuk-input--error' if form.errors.present? && !@form.national_insurance_number_validator.national_insurance_number_part_three_valid? %>"
+                  name="teacher_interface_name_and_date_of_birth_form[national_insurance_number_part_three]"
+                  type="text"
+                  inputmode="numeric"
+                  value=<%= form.national_insurance_number_part_three %>>
+        </div>
+      </div>
+    </div>
+  </fieldset>
+</div>
+
+<%= govuk_details(summary_text: "What is a National Insurance number?") do %>
+  <p>
+    In the UK, a National Insurance number is a personal number used by HM Revenue and Customs (HMRC) to record the tax and National Insurance you pay. You keep the same number for life, even if you move out of the UK.
+  </p>
+  <p>
+    It’s shown on UK documents such as your National Insurance card, benefit letter, payslip or P60.
+  </p>
+<% end %>
