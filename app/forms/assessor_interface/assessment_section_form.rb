@@ -100,6 +100,7 @@ class AssessorInterface::AssessmentSectionForm
   def work_histories
     assessment_section.assessment.application_form.work_histories.teaching_role
   end
+
   class << self
     def for_assessment_section(assessment_section)
       klass =
