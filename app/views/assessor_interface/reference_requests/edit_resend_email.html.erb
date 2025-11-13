@@ -1,0 +1,48 @@
+<% title = "Are you sure you want to resend the reference request?" %>
+<% content_for :page_title, title %>
+<% content_for :back_link_url, verify_assessor_interface_application_form_assessment_reference_request_path(@view_object.application_form, @assessment, @reference_request) %>
+
+<% work_history = @view_object.work_history %>
+
+<%= form_with model: @reference_request, url: [:resend_email, :assessor_interface, @view_object.application_form, @assessment, @reference_request], method: :post do |f| %>
+  <h1 class="govuk-heading-xl"><%= title %></h1>
+
+  <%= govuk_warning_text(text: "Only resend reference requests if you have been asked to do so.") %>
+
+  <p class="govuk-body">The reference was last emailed on <%= @view_object.last_sent_at_local_timestamp.to_fs %>.</p>
+
+  <% if !@reference_request.expired? %>
+    <p class="govuk-body">Resending this email will not affect the original reminder schedule. Reminders will be sent automatically 2 weeks and 4 weeks after the original reference request email was sent.</p>
+  <% end %>
+
+  <%= render(CheckYourAnswersSummary::Component.new(
+    id: "work-history-#{work_history.id}",
+    model: work_history,
+    title: work_history.school_name,
+    fields: {
+      school_name: {
+        title: "Name of institution",
+      },
+      months_in_role: {
+        title: "Number of months",
+        value: WorkHistoryDuration.for_record(work_history).count_months,
+      },
+      contact_name: {
+        title: "Name of reference",
+      },
+      contact_job: {
+        title: "Job title of reference",
+      },
+      contact_email: {
+        title: "Email address of reference",
+        error: work_history.activate_eligibility_domain_concern?,
+        error_message: "This email domain has been flagged with eligibility concerns",
+      },
+    },
+    changeable: false,
+  )) %>
+
+  <%= f.govuk_submit "Confirm" do %>
+    <%= govuk_link_to "Cancel", verify_assessor_interface_application_form_assessment_reference_request_path(@view_object.application_form, @assessment, @reference_request) %>
+  <% end %>
+<% end %>

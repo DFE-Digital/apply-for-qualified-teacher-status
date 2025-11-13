@@ -452,6 +452,11 @@ module PageHelpers
       PageObjects::AssessorInterface::VerifyReferenceRequest.new
   end
 
+  def assessor_resend_email_reference_request_page
+    @assessor_resend_email_reference_request_page ||=
+      PageObjects::AssessorInterface::ResendEmailReferenceRequest.new
+  end
+
   def assessor_withdraw_application_page
     @assessor_withdraw_application_page ||=
       PageObjects::AssessorInterface::WithdrawApplication.new

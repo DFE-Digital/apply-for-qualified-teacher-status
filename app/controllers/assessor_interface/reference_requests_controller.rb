@@ -39,6 +39,8 @@ module AssessorInterface
     end
 
     def edit_verify
+      @view_object = ReferenceRequestViewObject.new(reference_request:)
+
       @form =
         RequestableVerifyPassedForm.new(
           requestable:,
@@ -109,19 +111,24 @@ module AssessorInterface
       end
     end
 
-    def resend_email
-      if reference_request.requested? && !reference_request.received?
-        reference_request.send_requested_email
-        flash[:info] = "The reference requested email has been resent."
-      end
+    def edit_resend_email
+      @view_object = ReferenceRequestViewObject.new(reference_request:)
+    end
+
+    def update_resend_email
+      reference_request.send_requested_email
 
       redirect_to [
-                    :verify,
+                    :resend_email_confirmation,
                     :assessor_interface,
-                    application_form,
+                    assessment.application_form,
                     assessment,
                     reference_request,
                   ]
+    end
+
+    def resend_email_confirmation
+      @view_object = ReferenceRequestViewObject.new(reference_request:)
     end
 
     private
