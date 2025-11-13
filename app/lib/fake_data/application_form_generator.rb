@@ -162,7 +162,7 @@ class FakeData::ApplicationFormGenerator
             passed: false,
             selected_failure_reasons: {
               assessment_section.failure_reasons.sample => {
-                notes: "",
+                assessor_feedback: "",
               },
             },
           )
@@ -211,13 +211,21 @@ class FakeData::ApplicationFormGenerator
                   .sample(rand(1..3))
                   .index_with do |failure_reason|
                     {
-                      notes: Faker::Lorem.sentence,
-                      work_histories:
+                      assessor_feedback: Faker::Lorem.sentence,
+                      work_history_failure_reasons:
                         (
                           if FailureReasons.chooses_work_history?(
                                failure_reason,
                              )
-                            application_form.work_histories
+                            application_form
+                              .work_histories
+                              .teaching_role
+                              .map do |work_history|
+                              {
+                                work_history_id: work_history.id,
+                                assessor_feedback: "Cannot find referee.",
+                              }
+                            end
                           else
                             []
                           end
