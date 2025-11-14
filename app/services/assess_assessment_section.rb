@@ -36,20 +36,21 @@ class AssessAssessmentSection
   delegate :application_form, to: :assessment
 
   def update_selected_failure_reasons
-    selected_keys = selected_failure_reasons.keys
-
-    assessment_section
-      .selected_failure_reasons
-      .where.not(key: selected_keys)
-      .destroy_all
+    assessment_section.selected_failure_reasons.destroy_all
 
     selected_failure_reasons.each do |key, assessor_feedback|
       failure_reason =
         assessment_section.selected_failure_reasons.find_or_initialize_by(key:)
 
-      failure_reason.update!(assessor_feedback: assessor_feedback[:notes])
-      next unless assessor_feedback[:work_histories]
-      failure_reason.update!(work_histories: assessor_feedback[:work_histories])
+      failure_reason.update!(
+        assessor_feedback: assessor_feedback[:assessor_feedback],
+      )
+
+      next unless assessor_feedback[:work_history_failure_reasons]
+
+      failure_reason.selected_failure_reasons_work_histories.create!(
+        assessor_feedback[:work_history_failure_reasons],
+      )
     end
   end
 
