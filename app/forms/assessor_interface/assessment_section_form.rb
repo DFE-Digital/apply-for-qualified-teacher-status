@@ -98,7 +98,12 @@ class AssessorInterface::AssessmentSectionForm
   end
 
   def work_histories
-    assessment_section.assessment.application_form.work_histories.teaching_role
+    @work_histories ||=
+      assessment_section
+        .assessment
+        .application_form
+        .work_histories
+        .teaching_role
   end
 
   class << self
