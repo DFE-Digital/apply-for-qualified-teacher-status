@@ -107,13 +107,13 @@ RSpec.describe "Teacher qualifications", type: :system do
 
   def and_i_see_the_age_subject_restrictions
     expect(teacher_new_qualification_page).to have_content(
-      "Age and subject restrictions",
+      "Additional age and subject requirements",
     )
   end
 
   def and_i_dont_see_the_age_subject_restrictions
     expect(teacher_new_qualification_page).not_to have_content(
-      "Age and subject restrictions",
+      "Additional age and subject requirements",
     )
   end
 
