@@ -1,0 +1,11 @@
+<% title = "Reference request email resent" %>
+<% content_for :page_title, title %>
+<% content_for :back_link_url, verify_assessor_interface_application_form_assessment_reference_request_path(@assessment.application_form, @assessment, @reference_request) %>
+
+<h1 class="govuk-heading-xl"><%= title %></h1>
+<p class="govuk-body">You have resent the reference request. You can view when the reference was emailed in the application timeline.</p>
+
+<div class="govuk-button-group">
+  <%= govuk_button_link_to "Back to application list", %i[assessor_interface application_forms] %>
+  <%= govuk_button_link_to "See application overview", [:assessor_interface, @assessment.application_form], secondary: true %>
+</div>
