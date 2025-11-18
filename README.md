@@ -6,11 +6,11 @@ A service that allows international teachers to apply for qualified teacher stat
 
 ### Links
 
-| Name           | URL                                                                                                            |
-| -------------- | -------------------------------------------------------------------------------------------------------------- |
-| Production     | [apply-for-qts-in-england.education.gov.uk](https://apply-for-qts-in-england.education.gov.uk)                 |
-| Test           | [test.apply-for-qts-in-england.education.gov.uk](https://test.apply-for-qts-in-england.education.gov.uk)       |
-| Development    | [dev.apply-for-qts-in-england.education.gov.uk](https://dev.apply-for-qts-in-england.education.gov.uk)         |
+| Name        | URL                                                                                                      |
+| ----------- | -------------------------------------------------------------------------------------------------------- |
+| Production  | [apply-for-qts-in-england.education.gov.uk](https://apply-for-qts-in-england.education.gov.uk)           |
+| Test        | [test.apply-for-qts-in-england.education.gov.uk](https://test.apply-for-qts-in-england.education.gov.uk) |
+| Development | [dev.apply-for-qts-in-england.education.gov.uk](https://dev.apply-for-qts-in-england.education.gov.uk)   |
 
 ### Details and configuration
 
