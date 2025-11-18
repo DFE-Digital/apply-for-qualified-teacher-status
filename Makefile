@@ -29,11 +29,6 @@ review: test-cluster ## Specify review configuration
 test: test-cluster ## Specify test configuration
 	$(eval include global_config/test.sh)
 
-.PHONY: preproduction
-preproduction: set-test-azure-subscription test-cluster ## Specify preproduction configuration
-	$(eval include global_config/preprod.sh)
-	$(eval DOMAINS_TERRAFORM_BACKEND_KEY=afqtsdomains_preprod.tfstate)
-
 .PHONY: production
 production: set-production-azure-subscription production-cluster ## Specify production configuration
 	$(eval include global_config/production.sh)
