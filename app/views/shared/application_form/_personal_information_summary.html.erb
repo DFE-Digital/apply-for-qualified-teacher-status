@@ -29,6 +29,10 @@
     name_change_document: application_form.has_alternative_name? ? {
       href: [:teacher_interface, :application_form, application_form.name_change_document]
     } : nil,
+    national_insurance_number: {
+      title: "National Insurance number",
+      href: %i[name_and_date_of_birth teacher_interface application_form personal_information]
+    },
   },
   changeable:
 )) %>
