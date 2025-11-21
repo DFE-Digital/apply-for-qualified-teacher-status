@@ -165,6 +165,18 @@
     - domain
     - application_forms_count
     - updated_at
+  :email_deliveries:
+    - application_form_id
+    - created_at
+    - to
+    - further_information_request_id
+    - id
+    - mailer_action_name
+    - mailer_class_name
+    - prioritisation_reference_request_id
+    - reference_request_id
+    - subject
+    - updated_at
   :english_language_providers:
     - accepted_tests
     - b2_level_requirement

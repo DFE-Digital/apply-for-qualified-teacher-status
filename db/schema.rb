@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_11_154137) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_21_101117) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -253,6 +253,23 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_11_154137) do
     t.datetime "updated_at", null: false
     t.index ["created_by_id"], name: "index_eligibility_domains_on_created_by_id"
     t.index ["domain"], name: "index_eligibility_domains_on_domain", unique: true
+  end
+
+  create_table "email_deliveries", force: :cascade do |t|
+    t.bigint "application_form_id"
+    t.bigint "reference_request_id"
+    t.bigint "prioritisation_reference_request_id"
+    t.bigint "further_information_request_id"
+    t.string "mailer_class_name", default: "", null: false
+    t.string "mailer_action_name", default: "", null: false
+    t.string "to", default: "", null: false
+    t.string "subject", default: "", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["application_form_id"], name: "index_email_deliveries_on_application_form_id"
+    t.index ["further_information_request_id"], name: "index_email_deliveries_on_further_information_request_id"
+    t.index ["prioritisation_reference_request_id"], name: "index_email_deliveries_on_prioritisation_reference_request_id"
+    t.index ["reference_request_id"], name: "index_email_deliveries_on_reference_request_id"
   end
 
   create_table "english_language_providers", force: :cascade do |t|
@@ -727,6 +744,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_11_154137) do
   add_foreign_key "consent_requests", "qualifications"
   add_foreign_key "eligibility_checks", "regions"
   add_foreign_key "eligibility_domains", "staff", column: "created_by_id"
+  add_foreign_key "email_deliveries", "application_forms"
+  add_foreign_key "email_deliveries", "further_information_requests"
+  add_foreign_key "email_deliveries", "prioritisation_reference_requests"
+  add_foreign_key "email_deliveries", "reference_requests"
   add_foreign_key "further_information_request_items", "work_histories"
   add_foreign_key "notes", "application_forms"
   add_foreign_key "notes", "eligibility_domains"
