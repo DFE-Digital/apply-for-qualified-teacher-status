@@ -85,7 +85,7 @@ class PrioritisationReferenceRequest < ApplicationRecord
       application_form:,
       mailer: RefereeMailer,
       action: :prioritisation_reference_reminder,
-      reference_request: self,
+      prioritisation_reference_request: self,
       number_of_reminders_sent:,
     )
   end
@@ -95,7 +95,7 @@ class PrioritisationReferenceRequest < ApplicationRecord
       application_form:,
       mailer: RefereeMailer,
       action: :prioritisation_reference_requested,
-      reference_request: self,
+      prioritisation_reference_request: self,
     )
   end
 

@@ -3,7 +3,10 @@
 class RefereeMailer < ApplicationMailer
   include ApplicationFormHelper
 
-  before_action :set_reference_request, :set_work_history, :set_application_form
+  before_action :set_reference_request,
+                :set_prioritisation_reference_request,
+                :set_work_history,
+                :set_application_form
 
   helper :application_form
 
@@ -65,10 +68,32 @@ class RefereeMailer < ApplicationMailer
     params[:reference_request]
   end
 
-  delegate :application_form, :work_history, to: :reference_request
+  def prioritisation_reference_request
+    params[:prioritisation_reference_request]
+  end
+
+  def work_history
+    if reference_request
+      reference_request.work_history
+    else
+      prioritisation_reference_request.work_history
+    end
+  end
+
+  def application_form
+    if reference_request
+      reference_request.application_form
+    else
+      prioritisation_reference_request.application_form
+    end
+  end
 
   def set_reference_request
     @reference_request = reference_request
+  end
+
+  def set_prioritisation_reference_request
+    @prioritisation_reference_request = prioritisation_reference_request
   end
 
   def set_work_history
