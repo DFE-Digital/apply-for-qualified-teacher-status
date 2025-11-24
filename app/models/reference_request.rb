@@ -59,6 +59,8 @@ class ReferenceRequest < ApplicationRecord
 
   belongs_to :work_history
 
+  has_many :email_deliveries
+
   scope :remindable,
         -> do
           where

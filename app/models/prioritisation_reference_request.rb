@@ -44,6 +44,8 @@ class PrioritisationReferenceRequest < ApplicationRecord
   belongs_to :work_history
   belongs_to :prioritisation_work_history_check
 
+  has_many :email_deliveries
+
   scope :respondable,
         -> do
           joins(:assessment).requested.not_received.not_reviewed.where(
