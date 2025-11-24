@@ -11,6 +11,12 @@ RSpec.describe AssessorInterface::AssessmentSectionForm, type: :model do
     )
   end
 
+  let!(:work_histories) do
+    create_list :work_history,
+                2,
+                application_form: assessment_section.assessment.application_form
+  end
+
   let(:assessment_section) do
     create(
       :assessment_section,
@@ -52,6 +58,10 @@ RSpec.describe AssessorInterface::AssessmentSectionForm, type: :model do
           passed: false,
           "#{further_information_failure_reason}_checked": true,
           "#{work_history_failure_reason}_checked": true,
+          "#{work_history_failure_reason}_work_history_#{work_histories.first.id}_checked":
+            true,
+          "#{work_history_failure_reason}_work_history_#{work_histories.last.id}_checked":
+            true,
           "#{decline_failure_reason}_checked": true,
         }
       end
@@ -63,14 +73,39 @@ RSpec.describe AssessorInterface::AssessmentSectionForm, type: :model do
       end
 
       it do
-        expect(subject).to validate_presence_of(
-          :"#{work_history_failure_reason}_notes",
-        )
+        work_histories.each do |work_history|
+          expect(subject).to validate_presence_of(
+            :"#{work_history_failure_reason}_work_history_#{work_history.id}_notes",
+          ).with_message("Enter a note to the applicant")
+        end
       end
 
       it do
         expect(subject).not_to validate_presence_of(
           :"#{decline_failure_reason}_notes",
+        )
+      end
+    end
+
+    context "when no work history items are checked work history reference failure is selected" do
+      let(:attributes) do
+        {
+          passed: false,
+          "#{further_information_failure_reason}_checked": true,
+          "#{work_history_failure_reason}_checked": true,
+          "#{decline_failure_reason}_checked": true,
+        }
+      end
+
+      it do
+        subject.valid?
+
+        expect(
+          subject.errors[
+            :"#{work_history_failure_reason}_work_history_checked"
+          ],
+        ).to include(
+          "Select at least one school that we were unable to verify the reference for",
         )
       end
     end
@@ -81,9 +116,14 @@ RSpec.describe AssessorInterface::AssessmentSectionForm, type: :model do
           passed: false,
           "#{further_information_failure_reason}_checked": true,
           "#{further_information_failure_reason}_notes": "Notes.",
-          "#{work_history_failure_reason}_checked": true,
-          "#{work_history_failure_reason}_notes": "Notes.",
-          "#{work_history_failure_reason}_work_history_checked": [1],
+          "#{work_history_failure_reason}_work_history_#{work_histories.first.id}_checked":
+            true,
+          "#{work_history_failure_reason}_work_history_#{work_histories.first.id}_notes":
+            "Notes.",
+          "#{work_history_failure_reason}_work_history_#{work_histories.last.id}_checked":
+            true,
+          "#{work_history_failure_reason}_work_history_#{work_histories.last.id}_notes":
+            "Notes.",
           "#{decline_failure_reason}_checked": true,
           "#{decline_failure_reason}_notes": "Notes",
         }
@@ -113,7 +153,11 @@ RSpec.describe AssessorInterface::AssessmentSectionForm, type: :model do
 
       it do
         expect(subject).to eq(
-          { further_information_failure_reason.to_s => { notes: "Notes." } },
+          {
+            further_information_failure_reason.to_s => {
+              assessor_feedback: "Notes.",
+            },
+          },
         )
       end
     end
@@ -156,7 +200,13 @@ RSpec.describe AssessorInterface::AssessmentSectionForm, type: :model do
           :passed => false,
           :"#{further_information_failure_reason}_checked" => true,
           :"#{further_information_failure_reason}_notes" => "Notes.",
-          :"#{work_history_failure_reason}_checked" => false,
+          :"#{work_history_failure_reason}_checked" => true,
+          :"#{work_history_failure_reason}_work_history_#{work_histories.first.id}_checked" =>
+            true,
+          :"#{work_history_failure_reason}_work_history_#{work_histories.first.id}_notes" =>
+            "Notes.",
+          :"#{work_history_failure_reason}_work_history_#{work_histories.last.id}_checked" =>
+            false,
           "#{decline_failure_reason}_checked" => false,
         }
       end
@@ -170,7 +220,15 @@ RSpec.describe AssessorInterface::AssessmentSectionForm, type: :model do
           passed: false,
           selected_failure_reasons: {
             further_information_failure_reason.to_s => {
-              notes: "Notes.",
+              assessor_feedback: "Notes.",
+            },
+            work_history_failure_reason.to_s => {
+              work_history_failure_reasons: [
+                {
+                  assessor_feedback: "Notes.",
+                  work_history_id: work_histories.first.id,
+                },
+              ],
             },
           },
         )

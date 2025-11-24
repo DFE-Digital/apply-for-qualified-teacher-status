@@ -30,9 +30,11 @@ class SelectedFailureReason < ApplicationRecord
   has_one :assessment, through: :assessment_section
   has_one :application_form, through: :assessment
 
+  has_many :selected_failure_reasons_work_histories
+  has_and_belongs_to_many :work_histories
+
   validates :key, presence: true
   validates :key, inclusion: { in: FailureReasons::ALL }
-  has_and_belongs_to_many :work_histories
 
   scope :declinable, -> { where(key: FailureReasons::DECLINABLE) }
 end
