@@ -42,7 +42,7 @@ en:
         eligibility_interface/work_experience_in_england_form:
           attributes:
             eligible:
-              inclusion: Tell us whether you have worked in a valid educational setting in England within the last 12 months
+              inclusion: Tell us whether you have worked in a valid educational setting in England for any length of time in the last 12 months
 
     attributes:
       eligibility_check:
