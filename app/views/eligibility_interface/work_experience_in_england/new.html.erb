@@ -1,9 +1,9 @@
 <%
-  legend = "Have you worked in a valid educational setting in England within the last 12 months?"
+  legend = "Have you worked in a valid educational setting in England during the last 12 months?"
   hint = "
-    Your application will be prioritised #{ 'and subject restrictions will be removed ' if @form.eligibility_check.qualified_for_subject_required? }if you have valid educational work experience in England within the last 12 months that we can confirm with your references.
+    Your application may be prioritised #{ 'and additional subject requirements may be removed ' if @form.eligibility_check.qualified_for_subject_required? }if you have gained valid educational work experience in England for any length of time in the last 12 months.​
     <br /><br />
-    We will only consider the following settings and roles worked in England within the last 12 months:
+    The valid roles and settings we'll accept are:
     <ul class='govuk-list govuk-list--bullet govuk-hint'>
       <li>a teacher, supply teacher, cover supervisor or teaching assistant in a #{govuk_link_to('state school', 'https://get-information-schools.service.gov.uk/Search?SelectedTab=Establishments', new_tab: true)}</li>
       <li>a teacher or supply teacher in an #{govuk_link_to('independent school', 'https://get-information-schools.service.gov.uk/Search?SelectedTab=Establishments', new_tab: true)}</li>
@@ -23,7 +23,7 @@
   <%= f.govuk_collection_radio_buttons(
     :eligible,
     [
-      OpenStruct.new(label: 'Yes, I have valid work experience in England', value: true),
+      OpenStruct.new(label: 'Yes, I have valid experience in England', value: true),
       OpenStruct.new(label: 'No', value: false)
     ],
     :value,
