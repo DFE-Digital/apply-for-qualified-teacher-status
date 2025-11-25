@@ -29,7 +29,7 @@ in the free tier
 
 Update: The [dfe_analytics](https://github.com/DFE-Digital/terraform-modules/tree/main/aks/dfe_analytics) terraform module now automates these steps.
 
-You should create separate data sets for each environment (dev/preprod/prod).
+You should create separate data sets for each environment (dev/test/prod).
 
 1. Select the BigQuery instance
 1. Go to the Analysis -> SQL Workspace section
