@@ -14,12 +14,11 @@ A service that allows international teachers to apply for qualified teacher stat
 
 ### Details and configuration
 
-| Name           | Description                                   | Notify API key |
-| -------------- | --------------------------------------------- | -------------- |
-| Production     | Public site                                   | Live           |
-| Pre-production | For internal use by DfE to test deploys       | Live           |
-| Test           | For external use by 3rd parties to run audits | Live           |
-| Development    | For internal use by DfE for testing           | Test           |
+| Name        | Description                              | Notify API key |
+| ----------- | ---------------------------------------- | -------------- |
+| Production  | Public site                              | Live           |
+| Test        | For internal use by DfE for testing      | Live           |
+| Development | For internal use by dev team for testing | Test           |
 
 ## Dependencies
 

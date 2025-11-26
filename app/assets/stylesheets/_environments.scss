@@ -1,6 +1,5 @@
 $app-colour-development: govuk-colour("dark-grey");
 $app-colour-test: govuk-colour("orange");
-$app-colour-preprod: govuk-colour("bright-purple");
 
 .app-header--dev .govuk-header__container,
 .app-header--development .govuk-header__container {
@@ -18,14 +17,4 @@ $app-colour-preprod: govuk-colour("bright-purple");
 
 .app-environment-tag--test {
   background-color: $app-colour-test;
-}
-
-.app-header--preprod .govuk-header__container,
-.app-header--preproduction .govuk-header__container {
-  border-bottom-color: $app-colour-preprod;
-}
-
-.app-environment-tag--preprod,
-.app-environment-tag--preproduction {
-  background-color: $app-colour-preprod;
 }

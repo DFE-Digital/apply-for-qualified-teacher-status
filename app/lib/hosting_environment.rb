@@ -7,20 +7,12 @@ module HostingEnvironment
     end
 
     def phase
-      if production?
-        "Beta"
-      elsif preproduction?
-        "Pre-production"
-      else
-        name.capitalize
-      end
+      production? ? "Beta" : name.capitalize
     end
 
     def host
       if production?
         "apply-for-qts-in-england.education.gov.uk"
-      elsif preproduction?
-        "preprod.apply-for-qts-in-england.education.gov.uk"
       elsif review?
         "apply-for-qts-#{value}-web.test.teacherservices.cloud"
       elsif development?
@@ -32,10 +24,6 @@ module HostingEnvironment
 
     def production?
       name == "production"
-    end
-
-    def preproduction?
-      name == "preproduction"
     end
 
     def development?
