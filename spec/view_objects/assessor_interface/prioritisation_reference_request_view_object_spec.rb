@@ -78,11 +78,11 @@ RSpec.describe AssessorInterface::PrioritisationReferenceRequestViewObject do
       view_object.last_sent_at_local_timestamp
     end
 
-    context "when no relevant timeline events or reminder emails have been sent" do
+    context "when no relevant email deliveries or reminder emails have been recorded" do
       it { is_expected.to eq(prioritisation_reference_request.created_at) }
     end
 
-    context "when there are a timeline events for the prioritisation reference request" do
+    context "when there are a email deliveries for the prioritisation reference request" do
       let(:prioritisation_reference_request) do
         create(
           :prioritisation_reference_request,
@@ -91,30 +91,26 @@ RSpec.describe AssessorInterface::PrioritisationReferenceRequestViewObject do
         )
       end
 
-      let!(:timeline_event_one) do
-        create :timeline_event,
-               :email_sent,
+      let!(:email_delivery_one) do
+        create :email_delivery,
                application_form:,
-               mailer_class_name: "RefereeMailer",
-               mailer_action_name: "prioritisation_reference_requested",
+               prioritisation_reference_request:,
                created_at: 10.days.ago
       end
 
-      let!(:timeline_event_two) do
-        create :timeline_event,
-               :email_sent,
+      let!(:email_delivery_two) do
+        create :email_delivery,
                application_form:,
-               mailer_class_name: "RefereeMailer",
-               mailer_action_name: "prioritisation_reference_requested",
-               created_at: timeline_event_one.created_at + 5.days
+               prioritisation_reference_request:,
+               created_at: email_delivery_one.created_at + 5.days
       end
 
-      it "returns the latest timeline event" do
-        expect(subject).to eq(timeline_event_two.created_at)
+      it "returns the latest email delivery created_at" do
+        expect(subject).to eq(email_delivery_two.created_at)
       end
     end
 
-    context "when there are a mix of timeline events and reminder emails" do
+    context "when there are a mix of email deliveries and reminder emails" do
       let(:prioritisation_reference_request) do
         create(
           :prioritisation_reference_request,
@@ -130,22 +126,18 @@ RSpec.describe AssessorInterface::PrioritisationReferenceRequestViewObject do
       end
 
       before do
-        create :timeline_event,
-               :email_sent,
+        create :email_delivery,
                application_form:,
-               mailer_class_name: "RefereeMailer",
-               mailer_action_name: "prioritisation_reference_requested",
+               prioritisation_reference_request:,
                created_at: 10.days.ago
 
-        create :timeline_event,
-               :email_sent,
+        create :email_delivery,
                application_form:,
-               mailer_class_name: "RefereeMailer",
-               mailer_action_name: "prioritisation_reference_requested",
+               prioritisation_reference_request:,
                created_at: 5.days.ago
       end
 
-      it "returns the latest timestamp between timeline events and reminder emails" do
+      it "returns the latest timestamp between email delivery and reminder emails" do
         expect(subject).to eq(reminder_email.created_at)
       end
     end

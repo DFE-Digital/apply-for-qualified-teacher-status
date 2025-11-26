@@ -3,6 +3,8 @@
 class ApplicationMailer < Mail::Notify::Mailer
   default from: I18n.t("service.email.enquiries")
 
+  after_deliver :enqueue_email_delivery_audit
+
   GOVUK_NOTIFY_TEMPLATE_ID =
     ENV.fetch(
       "GOVUK_NOTIFY_TEMPLATE_ID_APPLICATION",
@@ -26,5 +28,17 @@ class ApplicationMailer < Mail::Notify::Mailer
     end
 
     raise
+  end
+
+  private
+
+  def enqueue_email_delivery_audit
+    EmailDeliveryAuditJob.perform_later(
+      headers["To"].value,
+      headers["Subject"].value,
+      mailer_name,
+      action_name,
+      params,
+    )
   end
 end
