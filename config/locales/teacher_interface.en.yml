@@ -3,6 +3,13 @@ en:
     application_forms:
       show:
         declined:
+          sections:
+            personal_information: About you
+            qualifications: Your qualifications
+            age_range_subjects: The age range and subjects you can teach
+            english_language_proficiency: Your English language proficiency
+            work_history: Your work history
+            professional_standing: Proof that you’re recognised as a teacher
           failure_reasons:
             additional_degree_certificate_illegible: There is a problem with your additional degree certificate (or translation).
             additional_degree_transcript_illegible: There is a problem with your additional degree transcript (or translation).

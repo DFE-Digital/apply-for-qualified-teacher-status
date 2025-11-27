@@ -41,6 +41,11 @@ class FailureReasons
     WORK_HISTORY_DURATION = "work_history_duration",
   ].freeze
 
+  CANNOT_REAPPLY_DECLINE_REASONS = [
+    APPLICANT_ALREADY_QTS,
+    AUTHORISATION_TO_TEACH,
+  ].freeze
+
   FURTHER_INFORMATIONABLE = [
     ADDITIONAL_DEGREE_CERTIFICATE_ILLEGIBLE =
       "additional_degree_certificate_illegible",
@@ -144,6 +149,10 @@ class FailureReasons
 
   def self.decline?(failure_reason)
     DECLINABLE.include?(failure_reason.to_s)
+  end
+
+  def self.decline_cannot_reapply?(failure_reason)
+    CANNOT_REAPPLY_DECLINE_REASONS.include?(failure_reason.to_s)
   end
 
   def self.further_information?(failure_reason)

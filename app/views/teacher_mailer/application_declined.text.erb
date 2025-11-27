@@ -2,36 +2,63 @@
 
 Dear <%= application_form_full_name(@application_form) %>,
 
-Thank you for applying for qualified teacher status (QTS) and for your patience while we reviewed your application. Unfortunately, your application has been declined.
+Thank you for applying for qualified teacher status (QTS) and for your patience while we reviewed your application. Your application has been declined.
 
-# Reason for decline
+# Reasons your application has been declined
 
 <% @view_object.declined_reasons.each do |title, reasons| %>
-<% if title.present? %>
-## <%= title %>
+<% next if reasons.empty? %>
 
-<% end %>
+<% if title.empty? %>
 <% reasons.each do |reason| %>
 <%= reason[:name] %>
+<% end %>
+<% else %>
+## <%= title %>
 
+<% reasons.each do |reason| %>
+^ <%= reason[:name] %>
 <% if reason[:assessor_note].present? %>
-## Assessor notes
+Note from assessor
 <%= reason[:assessor_note] %>
+<% end %>
+<% end %>
+<% end %>
+<% end %>
 
-<% end %>
-<% end %>
-<% end %>
-<% unless @view_object.declined_cannot_reapply? || @view_object.from_ineligible_country? %>
+<% unless @view_object.declined_cannot_reapply? %>
 # What you can do next
+You can explore [other routes into teaching](https://getintoteaching.education.gov.uk/routes-into-teaching).
 
-You’ll be able to make a new application once you've addressed all decline reasons given. If you reapply for QTS, you’ll not be able to review the details of your previous application.
+<% unless @view_object.from_ineligible_country? %>
+Or, you’ll be able to make a new application once you've addressed all decline reasons given. If you reapply for QTS, you’ll not be able to review the details of your previous application.
+<% end %>
+<% end %>
 
-You may want to explore [other routes to getting QTS](https://www.gov.uk/government/publications/apply-for-qualified-teacher-status-qts-if-you-teach-outside-the-uk/routes-to-qualified-teacher-status-qts-for-teachers-and-those-with-teaching-experience-outside-the-uk).
+<% unless @view_object.from_ineligible_country? %>
+<% unless @view_object.declined_cannot_reapply? %>
+<% if @view_object.has_any_further_information_decline_reasons? %>
+# Information we’ll need if you reapply
 
+<% @view_object.assessment_further_information_reasons.each do |title, reasons| %>
+<% next if reasons.empty? %>
+
+<% if title.present? %>
+## <%= title %>
+<% end %>
+
+<% reasons.each do |reason| %>
+^ <%= reason[:name] %>
+<% if reason[:assessor_note].present? %>
+Note from assessor:
+<%= reason[:assessor_note] %>
+<% end %>
+<% end %>
+<% end %>
+<% end %>
 [Apply again](<%= new_teacher_interface_application_form_url %>)
 
 <% end %>
-<% unless @view_object.from_ineligible_country? %>
 # Decision review
 
 Applicants who have been declined for QTS are entitled to a review of the decline decision by a senior Professional Recognition Manager.

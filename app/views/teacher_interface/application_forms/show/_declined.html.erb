@@ -1,39 +1,43 @@
-<h2 class="govuk-heading-l">Your QTS application has been declined</h2>
+<h2 class="govuk-heading-xl">Your QTS application has been declined</h2>
 
-<p class="govuk-body">Thank you for applying for qualified teacher status (QTS) and for your patience while we reviewed your application. Unfortunately, your application has been declined.</p>
+<p class="govuk-body">Thank you for applying for qualified teacher status (QTS) and for your patience while we reviewed your application. Your application has been declined.</p>
 
-<h3 class="govuk-heading-m">Reason for decline</h3>
+<h3 class="govuk-heading-l">Reasons your application has been declined</h3>
 
 <% view_object.declined_reasons.each do |title, reasons| %>
-  <% if title.present? %>
-    <h4 class="govuk-heading-s"><%= title %></h4>
-  <% end %>
+  <% next if reasons.empty? %>
 
-  <% if reasons.size == 1 %>
-    <%= simple_format reasons.first[:name] %>
-    <% if reasons.first[:assessor_note].present? %>
-      <h5 class="govuk-heading-s">Assessor notes</h5>
-      <%= simple_format reasons.first[:assessor_note] %>
+  <% if title.empty? %>
+    <% reasons.each do |reason| %>
+      <%= simple_format reason[:name] %>
     <% end %>
   <% else %>
-    <ul class="govuk-list govuk-list--bullet">
-      <% reasons.each do |reason| %>
-        <li>
-          <%= simple_format reason[:name] %>
-          <% if reason[:assessor_note].present? %>
-          <h5 class="govuk-heading-s">Assessor notes</h5>
-            <%= simple_format reason[:assessor_note] %>
-          <% end %>
-        </li>
+    <h4 class="govuk-heading-m"><%= title %></h4>
+
+    <% reasons.each do |reason| %>
+      <%= govuk_inset_text do %>
+        <%= reason[:name] %>
       <% end %>
-    </ul>
+      <% if reason[:assessor_note].present? %>
+        <p class="govuk-body govuk-!-margin-bottom-0">Note from assessor:</p>
+        <%= simple_format reason[:assessor_note] %>
+      <% end %>
+    <% end %>
   <% end %>
 <% end %>
 
 <%= render "teacher_interface/application_forms/show/what_can_you_do_next", view_object: %>
 
 <% unless view_object.from_ineligible_country? %>
-  <h3 class="govuk-heading-m">Decision review</h3>
+  <% unless view_object.declined_cannot_reapply? %>
+    <% if view_object.has_any_further_information_decline_reasons? %>
+      <%= render "teacher_interface/application_forms/show/information_if_you_reapply", view_object: %>
+    <% end %>
+
+    <%= govuk_start_button(text: "Apply again", href: %i[new teacher_interface application_form], as_button: true) %>
+  <% end %>
+
+  <h3 class="govuk-heading-l">Decision review</h3>
 
   <p class="govuk-body">Applicants who have been declined for QTS are entitled to a review of the decline decision by a senior Professional Recognition Manager.</p>
 
