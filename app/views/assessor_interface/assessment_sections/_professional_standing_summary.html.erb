@@ -6,7 +6,7 @@
   <%= render "shared/application_form/written_statement_summary", application_form:, changeable: false %>
 <% end %>
 
-<% if (professional_standing_request = assessment.professional_standing_request).present? %>
+<% if (professional_standing_request = assessment.professional_standing_request).present? && application_form.teaching_authority_provides_written_statement %>
   <%= render(CheckYourAnswersSummary::Component.new(
     id: "professional-standing-request",
     model: professional_standing_request,
