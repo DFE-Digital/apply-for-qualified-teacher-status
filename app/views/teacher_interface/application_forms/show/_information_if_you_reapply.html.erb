@@ -1,0 +1,19 @@
+<h3 class="govuk-heading-l">Information we’ll need if you reapply</h3>
+
+<% view_object.assessment_further_information_reasons.each do |title, reasons| %>
+  <% next if reasons.empty? %>
+
+  <% if title.present? %>
+    <h4 class="govuk-heading-m"><%= title %></h4>
+  <% end %>
+
+  <% reasons.each do |reason| %>
+    <%= govuk_inset_text do %>
+      <%= reason[:name] %>
+    <% end %>
+    <% if reason[:assessor_note].present? %>
+      <p class="govuk-body govuk-!-margin-bottom-0">Note from assessor:</p>
+      <%= simple_format reason[:assessor_note] %>
+    <% end %>
+  <% end %>
+<% end %>

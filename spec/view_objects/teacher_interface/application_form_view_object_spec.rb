@@ -380,7 +380,7 @@ RSpec.describe TeacherInterface::ApplicationFormViewObject do
       it { is_expected.to eq({ "" => [{ name: "A note." }] }) }
     end
 
-    context "with failure reasons" do
+    context "with failure reasons that include FI and Declines" do
       let(:assessment_section) do
         create(
           :assessment_section,
@@ -390,12 +390,17 @@ RSpec.describe TeacherInterface::ApplicationFormViewObject do
           selected_failure_reasons: [
             build(
               :selected_failure_reason,
-              key: FailureReasons::QUALIFIED_TO_TEACH,
+              key: FailureReasons::PASSPORT_DOCUMENT_EXPIRED,
               assessor_feedback: "A note.",
             ),
             build(
               :selected_failure_reason,
-              key: FailureReasons::AGE_RANGE,
+              key: FailureReasons::DUPLICATE_APPLICATION,
+              assessor_feedback: "A note.",
+            ),
+            build(
+              :selected_failure_reason,
+              key: FailureReasons::PASSPORT_DOCUMENT_ILLEGIBLE,
               assessor_feedback: "A note.",
             ),
           ],
@@ -404,20 +409,76 @@ RSpec.describe TeacherInterface::ApplicationFormViewObject do
 
       before { assessment_section.selected_failure_reasons }
 
-      it do
+      it "only returns the declined reasons" do
         expect(subject).to eq(
           {
-            "Personal information" => [
+            "About you" => [
               {
                 assessor_note: "A note.",
                 name:
-                  "The age range you are qualified to teach does not fall " \
-                    "within the requirements of QTS.",
+                  "Your passport had already expired when the application was submitted.",
               },
               {
+                assessor_note: "A note.",
+                name: "You already have an application in progress.",
+              },
+            ],
+          },
+        )
+      end
+    end
+
+    context "with failure reasons that include declines that prevent applicant from reapplying" do
+      let(:assessment_section) do
+        create(
+          :assessment_section,
+          :personal_information,
+          :failed,
+          assessment:,
+          selected_failure_reasons: [
+            build(
+              :selected_failure_reason,
+              key: FailureReasons::PASSPORT_DOCUMENT_EXPIRED,
+              assessor_feedback: "A note.",
+            ),
+            build(
+              :selected_failure_reason,
+              key: FailureReasons::DUPLICATE_APPLICATION,
+              assessor_feedback: "A note.",
+            ),
+            build(
+              :selected_failure_reason,
+              key: FailureReasons::PASSPORT_DOCUMENT_ILLEGIBLE,
+              assessor_feedback: "A note.",
+            ),
+            build(
+              :selected_failure_reason,
+              key: FailureReasons::AUTHORISATION_TO_TEACH,
+              assessor_feedback: "A note.",
+            ),
+          ],
+        )
+      end
+
+      before { assessment_section.selected_failure_reasons }
+
+      it "returns all declined reasons" do
+        expect(subject).to eq(
+          {
+            "About you" => [
+              {
+                assessor_note: "A note.",
                 name:
-                  "We were not provided with enough evidence to confirm you are " \
-                    "qualified to teach at state or government schools.",
+                  "Your passport had already expired when the application was submitted.",
+              },
+              {
+                assessor_note: "A note.",
+                name: "You already have an application in progress.",
+              },
+              {
+                assessor_note: "A note.",
+                name:
+                  "Sanctions or restrictions were detected on your professional record.",
               },
             ],
           },
@@ -453,6 +514,45 @@ RSpec.describe TeacherInterface::ApplicationFormViewObject do
             :assessment_section,
             :personal_information,
             :declines_with_already_qts,
+            assessment:,
+          )
+        end
+
+        it { is_expected.to be true }
+      end
+
+      context "with suitability" do
+        before do
+          create(
+            :assessment_section,
+            :personal_information,
+            :declines_with_suitability,
+            assessment:,
+          )
+        end
+
+        it { is_expected.to be true }
+      end
+
+      context "with suitability previously declined" do
+        before do
+          create(
+            :assessment_section,
+            :personal_information,
+            :declines_with_suitability_previously_declined,
+            assessment:,
+          )
+        end
+
+        it { is_expected.to be true }
+      end
+
+      context "with fraud" do
+        before do
+          create(
+            :assessment_section,
+            :personal_information,
+            :declines_with_fraud,
             assessment:,
           )
         end
@@ -740,6 +840,246 @@ RSpec.describe TeacherInterface::ApplicationFormViewObject do
 
     context "when the feature flag email domains for referees is disabled" do
       it { is_expected.to be false }
+    end
+  end
+
+  describe "#has_any_further_information_decline_reasons?" do
+    subject(:has_any_further_information_decline_reasons?) do
+      view_object.has_any_further_information_decline_reasons?
+    end
+
+    let(:assessment) { create(:assessment, application_form:) }
+
+    context "with failure reasons that includes FI" do
+      let(:assessment_section) do
+        create(
+          :assessment_section,
+          :personal_information,
+          :failed,
+          assessment:,
+          selected_failure_reasons: [
+            build(
+              :selected_failure_reason,
+              key: FailureReasons::PASSPORT_DOCUMENT_EXPIRED,
+              assessor_feedback: "A note.",
+            ),
+            build(
+              :selected_failure_reason,
+              key: FailureReasons::DUPLICATE_APPLICATION,
+              assessor_feedback: "A note.",
+            ),
+            build(
+              :selected_failure_reason,
+              key: FailureReasons::PASSPORT_DOCUMENT_ILLEGIBLE,
+              assessor_feedback: "A note.",
+            ),
+          ],
+        )
+      end
+
+      before { assessment_section.selected_failure_reasons }
+
+      it { is_expected.to be true }
+    end
+
+    context "with failure reasons that includes FI but FI request has already been sent" do
+      let(:assessment_section) do
+        create(
+          :assessment_section,
+          :personal_information,
+          :failed,
+          assessment:,
+          selected_failure_reasons: [
+            build(
+              :selected_failure_reason,
+              key: FailureReasons::PASSPORT_DOCUMENT_EXPIRED,
+              assessor_feedback: "A note.",
+            ),
+            build(
+              :selected_failure_reason,
+              key: FailureReasons::DUPLICATE_APPLICATION,
+              assessor_feedback: "A note.",
+            ),
+            build(
+              :selected_failure_reason,
+              key: FailureReasons::PASSPORT_DOCUMENT_ILLEGIBLE,
+              assessor_feedback: "A note.",
+            ),
+          ],
+        )
+      end
+
+      before do
+        assessment_section.selected_failure_reasons
+
+        create :received_further_information_request, assessment:
+      end
+
+      it { is_expected.to be false }
+    end
+
+    context "with failure reasons that only has decline" do
+      let(:assessment_section) do
+        create(
+          :assessment_section,
+          :personal_information,
+          :failed,
+          assessment:,
+          selected_failure_reasons: [
+            build(
+              :selected_failure_reason,
+              key: FailureReasons::PASSPORT_DOCUMENT_EXPIRED,
+              assessor_feedback: "A note.",
+            ),
+            build(
+              :selected_failure_reason,
+              key: FailureReasons::DUPLICATE_APPLICATION,
+              assessor_feedback: "A note.",
+            ),
+          ],
+        )
+      end
+
+      before { assessment_section.selected_failure_reasons }
+
+      it { is_expected.to be false }
+    end
+
+    context "without any assessment sections failing" do
+      let(:assessment_section) do
+        create(:assessment_section, :personal_information, :passed, assessment:)
+      end
+
+      it { is_expected.to be false }
+    end
+  end
+
+  describe "#assessment_further_information_reasons" do
+    subject(:assessment_further_information_reasons) do
+      view_object.assessment_further_information_reasons
+    end
+
+    let(:assessment) { create(:assessment, application_form:) }
+
+    context "with failure reasons that includes FI" do
+      let(:assessment_section) do
+        create(
+          :assessment_section,
+          :personal_information,
+          :failed,
+          assessment:,
+          selected_failure_reasons: [
+            build(
+              :selected_failure_reason,
+              key: FailureReasons::PASSPORT_DOCUMENT_EXPIRED,
+              assessor_feedback: "A note.",
+            ),
+            build(
+              :selected_failure_reason,
+              key: FailureReasons::DUPLICATE_APPLICATION,
+              assessor_feedback: "A note.",
+            ),
+            build(
+              :selected_failure_reason,
+              key: FailureReasons::PASSPORT_DOCUMENT_ILLEGIBLE,
+              assessor_feedback: "A note.",
+            ),
+          ],
+        )
+      end
+
+      before { assessment_section.selected_failure_reasons }
+
+      it "only returns the FI reasons" do
+        expect(subject).to eq(
+          {
+            "About you" => [
+              {
+                assessor_note: "A note.",
+                name:
+                  "There is a problem with your passport. For example, it’s incorrect, illegible, or incomplete.",
+              },
+            ],
+          },
+        )
+      end
+    end
+
+    context "with failure reasons that includes FI but FI request has already been sent" do
+      let(:assessment_section) do
+        create(
+          :assessment_section,
+          :personal_information,
+          :failed,
+          assessment:,
+          selected_failure_reasons: [
+            build(
+              :selected_failure_reason,
+              key: FailureReasons::PASSPORT_DOCUMENT_EXPIRED,
+              assessor_feedback: "A note.",
+            ),
+            build(
+              :selected_failure_reason,
+              key: FailureReasons::DUPLICATE_APPLICATION,
+              assessor_feedback: "A note.",
+            ),
+            build(
+              :selected_failure_reason,
+              key: FailureReasons::PASSPORT_DOCUMENT_ILLEGIBLE,
+              assessor_feedback: "A note.",
+            ),
+          ],
+        )
+      end
+
+      before do
+        assessment_section.selected_failure_reasons
+
+        create :received_further_information_request, assessment:
+      end
+
+      it "only returns empty object" do
+        expect(subject).to eq({})
+      end
+    end
+
+    context "with failure reasons that only has decline" do
+      let(:assessment_section) do
+        create(
+          :assessment_section,
+          :personal_information,
+          :failed,
+          assessment:,
+          selected_failure_reasons: [
+            build(
+              :selected_failure_reason,
+              key: FailureReasons::PASSPORT_DOCUMENT_EXPIRED,
+              assessor_feedback: "A note.",
+            ),
+            build(
+              :selected_failure_reason,
+              key: FailureReasons::DUPLICATE_APPLICATION,
+              assessor_feedback: "A note.",
+            ),
+          ],
+        )
+      end
+
+      before { assessment_section.selected_failure_reasons }
+
+      it "only returns empty object" do
+        expect(subject).to eq({})
+      end
+    end
+
+    context "without any assessment sections failing" do
+      let(:assessment_section) do
+        create(:assessment_section, :personal_information, :passed, assessment:)
+      end
+
+      it "only returns empty object" do
+        expect(subject).to eq({})
+      end
     end
   end
 end

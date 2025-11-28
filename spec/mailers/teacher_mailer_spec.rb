@@ -77,7 +77,10 @@ RSpec.describe TeacherMailer, type: :mailer do
 
       it { is_expected.to include("Dear First Last") }
       it { is_expected.to include("abc") }
-      it { is_expected.to include("Reason for decline") }
+
+      it do
+        expect(subject).to include("Reasons your application has been declined")
+      end
     end
   end
 

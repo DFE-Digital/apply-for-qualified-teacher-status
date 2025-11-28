@@ -1,13 +1,8 @@
 <% unless view_object.declined_cannot_reapply? %>
-  <h3 class="govuk-heading-m">What you can do next</h3>
+  <h3 class="govuk-heading-l">What you can do next</h3>
+  <p class="govuk-body">You can explore <%= govuk_link_to "other routes into teaching", "https://getintoteaching.education.gov.uk/routes-into-teaching" %>.</p>
 
   <% unless view_object.from_ineligible_country? %>
-    <p class="govuk-body">You’ll be able to make a new application once you've addressed all decline reasons given. If you reapply for QTS, you’ll not be able to review the details of your previous application.</p>  
-  <% end %>
-
-  <p class="govuk-body">You may want to explore <%= govuk_link_to "other routes to getting QTS", "https://www.gov.uk/government/publications/apply-for-qualified-teacher-status-qts-if-you-teach-outside-the-uk/routes-to-qualified-teacher-status-qts-for-teachers-and-those-with-teaching-experience-outside-the-uk" %>.</p>
-
-  <% unless view_object.from_ineligible_country? %>
-    <p class="govuk-body"><%= govuk_button_link_to "Apply again", %i[new teacher_interface application_form] %></p>
+    <p class="govuk-body">Or, you’ll be able to make a new application once you've addressed all decline reasons given. If you reapply for QTS, you’ll not be able to review the details of your previous application.</p>
   <% end %>
 <% end %>
