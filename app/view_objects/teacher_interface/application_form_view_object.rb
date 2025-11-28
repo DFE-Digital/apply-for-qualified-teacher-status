@@ -122,7 +122,7 @@ class TeacherInterface::ApplicationFormViewObject
         ],
       }
     elsif assessment_declined_reasons.present?
-      assessment_declined_reasons.sort
+      assessment_declined_reasons.sort.to_h
     elsif further_information_request&.expired?
       {
         "" => [
