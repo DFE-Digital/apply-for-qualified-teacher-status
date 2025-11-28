@@ -510,6 +510,45 @@ RSpec.describe TeacherInterface::ApplicationFormViewObject do
 
         it { is_expected.to be true }
       end
+
+      context "with suitability" do
+        before do
+          create(
+            :assessment_section,
+            :personal_information,
+            :declines_with_suitability,
+            assessment:,
+          )
+        end
+
+        it { is_expected.to be true }
+      end
+
+      context "with suitability previously declined" do
+        before do
+          create(
+            :assessment_section,
+            :personal_information,
+            :declines_with_suitability_previously_declined,
+            assessment:,
+          )
+        end
+
+        it { is_expected.to be true }
+      end
+
+      context "with fraud" do
+        before do
+          create(
+            :assessment_section,
+            :personal_information,
+            :declines_with_fraud,
+            assessment:,
+          )
+        end
+
+        it { is_expected.to be true }
+      end
     end
   end
 

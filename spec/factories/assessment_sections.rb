@@ -76,6 +76,30 @@ FactoryBot.define do
       end
     end
 
+    trait :declines_with_suitability do
+      assessed
+      passed { false }
+      selected_failure_reasons do
+        [build(:selected_failure_reason, :with_suitability)]
+      end
+    end
+
+    trait :declines_with_suitability_previously_declined do
+      assessed
+      passed { false }
+      selected_failure_reasons do
+        [build(:selected_failure_reason, :with_suitability_previously_declined)]
+      end
+    end
+
+    trait :declines_with_fraud do
+      assessed
+      passed { false }
+      selected_failure_reasons do
+        [build(:selected_failure_reason, :with_fraud)]
+      end
+    end
+
     trait :personal_information do
       key { "personal_information" }
       checks { %w[identification_document_present] }

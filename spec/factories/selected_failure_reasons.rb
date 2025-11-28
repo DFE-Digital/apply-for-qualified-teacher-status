@@ -51,5 +51,17 @@ FactoryBot.define do
     trait :with_already_qts do
       key { "applicant_already_qts" }
     end
+
+    trait :with_suitability do
+      key { "suitability" }
+    end
+
+    trait :with_suitability_previously_declined do
+      key { "suitability_previously_declined" }
+    end
+
+    trait :with_fraud do
+      key { "fraud" }
+    end
   end
 end
