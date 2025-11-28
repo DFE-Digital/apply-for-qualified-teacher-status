@@ -121,8 +121,6 @@ class TeacherInterface::ApplicationFormViewObject
           },
         ],
       }
-    elsif declined_cannot_reapply?
-      assessment_cannot_reapply_declined_reasons
     elsif assessment_declined_reasons.present?
       assessment_declined_reasons
     elsif further_information_request&.expired?
@@ -158,7 +156,11 @@ class TeacherInterface::ApplicationFormViewObject
   def declined_cannot_reapply?
     return false if assessment.nil?
 
-    assessment_cannot_reapply_declined_reasons[""].present?
+    assessment.sections.any? do |section|
+      section.selected_failure_reasons.any? do |failure_reason|
+        FailureReasons.decline_cannot_reapply?(failure_reason.key)
+      end
+    end
   end
 
   def from_ineligible_country?
@@ -354,28 +356,6 @@ class TeacherInterface::ApplicationFormViewObject
 
         reasons
       end
-  end
-
-  def assessment_cannot_reapply_declined_reasons
-    cannot_reapply_failure_reasons =
-      assessment.sections.map do |section|
-        section.selected_failure_reasons.filter do |failure_reason|
-          FailureReasons.decline_cannot_reapply?(failure_reason.key)
-        end
-      end
-
-    {
-      "" =>
-        cannot_reapply_failure_reasons.flatten.map do |failure_reason|
-          {
-            name:
-              I18n.t(
-                "teacher_interface.application_forms.show.declined.failure_reasons." \
-                  "#{failure_reason.key}",
-              ),
-          }
-        end,
-    }
   end
 
   def selected_declined_reasons

@@ -462,11 +462,21 @@ RSpec.describe TeacherInterface::ApplicationFormViewObject do
 
       before { assessment_section.selected_failure_reasons }
 
-      it "only returns the declined reasons that prevents from reapplying" do
+      it "returns all declined reasons" do
         expect(subject).to eq(
           {
-            "" => [
+            "About you" => [
               {
+                assessor_note: "A note.",
+                name:
+                  "Your passport had already expired when the application was submitted.",
+              },
+              {
+                assessor_note: "A note.",
+                name: "You already have an application in progress.",
+              },
+              {
+                assessor_note: "A note.",
                 name:
                   "Sanctions or restrictions were detected on your professional record.",
               },
