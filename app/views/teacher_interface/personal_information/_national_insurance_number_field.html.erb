@@ -1,16 +1,16 @@
-<div class="govuk-form-group <%= 'govuk-form-group--error' if form.errors.present? %>">
+<div class="govuk-form-group <%= 'govuk-form-group--error' if form.errors[:national_insurance_number].present? %>">
   <fieldset class="govuk-fieldset" aria-describedby="teacher-interface-name-and-date-of-birth-form-national-insurance-number-hint">
-    <label for="teacher-interface-name-and-date-of-birth-form-given-names-field" class="govuk-label govuk-label--m">
+    <label for="teacher-interface-name-and-date-of-birth-form-national-insurance-number-field" class="govuk-label govuk-label--m">
       <%= t("helpers.label.teacher_interface_name_and_date_of_birth_form.national_insurance_number") %>
     </label>
     <div class="govuk-hint" id="teacher-interface-name-and-date-of-birth-form-national-insurance-number-hint">
       <%= t("helpers.hint.teacher_interface_name_and_date_of_birth_form.national_insurance_number") %>
     </div>
 
-    <% if form.errors.present? %>
+    <% if form.errors[:national_insurance_number].present? %>
       <p id="teacher-interface-name-and-date-of-birth-form-national-insurance-number-field-error" class="govuk-error-message">
         <span class="govuk-visually-hidden">Error:</span>
-        <%= form.errors.first.message %>
+        <%= form.errors[:national_insurance_number].first %>
       </p>
     <% end %>
 
@@ -18,7 +18,7 @@
       <div class="govuk-date-input__item">
         <div class="govuk-form-group">
           <input id="teacher-interface-name-and-date-of-birth-form-national-insurance-number-part-one"
-                  class="govuk-input govuk-date-input__input govuk-input--width-2 <%= 'govuk-input--error' if form.errors.present? && !@form.national_insurance_number_validator.national_insurance_number_part_one_valid? %>"
+                  class="govuk-input govuk-date-input__input govuk-input--width-2 <%= 'govuk-input--error' if form.errors[:national_insurance_number].present? && !form.national_insurance_number_validator.national_insurance_number_part_one_valid? %>"
                   name="teacher_interface_name_and_date_of_birth_form[national_insurance_number_part_one]"
                   type="text" inputmode="text" value=<%= form.national_insurance_number_part_one %>>
         </div>
@@ -26,7 +26,7 @@
       <div class="govuk-date-input__item">
         <div class="govuk-form-group">
           <input id="teacher-interface-name-and-date-of-birth-form-national-insurance-number-part-two"
-                  class="govuk-input govuk-date-input__input govuk-input--width-5 <%= 'govuk-input--error' if form.errors.present? && !@form.national_insurance_number_validator.national_insurance_number_part_two_valid? %>"
+                  class="govuk-input govuk-date-input__input govuk-input--width-5 <%= 'govuk-input--error' if form.errors[:national_insurance_number].present? && !form.national_insurance_number_validator.national_insurance_number_part_two_valid? %>"
                   name="teacher_interface_name_and_date_of_birth_form[national_insurance_number_part_two]"
                   type="text"
                   inputmode="numeric"
@@ -36,7 +36,7 @@
       <div class="govuk-date-input__item">
         <div class="govuk-form-group">
           <input id="teacher-interface-name-and-date-of-birth-form-national-insurance-number-part-three"
-                  class="govuk-input govuk-date-input__input govuk-input--width-2 <%= 'govuk-input--error' if form.errors.present? && !@form.national_insurance_number_validator.national_insurance_number_part_three_valid? %>"
+                  class="govuk-input govuk-date-input__input govuk-input--width-2 <%= 'govuk-input--error' if form.errors[:national_insurance_number].present? && !form.national_insurance_number_validator.national_insurance_number_part_three_valid? %>"
                   name="teacher_interface_name_and_date_of_birth_form[national_insurance_number_part_three]"
                   type="text"
                   inputmode="numeric"
