@@ -1,8 +1,8 @@
 <div class="govuk-form-group <%= 'govuk-form-group--error' if form.errors[:national_insurance_number].present? %>">
   <fieldset class="govuk-fieldset" aria-describedby="teacher-interface-name-and-date-of-birth-form-national-insurance-number-hint">
-    <label for="teacher-interface-name-and-date-of-birth-form-national-insurance-number-field" class="govuk-label govuk-label--m">
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
       <%= t("helpers.label.teacher_interface_name_and_date_of_birth_form.national_insurance_number") %>
-    </label>
+    </legend>
     <div class="govuk-hint" id="teacher-interface-name-and-date-of-birth-form-national-insurance-number-hint">
       <%= t("helpers.hint.teacher_interface_name_and_date_of_birth_form.national_insurance_number") %>
     </div>
