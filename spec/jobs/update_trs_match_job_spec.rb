@@ -10,7 +10,9 @@ RSpec.describe UpdateTRSMatchJob do
       create(:application_form, :submitted, :with_personal_information)
     end
 
-    before { allow(TRS::Client::V3::FindTeachers).to receive(:call).and_return([]) }
+    before do
+      allow(TRS::Client::V3::FindTeachers).to receive(:call).and_return([])
+    end
 
     it "searches TRS for teachers" do
       expect(TRS::Client::V3::FindTeachers).to receive(:call).with(
