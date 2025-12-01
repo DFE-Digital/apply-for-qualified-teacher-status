@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class TRS::Client::FindTeachers
+class TRS::Client::V3::FindTeachers
   include ServicePattern
   include TRS::Client::Connection
 
