@@ -10,14 +10,14 @@ RSpec.describe UpdateTRSMatchJob do
       create(:application_form, :submitted, :with_personal_information)
     end
 
-    before { allow(TRS::Client::FindTeachers).to receive(:call).and_return([]) }
+    before { allow(TRS::Client::V3::FindTeachers).to receive(:call).and_return([]) }
 
     it "searches TRS for teachers" do
-      expect(TRS::Client::FindTeachers).to receive(:call).with(
+      expect(TRS::Client::V3::FindTeachers).to receive(:call).with(
         application_form:,
       )
 
-      expect(TRS::Client::FindTeachers).to receive(:call).with(
+      expect(TRS::Client::V3::FindTeachers).to receive(:call).with(
         application_form:,
         reverse_name: true,
       )
@@ -47,7 +47,7 @@ RSpec.describe UpdateTRSMatchJob do
         },
       ]
 
-      allow(TRS::Client::FindTeachers).to receive(:call).with(
+      allow(TRS::Client::V3::FindTeachers).to receive(:call).with(
         application_form:,
       ).and_return(results)
 
@@ -60,7 +60,7 @@ RSpec.describe UpdateTRSMatchJob do
       let(:application_form) { create(:application_form, :draft) }
 
       it "doesn't search TRS for teachers" do
-        expect(TRS::Client::FindTeachers).not_to receive(:call)
+        expect(TRS::Client::V3::FindTeachers).not_to receive(:call)
 
         perform
       end
@@ -70,7 +70,7 @@ RSpec.describe UpdateTRSMatchJob do
       let(:application_form) { create(:application_form, :awarded) }
 
       it "doesn't search TRS for teachers" do
-        expect(TRS::Client::FindTeachers).not_to receive(:call)
+        expect(TRS::Client::V3::FindTeachers).not_to receive(:call)
 
         perform
       end
