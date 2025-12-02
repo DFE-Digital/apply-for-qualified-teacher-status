@@ -43,6 +43,8 @@ Or, you’ll be able to make a new application once you've addressed all decline
 <% if @view_object.has_any_further_information_decline_reasons? %>
 # Information we’ll need if you reapply
 
+If you apply again, you will also need to provide the following information.
+
 <% @view_object.assessment_further_information_reasons.each do |title, reasons| %>
 <% next if reasons.empty? %>
 
