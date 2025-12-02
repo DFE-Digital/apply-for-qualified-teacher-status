@@ -237,4 +237,130 @@ RSpec.describe AssessorInterface::AssessmentSectionForm, type: :model do
       end
     end
   end
+
+  describe "initial attributes for assessment section loaded" do
+    let(:attributes) { described_class.initial_attributes(assessment_section) }
+
+    it "returns all relevant attributes empty" do
+      expect(form).to have_attributes(
+        passed: nil,
+        "#{further_information_failure_reason}_checked": nil,
+        "#{further_information_failure_reason}_notes": nil,
+        "#{work_history_failure_reason}_checked": nil,
+        "#{work_history_failure_reason}_work_history_#{work_histories.first.id}_checked":
+          nil,
+        "#{work_history_failure_reason}_work_history_#{work_histories.first.id}_notes":
+          nil,
+        "#{work_history_failure_reason}_work_history_#{work_histories.last.id}_checked":
+          nil,
+        "#{work_history_failure_reason}_work_history_#{work_histories.last.id}_notes":
+          nil,
+        "#{decline_failure_reason}_checked": nil,
+        "#{decline_failure_reason}_notes": nil,
+      )
+    end
+
+    context "when assessment section has been reviewed" do
+      let(:assessment_section) do
+        create(
+          :assessment_section,
+          key: "personal_information",
+          passed: false,
+          failure_reasons: [
+            further_information_failure_reason,
+            work_history_failure_reason,
+            decline_failure_reason,
+          ],
+          selected_failure_reasons: [
+            build(
+              :selected_failure_reason,
+              key: further_information_failure_reason,
+              assessor_feedback: "Note.",
+            ),
+            build(
+              :selected_failure_reason,
+              key: work_history_failure_reason,
+              assessor_feedback: "Note.",
+            ),
+          ],
+        )
+      end
+
+      before do
+        assessment_section
+          .selected_failure_reasons
+          .find_by(key: work_history_failure_reason)
+          .update!(work_histories:)
+      end
+
+      it "returns all relevant attributes" do
+        expect(form).to have_attributes(
+          passed: false,
+          "#{further_information_failure_reason}_checked": true,
+          "#{further_information_failure_reason}_notes": "Note.",
+          "#{work_history_failure_reason}_checked": true,
+          "#{work_history_failure_reason}_work_history_#{work_histories.first.id}_checked":
+            true,
+          "#{work_history_failure_reason}_work_history_#{work_histories.first.id}_notes":
+            "Note.",
+          "#{work_history_failure_reason}_work_history_#{work_histories.last.id}_checked":
+            true,
+          "#{work_history_failure_reason}_work_history_#{work_histories.last.id}_notes":
+            "Note.",
+          "#{decline_failure_reason}_checked": nil,
+          "#{decline_failure_reason}_notes": nil,
+        )
+      end
+    end
+
+    context "when failure reason used to trigger work history selection but no longer does" do
+      let(:work_history_failure_reason) { :school_details_cannot_be_verified }
+
+      let(:assessment_section) do
+        create(
+          :assessment_section,
+          key: "personal_information",
+          passed: false,
+          failure_reasons: [
+            further_information_failure_reason,
+            work_history_failure_reason,
+            decline_failure_reason,
+          ],
+          selected_failure_reasons: [
+            build(
+              :selected_failure_reason,
+              key: work_history_failure_reason,
+              assessor_feedback: "Note.",
+            ),
+          ],
+        )
+      end
+
+      before do
+        assessment_section
+          .selected_failure_reasons
+          .find_by(key: work_history_failure_reason)
+          .update!(work_histories:)
+      end
+
+      it "returns all relevant attributes" do
+        expect(form).to have_attributes(
+          passed: false,
+          "#{further_information_failure_reason}_checked": nil,
+          "#{further_information_failure_reason}_notes": nil,
+          "#{work_history_failure_reason}_checked": true,
+          "#{work_history_failure_reason}_work_history_#{work_histories.first.id}_checked":
+            true,
+          "#{work_history_failure_reason}_work_history_#{work_histories.first.id}_notes":
+            "Note.",
+          "#{work_history_failure_reason}_work_history_#{work_histories.last.id}_checked":
+            true,
+          "#{work_history_failure_reason}_work_history_#{work_histories.last.id}_notes":
+            "Note.",
+          "#{decline_failure_reason}_checked": nil,
+          "#{decline_failure_reason}_notes": nil,
+        )
+      end
+    end
+  end
 end

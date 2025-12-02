@@ -156,7 +156,11 @@ class AssessorInterface::AssessmentSectionForm
           end
         end
 
-        if FailureReasons.chooses_work_history?(failure_reason)
+        if FailureReasons.chooses_work_history?(failure_reason) ||
+             (
+               selected_failure_reason.present? &&
+                 selected_failure_reason.work_histories.present?
+             )
           work_histories.each do |work_history|
             klass.attribute "#{failure_reason}_work_history_#{work_history.id}_notes",
                             :string
