@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe TRS::Client::FindTeachers do
+RSpec.describe TRS::Client::V3::FindTeachers do
   subject(:call) { described_class.call(application_form:) }
 
   let(:application_form) do

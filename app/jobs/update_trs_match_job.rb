@@ -8,11 +8,14 @@ class UpdateTRSMatchJob < ApplicationJob
       return
     end
 
-    teachers = TRS::Client::FindTeachers.call(application_form:)
+    teachers = TRS::Client::V3::FindTeachers.call(application_form:)
 
     if teachers.empty?
       teachers =
-        TRS::Client::FindTeachers.call(application_form:, reverse_name: true)
+        TRS::Client::V3::FindTeachers.call(
+          application_form:,
+          reverse_name: true,
+        )
     end
 
     application_form.update!(trs_match: { teachers: })
