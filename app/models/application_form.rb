@@ -116,6 +116,7 @@ class ApplicationForm < ApplicationRecord
   belongs_to :english_language_provider, optional: true
   has_many :work_histories, dependent: :destroy
   has_many :qualifications, dependent: :destroy
+  has_many :email_deliveries, dependent: :destroy
   has_many :timeline_events
   has_many :application_holds
   has_one :active_application_hold,

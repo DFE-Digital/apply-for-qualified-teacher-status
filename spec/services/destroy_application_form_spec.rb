@@ -19,6 +19,7 @@ RSpec.describe DestroyApplicationForm do
         )
 
       create(:timeline_event, :stage_changed, application_form:)
+      create(:email_delivery, application_form:)
       create(:note, application_form:)
       create(:trs_trn_request, application_form:)
 
@@ -62,6 +63,7 @@ RSpec.describe DestroyApplicationForm do
   include_examples "deletes model", SelectedFailureReason
   include_examples "deletes model", Teacher
   include_examples "deletes model", TimelineEvent
+  include_examples "deletes model", EmailDelivery
   include_examples "deletes model", Upload, 6, 3
   include_examples "deletes model", WorkHistory, 4, 2
 end
