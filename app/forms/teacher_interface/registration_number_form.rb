@@ -6,6 +6,7 @@ module TeacherInterface
     attribute :registration_number, :string
 
     validates :application_form, presence: true
+    validates :registration_number, string_length: true
 
     def update_model
       application_form.update!(

@@ -6,7 +6,7 @@ module TeacherInterface
     attribute :reference, :string
 
     validates :application_form, presence: true
-    validates :reference, presence: true
+    validates :reference, presence: true, string_length: true
 
     def update_model
       application_form.update!(
