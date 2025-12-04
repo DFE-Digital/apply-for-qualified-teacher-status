@@ -10,6 +10,7 @@ module TeacherInterface
     validates :contact_response, inclusion: [true, false]
     validates :contact_comment,
               presence: true,
+              text_length: true,
               if: -> { contact_response == false }
 
     def update_model

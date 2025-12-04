@@ -79,3 +79,5 @@ en:
       future: can't be in the future
       invalid_content_type: is not in the correct format
       mismatch_content_type: file format doesn't match extension
+      exceeds_string_max_length: Response must be 1,000 characters or less
+      exceeds_text_max_length: Response must be 20,000 characters or less

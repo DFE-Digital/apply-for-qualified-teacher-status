@@ -23,11 +23,14 @@ module TeacherInterface
     attribute :end_date_is_estimate, :boolean
 
     validates :meets_all_requirements, presence: true
-    validates :school_name, presence: true
-    validates :address_line1, presence: true
-    validates :city, presence: true
+    validates :school_name, presence: true, string_length: true
+    validates :address_line1, presence: true, string_length: true
+    validates :address_line2, string_length: true
+    validates :city, presence: true, string_length: true
     validates :country_location, presence: true
-    validates :job, presence: true
+    validates :job, presence: true, string_length: true
+    validates :postcode, string_length: true
+    validates :school_website, string_length: true
     validates :hours_per_week,
               presence: true,
               numericality: {

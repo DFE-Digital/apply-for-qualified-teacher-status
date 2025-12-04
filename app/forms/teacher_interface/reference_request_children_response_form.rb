@@ -10,6 +10,7 @@ module TeacherInterface
     validates :children_response, inclusion: [true, false]
     validates :children_comment,
               presence: true,
+              text_length: true,
               if: -> { children_response == false }
 
     def update_model

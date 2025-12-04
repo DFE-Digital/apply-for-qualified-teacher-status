@@ -10,6 +10,7 @@ module TeacherInterface
     validates :confirm_applicant_response, inclusion: [true, false]
     validates :confirm_applicant_comment,
               presence: true,
+              text_length: true,
               if: -> { confirm_applicant_response == false }
 
     def update_model

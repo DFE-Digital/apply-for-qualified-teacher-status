@@ -15,8 +15,8 @@ module TeacherInterface
     attribute :teaching_confirmation, :boolean
 
     validates :qualification, presence: true
-    validates :title, presence: true
-    validates :institution_name, presence: true
+    validates :title, presence: true, string_length: true
+    validates :institution_name, presence: true, string_length: true
     validates :institution_country_location,
               presence: true,
               inclusion: {

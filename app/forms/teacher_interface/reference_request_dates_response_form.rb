@@ -8,7 +8,10 @@ module TeacherInterface
 
     validates :reference_request, presence: true
     validates :dates_response, inclusion: [true, false]
-    validates :dates_comment, presence: true, if: -> { dates_response == false }
+    validates :dates_comment,
+              presence: true,
+              text_length: true,
+              if: -> { dates_response == false }
 
     def update_model
       reference_request.update!(dates_response:, dates_comment:)

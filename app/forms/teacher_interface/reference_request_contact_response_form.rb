@@ -12,8 +12,13 @@ module TeacherInterface
     validates :contact_response, inclusion: [true, false]
     validates :contact_name,
               presence: true,
+              string_length: true,
               if: -> { contact_response == false }
-    validates :contact_job, presence: true, if: -> { contact_response == false }
+    validates :contact_job,
+              presence: true,
+              string_length: true,
+              if: -> { contact_response == false }
+    validates :contact_comment, text_length: true
 
     def update_model
       reference_request.update!(
