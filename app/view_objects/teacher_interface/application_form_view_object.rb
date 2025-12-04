@@ -122,7 +122,7 @@ class TeacherInterface::ApplicationFormViewObject
         ],
       }
     elsif assessment_declined_reasons.present?
-      assessment_declined_reasons
+      assessment_declined_reasons.sort.to_h
     elsif further_information_request&.expired?
       {
         "" => [
@@ -158,9 +158,7 @@ class TeacherInterface::ApplicationFormViewObject
 
     assessment.sections.any? do |section|
       section.selected_failure_reasons.any? do |failure_reason|
-        %w[authorisation_to_teach applicant_already_qts].include?(
-          failure_reason.key,
-        )
+        FailureReasons.decline_cannot_reapply?(failure_reason.key)
       end
     end
   end
@@ -232,6 +230,23 @@ class TeacherInterface::ApplicationFormViewObject
         !work_history_status_completed? ||
           !other_england_work_history_status_completed?
       )
+  end
+
+  def has_any_further_information_decline_reasons?
+    assessment_further_information_reasons.present?
+  end
+
+  def assessment_further_information_reasons
+    @assessment_further_information_reasons ||=
+      begin
+        reasons = {}
+
+        if assessment.present? && further_information_request.nil?
+          reasons.merge!(selected_further_information_reasons)
+        end
+
+        reasons
+      end
   end
 
   private
@@ -336,28 +351,26 @@ class TeacherInterface::ApplicationFormViewObject
         end
 
         if assessment.present? && further_information_request.nil?
-          reasons.merge!(selected_failure_reasons_declined_reasons)
+          reasons.merge!(selected_declined_reasons)
         end
 
         reasons
       end
   end
 
-  def selected_failure_reasons_declined_reasons
+  def selected_declined_reasons
     assessment
       .sections
       .each_with_object({}) do |section, hash|
         next if section.selected_failure_reasons.empty?
 
-        sorted_reasons =
-          section.selected_failure_reasons.sort_by do |failure_reason|
-            is_decline = FailureReasons.decline?(failure_reason.key)
-
-            [is_decline ? 0 : 1, failure_reason.key]
+        decline_reasons =
+          section.selected_failure_reasons.filter do |failure_reason|
+            FailureReasons.decline?(failure_reason.key)
           end
 
         reasons =
-          sorted_reasons.map do |failure_reason|
+          decline_reasons.map do |failure_reason|
             title =
               I18n.t(
                 failure_reason.key,
@@ -370,16 +383,74 @@ class TeacherInterface::ApplicationFormViewObject
                 ],
               )
 
-            if (
-                 assessor_feedback = failure_reason.assessor_feedback
-               ).present? && FailureReasons.decline?(failure_reason.key)
+            if (assessor_feedback = failure_reason.assessor_feedback).present?
               { name: title, assessor_note: assessor_feedback }
             else
               { name: title }
             end
           end
 
-        hash[section.key.humanize] = reasons
+        hash[
+          I18n.t(
+            section.key,
+            scope: %i[
+              teacher_interface
+              application_forms
+              show
+              declined
+              sections
+            ],
+          )
+        ] = reasons
+      end
+  end
+
+  def selected_further_information_reasons
+    assessment
+      .sections
+      .each_with_object({}) do |section, hash|
+        next if section.selected_failure_reasons.empty?
+
+        fi_reasons =
+          section.selected_failure_reasons.filter do |failure_reason|
+            FailureReasons.further_information?(failure_reason.key)
+          end
+
+        next if fi_reasons.empty?
+
+        reasons =
+          fi_reasons.map do |failure_reason|
+            title =
+              I18n.t(
+                failure_reason.key,
+                scope: %i[
+                  teacher_interface
+                  application_forms
+                  show
+                  declined
+                  failure_reasons
+                ],
+              )
+
+            if (assessor_feedback = failure_reason.assessor_feedback).present?
+              { name: title, assessor_note: assessor_feedback }
+            else
+              { name: title }
+            end
+          end
+
+        hash[
+          I18n.t(
+            section.key,
+            scope: %i[
+              teacher_interface
+              application_forms
+              show
+              declined
+              sections
+            ],
+          )
+        ] = reasons
       end
   end
 
