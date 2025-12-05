@@ -796,11 +796,6 @@ module PageHelpers
       PageObjects::TeacherInterface::PassportExpiryDateInterruption.new
   end
 
-  def teacher_new_application_page
-    @teacher_new_application_page =
-      PageObjects::TeacherInterface::NewApplication.new
-  end
-
   def teacher_new_qualification_page
     @teacher_new_qualification_page ||=
       PageObjects::TeacherInterface::NewQualification.new
