@@ -3,6 +3,8 @@
   <p class="govuk-body">You can explore <%= govuk_link_to "other routes into teaching", "https://getintoteaching.education.gov.uk/routes-into-teaching" %>.</p>
 
   <% unless view_object.from_ineligible_country? %>
-    <p class="govuk-body">Or, you’ll be able to make a new application once you’ve addressed all decline reasons given. If you reapply for QTS, you’ll not be able to review the details of your previous application.</p>
+    <p class="govuk-body">
+      Or, if you can address the reasons your application has been declined, you can submit a new application. You must <%= govuk_link_to "check you're still eligible to apply", reapply_teacher_interface_application_form_path %> first. You’ll need to provide all the required information and documents again.
+    </p>
   <% end %>
 <% end %>

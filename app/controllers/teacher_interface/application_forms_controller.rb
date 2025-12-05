@@ -5,10 +5,10 @@ module TeacherInterface
     include HandleApplicationFormSection
     include HistoryTrackable
 
-    before_action :redirect_if_application_form_active, only: %i[new create]
+    before_action :redirect_if_application_form_active, only: %i[create reapply]
     before_action :redirect_unless_application_form_is_draft,
                   only: %i[edit update]
-    before_action :load_application_form, except: %i[new create]
+    before_action :load_application_form, except: %i[create]
     before_action :update_application_and_redirect_if_passport_expired,
                   only: %i[edit update]
     before_action :update_application_and_redirect_if_any_referee_has_public_email_domain,
@@ -18,40 +18,25 @@ module TeacherInterface
     define_history_reset :show
     define_history_check :edit
 
-    def new
-      @already_applied = application_form.present?
-      @needs_region = false
-
-      @country_region_form =
-        CountryRegionForm.new(
-          location: CountryCode.to_location(application_form&.country&.code),
-        )
-    end
-
     def create
-      @already_applied = application_form.present?
+      eligibility_check =
+        EligibilityCheck.find_by(id: session[:eligibility_check_id])
 
-      @country_region_form =
-        CountryRegionForm.new(
-          country_region_form_params.merge(teacher: current_teacher),
+      if eligibility_check && eligibility_check.region
+        ApplicationFormFactory.call(
+          teacher: current_teacher,
+          region: eligibility_check.region,
+          eligibility_check:,
         )
 
-      if @country_region_form.needs_region?
-        @needs_region = true
-        render :new
-      elsif @country_region_form.save(validate: true)
-        redirect_to teacher_interface_application_form_path
+        redirect_to %i[teacher_interface application_form]
       else
-        send_errors_to_big_query(@country_region_form)
-
-        render :new, status: :unprocessable_entity
+        redirect_to %i[eligibility_interface countries]
       end
     end
 
     def show
-      if application_form.nil?
-        redirect_to %i[new teacher_interface application_form]
-      end
+      redirect_to %i[eligibility_interface countries] if application_form.nil?
 
       @view_object = ApplicationFormViewObject.new(application_form:)
     end
@@ -89,10 +74,25 @@ module TeacherInterface
       end
     end
 
+    def reapply
+      if application_form.present? && application_form.declined?
+        session[:reapplication_flow] = true
+
+        redirect_to %i[eligibility_interface countries]
+      else
+        redirect_to %i[teacher_interface application_form]
+      end
+    end
+
     private
 
     def redirect_if_application_form_active
-      if application_form.present? && !application_form.completed_stage?
+      return if application_form.blank?
+
+      view_object = ApplicationFormViewObject.new(application_form:)
+
+      if !application_form.completed_stage? ||
+           view_object.declined_cannot_reapply?
         redirect_to %i[teacher_interface application_form]
       end
     end

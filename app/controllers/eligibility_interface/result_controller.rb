@@ -6,6 +6,8 @@ class EligibilityInterface::ResultController < EligibilityInterface::BaseControl
   def show
     eligibility_check.complete! if eligibility_check.persisted?
 
+    @reapplication_flow = session[:reapplication_flow]
+
     render(
       if eligibility_check.eligible?(includes_email_domains_for_referees:)
         "eligible"

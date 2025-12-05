@@ -6,9 +6,11 @@ module PageObjects
       set_url "/teacher/application"
 
       element :heading, "h1"
-      element :apply_again_button, ".govuk-button"
+      element :apply_check_eligibility_again_button, ".govuk-button"
 
-      load_validation { has_heading? && has_apply_again_button? }
+      load_validation do
+        has_heading? && has_apply_check_eligibility_again_button?
+      end
     end
   end
 end
