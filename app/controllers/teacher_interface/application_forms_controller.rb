@@ -5,7 +5,7 @@ module TeacherInterface
     include HandleApplicationFormSection
     include HistoryTrackable
 
-    before_action :redirect_if_application_form_active, only: %i[create reapply]
+    before_action :redirect_if_application_form_active, only: %i[new create]
     before_action :redirect_unless_application_form_is_draft,
                   only: %i[edit update]
     before_action :load_application_form, except: %i[create]
@@ -19,7 +19,11 @@ module TeacherInterface
     define_history_check :edit
 
     def new
-      redirect_to %i[reapply teacher_interface application_form]
+      if application_form.present? && application_form.declined?
+        redirect_to %i[eligibility_interface countries]
+      else
+        redirect_to %i[teacher_interface application_form]
+      end
     end
 
     def create
@@ -75,16 +79,6 @@ module TeacherInterface
         send_errors_to_big_query(@sanction_confirmation_form)
 
         render :edit, status: :unprocessable_entity
-      end
-    end
-
-    def reapply
-      if application_form.present? && application_form.declined?
-        session[:reapplication_flow] = true
-
-        redirect_to %i[eligibility_interface countries]
-      else
-        redirect_to %i[teacher_interface application_form]
       end
     end
 

@@ -383,7 +383,6 @@ Rails.application.routes.draw do
 
     resource :application_form, path: "/application", except: %i[destroy] do
       get "/answers", to: "application_forms#answers"
-      get "/reapply", to: "application_forms#reapply"
 
       resource :personal_information,
                controller: :personal_information,

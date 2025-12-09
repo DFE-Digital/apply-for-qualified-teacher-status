@@ -2,12 +2,11 @@
 
 require "rails_helper"
 
-RSpec.describe "Teacher reapply", type: :system do
+RSpec.describe "Teacher apply and reapply when signed in", type: :system do
   around do |example|
     FeatureFlags::FeatureFlag.activate(:teacher_applications)
 
     given_i_am_authorized_as_a_user(teacher)
-    given_there_is_an_application_form
     given_countries_exist
     example.run
 
@@ -15,10 +14,39 @@ RSpec.describe "Teacher reapply", type: :system do
   end
 
   it "allows reapplying" do
+    given_there_is_an_application_form
+
     when_i_visit_the(:teacher_application_page)
     then_i_see_the(:teacher_declined_application_page)
 
     when_i_click_check_eligibility_again
+    then_i_see_the(:eligibility_country_page)
+
+    when_i_select_an_eligible_country
+    then_i_see_the(:eligibility_qualification_page)
+
+    when_i_have_a_qualification
+    then_i_see_the(:eligibility_degree_page)
+
+    when_i_have_a_degree
+    then_i_see_the(:eligibility_work_experience_page)
+
+    when_i_have_more_than_20_months_work_experience
+    then_i_see_the(:eligibility_misconduct_page)
+
+    when_i_dont_have_a_misconduct_record
+    then_i_see_the(:eligibility_teach_children_page)
+
+    when_i_can_teach_children
+    then_i_see_the(:eligibility_eligible_page)
+    and_i_see_the_start_new_application_button
+
+    when_i_click_start_new_application
+    then_i_see_the(:teacher_application_page)
+  end
+
+  it "allows new application if already does not have one" do
+    when_i_visit_the(:teacher_application_page)
     then_i_see_the(:eligibility_country_page)
 
     when_i_select_an_eligible_country
