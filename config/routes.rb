@@ -381,7 +381,7 @@ Rails.application.routes.draw do
   namespace :teacher_interface, path: "/teacher" do
     root to: redirect("/teacher/application")
 
-    resource :application_form, path: "/application", except: %i[new destroy] do
+    resource :application_form, path: "/application", except: %i[destroy] do
       get "/answers", to: "application_forms#answers"
       get "/reapply", to: "application_forms#reapply"
 

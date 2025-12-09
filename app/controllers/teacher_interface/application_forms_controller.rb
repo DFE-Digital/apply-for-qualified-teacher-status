@@ -18,6 +18,10 @@ module TeacherInterface
     define_history_reset :show
     define_history_check :edit
 
+    def new
+      redirect_to %i[reapply teacher_interface application_form]
+    end
+
     def create
       eligibility_check =
         EligibilityCheck.find_by(id: session[:eligibility_check_id])
