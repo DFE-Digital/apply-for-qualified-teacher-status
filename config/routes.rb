@@ -33,7 +33,7 @@ Rails.application.routes.draw do
       collection do
         post "filters/apply", to: "application_forms#apply_filters"
         get "filters/clear", to: "application_forms#clear_filters"
-        get "filters/sort", to: "application_forms#apply_sort"
+        post "filters/sort", to: "application_forms#apply_sort"
       end
 
       member do

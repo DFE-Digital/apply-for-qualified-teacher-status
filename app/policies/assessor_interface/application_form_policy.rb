@@ -8,6 +8,7 @@ class AssessorInterface::ApplicationFormPolicy < ApplicationPolicy
   end
 
   alias_method :apply_filters?, :index?
+  alias_method :apply_sort?, :index?
   alias_method :clear_filters?, :index?
 
   def show?
