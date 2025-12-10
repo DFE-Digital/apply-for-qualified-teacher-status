@@ -32,8 +32,6 @@ class AssessorInterface::ApplicationFormsIndexViewObject
       [OpenStruct.new(id: "null", name: "Not assigned")]
   end
 
-
-
   def country_filter_options
     options_for_select(
       Country::LOCATION_AUTOCOMPLETE_CANONICAL_LIST,
