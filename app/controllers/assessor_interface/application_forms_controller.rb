@@ -27,6 +27,11 @@ module AssessorInterface
       redirect_to assessor_interface_application_forms_path
     end
 
+    def apply_sort
+      #session[:sort_params] = extract_sort_params(params)
+      redirect_to assessor_interface_application_forms_path
+    end
+
     def clear_filters
       session[:filter_params] = {}
       redirect_to assessor_interface_application_forms_path
