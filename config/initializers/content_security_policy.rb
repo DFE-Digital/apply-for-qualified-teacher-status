@@ -10,7 +10,7 @@ Rails.application.configure do
     policy.style_src :self
   end
 
-  config.content_security_policy_nonce_generator = ->(request) do
+  config.content_security_policy_nonce_generator = ->(_request) do
     SecureRandom.base64(16)
   end
 
