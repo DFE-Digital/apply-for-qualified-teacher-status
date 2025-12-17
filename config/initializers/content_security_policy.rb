@@ -11,7 +11,7 @@ Rails.application.configure do
   end
 
   config.content_security_policy_nonce_generator = ->(request) do
-    request.session.id.to_s
+    SecureRandom.base64(16)
   end
 
   config.content_security_policy_nonce_directives = %w[script-src]
