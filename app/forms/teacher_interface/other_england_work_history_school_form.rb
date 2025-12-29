@@ -18,12 +18,14 @@ module TeacherInterface
     attribute :still_employed, :boolean
     attribute :end_date
 
-    validates :school_name, presence: true
-    validates :address_line1, presence: true
-    validates :city, presence: true
-    validates :postcode, presence: true
+    validates :school_name, presence: true, string_length: true
+    validates :address_line1, presence: true, string_length: true
+    validates :address_line2, string_length: true
+    validates :city, presence: true, string_length: true
+    validates :postcode, presence: true, string_length: true
     validates :country_location, presence: true, inclusion: ["country:GB-ENG"]
-    validates :job, presence: true
+    validates :job, presence: true, string_length: true
+    validates :school_website, string_length: true
     validates :start_date, date: true
     validates :still_employed, inclusion: [true, false]
     validates :end_date, date: true, if: -> { still_employed == false }

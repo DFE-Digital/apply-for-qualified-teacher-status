@@ -7,6 +7,8 @@ module TeacherInterface
 
     validates :reference_request, presence: true
 
+    validates :additional_information_response, text_length: true
+
     def update_model
       reference_request.update!(additional_information_response:)
     end
