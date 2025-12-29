@@ -54,7 +54,7 @@ jobs:
             data.json
 
       - name: Upload configuration data
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: data
           path: data.json
