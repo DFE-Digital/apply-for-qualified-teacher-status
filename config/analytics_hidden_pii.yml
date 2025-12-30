@@ -44,6 +44,10 @@
     - value
   :suitability_records:
     - date_of_birth
+  :support_requests:
+    - comment
+    - email
+    - name
   :teachers:
     - canonical_email
     - current_sign_in_ip
