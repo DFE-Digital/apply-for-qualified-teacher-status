@@ -19,4 +19,5 @@
 #  zendesk_ticket_id         :string
 #
 class SupportRequest < ApplicationRecord
+  has_one_attached :screenshot, dependent: :purge_later
 end
