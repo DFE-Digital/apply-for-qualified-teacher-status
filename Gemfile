@@ -53,6 +53,8 @@ gem "govuk_feature_flags", github: "DFE-Digital/govuk_feature_flags"
 gem "govuk_markdown"
 gem "mail-notify"
 
+gem "zendesk_api"
+
 # this is used in the example data generation task
 gem "factory_bot_rails"
 gem "faker"
