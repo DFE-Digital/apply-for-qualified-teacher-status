@@ -597,6 +597,8 @@ Rails.application.routes.draw do
              to: "prioritisation_reference_requests#update_confirm_applicant"
       end
     end
+
+    resources :support_requests, only: %i[new create]
   end
 
   devise_for :teachers,
