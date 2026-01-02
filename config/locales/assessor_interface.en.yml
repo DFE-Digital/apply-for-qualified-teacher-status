@@ -8,6 +8,7 @@ en:
           apply: Apply filters
           clear: Clear selection
           of_filter: of filters
+          sort: Apply sort
         results:
           empty: No applications found. Use the filters on the left to try again or refine your search.
 

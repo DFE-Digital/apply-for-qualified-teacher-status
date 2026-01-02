@@ -150,7 +150,7 @@ class AssessorInterface::ApplicationFormsIndexViewObject
               params: filter_params,
             ),
           params: filter_params,
-        ).order(submitted_at: :desc),
+        ).order(order_by_clause),
       )
   end
 
@@ -220,5 +220,14 @@ class AssessorInterface::ApplicationFormsIndexViewObject
 
   def suitability_matcher
     @suitability_matcher ||= SuitabilityMatcher.new
+  end
+
+  def order_by_clause
+    case filter_form.sort_by
+    when "submitted_at_asc"
+      { submitted_at: :asc }
+    else
+      { submitted_at: :desc }
+    end
   end
 end
