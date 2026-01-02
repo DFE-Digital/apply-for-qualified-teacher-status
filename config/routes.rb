@@ -26,6 +26,10 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :application_forms_exports,
+              path: "applications-export",
+              only: :index
+
     resources :application_forms,
               path: "/applications",
               only: %i[index show destroy],
