@@ -3,11 +3,7 @@
 require "rails_helper"
 
 RSpec.describe "Staff sign in", type: :request do
-  before do
-    FeatureFlags::FeatureFlag.activate(:sign_in_with_active_directory)
-
-    allow_any_instance_of(ActionController::Live).to receive(:process)
-  end
+  before { FeatureFlags::FeatureFlag.activate(:sign_in_with_active_directory) }
 
   after { FeatureFlags::FeatureFlag.deactivate(:sign_in_with_active_directory) }
 
