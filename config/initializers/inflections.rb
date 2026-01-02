@@ -9,5 +9,6 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.acronym "QTS"
   inflect.acronym "TRN"
   inflect.acronym "TRS"
+  inflect.acronym "CSV"
   inflect.uncountable %w[staff]
 end

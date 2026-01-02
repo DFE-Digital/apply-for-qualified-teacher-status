@@ -17,6 +17,21 @@ class AssessorInterface::ApplicationFormsIndexViewObject
     application_forms_with_pagy.last
   end
 
+  def application_forms_result
+    ::Filters::SortBy.apply(
+      scope:
+        ::Filters::Flags.apply(
+          scope:
+            ::Filters::Stage.apply(
+              scope: application_forms_without_counted_filters,
+              params: filter_params,
+            ),
+          params: filter_params,
+        ),
+      params: sort_params,
+    )
+  end
+
   def filter_form
     @filter_form ||= AssessorInterface::FilterForm.new(filter_params)
   end
@@ -149,21 +164,7 @@ class AssessorInterface::ApplicationFormsIndexViewObject
   end
 
   def application_forms_with_pagy
-    @application_forms_with_pagy ||=
-      pagy(
-        ::Filters::SortBy.apply(
-          scope:
-            ::Filters::Flags.apply(
-              scope:
-                ::Filters::Stage.apply(
-                  scope: application_forms_without_counted_filters,
-                  params: filter_params,
-                ),
-              params: filter_params,
-            ),
-          params: sort_params,
-        ),
-      )
+    @application_forms_with_pagy ||= pagy(application_forms_result)
   end
 
   def stage_filter_counts

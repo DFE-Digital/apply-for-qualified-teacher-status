@@ -2,7 +2,9 @@
 
 module AssessorInterface
   class ApplicationFormsController < BaseController
+    include ActionController::Live
     include HistoryTrackable
+    include CSVStreamable
 
     before_action only: %i[index apply_filters apply_sort clear_filters] do
       authorize %i[assessor_interface application_form]
@@ -17,7 +19,18 @@ module AssessorInterface
 
     def index
       @view_object = ApplicationFormsIndexViewObject.new(params:, session:)
-      render layout: "full_from_desktop"
+
+      respond_to do |format|
+        format.html { render layout: "full_from_desktop" }
+
+        format.csv do
+          set_csv_headers(filename: "applications-#{Time.current.iso8601}.csv")
+          stream_csv(
+            data: @view_object.application_forms_result,
+            csv_content_class: ApplicationFormsExportContent,
+          )
+        end
+      end
     end
 
     def apply_filters
