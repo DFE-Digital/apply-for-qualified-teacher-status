@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "csv"
+
 module CSVStreamable
   BATCH_SIZE = 250
 
