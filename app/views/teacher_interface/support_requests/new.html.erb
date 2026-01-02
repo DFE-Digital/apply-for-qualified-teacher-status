@@ -1,0 +1,19 @@
+<% content_for :page_title, "Support request", error: @form.errors.any? %>
+
+<%= form_with model: @form, url: %i[teacher_interface support_requests] do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <h1 class="govuk-heading-l">Support request</h1>
+
+  <%= f.govuk_text_field :name %>
+
+  <%= f.govuk_text_field :email %>
+
+  <%= f.govuk_text_area :comment %>
+
+  <%= f.govuk_file_field :screenshot,
+                        label: { text: "Upload a screenshot", class: "govuk-heading-m" },
+                        hint: { text: "You can upload your files in PDF, JPG, PNG, DOCX or DOC format. File must be no larger than 50MB." } %>
+
+  <%= f.govuk_submit "Submit" %>
+<% end %>
