@@ -14,7 +14,7 @@ RSpec.describe "Teacher authentication", type: :system do
     and_i_receive_a_teacher_magic_link_email
 
     when_i_sign_in_using_magic_link
-    then_i_see_the(:teacher_new_application_page)
+    then_i_see_the(:eligibility_country_page)
 
     given_i_clear_my_session
 
@@ -26,7 +26,7 @@ RSpec.describe "Teacher authentication", type: :system do
     and_i_receive_a_teacher_magic_link_email
 
     when_i_sign_in_using_magic_link
-    then_i_see_the(:teacher_new_application_page)
+    then_i_see_the(:eligibility_country_page)
 
     given_i_clear_my_session
 
@@ -47,12 +47,7 @@ RSpec.describe "Teacher authentication", type: :system do
     and_i_receive_a_teacher_magic_link_email
 
     when_i_sign_in_using_magic_link
-    then_i_see_the(:teacher_new_application_page)
-
-    when_i_select_a_country
-
-    when_i_click_save_and_sign_out
-    then_i_see_the(:teacher_signed_out_page)
+    then_i_see_the(:eligibility_country_page)
   end
 
   it "allows signing up and signing in with case insensitive" do
@@ -77,16 +72,34 @@ RSpec.describe "Teacher authentication", type: :system do
   end
 
   it "sign out with navigation link" do
-    when_i_visit_the(:teacher_sign_up_page)
-    then_i_see_the(:teacher_sign_up_page)
+    given_there_is_an_application_form
 
-    when_i_sign_up
+    when_i_visit_the(:teacher_sign_in_page)
+    then_i_see_the(:teacher_sign_in_page)
+
+    when_i_sign_in
     then_i_see_the(:teacher_check_email_page)
     and_i_receive_a_teacher_magic_link_email
 
     when_i_sign_in_using_magic_link
 
     when_i_click_sign_out
+    then_i_see_the(:teacher_signed_out_page)
+  end
+
+  it "sign out with save and sign out button" do
+    given_there_is_an_application_form
+
+    when_i_visit_the(:teacher_sign_in_page)
+    then_i_see_the(:teacher_sign_in_page)
+
+    when_i_sign_in
+    then_i_see_the(:teacher_check_email_page)
+    and_i_receive_a_teacher_magic_link_email
+
+    when_i_sign_in_using_magic_link
+
+    when_i_click_save_and_sign_out
     then_i_see_the(:teacher_signed_out_page)
   end
 
@@ -121,7 +134,7 @@ RSpec.describe "Teacher authentication", type: :system do
     and_i_receive_a_teacher_magic_link_email
 
     when_i_sign_in_using_magic_link
-    then_i_see_the(:teacher_new_application_page)
+    then_i_see_the(:eligibility_country_page)
 
     given_i_clear_my_session
 
@@ -133,7 +146,7 @@ RSpec.describe "Teacher authentication", type: :system do
     and_i_receive_a_teacher_magic_link_email
 
     when_i_sign_in_using_magic_link
-    then_i_see_the(:teacher_new_application_page)
+    then_i_see_the(:eligibility_country_page)
   end
 
   private
@@ -227,5 +240,18 @@ RSpec.describe "Teacher authentication", type: :system do
 
   def and_only_one_teacher_exists
     expect(Teacher.count).to eq(1)
+  end
+
+  def given_there_is_an_application_form
+    existing_application_form
+  end
+
+  def existing_teacher
+    @existing_teacher ||= create(:teacher, email: "test@example.com")
+  end
+
+  def existing_application_form
+    @existing_application_form ||=
+      create(:application_form, teacher: existing_teacher)
   end
 end
