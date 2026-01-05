@@ -21,6 +21,10 @@ class AssessorInterface::ApplicationFormsIndexViewObject
     @filter_form ||= AssessorInterface::FilterForm.new(filter_params)
   end
 
+  def sort_form
+    @sort_form ||= AssessorInterface::SortForm.new(sort_params)
+  end
+
   def assessor_filter_options
     ApplicationForm
       .submitted
@@ -118,6 +122,10 @@ class AssessorInterface::ApplicationFormsIndexViewObject
 
   def filter_params
     (session[:filter_params] || {}).with_indifferent_access
+  end
+
+  def sort_params
+    (session[:sort_params] || {}).with_indifferent_access
   end
 
   def application_forms_without_counted_filters
