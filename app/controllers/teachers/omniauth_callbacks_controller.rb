@@ -24,6 +24,8 @@ class Teachers::OmniauthCallbacksController < ApplicationController
 
       return error_redirect unless teacher
 
+      flash.discard
+
       sign_in_and_redirect teacher
     end
   end
