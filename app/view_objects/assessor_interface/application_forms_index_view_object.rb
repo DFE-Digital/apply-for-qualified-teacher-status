@@ -151,14 +151,18 @@ class AssessorInterface::ApplicationFormsIndexViewObject
   def application_forms_with_pagy
     @application_forms_with_pagy ||=
       pagy(
-        ::Filters::Flags.apply(
+        ::Filters::SortBy.apply(
           scope:
-            ::Filters::Stage.apply(
-              scope: application_forms_without_counted_filters,
+            ::Filters::Flags.apply(
+              scope:
+                ::Filters::Stage.apply(
+                  scope: application_forms_without_counted_filters,
+                  params: filter_params,
+                ),
               params: filter_params,
             ),
-          params: filter_params,
-        ).order(order_by_clause),
+          params: sort_params,
+        ),
       )
   end
 
@@ -228,14 +232,5 @@ class AssessorInterface::ApplicationFormsIndexViewObject
 
   def suitability_matcher
     @suitability_matcher ||= SuitabilityMatcher.new
-  end
-
-  def order_by_clause
-    case filter_form.sort_by
-    when "submitted_at_asc"
-      { submitted_at: :asc }
-    else
-      { submitted_at: :desc }
-    end
   end
 end
