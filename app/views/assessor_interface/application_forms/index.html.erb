@@ -89,7 +89,7 @@
 
 <div class="govuk-grid-column-two-thirds">
   <div class="govuk-!-text-align-right">
-    <%= form_with model: @view_object.filter_form, url: filters_sort_assessor_interface_application_forms_path, method: :post, class: "app-application-forms__filter-form" do |f| %>
+    <%= form_with model: @view_object.sort_form, url: filters_sort_assessor_interface_application_forms_path, method: :post do |f| %>
       <%= f.govuk_collection_select :sort_by,
                               [
                                 OpenStruct.new(id: "submitted_at_desc", name: "Newest to oldest"),

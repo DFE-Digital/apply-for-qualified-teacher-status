@@ -104,7 +104,7 @@ module AssessorInterface
     end
 
     def extract_sort_params(params)
-      params[:assessor_interface_filter_form].permit!.to_h
+      params[:assessor_interface_sort_form].permit!.to_h
     end
 
     def remove_cleared_autocomplete_values(params)

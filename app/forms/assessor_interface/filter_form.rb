@@ -16,6 +16,5 @@ class AssessorInterface::FilterForm
                 :submitted_at_before,
                 :statuses,
                 :prioritised,
-                :on_hold,
-                :sort_by
+                :on_hold
 end
