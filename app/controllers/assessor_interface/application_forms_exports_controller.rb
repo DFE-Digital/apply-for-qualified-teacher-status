@@ -12,6 +12,12 @@ module AssessorInterface
     def index
       @view_object = ApplicationFormsIndexViewObject.new(params:, session:)
 
+      ExportAudit.create!(
+        export_type: :application_forms,
+        exported_by: current_staff,
+        filter_params: (session[:filter_params] || {}).with_indifferent_access,
+      )
+
       set_csv_headers(filename: "applications-#{Time.current.iso8601}.csv")
       stream_csv(
         data: @view_object.application_forms_result,
