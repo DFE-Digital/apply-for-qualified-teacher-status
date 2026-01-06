@@ -190,6 +190,13 @@
     - reference_name
     - updated_at
     - url
+  :export_audits:
+    - created_at
+    - export_type
+    - exported_by_id
+    - filter_params
+    - id
+    - updated_at
   :further_information_requests:
     - assessment_id
     - created_at

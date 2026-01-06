@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_21_101117) do
+ActiveRecord::Schema[8.0].define(version: 2026_01_06_121437) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -284,6 +284,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_21_101117) do
     t.string "url", default: "", null: false
     t.string "b2_level_requirement_prefix", default: "", null: false
     t.text "other_information", default: "", null: false
+  end
+
+  create_table "export_audits", force: :cascade do |t|
+    t.string "export_type", null: false
+    t.bigint "exported_by_id", null: false
+    t.jsonb "filter_params", default: {}
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["exported_by_id"], name: "index_export_audits_on_exported_by_id"
   end
 
   create_table "feature_flags_features", force: :cascade do |t|
@@ -613,6 +622,21 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_21_101117) do
     t.index ["created_by_id"], name: "index_suitability_records_on_created_by_id"
   end
 
+  create_table "support_requests", force: :cascade do |t|
+    t.string "user_type"
+    t.boolean "has_application_reference"
+    t.string "enquiry_type"
+    t.string "name"
+    t.string "email"
+    t.string "application_reference"
+    t.text "comment"
+    t.datetime "submitted_at"
+    t.string "zendesk_ticket_id"
+    t.datetime "zendesk_ticket_created_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "teachers", force: :cascade do |t|
     t.string "email", null: false
     t.datetime "created_at", null: false
@@ -748,6 +772,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_21_101117) do
   add_foreign_key "email_deliveries", "further_information_requests"
   add_foreign_key "email_deliveries", "prioritisation_reference_requests"
   add_foreign_key "email_deliveries", "reference_requests"
+  add_foreign_key "export_audits", "staff", column: "exported_by_id"
   add_foreign_key "further_information_request_items", "work_histories"
   add_foreign_key "notes", "application_forms"
   add_foreign_key "notes", "eligibility_domains"
