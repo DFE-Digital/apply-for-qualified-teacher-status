@@ -31,7 +31,9 @@
 <% unless view_object.from_ineligible_country? %>
   <% unless view_object.declined_cannot_reapply? %>
     <% if view_object.has_any_further_information_decline_reasons? %>
-      <%= render "teacher_interface/application_forms/show/information_if_you_reapply", view_object: %>
+      <div class="govuk-!-margin-bottom-8">
+        <%= render "teacher_interface/application_forms/show/information_if_you_reapply", view_object: %>
+      </div>
     <% end %>
 
     <%= govuk_start_button(text: "Check you’re still eligible", href: %i[new teacher_interface application_form]) %>
