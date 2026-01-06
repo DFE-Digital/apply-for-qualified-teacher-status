@@ -2,9 +2,11 @@
 
 <div class="app-inline-action">
   <h1 class="govuk-heading-xl"><%= t(".title") %></h1>
-  <p class="govuk-body govuk-!-margin-bottom-8">
-    <%= govuk_link_to "Export result to CSV", assessor_interface_application_forms_exports_path %>
-  </p>
+  <% if policy([:assessor_interface, :application_forms_export]).index? %>
+    <p class="govuk-body govuk-!-margin-bottom-8">
+      <%= govuk_link_to "Export as CSV", assessor_interface_application_forms_exports_path %>
+    </p>
+  <% end %>
 </div>
 
 <div class="govuk-grid-column-one-third app-application-forms__filters">
