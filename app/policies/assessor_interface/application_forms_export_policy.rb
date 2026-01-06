@@ -2,8 +2,6 @@
 
 class AssessorInterface::ApplicationFormsExportPolicy < ApplicationPolicy
   def index?
-    return false if user.archived?
-
-    true
+    user.manage_staff_permission? && !user.archived?
   end
 end
