@@ -6,20 +6,19 @@ class ApplicationFormsExportContent
       %w[
         reference
         country_trained_in
+        region
         submitted_at
         assigned_to
         reviewer
-        given_names
-        family_name
-        alternative_given_names
-        alternative_family_name
-        date_of_birth
         statuses
         stage
         prioritised
         awarded_at
         declined_at
         withdrawn_at
+        trn
+        suitability_flag
+        referee_email_eligibility_concern
       ]
     end
 
@@ -27,20 +26,19 @@ class ApplicationFormsExportContent
       [
         "\"#{application_form.reference}\"",
         CountryName.from_code(application_form.country.code),
+        application_form.region.name.presence || "National",
         application_form.submitted_at.to_date,
         application_form.assessor&.name,
         application_form.reviewer&.name,
-        application_form.given_names,
-        application_form.family_name,
-        application_form.alternative_given_names,
-        application_form.alternative_family_name,
-        application_form.date_of_birth,
         human_readable_statuses(application_form.statuses).join(", "),
         human_readable_stage(application_form.stage),
         application_form.assessment.prioritised,
         application_form.awarded_at&.to_date,
         application_form.declined_at&.to_date,
         application_form.withdrawn_at&.to_date,
+        application_form.teacher.trn,
+        has_suitability_flag?(application_form),
+        has_work_history_eligibility_email_domain_concerns?(application_form),
       ]
     end
 
@@ -50,6 +48,16 @@ class ApplicationFormsExportContent
 
     def human_readable_stage(stage)
       I18n.t("components.status_tag.#{stage}")
+    end
+
+    def has_suitability_flag?(application_form)
+      SuitabilityMatcher.new.flag_as_unsuitable?(application_form:)
+    end
+
+    def has_work_history_eligibility_email_domain_concerns?(application_form)
+      application_form.work_histories.any?(
+        &:activate_eligibility_domain_concern?
+      )
     end
   end
 end
