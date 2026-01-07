@@ -34,7 +34,7 @@ Note from assessor:
 You can explore [other routes into teaching](https://getintoteaching.education.gov.uk/routes-into-teaching).
 
 <% unless @view_object.from_ineligible_country? %>
-Or, you’ll be able to make a new application once you’ve addressed all decline reasons given. If you reapply for QTS, you’ll not be able to review the details of your previous application.
+Or, if you can address the reasons your application has been declined, you can submit a new application. You must [check you’re still eligible to apply](<%= new_teacher_interface_application_form_url %>) first. You’ll need to provide all the required information and documents again.
 <% end %>
 <% end %>
 
@@ -63,8 +63,6 @@ Note from assessor:
 <% end %>
 <% end %>
 <% end %>
-
-[Apply again](<%= new_teacher_interface_application_form_url %>)
 
 <% end %>
 # Decision review
