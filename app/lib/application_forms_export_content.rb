@@ -17,8 +17,6 @@ class ApplicationFormsExportContent
         declined_at
         withdrawn_at
         trn
-        suitability_flag
-        referee_email_eligibility_concern
       ]
     end
 
@@ -37,8 +35,6 @@ class ApplicationFormsExportContent
         application_form.declined_at&.to_date,
         application_form.withdrawn_at&.to_date,
         application_form.teacher.trn,
-        has_suitability_flag?(application_form),
-        has_work_history_eligibility_email_domain_concerns?(application_form),
       ]
     end
 
@@ -48,16 +44,6 @@ class ApplicationFormsExportContent
 
     def human_readable_stage(stage)
       I18n.t("components.status_tag.#{stage}")
-    end
-
-    def has_suitability_flag?(application_form)
-      SuitabilityMatcher.new.flag_as_unsuitable?(application_form:)
-    end
-
-    def has_work_history_eligibility_email_domain_concerns?(application_form)
-      application_form.work_histories.any?(
-        &:activate_eligibility_domain_concern?
-      )
     end
   end
 end
