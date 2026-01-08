@@ -18,4 +18,13 @@
 #
 class SupportRequest < ApplicationRecord
   has_one_attached :screenshot, dependent: :purge_later
+
+  enum :enquiry_type,
+       {
+         submitted_application: "submitted_application",
+         submitting_an_application: "submitting_an_application",
+         providing_a_reference: "providing_a_reference",
+         authentication: "authentication",
+         other: "other",
+       }
 end
