@@ -3,10 +3,6 @@
 class CreateSupportRequests < ActiveRecord::Migration[8.0]
   def change
     create_table :support_requests do |t|
-      t.string :user_type
-
-      t.boolean :has_application_reference
-
       t.string :enquiry_type
 
       t.string :name
