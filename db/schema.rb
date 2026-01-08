@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_12_30_111338) do
+ActiveRecord::Schema[8.0].define(version: 2026_01_08_094837) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -623,9 +623,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_30_111338) do
   end
 
   create_table "support_requests", force: :cascade do |t|
-    t.string "user_type"
-    t.boolean "has_application_reference"
-    t.string "enquiry_type"
+    t.string "category_type"
+    t.string "application_enquiry_type"
     t.string "name"
     t.string "email"
     t.string "application_reference"

@@ -5,14 +5,13 @@
 # Table name: support_requests
 #
 #  id                        :bigint           not null, primary key
+#  application_enquiry_type  :string
 #  application_reference     :string
+#  category_type             :string
 #  comment                   :text
 #  email                     :string
-#  enquiry_type              :string
-#  has_application_reference :boolean
 #  name                      :string
 #  submitted_at              :datetime
-#  user_type                 :string
 #  zendesk_ticket_created_at :datetime
 #  created_at                :datetime         not null
 #  updated_at                :datetime         not null
