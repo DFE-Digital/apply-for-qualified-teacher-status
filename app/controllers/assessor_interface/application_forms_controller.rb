@@ -4,11 +4,11 @@ module AssessorInterface
   class ApplicationFormsController < BaseController
     include HistoryTrackable
 
-    before_action only: %i[index apply_filters clear_filters] do
+    before_action only: %i[index apply_filters apply_sort clear_filters] do
       authorize %i[assessor_interface application_form]
     end
 
-    before_action except: %i[index apply_filters clear_filters] do
+    before_action except: %i[index apply_filters apply_sort clear_filters] do
       authorize [:assessor_interface, application_form]
     end
 
@@ -24,6 +24,11 @@ module AssessorInterface
       session[:filter_params] = extract_filter_params(
         remove_cleared_autocomplete_values(params),
       )
+      redirect_to assessor_interface_application_forms_path
+    end
+
+    def apply_sort
+      session[:sort_params] = extract_sort_params(params)
       redirect_to assessor_interface_application_forms_path
     end
 
@@ -96,6 +101,10 @@ module AssessorInterface
 
     def extract_filter_params(params)
       params[:assessor_interface_filter_form].permit!.to_h
+    end
+
+    def extract_sort_params(params)
+      params[:assessor_interface_sort_form].permit!.to_h
     end
 
     def remove_cleared_autocomplete_values(params)
