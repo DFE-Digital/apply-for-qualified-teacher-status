@@ -107,7 +107,7 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
     end
 
     context "default sorting newest to oldest" do
-      let!(:newest) do
+      let!(:oldest) do
         create(
           :application_form,
           :submitted,
@@ -115,7 +115,7 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
         )
       end
 
-      let!(:oldest) do
+      let!(:newest) do
         create(
           :application_form,
           :submitted,
@@ -123,12 +123,12 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
         )
       end
 
-      it { is_expected.to eq([oldest, newest]) }
+      it { is_expected.to eq([newest, oldest]) }
 
-      context "when sorted by submitted_at ascending" do
+      context "when sorted by oldest to newest" do
         let(:session) { { sort_params: { sort_by: "submitted_at_asc" } } }
 
-        it { is_expected.to eq([newest, oldest]) }
+        it { is_expected.to eq([oldest, newest]) }
       end
     end
 
