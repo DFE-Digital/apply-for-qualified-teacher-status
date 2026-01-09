@@ -88,8 +88,8 @@
 </div>
 
 <div class="govuk-grid-column-two-thirds">
-  <div class="govuk-!-text-align-right">
-    <%= form_with model: @view_object.sort_form, url: filters_sort_assessor_interface_application_forms_path, method: :post do |f| %>
+  <%= form_with model: @view_object.sort_form, url: filters_sort_assessor_interface_application_forms_path, method: :post do |f| %>
+    <div class="app-inline-content app-inline-content__justify-end">
       <%= f.govuk_collection_select :sort_by,
                               [
                                 OpenStruct.new(id: "submitted_at_desc", name: "Newest to oldest"),
@@ -97,10 +97,11 @@
                               ],
                               :id,
                               :name,
-                              label: { size: "s", text: "Sort by" } %>
+                              form_group: { class: "app-inline-content app-inline-content__items-baseline govuk-!-margin-right-2" },
+                              label: { size: "s", text: "Sorted by", class: "govuk-!-margin-right-2" } %>
       <%= f.govuk_submit t(".filters.sort") %>
-    <% end %>
-  </div>
+    </div>
+  <% end %>
 
   <% if (records = @view_object.application_forms_records).present? %>
     <ul class="app-search-results">
