@@ -418,17 +418,16 @@
     - id
     - updated_at
   :support_requests:
+    - application_enquiry_type
     - application_reference
+    - category_type
     - created_at
     - comment
     - email
-    - enquiry_type
-    - has_application_reference
     - name
     - id
     - submitted_at
     - updated_at
-    - user_type
     - zendesk_ticket_created_at
     - zendesk_ticket_id
   :teachers:

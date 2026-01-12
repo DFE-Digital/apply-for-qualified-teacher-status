@@ -19,4 +19,17 @@
 #
 class SupportRequest < ApplicationRecord
   has_one_attached :screenshot, dependent: :purge_later
+
+  enum :category_type,
+       {
+         applicantion_submitted: "applicantion_submitted",
+         submitting_an_application: "submitting_an_application",
+         providing_a_reference: "providing_a_reference",
+         other: "other",
+       },
+       prefix: true
+
+  enum :application_enquiry_type,
+       { progress_update: "progress_update", other: "other" },
+       prefix: true
 end
