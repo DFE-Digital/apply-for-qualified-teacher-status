@@ -32,6 +32,9 @@ module TeacherInterface
         :name,
         :email,
         :comment,
+        :category_type,
+        :application_reference,
+        :application_enquiry_type,
         :screenshot,
       )
     end
