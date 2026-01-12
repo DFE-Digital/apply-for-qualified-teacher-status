@@ -71,6 +71,10 @@ module AssessorInterface
 
     def update
       @application_form = assessment.application_form
+      @view_object =
+        PrioritisationReferenceRequestViewObject.new(
+          prioritisation_reference_request:,
+        )
 
       @form =
         RequestableReviewForm.new(
