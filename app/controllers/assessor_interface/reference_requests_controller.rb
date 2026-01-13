@@ -51,6 +51,8 @@ module AssessorInterface
     end
 
     def update_verify
+      @view_object = ReferenceRequestViewObject.new(reference_request:)
+
       passed =
         params.dig(:assessor_interface_requestable_verify_passed_form, :passed)
 
