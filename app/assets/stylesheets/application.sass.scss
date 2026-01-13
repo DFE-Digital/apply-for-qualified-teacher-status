@@ -46,6 +46,18 @@ ul.autocomplete__menu {
   align-items: center;
 }
 
+.app-inline-content {
+  display: flex;
+}
+
+.app-inline-content__justify-end {
+  justify-content: end;
+}
+
+.app-inline-content__items-baseline {
+  align-items: baseline;
+}
+
 .app-highlight {
   border-bottom: 3px solid #ffbf47;
   margin-right: 1px;
