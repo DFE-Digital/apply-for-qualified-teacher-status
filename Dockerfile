@@ -13,7 +13,7 @@ RUN apk add --update --no-cache tzdata && \
     echo "Europe/London" > /etc/timezone
 
 # Upgrade ssl, crypto and curl libraries to latest version
-RUN apk upgrade --no-cache openssl libssl3 libcrypto3 curl expat imagemagick imagemagick-libs
+RUN apk upgrade --no-cache openssl libssl3 libcrypto3 curl expat
 
 # build-base: dependencies for bundle
 # yarn: node package manager
@@ -22,7 +22,7 @@ RUN apk upgrade --no-cache openssl libssl3 libcrypto3 curl expat imagemagick ima
 # vips-dev: dependencies for ruby-vips (image processing library)
 # imagemagick-dev: dependencies for rmagick (image conversion library)
 # poppler-utils: for analysing PDF files
-RUN apk add --update --no-cache build-base yarn postgresql-dev git vips-dev imagemagick-dev poppler-utils yaml-dev
+RUN apk add --update --no-cache build-base yarn postgresql-dev git vips-dev imagemagick-dev=7.1.2.12-r0 poppler-utils yaml-dev
 
 # Install gems defined in Gemfile
 COPY Gemfile Gemfile.lock ./
@@ -83,14 +83,14 @@ RUN apk add --update --no-cache tzdata && \
 RUN addgroup -S appgroup -g 20001 && adduser -S appuser -G appgroup -u 10001
 
 # Upgrade ssl, crypto and curl libraries to latest version
-RUN apk upgrade --no-cache openssl libssl3 libcrypto3 curl expat imagemagick imagemagick-libs
+RUN apk upgrade --no-cache openssl libssl3 libcrypto3 curl expat
 
 # libpq: required to run postgres
 # vips-dev: dependencies for ruby-vips (image processing library)
 # libreoffice-writer: for converting word documents to PDF
 # imagemagick-dev and imagemagick-pdf: for converting images to PDF
 # poppler-utils: for analysing PDF files
-RUN apk add --update --no-cache libpq vips-dev libreoffice-writer imagemagick-dev imagemagick-pdf poppler-utils
+RUN apk add --update --no-cache libpq vips-dev libreoffice-writer imagemagick-dev=7.1.2.12-r0 imagemagick-pdf=7.1.2.12-r0 poppler-utils
 
 # Install fonts suitable for rendering DOCX and ODT files to PDF
 # https://wiki.alpinelinux.org/wiki/Fonts#Installation
