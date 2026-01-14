@@ -13,7 +13,7 @@ RUN apk add --update --no-cache tzdata && \
     echo "Europe/London" > /etc/timezone
 
 # Upgrade ssl, crypto and curl libraries to latest version
-RUN apk upgrade --no-cache openssl libssl3 libcrypto3 curl expat
+RUN apk upgrade --no-cache openssl libssl3 libcrypto3 curl expat imagemagick imagemagick-libs
 
 # build-base: dependencies for bundle
 # yarn: node package manager
@@ -83,7 +83,7 @@ RUN apk add --update --no-cache tzdata && \
 RUN addgroup -S appgroup -g 20001 && adduser -S appuser -G appgroup -u 10001
 
 # Upgrade ssl, crypto and curl libraries to latest version
-RUN apk upgrade --no-cache openssl libssl3 libcrypto3 curl expat
+RUN apk upgrade --no-cache openssl libssl3 libcrypto3 curl expat imagemagick imagemagick-libs
 
 # libpq: required to run postgres
 # vips-dev: dependencies for ruby-vips (image processing library)
