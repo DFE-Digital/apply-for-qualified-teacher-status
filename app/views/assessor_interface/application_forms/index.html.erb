@@ -1,6 +1,13 @@
 <% content_for :page_title, t(".title") %>
 
-<h1 class="govuk-heading-xl"><%= t(".title") %></h1>
+<div class="app-inline-action">
+  <h1 class="govuk-heading-xl"><%= t(".title") %></h1>
+  <% if policy([:assessor_interface, :application_forms_export]).index? && session[:filter_params].try(:[], :show_all).nil? %>
+    <p class="govuk-body govuk-!-margin-bottom-8">
+      <%= govuk_link_to "Export as CSV", assessor_interface_application_forms_exports_path %>
+    </p>
+  <% end %>
+</div>
 
 <div class="govuk-grid-column-one-third app-application-forms__filters">
   <h2 class="govuk-heading-m"><%= t(".filters.title") %></h2>

@@ -18,6 +18,8 @@
   :email_deliveries:
     - to
     - subject
+  :export_audits:
+    - filter_params
   :prioritisation_reference_requests:
     - review_note
   :further_information_request_items:
