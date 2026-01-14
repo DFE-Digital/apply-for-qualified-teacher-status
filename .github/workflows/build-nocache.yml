@@ -22,6 +22,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           context: .
           reuse-cache: false
+          max-cache: true
           snyk-token: ${{ secrets.SNYK_TOKEN }}
 
       - name: Notify slack on failure
