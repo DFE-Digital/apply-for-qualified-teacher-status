@@ -45,7 +45,6 @@ class EmailDomain
     cspire1.com
     earthlink.net
     email.uscc.net
-    example.com
     fastmail.ca
     fastmail.cn
     fastmail.co.uk
