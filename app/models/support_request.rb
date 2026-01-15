@@ -18,8 +18,6 @@
 #  zendesk_ticket_id         :string
 #
 class SupportRequest < ApplicationRecord
-  has_one_attached :screenshot, dependent: :purge_later
-
   enum :category_type,
        {
          applicantion_submitted: "applicantion_submitted",

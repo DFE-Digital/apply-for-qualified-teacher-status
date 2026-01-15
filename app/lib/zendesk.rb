@@ -19,14 +19,10 @@ class Zendesk
     @as = as
   end
 
-  def create_ticket!(name:, email:, comment:, attachments: [])
+  def create_ticket!(name:, email:, comment:)
     client.tickets.create!(
       comment: {
         body: comment,
-        uploads:
-          attachments.compact_blank.map do |a|
-            client.uploads.create!(file: a).id
-          end,
       },
       requester: {
         name: name,
