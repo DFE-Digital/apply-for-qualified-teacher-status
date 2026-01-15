@@ -7,7 +7,6 @@ class TeacherInterface::SupportRequestForm < TeacherInterface::BaseForm
   attribute :category_type, :string
   attribute :application_enquiry_type, :string
   attribute :application_reference, :string
-  attribute :screenshot
 
   def update_model
     SupportRequest.create!(
@@ -17,9 +16,8 @@ class TeacherInterface::SupportRequestForm < TeacherInterface::BaseForm
       category_type:,
       application_enquiry_type:,
       application_reference:,
-      screenshot:,
     )
 
-    Zendesk.create_ticket!(name:, email:, comment:, attachments: [screenshot])
+    Zendesk.create_ticket!(name:, email:, comment:)
   end
 end

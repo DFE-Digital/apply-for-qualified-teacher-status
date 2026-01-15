@@ -35,7 +35,6 @@ module TeacherInterface
         :category_type,
         :application_reference,
         :application_enquiry_type,
-        :screenshot,
       )
     end
   end
