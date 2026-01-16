@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 module TimelineEntry
-  class Component < ViewComponent::Base
+  class Component < ApplicationComponent
     def initialize(timeline_event:)
-      super
+      super()
       @timeline_event = timeline_event
     end
 

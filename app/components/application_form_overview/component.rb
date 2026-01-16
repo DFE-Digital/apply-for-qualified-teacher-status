@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 module ApplicationFormOverview
-  class Component < ViewComponent::Base
+  class Component < ApplicationComponent
     def initialize(application_form, current_staff:, highlight_email: false)
-      super
+      super()
       @application_form = application_form
       @current_staff = current_staff
       @highlight_email = highlight_email

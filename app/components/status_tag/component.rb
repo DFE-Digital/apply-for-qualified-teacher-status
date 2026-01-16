@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 module StatusTag
-  class Component < ViewComponent::Base
+  class Component < ApplicationComponent
     def initialize(statuses, id: nil, class_context: nil)
-      super
+      super()
       @statuses = statuses
       @id = id
       @class_context = class_context
