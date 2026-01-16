@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 module DescriptionList
-  class Component < ViewComponent::Base
+  class Component < ApplicationComponent
     def initialize(rows:, classes: [])
-      super
+      super()
       @rows = rows
       @classes = classes
     end

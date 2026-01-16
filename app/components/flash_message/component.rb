@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 module FlashMessage
-  class Component < ViewComponent::Base
+  class Component < ApplicationComponent
     ALLOWED_PRIMARY_KEYS = %i[info success warning].freeze
     DEVISE_PRIMARY_KEYS = { alert: :warning, notice: :info }.freeze
 
     def initialize(flash:)
-      super
+      super()
       @flash = flash.to_hash.symbolize_keys
     end
 

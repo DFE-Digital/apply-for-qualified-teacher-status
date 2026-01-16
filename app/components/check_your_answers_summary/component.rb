@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module CheckYourAnswersSummary
-  class Component < ViewComponent::Base
+  class Component < ApplicationComponent
     def initialize(
       model:,
       id:,
@@ -11,7 +11,7 @@ module CheckYourAnswersSummary
       with_action_link_to: nil,
       with_action_link_label: nil
     )
-      super
+      super()
       @model = model
       @id = "app-check-your-answers-summary-#{id}"
       @title = title

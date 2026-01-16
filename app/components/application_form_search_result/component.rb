@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module ApplicationFormSearchResult
-  class Component < ViewComponent::Base
+  class Component < ApplicationComponent
     def initialize(
       application_form,
       current_staff:,
@@ -9,7 +9,7 @@ module ApplicationFormSearchResult
       prioritised:,
       on_hold:
     )
-      super
+      super()
       @application_form = application_form
       @current_staff = current_staff
       @unsuitable = unsuitable
