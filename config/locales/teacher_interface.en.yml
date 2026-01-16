@@ -496,7 +496,7 @@ en:
             application_reference:
               blank: Enter your application reference number
             application_enquiry_type:
-              blank: Select the what you are contacting us about
+              blank: Select what you are contacting us about
             name:
               blank: Enter your name
             email:

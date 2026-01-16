@@ -16,11 +16,13 @@ module TeacherInterface
       @form = SupportRequestForm.new(form_params)
 
       if @form.save(validate: true)
-        flash[:success] = "Support request created"
-        redirect_to root_path
+        redirect_to confirmation_teacher_interface_support_requests_path
       else
         render :new, status: :unprocessable_entity
       end
+    end
+
+    def confirmation
     end
 
     private

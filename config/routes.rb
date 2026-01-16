@@ -598,7 +598,9 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :support_requests, only: %i[new create]
+    resources :support_requests, only: %i[new create] do
+      collection { get "confirmation", to: "support_requests#confirmation" }
+    end
   end
 
   devise_for :teachers,
