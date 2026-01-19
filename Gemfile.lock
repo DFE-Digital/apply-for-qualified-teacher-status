@@ -10,9 +10,9 @@ GIT
 
 GIT
   remote: https://github.com/DFE-Digital/dfe-autocomplete.git
-  revision: 674ad38e35ba391526075109052f106694f167da
+  revision: 966efa70f058585fdbc91e7217d678092db62303
   specs:
-    dfe-autocomplete (0.2.0)
+    dfe-autocomplete (0.2.1)
       actionview (>= 7.0.2.3)
       activemodel (>= 7.0.2.3)
       govuk-components
@@ -337,7 +337,8 @@ GEM
     loofah (2.25.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
-    mail (2.8.1)
+    mail (2.9.0)
+      logger
       mini_mime (>= 0.1.1)
       net-imap
       net-pop
@@ -362,7 +363,7 @@ GEM
     mutex_m (0.3.0)
     net-http-persistent (4.0.2)
       connection_pool (~> 2.2)
-    net-imap (0.5.12)
+    net-imap (0.6.2)
       date
       net-protocol
     net-pop (0.1.2)
@@ -371,7 +372,7 @@ GEM
       timeout
     net-smtp (0.5.1)
       net-protocol
-    nio4r (2.7.4)
+    nio4r (2.7.5)
     nokogiri (1.19.0)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
@@ -519,7 +520,7 @@ GEM
     rake (13.3.1)
     rbs (3.4.4)
       abbrev
-    rdoc (7.0.3)
+    rdoc (7.1.0)
       erb
       psych (>= 4.0.0)
       tsort
@@ -662,7 +663,7 @@ GEM
     temple (0.10.3)
     thor (1.5.0)
     tilt (2.3.0)
-    timeout (0.4.3)
+    timeout (0.6.0)
     trailblazer-option (0.1.2)
     tsort (0.2.0)
     ttfunk (1.8.0)
