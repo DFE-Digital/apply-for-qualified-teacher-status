@@ -1,8 +1,15 @@
 <% failure_reasons.each do |failure_reason| %>
   <li>
-    <p class="govuk-body govuk-!-margin-bottom-0">
+    <p class="govuk-body govuk-!-margin-bottom-1">
       <%= t(failure_reason.key, scope: %i[assessor_interface assessment_sections failure_reasons as_statement]) %>
     </p>
-    <%= simple_format failure_reason.assessor_feedback, class: "govuk-hint" %>
+    <% if failure_reason.selected_failure_reasons_work_histories.present? %>
+      <% failure_reason.selected_failure_reasons_work_histories.each do |selected_failure_reasons_work_history| %>
+        <strong class="govuk-hint govuk-!-font-weight-bold"><%= selected_failure_reasons_work_history.work_history.school_name %></strong>
+        <%= simple_format failure_reason.assessor_feedback || selected_failure_reasons_work_history.assessor_feedback, class: "govuk-hint" %>
+      <% end %>
+    <% else %>
+      <%= simple_format failure_reason.assessor_feedback, class: "govuk-hint govuk-strong" %>
+    <% end %>
   </li>
 <% end %>
