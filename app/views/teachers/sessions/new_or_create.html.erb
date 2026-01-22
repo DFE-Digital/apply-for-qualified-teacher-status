@@ -1,9 +1,5 @@
 <% content_for :back_link_url, eligibility_interface_start_path %>
 
-<h1 class="govuk-heading-l">
-  Check your eligibility to apply for qualified teacher status (QTS) in England
-</h1>
-
 <% if FeatureFlags::FeatureFlag.active?(:gov_one_applicant_login) %>
   <%= govuk_notification_banner(title_text: "Important") do |notification_banner| %>
     <% notification_banner.with_heading(text: "How you sign in has changed") %>
@@ -14,7 +10,19 @@
 
     <p class="govuk-body">If you need to create a GOV.UK One Login, do not use a work or university email that you may lose access to. If your email address changes you will lose access to your application.</p>
   <% end %>
+<% else %>
+  <%= govuk_notification_banner(title_text: "Important") do |notification_banner| %>
+    <% notification_banner.with_heading(text: "How you sign in has changed") %>
+
+    <p class="govuk-body">GOV.UK One Login is not currently in use for this service.</p>
+
+    <p class="govuk-body">If you have used the service before, follow the instructions below using the email address you used to register.</p>
+  <% end %>
 <% end %>
+
+<h1 class="govuk-heading-l">
+  Check your eligibility to apply for qualified teacher status (QTS) in England
+</h1>
 
 <%= form_with model: @new_session_form, url: session_path(resource_name) do |f| %>
   <%= f.govuk_error_summary %>
