@@ -1,5 +1,13 @@
 <h1 class="govuk-heading-xl">Apply for qualified teacher status (QTS) in England</h1>
 
+<%= govuk_notification_banner(title_text: "Important") do |notification_banner| %>
+  <% notification_banner.with_heading(text: "How you sign in has changed") %>
+
+  <p class="govuk-body">GOV.UK One Login is not currently in use for this service.</p>
+
+  <p class="govuk-body">Follow the instructions below using the email address you used to register.</p>
+<% end %>
+
 <h2 class="govuk-heading-l">Sign in</h2>
 
 <%= form_with model: @new_session_form, url: session_path(resource_name) do |f| %>
