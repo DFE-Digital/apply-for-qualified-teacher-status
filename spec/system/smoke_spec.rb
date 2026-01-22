@@ -18,6 +18,7 @@ require "support/autoload/page_objects/eligibility_interface/region"
 require "support/autoload/page_objects/eligibility_interface/start"
 require "support/autoload/page_objects/eligibility_interface/teach_children"
 require "support/autoload/page_objects/eligibility_interface/work_experience"
+require "support/autoload/page_objects/eligibility_interface/work_experience_referee"
 require "support/autoload/page_objects/eligibility_interface/work_experience_in_england"
 
 Capybara.javascript_driver = :cuprite
@@ -37,6 +38,7 @@ describe "Smoke test", :js, :smoke_test, type: :system do
     and_i_have_a_teaching_qualification
     and_i_have_a_university_degree
     and_i_have_work_experience
+    and_i_have_a_valid_referee
     and_i_dont_have_sanctions
     and_i_have_work_experience_in_england
     and_i_am_qualified_to_teach_children
@@ -98,6 +100,10 @@ describe "Smoke test", :js, :smoke_test, type: :system do
     end
   end
 
+  def and_i_have_a_valid_referee
+    eligibility_work_experience_referee_page.submit_yes
+  end
+
   def and_i_dont_have_sanctions
     eligibility_misconduct_page.submit_no
   end
@@ -137,6 +143,11 @@ describe "Smoke test", :js, :smoke_test, type: :system do
   def eligibility_work_experience_page
     @eligibility_work_experience_page ||=
       PageObjects::EligibilityInterface::WorkExperience.new
+  end
+
+  def eligibility_work_experience_referee_page
+    @eligibility_work_experience_referee_page ||=
+      PageObjects::EligibilityInterface::WorkExperienceReferee.new
   end
 
   def eligibility_work_experience_in_england_page

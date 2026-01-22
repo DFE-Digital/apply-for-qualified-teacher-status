@@ -13,6 +13,7 @@ namespace :review_app do
       teacher_applications
       use_passport_for_identity_verification
       prioritisation
+      email_domains_for_referees
     ].each { |feature| FeatureFlags::FeatureFlag.activate(feature) }
   end
 end
