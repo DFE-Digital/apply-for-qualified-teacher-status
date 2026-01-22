@@ -326,7 +326,7 @@ en:
         assessor_interface/assessment_confirmation_form:
           attributes:
             confirmation:
-              inclusion: Select ‘Yes’ to confirm, or ‘No’ to cancel.
+              inclusion: Select yes if you want to decline this QTS application
         assessor_interface/assessment_declaration_decline_form:
           attributes:
             declaration:
@@ -342,7 +342,7 @@ en:
             confirmation:
               blank: Confirm you have assessed this application based on the eligibility criteria that was in place on the date that it was submitted
             recommendation:
-              blank: Select your recommendation
+              blank: Select your recommendationx
               inclusion: Select your recommendation
         assessor_interface/assessment_section_form:
           attributes:
@@ -355,7 +355,7 @@ en:
             selected_failure_reasons:
               blank: Select the reasons for your recommendation
             passed:
-              inclusion: Select whether the applicant completed this section to your satisfaction
+              inclusion: Select yes if the applicant has completed this section to your satisfaction
             additional_degree_certificate_illegible_notes:
               blank: Enter a note to the applicant
             additional_degree_transcript_illegible_notes:
@@ -377,6 +377,10 @@ en:
             degree_transcript_illegible_notes:
               blank: Enter a note to the applicant
             duplicate_application_notes:
+              blank: Enter a note to the applicant
+            english_language_proficiency_require_alternative_notes:
+              blank: Enter a note to the applicant
+            english_language_moi_invalid_format_notes:
               blank: Enter a note to the applicant
             fraud_notes:
               blank: Enter a note to the applicant
@@ -443,7 +447,7 @@ en:
         assessor_interface/assessment_prioritisation_decision_form:
           attributes:
             passed:
-              inclusion: Select your prioritisation decision
+              inclusion: Select that you want to prioritise this application
         assessor_interface/check_age_range_subjects_form:
           attributes:
             age_range_min:
@@ -548,7 +552,7 @@ en:
         assessor_interface/requestable_review_form:
           attributes:
             passed:
-              inclusion: Tell us if the response confirms that this is legitimate
+              inclusion: Select yes if you are satisfied with this reference for the applicant's work history
             note:
               blank: Tell us why this should not be accepted
         assessor_interface/requestable_verify_failed_form:
