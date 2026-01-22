@@ -260,6 +260,20 @@ RSpec.describe AssessorInterface::AssessmentSectionForm, type: :model do
       )
     end
 
+    context "when the assessment section is a preliminary section for qualifications" do
+      let(:assessment_section) do
+        create(:assessment_section, :preliminary, :qualifications, passed: nil)
+      end
+
+      it "returns attributes with all preliminary failure reasons empty" do
+        expect(form).to have_attributes(
+          passed: nil,
+          teaching_qualifications_not_at_required_level_checked: nil,
+          teaching_qualification_subjects_criteria_checked: nil,
+        )
+      end
+    end
+
     context "when assessment section has been reviewed" do
       let(:assessment_section) do
         create(
@@ -287,10 +301,12 @@ RSpec.describe AssessorInterface::AssessmentSectionForm, type: :model do
       end
 
       before do
-        assessment_section
-          .selected_failure_reasons
-          .find_by(key: work_history_failure_reason)
-          .update!(work_histories:)
+        work_history_selected_failure_reason =
+          assessment_section.selected_failure_reasons.find_by(
+            key: work_history_failure_reason,
+          )
+
+        work_history_selected_failure_reason&.update!(work_histories:)
       end
 
       it "returns all relevant attributes" do
@@ -310,6 +326,31 @@ RSpec.describe AssessorInterface::AssessmentSectionForm, type: :model do
           "#{decline_failure_reason}_checked": nil,
           "#{decline_failure_reason}_notes": nil,
         )
+      end
+
+      context "with the assessment section is a preliminary section for qualifications" do
+        let(:assessment_section) do
+          create(
+            :assessment_section,
+            :preliminary,
+            :qualifications,
+            passed: false,
+            selected_failure_reasons: [
+              build(
+                :selected_failure_reason,
+                key: "teaching_qualifications_not_at_required_level",
+              ),
+            ],
+          )
+        end
+
+        it "returns attributes with all preliminary failure reasons checked or not" do
+          expect(form).to have_attributes(
+            passed: false,
+            teaching_qualifications_not_at_required_level_checked: true,
+            teaching_qualification_subjects_criteria_checked: false,
+          )
+        end
       end
     end
 
