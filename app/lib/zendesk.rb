@@ -19,8 +19,8 @@ class Zendesk
     @as = as
   end
 
-  def create_ticket!(name:, email:, comment:)
-    client.tickets.create!(
+  def create_ticket!(name:, email:, subject:, comment:)
+    client.requests.create!(
       comment: {
         body: comment,
       },
@@ -28,14 +28,7 @@ class Zendesk
         name: name,
         email: email,
       },
-      subject: "[AfQTS] Support request for #{name}",
-      custom_fields: [
-        {
-          id: "26981537338385",
-          value: "professional_recognition-_apply_for_qts_service_enquiries",
-        },
-        { id: "26981551859857", value: ["afqts__application_update"] },
-      ],
+      subject:,
     )
   end
 
@@ -48,7 +41,7 @@ class Zendesk
         config.url = "https://becomingateacher1721898822.zendesk.com/api/v2"
         # config.url = "https://becomingateacher.zendesk.com/api/v2"
 
-        config.username = api_username # @as
+        config.username = @as
         config.token = api_key
       end
   end
