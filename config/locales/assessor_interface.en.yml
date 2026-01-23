@@ -326,7 +326,7 @@ en:
         assessor_interface/assessment_confirmation_form:
           attributes:
             confirmation:
-              inclusion: Select yes if you want to decline this QTS application
+              inclusion: Select ‘Yes’ to confirm, or ‘No’ to cancel.
         assessor_interface/assessment_declaration_decline_form:
           attributes:
             declaration:
@@ -355,7 +355,7 @@ en:
             selected_failure_reasons:
               blank: Select the reasons for your recommendation
             passed:
-              inclusion: Select yes if the applicant has completed this section to your satisfaction
+              inclusion: Select whether the applicant completed this section to your satisfaction
             additional_degree_certificate_illegible_notes:
               blank: Enter a note to the applicant
             additional_degree_transcript_illegible_notes:
@@ -447,7 +447,7 @@ en:
         assessor_interface/assessment_prioritisation_decision_form:
           attributes:
             passed:
-              inclusion: Select that you want to prioritise this application
+              inclusion: Select your prioritisation decision
         assessor_interface/check_age_range_subjects_form:
           attributes:
             age_range_min:

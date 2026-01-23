@@ -383,13 +383,13 @@ en:
         teacher_interface/prioritisation_reference_request_contact_response_form:
           attributes:
             contact_response:
-              inclusion: Select yes if the details about you are correct
+              inclusion: Select if the details about you are correct
             contact_comment:
               blank: Tell us why your details are not correct / Enter your correct details
         teacher_interface/prioritisation_reference_request_confirm_applicant_response_form:
           attributes:
             confirm_applicant_response:
-              inclusion: Select yes if you can confirm the applicant's work history
+              inclusion: Select if you can confirm the applicant’s work history
             confirm_applicant_comment:
               blank: Tell us why you cannot confirm the applicant's work history
         teacher_interface/passport_expiry_date_form:
