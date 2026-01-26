@@ -76,6 +76,7 @@ class EmailDomain
     gmail.com
     gmail.com.au
     gmail.com.br
+    gmail.edu
     gmail.ru
     gmx.at
     gmx.ch
@@ -125,6 +126,7 @@ class EmailDomain
     inbox.net
     inbox.ru
     inbox.si
+    institution.edu
     juno.com
     laposte.net
     libero.it
@@ -255,6 +257,7 @@ class EmailDomain
     sbcglbal.net
     sbcglobal.com
     sbcglobal.net
+    school.edu
     sfr.fr
     shaw.ca
     sky.com
