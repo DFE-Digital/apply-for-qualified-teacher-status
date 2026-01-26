@@ -63,7 +63,7 @@
 
 <% if @view_object.can_submit? %>
   <section id="app-application-form-submission-declaration">
-    <%= form_with model: @sanction_confirmation_form, url: [:teacher_interface, :application_form], method: :put do |f| %>
+    <%= form_with model: @sanction_confirmation_form, url: [:teacher_interface, :application_form, :payment_transactions], method: :post do |f| %>
       <%= f.govuk_error_summary %>
 
       <h2 class="govuk-heading-m">How we handle your data</h2>
@@ -81,9 +81,9 @@
       <% end %>
 
       <h2 class="govuk-heading-m">Submitting your application</h2>
-      <p class="govuk-body">By selecting the ‘Submit application button’ you confirm that, to the best of your knowledge, the details you’ve provided are correct.</p>
-      <p class="govuk-body">You will not be able to change your application, add new documents or delete anything once you submit it.</p>
-      <%= f.govuk_submit "Submit your application" %>
+      <p class="govuk-body">By selecting the ‘Pay and submit application button’ you confirm that, to the best of your knowledge, the details you’ve provided are correct.</p>
+      <p class="govuk-body">You will not be able to change your application, add new documents or delete anything once you pay to submit it.</p>
+      <%= f.govuk_submit "Pay to submit your application" %>
     <%- end -%>
   </section>
 <% end %>

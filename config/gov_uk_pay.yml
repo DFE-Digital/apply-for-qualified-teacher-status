@@ -1,0 +1,11 @@
+development:
+  base_url: <%= ENV.fetch("GOV_UK_PAY_BASE_URL", "https://publicapi.payments.service.gov.uk/") %>
+  api_key: <%= ENV["GOV_UK_PAY_API_KEY"] %>
+
+production:
+  base_url: <%= ENV["GOV_UK_PAY_BASE_URL"] %>
+  api_key: <%= ENV["GOV_UK_PAY_API_KEY"] %>
+
+test:
+  base_url: https://publicapi.payments.service.gov.uk/
+  api_key: test

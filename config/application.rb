@@ -55,6 +55,7 @@ module ApplyForQualifiedTeacherStatus
 
     config.trs = config_for(:trs)
     config.gov_one = config_for(:gov_one)
+    config.gov_uk_pay = config_for(:gov_uk_pay)
 
     config.active_support.to_time_preserves_timezone = :zone
   end

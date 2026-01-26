@@ -545,6 +545,8 @@ Rails.application.routes.draw do
           post "submit"
         end
       end
+
+      resources :payment_transactions, path: "/payment-transactions", only: %i[create show]
     end
 
     resources :reference_requests,
