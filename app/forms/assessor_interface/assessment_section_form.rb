@@ -225,7 +225,7 @@ class AssessorInterface::AssessmentSectionForm
         end
       end
 
-      if assessment_section.preliminary? && assessment_section.passed?
+      if assessment_section.preliminary? && assessment_section.assessed?
         remaining_failure_reasons =
           assessment_section.failure_reasons -
             selected_failure_reasons_hash.keys
