@@ -432,6 +432,8 @@ en:
               inclusion: Select whether the applicant qualified to teach children between ages 11-16 in one of the subjects
             qualified_to_teach_notes:
               blank: Enter a note to the applicant
+            registration_number_alternative_notes:
+              blank: Enter a note to the applicant
             registration_number_notes:
               blank: Enter a note to the applicant
             satisfactory_evidence_work_history_notes:
@@ -455,6 +457,10 @@ en:
             teaching_qualification_pedagogy:
               blank: Enter a note to the applicant
             teaching_qualifications_from_ineligible_country_notes:
+              blank: Enter a note to the applicant
+            written_statement_mismatch_notes:
+              blank: Enter a note to the applicant
+            written_statement_information_notes:
               blank: Enter a note to the applicant
             teaching_qualifications_not_at_required_level_checked:
               inclusion: Select whether the teaching qualification meets the required academic level
