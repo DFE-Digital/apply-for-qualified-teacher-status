@@ -378,6 +378,10 @@ en:
               blank: Enter a note to the applicant
             duplicate_application_notes:
               blank: Enter a note to the applicant
+            english_language_exemption_by_citizenship_not_confirmed_notes:
+              blank: Enter a note to the applicant
+            english_language_exemption_by_citizenship_not_confirmed_via_passport_notes:
+              blank: Enter a note to the applicant
             english_language_proficiency_require_alternative_notes:
               blank: Enter a note to the applicant
             english_language_moi_invalid_format_notes:
@@ -395,6 +399,12 @@ en:
             name_change_document_illegible_notes:
               blank: Enter a note to the applicant
             not_qualified_to_teach_mainstream_notes:
+              blank: Enter a note to the applicant
+            passport_document_expired_notes:
+              blank: Enter a note to the applicant
+            passport_document_illegible_notes:
+              blank: Enter a note to the applicant
+            passport_document_mismatch_notes:
               blank: Enter a note to the applicant
             qualifications_dont_match_other_details_notes:
               blank: Enter a note to the applicant
