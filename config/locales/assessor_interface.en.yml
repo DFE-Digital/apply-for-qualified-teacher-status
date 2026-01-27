@@ -388,11 +388,15 @@ en:
               blank: Enter a note to the applicant
             english_language_exemption_by_citizenship_not_confirmed_via_passport_notes:
               blank: Enter a note to the applicant
+            english_language_exemption_by_qualification_not_confirmed_notes:
+              blank: Enter a note to the applicant
             english_language_moi_invalid_format_notes:
               blank: Enter a note to the applicant
             english_language_moi_not_taught_in_english_notes:
               blank: Enter a note to the applicant
             english_language_not_achieved_b2_notes:
+              blank: Enter a note to the applicant
+            english_language_not_exempt_by_qualification_country_notes:
               blank: Enter a note to the applicant
             english_language_proficiency_document_illegible_notes:
               blank: Enter a note to the applicant
@@ -428,8 +432,12 @@ en:
               blank: Enter a note to the applicant
             qualifications_dont_match_subjects_notes:
               blank: Enter a note to the applicant
+            qualifications_or_modules_required_not_provided_notes:
+              blank: Enter a note to the applicant
             qualified_to_teach_children_11_to_16_checked:
               inclusion: Select whether the applicant qualified to teach children between ages 11-16 in one of the subjects
+            qualified_to_teach_children_11_to_16_notes:
+              blank: Enter a note to the applicant
             qualified_to_teach_notes:
               blank: Enter a note to the applicant
             registration_number_alternative_notes:
@@ -454,7 +462,9 @@ en:
               blank: Enter a note to the applicant
             teaching_qualification_1_year_notes:
               blank: Enter a note to the applicant
-            teaching_qualification_pedagogy:
+            teaching_qualification_pedagogy_notes:
+              blank: Enter a note to the applicant
+            teaching_qualification_subjects_criteria_notes:
               blank: Enter a note to the applicant
             teaching_qualifications_from_ineligible_country_notes:
               blank: Enter a note to the applicant
