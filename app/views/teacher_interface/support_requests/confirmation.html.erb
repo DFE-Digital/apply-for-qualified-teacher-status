@@ -2,6 +2,11 @@
 
 <h1 class="govuk-heading-xl">Thank you for submitting your request</h1>
 
-<p class="govuk-body">Your help request for Apply for qualified teacher status (QTS) in England has now been submitted.</p>
+<p class="govuk-body">Your request for help to Apply for qualified teacher status (QTS) in England has now been submitted.</p>
 <p class="govuk-body">You will receive a confirmation email with your ticket number.</p>
-<p class="govuk-body"><%= govuk_link_to "Click here", root_path %> to go back to the homepage.</p>
+
+<% if current_teacher %>
+  <p class="govuk-body"><%= govuk_link_to "Back to application", teacher_interface_application_form_path %>.</p>
+<% else %>
+  <p class="govuk-body">You do not need to do anything else. You can now close this page.</p>
+<% end %>
