@@ -378,6 +378,36 @@ en:
               blank: Enter a note to the applicant
             duplicate_application_notes:
               blank: Enter a note to the applicant
+            english_language_esol_below_required_level_notes:
+              blank: Enter a note to the applicant
+            english_language_esol_document_illegible_notes:
+              blank: Enter a note to the applicant
+            english_language_esol_expired_notes:
+              blank: Enter a note to the applicant
+            english_language_exemption_by_citizenship_not_confirmed_notes:
+              blank: Enter a note to the applicant
+            english_language_exemption_by_citizenship_not_confirmed_via_passport_notes:
+              blank: Enter a note to the applicant
+            english_language_exemption_by_qualification_not_confirmed_notes:
+              blank: Enter a note to the applicant
+            english_language_moi_invalid_format_notes:
+              blank: Enter a note to the applicant
+            english_language_moi_not_taught_in_english_notes:
+              blank: Enter a note to the applicant
+            english_language_not_achieved_b2_notes:
+              blank: Enter a note to the applicant
+            english_language_not_exempt_by_qualification_country_notes:
+              blank: Enter a note to the applicant
+            english_language_proficiency_document_illegible_notes:
+              blank: Enter a note to the applicant
+            english_language_proficiency_require_alternative_notes:
+              blank: Enter a note to the applicant
+            english_language_qualification_invalid_notes:
+              blank: Enter a note to the applicant
+            english_language_selt_expired_notes:
+              blank: Enter a note to the applicant
+            english_language_unverifiable_reference_number_notes:
+              blank: Enter a note to the applicant
             fraud_notes:
               blank: Enter a note to the applicant
             full_professional_status_notes:
@@ -392,13 +422,25 @@ en:
               blank: Enter a note to the applicant
             not_qualified_to_teach_mainstream_notes:
               blank: Enter a note to the applicant
+            passport_document_expired_notes:
+              blank: Enter a note to the applicant
+            passport_document_illegible_notes:
+              blank: Enter a note to the applicant
+            passport_document_mismatch_notes:
+              blank: Enter a note to the applicant
             qualifications_dont_match_other_details_notes:
               blank: Enter a note to the applicant
             qualifications_dont_match_subjects_notes:
               blank: Enter a note to the applicant
+            qualifications_or_modules_required_not_provided_notes:
+              blank: Enter a note to the applicant
             qualified_to_teach_children_11_to_16_checked:
               inclusion: Select whether the applicant qualified to teach children between ages 11-16 in one of the subjects
+            qualified_to_teach_children_11_to_16_notes:
+              blank: Enter a note to the applicant
             qualified_to_teach_notes:
+              blank: Enter a note to the applicant
+            registration_number_alternative_notes:
               blank: Enter a note to the applicant
             registration_number_notes:
               blank: Enter a note to the applicant
@@ -420,9 +462,15 @@ en:
               blank: Enter a note to the applicant
             teaching_qualification_1_year_notes:
               blank: Enter a note to the applicant
-            teaching_qualification_pedagogy:
+            teaching_qualification_pedagogy_notes:
+              blank: Enter a note to the applicant
+            teaching_qualification_subjects_criteria_notes:
               blank: Enter a note to the applicant
             teaching_qualifications_from_ineligible_country_notes:
+              blank: Enter a note to the applicant
+            written_statement_mismatch_notes:
+              blank: Enter a note to the applicant
+            written_statement_information_notes:
               blank: Enter a note to the applicant
             teaching_qualifications_not_at_required_level_checked:
               inclusion: Select whether the teaching qualification meets the required academic level
@@ -435,6 +483,10 @@ en:
             unrecognised_references_work_history_checked:
               no_schools_selected: Select at least one school that we were unable to verify the reference for
             work_history_break_notes:
+              blank: Enter a note to the applicant
+            work_history_duration_notes:
+              blank: Enter a note to the applicant
+            work_history_information_notes:
               blank: Enter a note to the applicant
             written_statement_illegible_notes:
               blank: Enter a note to the applicant
@@ -548,7 +600,7 @@ en:
         assessor_interface/requestable_review_form:
           attributes:
             passed:
-              inclusion: Tell us if the response confirms that this is legitimate
+              inclusion: Select yes if you are satisfied with this reference for the applicant’s work history
             note:
               blank: Tell us why this should not be accepted
         assessor_interface/requestable_verify_failed_form:
