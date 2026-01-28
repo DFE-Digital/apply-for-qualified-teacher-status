@@ -597,10 +597,6 @@ Rails.application.routes.draw do
              to: "prioritisation_reference_requests#update_confirm_applicant"
       end
     end
-
-    resources :support_requests, only: %i[new create] do
-      collection { get "confirmation", to: "support_requests#confirmation" }
-    end
   end
 
   devise_for :teachers,
@@ -647,6 +643,10 @@ Rails.application.routes.draw do
 
   resources :autocomplete_locations, only: %i[index]
   resources :autocomplete_passport_country_of_issues, only: %i[index]
+
+  resources :support_requests, path: "support-requests", only: %i[new create] do
+    collection { get "confirmation", to: "support_requests#confirmation" }
+  end
 
   get "cookies", to: "static#cookies"
   get "email/:key", to: "static#email", as: "email"

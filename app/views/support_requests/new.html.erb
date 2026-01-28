@@ -1,6 +1,6 @@
 <% content_for :page_title, "Get help", error: @form.errors.any? %>
 
-<%= form_with model: @form, url: %i[teacher_interface support_requests] do |f| %>
+<%= form_with model: @form, url: %i[support_requests] do |f| %>
   <%= f.govuk_error_summary %>
 
   <h1 class="govuk-heading-xl">Get help</h1>

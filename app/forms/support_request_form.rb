@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
-class TeacherInterface::SupportRequestForm < TeacherInterface::BaseForm
+class SupportRequestForm
+  include ActiveModel::Model
+  include ActiveModel::Attributes
+
   attribute :email, :string
   attribute :name, :string
   attribute :comment, :string
@@ -14,17 +17,23 @@ class TeacherInterface::SupportRequestForm < TeacherInterface::BaseForm
             presence: true,
             if: :application_submitted_category?
 
-  def update_model
-    SupportRequest.create!(
-      email:,
-      name:,
-      comment:,
-      category_type:,
-      application_enquiry_type:,
-      application_reference:,
-    )
+  def save
+    return false if invalid?
 
-    Zendesk.create_ticket!(name:, email:, subject:, comment:)
+    ActiveRecord::Base.transaction do
+      SupportRequest.create!(
+        email:,
+        name:,
+        comment:,
+        category_type:,
+        application_enquiry_type:,
+        application_reference:,
+      )
+
+      Zendesk.create_ticket!(name:, email:, subject:, comment:)
+    end
+
+    true
   end
 
   private
