@@ -6,7 +6,10 @@
   <h1 class="govuk-heading-xl">Get help</h1>
 
   <p class="govuk-body">You can use this form to ask a question or report a problem about Apply for qualified teacher status (QTS) in England.</p>
-  <p class="govuk-body">For questions relating to creating an account or signing in to your application with GOV.UK One Login, please visit <%= govuk_link_to "Contact GOV.UK One Login", "https://home.account.gov.uk/contact-gov-uk-one-login" %>.</p>
+
+  <% if FeatureFlags::FeatureFlag.active?(:gov_one_applicant_login) %>
+    <p class="govuk-body">For questions relating to creating an account or signing in to your application with GOV.UK One Login, please visit <%= govuk_link_to "Contact GOV.UK One Login", "https://home.account.gov.uk/contact-gov-uk-one-login" %>.</p>
+  <% end %>
 
   <%= f.govuk_text_field :name %>
 
