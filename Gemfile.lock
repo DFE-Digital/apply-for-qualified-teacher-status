@@ -315,6 +315,7 @@ GEM
       concurrent-ruby (~> 1.0)
     indefinite_article (0.2.5)
       activesupport
+    inflection (1.0.0)
     io-console (0.8.2)
     irb (1.16.0)
       pp (>= 0.6.0)
@@ -710,6 +711,12 @@ GEM
     xpath (3.2.0)
       nokogiri (~> 1.8)
     zeitwerk (2.7.4)
+    zendesk_api (1.37.0)
+      faraday (>= 0.9.0, < 2.0.0)
+      hashie (>= 3.5.2, < 6.0.0)
+      inflection
+      mini_mime
+      multipart-post (~> 2.0)
 
 PLATFORMS
   arm64-darwin-21
@@ -790,6 +797,7 @@ DEPENDENCIES
   validate_url
   web-console
   webmock
+  zendesk_api
 
 RUBY VERSION
    ruby 3.4.8p72

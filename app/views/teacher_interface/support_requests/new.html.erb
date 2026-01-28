@@ -1,0 +1,36 @@
+<% content_for :page_title, "Get help", error: @form.errors.any? %>
+
+<%= form_with model: @form, url: %i[teacher_interface support_requests] do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <h1 class="govuk-heading-xl">Get help</h1>
+
+  <p class="govuk-body">You can use this form to ask a question or report a problem about Apply for qualified teacher status (QTS) in England.</p>
+  <p class="govuk-body">For questions relating to creating an account or signing in to your application with GOV.UK One Login, please visit <%= govuk_link_to "Contact GOV.UK One Login", "https://home.account.gov.uk/contact-gov-uk-one-login" %>.</p>
+
+  <%= f.govuk_text_field :name %>
+
+  <%= f.govuk_text_field :email %>
+
+  <%= f.govuk_radio_buttons_fieldset :category_type, legend: { text: "Which option applies to you?"  } do %>
+    <%= f.govuk_radio_button :category_type, :applicantion_submitted, label: { text: "I have submitted an application" } do %>
+      <%= f.govuk_text_field :application_reference, label: { text: "Application reference number" } %>
+
+      <%= f.govuk_radio_buttons_fieldset :application_enquiry_type, legend: { text: "What are you contacting us about?", tag: "label", size: "s"  } do %>
+        <%= f.govuk_radio_button :application_enquiry_type, :progress_update, label: { text: "I need a progress update on my application" } %>
+        <%= f.govuk_radio_button :application_enquiry_type, :other, label: { text: "I have a question about my application" } %>
+      <% end %>
+    <% end %>
+
+    <%= f.govuk_radio_button :category_type, :submitting_an_application, label: { text: "I have not yet submitted an application" } %>
+
+    <%= f.govuk_radio_button :category_type, :providing_a_reference, label: { text: "I am a referee for an applicant" } %>
+
+    <%= f.govuk_radio_button :category_type, :other, label: { text: "Other" } %>
+  <% end %>
+
+
+  <%= f.govuk_text_area :comment, label: { size: "m", text: "Tell us about your question or problem" } %>
+
+  <%= f.govuk_submit "Submit" %>
+<% end %>
