@@ -600,7 +600,7 @@ en:
         assessor_interface/requestable_review_form:
           attributes:
             passed:
-              inclusion: Select yes if you are satisfied with this reference for the applicant's work history
+              inclusion: Select yes if you are satisfied with this reference for the applicant’s work history
             note:
               blank: Tell us why this should not be accepted
         assessor_interface/requestable_verify_failed_form:
