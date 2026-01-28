@@ -342,7 +342,7 @@ en:
             confirmation:
               blank: Confirm you have assessed this application based on the eligibility criteria that was in place on the date that it was submitted
             recommendation:
-              blank: Select your recommendationx
+              blank: Select your recommendation
               inclusion: Select your recommendation
         assessor_interface/assessment_section_form:
           attributes:
@@ -479,8 +479,6 @@ en:
             teaching_qualification_subjects_criteria_checked:
               inclusion: Select whether the applicant qualified to teach one of the subjects we currently accept
             teaching_transcript_illegible_notes:
-              blank: Enter a note to the applicant
-            unrecognised_references_notes:
               blank: Enter a note to the applicant
             unrecognised_references_work_history_checked:
               no_schools_selected: Select at least one school that we were unable to verify the reference for
