@@ -17,17 +17,27 @@
 #  updated_at                :datetime         not null
 #  zendesk_ticket_id         :string
 #
-class SupportRequest < ApplicationRecord
-  enum :category_type,
-       {
-         application_submitted: "application_submitted",
-         submitting_an_application: "submitting_an_application",
-         providing_a_reference: "providing_a_reference",
-         other: "other",
-       },
-       prefix: true
+FactoryBot.define do
+  factory :support_request do
+    name { Faker::Name.name }
+    email { Faker::Internet.email }
+    comment { Faker::Lorem.sentence }
 
-  enum :application_enquiry_type,
-       { progress_update: "progress_update", other: "other" },
-       prefix: true
+    category_type { "other" }
+
+    trait :application_submitted_category do
+      category_type { "application_submitted" }
+
+      application_reference { "000001" }
+      application_enquiry_type { "other" }
+    end
+
+    trait :submitting_an_application_category do
+      category_type { "submitting_an_application" }
+    end
+
+    trait :providing_a_reference_category do
+      category_type { "providing_a_reference" }
+    end
+  end
 end

@@ -16,7 +16,7 @@
   <%= f.govuk_text_field :email %>
 
   <%= f.govuk_radio_buttons_fieldset :category_type, legend: { text: "Which option applies to you?"  } do %>
-    <%= f.govuk_radio_button :category_type, :applicantion_submitted, label: { text: "I have submitted an application" } do %>
+    <%= f.govuk_radio_button :category_type, :application_submitted, label: { text: "I have submitted an application" } do %>
       <%= f.govuk_text_field :application_reference, label: { text: "Application reference number" } %>
 
       <%= f.govuk_radio_buttons_fieldset :application_enquiry_type, legend: { text: "What are you contacting us about?", tag: "label", size: "s"  } do %>

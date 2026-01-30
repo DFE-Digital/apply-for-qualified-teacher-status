@@ -20,7 +20,7 @@ class SupportRequestForm
   def save
     return false if invalid?
 
-    ActiveRecord::Base.transaction do
+    support_request =
       SupportRequest.create!(
         email:,
         name:,
@@ -30,8 +30,7 @@ class SupportRequestForm
         application_reference:,
       )
 
-      Zendesk.create_ticket!(name:, email:, subject:, comment:)
-    end
+    CreateZendeskRequestJob.perform_later(support_request)
 
     true
   end
@@ -39,23 +38,6 @@ class SupportRequestForm
   private
 
   def application_submitted_category?
-    category_type == "applicantion_submitted"
-  end
-
-  def application_not_submitted_category?
-    category_type == "submitting_an_application"
-  end
-
-  def application_progress_update_enquiry?
-    application_enquiry_type == "progress_update"
-  end
-
-  def subject
-    if application_progress_update_enquiry? ||
-         application_not_submitted_category?
-      "[AfQTS Ops] Support request for #{name}"
-    else
-      "[AfQTS PR] Support request for #{name}"
-    end
+    category_type == "application_submitted"
   end
 end
