@@ -36,12 +36,45 @@ RSpec.describe SupportRequestForm, type: :model do
       it { is_expected.to validate_presence_of(:application_enquiry_type) }
       it { is_expected.to validate_presence_of(:application_reference) }
     end
+
+    context "when comment is less than 30 characters long" do
+      let(:email) { "test@example.com" }
+      let(:name) { "John Smith" }
+      let(:comment) { "I need some help!" }
+      let(:category_type) { "application_submitted" }
+      let(:application_enquiry_type) { "other" }
+      let(:application_reference) { "000001" }
+
+      it { is_expected.not_to be_valid }
+    end
+
+    context "when comment is between than 30 and 20,000 characters long" do
+      let(:email) { "test@example.com" }
+      let(:name) { "John Smith" }
+      let(:comment) { "I need some help!" * 3 }
+      let(:category_type) { "application_submitted" }
+      let(:application_enquiry_type) { "other" }
+      let(:application_reference) { "000001" }
+
+      it { is_expected.to be_valid }
+    end
+
+    context "when comment is over 20,000 characters long" do
+      let(:email) { "test@example.com" }
+      let(:name) { "John Smith" }
+      let(:comment) { "I need some help!" * 2000 }
+      let(:category_type) { "application_submitted" }
+      let(:application_enquiry_type) { "other" }
+      let(:application_reference) { "000001" }
+
+      it { is_expected.not_to be_valid }
+    end
   end
 
   describe "#save" do
     let(:email) { "test@example.com" }
     let(:name) { "John Smith" }
-    let(:comment) { "I need some help!" }
+    let(:comment) { "I need some help!" * 3 }
     let(:category_type) { "application_submitted" }
     let(:application_enquiry_type) { "other" }
     let(:application_reference) { "000001" }

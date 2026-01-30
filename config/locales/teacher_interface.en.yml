@@ -491,20 +491,6 @@ en:
           attributes:
             subject_1:
               blank: Enter your first subject
-        teacher_interface/support_request_form:
-          attributes:
-            application_reference:
-              blank: Enter your application reference number
-            application_enquiry_type:
-              blank: Select what you are contacting us about
-            name:
-              blank: Enter your name
-            email:
-              blank: Enter your email
-            category_type:
-              blank: Select the option that applies to you
-            comment:
-              blank: Enter your question or problem
         teacher_interface/teaching_qualification_part_of_degree_form:
           attributes:
             teaching_qualification_part_of_degree: Tell us if your teaching qualification is part of your bachelor’s degree
@@ -618,3 +604,18 @@ en:
           attributes:
             written_statement_confirmation:
               blank: You must confirm that you understand it’s your responsibility to request written evidence
+        support_request_form:
+          attributes:
+            application_reference:
+              blank: Enter your application reference number
+            application_enquiry_type:
+              blank: Select what you are contacting us about
+            name:
+              blank: Enter your name
+            email:
+              blank: Enter your email
+            category_type:
+              blank: Select the option that applies to you
+            comment:
+              blank: Enter your question or problem
+              too_short: Response must be 30 characters or more
