@@ -50,7 +50,7 @@ RSpec.describe "POST /teacher/sign_in", type: :request do
       sign_in
 
       expect(response.body).to include(
-        "Select whether you have used the service before",
+        "Select if you have used the service before",
       )
     end
   end
@@ -106,7 +106,7 @@ RSpec.describe "POST /teacher/sign_in", type: :request do
         sign_in
 
         expect(response.body).to include(
-          "Select whether you have used the service before",
+          "Select if you have used the service before",
         )
       end
     end

@@ -5,19 +5,19 @@ en:
         eligibility_interface/country_form:
           attributes:
             location:
-              blank: Tell us where you’re currently recognised as a teacher
+              blank: Select the country where you're currently recognised as a teacher
         eligibility_interface/degree_form:
           attributes:
             degree:
-              inclusion: Tell us whether you have a bachelor’s (undergraduate) degree
+              inclusion: Select if you have a bachelor's (undergraduate) degree
         eligibility_interface/misconduct_form:
           attributes:
             misconduct:
-              inclusion: Tell us whether your employment record has any sanctions or restrictions
+              inclusion: Select if your employment record has any sanctions or restrictions
         eligibility_interface/qualification_form:
           attributes:
             qualification:
-              inclusion: Tell us if you have a teaching qualification
+              inclusion: Select if you have a teaching qualification that was completed in %{country_name}
         eligibility_interface/qualified_for_subject_form:
           attributes:
             qualified_for_subject:
@@ -25,24 +25,24 @@ en:
         eligibility_interface/region_form:
           attributes:
             region_id:
-              blank: Tell us where you’re currently recognised as a teacher
+              blank: Select the state/territory where you're currently recognised as a teacher
         eligibility_interface/teach_children_form:
           attributes:
             teach_children:
-              inclusion: Tell us whether you’re qualified to teach children aged between 5 and 16
+              inclusion: Select if you are qualified to teach children aged between 5 and 16
         eligibility_interface/work_experience_form:
           attributes:
             work_experience:
-              blank: Tell us how long you have worked as a recognised teacher
-              inclusion: Tell us how long you have worked as a recognised teacher
+              blank: Select how long you have worked as a recognised teacher
+              inclusion: Select how long you have worked as a recognised teacher
         eligibility_interface/work_experience_referee_form:
           attributes:
             work_experience_referee:
-              inclusion: Tell us if your employment references meet all of the following requirements
+              inclusion: Select if your employment references meet all of the following requirements
         eligibility_interface/work_experience_in_england_form:
           attributes:
             eligible:
-              inclusion: Tell us whether you have worked in a valid educational setting in England for any length of time in the last 12 months
+              inclusion: Select if you have worked in a valid educational setting in England for any length of time in the last 12 months
 
     attributes:
       eligibility_check:
