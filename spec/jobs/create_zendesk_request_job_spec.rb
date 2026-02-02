@@ -28,12 +28,14 @@ RSpec.describe CreateZendeskRequestJob do
     end
 
     it "updates the Zendesk id and created_at timestamp on the support request record" do
-      expect { perform }.to change(support_request, :zendesk_ticket_id).from(
-        nil,
-      ).to(zendesk_response.id).and change(
-              support_request,
-              :zendesk_ticket_created_at,
-            ).from(nil).to(zendesk_response.created_at)
+      freeze_time do
+        expect { perform }.to change(support_request, :zendesk_ticket_id).from(
+          nil,
+        ).to(zendesk_response.id).and change(
+                support_request,
+                :zendesk_ticket_created_at,
+              ).from(nil).to(zendesk_response.created_at)
+      end
     end
 
     context "when the support request is from a user who has not yet submitted application" do
