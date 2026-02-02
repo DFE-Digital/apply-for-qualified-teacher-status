@@ -926,4 +926,13 @@ module PageHelpers
     @teacher_written_statement_page =
       PageObjects::TeacherInterface::WrittenStatement.new
   end
+
+  def new_support_request_page
+    @new_support_request_page = PageObjects::NewSupportRequest.new
+  end
+
+  def support_request_confirmation_page
+    @support_request_confirmation_page =
+      PageObjects::SupportRequestConfirmation.new
+  end
 end

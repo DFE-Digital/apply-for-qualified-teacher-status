@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class SupportRequestsController < ApplicationController
-  rescue_from ActiveRecord::RecordNotFound, with: :error_not_found
+  before_action :ensure_feature_enabled
 
   def new
     @form = SupportRequestForm.new
@@ -22,8 +22,6 @@ class SupportRequestsController < ApplicationController
 
   private
 
-  attr_reader :reference_request
-
   def form_params
     params.require(:support_request_form).permit(
       :name,
@@ -37,5 +35,11 @@ class SupportRequestsController < ApplicationController
 
   def current_namespace
     current_teacher ? "teacher" : "eligibility"
+  end
+
+  def ensure_feature_enabled
+    return if FeatureFlags::FeatureFlag.active?(:support_request_form)
+
+    redirect_to root_path
   end
 end
