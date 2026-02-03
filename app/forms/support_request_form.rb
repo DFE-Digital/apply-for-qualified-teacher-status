@@ -12,7 +12,7 @@ class SupportRequestForm
   attribute :application_reference, :string
 
   validates :name, presence: true, string_length: true
-  validates :email, presence: true, string_length: true
+  validates :email, presence: true, string_length: true, valid_for_notify: true
   validates :category_type, presence: true
 
   validates :application_reference,
