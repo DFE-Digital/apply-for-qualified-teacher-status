@@ -67,7 +67,4 @@
 
 <% if ineligible_country %>
   <%= render "shared/help_us_to_improve_this_service" %>
-<% else %>
-  <p class="govuk-body">If you have any questions about QTS contact the help team at:</p>
-  <p class="govuk-body"><%= govuk_link_to t("service.email.enquiries"), email_path("enquiries") %></p>
 <% end %>
