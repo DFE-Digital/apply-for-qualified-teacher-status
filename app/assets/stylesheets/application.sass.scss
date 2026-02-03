@@ -70,20 +70,6 @@ ul.autocomplete__menu {
   vertical-align: middle;
 }
 
-.govuk-footer {
-  &__list {
-    padding-bottom: govuk-spacing(7);
-  }
-
-  &__navigation {
-    .govuk-footer__link {
-      border: 0;
-      margin-bottom: 0;
-      padding: 0;
-    }
-  }
-}
-
 .govuk-footer__navigation {
   margin-left: 0px;
   margin-right: 0px;
