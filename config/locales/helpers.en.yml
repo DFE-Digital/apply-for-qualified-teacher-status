@@ -397,7 +397,7 @@ en:
           progress_update: I need a progress update on my application
           other: I have a question about my application
         application_reference: Application reference number
-        category_type_options:
+        user_type_options:
           application_submitted: I have submitted an application
           submitting_an_application: I have not yet submitted an application
           providing_a_reference: I am a referee for an applicant
@@ -504,4 +504,4 @@ en:
         end_date: Your end date
       support_request_form:
         application_enquiry_type: What are you contacting us about?
-        category_type: Which option applies to you?
+        user_type: Which option applies to you?

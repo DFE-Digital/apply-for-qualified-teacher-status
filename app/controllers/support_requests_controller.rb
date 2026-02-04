@@ -27,7 +27,7 @@ class SupportRequestsController < ApplicationController
       :name,
       :email,
       :comment,
-      :category_type,
+      :user_type,
       :application_reference,
       :application_enquiry_type,
     )

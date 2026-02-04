@@ -8,7 +8,7 @@ RSpec.describe SupportRequestForm, type: :model do
       email:,
       name:,
       comment:,
-      category_type:,
+      user_type:,
       application_enquiry_type:,
       application_reference:,
     )
@@ -18,20 +18,20 @@ RSpec.describe SupportRequestForm, type: :model do
     let(:email) { "" }
     let(:name) { "" }
     let(:comment) { "" }
-    let(:category_type) { "" }
+    let(:user_type) { "" }
     let(:application_enquiry_type) { "" }
     let(:application_reference) { "" }
 
     it { is_expected.to validate_presence_of(:email) }
     it { is_expected.to validate_presence_of(:name) }
     it { is_expected.to validate_presence_of(:comment) }
-    it { is_expected.to validate_presence_of(:category_type) }
+    it { is_expected.to validate_presence_of(:user_type) }
 
     it { is_expected.not_to validate_presence_of(:application_enquiry_type) }
     it { is_expected.not_to validate_presence_of(:application_reference) }
 
-    context "when category_type is application_submitted" do
-      let(:category_type) { "application_submitted" }
+    context "when user_type is application_submitted" do
+      let(:user_type) { "application_submitted" }
 
       it { is_expected.to validate_presence_of(:application_enquiry_type) }
       it { is_expected.to validate_presence_of(:application_reference) }
@@ -41,7 +41,7 @@ RSpec.describe SupportRequestForm, type: :model do
       let(:email) { "test@example.com" }
       let(:name) { "John Smith" }
       let(:comment) { "I need some help!" }
-      let(:category_type) { "application_submitted" }
+      let(:user_type) { "application_submitted" }
       let(:application_enquiry_type) { "other" }
       let(:application_reference) { "000001" }
 
@@ -52,7 +52,7 @@ RSpec.describe SupportRequestForm, type: :model do
       let(:email) { "test@example.com" }
       let(:name) { "John Smith" }
       let(:comment) { "I need some help!" * 3 }
-      let(:category_type) { "application_submitted" }
+      let(:user_type) { "application_submitted" }
       let(:application_enquiry_type) { "other" }
       let(:application_reference) { "000001" }
 
@@ -63,7 +63,7 @@ RSpec.describe SupportRequestForm, type: :model do
       let(:email) { "test@example.com" }
       let(:name) { "John Smith" }
       let(:comment) { "I need some help!" * 2000 }
-      let(:category_type) { "application_submitted" }
+      let(:user_type) { "application_submitted" }
       let(:application_enquiry_type) { "other" }
       let(:application_reference) { "000001" }
 
@@ -75,7 +75,7 @@ RSpec.describe SupportRequestForm, type: :model do
     let(:email) { "test@example.com" }
     let(:name) { "John Smith" }
     let(:comment) { "I need some help!" * 3 }
-    let(:category_type) { "application_submitted" }
+    let(:user_type) { "application_submitted" }
     let(:application_enquiry_type) { "other" }
     let(:application_reference) { "000001" }
 
@@ -88,7 +88,7 @@ RSpec.describe SupportRequestForm, type: :model do
         email:,
         name:,
         comment:,
-        category_type:,
+        user_type:,
         application_enquiry_type:,
         application_reference:,
       )

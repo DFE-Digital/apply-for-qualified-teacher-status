@@ -18,8 +18,8 @@ class CreateZendeskRequestJob < ApplicationJob
 
   private
 
-  def submitting_an_application_category?(support_request)
-    support_request.category_type == "submitting_an_application"
+  def submitting_an_application_user?(support_request)
+    support_request.user_type == "submitting_an_application"
   end
 
   def application_progress_update_enquiry?(support_request)
@@ -29,7 +29,7 @@ class CreateZendeskRequestJob < ApplicationJob
   def subject(support_request)
     subject_prefix =
       if application_progress_update_enquiry?(support_request) ||
-           submitting_an_application_category?(support_request)
+           submitting_an_application_user?(support_request)
         "[AfQTS Ops]"
       else
         "[AfQTS PR]"

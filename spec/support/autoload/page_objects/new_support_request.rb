@@ -20,17 +20,17 @@ module PageObjects
               "#support-request-form-application-enquiry-type-other-field",
               visible: false
 
-      element :application_submitted_category_radio_item,
-              "#support-request-form-category-type-application-submitted-field",
+      element :application_submitted_user_radio_item,
+              "#support-request-form-user-type-application-submitted-field",
               visible: false
-      element :submitting_an_application_category_radio_item,
-              "#support-request-form-category-type-submitting-an-application-field",
+      element :submitting_an_application_user_radio_item,
+              "#support-request-form-user-type-submitting-an-application-field",
               visible: false
-      element :providing_a_reference_category_radio_item,
-              "#support-request-form-category-type-providing-a-reference-field",
+      element :providing_a_reference_user_radio_item,
+              "#support-request-form-user-type-providing-a-reference-field",
               visible: false
-      element :other_category_radio_item,
-              "#support-request-form-category-type-other-field",
+      element :other_user_radio_item,
+              "#support-request-form-user-type-other-field",
               visible: false
 
       element :comment_textarea, "#support-request-form-comment-field"

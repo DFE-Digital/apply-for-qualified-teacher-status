@@ -7,22 +7,22 @@ class SupportRequestForm
   attribute :email, :string
   attribute :name, :string
   attribute :comment, :string
-  attribute :category_type, :string
+  attribute :user_type, :string
   attribute :application_enquiry_type, :string
   attribute :application_reference, :string
 
   validates :name, presence: true, string_length: true
   validates :email, presence: true, string_length: true, valid_for_notify: true
-  validates :category_type, presence: true
+  validates :user_type, presence: true
 
   validates :application_reference,
             presence: true,
             string_length: true,
-            if: :application_submitted_category?
+            if: :application_submitted_user?
 
   validates :application_enquiry_type,
             presence: true,
-            if: :application_submitted_category?
+            if: :application_submitted_user?
 
   validates :comment, presence: true, text_length: true, length: { minimum: 30 }
 
@@ -34,7 +34,7 @@ class SupportRequestForm
         email:,
         name:,
         comment:,
-        category_type:,
+        user_type:,
         application_enquiry_type:,
         application_reference:,
       )
@@ -46,7 +46,7 @@ class SupportRequestForm
 
   private
 
-  def application_submitted_category?
-    category_type == "application_submitted"
+  def application_submitted_user?
+    user_type == "application_submitted"
   end
 end

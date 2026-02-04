@@ -30,7 +30,7 @@ RSpec.describe "Support request form", type: :system do
       new_support_request_page.form.email_input.fill_in with: "test@example.com"
       new_support_request_page
         .form
-        .submitting_an_application_category_radio_item
+        .submitting_an_application_user_radio_item
         .click
 
       new_support_request_page.form.comment_textarea.fill_in(
@@ -52,7 +52,7 @@ RSpec.describe "Support request form", type: :system do
           "test@example.com"
         new_support_request_page
           .form
-          .application_submitted_category_radio_item
+          .application_submitted_user_radio_item
           .click
 
         new_support_request_page.form.application_reference_input.fill_in with:

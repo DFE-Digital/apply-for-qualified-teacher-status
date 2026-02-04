@@ -614,7 +614,7 @@ en:
               blank: Enter your name
             email:
               blank: Enter your email
-            category_type:
+            user_type:
               blank: Select the option that applies to you
             comment:
               blank: Enter your question or problem

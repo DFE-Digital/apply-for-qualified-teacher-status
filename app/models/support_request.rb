@@ -7,18 +7,18 @@
 #  id                        :bigint           not null, primary key
 #  application_enquiry_type  :string
 #  application_reference     :string
-#  category_type             :string
 #  comment                   :text
 #  email                     :string
 #  name                      :string
 #  submitted_at              :datetime
+#  user_type                 :string
 #  zendesk_ticket_created_at :datetime
 #  created_at                :datetime         not null
 #  updated_at                :datetime         not null
 #  zendesk_ticket_id         :string
 #
 class SupportRequest < ApplicationRecord
-  enum :category_type,
+  enum :user_type,
        {
          application_submitted: "application_submitted",
          submitting_an_application: "submitting_an_application",

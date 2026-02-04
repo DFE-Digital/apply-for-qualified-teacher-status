@@ -38,7 +38,7 @@ RSpec.describe CreateZendeskRequestJob do
 
     context "when the support request is from a user who has not yet submitted application" do
       let(:support_request) do
-        create(:support_request, :submitting_an_application_category)
+        create(:support_request, :submitting_an_application_user)
       end
 
       it "calls creates a request on Zendesk with correct subject" do
@@ -55,7 +55,7 @@ RSpec.describe CreateZendeskRequestJob do
 
     context "when the support request is from a user who has submitted application" do
       let(:support_request) do
-        create(:support_request, :application_submitted_category)
+        create(:support_request, :application_submitted_user)
       end
 
       it "calls creates a request on Zendesk with correct subject" do
@@ -74,7 +74,7 @@ RSpec.describe CreateZendeskRequestJob do
         let(:support_request) do
           create(
             :support_request,
-            :application_submitted_category,
+            :application_submitted_user,
             application_enquiry_type: "progress_update",
           )
         end
@@ -95,7 +95,7 @@ RSpec.describe CreateZendeskRequestJob do
 
     context "when the support request is from a referee" do
       let(:support_request) do
-        create(:support_request, :providing_a_reference_category)
+        create(:support_request, :providing_a_reference_user)
       end
 
       it "calls creates a request on Zendesk with correct subject" do

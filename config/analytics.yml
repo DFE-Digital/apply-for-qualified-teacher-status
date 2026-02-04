@@ -420,7 +420,7 @@
   :support_requests:
     - application_enquiry_type
     - application_reference
-    - category_type
+    - user_type
     - created_at
     - comment
     - email
