@@ -4,7 +4,6 @@ require "rails_helper"
 
 RSpec.describe DateComparisonValidator do
   before do
-    # rubocop:disable RSpec/DescribedClass
     stub_const("Validatable", Class.new).class_eval do
       include ActiveModel::Validations
       attr_accessor :date1, :date2
@@ -21,8 +20,6 @@ RSpec.describe DateComparisonValidator do
                      later_field: :date2,
                      allow_equal: true
     end
-    # rubocop:enable RSpec/DescribedClass
-
     model.date1 = date1
     model.date2 = date2
     model.valid?
