@@ -1,0 +1,11 @@
+development:
+  url: <%= ENV.fetch("ZENDESK_API_URL", "https://becomingateacher1721898822.zendesk.com/api/v2") %>
+  api_key: <%= ENV["ZENDESK_API_KEY"] %>
+
+production:
+  url: <%= ENV["ZENDESK_API_URL"] %>
+  api_key: <%= ENV["ZENDESK_API_KEY"] %>
+
+test:
+  url: <%= ENV["ZENDESK_API_URL"] %>
+  api_key: <%= ENV["ZENDESK_API_KEY"] %>

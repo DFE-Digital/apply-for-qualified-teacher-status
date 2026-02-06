@@ -392,6 +392,19 @@ en:
         still_employed_options:
           true: "Yes"
           false: "No"
+      support_request_form:
+        application_enquiry_type_options:
+          progress_update: I need a progress update on my application
+          other: I have a question about my application
+        application_reference: Application reference number
+        user_type_options:
+          application_submitted: I have submitted an application
+          submitting_an_application: I have not yet submitted an application
+          providing_a_reference: I am a referee for an applicant
+          other: Other
+        comment: Tell us about your question or problem
+        email: Email
+        name: Name
     placeholder:
       assessor_interface_assessment_section_form:
         failure_reason_notes:
@@ -489,3 +502,6 @@ en:
         start_date: When did you start this role?
         still_employed: Are you still employed at this institution?
         end_date: Your end date
+      support_request_form:
+        application_enquiry_type: What are you contacting us about?
+        user_type: Which option applies to you?

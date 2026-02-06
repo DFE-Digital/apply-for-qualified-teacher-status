@@ -1,0 +1,39 @@
+<% content_for :page_title, "Get help", error: @form.errors.any? %>
+
+<%= form_with model: @form, url: %i[support_requests] do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <h1 class="govuk-heading-xl">Get help</h1>
+
+  <p class="govuk-body">You can use this form to ask a question or report a problem about Apply for qualified teacher status (QTS) in England.</p>
+
+  <% if FeatureFlags::FeatureFlag.active?(:gov_one_applicant_login) %>
+    <p class="govuk-body">For questions relating to creating an account or signing in to your application with GOV.UK One Login, please visit <%= govuk_link_to "Contact GOV.UK One Login", "https://home.account.gov.uk/contact-gov-uk-one-login" %>.</p>
+  <% end %>
+
+  <%= f.govuk_text_field :name %>
+
+  <%= f.govuk_email_field :email %>
+
+  <%= f.govuk_radio_buttons_fieldset :user_type do %>
+    <%= f.govuk_radio_button :user_type, :application_submitted do %>
+      <%= f.govuk_text_field :application_reference %>
+
+      <%= f.govuk_radio_buttons_fieldset :application_enquiry_type, legend: { tag: "label", size: "s"  } do %>
+        <%= f.govuk_radio_button :application_enquiry_type, :progress_update %>
+        <%= f.govuk_radio_button :application_enquiry_type, :other %>
+      <% end %>
+    <% end %>
+
+    <%= f.govuk_radio_button :user_type, :submitting_an_application %>
+
+    <%= f.govuk_radio_button :user_type, :providing_a_reference %>
+
+    <%= f.govuk_radio_button :user_type, :other %>
+  <% end %>
+
+
+  <%= f.govuk_text_area :comment, label: { size: "m" } %>
+
+  <%= f.govuk_submit "Submit" %>
+<% end %>

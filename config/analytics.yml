@@ -417,6 +417,19 @@
     - date_of_birth
     - id
     - updated_at
+  :support_requests:
+    - application_enquiry_type
+    - application_reference
+    - user_type
+    - created_at
+    - comment
+    - email
+    - name
+    - id
+    - submitted_at
+    - updated_at
+    - zendesk_ticket_created_at
+    - zendesk_ticket_id
   :teachers:
     - canonical_email
     - created_at

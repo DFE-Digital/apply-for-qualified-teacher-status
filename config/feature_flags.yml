@@ -47,4 +47,8 @@ feature_flags:
     author: Hassan Mir
     description: New feature to block public email domains being submitted for referees by applicants.
 
+  support_request_form:
+    author: Hassan Mir
+    description: New feature for applicants to submit support requests regarding the service.
+
 parent_controller: SupportInterface::FeatureFlagsController
