@@ -126,21 +126,38 @@ RSpec.describe AssessorInterface::ServiceLevelAgreementIndexViewObject do
 
   before do
     # Including some already completed application forms to ensure they never show
+
+    # Awarded prioritised application
     create(:application_form, :with_assessment, :awarded) do |application_form|
       application_form.assessment.update!(
         prioritised: true,
         verification_started_at: Time.current,
       )
     end
+
+    # Declined prioritised application
     create(:application_form, :with_assessment, :declined) do |application_form|
       application_form.assessment.update!(prioritised: true)
     end
+
+    # Withdrawn prioritised application
     create(
       :application_form,
       :with_assessment,
       :withdrawn,
     ) do |application_form|
       application_form.assessment.update!(prioritised: true)
+    end
+
+    # Withdrawn application without starting prioritisation checks
+    create(
+      :application_form,
+      :submitted,
+      :with_assessment,
+      :withdrawn,
+    ) do |application_form|
+      create :prioritisation_work_history_check,
+             assessment: application_form.assessment
     end
   end
 

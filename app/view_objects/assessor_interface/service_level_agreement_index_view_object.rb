@@ -111,7 +111,7 @@ class AssessorInterface::ServiceLevelAgreementIndexViewObject
   def application_forms_with_prioritisation_checks_not_started
     ApplicationForm
       .joins(assessment: :prioritisation_work_history_checks)
-      .where(assessment: { started_at: nil })
+      .where(assessment: { started_at: nil }, withdrawn_at: nil)
       .distinct
   end
 
