@@ -38,6 +38,7 @@ class SupportRequestsController < ApplicationController
   end
 
   def ensure_feature_enabled
+    return if current_staff
     return if FeatureFlags::FeatureFlag.active?(:support_request_form)
 
     redirect_to root_path
