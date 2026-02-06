@@ -18,7 +18,7 @@
   <%= govuk_summary_list(html_attributes: { id: "reference-details-summary-list" }) do |summary_list|
     summary_list.with_row do |row|
       row.with_key { "Name of institution" }
-      row.with_value { work_history.school_name }
+      row.with_value { sanitize(work_history.school_name) }
     end
 
     summary_list.with_row do |row|
@@ -28,7 +28,7 @@
 
     summary_list.with_row do |row|
       row.with_key { "Name of reference" }
-      row.with_value { work_history.contact_name }
+      row.with_value { sanitize(work_history.contact_name) }
 
       if can_edit_work_history
         row.with_action(text: "Change", href: [:edit, :assessor_interface, @application_form, work_history])
@@ -37,7 +37,7 @@
 
     summary_list.with_row do |row|
       row.with_key { "Job title of reference" }
-      row.with_value { work_history.contact_job }
+      row.with_value { sanitize(work_history.contact_job) }
 
       if can_edit_work_history
         row.with_action(text: "Change", href: [:edit, :assessor_interface, @application_form, work_history])

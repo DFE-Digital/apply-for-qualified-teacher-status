@@ -14,11 +14,11 @@ module CheckYourAnswersSummary
       super()
       @model = model
       @id = "app-check-your-answers-summary-#{id}"
-      @title = title
+      @title = sanitize title
       @fields = fields
       @changeable = changeable
       @with_action_link_to = with_action_link_to
-      @with_action_link_label = with_action_link_label
+      @with_action_link_label = sanitize with_action_link_label
     end
 
     attr_reader :title, :with_action_link_to, :with_action_link_label
@@ -99,7 +99,7 @@ module CheckYourAnswersSummary
         when false
           "No"
         else
-          value.to_s
+          sanitize value.to_s
         end
 
       if field[:error]

@@ -20,7 +20,7 @@
                   .each { |upload| concat(tag.li(upload_link_to(upload))) }
               end
             else
-              item[:value]
+              sanitize(item[:value])
             end
           end
           row.with_action(

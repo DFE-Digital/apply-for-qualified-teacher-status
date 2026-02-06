@@ -22,7 +22,7 @@
         <p class="govuk-hint govuk-!-margin-bottom-2"><%= item.fetch(:recieved_date) %></p>
 
         <% if item[:applicant_text_response] %>
-          <p class="govuk-body govuk-!-margin-bottom-2"><%= item.fetch(:applicant_text_response) %></p>
+          <p class="govuk-body govuk-!-margin-bottom-2"><%= sanitize(item.fetch(:applicant_text_response)) %></p>
         <% end %>
 
         <% if item[:applicant_contact_response] %>
