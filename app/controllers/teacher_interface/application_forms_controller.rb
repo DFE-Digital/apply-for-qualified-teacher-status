@@ -85,12 +85,7 @@ module TeacherInterface
     private
 
     def redirect_if_application_form_active
-      return if application_form.blank?
-
-      view_object = ApplicationFormViewObject.new(application_form:)
-
-      if !application_form.completed_stage? ||
-           view_object.declined_cannot_reapply?
+      if application_form.present? && !application_form.completed_stage?
         redirect_to %i[teacher_interface application_form]
       end
     end
