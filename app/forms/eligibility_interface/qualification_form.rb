@@ -8,9 +8,17 @@ class EligibilityInterface::QualificationForm
   attribute :qualification, :boolean
 
   validates :eligibility_check, presence: true
-  validate :qualification_inclusion_with_country
+  validate :inclusion_of_qualification
 
-  def qualification_inclusion_with_country
+  def save
+    return false unless valid?
+
+    eligibility_check.update!(qualification:)
+  end
+
+  private
+
+  def inclusion_of_qualification
     unless [true, false].include?(qualification)
       errors.add(
         :qualification,
@@ -18,11 +26,5 @@ class EligibilityInterface::QualificationForm
         country_name: CountryName.from_eligibility_check(eligibility_check),
       )
     end
-  end
-
-  def save
-    return false unless valid?
-
-    eligibility_check.update!(qualification:)
   end
 end
