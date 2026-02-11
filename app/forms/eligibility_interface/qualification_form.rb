@@ -7,7 +7,6 @@ class EligibilityInterface::QualificationForm
   attr_accessor :eligibility_check
   attribute :qualification, :boolean
 
-
   validates :eligibility_check, presence: true
   validate :qualification_inclusion_with_country
 
@@ -16,7 +15,7 @@ class EligibilityInterface::QualificationForm
       errors.add(
         :qualification,
         :inclusion,
-        country_name: CountryName.from_eligibility_check(eligibility_check)
+        country_name: CountryName.from_eligibility_check(eligibility_check),
       )
     end
   end
