@@ -44,12 +44,14 @@ RSpec.describe WorkHistoryHelper do
       create(
         :work_history,
         application_form:,
-        school_name: "School of Rock",
+        school_name:,
         start_date: Date.new(2022, 1, 1),
         end_date: Date.new(2022, 12, 22),
         hours_per_week: 30,
       )
     end
+
+    let(:school_name) { "School of Rock" }
 
     context "when it is not the most recent" do
       before { create(:work_history, application_form:) }
@@ -61,6 +63,16 @@ RSpec.describe WorkHistoryHelper do
       it do
         expect(subject).to eq(
           %(School of Rock — 12 months <span class="govuk-!-font-weight-bold">(MOST RECENT)</span>),
+        )
+      end
+    end
+
+    context "when the school name contains unsafe HTML tags" do
+      let(:school_name) { "School of Rock <script src='unsafe.com'></script>" }
+
+      it "strips out unsafe tags and attributes" do
+        expect(subject).to eq(
+          %(School of Rock  — 12 months <span class="govuk-!-font-weight-bold">(MOST RECENT)</span>),
         )
       end
     end
