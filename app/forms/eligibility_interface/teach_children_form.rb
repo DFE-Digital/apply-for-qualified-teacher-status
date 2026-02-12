@@ -19,6 +19,8 @@ class EligibilityInterface::TeachChildrenForm
   private
 
   def teach_children_inclusion_with_age_range
+    return if eligibility_check.nil?
+    
     unless [true, false].include?(teach_children)
       age_range =
         (
