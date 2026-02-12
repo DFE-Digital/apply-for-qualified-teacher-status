@@ -5,7 +5,7 @@ en:
         eligibility_interface/country_form:
           attributes:
             location:
-              blank: Select the country where you're currently recognised as a teacher
+              blank: Select the country where you’re currently recognised as a teacher
         eligibility_interface/degree_form:
           attributes:
             degree:
@@ -25,11 +25,11 @@ en:
         eligibility_interface/region_form:
           attributes:
             region_id:
-              blank: Select the state/territory where you're currently recognised as a teacher
+              blank: Select the state/territory where you’re currently recognised as a teacher
         eligibility_interface/teach_children_form:
           attributes:
             teach_children:
-              inclusion: Select if you are qualified to teach children aged between 5 and 16
+              inclusion: Select if you are qualified to teach children aged between %{age_range}
         eligibility_interface/work_experience_form:
           attributes:
             work_experience:
