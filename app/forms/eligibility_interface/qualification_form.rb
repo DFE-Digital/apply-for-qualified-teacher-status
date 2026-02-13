@@ -19,8 +19,6 @@ class EligibilityInterface::QualificationForm
   private
 
   def inclusion_of_qualification
-    return if eligibility_check.nil?
-    
     unless [true, false].include?(qualification)
       errors.add(
         :qualification,

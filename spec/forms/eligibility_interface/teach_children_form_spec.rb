@@ -3,10 +3,6 @@
 require "rails_helper"
 
 RSpec.describe EligibilityInterface::TeachChildrenForm, type: :model do
-  describe "validations" do
-    it { is_expected.to validate_presence_of(:eligibility_check) }
-  end
-
   describe "#valid?" do
     subject(:valid) { form.valid? }
 
@@ -15,6 +11,7 @@ RSpec.describe EligibilityInterface::TeachChildrenForm, type: :model do
     let(:teach_children) { "true" }
 
     it { is_expected.to be_truthy }
+    it { expect(form).to validate_presence_of(:eligibility_check) }
 
     context "when teach_children is blank" do
       let(:teach_children) { "" }
