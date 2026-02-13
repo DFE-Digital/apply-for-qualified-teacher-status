@@ -21,7 +21,7 @@ en:
         eligibility_interface/qualified_for_subject_form:
           attributes:
             qualified_for_subject:
-              inclusion: Tell us whether you’re qualified to teach one of these subjects
+              inclusion: Select if you’re qualified to teach one of these subjects
         eligibility_interface/region_form:
           attributes:
             region_id:
