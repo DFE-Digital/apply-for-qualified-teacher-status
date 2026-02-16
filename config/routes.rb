@@ -644,6 +644,10 @@ Rails.application.routes.draw do
   resources :autocomplete_locations, only: %i[index]
   resources :autocomplete_passport_country_of_issues, only: %i[index]
 
+  resources :support_requests, path: "support-requests", only: %i[new create] do
+    collection { get "confirmation", to: "support_requests#confirmation" }
+  end
+
   get "cookies", to: "static#cookies"
   get "email/:key", to: "static#email", as: "email"
   get "english-language-guidance", to: "static#english_language_guidance"

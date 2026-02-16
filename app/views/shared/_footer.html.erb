@@ -5,12 +5,18 @@
         "Cookies" => main_app.cookies_path,
         "Privacy" => "https://www.gov.uk/government/publications/privacy-information-education-providers-workforce-including-teachers/5a254207-a566-44f7-ac77-6ba59fd26e04#using-your-data-when-you-use-the-apply-for-qualified-teacher-status-qts-in-england-service"
       }) do |footer| %>
-  <% if current_teacher %>
+  <% unless current_namespace.in?(["assessor", "support"]) %>
     <% footer.with_navigation do %>
-      <span class="govuk-heading-s">Get help</span>
-      <p class="govuk-body">Email: <%= govuk_link_to t("service.email.enquiries"), main_app.email_path("enquiries") %></p>
-      <p class="govuk-body">Please include as much detail as possible about your query.</p>
-      <p class="govuk-body">We aim to respond to you within 5 working days.</p>
+      <span class="govuk-heading-m">Get help</span>
+      <% if FeatureFlags::FeatureFlag.active?(:support_request_form) %>
+        <p class="govuk-body">
+          <%= govuk_link_to "Ask a question or report a problem", new_support_request_path %>
+        </p>
+      <% else %>
+        <p class="govuk-body">Email: <%= govuk_link_to t("service.email.enquiries"), main_app.email_path("enquiries") %></p>
+        <p class="govuk-body">Please include as much detail as possible about your query.</p>
+        <p class="govuk-body">We aim to respond to you within 5 working days.</p>
+      <% end %>
     <% end %>
   <% end %>
 <% end %>
