@@ -53,6 +53,12 @@
   <p class="govuk-body">Your request for review must be received within 28 days of receipt of the decision to decline QTS.</p>
 
   <p class="govuk-body">Email your request for review, including the information required as above, to <%= govuk_link_to t("service.email.enquiries"), email_path("enquiries") %>.</p>
+
+  <% if view_object.declined_cannot_reapply? %>
+    <p class="govuk-body">
+      Or, if you can address the reasons your application has been declined, you can submit a new application. You must <%= govuk_link_to "check if you’re still eligible", %i[new teacher_interface application_form] %> to apply first. You’ll need to provide all the required information and documents again.
+    </p>
+  <% end %>
 <% end %>
 
 <%= render "shared/help_us_to_improve_this_service" %>
