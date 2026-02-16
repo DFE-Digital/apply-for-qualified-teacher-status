@@ -38,7 +38,7 @@ en:
         eligibility_interface/work_experience_referee_form:
           attributes:
             work_experience_referee:
-              inclusion: Select if your employment references meet all of the following requirements
+              inclusion: Select if your employment references meet all of the requirements
         eligibility_interface/work_experience_in_england_form:
           attributes:
             eligible:
