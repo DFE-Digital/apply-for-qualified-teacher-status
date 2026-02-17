@@ -377,7 +377,7 @@ en:
         teacher_interface/new_session_form:
           attributes:
             sign_in_or_sign_up:
-              blank: Select whether you have used the service before
+              blank: Select if you have used the service before
             email:
               blank: Enter your email address
         teacher_interface/prioritisation_reference_request_contact_response_form:

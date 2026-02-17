@@ -8,11 +8,23 @@ class EligibilityInterface::QualificationForm
   attribute :qualification, :boolean
 
   validates :eligibility_check, presence: true
-  validates :qualification, inclusion: { in: [true, false] }
+  validate :inclusion_of_qualification
 
   def save
     return false unless valid?
 
     eligibility_check.update!(qualification:)
+  end
+
+  private
+
+  def inclusion_of_qualification
+    unless [true, false].include?(qualification)
+      errors.add(
+        :qualification,
+        :inclusion,
+        country_name: CountryName.from_eligibility_check(eligibility_check),
+      )
+    end
   end
 end
