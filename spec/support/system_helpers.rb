@@ -116,17 +116,10 @@ module SystemHelpers
 
   def given_malware_scanning_is_enabled(scan_result: "No threats found")
     FeatureFlags::FeatureFlag.activate(:fetch_malware_scan_result)
-    response_body = <<-XML.squish
-      <Tags>
-        <Tag>
-          <Key>Malware Scanning scan result</Key>
-          <Value>#{scan_result}</Value>
-        </Tag>
-      </Tags>
-    XML
+    response_body = { "Malware Scanning scan result" => scan_result }
     stubbed_service = instance_double(AzureBlob::Client)
     allow(AzureBlob::Client).to receive(:new).and_return(stubbed_service)
-    allow(stubbed_service).to receive(:get_blob).and_return(response_body)
+    allow(stubbed_service).to receive(:get_blob_tags).and_return(response_body)
   end
 
   def given_malware_scanning_is_disabled
