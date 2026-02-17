@@ -754,6 +754,7 @@ DEPENDENCIES
   libreconv
   mail-notify
   matrix
+  nokogiri
   okcomputer
   omniauth-entra-id
   omniauth-rails_csrf_protection
