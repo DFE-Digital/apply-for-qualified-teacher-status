@@ -10,7 +10,7 @@ module TeacherInterface
     validates :satisfied_response, inclusion: [true, false]
     validates :satisfied_comment,
               presence: true,
-              text_length: true,
+              max_text_length: true,
               if: -> { satisfied_response == false }
 
     def update_model

@@ -2,14 +2,14 @@
 
 require "rails_helper"
 
-RSpec.describe StringLengthValidator do
+RSpec.describe MaxStringLengthValidator do
   subject(:model) { Validatable.new }
 
   before do
     stub_const("Validatable", Class.new).class_eval do
       include ActiveModel::Validations
       attr_accessor :string
-      validates :string, string_length: true
+      validates :string, max_string_length: true
     end
     model.string = string
     model.valid?

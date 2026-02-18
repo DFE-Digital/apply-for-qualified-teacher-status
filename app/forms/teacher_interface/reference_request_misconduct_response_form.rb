@@ -10,7 +10,7 @@ module TeacherInterface
     validates :misconduct_response, inclusion: [true, false]
     validates :misconduct_comment,
               presence: true,
-              text_length: true,
+              max_text_length: true,
               if: -> { misconduct_response == true }
 
     def update_model

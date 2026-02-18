@@ -10,7 +10,7 @@ module TeacherInterface
     validates :reports_response, inclusion: [true, false]
     validates :reports_comment,
               presence: true,
-              text_length: true,
+              max_text_length: true,
               if: -> { reports_response == false }
 
     def update_model

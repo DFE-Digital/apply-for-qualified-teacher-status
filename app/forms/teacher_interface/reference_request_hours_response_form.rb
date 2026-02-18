@@ -10,7 +10,7 @@ module TeacherInterface
     validates :hours_response, inclusion: [true, false]
     validates :hours_comment,
               presence: true,
-              text_length: true,
+              max_text_length: true,
               if: -> { hours_response == false }
 
     def update_model

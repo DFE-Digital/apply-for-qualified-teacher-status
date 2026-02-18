@@ -11,20 +11,28 @@ class SupportRequestForm
   attribute :application_enquiry_type, :string
   attribute :application_reference, :string
 
-  validates :name, presence: true, string_length: true
-  validates :email, presence: true, string_length: true, valid_for_notify: true
+  validates :name, presence: true, max_string_length: true
+  validates :email,
+            presence: true,
+            max_string_length: true,
+            valid_for_notify: true
   validates :user_type, presence: true
 
   validates :application_reference,
             presence: true,
-            string_length: true,
+            max_string_length: true,
             if: :application_submitted_user?
 
   validates :application_enquiry_type,
             presence: true,
             if: :application_submitted_user?
 
-  validates :comment, presence: true, text_length: true, length: { minimum: 30 }
+  validates :comment,
+            presence: true,
+            max_text_length: true,
+            length: {
+              minimum: 30,
+            }
 
   def save
     return false if invalid?

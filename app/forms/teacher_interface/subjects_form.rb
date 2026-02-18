@@ -7,8 +7,8 @@ class TeacherInterface::SubjectsForm < TeacherInterface::BaseForm
   attribute :subject_3, :string
 
   validates :application_form, presence: true
-  validates :subject_1, presence: true, string_length: true
-  validates :subject_2, :subject_3, string_length: true
+  validates :subject_1, presence: true, max_string_length: true
+  validates :subject_2, :subject_3, max_string_length: true
 
   def update_model
     application_form.update!(subjects:)

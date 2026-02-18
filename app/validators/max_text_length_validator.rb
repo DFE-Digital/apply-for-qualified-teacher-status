@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class TextLengthValidator < ActiveModel::EachValidator
+class MaxTextLengthValidator < ActiveModel::EachValidator
   MAX_LENGTH = 20_000
 
   def validate_each(record, attribute, value)

@@ -16,7 +16,7 @@ module TeacherInterface
     attribute :national_insurance_number_part_three, :string
 
     validates :application_form, presence: true
-    validates :given_names, string_length: true
+    validates :given_names, max_string_length: true
     validates :given_names,
               presence: {
                 message: :blank_passport,
@@ -29,7 +29,7 @@ module TeacherInterface
               },
               unless: :requires_passport_as_identity_proof
 
-    validates :family_name, string_length: true
+    validates :family_name, max_string_length: true
     validates :family_name,
               presence: {
                 message: :blank_passport,

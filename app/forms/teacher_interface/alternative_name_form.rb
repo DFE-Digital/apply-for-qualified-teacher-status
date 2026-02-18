@@ -23,11 +23,11 @@ module TeacherInterface
     validates :alternative_given_names,
               presence: true,
               if: :has_alternative_name
-    validates :alternative_given_names, string_length: true
+    validates :alternative_given_names, max_string_length: true
     validates :alternative_family_name,
               presence: true,
               if: :has_alternative_name
-    validates :alternative_family_name, string_length: true
+    validates :alternative_family_name, max_string_length: true
 
     def update_model
       application_form.update!(
