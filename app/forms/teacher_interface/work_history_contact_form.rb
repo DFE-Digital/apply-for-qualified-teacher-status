@@ -9,11 +9,11 @@ module TeacherInterface
     attribute :contact_job, :string
     attribute :contact_email, :string
 
-    validates :contact_name, presence: true, string_length: true
-    validates :contact_job, presence: true, string_length: true
+    validates :contact_name, presence: true, max_string_length: true
+    validates :contact_job, presence: true, max_string_length: true
     validates :contact_email,
               presence: true,
-              string_length: true,
+              max_string_length: true,
               valid_for_notify: true
 
     validate :contact_email_has_private_email_domain

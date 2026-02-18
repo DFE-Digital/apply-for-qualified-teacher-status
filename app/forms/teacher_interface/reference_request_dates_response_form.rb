@@ -10,7 +10,7 @@ module TeacherInterface
     validates :dates_response, inclusion: [true, false]
     validates :dates_comment,
               presence: true,
-              text_length: true,
+              max_text_length: true,
               if: -> { dates_response == false }
 
     def update_model
