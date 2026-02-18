@@ -50,6 +50,23 @@ RSpec.describe AssessorInterface::AssessmentSectionForm, type: :model do
       let(:attributes) { { passed: true } }
 
       it { is_expected.to be_valid }
+
+      context "when failure reasons are included in the attributes" do
+        let(:attributes) do
+          {
+            passed: true,
+            "#{further_information_failure_reason}_checked": true,
+            "#{work_history_failure_reason}_checked": true,
+            "#{work_history_failure_reason}_work_history_#{work_histories.first.id}_checked":
+              true,
+            "#{work_history_failure_reason}_work_history_#{work_histories.last.id}_checked":
+              true,
+            "#{decline_failure_reason}_checked": true,
+          }
+        end
+
+        it { is_expected.to be_valid }
+      end
     end
 
     context "when reasons are checked" do

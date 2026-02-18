@@ -147,7 +147,7 @@ class AssessorInterface::AssessmentSectionForm
           end
 
           klass.validate :ensure_atleast_one_work_history_selected,
-                         if: :"#{failure_reason}_checked"
+                         if: -> { !passed && send("#{failure_reason}_checked") }
         elsif selected_failure_reason.present? &&
               selected_failure_reason.work_histories.present?
           work_histories.each do |work_history|
@@ -179,13 +179,19 @@ class AssessorInterface::AssessmentSectionForm
                             presence: {
                               message: "Enter a note to the applicant",
                             },
-                            if:
-                              :"#{failure_reason}_work_history_#{work_history.id}_checked"
+                            if: -> do
+                              !passed &&
+                                send(
+                                  "#{failure_reason}_work_history_#{work_history.id}_checked",
+                                )
+                            end
           end
         else
           klass.validates "#{failure_reason}_notes",
                           presence: true,
-                          if: :"#{failure_reason}_checked"
+                          if: -> do
+                            !passed && send("#{failure_reason}_checked")
+                          end
         end
       end
 
