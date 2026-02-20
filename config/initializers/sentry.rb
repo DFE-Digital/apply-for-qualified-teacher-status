@@ -36,7 +36,7 @@ Sentry.init do |config|
       return nil if is_active_storage_faraday_error?(event, hint)
 
       filter_record_not_unique_exception_messages!(event, hint)
-      filter.filter(event.to_hash)
+      filter.filter(event.to_h)
     end
 
   config.inspect_exception_causes_for_exclusion = true
