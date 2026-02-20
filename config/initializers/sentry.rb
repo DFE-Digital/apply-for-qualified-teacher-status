@@ -21,6 +21,20 @@ def is_active_storage_faraday_error?(event, hint)
     %w[ActiveStorage::AnalyzeJob ActiveStorage::PurgeJob].include?(active_job)
 end
 
+def apply_parameter_filters!(event, filter)
+  event.extra = filter.filter(event.extra) if event.extra
+
+  event.tags = filter.filter(event.tags) if event.tags
+
+  event.request.data = filter.filter(event.request.data) if event.request&.data
+
+  event.fingerprint = filter.filter(event.fingerprint) if event.fingerprint
+
+  event.user = filter.filter(event.user) if event.user
+
+  event.contexts = filter.filter(event.contexts) if event.contexts
+end
+
 Sentry.init do |config|
   config.breadcrumbs_logger = %i[active_support_logger http_logger]
 
@@ -36,7 +50,9 @@ Sentry.init do |config|
       return nil if is_active_storage_faraday_error?(event, hint)
 
       filter_record_not_unique_exception_messages!(event, hint)
-      filter.filter(event.to_hash)
+      apply_parameter_filters!(event, filter)
+
+      event
     end
 
   config.inspect_exception_causes_for_exclusion = true
