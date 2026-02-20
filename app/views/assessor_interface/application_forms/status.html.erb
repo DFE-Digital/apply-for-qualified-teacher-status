@@ -38,7 +38,7 @@
 
   <p class="govuk-body">If the applicant does not respond to the further information request, their application will be automatically declined.</p>
 <% elsif @view_object.application_form.declined_at.present? %>
-  <p class="govuk-body">The application will be deleted after 90 days unless the applicant chooses to appeal.</p>
+  <p class="govuk-body">You do not need to do anything else, but the applicant can still request a decision review.</p>
 <% elsif @view_object.application_form.trs_trn_request.present? %>
   <p class="govuk-body">This status will appear while the award is reconciled with the information in the Teaching Record System (TRS).</p>
   <p class="govuk-body">Once these checks are complete, the status will change to ‘Awarded’ and the applicant will receive the email telling them they’ve been awarded QTS.</p>
