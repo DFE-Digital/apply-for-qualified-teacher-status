@@ -501,12 +501,12 @@ en:
             original_attachment:
               blank: Select a file to upload
               encrypted_pdf: The selected file is security protected
-              invalid_content_type: Files must be in PDF, JPG, PNG, DOCX or DOC format
+              invalid_content_type: Files must be in PDF, JPG, PNG or DOCX format
               mismatch_content_type: Files must have matching file type and file name. For example, if the upload is called example.doc, it must be a DOC file.
             translated_attachment:
               blank: Select a translation to upload
               encrypted_pdf: The selected file is security protected
-              invalid_content_type: Files must be in PDF, JPG, PNG, DOCX or DOC format
+              invalid_content_type: Files must be in PDF, JPG, PNG or DOCX format
               mismatch_content_type: Files must have matching file type and file name. For example, if the upload is called example.doc, it must be a DOC file.
         teacher_interface/work_history_form:
           attributes:

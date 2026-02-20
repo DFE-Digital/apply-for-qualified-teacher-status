@@ -8,7 +8,6 @@ class FileUploadValidator < ActiveModel::EachValidator
     ".jpg" => "image/jpeg",
     ".jpeg" => "image/jpeg",
     ".pdf" => "application/pdf",
-    ".doc" => "application/msword",
     ".docx" =>
       "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
   }.freeze

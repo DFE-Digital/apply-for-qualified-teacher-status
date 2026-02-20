@@ -199,7 +199,8 @@
 
   <%= f.govuk_file_field :original_attachment,
                          label: { text: "Select a file to upload", class: "govuk-heading-m" },
-                         hint: { text: "You can upload your files in PDF, JPG, PNG, DOCX or DOC format. Each file must be no larger than 50MB." } %>
+                         hint: { text: "You can upload your files in PDF, JPG, PNG or DOCX format. Each file must be no larger than 50MB." },
+                         accept: ".pdf,.jpg,.jpeg,.png,.docx" %>
 
   <% if @document.qualification_transcript? %>
     <%= govuk_details(summary_text: "What is a transcript?") do %>
@@ -218,7 +219,8 @@
 
         <%= f.govuk_file_field :translated_attachment,
                                label: { text: "Select a file to upload" },
-                               hint: { text: "You can upload your files in PDF, JPG, PNG, DOCX or DOC format. Each file must be no larger than 50MB." } %>
+                               hint: { text: "You can upload your files in PDF, JPG, PNG or DOCX format. Each file must be no larger than 50MB." },
+                               accept: ".pdf,.jpg,.jpeg,.png,.docx" %>
       <% end %>
     <% end %>
   <% end %>
