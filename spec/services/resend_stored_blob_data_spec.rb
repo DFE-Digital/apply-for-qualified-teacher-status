@@ -10,33 +10,23 @@ RSpec.describe ResendStoredBlobData do
     let(:response_success) { true }
     let(:put_blob_url) { "http://example.com/uploads/#{upload.attachment.key}" }
     let(:stubbed_blob_service) do
-      instance_double(
-        Azure::Storage::Blob::BlobService,
-        generate_uri: put_blob_url,
-      )
-    end
-    let(:stubbed_response) do
-      instance_double(
-        Azure::Core::Http::HttpResponse,
-        success?: response_success,
-      )
+      instance_double(AzureBlob::Client, generate_uri: put_blob_url)
     end
 
     before do
-      allow(Azure::Storage::Blob::BlobService).to receive(:new).and_return(
-        stubbed_blob_service,
+      allow(AzureBlob::Client).to receive(:new).and_return(stubbed_blob_service)
+      allow(stubbed_blob_service).to receive(:create_block_blob).and_return(
+        response_success,
       )
-      allow(stubbed_blob_service).to receive(:call).and_return(stubbed_response)
     end
 
     it "calls the Azure Storage REST API to PUT blob data from the upload attachment" do
-      expect(stubbed_blob_service).to receive(:call).with(
-        :put,
-        put_blob_url,
-        upload.attachment.download,
-        anything,
-      )
       resend_stored_blob_data
+
+      expect(stubbed_blob_service).to have_received(:create_block_blob).with(
+        upload.attachment.key,
+        upload.attachment.download,
+      )
     end
 
     it "enqueues a FetchMalwareScanResultJob" do

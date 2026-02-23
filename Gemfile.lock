@@ -124,14 +124,9 @@ GEM
       activesupport (>= 6.0.0)
     ast (2.4.3)
     attr_required (1.0.2)
-    azure-storage-blob (2.0.3)
-      azure-storage-common (~> 2.0)
-      nokogiri (~> 1, >= 1.10.8)
-    azure-storage-common (2.0.4)
-      faraday (~> 1.0)
-      faraday_middleware (~> 1.0, >= 1.0.0.rc1)
-      net-http-persistent (~> 4.0)
-      nokogiri (~> 1, >= 1.10.8)
+    azure-blob (0.8.0)
+      cgi
+      rexml
     base64 (0.3.0)
     bcrypt (3.1.21)
     benchmark (0.5.0)
@@ -233,8 +228,6 @@ GEM
     faraday-patron (1.0.0)
     faraday-rack (1.0.0)
     faraday-retry (1.0.3)
-    faraday_middleware (1.2.0)
-      faraday (~> 1.0)
     ferrum (0.17.1)
       addressable (~> 2.5)
       base64 (~> 0.2)
@@ -364,8 +357,6 @@ GEM
     multi_xml (0.6.0)
     multipart-post (2.4.1)
     mutex_m (0.3.0)
-    net-http-persistent (4.0.2)
-      connection_pool (~> 2.2)
     net-imap (0.6.2)
       date
       net-protocol
@@ -737,7 +728,7 @@ DEPENDENCIES
   activerecord-session_store
   amazing_print
   annotaterb
-  azure-storage-blob
+  azure-blob
   bootsnap
   business
   capybara
@@ -765,6 +756,7 @@ DEPENDENCIES
   libreconv
   mail-notify
   matrix
+  nokogiri
   okcomputer
   omniauth-entra-id
   omniauth-rails_csrf_protection
