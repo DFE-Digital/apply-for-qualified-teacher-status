@@ -6,6 +6,12 @@ RSpec.describe SendReminderEmail do
   describe "#call" do
     subject(:call) { described_class.call(remindable:) }
 
+    around do |example|
+      travel_to Date.new(2025, 1, 1) do
+        example.run
+      end
+    end
+
     shared_examples "doesn't send an email" do
       it "doesn't log any email" do
         expect { call }.not_to change(ReminderEmail, :count)
