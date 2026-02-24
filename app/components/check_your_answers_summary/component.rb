@@ -121,7 +121,7 @@ module CheckYourAnswersSummary
     end
 
     def format_array(list, field)
-      list.map { |v| format_value(v, field) }.join("<br />").html_safe
+      sanitize(list.map { |v| format_value(v, field) }.join("<br />"))
     end
 
     def url_helpers

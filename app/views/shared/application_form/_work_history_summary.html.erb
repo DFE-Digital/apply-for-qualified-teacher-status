@@ -15,7 +15,7 @@
     <% with_action_link_to = as_teacher && changeable ? [:delete, :teacher_interface, :application_form, work_history] : nil %>
   <% end %>
 
-  <% with_action_link_label = as_teacher && changeable ? "Delete <span class=\"govuk-visually-hidden\">#{work_history.school_name.downcase}</span>".html_safe : nil %>
+  <% with_action_link_label = as_teacher && changeable ? "Delete <span class=\"govuk-visually-hidden\">#{work_history.school_name.downcase}</span>" : nil %>
 
   <%= render(CheckYourAnswersSummary::Component.new(
     id: "work-history-#{work_history.id}",
