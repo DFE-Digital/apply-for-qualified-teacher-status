@@ -7,10 +7,18 @@ RSpec.describe EmailDeliveryAuditJob do
     subject(:perform) { described_class.new.perform(*params) }
 
     let(:params) do
-      [to, email_subject, mailer_class_name, mailer_action_name, mailer_params]
+      [
+        to,
+        email_subject,
+        notify_id,
+        mailer_class_name,
+        mailer_action_name,
+        mailer_params,
+      ]
     end
 
     let(:to) { "test@example.com" }
+    let(:notify_id) { "123456789" }
     let(:email_subject) { "Test email" }
     let(:mailer_class_name) { "teacher_mailer" }
     let(:mailer_action_name) { "application_received" }
@@ -29,6 +37,7 @@ RSpec.describe EmailDeliveryAuditJob do
       expect(email_delivery).to have_attributes(
         to:,
         subject: email_subject,
+        notify_id:,
         mailer_class_name:,
         mailer_action_name:,
         application_form:,
@@ -50,6 +59,7 @@ RSpec.describe EmailDeliveryAuditJob do
         expect(email_delivery).to have_attributes(
           to:,
           subject: email_subject,
+          notify_id:,
           mailer_class_name:,
           mailer_action_name:,
           application_form:,
@@ -75,6 +85,7 @@ RSpec.describe EmailDeliveryAuditJob do
         expect(email_delivery).to have_attributes(
           to:,
           subject: email_subject,
+          notify_id:,
           mailer_class_name:,
           mailer_action_name:,
           application_form:,
@@ -100,6 +111,7 @@ RSpec.describe EmailDeliveryAuditJob do
         expect(email_delivery).to have_attributes(
           to:,
           subject: email_subject,
+          notify_id:,
           mailer_class_name:,
           mailer_action_name:,
           application_form:,
