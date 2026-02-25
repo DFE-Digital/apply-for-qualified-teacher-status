@@ -1,5 +1,5 @@
 <% content_for :page_title, t(".title") %>
-
+<%= debug(session[:history_stack]) %>
 <div class="app-inline-action">
   <h1 class="govuk-heading-xl"><%= t(".title") %></h1>
   <% if policy([:assessor_interface, :application_forms_export]).index? && session[:filter_params].try(:[], :show_all).nil? %>

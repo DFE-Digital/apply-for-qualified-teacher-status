@@ -1,6 +1,6 @@
 <% content_for :page_title, "Application" %>
 <% content_for :back_link_url, assessor_interface_application_forms_path %>
-
+<%= debug(session[:history_stack]) %>
 <% application_form = @view_object.application_form %>
 
 <% if FeatureFlags::FeatureFlag.active?(:personas) %>
