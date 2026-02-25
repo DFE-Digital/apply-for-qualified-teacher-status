@@ -7,6 +7,8 @@
 #  id                                  :bigint           not null, primary key
 #  mailer_action_name                  :string           default(""), not null
 #  mailer_class_name                   :string           default(""), not null
+#  notify_completed_at                 :datetime
+#  notify_status                       :string           default("created")
 #  subject                             :string           default(""), not null
 #  to                                  :string           default(""), not null
 #  created_at                          :datetime         not null
@@ -36,4 +38,14 @@ class EmailDelivery < ApplicationRecord
   belongs_to :reference_request, optional: true
   belongs_to :prioritisation_reference_request, optional: true
   belongs_to :further_information_request, optional: true
+
+  enum :notify_status,
+       {
+         created: "created",
+         delivered: "delivered",
+         permanent_failure: "permanent-failure",
+         temporary_failure: "temporary-failure",
+         technical_failure: "technical-failure",
+       },
+       prefix: true
 end
