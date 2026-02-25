@@ -173,6 +173,7 @@
     - id
     - mailer_action_name
     - mailer_class_name
+    - notify_id
     - prioritisation_reference_request_id
     - reference_request_id
     - subject

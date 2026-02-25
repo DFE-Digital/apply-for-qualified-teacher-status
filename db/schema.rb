@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_04_095210) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_25_112908) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -261,6 +261,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_04_095210) do
     t.bigint "further_information_request_id"
     t.string "mailer_action_name", default: "", null: false
     t.string "mailer_class_name", default: "", null: false
+    t.string "notify_id"
     t.bigint "prioritisation_reference_request_id"
     t.bigint "reference_request_id"
     t.string "subject", default: "", null: false

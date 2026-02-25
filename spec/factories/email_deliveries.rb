@@ -13,6 +13,7 @@
 #  updated_at                          :datetime         not null
 #  application_form_id                 :bigint
 #  further_information_request_id      :bigint
+#  notify_id                           :string
 #  prioritisation_reference_request_id :bigint
 #  reference_request_id                :bigint
 #
