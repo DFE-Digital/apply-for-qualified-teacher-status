@@ -44,6 +44,12 @@ RSpec.describe EmailDeliveryAuditJob do
       )
     end
 
+    it "enqueues a job for EmailDeliveryNotifyStatusUpdateJob" do
+      expect { perform }.to have_enqueued_job(
+        EmailDeliveryNotifyStatusUpdateJob,
+      ).with(EmailDelivery.last)
+    end
+
     context "when reference_request is present in mailer params" do
       let(:reference_request) do
         create :requested_reference_request,
@@ -116,6 +122,31 @@ RSpec.describe EmailDeliveryAuditJob do
           mailer_action_name:,
           application_form:,
           further_information_request:,
+        )
+      end
+    end
+
+    context "when no notify_id is passed in" do
+      let(:notify_id) { nil }
+
+      it "creates a new email record without notify_id" do
+        expect { perform }.to change(EmailDelivery, :count).by(1)
+
+        email_delivery = EmailDelivery.last
+
+        expect(email_delivery).to have_attributes(
+          to:,
+          subject: email_subject,
+          notify_id: nil,
+          mailer_class_name:,
+          mailer_action_name:,
+          application_form:,
+        )
+      end
+
+      it "does not enqueue a job for EmailDeliveryNotifyStatusUpdateJob" do
+        expect { perform }.not_to have_enqueued_job(
+          EmailDeliveryNotifyStatusUpdateJob,
         )
       end
     end

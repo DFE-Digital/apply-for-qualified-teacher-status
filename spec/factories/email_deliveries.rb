@@ -39,6 +39,7 @@ FactoryBot.define do
 
     to { Faker::Internet.email }
     subject { Faker::Lorem.sentence }
+    notify_id { Faker::Config.random }
     mailer_class_name { "teacher_mailer" }
     mailer_action_name { "application_received" }
   end

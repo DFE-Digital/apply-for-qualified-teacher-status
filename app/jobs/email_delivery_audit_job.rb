@@ -9,17 +9,22 @@ class EmailDeliveryAuditJob < ApplicationJob
     mailer_action_name,
     params = {}
   )
-    EmailDelivery.create!(
-      to:,
-      subject:,
-      notify_id:,
-      mailer_action_name:,
-      mailer_class_name:,
-      application_form: params[:application_form],
-      further_information_request: params[:further_information_request],
-      reference_request: params[:reference_request],
-      prioritisation_reference_request:
-        params[:prioritisation_reference_request],
-    )
+    email_delivery =
+      EmailDelivery.create!(
+        to:,
+        subject:,
+        notify_id:,
+        mailer_action_name:,
+        mailer_class_name:,
+        application_form: params[:application_form],
+        further_information_request: params[:further_information_request],
+        reference_request: params[:reference_request],
+        prioritisation_reference_request:
+          params[:prioritisation_reference_request],
+      )
+
+    if notify_id
+      EmailDeliveryNotifyStatusUpdateJob.perform_later(email_delivery)
+    end
   end
 end
