@@ -24,7 +24,9 @@ class EmailDeliveryAuditJob < ApplicationJob
       )
 
     if notify_id
-      EmailDeliveryNotifyStatusUpdateJob.perform_later(email_delivery)
+      EmailDeliveryNotifyStatusUpdateJob.set(wait: 1.minute).perform_later(
+        email_delivery,
+      )
     end
   end
 end
