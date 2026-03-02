@@ -33,9 +33,15 @@ class ApplicationMailer < Mail::Notify::Mailer
   private
 
   def enqueue_email_delivery_audit
+    notify_id =
+      if message.delivery_method.respond_to?(:response)
+        message.delivery_method.response&.id
+      end
+
     EmailDeliveryAuditJob.perform_later(
       headers["To"].value,
       headers["Subject"].value,
+      notify_id,
       mailer_name,
       action_name,
       params,

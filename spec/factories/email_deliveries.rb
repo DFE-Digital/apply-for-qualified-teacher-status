@@ -7,12 +7,15 @@
 #  id                                  :bigint           not null, primary key
 #  mailer_action_name                  :string           default(""), not null
 #  mailer_class_name                   :string           default(""), not null
+#  notify_completed_at                 :datetime
+#  notify_status                       :string           default("created")
 #  subject                             :string           default(""), not null
 #  to                                  :string           default(""), not null
 #  created_at                          :datetime         not null
 #  updated_at                          :datetime         not null
 #  application_form_id                 :bigint
 #  further_information_request_id      :bigint
+#  notify_id                           :string
 #  prioritisation_reference_request_id :bigint
 #  reference_request_id                :bigint
 #
@@ -36,6 +39,7 @@ FactoryBot.define do
 
     to { Faker::Internet.email }
     subject { Faker::Lorem.sentence }
+    notify_id { Faker::Config.random }
     mailer_class_name { "teacher_mailer" }
     mailer_action_name { "application_received" }
   end
