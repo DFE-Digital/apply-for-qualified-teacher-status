@@ -43,9 +43,7 @@ module ApplyForQualifiedTeacherStatus
 
     config.assets.paths +=
       %w[
-        node_modules/govuk-frontend/dist/govuk/assets
-        node_modules/govuk-frontend/dist/govuk/assets/images
-        node_modules/govuk-frontend/dist/govuk/assets/fonts
+        node_modules/govuk-frontend/dist/govuk
       ].map { |path| Rails.root.join(path) }
 
     config.action_dispatch.rescue_responses[
