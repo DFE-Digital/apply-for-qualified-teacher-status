@@ -161,6 +161,7 @@ module AssessorInterface
       authorize %i[assessor_interface assessment_recommendation], :edit?
 
       if skip_professional_standing?
+        history_stack.pop
         redirect_to [
                       :reference_requests,
                       :assessor_interface,
