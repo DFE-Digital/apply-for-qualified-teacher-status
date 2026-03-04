@@ -276,7 +276,7 @@ en:
         proof_method_options:
           esol: Upload proof of an English for Speakers of Other Languages (ESOL) certificate at Level 1 or Level 2 from one of the approved providers.
           medium_of_instruction: Upload an official document that shows your teaching qualification or university degree was taught exclusively in the English language.
-          provider: Upload proof of a Secure English Language Test (SELT) at B2 level, from one of the approved providers.
+          provider: Provide proof of a Secure English Language Test (SELT) at B2 level, from one of the approved providers.
       teacher_interface_further_information_request_item_text_form:
         response: Enter your response
       teacher_interface_ghana_registration_number_form:
