@@ -1,4 +1,4 @@
-$app-colour-development: govuk-colour("dark-grey");
+$app-colour-development: govuk-colour("black", $variant: "tint-25");
 $app-colour-test: govuk-colour("orange");
 
 .app-header--dev .govuk-header__container,
