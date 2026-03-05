@@ -72,6 +72,17 @@ RSpec.describe PrioritisationReferenceRequest do
             create(:assessment, prioritisation_decision_at: Time.current),
         )
       end
+      let(:requested_with_application_withdrawn) do
+        create(
+          :prioritisation_reference_request,
+          :requested,
+          assessment:
+            create(
+              :assessment,
+              application_form: create(:application_form, :withdrawn),
+            ),
+        )
+      end
 
       let(:requested_expired) do
         create(:prioritisation_reference_request, :requested, :expired)
@@ -85,6 +96,7 @@ RSpec.describe PrioritisationReferenceRequest do
         not_requested
         requested_outstanding
         requested_with_prioritisation_decision_made
+        requested_with_application_withdrawn
         requested_expired
         requested_received
       end
