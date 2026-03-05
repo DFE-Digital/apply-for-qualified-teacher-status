@@ -60,28 +60,38 @@ RSpec.describe PrioritisationReferenceRequest do
     describe "#remindable" do
       subject(:remindable) { described_class.remindable }
 
-      let(:expected) { create(:prioritisation_reference_request, :requested) }
-
-      before do
-        # Not requested
-        create(:prioritisation_reference_request)
-
-        # Reached prioritisation decision
+      let(:not_requested) { create(:prioritisation_reference_request) }
+      let(:requested_outstanding) do
+        create(:prioritisation_reference_request, :requested)
+      end
+      let(:requested_with_prioritisation_decision_made) do
         create(
           :prioritisation_reference_request,
           :requested,
           assessment:
             create(:assessment, prioritisation_decision_at: Time.current),
         )
+      end
 
-        # Expired
+      let(:requested_expired) do
         create(:prioritisation_reference_request, :requested, :expired)
+      end
 
-        # Received
+      let(:requested_received) do
         create(:received_prioritisation_reference_request)
       end
 
-      it { is_expected.to eq([expected]) }
+      before do
+        not_requested
+        requested_outstanding
+        requested_with_prioritisation_decision_made
+        requested_expired
+        requested_received
+      end
+
+      it "returns only requested and outstanding" do
+        expect(remindable).to eq([requested_outstanding])
+      end
     end
   end
 
