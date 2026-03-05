@@ -73,14 +73,22 @@ RSpec.describe PrioritisationReferenceRequest do
       end
 
       before do
+        # Prioritisation Reference Request not requested
+        create(:prioritisation_reference_request)
+
+        # Prioritisation Reference Request already reached prioritisation decision
         create(
           :prioritisation_reference_request,
+          :requested,
           assessment:
-            create(
-              :assessment,
-              application_form: create(:application_form, :awarded),
-            ),
+            create(:assessment, prioritisation_decision_at: Time.current),
         )
+
+        # Prioritisation Reference Request already expired
+        create(:prioritisation_reference_request, :requested, :expired)
+
+        # Prioritisation Reference Request already received
+        create(:received_prioritisation_reference_request)
       end
 
       it { is_expected.to eq([expected]) }
