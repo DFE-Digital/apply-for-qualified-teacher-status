@@ -58,10 +58,11 @@ class PrioritisationReferenceRequest < ApplicationRecord
         -> { where.not(reviewed_at: nil).where(review_passed: false) }
   scope :remindable,
         -> do
-          where
-            .not(requested_at: nil)
-            .where(expired_at: nil, received_at: nil)
-            .joins(assessment: :application_form)
+          joins(assessment: :application_form)
+            .requested
+            .not_received
+            .not_expired
+            .where(assessment: { prioritisation_decision_at: nil })
             .merge(ApplicationForm.assessable)
         end
 
