@@ -97,7 +97,7 @@ variable "run_as_non_root" {
   description = "Whether to enforce that containers must run as non-root user"
 }
 
-variable "postgres_version" { default = 14 }
+variable "postgres_version" { default = 17 }
 
 locals {
   environment_variables = yamldecode(file("${path.module}/config/${var.app_environment}/variables.yml"))
