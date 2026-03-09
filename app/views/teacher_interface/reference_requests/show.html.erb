@@ -1,5 +1,7 @@
 <% content_for :page_title, t(".title") %>
 
+<%= render "shared/maintenance_notice_banner" %>
+
 <% if @reference_request.received? %>
   <%= govuk_panel(title_text: "You’ve successfully submitted your response") %>
 

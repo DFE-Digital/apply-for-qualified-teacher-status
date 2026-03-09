@@ -1,5 +1,7 @@
 <% content_for :page_title, "Apply for qualified teacher status (QTS)" %>
 
+<%= render "shared/maintenance_notice_banner" %>
+
 <h1 class="govuk-heading-xl">Apply for qualified teacher status (QTS)</h1>
 
 <% if @view_object.application_form.declined_at.present? %>
