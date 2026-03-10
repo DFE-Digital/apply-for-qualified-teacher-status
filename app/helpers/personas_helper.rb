@@ -12,7 +12,7 @@ module PersonasHelper
     when "online"
       govuk_tag(text: "Online", colour: "orange")
     when "written"
-      govuk_tag(text: "Written", colour: "pink")
+      govuk_tag(text: "Written", colour: "magenta")
     end
   end
 
