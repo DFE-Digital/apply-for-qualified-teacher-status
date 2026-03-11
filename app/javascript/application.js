@@ -4,6 +4,16 @@ import openregisterLocationPicker from "govuk-country-and-territory-autocomplete
 import checkboxSearchFilter from "./checkbox_search_filter";
 import suitabilityRecordForm from "./suitability_record_form";
 
+// StimulusJS
+import { Application } from "@hotwired/stimulus";
+import DisableSubmitController from "./controllers/disable_submit_controller";
+
+const application = Application.start();
+
+window.Stimulus = application;
+
+application.register("disable-submit", DisableSubmitController);
+
 initAll();
 
 var loadCountryAutoComplete = () => {

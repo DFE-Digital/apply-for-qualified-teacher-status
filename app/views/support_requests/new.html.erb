@@ -1,6 +1,6 @@
 <% content_for :page_title, "Get help", error: @form.errors.any? %>
 
-<%= form_with model: @form, url: %i[support_requests] do |f| %>
+<%= form_with model: @form, url: %i[support_requests], data: { controller: "disable-submit", action: "submit->disable-submit#disableSubmitButton" } do |f| %>
   <%= f.govuk_error_summary %>
 
   <h1 class="govuk-heading-xl">Get help</h1>
@@ -35,5 +35,5 @@
 
   <%= f.govuk_text_area :comment, label: { size: "m" } %>
 
-  <%= f.govuk_submit "Submit" %>
+  <%= f.govuk_submit "Submit", data: { disable_submit_target: "submitButton" } %>
 <% end %>
