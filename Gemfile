@@ -44,6 +44,7 @@ gem "sentry-ruby"
 gem "sidekiq", "<7"
 gem "sidekiq-cron"
 gem "sitemap_generator"
+gem "stimulus-rails"
 gem "validate_url"
 
 gem "dfe-analytics", github: "DFE-Digital/dfe-analytics"
