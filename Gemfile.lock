@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DFE-Digital/dfe-analytics.git
-  revision: 31c25462e5fa824c1e75a1099c06e0676724731c
+  revision: accf90e0c8091633dcbc54127e1fe62fcd09576f
   specs:
     dfe-analytics (1.15.14)
       google-cloud-bigquery (~> 1.38)
@@ -235,16 +235,16 @@ GEM
       raabro (~> 1.4)
     globalid (1.3.0)
       activesupport (>= 6.1)
-    google-apis-bigquery_v2 (0.97.0)
+    google-apis-bigquery_v2 (0.99.0)
       google-apis-core (>= 0.15.0, < 2.a)
-    google-apis-core (0.18.0)
-      addressable (~> 2.5, >= 2.5.1)
-      googleauth (~> 1.9)
-      httpclient (>= 2.8.3, < 3.a)
-      mini_mime (~> 1.0)
-      mutex_m
+    google-apis-core (1.0.2)
+      addressable (~> 2.8, >= 2.8.7)
+      faraday (~> 2.13)
+      faraday-follow_redirects (~> 0.3)
+      googleauth (~> 1.14)
+      mini_mime (~> 1.1)
       representable (~> 3.0)
-      retriable (>= 2.0, < 4.a)
+      retriable (~> 3.1)
     google-cloud-bigquery (1.62.0)
       bigdecimal (~> 3.0)
       concurrent-ruby (~> 1.0)
@@ -261,7 +261,7 @@ GEM
       faraday (>= 1.0, < 3.a)
     google-cloud-errors (1.5.0)
     google-logging-utils (0.2.0)
-    googleauth (1.16.1)
+    googleauth (1.16.2)
       faraday (>= 1.0, < 3.a)
       google-cloud-env (~> 2.2)
       google-logging-utils (~> 0.1)
@@ -294,8 +294,6 @@ GEM
       csv
       mini_mime (>= 1.0.0)
       multi_xml (>= 0.5.2)
-    httpclient (2.9.0)
-      mutex_m
     i18n (1.14.8)
       concurrent-ruby (~> 1.0)
     indefinite_article (0.2.5)
@@ -351,7 +349,6 @@ GEM
     multi_json (1.19.1)
     multi_xml (0.6.0)
     multipart-post (2.4.1)
-    mutex_m (0.3.0)
     net-http (0.9.1)
       uri (>= 0.11.1)
     net-imap (0.6.3)
@@ -534,7 +531,7 @@ GEM
     responders (3.2.0)
       actionpack (>= 7.0)
       railties (>= 7.0)
-    retriable (3.1.2)
+    retriable (3.4.1)
     rexml (3.4.4)
     rladr (1.2.0)
     rmagick (6.2.0)
