@@ -18,7 +18,11 @@ class UpdateWorkingDaysJob < ApplicationJob
   private
 
   def calendar
-    @calendar ||= Business::Calendar.load("england_and_wales")
+    @calendar ||=
+      Business::Calendar.new(
+        holidays:
+          DfE::ReferenceData::BankHolidays::BANK_HOLIDAYS.all.map(&:date),
+      )
   end
 
   def today
