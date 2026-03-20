@@ -1,5 +1,6 @@
 import { initAll } from "govuk-frontend";
 import checkboxSearchFilter from "./checkbox_search_filter";
+import dfeAutocomplete from "dfe-autocomplete";
 import suitabilityRecordForm from "./suitability_record_form";
 
 // StimulusJS
@@ -18,6 +19,8 @@ application.register(
 );
 
 initAll();
+
+dfeAutocomplete({ rawAttribute: true });
 
 checkboxSearchFilter("app-applications-filters-assessor", "Search assessors");
 checkboxSearchFilter("app-applications-filters-statuses", "Search statuses");
