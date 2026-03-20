@@ -6,8 +6,8 @@ export default class extends Controller {
   connect() {
     openregisterLocationPicker({
       selectElement: this.element,
-      url: "/autocomplete_passport_country_of_issues.json",
-      name: "passport_country_of_issue_autocomplete",
+      url: "/autocomplete_locations.json",
+      name: "location_autocomplete",
     });
 
     dfeAutocomplete({ rawAttribute: true });

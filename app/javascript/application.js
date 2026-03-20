@@ -1,6 +1,4 @@
-import dfeAutocomplete from "dfe-autocomplete";
 import { initAll } from "govuk-frontend";
-import openregisterLocationPicker from "govuk-country-and-territory-autocomplete";
 import checkboxSearchFilter from "./checkbox_search_filter";
 import suitabilityRecordForm from "./suitability_record_form";
 
@@ -8,6 +6,7 @@ import suitabilityRecordForm from "./suitability_record_form";
 import { Application } from "@hotwired/stimulus";
 import DisableSubmitController from "./controllers/disable_submit_controller";
 import CountriesTerritoriesAutocompleteController from "./controllers/countries_territories_autocomplete_controller";
+import PassportCountriesOfIssueAutocompleteController from "./controllers/passport_countries_of_issue_autocomplete_controller";
 
 const application = Application.start();
 
@@ -18,29 +17,12 @@ application.register(
   "countries-territories-autocomplete",
   CountriesTerritoriesAutocompleteController
 );
+application.register(
+  "passport-countries-of-issue-autocomplete",
+  PassportCountriesOfIssueAutocompleteController
+);
 
 initAll();
-
-var loadPassportCountryOfIssueAutoComplete = () => {
-  var passportCountryOfIssuePicker =
-    document.getElementById(
-      "teacher-interface-passport-expiry-date-form-passport-country-of-issue-code-field"
-    ) ??
-    document.getElementById(
-      "teacher-interface-passport-expiry-date-form-passport-country-of-issue-code-field-error"
-    );
-
-  if (passportCountryOfIssuePicker) {
-    openregisterLocationPicker({
-      selectElement: passportCountryOfIssuePicker,
-      url: "/autocomplete_passport_country_of_issues.json",
-      name: "passport_country_of_issue_autocomplete",
-    });
-  }
-};
-
-loadPassportCountryOfIssueAutoComplete();
-dfeAutocomplete({ rawAttribute: true });
 
 checkboxSearchFilter("app-applications-filters-assessor", "Search assessors");
 checkboxSearchFilter("app-applications-filters-statuses", "Search statuses");
