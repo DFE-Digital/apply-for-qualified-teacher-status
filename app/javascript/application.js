@@ -21,20 +21,6 @@ application.register(
 
 initAll();
 
-var loadCountryAutoComplete = () => {
-  var locationPicker =
-    document.getElementById("location-field") ??
-    document.getElementById("location-field-error");
-
-  if (locationPicker) {
-    openregisterLocationPicker({
-      selectElement: locationPicker,
-      url: "/autocomplete_locations.json",
-      name: "location_autocomplete",
-    });
-  }
-};
-
 var loadPassportCountryOfIssueAutoComplete = () => {
   var passportCountryOfIssuePicker =
     document.getElementById(
@@ -53,7 +39,6 @@ var loadPassportCountryOfIssueAutoComplete = () => {
   }
 };
 
-loadCountryAutoComplete();
 loadPassportCountryOfIssueAutoComplete();
 dfeAutocomplete({ rawAttribute: true });
 
