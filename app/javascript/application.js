@@ -24,12 +24,6 @@ initAll();
 var loadCountryAutoComplete = () => {
   var locationPicker =
     document.getElementById(
-      "eligibility-interface-country-form-location-field"
-    ) ??
-    document.getElementById(
-      "eligibility-interface-country-form-location-field-error"
-    ) ??
-    document.getElementById(
       "teacher-interface-country-region-form-location-field"
     ) ??
     document.getElementById(
