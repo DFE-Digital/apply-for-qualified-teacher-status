@@ -54,7 +54,8 @@
 
     <%= f.govuk_select :country_location,
                        options_for_select(locations, form.country_location),
-                       options: { include_blank: true } %>
+                       options: { include_blank: true },
+                       data: { controller: "countries-territories-autocomplete" } %>
 
     <%= f.govuk_text_field :postcode %>
 
