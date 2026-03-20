@@ -9,7 +9,11 @@
                      label: { size: "l", tag: "h1" },
                      hint: { text: t("helpers.hint.eligibility_interface_country_form.location").html_safe },
                      options: { include_blank: true },
-                     data: { controller: "countries-territories-autocomplete" } %>
+                     data: {
+                      controller: "location-picker-autocomplete",
+                      location_picker_autocomplete_url_value: autocomplete_locations_path,
+                      location_picker_autocomplete_name_value: "location_autocomplete"
+                     } %>
 
   <%= f.govuk_submit %>
 <% end %>
