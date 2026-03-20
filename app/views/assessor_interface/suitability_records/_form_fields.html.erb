@@ -18,7 +18,8 @@
 
 <%= f.govuk_select :location,
                    options_for_select(locations, @form.location),
-                   options: { include_blank: true } %>
+                   options: { include_blank: true },
+                   data: { controller: "countries-territories-autocomplete" } %>
 
 <%= f.govuk_date_field :date_of_birth, legend: { size: nil }, maxlength_enabled: true, date_of_birth: true %>
 
