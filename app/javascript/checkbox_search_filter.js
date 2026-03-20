@@ -1,12 +1,5 @@
-import "./polyfills";
-
-function outerHeight(el) {
-  var height = el.offsetHeight;
-  var style = window.getComputedStyle(el, "");
-
-  height += parseInt(style.marginTop) + parseInt(style.marginBottom);
-  return height;
-}
+import "./utils/polyfills";
+import outerHeight from "./utils/outer_height";
 
 function CheckboxSearchFilter(params) {
   this.params = params;
