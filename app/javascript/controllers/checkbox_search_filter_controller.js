@@ -1,19 +1,24 @@
-import "./utils/polyfills";
-import outerHeight from "./utils/outer_height";
+import { Controller } from "@hotwired/stimulus";
+import "../utils/polyfills";
+import outerHeight from "../utils/outer_height";
 
-function CheckboxSearchFilter(params) {
-  this.params = params;
-  this.container = params.container;
-  this.container.classList.add("app-checkbox-filter--enhanced");
-  this.checkboxes = this.container.querySelectorAll("input[type='checkbox']");
-  this.checkboxesContainer = this.container.querySelector(
-    ".app-checkbox-filter__container"
-  );
-  this.checkboxesInnerContainer = this.checkboxesContainer.querySelector(
-    ".app-checkbox-filter__container-inner"
-  );
+export default class extends Controller {
+  static values = {
+    label: String,
+  };
 
-  this.filterCheckboxes = function () {
+  static targets = [
+    "container",
+    "checkbox",
+    "checkboxContainer",
+    "checkboxInnerContainer",
+  ];
+
+  connect() {
+    this.setup();
+  }
+
+  filterCheckboxes() {
     var textValue = this.sanitizeText(this.textBox.value);
     var allCheckboxes = this.getAllCheckboxes();
 
@@ -32,30 +37,32 @@ function CheckboxSearchFilter(params) {
       foundCount: this.getAllVisibleCheckboxes().length,
       checkedCount: this.getAllVisibleCheckedCheckboxes().length,
     });
-  };
+  }
 
-  this.getAllCheckboxes = function () {
-    return this.checkboxesContainer.querySelectorAll(".govuk-checkboxes__item");
-  };
+  getAllCheckboxes() {
+    return this.checkboxContainerTarget.querySelectorAll(
+      ".govuk-checkboxes__item"
+    );
+  }
 
-  this.getAllVisibleCheckboxes = function () {
+  getAllVisibleCheckboxes() {
     return [].filter.call(this.getAllCheckboxes(), function (el) {
       return el.style.display === "block";
     });
-  };
+  }
 
-  this.getAllVisibleCheckedCheckboxes = function () {
+  getAllVisibleCheckedCheckboxes() {
     return [].filter.call(this.getAllVisibleCheckboxes(), function (el) {
       return el.querySelector(".govuk-checkboxes__input").checked;
     });
-  };
+  }
 
-  this.getTextBoxHtml = function () {
-    var containerId = this.container.id;
+  getTextBoxHtml() {
+    var containerId = this.containerTarget.id;
     var label = document.createElement("label");
     label.setAttribute("for", containerId + "-checkbox-filter__filter-input");
     label.className = "govuk-label govuk-visually-hidden";
-    label.innerHTML = this.params.textBox.label;
+    label.innerHTML = this.labelValue;
 
     var input = document.createElement("input");
     input.className = "app-checkbox-filter__filter-input govuk-input";
@@ -66,72 +73,78 @@ function CheckboxSearchFilter(params) {
     input.setAttribute("spellcheck", "false");
 
     return [label, input];
-  };
+  }
 
-  this.getVisibleCheckboxes = function () {
-    var visibleCheckboxes = [].filter.call(this.checkboxes, (el) =>
+  getVisibleCheckboxes() {
+    var visibleCheckboxes = [].filter.call(this.checkboxTargets, (el) =>
       this.isCheckboxInView(el)
     );
 
     // add an extra checkbox, if the label of the first is too long it collapses onto itself
-    visibleCheckboxes.push(this.checkboxes[visibleCheckboxes.length - 1]);
+    visibleCheckboxes.push(this.checkboxTargets[visibleCheckboxes.length - 1]);
     return visibleCheckboxes;
-  };
+  }
 
-  this.isCheckboxInView = function (checkbox) {
-    var initialOptionContainerHeight = this.checkboxesContainer.offsetHeight;
-    var optionListOffsetTop = this.checkboxesInnerContainer.offsetTop;
+  isCheckboxInView(checkbox) {
+    var initialOptionContainerHeight =
+      this.checkboxContainerTarget.offsetHeight;
+    var optionListOffsetTop = this.checkboxInnerContainerTarget.offsetTop;
     var distanceFromTopOfContainer = checkbox.offsetTop - optionListOffsetTop;
     return distanceFromTopOfContainer < initialOptionContainerHeight;
-  };
+  }
 
-  this.onTextBoxKeyUp = function (e) {
+  onTextBoxKeyUp(e) {
     var ENTER_KEY = 13;
+
     if (e.keyCode === ENTER_KEY) {
       e.preventDefault();
     } else {
       this.filterCheckboxes();
     }
-  };
+  }
 
-  this.sanitizeText = function (text) {
+  sanitizeText(text) {
     text = text.replace(/&/g, "and");
     text = text.replace(/[’',:–-]/g, ""); // remove punctuation characters
     text = text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // escape special characters
     return text.trim().replace(/\s\s+/g, " ").toLowerCase(); // replace multiple spaces with one
-  };
+  }
 
-  this.setContainerHeight = function (height) {
-    this.checkboxesContainer.style.height = height;
-  };
+  setContainerHeight(height) {
+    this.checkboxContainerTarget.style.height = height;
+  }
 
-  this.setup = function () {
+  setup() {
     var MIN_FILTERED_CHECKBOX_LENGTH = 2;
 
     this.setupStatusBox();
     this.setupHeading();
-    if (this.checkboxes.length >= MIN_FILTERED_CHECKBOX_LENGTH) {
+    if (this.checkboxTargets.length >= MIN_FILTERED_CHECKBOX_LENGTH) {
       this.setupTextBox();
     }
     this.setupHeight();
-  };
+  }
 
-  this.setupHeading = function () {
+  setupHeading() {
     var element = document.createElement("span");
     element.className = "app-checkbox-filter__title";
     element.setAttribute("aria-hidden", "true");
 
     this.heading = element;
-    this.container.insertBefore(this.heading, this.container.firstChild);
-  };
+    this.containerTarget.insertBefore(
+      this.heading,
+      this.containerTarget.firstChild
+    );
+  }
 
-  this.setupHeight = function () {
-    var initialOptionContainerHeight = this.checkboxesContainer.style.height;
-    var height = outerHeight(this.checkboxesInnerContainer);
+  setupHeight() {
+    var initialOptionContainerHeight =
+      this.checkboxContainerTarget.style.height;
+    var height = outerHeight(this.checkboxInnerContainerTarget);
 
     // check whether this is hidden by progressive disclosure,
     // because height calculations won't work
-    if (this.checkboxesContainer.offsetParent === null) {
+    if (this.checkboxContainerTarget.offsetParent === null) {
       initialOptionContainerHeight = 200;
       height = 200;
     }
@@ -147,12 +160,12 @@ function CheckboxSearchFilter(params) {
     var lastVisibleCheckbox = visibleCheckboxes[visibleCheckboxes.length - 1];
     var position = lastVisibleCheckbox.parentNode.offsetTop; // parent element is relative
     this.setContainerHeight(position + lastVisibleCheckbox.height / 1.5);
-  };
+  }
 
-  this.setupStatusBox = function () {
+  setupStatusBox() {
     var element = document.createElement("div");
     element.className = "govuk-visually-hidden";
-    element.id = this.container.id + "-checkboxes-status";
+    element.id = this.containerTarget.id + "-checkboxes-status";
     element.setAttribute("role", "status");
 
     this.statusBox = element;
@@ -160,11 +173,11 @@ function CheckboxSearchFilter(params) {
       foundCount: this.getAllVisibleCheckboxes().length,
       checkedCount: this.getAllVisibleCheckedCheckboxes().length,
     });
-    this.container.insertAdjacentElement("afterend", this.statusBox);
-  };
+    this.containerTarget.insertAdjacentElement("afterend", this.statusBox);
+  }
 
-  this.setupTextBox = function () {
-    var tagContainer = this.container.querySelector(
+  setupTextBox() {
+    var tagContainer = this.containerTarget.querySelector(
       ".app-checkbox-filter__selected"
     );
     var textBoxElements = this.getTextBoxHtml();
@@ -185,31 +198,16 @@ function CheckboxSearchFilter(params) {
       }
     }
 
-    this.textBox = this.container.querySelector(
+    this.textBox = this.containerTarget.querySelector(
       ".app-checkbox-filter__filter-input"
     );
     this.textBox.addEventListener("keyup", () => this.onTextBoxKeyUp(this));
-  };
+  }
 
-  this.updateStatusBox = function (params) {
+  updateStatusBox(params) {
     var status = "%found% options found, %selected% selected";
     status = status.replace(/%found%/, params.foundCount);
     status = status.replace(/%selected%/, params.checkedCount);
     this.statusBox.innerHTML = status;
-  };
-
-  this.setup();
-}
-
-function checkboxSearchFilter(containerId, label) {
-  var containerElement = document.getElementById(containerId);
-
-  if (containerElement) {
-    return new CheckboxSearchFilter({
-      container: containerElement,
-      textBox: { label },
-    });
   }
 }
-
-export default checkboxSearchFilter;

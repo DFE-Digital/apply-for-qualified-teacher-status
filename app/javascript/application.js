@@ -1,5 +1,4 @@
 import { initAll } from "govuk-frontend";
-import checkboxSearchFilter from "./checkbox_search_filter";
 import dfeAutocomplete from "dfe-autocomplete";
 import suitabilityRecordForm from "./suitability_record_form";
 
@@ -7,6 +6,7 @@ import suitabilityRecordForm from "./suitability_record_form";
 import { Application } from "@hotwired/stimulus";
 import DisableSubmitController from "./controllers/disable_submit_controller";
 import LocationPickerAutocompleteController from "./controllers/location_picker_autocomplete_controller";
+import CheckboxSearchFilterController from "./controllers/checkbox_search_filter_controller";
 
 const application = Application.start();
 
@@ -17,12 +17,10 @@ application.register(
   "location-picker-autocomplete",
   LocationPickerAutocompleteController
 );
+application.register("checkbox-search-filter", CheckboxSearchFilterController);
 
 initAll();
 
 dfeAutocomplete({ rawAttribute: true });
-
-checkboxSearchFilter("app-applications-filters-assessor", "Search assessors");
-checkboxSearchFilter("app-applications-filters-statuses", "Search statuses");
 
 suitabilityRecordForm("app-suitability-record-form");
