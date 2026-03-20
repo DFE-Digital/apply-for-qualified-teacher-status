@@ -7,12 +7,17 @@ import suitabilityRecordForm from "./suitability_record_form";
 // StimulusJS
 import { Application } from "@hotwired/stimulus";
 import DisableSubmitController from "./controllers/disable_submit_controller";
+import CountriesTerritoriesAutocompleteController from "./controllers/countries_territories_autocomplete_controller";
 
 const application = Application.start();
 
 window.Stimulus = application;
 
 application.register("disable-submit", DisableSubmitController);
+application.register(
+  "countries-territories-autocomplete",
+  CountriesTerritoriesAutocompleteController
+);
 
 initAll();
 
