@@ -23,10 +23,6 @@ initAll();
 
 var loadCountryAutoComplete = () => {
   var locationPicker =
-    document.getElementById("assessor-interface-filter-form-location-field") ??
-    document.getElementById(
-      "assessor-interface-filter-form-location-field-error"
-    ) ??
     document.getElementById("location-field") ??
     document.getElementById("location-field-error");
 

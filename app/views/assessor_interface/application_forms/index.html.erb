@@ -45,7 +45,7 @@
     </section>
 
     <section id="app-applications-filters-country" class="govuk-!-margin-top-6">
-      <%= f.govuk_select :location, @view_object.country_filter_options, label: { size: "s" }, options: { include_blank: true } %>
+      <%= f.govuk_select :location, @view_object.country_filter_options, label: { size: "s" }, options: { include_blank: true }, data: { controller: "countries-territories-autocomplete" } %>
     </section>
 
     <section id="app-applications-filters-reference">
