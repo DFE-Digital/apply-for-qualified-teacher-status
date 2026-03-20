@@ -24,18 +24,6 @@ initAll();
 var loadCountryAutoComplete = () => {
   var locationPicker =
     document.getElementById(
-      "teacher-interface-country-region-form-location-field"
-    ) ??
-    document.getElementById(
-      "teacher-interface-country-region-form-location-field-error"
-    ) ??
-    document.getElementById(
-      "teacher-interface-work-history-form-country-location-field"
-    ) ??
-    document.getElementById(
-      "teacher-interface-work-history-form-country-location-field-error"
-    ) ??
-    document.getElementById(
       "teacher-interface-work-history-school-form-country-location-field"
     ) ??
     document.getElementById(
