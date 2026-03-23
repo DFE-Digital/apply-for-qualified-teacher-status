@@ -1,20 +1,33 @@
 <%= f.govuk_text_field :name %>
 
-<div id="app-aliases">
-  <% if @form.aliases.blank? %>
-    <%= f.govuk_text_field :aliases, multiple: true %>
-  <% else %>
-    <% @form.aliases.each_with_index do |value, index| %>
-      <%= f.govuk_text_field :aliases, multiple: true, value:, form_group: { class: index > 0 ? "govuk-!-margin-bottom-2" : "" } %>
+<div data-controller="multiple-entries">
+  <template data-multiple-entries-target="entryTemplate">
+    <div class="govuk-form-group govuk-!-margin-bottom-2">
+      <%= email_field_tag "#{f.object_name}[aliases][]", nil, class: "govuk-input" %>
+    </div>
 
-      <% if index > 0 %>
-        <%= govuk_button_link_to "Remove alias", "#", class: "app-remove-alias-button", secondary: true %>
+    <%= govuk_button_link_to "Remove alias", "#", secondary: true, data: { action: "click->multiple-entries#removeEntry" } %>
+  </template>
+
+  <div data-multiple-entries-target="entriesContainer">
+    <% if @form.aliases.blank? %>
+      <%= f.govuk_text_field :aliases, multiple: true %>
+    <% else %>
+      <% @form.aliases.each_with_index do |value, index| %>
+        <%= f.govuk_text_field :aliases, multiple: true, value:, form_group: { class: index > 0 ? "govuk-!-margin-bottom-2" : "" } %>
+
+        <% if index > 0 %>
+          <%= govuk_button_link_to "Remove alias", "#", secondary: true, data: { action: "click->multiple-entries#removeEntry" } %>
+        <% end %>
       <% end %>
     <% end %>
-  <% end %>
+  </div>
+
+  <div>
+    <%= govuk_button_link_to "Add another alias", "#", secondary: true, data: { action: "click->multiple-entries#addEntry" } %>
+  </div>
 </div>
 
-<%= govuk_button_link_to "Add another alias", "#", id: "app-add-alias-button", secondary: true %>
 
 <%= f.govuk_select :location,
                    options_for_select(locations, @form.location),
