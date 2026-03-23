@@ -61,23 +61,6 @@ function SuitabilityRecordForm(params) {
     this.aliasInput
   );
 
-  this.emailAddButton = this.form.querySelector("#app-add-email-button");
-  this.emailRemoveButtons = this.form.querySelectorAll(
-    ".app-remove-email-button"
-  );
-  this.emailContainer = this.form.querySelector("#app-emails");
-  this.emailInput = this.form.querySelector(
-    "[name='assessor_interface_suitability_record_form[emails][]']"
-  ).parentElement;
-
-  this.setUp(
-    "email address",
-    this.emailAddButton,
-    this.emailRemoveButtons,
-    this.emailContainer,
-    this.emailInput
-  );
-
   this.referenceAddButton = this.form.querySelector(
     "#app-add-reference-button"
   );
