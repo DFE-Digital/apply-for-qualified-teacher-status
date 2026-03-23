@@ -1,6 +1,5 @@
 import { initAll } from "govuk-frontend";
 import dfeAutocomplete from "dfe-autocomplete";
-import suitabilityRecordForm from "./suitability_record_form";
 
 // StimulusJS
 import { Application } from "@hotwired/stimulus";
@@ -24,5 +23,3 @@ application.register("multiple-entries", MultipleEntriesController);
 initAll();
 
 dfeAutocomplete({ rawAttribute: true });
-
-suitabilityRecordForm("app-suitability-record-form");
