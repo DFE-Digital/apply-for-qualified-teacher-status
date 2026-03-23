@@ -6,9 +6,9 @@ export default class extends Controller {
   addEntry(event) {
     event.preventDefault();
 
-    let entry = this.entryTemplateTarget.innerHTML;
+    let entry = this.entryTemplateTarget.content.cloneNode(true);
 
-    this.entriesContainerTarget.insertAdjacentHTML("afterend", entry);
+    this.entriesContainerTarget.appendChild(entry);
   }
 
   removeEntry(event) {
