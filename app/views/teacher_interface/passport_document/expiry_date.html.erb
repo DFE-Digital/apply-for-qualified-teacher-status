@@ -31,7 +31,12 @@
                        @form.passport_country_of_issue_code,
                      ),
                      options: { include_blank: true },
-                     label: { text: "Country of issue", size: "m" } %>
+                     label: { text: "Country of issue", size: "m" },
+                     data: {
+                      controller: "location-picker-autocomplete",
+                      location_picker_autocomplete_url_value: autocomplete_passport_country_of_issues_path,
+                      location_picker_autocomplete_name_value: "passport_country_of_issue_autocomplete"
+                    } %>
 
   <%= render "shared/save_submit_buttons", f: %>
 <% end %>

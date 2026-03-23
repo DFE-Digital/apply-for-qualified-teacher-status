@@ -41,7 +41,12 @@
                        options_for_select(locations, form.institution_country_location),
                        options: { include_blank: true },
                        label: { text: t("application_form.qualifications.form.fields.institution_country") },
-                       hint: { text: qualification.is_teaching? ? "This must be the country in which you’re recognised as a teacher" : nil } %>
+                       hint: { text: qualification.is_teaching? ? "This must be the country in which you’re recognised as a teacher" : nil },
+                       data: {
+                        controller: "location-picker-autocomplete",
+                        location_picker_autocomplete_url_value: autocomplete_locations_path,
+                        location_picker_autocomplete_name_value: "location_autocomplete"
+                       } %>
   <% end %>
 
   <%= f.govuk_date_field :start_date,
