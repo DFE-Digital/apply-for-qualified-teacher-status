@@ -6,7 +6,8 @@ import { Application } from "@hotwired/stimulus";
 import DisableSubmitController from "./controllers/disable_submit_controller";
 import LocationPickerAutocompleteController from "./controllers/location_picker_autocomplete_controller";
 import CheckboxSearchFilterController from "./controllers/checkbox_search_filter_controller";
-import MultipleEntriesController from "./controllers/multiple_entries_controller";
+import AppendableTemplateController from "./controllers/appendable_template_controller";
+import RemovableElementController from "./controllers/removable_element_controller";
 
 const application = Application.start();
 
@@ -18,7 +19,8 @@ application.register(
   LocationPickerAutocompleteController
 );
 application.register("checkbox-search-filter", CheckboxSearchFilterController);
-application.register("multiple-entries", MultipleEntriesController);
+application.register("appendable-template", AppendableTemplateController);
+application.register("removable-element", RemovableElementController);
 
 initAll();
 

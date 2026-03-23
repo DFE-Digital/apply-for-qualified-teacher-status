@@ -1,30 +1,34 @@
 <%= f.govuk_text_field :name %>
 
-<div data-controller="multiple-entries">
-  <template data-multiple-entries-target="entryTemplate">
-    <div class="govuk-form-group govuk-!-margin-bottom-2">
-      <%= email_field_tag "#{f.object_name}[aliases][]", nil, class: "govuk-input" %>
-    </div>
+<div data-controller="appendable-template">
+  <template data-appendable-template-target="template">
+    <div data-controller="removable-element">
+      <div class="govuk-form-group govuk-!-margin-bottom-2">
+        <%= email_field_tag "#{f.object_name}[aliases][]", nil, class: "govuk-input" %>
+      </div>
 
-    <%= govuk_button_link_to "Remove alias", "#", secondary: true, data: { action: "click->multiple-entries#removeEntry" } %>
+      <%= govuk_button_link_to "Remove alias", "#", secondary: true, data: { action: "click->removable-element#remove" } %>
+    </div>
   </template>
 
-  <div data-multiple-entries-target="entriesContainer">
+  <div data-appendable-template-target="container">
     <% if @form.aliases.blank? %>
       <%= f.govuk_text_field :aliases, multiple: true %>
     <% else %>
       <% @form.aliases.each_with_index do |value, index| %>
-        <%= f.govuk_text_field :aliases, multiple: true, value:, form_group: { class: index > 0 ? "govuk-!-margin-bottom-2" : "" } %>
+        <div data-controller="removable-element">
+          <%= f.govuk_text_field :aliases, multiple: true, value:, form_group: { class: index > 0 ? "govuk-!-margin-bottom-2" : "" } %>
 
-        <% if index > 0 %>
-          <%= govuk_button_link_to "Remove alias", "#", secondary: true, data: { action: "click->multiple-entries#removeEntry" } %>
-        <% end %>
+          <% if index > 0 %>
+            <%= govuk_button_link_to "Remove alias", "#", secondary: true, data: { action: "click->removable-element#remove" } %>
+          <% end %>
+        </div>
       <% end %>
     <% end %>
   </div>
 
   <div>
-    <%= govuk_button_link_to "Add another alias", "#", secondary: true, data: { action: "click->multiple-entries#addEntry" } %>
+    <%= govuk_button_link_to "Add another alias", "#", secondary: true, data: { action: "click->appendable-template#append" } %>
   </div>
 </div>
 
@@ -40,59 +44,67 @@
 
 <%= f.govuk_date_field :date_of_birth, legend: { size: nil }, maxlength_enabled: true, date_of_birth: true %>
 
-<div data-controller="multiple-entries">
-  <template data-multiple-entries-target="entryTemplate">
-    <div class="govuk-form-group govuk-!-margin-bottom-2">
-      <%= email_field_tag "#{f.object_name}[emails][]", nil, class: "govuk-input" %>
-    </div>
+<div data-controller="appendable-template">
+  <template data-appendable-template-target="template">
+    <div data-controller="removable-element">
+      <div class="govuk-form-group govuk-!-margin-bottom-2">
+        <%= email_field_tag "#{f.object_name}[emails][]", nil, class: "govuk-input" %>
+      </div>
 
-    <%= govuk_button_link_to "Remove email address", "#", secondary: true, data: { action: "click->multiple-entries#removeEntry" } %>
+      <%= govuk_button_link_to "Remove email address", "#", secondary: true, data: { action: "click->removable-element#remove" } %>
+    </div>
   </template>
 
-  <div data-multiple-entries-target="entriesContainer">
+  <div data-appendable-template-target="container">
     <% if @form.emails.blank? %>
       <%= f.govuk_email_field :emails, multiple: true %>
     <% else %>
       <% @form.emails.each_with_index do |value, index| %>
-        <%= f.govuk_email_field :emails, multiple: true, value:, form_group: { class: index > 0 ? "govuk-!-margin-bottom-2" : "" } %>
+        <div data-controller="removable-element">
+          <%= f.govuk_email_field :emails, multiple: true, value:, form_group: { class: index > 0 ? "govuk-!-margin-bottom-2" : "" } %>
 
-        <% if index > 0 %>
-          <%= govuk_button_link_to "Remove email address", "#", secondary: true, data: { action: "click->multiple-entries#removeEntry" } %>
-        <% end %>
+          <% if index > 0 %>
+            <%= govuk_button_link_to "Remove email address", "#", secondary: true, data: { action: "click->removable-element#remove" } %>
+          <% end %>
+        </div>
       <% end %>
     <% end %>
   </div>
 
   <div>
-    <%= govuk_button_link_to "Add another email address", "#", secondary: true, data: { action: "click->multiple-entries#addEntry" } %>
+    <%= govuk_button_link_to "Add another email address", "#", secondary: true, data: { action: "click->appendable-template#append" } %>
   </div>
 </div>
 
-<div data-controller="multiple-entries">
-  <template data-multiple-entries-target="entryTemplate">
-    <div class="govuk-form-group govuk-!-margin-bottom-2">
-      <%= email_field_tag "#{f.object_name}[references][]", nil, class: "govuk-input" %>
-    </div>
+<div data-controller="appendable-template">
+  <template data-appendable-template-target="template">
+    <div data-controller="removable-element">
+      <div class="govuk-form-group govuk-!-margin-bottom-2">
+        <%= email_field_tag "#{f.object_name}[references][]", nil, class: "govuk-input" %>
+      </div>
 
-    <%= govuk_button_link_to "Remove application reference", "#", secondary: true, data: { action: "click->multiple-entries#removeEntry" } %>
+      <%= govuk_button_link_to "Remove application reference", "#", secondary: true, data: { action: "click->removable-element#remove" } %>
+    </div>
   </template>
 
-  <div data-multiple-entries-target="entriesContainer">
+  <div data-appendable-template-target="container">
     <% if @form.references.blank? %>
       <%= f.govuk_text_field :references, multiple: true %>
     <% else %>
       <% @form.references.each_with_index do |value, index| %>
-        <%= f.govuk_text_field :references, multiple: true, value:, form_group: { class: index > 0 ? "govuk-!-margin-bottom-2" : "" } %>
+        <div data-controller="removable-element">
+          <%= f.govuk_text_field :references, multiple: true, value:, form_group: { class: index > 0 ? "govuk-!-margin-bottom-2" : "" } %>
 
-        <% if index > 0 %>
-          <%= govuk_button_link_to "Remove application reference", "#", secondary: true, data: { action: "click->multiple-entries#removeEntry" } %>
-        <% end %>
+          <% if index > 0 %>
+            <%= govuk_button_link_to "Remove application reference", "#", secondary: true, data: { action: "click->removable-element#remove" } %>
+          <% end %>
+        </div>
       <% end %>
     <% end %>
   </div>
 
   <div>
-    <%= govuk_button_link_to "Add another application reference", "#", secondary: true, data: { action: "click->multiple-entries#addEntry" } %>
+    <%= govuk_button_link_to "Add another application reference", "#", secondary: true, data: { action: "click->appendable-template#append" } %>
   </div>
 </div>
 
