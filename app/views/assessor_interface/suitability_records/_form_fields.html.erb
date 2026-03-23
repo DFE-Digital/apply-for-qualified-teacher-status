@@ -68,20 +68,32 @@
   </div>
 </div>
 
-<div id="app-references">
-  <% if @form.references.blank? %>
-    <%= f.govuk_text_field :references, multiple: true %>
-  <% else %>
-    <% @form.references.each_with_index do |value, index| %>
-      <%= f.govuk_text_field :references, multiple: true, value:, form_group: { class: index > 0 ? "govuk-!-margin-bottom-2" : "" } %>
+<div data-controller="multiple-entries">
+  <template data-multiple-entries-target="entryTemplate">
+    <div class="govuk-form-group govuk-!-margin-bottom-2">
+      <%= email_field_tag "#{f.object_name}[references][]", nil, class: "govuk-input" %>
+    </div>
 
-      <% if index > 0 %>
-        <%= govuk_button_link_to "Remove application reference", "#", class: "app-remove-reference-button", secondary: true %>
+    <%= govuk_button_link_to "Remove application reference", "#", secondary: true, data: { action: "click->multiple-entries#removeEntry" } %>
+  </template>
+
+  <div data-multiple-entries-target="entriesContainer">
+    <% if @form.references.blank? %>
+      <%= f.govuk_text_field :references, multiple: true %>
+    <% else %>
+      <% @form.references.each_with_index do |value, index| %>
+        <%= f.govuk_text_field :references, multiple: true, value:, form_group: { class: index > 0 ? "govuk-!-margin-bottom-2" : "" } %>
+
+        <% if index > 0 %>
+          <%= govuk_button_link_to "Remove application reference", "#", secondary: true, data: { action: "click->multiple-entries#removeEntry" } %>
+        <% end %>
       <% end %>
     <% end %>
-  <% end %>
-</div>
+  </div>
 
-<%= govuk_button_link_to "Add another application reference", "#", id: "app-add-reference-button", secondary: true %>
+  <div>
+    <%= govuk_button_link_to "Add another application reference", "#", secondary: true, data: { action: "click->multiple-entries#addEntry" } %>
+  </div>
+</div>
 
 <%= f.govuk_text_area :note %>
