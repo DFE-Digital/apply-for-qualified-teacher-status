@@ -37,7 +37,7 @@
   <%= f.govuk_text_field :contact_job %>
 
   <% if FeatureFlags::FeatureFlag.active?(:email_domains_for_referees) %>
-    <%= f.govuk_email_field :contact_email, hint: { text: "The email address must use the institution’s domain, for example, name@school.edu" } %>
+    <%= f.govuk_email_field :contact_email, hint: { text: "The email address must use the institution’s domain, for example, name@school.edu. We do not accept public email addresses such as those from Gmail, Yahoo, Hotmail or Protonmail." } %>
   <% else %>
     <%= f.govuk_email_field :contact_email %>
   <% end %>
