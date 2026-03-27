@@ -8,14 +8,13 @@
 
   <h1 class="govuk-heading-l"><%= t("application_form.work_history.contact.heading", school_name: @work_history.school_name) %></h1>
 
-  <p class="govuk-body">If your application is successful, we’ll contact this person before awarding QTS to check what you’ve told us. You may want to let them know that you’ve put them forward as a reference.</p>
+  <% if FeatureFlags::FeatureFlag.active?(:email_domains_for_referees) %>
+    <p class="govuk-body">Your referee must have an email address that uses their school’s domain, for example, name@school.edu. We do not accept public email addresses, such as those from Gmail, Yahoo, Hotmail or Protonmail, even where this is the official email address for a school.</p>
+  <% end %>
 
   <p class="govuk-body">The person you choose must:</p>
 
   <ul class="govuk-list govuk-list--bullet">
-    <% if FeatureFlags::FeatureFlag.active?(:email_domains_for_referees) %>
-      <li>have an email address that uses the school’s domain, for example, name@school.edu</li>
-    <% end %>
     <li>be a senior member of staff that is still working at this school (either a headteacher/principal, an assistant/deputy head, or a school business manager)<%= ", we will also accept a head of department for schools in England" if @form.work_history.country_code_england? %></li>
     <li>be able to provide a reference in English</li>
     <li>only comment on teaching work that you did <strong>after</strong> becoming a qualified teacher</li>
@@ -23,16 +22,15 @@
 
   <p class="govuk-body">It’s important to provide the correct job title for this person, as we’ll check that information with them.</p>
 
-  <% if FeatureFlags::FeatureFlag.active?(:email_domains_for_referees) %>
-    <%= govuk_warning_text(text: "You cannot act as your own reference. If your references do not meet all of the above requirements, you are not eligible to apply for QTS in England.") %>
-  <% else %>
-    <%= govuk_warning_text(text: "You cannot act as your own reference.") %>
-  <% end %>
+  <%= govuk_warning_text(text: "If your references do not meet all of the above requirements, you are not eligible to apply for QTS in England.") %>
+
+  <p class="govuk-body">We’ll contact this person before awarding QTS to check what you’ve told us. You may want to let them know that you’ve put them forward as a reference.</p>
 
   <% if FeatureFlags::FeatureFlag.active?(:email_domains_for_referees) %>
     <%= govuk_details(summary_text: "About your references’ email addresses") do %>
       <p>A domain is the part of an email address that shows who provides it. It comes after the @ symbol. For example, in name@institution.edu the domain is institution.edu.</p>
       <p>We only accept references from official email addresses to verify they are genuine staff members of a recognised institution. To verify your work history, we will also check that the email domain is listed on the school’s website.</p>
+      <p>We do not accept public email addresses, such as those from Gmail, Yahoo, Hotmail or Protonmail, even where this is the official email address for an institution.</p>
     <% end %>
   <% end %>
 
@@ -41,7 +39,7 @@
   <%= f.govuk_text_field :contact_job %>
 
   <% if FeatureFlags::FeatureFlag.active?(:email_domains_for_referees) %>
-    <%= f.govuk_email_field :contact_email, hint: { text: "The email address must use the school’s domain, for example, name@school.edu" } %>
+    <%= f.govuk_email_field :contact_email, hint: { text: "The email address must use the school’s domain, for example, name@school.edu. We do not accept public email addresses such as those from Gmail, Yahoo, Hotmail or Protonmail." } %>
   <% else %>
     <%= f.govuk_email_field :contact_email %>
   <% end %>
