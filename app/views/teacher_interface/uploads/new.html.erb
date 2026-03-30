@@ -24,6 +24,8 @@
         <li>be awarded within the last 2 years before the date of your application</li>
       </ul>
       <%= render "shared/english_language_approved_esol_providers", reduced_evidence_accepted: @application_form.reduced_evidence_accepted %>
+    <% elsif @document.decision_review_evidence? %>
+      <h1 class="govuk-heading-l">Upload your supporting document for a decision review</h1>
     <% elsif @document.identification? %>
       <h1 class="govuk-heading-l">Upload a valid identification document</h1>
 

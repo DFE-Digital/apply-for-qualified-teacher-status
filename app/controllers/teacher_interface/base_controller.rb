@@ -27,7 +27,8 @@ class TeacherInterface::BaseController < ApplicationController
                 .assessment
                 &.further_information_requests
                 &.flat_map(&:items) || []
-            ) + (application_form.assessment&.consent_requests || []),
+            ) + (application_form.assessment&.consent_requests || []) +
+            [application_form.assessment&.decision_review_request].compact,
       ).find(params[:document_id] || params[:id])
   end
 
@@ -44,6 +45,11 @@ class TeacherInterface::BaseController < ApplicationController
       end
     elsif document.for_consent_request?
       if !document.documentable.requested? || document.documentable.received?
+        redirect_to %i[teacher_interface application_form]
+      end
+    elsif document.for_decision_review_request?
+      if !document.documentable.has_supporting_documents ||
+           document.documentable.received?
         redirect_to %i[teacher_interface application_form]
       end
     else

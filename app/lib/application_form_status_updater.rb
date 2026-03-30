@@ -106,7 +106,12 @@ class ApplicationFormStatusUpdater
       if application_form.withdrawn_at.present?
         %w[withdrawn]
       elsif application_form.declined_at.present?
-        %w[declined]
+        if assessment.decision_review_request&.received? &&
+             !assessment.decision_review_request.reviewed?
+          %w[declined received_decision_review]
+        else
+          %w[declined]
+        end
       elsif application_form.awarded_at.present?
         %w[awarded]
       elsif trs_trn_request.present?

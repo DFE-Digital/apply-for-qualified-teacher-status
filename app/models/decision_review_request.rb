@@ -24,4 +24,16 @@
 #  fk_rails_...  (assessment_id => assessments.id)
 #
 class DecisionReviewRequest < ApplicationRecord
+  ATTACHABLE_DOCUMENT_TYPES = %w[decision_review_evidence].freeze
+
+  include Requestable
+  include Documentable
+
+  def completed?
+    (comment.present? && has_supporting_documents == false) ||
+      (
+        comment.present? && has_supporting_documents == true &&
+          decision_review_evidence_document.completed?
+      )
+  end
 end

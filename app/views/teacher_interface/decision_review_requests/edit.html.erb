@@ -1,0 +1,29 @@
+<% content_for :page_title, title_with_error_prefix("Request for a decision review", error: @form.errors.any?) %>
+<% content_for :back_link_url, back_history_path(default: teacher_interface_application_form_path) %>
+
+<%= form_with model: @form, url: teacher_interface_application_form_decision_review_request_path(@decision_review_request), method: :put do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <span class="govuk-caption-l">Your application</span>
+  <h1 class="govuk-heading-l">Request for a decision review</h1>
+
+  <p class="govuk-body">Applicants who have been declined for QTS are entitled to a review of the decline decision by a senior Professional Recognition Manager.</p>
+
+  <p class="govuk-body">You’ll need to provide:</p>
+
+  <ul class="govuk-list govuk-list--bullet">
+    <li>formal evidence and reasoning as to how you meet the required assessment criteria</li>
+    <li>additional information not included in your original application that would support your decision review</li>
+  </ul>
+
+  <%= govuk_warning_text(text: "If you do not provide the above, your request for a decision review will be declined.") %>
+
+  <%= f.govuk_text_area :comment, label: { size: "m", text: "Provide your reasoning for a decision review" } %>
+
+  <%= f.govuk_radio_buttons_fieldset :has_supporting_documents, legend: { text: "Do you need to upload any supporting evidence for your request?" } do %>
+    <%= f.govuk_radio_button :has_supporting_documents, true, label: { text: "Yes" }, link_errors: true %>
+    <%= f.govuk_radio_button :has_supporting_documents, false, label: { text: "No" } %>
+  <% end %>
+
+  <%= f.govuk_submit "Continue", name: "button", value: "save_and_continue"  %>
+<% end %>

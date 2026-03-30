@@ -31,6 +31,10 @@ class DocumentContinueRedirection
     %i[check teacher_interface application_form passport_document]
   end
 
+  def decision_review_evidence_url
+    %i[confirm teacher_interface application_form decision_review_requests]
+  end
+
   def name_change_url
     %i[check teacher_interface application_form personal_information]
   end
