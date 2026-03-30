@@ -157,6 +157,7 @@ class TimelineEvent < ApplicationRecord
             presence: true,
             inclusion: %w[
               ConsentRequest
+              DecisionReviewRequest
               FurtherInformationRequest
               ProfessionalStandingRequest
               QualificationRequest

@@ -121,6 +121,7 @@ class AssessorInterface::ApplicationFormsIndexViewObject
     preliminary_check
     prioritisation_check
     received_consent
+    received_decision_review
     received_further_information
     received_reference
     received_prioritisation_reference

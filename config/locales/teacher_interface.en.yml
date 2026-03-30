@@ -303,6 +303,12 @@ en:
           attributes:
             add_another:
               inclusion: Select whether you need to add another role
+        teacher_interface/create_decision_review_request_form:
+          attributes:
+            comment:
+              blank: Enter your reasoning for a decision review
+            has_supporting_documents:
+              inclusion: Select if you need to upload any supporting evidence for your request
         teacher_interface/delete_qualification_form:
           attributes:
             confirm:
