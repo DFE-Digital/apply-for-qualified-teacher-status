@@ -134,6 +134,17 @@
     - id
     - subject_limited
     - updated_at
+  :decision_review_requests:
+    - assessment_id
+    - comment
+    - created_at
+    - has_supporting_documents
+    - id
+    - received_at
+    - review_passed
+    - reviewed_at
+    - review_note
+    - updated_at
   :documents:
     - available
     - created_at
