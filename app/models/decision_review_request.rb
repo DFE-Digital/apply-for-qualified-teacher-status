@@ -36,4 +36,13 @@ class DecisionReviewRequest < ApplicationRecord
           decision_review_evidence_document.completed?
       )
   end
+
+  def after_received(user:)
+    # We may want to trigger email delivery
+  end
+
+  def after_reviewed(user:)
+    # We may want to also trigger email delivery
+    RollbackAssessment.call(assessment:, user:) if review_passed
+  end
 end

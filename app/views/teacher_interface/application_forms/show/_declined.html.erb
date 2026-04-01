@@ -64,7 +64,9 @@
 
     <p class="govuk-body">Note from Assessor:</p>
 
-    <p class="govuk-body"><%= view_object.assessment.decision_review_request.review_note %></p>
+    <%= govuk_inset_text do %>
+      <p><%= view_object.assessment.decision_review_request.review_note %></p>
+    <% end %>
 
     <p class="govuk-body">If you would like to appeal this decision, email your request, including the information required as above, to <%= govuk_link_to t("service.email.enquiries"), email_path("enquiries") %>.</p>
 
