@@ -284,6 +284,15 @@ Rails.application.routes.draw do
                   "prioritisation_reference_requests#resend_email_confirmation"
           end
         end
+
+        resources :decision_review_requests,
+                  path: "/decision-review-requests",
+                  only: %i[edit update] do
+          get "confirm", to: "decision_review_requests#edit_confirm"
+          post "confirm", to: "decision_review_requests#update_confirm"
+
+          get "confirmation", to: "decision_review_requests#confirmation"
+        end
       end
     end
 
