@@ -15,7 +15,7 @@
     <h3 class="govuk-heading-s govuk-!-margin-bottom-2">Applicant's comments</h3>
 
     <p class="govuk-body govuk-!-margin-bottom-2">
-      <%= sanitize @decision_review_request.comment %>
+      <%= simple_format @decision_review_request.comment %>
     </p>
 
     <% if @decision_review_request.has_supporting_documents? %>

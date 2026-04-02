@@ -43,12 +43,12 @@ module TeacherInterface
 
       handle_application_form_section(
         form: @form,
-        if_success_then_redirect:
+        if_success_then_redirect: ->(check_path) do
           if @form.has_supporting_documents
             [
               :teacher_interface,
               :application_form,
-              application_form.decision_review_evidence_document,
+              @form.decision_review_request.decision_review_evidence_document,
             ]
           else
             %i[
@@ -57,7 +57,8 @@ module TeacherInterface
               application_form
               decision_review_requests
             ]
-          end,
+          end
+        end,
         if_failure_then_render: :new,
       )
     end
