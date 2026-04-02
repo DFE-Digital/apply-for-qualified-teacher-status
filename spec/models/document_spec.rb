@@ -28,6 +28,7 @@ RSpec.describe Document, type: :model do
 
     it do
       expect(subject).to define_enum_for(:document_type).with_values(
+        decision_review_evidence: "decision_review_evidence",
         english_for_speakers_of_other_languages:
           "english_for_speakers_of_other_languages",
         english_language_proficiency: "english_language_proficiency",

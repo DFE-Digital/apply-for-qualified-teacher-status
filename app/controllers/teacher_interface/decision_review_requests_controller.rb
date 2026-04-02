@@ -43,7 +43,7 @@ module TeacherInterface
 
       handle_application_form_section(
         form: @form,
-        if_success_then_redirect: ->(check_path) do
+        if_success_then_redirect: ->(_check_path) do
           if @form.has_supporting_documents
             [
               :teacher_interface,
