@@ -280,6 +280,10 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
           ),
           OpenStruct.new(id: "received_consent", label: "Received consent"),
           OpenStruct.new(
+            id: "received_decision_review",
+            label: "Received decision review",
+          ),
+          OpenStruct.new(
             id: "received_further_information",
             label: "Received further information",
           ),
