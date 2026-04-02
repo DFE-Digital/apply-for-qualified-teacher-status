@@ -54,15 +54,17 @@ module AssessorInterface
           user: current_staff,
         )
 
-      @form.save!
-
-      redirect_to [
-                    :assessor_interface,
-                    @application_form,
-                    assessment,
-                    decision_review_request,
-                    :confirmation,
-                  ]
+      if @form.save
+        redirect_to [
+                      :assessor_interface,
+                      @application_form,
+                      assessment,
+                      decision_review_request,
+                      :confirmation,
+                    ]
+      else
+        render :edit_confirm
+      end
     end
 
     def confirmation
