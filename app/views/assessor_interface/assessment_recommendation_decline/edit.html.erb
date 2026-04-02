@@ -43,7 +43,7 @@
                 <% if FailureReasons.decline?(failure_reason.key) %>
                   <p class="govuk-body govuk-!-margin-bottom-2">Your note to the applicant:</p>
                 <% else %>
-                  <p class="govuk-body govuk-!-margin-bottom-2">Your note (the applicant won’t see this):</p>
+                  <p class="govuk-body govuk-!-margin-bottom-2">Your note:</p>
                 <% end %>
 
                 <%= govuk_inset_text { simple_format assessor_feedback } %>
