@@ -42,8 +42,6 @@
               <% if (assessor_feedback = failure_reason.assessor_feedback).present? %>
                 <% if FailureReasons.decline?(failure_reason.key) %>
                   <p class="govuk-body govuk-!-margin-bottom-2">Your note to the applicant:</p>
-                <% else %>
-                  <p class="govuk-body govuk-!-margin-bottom-2">Your note:</p>
                 <% end %>
 
                 <%= govuk_inset_text { simple_format assessor_feedback } %>
