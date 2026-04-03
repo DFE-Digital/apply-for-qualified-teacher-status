@@ -286,7 +286,7 @@ GEM
       activemodel (>= 6.1)
       activesupport (>= 6.1)
       html-attributes-utils (~> 1)
-    govuk_markdown (2.0.3)
+    govuk_markdown (2.0.4)
       activesupport
       redcarpet
     haml (6.3.0)
