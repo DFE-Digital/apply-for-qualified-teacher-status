@@ -45,7 +45,7 @@ class ConsentLetter
           )
 
           pdf.pad(SECTION_PAD) do
-            pdf.text "By submitting an application to the Apply for qualified teacher status (QTS) in England."
+            pdf.text "By applying for qualified teacher status (QTS) in England, I agree to the following:"
 
             pdf.pad(LINE_PAD) do
               pdf.text "I have given consent for my data to be shared with organisations that can confirm " \
