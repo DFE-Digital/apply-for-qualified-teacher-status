@@ -15,7 +15,7 @@ en:
             additional_degree_transcript_illegible: There is a problem with your additional degree transcript (or translation).
             age_range: The age range you are qualified to teach does not fall within the requirements of QTS.
             applicant_already_dqt: We need more information to verify your identity.
-            applicant_already_qts: You already hold QTS and induction exemption.
+            applicant_already_qts: You already hold QTS.
             application_and_qualification_names_do_not_match: Your name on the application form is different from one or more of the qualifications documents you uploaded.
             authorisation_to_teach: Sanctions or restrictions were detected on your professional record.
             confirm_age_range_subjects: We were not provided with sufficient evidence to confirm qualification to teach the age ranges and subjects entered on the application form.
