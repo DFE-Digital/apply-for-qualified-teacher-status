@@ -52,7 +52,7 @@ RSpec.describe ApplicationFormSearchResult::Component, type: :component do
     context "when unsuitable true" do
       let(:unsuitable) { true }
 
-      it { expect(subject).to eq("Flagged for suitability") }
+      it { expect(subject).to eq("Suitability") }
     end
 
     context "when prioritised true" do
