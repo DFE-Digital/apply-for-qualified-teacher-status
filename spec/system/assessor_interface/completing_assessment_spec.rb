@@ -344,7 +344,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
         .items
         .first
     expect(failure_reason_item.heading.text).to eq(
-      "The applicant already holds QTS and induction exemption.",
+      "The applicant already holds QTS.",
     )
     expect(failure_reason_item.note.text).to eq("Note.")
   end
