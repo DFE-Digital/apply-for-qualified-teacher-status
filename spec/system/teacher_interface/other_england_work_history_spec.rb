@@ -102,6 +102,34 @@ RSpec.describe "Teacher work history in England", type: :system do
     then_i_see_the(:teacher_meets_criteria_other_england_work_history_page)
   end
 
+  it "allows to update and complete when the other work history in England is in progress" do
+    given_incomplete_other_england_work_history_exists
+
+    when_i_visit_the(:teacher_application_page)
+    then_i_see_the(:teacher_application_page)
+    and_i_see_the_other_england_work_history_task
+
+    when_i_click_the_other_england_work_history_task
+    then_i_see_the(:teacher_meets_criteria_other_england_work_history_page)
+
+    when_i_choose_yes_to_having_other_work_experience_in_england
+    then_i_see_the(:teacher_edit_other_england_work_history_page)
+
+    when_i_fill_in_the_school_information(name: "Other School 1")
+    then_i_see_the(:teacher_edit_other_england_work_history_contact_page)
+
+    when_i_fill_in_the_contact_information
+    then_i_see_the(:teacher_check_other_england_work_history_page)
+    and_i_see_the_other_england_work_history_information(name: "Other School 1")
+
+    when_i_click_continue
+    then_i_see_the(:teacher_add_another_other_england_work_history_page)
+
+    when_i_dont_add_another_other_england_work_history
+    then_i_see_the(:teacher_application_page)
+    and_i_see_other_work_experience_in_england_task_as_completed
+  end
+
   context "when the work history has update needed as status with email domain feature enabled" do
     before do
       FeatureFlags::FeatureFlag.activate(:email_domains_for_referees)
@@ -140,6 +168,17 @@ RSpec.describe "Teacher work history in England", type: :system do
 
   def given_some_work_history_exists
     create_list(:work_history, 3, :completed, application_form:)
+    ApplicationFormSectionStatusUpdater.call(application_form:)
+  end
+
+  def given_incomplete_other_england_work_history_exists
+    create(
+      :work_history,
+      :other_england_role,
+      application_form:,
+      country_code: "GB-ENG",
+    )
+    application_form.update!(has_other_england_work_history: true)
     ApplicationFormSectionStatusUpdater.call(application_form:)
   end
 

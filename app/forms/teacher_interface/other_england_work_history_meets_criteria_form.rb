@@ -10,6 +10,13 @@ module TeacherInterface
 
     def update_model
       application_form.update!(has_other_england_work_history:)
+
+      unless has_other_england_work_history
+        application_form
+          .work_histories
+          .other_england_educational_role
+          .destroy_all
+      end
     end
   end
 end
