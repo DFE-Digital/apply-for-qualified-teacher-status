@@ -29,21 +29,14 @@ module TeacherInterface
                       application_form
                       other_england_work_histories
                     ]
-      elsif application_form
-            .work_histories
-            .other_england_educational_role
-            .empty?
+      elsif other_england_work_histories.empty?
         redirect_to %i[
                       meets_criteria
                       teacher_interface
                       application_form
                       other_england_work_histories
                     ]
-      elsif application_form
-            .work_histories
-            .other_england_educational_role
-            .order_by_user
-            .find(&:incomplete?)
+      elsif other_england_work_histories.find(&:incomplete?)
         redirect_to %i[
                       meets_criteria
                       teacher_interface
@@ -52,11 +45,9 @@ module TeacherInterface
                     ]
       elsif (
             work_history =
-              application_form
-                .work_histories
-                .other_england_educational_role
-                .order_by_user
-                .find(&:invalid_email_domain_for_contact?)
+              other_england_work_histories.find(
+                &:invalid_email_domain_for_contact?
+              )
           )
         redirect_to contact_teacher_interface_application_form_other_england_work_history_path(
                       work_history,
@@ -72,11 +63,7 @@ module TeacherInterface
     end
 
     def check_collection
-      @work_histories =
-        application_form
-          .work_histories
-          .other_england_educational_role
-          .order_by_user
+      @work_histories = other_england_work_histories
       @came_from_add_another =
         history_stack.last_entry&.fetch(:path) ==
           add_another_teacher_interface_application_form_other_england_work_histories_path
@@ -150,10 +137,7 @@ module TeacherInterface
               check_teacher_interface_application_form_other_england_work_histories_path
 
           if came_from_check_collection ||
-               application_form
-                 .work_histories
-                 .other_england_educational_role
-                 .count == 1
+               other_england_work_histories.count == 1
             redirect_to %i[teacher_interface application_form]
           else
             redirect_to check_teacher_interface_application_form_other_england_work_histories_path
@@ -183,14 +167,7 @@ module TeacherInterface
 
       if @form.save(validate: params[:button] != "save_and_return")
         if @form.has_other_england_work_history
-          if (
-               work_history =
-                 application_form
-                   .work_histories
-                   .other_england_educational_role
-                   .order_by_user
-                   .find(&:incomplete?)
-             )
+          if (work_history = other_england_work_histories.find(&:incomplete?))
             redirect_to school_teacher_interface_application_form_other_england_work_history_path(
                           work_history,
                         )
@@ -287,12 +264,7 @@ module TeacherInterface
     def check_member
       @work_history = work_history
 
-      work_histories =
-        application_form
-          .work_histories
-          .other_england_educational_role
-          .order_by_user
-          .to_a
+      work_histories = other_england_work_histories.to_a
       @next_work_history =
         work_histories[work_histories.index(work_history) + 1]
     end
@@ -311,7 +283,7 @@ module TeacherInterface
         )
 
       if @form.save(validate: true)
-        if application_form.work_histories.other_england_educational_role.empty?
+        if other_england_work_histories.empty?
           history_stack.replace_self(
             path: teacher_interface_application_form_path,
             origin: false,
@@ -342,10 +314,15 @@ module TeacherInterface
     private
 
     def work_history
-      @work_history ||=
-        application_form.work_histories.other_england_educational_role.find(
-          params[:id],
-        )
+      @work_history ||= other_england_work_histories.find(params[:id])
+    end
+
+    def other_england_work_histories
+      @other_england_work_histories ||=
+        application_form
+          .work_histories
+          .other_england_educational_role
+          .order_by_user
     end
 
     def meets_criteria_form_params
