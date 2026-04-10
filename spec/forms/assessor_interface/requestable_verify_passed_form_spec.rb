@@ -59,7 +59,7 @@ RSpec.describe AssessorInterface::RequestableVerifyPassedForm, type: :model do
 
       it "updates induction required" do
         expect(UpdateAssessmentInductionRequired).to receive(:call)
-        save # rubocop:disable Rails/SaveBang
+        save
       end
     end
 
@@ -85,7 +85,7 @@ RSpec.describe AssessorInterface::RequestableVerifyPassedForm, type: :model do
 
       it "doesn't update induction required" do
         expect(UpdateAssessmentInductionRequired).not_to receive(:call)
-        save # rubocop:disable Rails/SaveBang
+        save
       end
     end
   end
