@@ -52,7 +52,7 @@
 
     <p class="govuk-body">Your request for review must be received within 28 days of receipt of the decision to decline QTS.</p>
 
-    <p class="govuk-body"><%= govuk_link_to "Begin your request for a decision review", teacher_interface_application_form_decision_review_requests_path %>.</p>
+    <p class="govuk-body"><%= govuk_link_to "Start your request for a decision review", teacher_interface_application_form_decision_review_requests_path %>.</p>
 
     <% if view_object.declined_cannot_reapply? %>
       <p class="govuk-body">
@@ -77,10 +77,10 @@
     <% end %>
   <% elsif view_object.assessment.decision_review_request.present? %>
     <%= govuk_inset_text do %>
-      We have received your request for a decision review. We aim to get back to you within 5 working days.
+      We have received your request for a decision review. We aim to get back to you within 28 working days.
     <% end %>
   <% else %>
-    <p class="govuk-body">Unfortunately you have missed the 28 day deadline following the receipt of the decision to decline QTS to request a review.</p>
+    <p class="govuk-body">You have missed the 28 day deadline following the receipt of the decision to decline QTS to request a review.</p>
   <% end %>
 <% end %>
 
