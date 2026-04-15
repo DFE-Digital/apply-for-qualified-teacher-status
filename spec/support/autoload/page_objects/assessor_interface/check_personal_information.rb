@@ -16,7 +16,10 @@ module PageObjects
       element :back_link, "a", text: "Back"
 
       sections :cards, PersonalInformationCard, ".govuk-summary-card"
-      section :summary_list, GovukSummaryList, ".govuk-summary-list", match: :first
+      section :summary_list,
+              GovukSummaryList,
+              ".govuk-summary-list",
+              match: :first
       section :exemption_form, "form" do
         element :english_language_exempt,
                 "#assessor-interface-assessment-section-form-english-language-section-passed-true-field",

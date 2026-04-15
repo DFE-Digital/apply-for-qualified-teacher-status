@@ -16,7 +16,9 @@ RSpec.describe "Assessor change application form name", type: :system do
     it "does not show change name link on overview page" do
       when_i_visit_the(:assessor_application_page, reference:)
       then_i_see_the(:assessor_application_page)
-      expect(assessor_application_page.summary_list.find_row(key: "Name")).to have_no_actions
+      expect(
+        assessor_application_page.summary_list.find_row(key: "Name"),
+      ).to have_no_actions
     end
 
     it "does not show change name link on personal information page" do
@@ -27,8 +29,16 @@ RSpec.describe "Assessor change application form name", type: :system do
         section_id: section_id("personal_information"),
       )
       then_i_see_the(:assessor_check_personal_information_page)
-      expect(assessor_check_personal_information_page.summary_list.find_row(key: "Given names")).to have_no_actions
-      expect(assessor_check_personal_information_page.summary_list.find_row(key: "Surname")).to have_no_actions
+      expect(
+        assessor_check_personal_information_page.summary_list.find_row(
+          key: "Given names",
+        ),
+      ).to have_no_actions
+      expect(
+        assessor_check_personal_information_page.summary_list.find_row(
+          key: "Surname",
+        ),
+      ).to have_no_actions
     end
 
     it "does not allow any access if user is archived" do
@@ -61,8 +71,16 @@ RSpec.describe "Assessor change application form name", type: :system do
         section_id: section_id("personal_information"),
       )
       then_i_see_the(:assessor_check_personal_information_page)
-      expect(assessor_check_personal_information_page.summary_list.find_row(key: "Given names")).to have_actions
-      expect(assessor_check_personal_information_page.summary_list.find_row(key: "Surname")).to have_actions
+      expect(
+        assessor_check_personal_information_page.summary_list.find_row(
+          key: "Given names",
+        ),
+      ).to have_actions
+      expect(
+        assessor_check_personal_information_page.summary_list.find_row(
+          key: "Surname",
+        ),
+      ).to have_actions
 
       when_i_click_on_change_given_names
       then_i_see_the(:assessor_edit_application_name_page, reference:)
@@ -117,13 +135,18 @@ RSpec.describe "Assessor change application form name", type: :system do
   def application_form
     @application_form ||=
       begin
-        form = create(
-          :application_form,
-          :submitted,
-          :with_personal_information,
-          :with_assessment,
+        form =
+          create(
+            :application_form,
+            :submitted,
+            :with_personal_information,
+            :with_assessment,
+          )
+        create(
+          :assessment_section,
+          :personal_information,
+          assessment: form.assessment,
         )
-        create(:assessment_section, :personal_information, assessment: form.assessment)
         form
       end
   end
