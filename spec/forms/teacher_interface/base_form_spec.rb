@@ -29,7 +29,7 @@ RSpec.describe TeacherInterface::BaseForm, type: :model do
 
       it "updates the model" do
         expect(application_form.given_names).to eq("Old name")
-        save # rubocop:disable Rails/SaveBang
+        save
         expect(application_form.given_names).to eq(given_names)
       end
 
@@ -37,7 +37,7 @@ RSpec.describe TeacherInterface::BaseForm, type: :model do
         expect(ApplicationFormSectionStatusUpdater).to receive(:call).with(
           application_form:,
         )
-        save # rubocop:disable Rails/SaveBang
+        save
       end
     end
 
@@ -46,7 +46,7 @@ RSpec.describe TeacherInterface::BaseForm, type: :model do
 
       it "doesn't update the model" do
         expect(application_form.given_names).to eq("Old name")
-        save # rubocop:disable Rails/SaveBang
+        save
         expect(application_form.given_names).to eq("Old name")
       end
     end

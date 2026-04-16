@@ -37,6 +37,10 @@ RSpec/SpecFilePathFormat:
     - spec/components/*
     - spec/lib/business_calendar_spec.rb
 
+Rails/SaveBang:
+  Exclude:
+    - spec/**/*
+
 RSpec/SubjectStub:
   Enabled: false
 

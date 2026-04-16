@@ -140,7 +140,7 @@ RSpec.shared_examples_for "an age range subjects form" do
       it { is_expected.to be true }
 
       it "sets the attributes" do
-        save # rubocop:disable Rails/SaveBang
+        save
 
         expect(assessment.age_range_min).to eq(5)
         expect(assessment.age_range_max).to eq(16)
@@ -173,7 +173,7 @@ RSpec.shared_examples_for "an age range subjects form" do
       it { is_expected.to be true }
 
       it "sets the attributes" do
-        save # rubocop:disable Rails/SaveBang
+        save
 
         expect(assessment.age_range_note).to eq("A note.")
         expect(assessment.subjects_note).to eq("Another note.")

@@ -207,7 +207,7 @@ RSpec.describe AssessorInterface::AssessmentSectionForm, type: :model do
           },
         )
 
-        save # rubocop:disable Rails/SaveBang
+        save
       end
     end
 
@@ -250,7 +250,7 @@ RSpec.describe AssessorInterface::AssessmentSectionForm, type: :model do
           },
         )
 
-        save # rubocop:disable Rails/SaveBang
+        save
       end
     end
   end

@@ -53,7 +53,7 @@ RSpec.describe AssessorInterface::PersonalInformationForm, type: :model do
       it { is_expected.to be true }
 
       it "sets the attributes" do
-        save # rubocop:disable Rails/SaveBang
+        save
 
         expect(assessment_section.reload.passed).to be true
       end
@@ -61,7 +61,7 @@ RSpec.describe AssessorInterface::PersonalInformationForm, type: :model do
       it "sets the passed attribute on the english language proficiency section" do
         application_form.update!(english_language_citizenship_exempt: true)
 
-        save # rubocop:disable Rails/SaveBang
+        save
 
         expect(english_language_section.reload.passed).to be true
       end
@@ -69,7 +69,7 @@ RSpec.describe AssessorInterface::PersonalInformationForm, type: :model do
       it "ignores the passed attribute for the ELP section if exemption is by qualifications" do
         application_form.update!(english_language_qualification_exempt: true)
 
-        save # rubocop:disable Rails/SaveBang
+        save
 
         expect(english_language_section.reload.passed).to be_nil
       end

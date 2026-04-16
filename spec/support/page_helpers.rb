@@ -816,6 +816,11 @@ module PageHelpers
       PageObjects::TeacherInterface::NewOtherEnglandWorkHistory.new
   end
 
+  def teacher_edit_other_england_work_history_page
+    @teacher_edit_other_england_work_history_page ||=
+      PageObjects::TeacherInterface::EditOtherEnglandWorkHistory.new
+  end
+
   def teacher_edit_other_england_work_history_contact_page
     @teacher_edit_other_england_work_history_contact_page ||=
       PageObjects::TeacherInterface::EditOtherEnglandWorkHistoryContact.new

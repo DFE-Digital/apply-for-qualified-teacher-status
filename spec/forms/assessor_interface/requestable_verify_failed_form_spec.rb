@@ -41,7 +41,7 @@ RSpec.describe AssessorInterface::RequestableVerifyFailedForm, type: :model do
 
       it "updates induction required" do
         expect(UpdateAssessmentInductionRequired).to receive(:call)
-        save # rubocop:disable Rails/SaveBang
+        save
       end
     end
   end
