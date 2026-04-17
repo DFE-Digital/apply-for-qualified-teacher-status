@@ -32,6 +32,8 @@ class AssessorInterface::ApplicationFormPolicy < ApplicationPolicy
   end
 
   alias_method :edit_name?, :update_name?
+  alias_method :edit_date_of_birth?, :update_name?
+  alias_method :update_date_of_birth?, :update_name?
 
   def destroy?
     user.withdraw_permission && !user.archived?

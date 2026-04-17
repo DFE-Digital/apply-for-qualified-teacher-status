@@ -1,0 +1,23 @@
+<% title = "Change date of birth for ‘#{application_form_full_name(@application_form)}’" %>
+
+<% content_for :page_title, title_with_error_prefix(title, error: @form.errors.any?) %>
+<% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
+<%# TODO: change back link to Check personal information page %>
+<%= form_with model: @form, url: [:date_of_birth, :assessor_interface, @application_form] do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <h1 class="govuk-heading-xl"><%= title %></h1>
+
+  <h2 class="govuk-heading-m">Current date of birth</h2>
+
+  <%= govuk_summary_list(actions: false) do |summary_list|
+    summary_list.with_row do |row|
+      row.with_key { "Date of birth" }
+      row.with_value { @application_form.date_of_birth.to_fs }
+    end
+  end %>
+
+  <%= f.govuk_date_field :date_of_birth, legend: { text: "Change date of birth" }, hint: { text: "Use this form to change the date of birth. For example, 27 3 1980" } %>
+
+  <%= render "shared/assessor_interface/continue_cancel_button", f: %>
+<% end %>
