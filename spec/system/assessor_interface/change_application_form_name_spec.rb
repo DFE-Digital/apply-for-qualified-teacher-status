@@ -83,13 +83,13 @@ RSpec.describe "Assessor change application form name", type: :system do
       #
       # when_i_click_on_change_surname
       # then_i_see_the(:assessor_edit_application_name_page, reference:)
+    end
 
-      it "does not allow any access if user is archived" do
-        given_i_am_authorized_as_an_archived_user(manager)
+    it "does not allow any access if user is archived" do
+      given_i_am_authorized_as_an_archived_user(manager)
 
-        when_i_visit_the(:assessor_edit_application_name_page, reference:)
-        then_i_see_the_forbidden_page
-      end
+      when_i_visit_the(:assessor_edit_application_name_page, reference:)
+      then_i_see_the_forbidden_page
     end
   end
 
