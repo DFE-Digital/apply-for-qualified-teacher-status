@@ -19,13 +19,13 @@ RSpec.describe UpdateApplicationFormName do
   let(:new_given_names) { "New given names" }
   let(:new_family_name) { "New family name" }
 
-  it "changes the contact name" do
+  it "changes the given name" do
     expect { call }.to change(application_form, :given_names).to(
       new_given_names,
     )
   end
 
-  it "changes the contact job" do
+  it "changes the family name" do
     expect { call }.to change(application_form, :family_name).to(
       new_family_name,
     )
