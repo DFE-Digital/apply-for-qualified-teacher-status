@@ -53,6 +53,17 @@ RSpec.describe "Assessor change application form name", type: :system do
         ),
       ).to have_actions
     end
+
+    it "allows changing application form date of birth" do
+      when_i_visit_the(
+        :assessor_check_personal_information_page,
+        reference:,
+        assessment_id:,
+        section_id: section_id("personal_information"),
+      )
+      when_i_click_on_change_date_of_birth
+      then_i_see_the(:assessor_edit_application_date_of_birth_page, reference:)
+    end
   end
 
   private
@@ -96,5 +107,14 @@ RSpec.describe "Assessor change application form name", type: :system do
 
   def manager
     create(:staff, :with_change_name_permission)
+  end
+
+  def when_i_click_on_change_date_of_birth
+    assessor_check_personal_information_page
+      .summary_list
+      .find_row(key: "Date of birth")
+      .actions
+      .link
+      .click
   end
 end
