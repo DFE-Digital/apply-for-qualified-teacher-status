@@ -47,6 +47,9 @@ Rails.application.routes.draw do
         get "name", to: "application_forms#edit_name"
         post "name", to: "application_forms#update_name"
 
+        get "date-of-birth", to: "application_forms#edit_date_of_birth"
+        post "date-of-birth", to: "application_forms#update_date_of_birth"
+
         get "status"
         get "timeline"
         get "withdraw"
