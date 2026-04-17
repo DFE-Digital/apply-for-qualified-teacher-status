@@ -39,7 +39,7 @@ RSpec.describe "Assessor change application form name", type: :system do
       then_i_see_the_forbidden_page
     end
 
-    it "shows change date of birth link on personal information page" do
+    it "allows changing application form date of birth" do
       when_i_visit_the(
         :assessor_check_personal_information_page,
         reference:,
@@ -52,17 +52,12 @@ RSpec.describe "Assessor change application form name", type: :system do
           key: "Date of birth",
         ),
       ).to have_actions
-    end
 
-    it "allows changing application form date of birth" do
-      when_i_visit_the(
-        :assessor_check_personal_information_page,
-        reference:,
-        assessment_id:,
-        section_id: section_id("personal_information"),
-      )
       when_i_click_on_change_date_of_birth
       then_i_see_the(:assessor_edit_application_date_of_birth_page, reference:)
+
+      when_i_fill_in_the_date_of_birth
+      then_i_see_the(:assessor_application_page, reference:)
     end
   end
 
@@ -116,5 +111,15 @@ RSpec.describe "Assessor change application form name", type: :system do
       .actions
       .link
       .click
+  end
+
+  def when_i_fill_in_the_date_of_birth
+    assessor_edit_application_date_of_birth_page.form.day_field.fill_in with:
+      "1"
+    assessor_edit_application_date_of_birth_page.form.month_field.fill_in with:
+      "1"
+    assessor_edit_application_date_of_birth_page.form.year_field.fill_in with:
+      "1990"
+    assessor_edit_application_date_of_birth_page.form.submit_button.click
   end
 end

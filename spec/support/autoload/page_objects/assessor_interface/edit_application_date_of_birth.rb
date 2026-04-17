@@ -12,7 +12,7 @@ module PageObjects
                 "#assessor_interface_application_form_date_of_birth_form_date_of_birth_2i"
         element :year_field,
                 "#assessor_interface_application_form_date_of_birth_form_date_of_birth_1i"
-        element :save_button, "govuk-button"
+        element :submit_button, ".govuk-button"
       end
     end
   end
