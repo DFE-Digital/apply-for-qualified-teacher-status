@@ -78,11 +78,10 @@ RSpec.describe "Assessor change application form name", type: :system do
       when_i_click_on_change_given_names
       then_i_see_the(:assessor_edit_application_name_page, reference:)
 
-      # TODO: uncomment when back link bug is fixed
-      # when_i_click_the_back_link
-      #
-      # when_i_click_on_change_surname
-      # then_i_see_the(:assessor_edit_application_name_page, reference:)
+      when_i_click_the_back_link
+      
+      when_i_click_on_change_surname
+      then_i_see_the(:assessor_edit_application_name_page, reference:)
     end
 
     it "does not allow any access if user is archived" do
