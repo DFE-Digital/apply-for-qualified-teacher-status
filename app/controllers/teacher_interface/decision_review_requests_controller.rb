@@ -23,7 +23,9 @@ module TeacherInterface
                       decision_review_request
                     ]
       elsif decision_review_request.completed?
-        redirect_to teacher_interface_application_form_decision_review_request_confirm_path
+        redirect_to teacher_interface_application_form_decision_review_request_confirm_path(
+                      decision_review_request,
+                    )
       else
         redirect_to edit_teacher_interface_application_form_decision_review_request_path(
                       decision_review_request,
@@ -51,12 +53,9 @@ module TeacherInterface
               @form.decision_review_request.decision_review_evidence_document,
             ]
           else
-            %i[
-              confirm
-              teacher_interface
-              application_form
-              decision_review_requests
-            ]
+            redirect_to teacher_interface_application_form_decision_review_request_confirm_path(
+                          @form.decision_review_request,
+                        )
           end
         end,
         if_failure_then_render: :new,

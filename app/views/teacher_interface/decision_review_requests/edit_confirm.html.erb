@@ -2,7 +2,7 @@
 <% content_for :back_link_url, back_history_path(origin: true, default: teacher_interface_application_form_path) %>
 
 
-<%= form_with url: [:confirm ,:teacher_interface, :application_form, :decision_review_requests], method: :post do |f| %>
+<%= form_with url: [:teacher_interface, :application_form, @decision_review_request, :confirm], method: :post do |f| %>
   <span class="govuk-caption-l">Your application</span>
   <h1 class="govuk-heading-l">Check your decision review evidence</h1>
 

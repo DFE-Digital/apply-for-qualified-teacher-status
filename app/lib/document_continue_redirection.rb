@@ -32,7 +32,7 @@ class DocumentContinueRedirection
   end
 
   def decision_review_evidence_url
-    %i[confirm teacher_interface application_form decision_review_requests]
+    [:teacher_interface, :application_form, documentable, :confirm]
   end
 
   def name_change_url
