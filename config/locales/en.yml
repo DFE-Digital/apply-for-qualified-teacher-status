@@ -48,7 +48,7 @@ en:
     attributes:
       staff:
         assess_permission: Assess applicants
-        change_name_permission: Change applicant’s name
+        change_name_permission: Change applicant’s name and date of birth
         change_work_history_and_qualification_permission: Change work history references and qualifications
         reverse_decision_permission: Reverse decisions
         support_console_permission: Support console access

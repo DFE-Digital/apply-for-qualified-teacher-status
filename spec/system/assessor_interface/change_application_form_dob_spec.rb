@@ -2,7 +2,8 @@
 
 require "rails_helper"
 
-RSpec.describe "Assessor change application form name", type: :system do
+RSpec.describe "Assessor change application form date of birth",
+               type: :system do
   before { given_there_is_an_application_form }
 
   context "when user does not have edit name permission" do
@@ -35,7 +36,10 @@ RSpec.describe "Assessor change application form name", type: :system do
     it "does not allow any access if user is archived" do
       given_i_am_authorized_as_an_archived_user(manager)
 
-      when_i_visit_the(:assessor_edit_application_name_page, reference:)
+      when_i_visit_the(
+        :assessor_edit_application_date_of_birth_page,
+        reference:,
+      )
       then_i_see_the_forbidden_page
     end
 
