@@ -27,7 +27,11 @@ class UpdateApplicationFormPersonalInformation
 
   private
 
-  attr_reader :application_form, :user, :given_names, :family_name
+  attr_reader :application_form,
+              :user,
+              :given_names,
+              :family_name,
+              :date_of_birth
 
   def change_value(column_name, new_value)
     return if new_value.blank?
