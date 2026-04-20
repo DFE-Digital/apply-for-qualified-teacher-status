@@ -13,7 +13,7 @@ class AssessorInterface::ApplicationFormNameForm
   def save
     return false if invalid?
 
-    UpdateApplicationFormName.call(
+    UpdateApplicationFormPersonalInformation.call(
       application_form:,
       user:,
       given_names:,

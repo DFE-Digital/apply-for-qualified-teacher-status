@@ -14,7 +14,7 @@ class AssessorInterface::ApplicationFormDateOfBirthForm
   def save
     return false if invalid?
 
-    UpdateApplicationFormDateOfBirth.call(
+    UpdateApplicationFormPersonalInformation.call(
       application_form: application_form,
       user: user,
       date_of_birth: date_of_birth,
