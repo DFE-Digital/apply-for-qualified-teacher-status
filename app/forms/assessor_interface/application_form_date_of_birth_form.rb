@@ -7,8 +7,9 @@ class AssessorInterface::ApplicationFormDateOfBirthForm
 
   attr_accessor :application_form, :user
   attribute :date_of_birth, :date
-  # TODO: may need to add validation for date_of_birth
+
   validates :application_form, :user, presence: true
+  validates :date_of_birth, presence: true
 
   def save
     return false if invalid?
