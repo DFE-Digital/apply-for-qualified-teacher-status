@@ -10,7 +10,10 @@ RSpec.describe "Assessor change application form date of birth",
     before { given_i_am_authorized_as_a_user(assessor) }
 
     it "checks manage applications permission" do
-      when_i_visit_the(:assessor_edit_application_name_page, reference:)
+      when_i_visit_the(
+        :assessor_edit_application_date_of_birth_page,
+        reference:,
+      )
       then_i_see_the_forbidden_page
     end
 
@@ -44,12 +47,7 @@ RSpec.describe "Assessor change application form date of birth",
     end
 
     it "allows changing application form date of birth" do
-      when_i_visit_the(
-        :assessor_check_personal_information_page,
-        reference:,
-        assessment_id:,
-        section_id: section_id("personal_information"),
-      )
+      when_i_visit_the_personal_information_page
       then_i_see_the(:assessor_check_personal_information_page)
       expect(
         assessor_check_personal_information_page.summary_list.find_row(
@@ -62,6 +60,13 @@ RSpec.describe "Assessor change application form date of birth",
 
       when_i_fill_in_the_date_of_birth
       then_i_see_the(:assessor_application_page, reference:)
+
+      when_i_visit_the_personal_information_page
+      expect(
+        assessor_check_personal_information_page.summary_list.find_row(
+          key: "Date of birth",
+        ),
+      ).to have_text("1 January 1990")
     end
   end
 
@@ -106,6 +111,15 @@ RSpec.describe "Assessor change application form date of birth",
 
   def manager
     create(:staff, :with_change_name_permission)
+  end
+
+  def when_i_visit_the_personal_information_page
+    when_i_visit_the(
+      :assessor_check_personal_information_page,
+      reference:,
+      assessment_id:,
+      section_id: section_id("personal_information"),
+    )
   end
 
   def when_i_click_on_change_date_of_birth
