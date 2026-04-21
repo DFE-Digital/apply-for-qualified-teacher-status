@@ -309,6 +309,14 @@ en:
   activemodel:
     errors:
       models:
+        assessor_interface/application_form_date_of_birth_form:
+          attributes:
+            date_of_birth:
+              blank: Enter a date of birth in the format 27 3 1980
+              invalid: Enter a date of birth in the format 27 3 1980
+              future: Applicant's date of birth must be in the past
+              too_old: Enter a valid date of birth
+              too_young: Enter a valid date of birth
         assessor_interface/application_form_email_form:
           attributes:
             email:
