@@ -4,7 +4,6 @@ class AssessorInterface::ApplicationFormDateOfBirthForm
   include ActiveModel::Model
   include ActiveModel::Attributes
   include ActiveRecord::AttributeAssignment
-  include SanitizeDates
 
   attr_accessor :application_form, :user
   attribute :date_of_birth
@@ -15,8 +14,6 @@ class AssessorInterface::ApplicationFormDateOfBirthForm
 
   def save
     return false if invalid?
-
-    sanitize_dates!(date_of_birth)
 
     UpdateApplicationFormPersonalInformation.call(
       application_form: application_form,
