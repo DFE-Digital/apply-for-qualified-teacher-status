@@ -185,7 +185,7 @@ jobs:
 
       - name: Post sticky pull request comment
         if: github.event_name == 'pull_request'
-        uses: marocchino/sticky-pull-request-comment@v3
+        uses: marocchino/sticky-pull-request-comment@0ea0beb66eb9baf113663a64ec522f60e49231c0 # Pinned at v3.0.4
         with:
           message: |
             Review app deployed to ${{ steps.deploy.outputs.url }}/personas
