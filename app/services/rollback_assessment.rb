@@ -12,6 +12,12 @@ class RollbackAssessment
     ActiveRecord::Base.transaction do
       validate_state
       update_assessment
+
+      if previously_further_information_requested? &&
+           latest_further_information_request.expired?
+        re_request_latest_further_information_request
+      end
+
       update_application_form
       delete_draft_application_forms
     end
@@ -38,7 +44,11 @@ class RollbackAssessment
 
   def valid_assessment_state?
     assessment.award? || assessment.decline? ||
-      (assessment.unknown? && application_form.declined_at.present?)
+      (assessment.unknown? && application_form.declined_at.present?) ||
+      (
+        assessment.request_further_information? &&
+          application_form.declined_at.present?
+      )
   end
 
   def update_assessment
@@ -80,6 +90,19 @@ class RollbackAssessment
       .find_each do |application_form|
         DestroyApplicationForm.call(application_form:)
       end
+  end
+
+  def re_request_latest_further_information_request
+    RequestRequestable.call(
+      requestable: latest_further_information_request,
+      user:,
+      allow_already_requested: true,
+    )
+  end
+
+  def latest_further_information_request
+    @latest_further_information_request ||=
+      assessment.latest_further_information_request
   end
 
   class InvalidState < StandardError

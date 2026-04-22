@@ -92,10 +92,12 @@ RSpec.describe RollbackAssessment do
       end
     end
 
-    context "having requested further information" do
-      before { create(:requested_further_information_request, assessment:) }
+    context "having requested further information and expired" do
+      let!(:further_information_request) do
+        create(:requested_further_information_request, :expired, assessment:)
+      end
 
-      it "sets the assessment to unknown" do
+      it "sets the assessment to request_further_information" do
         expect { call }.to change(assessment, :request_further_information?).to(
           true,
         )
@@ -103,6 +105,91 @@ RSpec.describe RollbackAssessment do
 
       it "reverts application form status" do
         expect { call }.to change(application_form, :stage).to("assessment")
+      end
+
+      it "re-requests the further information request" do
+        expect {
+          call
+
+          further_information_request.reload
+        }.to change(further_information_request, :expired?).to(
+          false,
+        ).and change(
+                further_information_request,
+                :requested_at,
+              ).and have_enqueued_mail(
+                      TeacherMailer,
+                      :further_information_requested,
+                    ).with(
+                      params: {
+                        further_information_request:,
+                        application_form:,
+                      },
+                      args: [],
+                    )
+      end
+
+      it "records a timeline event" do
+        expect { call }.to have_recorded_timeline_event(
+          :stage_changed,
+          creator: user,
+        )
+      end
+
+      context "with multiple further information requests" do
+        before do
+          create(
+            :received_further_information_request,
+            assessment:,
+            review_passed: false,
+            requested_at: further_information_request.requested_at - 10.days,
+          )
+        end
+
+        it "re-requests the lastest expired further information request" do
+          expect {
+            call
+
+            further_information_request.reload
+          }.to change(further_information_request, :expired?).to(
+            false,
+          ).and change(
+                  further_information_request,
+                  :requested_at,
+                ).and have_enqueued_mail(
+                        TeacherMailer,
+                        :further_information_requested,
+                      ).with(
+                        params: {
+                          further_information_request:,
+                          application_form:,
+                        },
+                        args: [],
+                      )
+        end
+      end
+    end
+
+    context "having received further information" do
+      let!(:further_information_request) do
+        create(:received_further_information_request, assessment:)
+      end
+
+      it "sets the assessment to request_further_information" do
+        expect { call }.to change(assessment, :request_further_information?).to(
+          true,
+        )
+      end
+
+      it "reverts application form status" do
+        expect { call }.to change(application_form, :stage).to("assessment")
+      end
+
+      it "does not re-request the further information request" do
+        expect { call }.not_to change(
+          further_information_request,
+          :requested_at,
+        )
       end
 
       it "records a timeline event" do
@@ -163,7 +250,7 @@ RSpec.describe RollbackAssessment do
       expect { call }.not_to change(assessment, :unknown?)
     end
 
-    it "reverts application form status" do
+    it "reverts application form stage" do
       expect { call }.to change(application_form, :stage).to("not_started")
     end
 
