@@ -100,6 +100,18 @@ RSpec.describe AssessorInterface::ApplicationFormPolicy do
     it_behaves_like "a policy method requiring the change name permission"
   end
 
+  describe "#update_date_of_birth?" do
+    subject(:update?) { policy.update_date_of_birth? }
+
+    it_behaves_like "a policy method requiring the change name permission"
+  end
+
+  describe "#edit_date_of_birth?" do
+    subject(:edit?) { policy.edit_date_of_birth? }
+
+    it_behaves_like "a policy method requiring the change name permission"
+  end
+
   describe "#destroy?" do
     subject(:destroy?) { policy.destroy? }
 
