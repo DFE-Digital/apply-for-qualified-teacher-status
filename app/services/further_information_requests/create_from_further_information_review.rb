@@ -14,7 +14,7 @@ class FurtherInformationRequests::CreateFromFurtherInformationReview
       raise AlreadyExists
     end
 
-    send_email(create_and_request)
+    create_and_request
   end
 
   class AlreadyExists < StandardError
@@ -44,15 +44,6 @@ class FurtherInformationRequests::CreateFromFurtherInformationReview
 
       requestable
     end
-  end
-
-  def send_email(further_information_request)
-    DeliverEmail.call(
-      application_form:,
-      mailer: TeacherMailer,
-      action: :further_information_requested,
-      further_information_request:,
-    )
   end
 
   def build_follow_up_items
