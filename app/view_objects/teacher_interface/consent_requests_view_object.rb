@@ -62,11 +62,14 @@ module TeacherInterface
           status: download_unsigned_consent_document_status(consent_request),
         },
         {
-          link: [
-            :teacher_interface,
-            :application_form,
-            consent_request.signed_consent_document,
-          ],
+          link:
+            if consent_request.unsigned_document_downloaded?
+              [
+                :teacher_interface,
+                :application_form,
+                consent_request.signed_consent_document,
+              ]
+            end,
           name: "Upload #{institution_name} consent document",
           status: upload_signed_consent_document_status(consent_request),
         },
