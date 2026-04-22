@@ -18,7 +18,7 @@ RSpec.describe AssessorInterface::ApplicationFormEmailForm, type: :model do
   describe "#save" do
     subject(:save) { form.save }
 
-    it "calls the UpdateApplicationFormPersonalInformation service" do
+    it "calls the UpdateTeacherEmail service" do
       expect(UpdateTeacherEmail).to receive(:call).with(
         application_form:,
         user:,

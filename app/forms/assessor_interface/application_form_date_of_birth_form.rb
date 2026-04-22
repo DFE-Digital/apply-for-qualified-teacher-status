@@ -18,7 +18,7 @@ class AssessorInterface::ApplicationFormDateOfBirthForm
     UpdateApplicationFormPersonalInformation.call(
       application_form: application_form,
       user: user,
-      date_of_birth: date_of_birth,
+      date_of_birth: DateValidator.parse(date_of_birth),
     )
 
     true
