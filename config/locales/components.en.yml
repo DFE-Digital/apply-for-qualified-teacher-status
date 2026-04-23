@@ -155,6 +155,7 @@ en:
         contact_name: Reference name
         family_name: Family name
         given_names: Given names
+        date_of_birth: Date of birth
         teaching_qualification: Teaching qualification
         title: Teaching qualification title
         institution_name: Teaching qualification name of institution
