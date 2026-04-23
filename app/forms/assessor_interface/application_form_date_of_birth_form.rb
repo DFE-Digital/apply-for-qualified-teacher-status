@@ -18,7 +18,7 @@ class AssessorInterface::ApplicationFormDateOfBirthForm
     UpdateApplicationFormPersonalInformation.call(
       application_form: application_form,
       user: user,
-      date_of_birth: DateValidator.parse(date_of_birth),
+      date_of_birth: parsed_date_of_birth,
     )
 
     true
@@ -27,13 +27,16 @@ class AssessorInterface::ApplicationFormDateOfBirthForm
   private
 
   def date_of_birth_valid
-    date = DateValidator.parse(date_of_birth)
-    return if date.nil?
+    return if parsed_date_of_birth.nil?
 
-    if date > 18.years.ago
+    if parsed_date_of_birth > 18.years.ago
       errors.add(:date_of_birth, :too_young)
-    elsif date < 100.years.ago
+    elsif parsed_date_of_birth < 100.years.ago
       errors.add(:date_of_birth, :too_old)
     end
+  end
+
+  def parsed_date_of_birth
+    @parsed_date_of_birth ||= DateValidator.parse(date_of_birth)
   end
 end
