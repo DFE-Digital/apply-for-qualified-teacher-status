@@ -12,16 +12,15 @@ class RollbackAssessment
     ActiveRecord::Base.transaction do
       validate_state
       update_assessment
+
+      if previously_further_information_requested? &&
+           latest_further_information_request.expired?
+        re_request_latest_further_information_request
+      end
+
       update_application_form
       delete_draft_application_forms
     end
-
-    if previously_further_information_requested? &&
-         latest_further_information_request.expired?
-      re_request_latest_further_information_request
-    end
-
-    ApplicationFormStatusUpdater.call(application_form:, user:)
   end
 
   private
@@ -81,6 +80,8 @@ class RollbackAssessment
     if application_form.declined_at.present?
       application_form.update!(declined_at: nil)
     end
+
+    ApplicationFormStatusUpdater.call(application_form:, user:)
   end
 
   def delete_draft_application_forms
