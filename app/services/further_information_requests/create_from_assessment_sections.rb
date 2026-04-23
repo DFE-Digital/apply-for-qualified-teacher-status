@@ -11,7 +11,7 @@ class FurtherInformationRequests::CreateFromAssessmentSections
   def call
     raise AlreadyExists if assessment.further_information_requests.exists?
 
-    send_email(create_and_request)
+    create_and_request
   end
 
   class AlreadyExists < StandardError
@@ -44,14 +44,5 @@ class FurtherInformationRequests::CreateFromAssessmentSections
 
       requestable
     end
-  end
-
-  def send_email(further_information_request)
-    DeliverEmail.call(
-      application_form:,
-      mailer: TeacherMailer,
-      action: :further_information_requested,
-      further_information_request:,
-    )
   end
 end

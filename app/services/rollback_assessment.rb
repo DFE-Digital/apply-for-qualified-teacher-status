@@ -15,6 +15,13 @@ class RollbackAssessment
       update_application_form
       delete_draft_application_forms
     end
+
+    if previously_further_information_requested? &&
+         latest_further_information_request.expired?
+      re_request_latest_further_information_request
+    end
+
+    ApplicationFormStatusUpdater.call(application_form:, user:)
   end
 
   private
@@ -38,7 +45,11 @@ class RollbackAssessment
 
   def valid_assessment_state?
     assessment.award? || assessment.decline? ||
-      (assessment.unknown? && application_form.declined_at.present?)
+      (assessment.unknown? && application_form.declined_at.present?) ||
+      (
+        assessment.request_further_information? &&
+          application_form.declined_at.present?
+      )
   end
 
   def update_assessment
@@ -70,8 +81,6 @@ class RollbackAssessment
     if application_form.declined_at.present?
       application_form.update!(declined_at: nil)
     end
-
-    ApplicationFormStatusUpdater.call(application_form:, user:)
   end
 
   def delete_draft_application_forms
@@ -80,6 +89,19 @@ class RollbackAssessment
       .find_each do |application_form|
         DestroyApplicationForm.call(application_form:)
       end
+  end
+
+  def re_request_latest_further_information_request
+    RequestRequestable.call(
+      requestable: latest_further_information_request,
+      user:,
+      allow_already_requested: true,
+    )
+  end
+
+  def latest_further_information_request
+    @latest_further_information_request ||=
+      assessment.latest_further_information_request
   end
 
   class InvalidState < StandardError

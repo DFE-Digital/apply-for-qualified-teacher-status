@@ -66,6 +66,11 @@ FactoryBot.define do
       recommended_at { Time.zone.now }
     end
 
+    trait :request_further_information do
+      recommendation { "request_further_information" }
+      recommended_at { Time.zone.now }
+    end
+
     trait :review do
       recommendation { "review" }
       recommended_at { Time.zone.now }

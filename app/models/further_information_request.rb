@@ -73,6 +73,15 @@ class FurtherInformationRequest < ApplicationRecord
     end
   end
 
+  def after_requested(*)
+    DeliverEmail.call(
+      application_form:,
+      mailer: TeacherMailer,
+      action: :further_information_requested,
+      further_information_request: self,
+    )
+  end
+
   def after_received(*)
     DeliverEmail.call(
       application_form:,
