@@ -72,20 +72,22 @@ RSpec.describe TeacherInterface::FurtherInformationRequestViewObject do
         {
           heading: "About you",
           items: [
-            title: "Tell us more about the subjects you can teach",
-            description:
-              "The subjects you entered are acceptable for QTS, but the uploaded qualifications do not match them",
-            href: [
-              :edit,
-              :teacher_interface,
-              :application_form,
-              further_information_request,
-              text_item,
-            ],
-            status: "not_started",
-            value: nil,
-            value_title: "Your response",
-            assessor_note: text_item.failure_reason_assessor_feedback,
+            {
+              title: "Tell us more about the subjects you can teach",
+              description:
+                "The subjects you entered are acceptable for QTS, but the uploaded qualifications do not match them",
+              href: [
+                :edit,
+                :teacher_interface,
+                :application_form,
+                further_information_request,
+                text_item,
+              ],
+              status: "not_started",
+              value: nil,
+              value_title: "Your response",
+              assessor_note: text_item.failure_reason_assessor_feedback,
+            },
           ],
         },
       )
@@ -96,20 +98,22 @@ RSpec.describe TeacherInterface::FurtherInformationRequestViewObject do
         {
           heading: "Your qualifications",
           items: [
-            title: "Upload your identity document",
-            description:
-              "Your ID document is illegible or in a format we cannot accept",
-            href: [
-              :edit,
-              :teacher_interface,
-              :application_form,
-              further_information_request,
-              document_item,
-            ],
-            status: "not_started",
-            value: document_item.document,
-            value_title: "Identity documents",
-            assessor_note: document_item.failure_reason_assessor_feedback,
+            {
+              title: "Upload your identity document",
+              description:
+                "Your ID document is illegible or in a format we cannot accept",
+              href: [
+                :edit,
+                :teacher_interface,
+                :application_form,
+                further_information_request,
+                document_item,
+              ],
+              status: "not_started",
+              value: document_item.document,
+              value_title: "Identity documents",
+              assessor_note: document_item.failure_reason_assessor_feedback,
+            },
           ],
         },
       )
