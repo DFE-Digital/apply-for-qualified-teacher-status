@@ -25,7 +25,9 @@ class RequestRequestable
       )
     end
 
-    requestable.after_requested(user:)
+    ActiveRecord.after_all_transactions_commit do
+      requestable.after_requested(user:)
+    end
   end
 
   class AlreadyRequested < StandardError

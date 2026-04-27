@@ -104,7 +104,11 @@ RSpec.describe RollbackAssessment do
       end
 
       it "reverts application form status" do
-        expect { call }.to change(application_form, :stage).to("assessment")
+        expect { call }.to change(application_form, :stage).to(
+          "assessment",
+        ).and change(application_form, :statuses).to(
+                ["waiting_on_further_information"],
+              )
       end
 
       it "re-requests the further information request" do
