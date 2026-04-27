@@ -214,6 +214,11 @@ module PageHelpers
       PageObjects::AssessorInterface::EditAgeRangeSubjectsAssessmentRecommendationAward.new
   end
 
+  def assessor_edit_application_date_of_birth_page
+    @assessor_edit_application_date_of_birth_page ||=
+      PageObjects::AssessorInterface::EditApplicationDateOfBirth.new
+  end
+
   def assessor_edit_application_email_page
     @assessor_edit_application_email_page ||=
       PageObjects::AssessorInterface::EditApplicationEmail.new

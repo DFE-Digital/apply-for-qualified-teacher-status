@@ -1,25 +1,37 @@
 # frozen_string_literal: true
 
-class UpdateApplicationFormName
+class UpdateApplicationFormPersonalInformation
   include ServicePattern
 
-  def initialize(application_form:, user:, given_names: nil, family_name: nil)
+  def initialize(
+    application_form:,
+    user:,
+    given_names: nil,
+    family_name: nil,
+    date_of_birth: nil
+  )
     @application_form = application_form
     @user = user
     @given_names = given_names
     @family_name = family_name
+    @date_of_birth = date_of_birth
   end
 
   def call
     ActiveRecord::Base.transaction do
       change_value("given_names", given_names)
       change_value("family_name", family_name)
+      change_value("date_of_birth", date_of_birth)
     end
   end
 
   private
 
-  attr_reader :application_form, :user, :given_names, :family_name
+  attr_reader :application_form,
+              :user,
+              :given_names,
+              :family_name,
+              :date_of_birth
 
   def change_value(column_name, new_value)
     return if new_value.blank?

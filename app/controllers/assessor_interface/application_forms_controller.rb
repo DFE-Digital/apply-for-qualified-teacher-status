@@ -89,6 +89,26 @@ module AssessorInterface
       end
     end
 
+    def edit_date_of_birth
+      @form = ApplicationFormDateOfBirthForm.new
+    end
+
+    def update_date_of_birth
+      @form =
+        ApplicationFormDateOfBirthForm.new(
+          date_of_birth_form_params.merge(
+            application_form:,
+            user: current_staff,
+          ),
+        )
+
+      if @form.save
+        redirect_to [:assessor_interface, application_form]
+      else
+        render :edit_date_of_birth, status: :unprocessable_entity
+      end
+    end
+
     def withdraw
     end
 
@@ -136,6 +156,12 @@ module AssessorInterface
         :given_names,
         :family_name,
       )
+    end
+
+    def date_of_birth_form_params
+      params.require(
+        :assessor_interface_application_form_date_of_birth_form,
+      ).permit(:date_of_birth)
     end
   end
 end

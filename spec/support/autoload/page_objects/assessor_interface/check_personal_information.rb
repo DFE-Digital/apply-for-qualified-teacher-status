@@ -13,8 +13,13 @@ module PageObjects
     class CheckPersonalInformation < AssessmentSection
       set_url "/assessor/applications/{reference}/assessments/{assessment_id}/sections/{section_id}"
 
-      sections :cards, PersonalInformationCard, ".govuk-summary-card"
+      element :back_link, "a", text: "Back"
 
+      sections :cards, PersonalInformationCard, ".govuk-summary-card"
+      section :summary_list,
+              GovukSummaryList,
+              ".govuk-summary-list",
+              match: :first
       section :exemption_form, "form" do
         element :english_language_exempt,
                 "#assessor-interface-assessment-section-form-english-language-section-passed-true-field",

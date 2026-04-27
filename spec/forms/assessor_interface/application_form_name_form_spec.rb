@@ -21,8 +21,8 @@ RSpec.describe AssessorInterface::ApplicationFormNameForm, type: :model do
   describe "#save" do
     subject(:save) { form.save }
 
-    it "calls the UpdateApplicationFormName service" do
-      expect(UpdateApplicationFormName).to receive(:call).with(
+    it "calls the UpdateApplicationFormPersonalInformation service" do
+      expect(UpdateApplicationFormPersonalInformation).to receive(:call).with(
         application_form:,
         user:,
         given_names:,
