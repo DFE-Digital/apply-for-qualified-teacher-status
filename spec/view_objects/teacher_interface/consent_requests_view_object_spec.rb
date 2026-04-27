@@ -48,11 +48,7 @@ RSpec.describe TeacherInterface::ConsentRequestsViewObject do
                 },
                 {
                   name: "Upload University of Maths consent document",
-                  link: [
-                    :teacher_interface,
-                    :application_form,
-                    consent_request.signed_consent_document,
-                  ],
+                  link: nil,
                   status: :cannot_start,
                 },
               ],
