@@ -62,6 +62,14 @@ RSpec.describe "Countries support", type: :system do
     and_i_see_the_updated_countries
   end
 
+  it "makes Add a new country button visible" do
+    given_countries_exist
+    given_i_am_authorized_as_a_support_user
+    when_i_visit_the_countries_page
+
+    expect(page).to have_link("Add a new country")
+  end
+
   private
 
   def given_countries_exist
