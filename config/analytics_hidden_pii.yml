@@ -15,6 +15,9 @@
     - release_comment
   :assessments:
     - recommendation_assessor_note
+  :decision_review_requests:
+    - comment
+    - review_note
   :email_deliveries:
     - to
     - subject

@@ -32,6 +32,7 @@ class Document < ApplicationRecord
            class_name: "Upload"
 
   UNTRANSLATABLE_TYPES = %w[
+    decision_review_evidence
     english_for_speakers_of_other_languages
     english_language_proficiency
     identification
@@ -101,6 +102,10 @@ class Document < ApplicationRecord
 
   def for_consent_request?
     documentable.is_a?(ConsentRequest)
+  end
+
+  def for_decision_review_request?
+    documentable.is_a?(DecisionReviewRequest)
   end
 
   def application_form

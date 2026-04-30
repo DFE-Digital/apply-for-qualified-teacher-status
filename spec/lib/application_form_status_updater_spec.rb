@@ -3,7 +3,8 @@
 require "rails_helper"
 
 RSpec.describe ApplicationFormStatusUpdater do
-  let(:application_form) { create(:application_form) }
+  let(:application_form) { create(:application_form, assessment:) }
+  let(:assessment) { create :assessment }
   let(:user) { create(:staff) }
 
   shared_examples "changes action required by" do |new_action_required_by|
@@ -127,8 +128,6 @@ RSpec.describe ApplicationFormStatusUpdater do
     end
 
     context "with a received further information request" do
-      let(:assessment) { create(:assessment, application_form:) }
-
       before do
         application_form.update!(submitted_at: Time.zone.now)
         create(:received_further_information_request, assessment:)
@@ -140,8 +139,6 @@ RSpec.describe ApplicationFormStatusUpdater do
     end
 
     context "with a requested further information request" do
-      let(:assessment) { create(:assessment, application_form:) }
-
       before do
         application_form.update!(submitted_at: Time.zone.now)
         create(:requested_further_information_request, assessment:)
@@ -153,8 +150,6 @@ RSpec.describe ApplicationFormStatusUpdater do
     end
 
     context "with a requested profession standing request" do
-      let(:assessment) { create(:assessment, application_form:) }
-
       before do
         application_form.update!(submitted_at: Time.zone.now)
         create(:requested_professional_standing_request, assessment:)
@@ -166,8 +161,6 @@ RSpec.describe ApplicationFormStatusUpdater do
     end
 
     context "with a received profession standing request" do
-      let(:assessment) { create(:assessment, application_form:) }
-
       context "when the teaching authority provides the written statement" do
         before do
           application_form.update!(
@@ -195,8 +188,6 @@ RSpec.describe ApplicationFormStatusUpdater do
     end
 
     context "with a received qualification request" do
-      let(:assessment) { create(:assessment, application_form:) }
-
       before do
         application_form.update!(submitted_at: Time.zone.now)
         create(:received_qualification_request, assessment:)
@@ -208,8 +199,6 @@ RSpec.describe ApplicationFormStatusUpdater do
     end
 
     context "with a requested qualification request" do
-      let(:assessment) { create(:assessment, application_form:) }
-
       before do
         application_form.update!(submitted_at: Time.zone.now)
         create(
@@ -226,8 +215,6 @@ RSpec.describe ApplicationFormStatusUpdater do
     end
 
     context "with a received reference request" do
-      let(:assessment) { create(:assessment, application_form:) }
-
       before { application_form.update!(submitted_at: Time.zone.now) }
 
       context "with less than 9 months" do
@@ -306,8 +293,6 @@ RSpec.describe ApplicationFormStatusUpdater do
     end
 
     context "with a requested reference request" do
-      let(:assessment) { create(:assessment, application_form:) }
-
       before do
         application_form.update!(submitted_at: Time.zone.now)
         create(:requested_reference_request, assessment:)
@@ -319,10 +304,9 @@ RSpec.describe ApplicationFormStatusUpdater do
     end
 
     context "when a reviewed assessment" do
-      before do
-        application_form.update!(submitted_at: Time.zone.now)
-        create(:assessment, :review, application_form:)
-      end
+      let(:assessment) { create :assessment, :review }
+
+      before { application_form.update!(submitted_at: Time.zone.now) }
 
       include_examples "changes action required by", "assessor"
       include_examples "changes stage", "review"
@@ -330,10 +314,9 @@ RSpec.describe ApplicationFormStatusUpdater do
     end
 
     context "with an assessment in verify" do
-      before do
-        application_form.update!(submitted_at: Time.zone.now)
-        create(:assessment, :verify, application_form:)
-      end
+      let(:assessment) { create :assessment, :verify }
+
+      before { application_form.update!(submitted_at: Time.zone.now) }
 
       include_examples "changes action required by", "assessor"
       include_examples "changes stage", "verification"
@@ -341,10 +324,9 @@ RSpec.describe ApplicationFormStatusUpdater do
     end
 
     context "with a started assessment" do
-      before do
-        application_form.update!(submitted_at: Time.zone.now)
-        create(:assessment, :started, application_form:)
-      end
+      let(:assessment) { create :assessment, :started }
+
+      before { application_form.update!(submitted_at: Time.zone.now) }
 
       include_examples "changes action required by", "assessor"
       include_examples "changes stage", "assessment"
@@ -352,10 +334,7 @@ RSpec.describe ApplicationFormStatusUpdater do
     end
 
     context "with an unstarted assessment" do
-      before do
-        application_form.update!(submitted_at: Time.zone.now)
-        create(:assessment, application_form:)
-      end
+      before { application_form.update!(submitted_at: Time.zone.now) }
 
       include_examples "changes action required by", "assessor"
       include_examples "changes stage", "not_started"
@@ -363,6 +342,8 @@ RSpec.describe ApplicationFormStatusUpdater do
     end
 
     context "when status is unchanged" do
+      let(:application_form) { create(:application_form) }
+
       include_examples "doesn't change action required by"
 
       it "doesn't change the stage from draft" do
@@ -387,8 +368,6 @@ RSpec.describe ApplicationFormStatusUpdater do
           requires_preliminary_check: true,
         )
       end
-
-      let(:assessment) { create(:assessment, application_form:) }
 
       let!(:preliminary_assessment_section) do
         create(:assessment_section, :preliminary, assessment:)
@@ -448,7 +427,6 @@ RSpec.describe ApplicationFormStatusUpdater do
       let!(:prioritisation_work_history_check) do
         create(:prioritisation_work_history_check, assessment:)
       end
-      let(:assessment) { create(:assessment, application_form:) }
 
       before do
         application_form.update!(

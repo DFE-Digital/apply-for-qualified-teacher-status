@@ -1,0 +1,37 @@
+<% title = "Review decision review received" %>
+
+<% content_for :page_title, title_with_error_prefix(title, error: @form.errors.any?) %>
+<% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
+
+<%= form_with model: @form, url: [:assessor_interface, @application_form, @assessment, @decision_review_request], method: :put do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <h1 class="govuk-heading-xl">
+    <%= title %>
+  </h1>
+
+  <%= govuk_summary_card(title: "Decision review request") do |card| %>
+    <p class="govuk-hint govuk-!-margin-bottom-2"><%= @decision_review_request.received_at.to_date.to_fs %></p>
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-2">Applicant's comments</h3>
+
+    <p class="govuk-body govuk-!-margin-bottom-2">
+      <%= simple_format @decision_review_request.comment %>
+    </p>
+
+    <% if @decision_review_request.has_supporting_documents? %>
+      <h3 class="govuk-heading-s govuk-!-margin-bottom-2">Applicant's supporting evidence</h3>
+      <%= document_link_to(@decision_review_request.decision_review_evidence_document) %>
+    <% end %>
+  <% end %>
+
+  <%= f.govuk_radio_buttons_fieldset :review_passed, legend: { text: "Has the applicant provided enough evidence to reverse a decline decision?" } do %>
+    <%= f.govuk_radio_button :review_passed, true, label: { text: "Yes" }, link_errors: true, disabled: @decision_review_request.reviewed_at.present? %>
+    <%= f.govuk_radio_button :review_passed, false, label: { text: "No" }, disabled: @decision_review_request.reviewed_at.present? do %>
+      <%= f.govuk_text_area :review_note, label: { text: "Provide your reasoning for the applicant" }, disabled: @decision_review_request.reviewed_at.present? %>
+    <% end %>
+  <% end %>
+
+  <%= f.govuk_submit disabled: @decision_review_request.reviewed_at.present? do %>
+    <%= render "shared/assessor_interface/cancel_link" %>
+  <% end %>
+<% end %>

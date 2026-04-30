@@ -9,7 +9,9 @@ RSpec.describe DeclineQTS do
   let(:user) { create(:staff) }
 
   context "with an application form" do
-    let(:application_form) { create(:application_form, :submitted, teacher:) }
+    let(:application_form) do
+      create(:application_form, :submitted, :with_assessment, teacher:)
+    end
 
     it "sends an email" do
       expect { call }.to have_enqueued_mail(
@@ -44,7 +46,9 @@ RSpec.describe DeclineQTS do
   end
 
   context "with a declined application form" do
-    let(:application_form) { create(:application_form, :declined, teacher:) }
+    let(:application_form) do
+      create(:application_form, :declined, :with_assessment, teacher:)
+    end
 
     it "doesn't send an email" do
       expect { call }.not_to have_enqueued_mail(

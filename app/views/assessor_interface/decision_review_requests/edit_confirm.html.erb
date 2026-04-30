@@ -1,0 +1,27 @@
+<% content_for :page_title, "Confirm decision review" %>
+<% content_for :back_link_url, edit_assessor_interface_application_form_assessment_decision_review_request_path(@application_form, @assessment, @decision_review_request) %>
+
+<%= form_with model: @form, url: [:assessor_interface, @application_form, @assessment, @decision_review_request, :confirm], method: :post do |f| %>
+
+  <% if @decision_review_request.review_passed? %>
+    <h1 class="govuk-heading-xl">
+      Are you sure you want to reverse a decline decision?
+    </h1>
+
+    <p class="govuk-body">Once you click confirm, the application will move back into assessment and will no longer be declined.</p>
+    <p class="govuk-body">The applicant will receive an email to notify them of this decision.</p>
+  <% else %>
+    <h1 class="govuk-heading-xl">
+      Are you sure you want to reject the applicant's request for a reverse decision?
+    </h1>
+
+    <p class="govuk-body">Once you click confirm, the applicant will receive an email to notify them of this decision alongside your note.</p>
+    <%= govuk_inset_text do %>
+      <p><%= simple_format @decision_review_request.review_note %></p>
+    <% end %>
+  <% end %>
+
+  <%= f.govuk_submit "Confirm" do %>
+    <%= render "shared/assessor_interface/cancel_link" %>
+  <% end %>
+<% end %>
