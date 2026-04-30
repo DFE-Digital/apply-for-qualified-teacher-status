@@ -348,7 +348,7 @@ Rails.application.routes.draw do
 
     mount FeatureFlags::Engine, at: "features"
 
-    resources :countries, only: %i[index edit update] do
+    resources :countries, only: %i[index edit update new create] do
       get "preview", on: :member
     end
 

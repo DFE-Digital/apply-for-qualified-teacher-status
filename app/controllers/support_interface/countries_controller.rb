@@ -35,6 +35,13 @@ module SupportInterface
       @form.assign_country_attributes
     end
 
+    def new
+      authorize [:support_interface, Country]
+    end
+
+    def create
+    end
+
     private
 
     def country
