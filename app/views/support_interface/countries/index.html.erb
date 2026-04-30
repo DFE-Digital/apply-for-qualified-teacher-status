@@ -2,7 +2,7 @@
 
 <h1 class="govuk-heading-l">Countries</h1>
 
-<%= govuk_button_link_to "Add a new country" %>
+<%= govuk_button_link_to "Add a new country", new_support_interface_country_path %>
 
 <% @countries.each do |country| %>
   <%= govuk_table do |table| %>
