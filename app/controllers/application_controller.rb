@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   default_form_builder GOVUKDesignSystemFormBuilder::FormBuilder
   layout "two_thirds"
 
+  before_action :set_no_cache_headers
   before_action :authenticate_support!, unless: :service_open?
 
   def current_user
@@ -24,6 +25,10 @@ class ApplicationController < ActionController::Base
       username == ENV.fetch("SUPPORT_USERNAME") &&
         password == ENV.fetch("SUPPORT_PASSWORD")
     end
+  end
+
+  def set_no_cache_headers
+    response.set_header("Cache-Control", "no-store")
   end
 
   def service_open?
