@@ -62,6 +62,16 @@ RSpec.describe "Countries support", type: :system do
     and_i_see_the_updated_countries
   end
 
+  it "allows visiting new country page" do
+    given_countries_exist
+    given_i_am_authorized_as_a_support_user
+    when_i_visit_the_countries_page
+
+    expect(page).to have_link("Add a new country")
+    and_i_click_new_country
+    then_i_see_the_new_country_page
+  end
+
   private
 
   def given_countries_exist
@@ -232,5 +242,13 @@ RSpec.describe "Countries support", type: :system do
 
   def and_i_click_preview
     click_button "Preview", visible: false
+  end
+
+  def and_i_click_new_country
+    click_link "Add a new country"
+  end
+
+  def then_i_see_the_new_country_page
+    expect(page).to have_content("Create a new country")
   end
 end
