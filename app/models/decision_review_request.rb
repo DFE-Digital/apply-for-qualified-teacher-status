@@ -37,8 +37,12 @@ class DecisionReviewRequest < ApplicationRecord
       )
   end
 
-  def after_received(user:)
-    # We may want to trigger email delivery
+  def after_received(*)
+    DeliverEmail.call(
+      application_form:,
+      mailer: TeacherMailer,
+      action: :decision_review_received,
+    )
   end
 
   def after_reviewed(user:)
