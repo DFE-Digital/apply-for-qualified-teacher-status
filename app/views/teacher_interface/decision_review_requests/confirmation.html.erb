@@ -1,0 +1,6 @@
+<% content_for :page_title, t(".title") %>
+<% content_for :back_link_url, teacher_interface_application_form_path %>
+
+<h1 class="govuk-heading-xl"><%= t(".title") %></h1>
+
+<p class="govuk-body">You can close this page or <%= govuk_link_to "click here to go back to your application page", teacher_interface_application_form_path %>.</p>

@@ -561,8 +561,15 @@ Rails.application.routes.draw do
       resources :decision_review_requests,
                 path: "/decision-review-requests",
                 only: %i[index new create edit update] do
+        collection do
+          get "declaration", to: "decision_review_requests#edit_declaration"
+          post "declaration", to: "decision_review_requests#update_declaration"
+        end
+
         get "confirm", to: "decision_review_requests#edit_confirm"
         post "confirm", to: "decision_review_requests#update_confirm"
+
+        post "confirmation", to: "decision_review_requests#confirmation"
       end
     end
 

@@ -83,6 +83,11 @@ en:
         draft:
           check: Check your application
           save: Save and sign out
+    decision_review_requests:
+      edit_declaration:
+        title: Request a decision review
+      confirmation:
+        title: We’ve received your decision review request
     documents:
       unsafe_to_link: The selected file contains a suspected virus. Delete it and upload a new file.
     english_language:
