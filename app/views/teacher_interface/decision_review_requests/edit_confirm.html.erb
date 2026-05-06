@@ -1,10 +1,10 @@
-<% content_for :page_title, "Check your decision review evidence" %>
+<% content_for :page_title, t(".title") %>
 <% content_for :back_link_url, back_history_path(origin: true, default: teacher_interface_application_form_path) %>
 
 
 <%= form_with url: [:teacher_interface, :application_form, @decision_review_request, :confirm], method: :post do |f| %>
   <span class="govuk-caption-l">Your application</span>
-  <h1 class="govuk-heading-l">Check your decision review evidence</h1>
+  <h1 class="govuk-heading-l"><%= t(".title") %></h1>
 
   <%= render(CheckYourAnswersSummary::Component.new(
     id: "decision-review-request",
@@ -12,13 +12,18 @@
     title: "Decision review request",
     fields: {
       comment: {
-        title: "Reasoning for a decision review",
+        title: "Tell us why you are requesting a decision review",
         href: edit_teacher_interface_application_form_decision_review_request_path(@decision_review_request)
       },
-      decision_review_evidence_document: {
-        title: "Supporting evidence",
-        href: [:teacher_interface, :application_form, @decision_review_request.decision_review_evidence_document]
+      has_supporting_documents: {
+        title: "Do you need to upload supporting documents for your decision review request?",
+        text: @decision_review_request.has_supporting_documents? ? "Yes, I need to upload supporting documents" : "No, I do not need to upload supporting documents",
+        href: edit_teacher_interface_application_form_decision_review_request_path(@decision_review_request)
       },
+      decision_review_evidence_document: @decision_review_request.has_supporting_documents? ? {
+        title: "Supporting evidence documents",
+        href: [:teacher_interface, :application_form, @decision_review_request.decision_review_evidence_document]
+      } : nil,
     },
     changeable: true
   )) %>
@@ -26,5 +31,8 @@
   <h2 class="govuk-heading-m">Submitting your decision review</h2>
   <p class="govuk-body">By selecting the ‘Submit decision review’ you confirm that, to the best of your knowledge, the details you’ve provided are correct.</p>
   <p class="govuk-body">You will not be able to change your request, add new documents or delete anything once you submit it.</p>
-  <%= f.govuk_submit "Submit decision review" %>
+
+  <%= f.govuk_submit "Submit decision review" do %>
+    <%= govuk_link_to "Cancel", teacher_interface_application_form_path %>
+  <% end %>
 <% end %>

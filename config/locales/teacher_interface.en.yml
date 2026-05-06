@@ -84,8 +84,12 @@ en:
           check: Check your application
           save: Save and sign out
     decision_review_requests:
+      form:
+        title: Add your decision review reason
       edit_declaration:
         title: Request a decision review
+      edit_confirm:
+        title: Check your decision review evidence
       confirmation:
         title: We’ve received your decision review request
     documents:
@@ -314,6 +318,10 @@ en:
               blank: Enter your reasoning for a decision review
             has_supporting_documents:
               inclusion: Select if you need to upload any supporting evidence for your request
+        teacher_interface/declaration_decision_review_request_form:
+          attributes:
+            confirm:
+              blank: You must confirm that your request meets the above requirements
         teacher_interface/delete_qualification_form:
           attributes:
             confirm:
@@ -330,6 +338,12 @@ en:
           attributes:
             available:
               inclusion: Select whether you have this document available
+        teacher_interface/edit_decision_review_request_form:
+          attributes:
+            comment:
+              blank: Enter your reasoning for a decision review
+            has_supporting_documents:
+              inclusion: Select if you need to upload any supporting evidence for your request
         teacher_interface/english_language_exemption_form:
           attributes:
             exempt:
