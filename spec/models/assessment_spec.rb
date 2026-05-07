@@ -877,4 +877,53 @@ RSpec.describe Assessment, type: :model do
       end
     end
   end
+
+  describe "#can_request_decision_review?" do
+    subject(:can_request_decision_review?) do
+      assessment.can_request_decision_review?
+    end
+
+    context "when application is not declined" do
+      it { is_expected.to be false }
+    end
+
+    context "when application is declined" do
+      let(:application_form) { create(:application_form, :declined) }
+
+      it { is_expected.to be true }
+
+      context "with having been declined over 28 days ago" do
+        let(:application_form) do
+          create(:application_form, :declined, declined_at: 29.days.ago)
+        end
+
+        it { is_expected.to be false }
+      end
+
+      context "when assessment already has a decision review request not received" do
+        before { create(:decision_review_request, assessment:) }
+
+        it { is_expected.to be true }
+      end
+
+      context "when assessment already has a decision review request received" do
+        before { create(:received_decision_review_request, assessment:) }
+
+        it { is_expected.to be false }
+      end
+
+      context "when assessment already has a decision review request which has been reviewed and not passed" do
+        before do
+          create(
+            :received_decision_review_request,
+            assessment:,
+            reviewed_at: Time.current,
+            review_passed: false,
+          )
+        end
+
+        it { is_expected.to be false }
+      end
+    end
+  end
 end

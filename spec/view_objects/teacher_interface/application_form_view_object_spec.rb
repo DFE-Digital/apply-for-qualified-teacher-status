@@ -1082,4 +1082,82 @@ RSpec.describe TeacherInterface::ApplicationFormViewObject do
       end
     end
   end
+
+  describe "#has_requested_decision_review_and_awaiting_review?" do
+    subject(:has_requested_decision_review_and_awaiting_review?) do
+      view_object.has_requested_decision_review_and_awaiting_review?
+    end
+
+    let!(:assessment) { create(:assessment, application_form:) }
+
+    context "without a decision review request" do
+      it { is_expected.to be(false) }
+    end
+
+    context "with a decision review request" do
+      context "that has not yet been received" do
+        before { create(:decision_review_request, assessment:) }
+
+        it { is_expected.to be(false) }
+      end
+
+      context "that has been received and not yet reviewed" do
+        before { create(:received_decision_review_request, assessment:) }
+
+        it { is_expected.to be(true) }
+      end
+
+      context "that has been received and reviewed" do
+        before do
+          create(
+            :received_decision_review_request,
+            assessment:,
+            reviewed_at: Time.current,
+            review_passed: false,
+          )
+        end
+
+        it { is_expected.to be(false) }
+      end
+    end
+  end
+
+  describe "#has_requested_decision_review_and_received_outcome?" do
+    subject(:has_requested_decision_review_and_received_outcome?) do
+      view_object.has_requested_decision_review_and_received_outcome?
+    end
+
+    let!(:assessment) { create(:assessment, application_form:) }
+
+    context "without a decision review request" do
+      it { is_expected.to be(false) }
+    end
+
+    context "with a decision review request" do
+      context "that has not yet been received" do
+        before { create(:decision_review_request, assessment:) }
+
+        it { is_expected.to be(false) }
+      end
+
+      context "that has been received and not yet reviewed" do
+        before { create(:received_decision_review_request, assessment:) }
+
+        it { is_expected.to be(false) }
+      end
+
+      context "that has been received and reviewed" do
+        before do
+          create(
+            :received_decision_review_request,
+            assessment:,
+            reviewed_at: Time.current,
+            review_passed: false,
+          )
+        end
+
+        it { is_expected.to be(true) }
+      end
+    end
+  end
 end

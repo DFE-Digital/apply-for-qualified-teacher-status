@@ -42,7 +42,7 @@
   <h3 class="govuk-heading-l">Decision review</h3>
     <p class="govuk-body">Applicants who have been declined for QTS are entitled to a review of the decline decision by a senior Professional Recognition Manager.</p>
 
-  <% if view_object.assessment.can_request_decision_review? %>
+  <% if view_object.can_request_decision_review? %>
     <p class="govuk-body">If you would like to request a decision review, you’ll need to provide:</p>
 
     <ul class="govuk-list govuk-list--bullet">
@@ -59,7 +59,7 @@
         Or, if you can address the reasons your application has been declined, you can submit a new application. You must <%= govuk_link_to "check if you’re still eligible", %i[new teacher_interface application_form] %> to apply first. You’ll need to provide all the required information and documents again.
       </p>
     <% end %>
-  <% elsif view_object.assessment.decision_review_request&.reviewed_at.present? && view_object.assessment.decision_review_request.review_passed == false %>
+  <% elsif view_object.has_requested_decision_review_and_received_outcome? %>
     <p class="govuk-body">Unfortunately your request for a decision review has been rejected.</p>
 
     <p class="govuk-body">Note from Assessor:</p>
@@ -75,7 +75,7 @@
         Or, if you can address the reasons your application has been declined, you can submit a new application. You must <%= govuk_link_to "check if you’re still eligible", %i[new teacher_interface application_form] %> to apply first. You’ll need to provide all the required information and documents again.
       </p>
     <% end %>
-  <% elsif view_object.assessment.decision_review_request.present? %>
+  <% elsif view_object.has_requested_decision_review_and_awaiting_review? %>
     <%= govuk_inset_text do %>
       We have received your request for a decision review. We aim to get back to you within 28 working days.
     <% end %>

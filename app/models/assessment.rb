@@ -179,7 +179,7 @@ class Assessment < ApplicationRecord
   end
 
   def can_request_decision_review?
-    return false unless decline?
+    return false unless application_form.declined?
 
     application_form.declined_at > DAYS_TO_REQUEST_DECISION_REVIEW.ago &&
       !decision_review_request&.received?
