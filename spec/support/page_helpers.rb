@@ -927,6 +927,31 @@ module PageHelpers
       PageObjects::TeacherInterface::SubmittedApplication.new
   end
 
+  def teacher_request_decision_review_declaration_page
+    @teacher_request_decision_review_declaration_page =
+      PageObjects::TeacherInterface::DecisionReviewDeclaration.new
+  end
+
+  def teacher_request_decision_review_new_page
+    @teacher_request_decision_review_new_page =
+      PageObjects::TeacherInterface::DecisionReviewNew.new
+  end
+
+  def teacher_request_decision_review_edit_page
+    @teacher_request_decision_review_edit_page =
+      PageObjects::TeacherInterface::DecisionReviewEdit.new
+  end
+
+  def teacher_request_decision_review_confirm_page
+    @teacher_request_decision_review_confirm_page =
+      PageObjects::TeacherInterface::DecisionReviewConfirm.new
+  end
+
+  def teacher_request_decision_review_confirmation_page
+    @teacher_request_decision_review_confirmation_page =
+      PageObjects::TeacherInterface::DecisionReviewConfirmation.new
+  end
+
   def teacher_upload_document_page
     @teacher_upload_document_page =
       PageObjects::TeacherInterface::UploadDocument.new

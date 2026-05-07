@@ -5,8 +5,10 @@ module TeacherInterface
     include HandleApplicationFormSection
     include HistoryTrackable
 
-    before_action :redirect_unless_application_form_is_declined
-    before_action :redirect_if_decision_review_already_received
+    before_action :redirect_unless_can_request_decision_review,
+                  except: :confirmation
+    before_action :redirect_if_decision_review_already_received,
+                  except: :confirmation
     before_action :redirect_if_decision_review_already_created,
                   only: %i[new create]
     before_action :load_application_form
@@ -84,23 +86,19 @@ module TeacherInterface
     end
 
     def edit
-      @decision_review_request = DecisionReviewRequest.find(params[:id])
-
       @form =
         EditDecisionReviewRequestForm.new(
-          comment: @decision_review_request.comment,
+          comment: decision_review_request.comment,
           has_supporting_documents:
-            @decision_review_request.has_supporting_documents,
+            decision_review_request.has_supporting_documents,
         )
     end
 
     def update
-      @decision_review_request = DecisionReviewRequest.find(params[:id])
-
       @form =
         EditDecisionReviewRequestForm.new(
           edit_decision_review_request_form_params.merge(
-            decision_review_request: @decision_review_request,
+            decision_review_request: decision_review_request,
           ),
         )
 
@@ -111,11 +109,11 @@ module TeacherInterface
             [
               :teacher_interface,
               :application_form,
-              @decision_review_request.decision_review_evidence_document,
+              decision_review_request.decision_review_evidence_document,
             ]
           else
             teacher_interface_application_form_decision_review_request_confirm_path(
-              @form.decision_review_request,
+              decision_review_request,
             )
           end,
         if_failure_then_render: :edit,
@@ -129,11 +127,13 @@ module TeacherInterface
 
     def update_confirm
       ReceiveRequestable.call(
-        requestable: application_form.assessment.decision_review_request,
+        requestable: decision_review_request,
         user: current_teacher,
       )
 
-      redirect_to %i[teacher_interface application_form]
+      redirect_to teacher_interface_application_form_decision_review_request_confirmation_path(
+                    decision_review_request,
+                  )
     end
 
     def confirmation
@@ -146,8 +146,8 @@ module TeacherInterface
         application_form.assessment.decision_review_request
     end
 
-    def redirect_unless_application_form_is_declined
-      return if application_form.declined?
+    def redirect_unless_can_request_decision_review
+      return if application_form.assessment.can_request_decision_review?
 
       redirect_to teacher_interface_application_form_path
     end

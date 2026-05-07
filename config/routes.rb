@@ -569,7 +569,7 @@ Rails.application.routes.draw do
         get "confirm", to: "decision_review_requests#edit_confirm"
         post "confirm", to: "decision_review_requests#update_confirm"
 
-        post "confirmation", to: "decision_review_requests#confirmation"
+        get "confirmation", to: "decision_review_requests#confirmation"
       end
     end
 
