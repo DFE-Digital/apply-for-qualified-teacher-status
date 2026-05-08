@@ -8,7 +8,7 @@ module TeacherInterface
     attribute :has_supporting_documents, :boolean
 
     validates :decision_review_request, presence: true
-    validates :comment, presence: true
+    validates :comment, presence: true, max_text_length: true
     validates :has_supporting_documents, inclusion: [true, false]
 
     def update_model
