@@ -39,18 +39,18 @@
     <%= govuk_start_button(text: "Check you’re still eligible", href: %i[new teacher_interface application_form]) %>
   <% end %>
 
-  <h3 class="govuk-heading-l">Decision review</h3>
-    <p class="govuk-body">Applicants who have been declined for QTS are entitled to a review of the decline decision by a senior Professional Recognition Manager.</p>
-
+  <h3 class="govuk-heading-l">If you disagree with our decision</h3>
   <% if view_object.can_request_decision_review? %>
-    <p class="govuk-body">If you would like to request a decision review, you’ll need to provide:</p>
+    <p class="govuk-body">If you think our decision to decline your application for QTS in England is wrong, you can request to challenge the decision. This is known as a decision review.</p>
+
+    <p class="govuk-body">To challenge this decision, you must provide:</p>
 
     <ul class="govuk-list govuk-list--bullet">
-      <li>formal evidence and reasoning as to how you meet the required assessment criteria</li>
-      <li>additional information not included in your original application that would support your decision review</li>
+      <li>evidence and reasoning for how you meet the required assessment criteria</li>
+      <li>any additional information not included in your original application that would support the decision review</li>
     </ul>
 
-    <p class="govuk-body">Your request for review must be received within 28 days of receipt of the decision to decline QTS.</p>
+    <p class="govuk-body">You must make the request within 28 days of the date we sent the decision email. Your request will be reviewed by a senior Professional Recognition Manager.</p>
 
     <p class="govuk-body"><%= govuk_link_to "Request a decision review", teacher_interface_application_form_decision_review_requests_path %>.</p>
 
@@ -76,11 +76,17 @@
       </p>
     <% end %>
   <% elsif view_object.has_requested_decision_review_and_awaiting_review? %>
-    <%= govuk_inset_text do %>
-      We have received your request for a decision review. We aim to get back to you within 28 working days.
-    <% end %>
+    <p class="govuk-body">
+      We have received your request for a decision review. Your request and evidence will be reviewed by a senior Professional Recognition Manager within 28 working days. We will email to confirm the outcome of your request.
+    </p>
   <% else %>
-    <p class="govuk-body">You have missed the 28 day deadline following the receipt of the decision to decline QTS to request a review.</p>
+    <p class="govuk-body">You cannot challenge this decision because it has been more than 28 days since we sent the decision email.</p>
+
+    <% if view_object.declined_cannot_reapply? %>
+      <p class="govuk-body">
+        If you can address the reasons your application has been declined, you can submit a new application. You must <%= govuk_link_to "check if you’re still eligible", %i[new teacher_interface application_form] %> to apply first. You’ll need to provide all the required information and documents again.
+      </p>
+    <% end %>
   <% end %>
 <% end %>
 

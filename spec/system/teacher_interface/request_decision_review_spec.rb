@@ -49,7 +49,7 @@ RSpec.describe "Teacher decision review request", type: :system do
     when_i_submit_decision_review
     then_i_see_the(:teacher_request_decision_review_confirmation_page)
 
-    when_i_click_to_go_back_to_application_page
+    when_i_visit_the(:teacher_application_page)
     then_i_see_the(:teacher_declined_application_page)
     and_i_see_content_that_submitted_a_decision_review
   end
@@ -88,7 +88,7 @@ RSpec.describe "Teacher decision review request", type: :system do
     when_i_submit_decision_review
     then_i_see_the(:teacher_request_decision_review_confirmation_page)
 
-    when_i_click_to_go_back_to_application_page
+    when_i_visit_the(:teacher_application_page)
     then_i_see_the(:teacher_declined_application_page)
     and_i_see_content_that_submitted_a_decision_review
   end
@@ -136,12 +136,11 @@ RSpec.describe "Teacher decision review request", type: :system do
   end
 
   def and_i_see_ability_to_request_a_decision_review
-    expect(teacher_declined_application_page).to have_content("Decision review")
     expect(teacher_declined_application_page).to have_content(
-      "Applicants who have been declined for QTS are entitled to a review of the decline decision",
+      "If you disagree with our decision",
     )
     expect(teacher_declined_application_page).to have_content(
-      "Your request for review must be received within 28 days of receipt of the decision to decline QTS.",
+      "You must make the request within 28 days of the date we sent the decision email.",
     )
     expect(teacher_declined_application_page).to have_link(
       "Request a decision review",
@@ -149,12 +148,11 @@ RSpec.describe "Teacher decision review request", type: :system do
   end
 
   def and_i_see_that_i_have_missed_the_timeframe_to_request_a_decision_review
-    expect(teacher_declined_application_page).to have_content("Decision review")
     expect(teacher_declined_application_page).to have_content(
-      "Applicants who have been declined for QTS are entitled to a review of the decline decision",
+      "If you disagree with our decision",
     )
     expect(teacher_declined_application_page).to have_content(
-      "You have missed the 28 day deadline following the receipt of the decision to decline QTS to request a review.",
+      "You cannot challenge this decision because it has been more than 28 days since we sent the decision email.",
     )
     expect(teacher_declined_application_page).not_to have_link(
       "Request a decision review",
@@ -162,7 +160,9 @@ RSpec.describe "Teacher decision review request", type: :system do
   end
 
   def and_i_see_my_rejection_reason_for_my_decision_review_request
-    expect(teacher_declined_application_page).to have_content("Decision review")
+    expect(teacher_declined_application_page).to have_content(
+      "If you disagree with our decision",
+    )
     expect(teacher_declined_application_page).to have_content(
       "Unfortunately your request for a decision review has been rejected.",
     )
@@ -181,7 +181,7 @@ RSpec.describe "Teacher decision review request", type: :system do
 
   def then_i_see_an_error_message_for_confirm_to_meet_requirements
     expect(teacher_request_decision_review_declaration_page).to have_content(
-      "You must confirm that your request meets the above requirements",
+      "Select if your request meets the requirements",
     )
   end
 
@@ -216,7 +216,7 @@ RSpec.describe "Teacher decision review request", type: :system do
     teacher_request_decision_review_confirm_page
       .summary_rows
       .first
-      .find_row(key: "Tell us why you are requesting a decision review")
+      .find_row(key: "Your decision review reason")
       .actions
       .link
       .click
@@ -226,26 +226,20 @@ RSpec.describe "Teacher decision review request", type: :system do
     teacher_request_decision_review_confirm_page
       .summary_rows
       .first
-      .find_row(
-        key:
-          "Do you need to upload supporting documents for your decision review request?",
-      )
+      .find_row(key: "Add supporting evidence")
       .actions
       .link
       .click
   end
 
   def when_i_submit_decision_review
-    teacher_request_decision_review_confirm_page.click_on "Submit decision review"
-  end
-
-  def when_i_click_to_go_back_to_application_page
-    teacher_request_decision_review_confirmation_page.click_on "click here to go back to your application"
+    teacher_request_decision_review_confirm_page.click_on "Submit request"
   end
 
   def and_i_see_content_that_submitted_a_decision_review
     expect(teacher_declined_application_page).to have_content(
-      "We have received your request for a decision review. We aim to get back to you within 28 working days.",
+      "We have received your request for a decision review. " \
+        "Your request and evidence will be reviewed by a senior Professional Recognition Manager within 28 working days.",
     )
   end
 
@@ -253,6 +247,7 @@ RSpec.describe "Teacher decision review request", type: :system do
     teacher_upload_document_page.form.original_attachment.attach_file Rails.root.join(
       file_fixture("upload.pdf"),
     )
+    teacher_upload_document_page.form.written_in_english_items.first.choose
     teacher_upload_document_page.form.continue_button.click
   end
 

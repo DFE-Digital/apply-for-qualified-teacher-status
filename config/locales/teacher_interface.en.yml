@@ -85,13 +85,13 @@ en:
           save: Save and sign out
     decision_review_requests:
       form:
-        title: Add your decision review reason
+        title: Your decision review reason
       edit_declaration:
         title: Request a decision review
       edit_confirm:
-        title: Check your decision review evidence
+        title: Check your decision review request
       confirmation:
-        title: We’ve received your decision review request
+        title: Request submitted
     documents:
       unsafe_to_link: The selected file contains a suspected virus. Delete it and upload a new file.
     english_language:
@@ -315,13 +315,13 @@ en:
         teacher_interface/create_decision_review_request_form:
           attributes:
             comment:
-              blank: Enter your reasoning for a decision review
+              blank: Enter the reason you are requesting a decision review
             has_supporting_documents:
-              inclusion: Select if you need to upload any supporting evidence for your request
+              inclusion: Select if you need to upload documents to support your decision review request
         teacher_interface/declaration_decision_review_request_form:
           attributes:
             confirm:
-              blank: You must confirm that your request meets the above requirements
+              blank: Select if your request meets the requirements
         teacher_interface/delete_qualification_form:
           attributes:
             confirm:
@@ -341,9 +341,9 @@ en:
         teacher_interface/edit_decision_review_request_form:
           attributes:
             comment:
-              blank: Enter your reasoning for a decision review
+              blank: Enter the reason you are requesting a decision review
             has_supporting_documents:
-              inclusion: Select if you need to upload any supporting evidence for your request
+              inclusion: Select if you need to upload documents to support your decision review request
         teacher_interface/english_language_exemption_form:
           attributes:
             exempt:

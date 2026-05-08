@@ -12,14 +12,14 @@
 
   <%= govuk_summary_card(title: "Decision review request") do |card| %>
     <p class="govuk-hint govuk-!-margin-bottom-2"><%= @decision_review_request.received_at.to_date.to_fs %></p>
-    <h3 class="govuk-heading-s govuk-!-margin-bottom-2">Applicant's comments</h3>
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-2">Applicant’s comments</h3>
 
     <p class="govuk-body govuk-!-margin-bottom-2">
       <%= simple_format @decision_review_request.comment %>
     </p>
 
     <% if @decision_review_request.has_supporting_documents? %>
-      <h3 class="govuk-heading-s govuk-!-margin-bottom-2">Applicant's supporting evidence</h3>
+      <h3 class="govuk-heading-s govuk-!-margin-bottom-2">Applicant’s supporting evidence</h3>
       <%= document_link_to(@decision_review_request.decision_review_evidence_document) %>
     <% end %>
   <% end %>

@@ -32,7 +32,6 @@ class Document < ApplicationRecord
            class_name: "Upload"
 
   UNTRANSLATABLE_TYPES = %w[
-    decision_review_evidence
     english_for_speakers_of_other_languages
     english_language_proficiency
     identification
@@ -44,6 +43,7 @@ class Document < ApplicationRecord
   UNTRANSLATABLE_SINGLE_TYPES = %w[signed_consent unsigned_consent].freeze
 
   TRANSLATABLE_TYPES = %w[
+    decision_review_evidence
     qualification_certificate
     qualification_document
     qualification_transcript

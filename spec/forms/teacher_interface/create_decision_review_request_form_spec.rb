@@ -18,7 +18,7 @@ RSpec.describe TeacherInterface::CreateDecisionReviewRequestForm,
 
     it do
       expect(subject).to validate_presence_of(:comment).with_message(
-        "Enter your reasoning for a decision review",
+        "Enter the reason you are requesting a decision review",
       )
     end
 
@@ -26,7 +26,7 @@ RSpec.describe TeacherInterface::CreateDecisionReviewRequestForm,
       expect(subject).to validate_presence_of(
         :has_supporting_documents,
       ).with_message(
-        "Select if you need to upload any supporting evidence for your request",
+        "Select if you need to upload documents to support your decision review request",
       )
     end
   end

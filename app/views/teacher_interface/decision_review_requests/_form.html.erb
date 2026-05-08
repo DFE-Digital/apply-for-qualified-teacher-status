@@ -4,16 +4,14 @@
 <%= form_with model: form, url:, method: do |f| %>
   <%= f.govuk_error_summary %>
 
-  <span class="govuk-caption-l">Your application</span>
+  <span class="govuk-caption-l">Your decision review request</span>
   <h1 class="govuk-heading-l"><%= t(".title") %></h1>
 
-  <%= govuk_warning_text(text: "If you do not provide grounds for review, your request will be dismissed.") %>
+  <%= f.govuk_text_area :comment, label: { size: "m" } %>
 
-  <%= f.govuk_text_area :comment, label: { size: "m", text: "Tell us why you are requesting a decision review" } %>
-
-  <%= f.govuk_radio_buttons_fieldset :has_supporting_documents, legend: { text: "Do you need to upload supporting documents for your decision review request?" } do %>
-    <%= f.govuk_radio_button :has_supporting_documents, true, label: { text: "Yes, I need to upload supporting documents" }, link_errors: true %>
-    <%= f.govuk_radio_button :has_supporting_documents, false, label: { text: "No, I do not need to upload supporting documents" } %>
+  <%= f.govuk_radio_buttons_fieldset :has_supporting_documents do %>
+    <%= f.govuk_radio_button :has_supporting_documents, true, label: { text: "Yes, I need to upload supporting evidence" }, link_errors: true %>
+    <%= f.govuk_radio_button :has_supporting_documents, false, label: { text: "No, I do not need to upload supporting evidence" } %>
   <% end %>
 
   <%= f.govuk_submit "Continue", name: "button", value: "save_and_continue" do %>

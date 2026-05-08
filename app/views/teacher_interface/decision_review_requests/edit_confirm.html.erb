@@ -3,7 +3,7 @@
 
 
 <%= form_with url: [:teacher_interface, :application_form, @decision_review_request, :confirm], method: :post do |f| %>
-  <span class="govuk-caption-l">Your application</span>
+  <span class="govuk-caption-l">Your decision review request</span>
   <h1 class="govuk-heading-l"><%= t(".title") %></h1>
 
   <%= render(CheckYourAnswersSummary::Component.new(
@@ -12,11 +12,11 @@
     title: "Decision review request",
     fields: {
       comment: {
-        title: "Tell us why you are requesting a decision review",
+        title: "Your decision review reason",
         href: edit_teacher_interface_application_form_decision_review_request_path(@decision_review_request)
       },
       has_supporting_documents: {
-        title: "Do you need to upload supporting documents for your decision review request?",
+        title: "Add supporting evidence",
         text: @decision_review_request.has_supporting_documents? ? "Yes, I need to upload supporting documents" : "No, I do not need to upload supporting documents",
         href: edit_teacher_interface_application_form_decision_review_request_path(@decision_review_request)
       },
@@ -28,11 +28,11 @@
     changeable: true
   )) %>
 
-  <h2 class="govuk-heading-m">Submitting your decision review</h2>
-  <p class="govuk-body">By selecting the ‘Submit decision review’ you confirm that, to the best of your knowledge, the details you’ve provided are correct.</p>
+  <h2 class="govuk-heading-m">Submitting your request</h2>
+  <p class="govuk-body">By selecting ‘Submit request’ you confirm that, to the best of your knowledge, the details you’ve provided are correct.</p>
   <p class="govuk-body">You will not be able to change your request, add new documents or delete anything once you submit it.</p>
 
-  <%= f.govuk_submit "Submit decision review" do %>
+  <%= f.govuk_submit "Submit request" do %>
     <%= govuk_link_to "Cancel", teacher_interface_application_form_path %>
   <% end %>
 <% end %>

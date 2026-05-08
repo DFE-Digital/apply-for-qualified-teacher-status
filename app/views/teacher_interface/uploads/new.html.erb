@@ -26,6 +26,8 @@
       <%= render "shared/english_language_approved_esol_providers", reduced_evidence_accepted: @application_form.reduced_evidence_accepted %>
     <% elsif @document.decision_review_evidence? %>
       <h1 class="govuk-heading-l">Upload your supporting document for a decision review</h1>
+
+      <p class="govuk-body">You should upload any documents that will support your request for a decision review.</p>
     <% elsif @document.identification? %>
       <h1 class="govuk-heading-l">Upload a valid identification document</h1>
 

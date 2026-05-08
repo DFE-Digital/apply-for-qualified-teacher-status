@@ -4,28 +4,26 @@
 <%= form_with model: @form, url: declaration_teacher_interface_application_form_decision_review_requests_path do |f| %>
   <%= f.govuk_error_summary %>
 
-  <span class="govuk-caption-l">Your application</span>
+  <span class="govuk-caption-l">Your decision review request</span>
   <h1 class="govuk-heading-l"><%= t(".title") %></h1>
 
-  <p class="govuk-body">Applicants who have been declined for QTS are entitled to a review of the decline decision by a senior Professional Recognition Manager.</p>
-
-  <p class="govuk-body">If you would like to request a decision review, you’ll need to provide:</p>
+  <p class="govuk-body">To request a decision review, you must provide:</p>
 
   <ul class="govuk-list govuk-list--bullet">
-    <li>formal evidence and reasoning as to how you meet the required assessment criteria</li>
-    <li>additional information not included in your original application that would support your decision review</li>
+    <li>evidence and reasoning for how you meet the required assessment criteria</li>
+    <li>any additional information not included in your original application that would support the decision review</li>
   </ul>
 
   <p class="govuk-body">Your request for review must be received within 28 days of receipt of the decision to decline QTS.</p>
 
-  <%= f.govuk_check_boxes_fieldset :confirm, legend: { text: "Does your request meet these requirements?", tag: "h2", size: "m" }, small: true do %>
+  <%= f.govuk_check_boxes_fieldset :confirm, legend: { tag: "h2", size: "m" }, small: true do %>
     <%= f.govuk_check_box :confirm,
                           true,
                           false,
                           multiple: false,
                           link_errors: true,
                           label: {
-                            text: "	I confirm that the request meets the above requirements"
+                            text: "I confirm that I have evidence, reasoning, or additional information to support the decision review"
                           } %>
   <% end %>
 
