@@ -900,19 +900,19 @@ RSpec.describe Assessment, type: :model do
         it { is_expected.to be false }
       end
 
-      context "when assessment already has a decision review request not received" do
+      context "when already has a decision review request not received" do
         before { create(:decision_review_request, assessment:) }
 
         it { is_expected.to be true }
       end
 
-      context "when assessment already has a decision review request received" do
+      context "when already has a decision review request received" do
         before { create(:received_decision_review_request, assessment:) }
 
         it { is_expected.to be false }
       end
 
-      context "when assessment already has a decision review request which has been reviewed and not passed" do
+      context "when already has a decision review request which has been reviewed and not passed" do
         before do
           create(
             :received_decision_review_request,
@@ -923,6 +923,128 @@ RSpec.describe Assessment, type: :model do
         end
 
         it { is_expected.to be false }
+      end
+
+      context "when already has a previous decision review request which passed review but declined again after" do
+        let(:application_form) { create(:application_form, :declined) }
+
+        before do
+          create(
+            :received_decision_review_request,
+            assessment:,
+            created_at: 1.day.ago,
+            reviewed_at: 1.day.ago,
+            received_at: 1.day.ago,
+            review_passed: true,
+          )
+        end
+
+        it { is_expected.to be true }
+      end
+    end
+  end
+
+  describe "#decision_review_request_for_current_decline" do
+    subject(:decision_review_request_for_current_decline) do
+      assessment.decision_review_request_for_current_decline
+    end
+
+    context "when application not declined" do
+      let(:application_form) { create(:application_form) }
+
+      it { is_expected.to be_nil }
+
+      context "with a decision review request which has been reviewed and passed review" do
+        before do
+          create(
+            :received_decision_review_request,
+            assessment:,
+            created_at: 1.day.ago,
+            reviewed_at: 1.day.ago,
+            received_at: 1.day.ago,
+            review_passed: true,
+          )
+        end
+
+        it { is_expected.to be_nil }
+      end
+    end
+
+    context "when application declined" do
+      let(:application_form) { create(:application_form, :declined) }
+
+      it { is_expected.to be_nil }
+
+      context "with a decision review request which has been created" do
+        let!(:decision_review_request) do
+          create :decision_review_request, assessment:
+        end
+
+        it { is_expected.to eq(decision_review_request) }
+
+        context "when a previous decision review request exists with passed review due to an initial decline" do
+          before do
+            create(
+              :received_decision_review_request,
+              assessment:,
+              created_at: 1.day.ago,
+              reviewed_at: 1.day.ago,
+              received_at: 1.day.ago,
+              review_passed: true,
+            )
+          end
+
+          it { is_expected.to eq(decision_review_request) }
+        end
+      end
+
+      context "with a decision review request which has been received" do
+        let!(:decision_review_request) do
+          create :received_decision_review_request, assessment:
+        end
+
+        it { is_expected.to eq(decision_review_request) }
+
+        context "when a previous decision review request exists with passed review due to an initial decline" do
+          before do
+            create(
+              :received_decision_review_request,
+              assessment:,
+              created_at: 1.day.ago,
+              reviewed_at: 1.day.ago,
+              received_at: 1.day.ago,
+              review_passed: true,
+            )
+          end
+
+          it { is_expected.to eq(decision_review_request) }
+        end
+      end
+
+      context "with a decision review request which has been received, reviewed and review failed" do
+        let!(:decision_review_request) do
+          create :received_decision_review_request,
+                 assessment:,
+                 review_passed: false,
+                 reviewed_at: Time.current
+        end
+
+        it { is_expected.to eq(decision_review_request) }
+
+        context "when a previous decision review request exists with passed review due to an initial decline" do
+          before do
+            create(
+              :received_decision_review_request,
+              assessment:,
+              created_at: 1.day.ago,
+              reviewed_at: 1.day.ago,
+              received_at: 1.day.ago,
+              review_passed: true,
+            )
+          end
+
+          it { is_expected.to eq(decision_review_request) }
+        end
       end
     end
   end

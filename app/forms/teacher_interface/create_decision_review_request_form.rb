@@ -13,7 +13,7 @@ module TeacherInterface
 
     def update_model
       self.decision_review_request =
-        application_form.assessment.create_decision_review_request!(
+        application_form.assessment.decision_review_requests.create!(
           comment:,
           has_supporting_documents:,
         )

@@ -101,6 +101,38 @@ RSpec.describe ApplicationFormStatusUpdater do
       include_examples "doesn't change action required by"
       include_examples "changes stage", "completed"
       include_examples "changes statuses", %w[declined]
+
+      context "when the there is a decision review request created" do
+        before { create(:decision_review_request, assessment:) }
+
+        include_examples "doesn't change action required by"
+        include_examples "changes stage", "completed"
+        include_examples "changes statuses", %w[declined]
+      end
+
+      context "when the there is a decision review request created and received" do
+        before { create(:received_decision_review_request, assessment:) }
+
+        include_examples "doesn't change action required by"
+        include_examples "changes stage", "completed"
+        include_examples "changes statuses",
+                         %w[declined received_decision_review]
+      end
+
+      context "when the there is a decision review request created, received and reviewed" do
+        before do
+          create(
+            :received_decision_review_request,
+            assessment:,
+            review_passed: false,
+            reviewed_at: Time.current,
+          )
+        end
+
+        include_examples "doesn't change action required by"
+        include_examples "changes stage", "completed"
+        include_examples "changes statuses", %w[declined]
+      end
     end
 
     context "with an awarded_at date" do

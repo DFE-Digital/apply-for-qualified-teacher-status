@@ -8,7 +8,14 @@ RSpec.describe TeacherInterface::CreateDecisionReviewRequestForm,
     described_class.new(application_form:, comment:, has_supporting_documents:)
   end
 
-  let(:application_form) { create(:application_form, :with_assessment) }
+  let(:application_form) do
+    create(
+      :application_form,
+      :with_assessment,
+      :declined,
+      declined_at: 1.day.ago,
+    )
+  end
 
   describe "validations" do
     let(:comment) { "" }
@@ -37,16 +44,19 @@ RSpec.describe TeacherInterface::CreateDecisionReviewRequestForm,
 
     it "creates a new DecisionReviewRequest" do
       expect { form.save(validate: true) }.to change {
-        application_form.assessment.decision_review_request
-      }.from(nil)
+        application_form.assessment.decision_review_requests.count
+      }.by(1)
 
-      expect(application_form.assessment.decision_review_request.comment).to eq(
-        comment,
-      )
       expect(
         application_form
           .assessment
-          .decision_review_request
+          .decision_review_request_for_current_decline
+          .comment,
+      ).to eq(comment)
+      expect(
+        application_form
+          .assessment
+          .decision_review_request_for_current_decline
           .has_supporting_documents,
       ).to be true
     end

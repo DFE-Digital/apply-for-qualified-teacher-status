@@ -28,7 +28,7 @@ class TeacherInterface::BaseController < ApplicationController
                 &.further_information_requests
                 &.flat_map(&:items) || []
             ) + (application_form.assessment&.consent_requests || []) +
-            [application_form.assessment&.decision_review_request].compact,
+            (application_form.assessment&.decision_review_requests || []),
       ).find(params[:document_id] || params[:id])
   end
 

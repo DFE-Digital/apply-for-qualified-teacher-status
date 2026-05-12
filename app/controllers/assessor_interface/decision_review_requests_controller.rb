@@ -93,7 +93,12 @@ module AssessorInterface
 
     def decision_review_request
       @decision_review_request ||=
-        authorize [:assessor_interface, assessment.decision_review_request]
+        authorize [
+                    :assessor_interface,
+                    assessment.decision_review_requests.find(
+                      params[:id] || params[:decision_review_request_id],
+                    ),
+                  ]
     end
   end
 end

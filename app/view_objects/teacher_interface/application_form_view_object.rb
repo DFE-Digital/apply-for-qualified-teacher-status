@@ -16,7 +16,9 @@ class TeacherInterface::ApplicationFormViewObject
            :passport_document_status,
            to: :application_form
 
-  delegate :can_request_decision_review?, to: :assessment
+  delegate :can_request_decision_review?,
+           :decision_review_request_for_current_decline,
+           to: :assessment
 
   def passport_document_status_in_progress?
     passport_document_status == "in_progress"
@@ -239,15 +241,15 @@ class TeacherInterface::ApplicationFormViewObject
   end
 
   def has_requested_decision_review_and_awaiting_review?
-    assessment.decision_review_request.present? &&
-      assessment.decision_review_request.received? &&
-      assessment.decision_review_request.reviewed_at.nil?
+    decision_review_request_for_current_decline.present? &&
+      decision_review_request_for_current_decline.received? &&
+      decision_review_request_for_current_decline.reviewed_at.nil?
   end
 
   def has_requested_decision_review_and_received_outcome?
-    assessment.decision_review_request.present? &&
-      assessment.decision_review_request.received? &&
-      assessment.decision_review_request.reviewed_at.present?
+    decision_review_request_for_current_decline.present? &&
+      decision_review_request_for_current_decline.received? &&
+      decision_review_request_for_current_decline.reviewed_at.present?
   end
 
   def assessment_further_information_reasons

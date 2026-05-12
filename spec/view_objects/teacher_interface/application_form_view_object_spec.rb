@@ -1088,6 +1088,9 @@ RSpec.describe TeacherInterface::ApplicationFormViewObject do
       view_object.has_requested_decision_review_and_awaiting_review?
     end
 
+    let(:application_form) do
+      create(:application_form, :declined, region:, declined_at: 5.days.ago)
+    end
     let!(:assessment) { create(:assessment, application_form:) }
 
     context "without a decision review request" do
@@ -1127,6 +1130,9 @@ RSpec.describe TeacherInterface::ApplicationFormViewObject do
       view_object.has_requested_decision_review_and_received_outcome?
     end
 
+    let(:application_form) do
+      create(:application_form, :declined, region:, declined_at: 5.days.ago)
+    end
     let!(:assessment) { create(:assessment, application_form:) }
 
     context "without a decision review request" do

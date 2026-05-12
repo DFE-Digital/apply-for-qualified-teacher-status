@@ -59,7 +59,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
 
   def management_tasks
     [
-      decision_review_request_task_list_item,
+      *decision_review_request_task_list_items,
       if AssessorInterface::AssessmentPolicy.new(
            current_staff,
            assessment,
@@ -95,7 +95,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
            :professional_standing_request,
            :qualification_requests,
            :reference_requests,
-           :decision_review_request,
+           :decision_review_requests,
            to: :assessment
   delegate :canonical_email, to: :teacher
 
@@ -578,27 +578,29 @@ class AssessorInterface::ApplicationFormsShowViewObject
     }
   end
 
-  def decision_review_request_task_list_item
-    return unless decision_review_request
+  def decision_review_request_task_list_items
+    return if decision_review_requests.received.blank?
 
-    {
-      name: "Review decision review received",
-      link: [
-        :edit,
-        :assessor_interface,
-        application_form,
-        assessment,
-        decision_review_request,
-      ],
-      status:
-        if decision_review_request.reviewed_at.present?
-          :completed
-        elsif !decision_review_request.review_passed.nil?
-          :in_progress
-        else
-          :not_started
-        end,
-    }
+    decision_review_requests.received.map do |decision_review_request|
+      {
+        name: "Review decision review received",
+        link: [
+          :edit,
+          :assessor_interface,
+          application_form,
+          assessment,
+          decision_review_request,
+        ],
+        status:
+          if decision_review_request.reviewed_at.present?
+            :completed
+          elsif !decision_review_request.review_passed.nil?
+            :in_progress
+          else
+            :not_started
+          end,
+      }
+    end
   end
 
   def pre_assessment_complete?

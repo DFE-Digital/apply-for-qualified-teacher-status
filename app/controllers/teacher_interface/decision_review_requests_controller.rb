@@ -121,8 +121,7 @@ module TeacherInterface
     end
 
     def edit_confirm
-      @decision_review_request =
-        application_form.assessment.decision_review_request
+      decision_review_request
     end
 
     def update_confirm
@@ -143,7 +142,7 @@ module TeacherInterface
 
     def decision_review_request
       @decision_review_request ||=
-        application_form.assessment.decision_review_request
+        application_form.assessment.decision_review_request_for_current_decline
     end
 
     def redirect_unless_can_request_decision_review
@@ -153,9 +152,9 @@ module TeacherInterface
     end
 
     def redirect_if_decision_review_already_received
-      return if application_form.assessment.decision_review_request.nil?
+      return if decision_review_request.nil?
 
-      if application_form.assessment.decision_review_request.received?
+      if decision_review_request.received?
         redirect_to teacher_interface_application_form_path
       end
     end
