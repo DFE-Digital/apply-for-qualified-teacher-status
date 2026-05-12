@@ -583,7 +583,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
 
     decision_review_requests.received.map do |decision_review_request|
       {
-        name: "Review decision review received",
+        name: "Review request for decision review",
         link: [
           :edit,
           :assessor_interface,

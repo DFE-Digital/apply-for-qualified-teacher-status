@@ -1664,7 +1664,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
           expect(subject).to eq(
             [
               {
-                name: "Review decision review received",
+                name: "Review request for decision review",
                 link: [
                   :edit,
                   :assessor_interface,
@@ -1710,7 +1710,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
           expect(subject).to eq(
             [
               {
-                name: "Review decision review received",
+                name: "Review request for decision review",
                 link: [
                   :edit,
                   :assessor_interface,
@@ -1736,7 +1736,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
           expect(subject).to eq(
             [
               {
-                name: "Review decision review received",
+                name: "Review request for decision review",
                 link: [
                   :edit,
                   :assessor_interface,
@@ -1763,7 +1763,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
           expect(subject).to eq(
             [
               {
-                name: "Review decision review received",
+                name: "Review request for decision review",
                 link: [
                   :edit,
                   :assessor_interface,
@@ -1796,7 +1796,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
           expect(subject).to eq(
             [
               {
-                name: "Review decision review received",
+                name: "Review request for decision review",
                 link: [
                   :edit,
                   :assessor_interface,
@@ -1807,7 +1807,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
                 status: :completed,
               },
               {
-                name: "Review decision review received",
+                name: "Review request for decision review",
                 link: [
                   :edit,
                   :assessor_interface,
