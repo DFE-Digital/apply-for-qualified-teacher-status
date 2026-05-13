@@ -2,13 +2,23 @@
 
 module AssessorInterface
   class DecisionReviewRequestsController < BaseController
+    before_action :ensure_not_already_reviewed,
+                  only: %i[update edit_confirm update_confirm]
+
     def edit
       @application_form = assessment.application_form
       @form =
         DecisionReviewRequestReviewForm.new(
           decision_review_request:,
           review_passed: decision_review_request.review_passed,
-          review_note: decision_review_request.review_note,
+          review_passed_note:
+            if decision_review_request.review_passed
+              decision_review_request.review_note
+            end,
+          review_failed_note:
+            unless decision_review_request.review_passed
+              decision_review_request.review_note
+            end,
         )
     end
 
@@ -78,7 +88,21 @@ module AssessorInterface
     def decision_review_request_review_form_params
       params.require(
         :assessor_interface_decision_review_request_review_form,
-      ).permit(:review_passed, :review_note)
+      ).permit(:review_passed, :review_passed_note, :review_failed_note)
+    end
+
+    def ensure_not_already_reviewed
+      if decision_review_request.reviewed_at.present?
+        @application_form = assessment.application_form
+
+        redirect_to [
+                      :edit,
+                      :assessor_interface,
+                      @application_form,
+                      assessment,
+                      decision_review_request,
+                    ]
+      end
     end
 
     def assessment

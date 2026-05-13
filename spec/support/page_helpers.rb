@@ -467,6 +467,21 @@ module PageHelpers
       PageObjects::AssessorInterface::WithdrawApplication.new
   end
 
+  def assessor_review_decision_review_request_page
+    @assessor_review_decision_review_request_page ||=
+      PageObjects::AssessorInterface::ReviewDecisionReview.new
+  end
+
+  def assessor_confirm_decision_review_request_page
+    @assessor_confirm_decision_review_request_page ||=
+      PageObjects::AssessorInterface::ConfirmDecisionReview.new
+  end
+
+  def assessor_decision_review_request_confirmation_page
+    @assessor_decision_review_request_confirmation_page ||=
+      PageObjects::AssessorInterface::DecisionReviewConfirmation.new
+  end
+
   def eligibility_country_page
     @eligibility_country_page ||= PageObjects::EligibilityInterface::Country.new
   end

@@ -1,13 +1,11 @@
-<% title = "Review decision review received" %>
-
-<% content_for :page_title, title_with_error_prefix(title, error: @form.errors.any?) %>
+<% content_for :page_title, title_with_error_prefix(t(".title"), error: @form.errors.any?) %>
 <% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
 
 <%= form_with model: @form, url: [:assessor_interface, @application_form, @assessment, @decision_review_request], method: :put do |f| %>
   <%= f.govuk_error_summary %>
 
   <h1 class="govuk-heading-xl">
-    <%= title %>
+    <%= t(".title") %>
   </h1>
 
   <%= govuk_summary_card(title: "Decision review request") do |card| %>
@@ -24,14 +22,16 @@
     <% end %>
   <% end %>
 
-  <%= f.govuk_radio_buttons_fieldset :review_passed, legend: { text: "Has the applicant provided enough evidence to reverse a decline decision?" } do %>
-    <%= f.govuk_radio_button :review_passed, true, label: { text: "Yes" }, link_errors: true, disabled: @decision_review_request.reviewed_at.present? %>
-    <%= f.govuk_radio_button :review_passed, false, label: { text: "No" }, disabled: @decision_review_request.reviewed_at.present? do %>
-      <%= f.govuk_text_area :review_note, label: { text: "Provide your reasoning for the applicant" }, disabled: @decision_review_request.reviewed_at.present? %>
+  <%= f.govuk_radio_buttons_fieldset :review_passed do %>
+    <%= f.govuk_radio_button :review_passed, true, label: { text: "Yes" }, link_errors: true, disabled: @decision_review_request.reviewed_at.present? || !policy([:assessor_interface,@decision_review_request ]).update? do %>
+      <%= f.govuk_text_area :review_passed_note, label: { text: "Add an internal note" }, disabled: @decision_review_request.reviewed_at.present? || !policy([:assessor_interface,@decision_review_request ]).update? %>
+    <% end %>
+    <%= f.govuk_radio_button :review_passed, false, label: { text: "No" }, disabled: @decision_review_request.reviewed_at.present? || !policy([:assessor_interface,@decision_review_request ]).update? do %>
+      <%= f.govuk_text_area :review_failed_note, label: { text: "Note to the applicant" }, disabled: @decision_review_request.reviewed_at.present? || !policy([:assessor_interface,@decision_review_request ]).update? %>
     <% end %>
   <% end %>
 
-  <%= f.govuk_submit disabled: @decision_review_request.reviewed_at.present? do %>
+  <%= f.govuk_submit disabled: @decision_review_request.reviewed_at.present? || !policy([:assessor_interface,@decision_review_request ]).update? do %>
     <%= render "shared/assessor_interface/cancel_link" %>
   <% end %>
 <% end %>
