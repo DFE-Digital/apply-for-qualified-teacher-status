@@ -193,7 +193,7 @@ GEM
     devise-passwordless (1.1.0)
       devise
       globalid
-    devise_invitable (2.0.11)
+    devise_invitable (2.0.12)
       actionmailer (>= 5.0)
       devise (>= 4.6)
     diff-lcs (1.6.2)
@@ -877,7 +877,7 @@ CHECKSUMS
   declarative (0.0.20) sha256=8021dd6cb17ab2b61233c56903d3f5a259c5cf43c80ff332d447d395b17d9ff9
   devise (5.0.4) sha256=d605f2b85854e74e56ee789e2d398702bc2d06e6bcd894717a670a3199c74cc1
   devise-passwordless (1.1.0) sha256=4a4b8c93e68fcc69a143140f8cdd53ca919751b07d0c2eeb2e598a77f9c39929
-  devise_invitable (2.0.11) sha256=780014f74b8848218d93a297300590120f1742984396acf3d6799ab49b9a6a3f
+  devise_invitable (2.0.12) sha256=3ff1cb9dc85b5675e49c733399872916fc0a60b9e8a4c42ac04828d36c114e78
   dfe-analytics (1.15.17)
   dfe-autocomplete (0.2.1)
   dfe-reference-data (3.8.6)
