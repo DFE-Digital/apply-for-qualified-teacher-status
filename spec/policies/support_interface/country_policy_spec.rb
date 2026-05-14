@@ -28,4 +28,16 @@ RSpec.describe SupportInterface::CountryPolicy do
 
     it_behaves_like "a policy method requiring the support console permission"
   end
+
+  describe "#new?" do
+    subject(:new?) { described_class.new(user, nil).new? }
+
+    it_behaves_like "a policy method requiring the support console permission"
+  end
+
+  describe "#create?" do
+    subject(:create?) { described_class.new(user, nil).create? }
+
+    it_behaves_like "a policy method requiring the support console permission"
+  end
 end
