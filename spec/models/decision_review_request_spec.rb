@@ -65,23 +65,29 @@ RSpec.describe DecisionReviewRequest, type: :model do
   describe "#after_received" do
     let(:after_received) { subject.after_received(user: "User") }
 
+    let(:application_form) { decision_review_request.application_form }
+
     it "delivers the decision_review_requested email" do
       expect { after_received }.to have_enqueued_mail(
         TeacherMailer,
         :decision_review_received,
-      ).with(
-        params: {
-          application_form: decision_review_request.application_form,
-        },
-        args: [],
-      )
+      ).with(params: { application_form: }, args: [])
     end
   end
 
   describe "#after_reviewed" do
     let(:after_reviewed) { subject.after_reviewed(user: "User") }
 
+    let(:application_form) { decision_review_request.application_form }
+
     before { allow(RollbackAssessment).to receive(:call) }
+
+    it "triggers decision review reviewed email" do
+      expect { after_reviewed }.to have_enqueued_mail(
+        TeacherMailer,
+        :decision_review_reviewed,
+      ).with(params: { application_form:, decision_review_request: }, args: [])
+    end
 
     context "when the review has passed" do
       before { decision_review_request.review_passed = true }

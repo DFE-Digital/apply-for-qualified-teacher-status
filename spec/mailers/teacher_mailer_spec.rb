@@ -824,4 +824,93 @@ RSpec.describe TeacherMailer, type: :mailer do
       end
     end
   end
+
+  describe "#decision_review_received" do
+    subject(:mail) do
+      described_class.with(application_form:).decision_review_received
+    end
+
+    describe "#subject" do
+      subject { mail.subject }
+
+      it do
+        expect(subject).to eq("Your QTS application: decision review received")
+      end
+    end
+
+    describe "#to" do
+      subject(:to) { mail.to }
+
+      it { is_expected.to eq(["teacher@example.com"]) }
+    end
+
+    describe "#body" do
+      subject(:body) { mail.body }
+
+      it { is_expected.to include("Dear First Last") }
+
+      it do
+        expect(subject).to include(
+          "We have received your request for a decision review.",
+        )
+      end
+    end
+  end
+
+  describe "#decision_review_reviewed" do
+    subject(:mail) do
+      described_class.with(
+        application_form:,
+        decision_review_request:,
+      ).decision_review_reviewed
+    end
+
+    let(:decision_review_request) do
+      create :received_decision_review_request,
+             assessment: application_form.assessment,
+             review_passed:
+    end
+
+    let(:review_passed) { true }
+
+    describe "#subject" do
+      subject { mail.subject }
+
+      it do
+        expect(subject).to eq(
+          "Your QTS application: outcome of your decision review request",
+        )
+      end
+    end
+
+    describe "#to" do
+      subject(:to) { mail.to }
+
+      it { is_expected.to eq(["teacher@example.com"]) }
+    end
+
+    describe "#body" do
+      subject(:body) { mail.body }
+
+      it { is_expected.to include("Dear First Last") }
+
+      it do
+        expect(subject).to include(
+          "They found that your application meets the eligibility criteria. " \
+            "This means the decline decision has been removed.",
+        )
+      end
+
+      context "when review failed" do
+        let(:review_passed) { false }
+
+        it do
+          expect(subject).to include(
+            "They found that your application does not meet the eligibility criteria." \
+              " This means the decline decision has not changed.",
+          )
+        end
+      end
+    end
+  end
 end

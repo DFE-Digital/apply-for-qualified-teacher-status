@@ -46,7 +46,15 @@ class DecisionReviewRequest < ApplicationRecord
   end
 
   def after_reviewed(user:)
-    # We may want to also trigger email delivery
     RollbackAssessment.call(assessment:, user:) if review_passed
+
+    ActiveRecord.after_all_transactions_commit do
+      DeliverEmail.call(
+        application_form:,
+        mailer: TeacherMailer,
+        action: :decision_review_reviewed,
+        decision_review_request: self,
+      )
+    end
   end
 end
