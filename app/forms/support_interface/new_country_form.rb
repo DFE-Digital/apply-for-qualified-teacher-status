@@ -9,10 +9,7 @@ class SupportInterface::NewCountryForm
   attribute :has_regions, :boolean
   attribute :region_names, :string
 
-  validates :location,
-            presence: {
-              message: "Select the country of recognition",
-            }
+  validates :location, presence: true
   validate :location_must_be_valid_country, if: -> { location.present? }
   validate :country_must_not_already_exist, if: -> { location.present? }
   validates :eligibility_route, inclusion: { in: %w[expanded reduced standard] }
@@ -54,17 +51,12 @@ class SupportInterface::NewCountryForm
   private
 
   def location_must_be_valid_country
-    unless Country::CODES.include?(country_code)
-      errors.add(:location, "Select the country of recognition")
-    end
+    errors.add(:location, :invalid) unless Country::CODES.include?(country_code)
   end
 
   def country_must_not_already_exist
     if Country.exists?(code: country_code)
-      errors.add(
-        :location,
-        "You must select a country that does not already exist",
-      )
+      errors.add(:location, :already_exists)
     end
   end
 end

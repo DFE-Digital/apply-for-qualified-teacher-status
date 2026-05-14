@@ -2,6 +2,12 @@ en:
   activemodel:
     errors:
       models:
+        support_interface/new_country_form:
+          attributes:
+            location:
+              blank: Select the country of recognition
+              invalid: Select the country of recognition
+              already_exists: You must select a country that does not already exist
         support_interface/country_form:
           attributes:
             eligibility_enabled:
