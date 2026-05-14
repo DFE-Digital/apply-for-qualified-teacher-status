@@ -60,9 +60,10 @@
       </p>
     <% end %>
   <% elsif view_object.has_requested_decision_review_and_received_outcome? %>
-    <p class="govuk-body">Unfortunately your request for a decision review has been rejected.</p>
+    <p class="govuk-body">A senior Professional Recognition Manager has reviewed your decision review request, including the evidence and reasons you provided.</p>
+    <p class="govuk-body">They found that your application does not meet the eligibility criteria. This means the decline decision has not changed.</p>
 
-    <p class="govuk-body">Note from Assessor:</p>
+    <p class="govuk-body">Note from the assessor:</p>
 
     <%= govuk_inset_text do %>
       <p><%= simple_format view_object.decision_review_request_for_current_decline.review_note %></p>

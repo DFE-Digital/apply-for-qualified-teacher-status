@@ -164,7 +164,8 @@ RSpec.describe "Teacher decision review request", type: :system do
       "If you disagree with our decision",
     )
     expect(teacher_declined_application_page).to have_content(
-      "Unfortunately your request for a decision review has been rejected.",
+      "They found that your application does not meet the eligibility criteria." \
+        " This means the decline decision has not changed.",
     )
     expect(teacher_declined_application_page).not_to have_link(
       "Request a decision review",
