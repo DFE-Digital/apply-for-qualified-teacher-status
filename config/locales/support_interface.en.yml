@@ -8,6 +8,12 @@ en:
               blank: Select the country of recognition
               invalid: Select the country of recognition
               already_exists: You must select a country that does not already exist
+            eligibility_route:
+              inclusion: You must select a valid eligibility route
+            has_regions:
+              inclusion: You must specify whether this country has regions
+            region_names:
+              blank: You must provide region names if the country has regions
         support_interface/country_form:
           attributes:
             eligibility_enabled:
