@@ -74,8 +74,8 @@ RSpec.describe SupportInterface::NewCountryForm, type: :model do
     end
   end
 
-  describe "#save!" do
-    subject(:save!) { form.save! }
+  describe "#save" do
+    subject(:save) { form.save }
 
     let(:form) do
       described_class.new(
@@ -145,12 +145,12 @@ RSpec.describe SupportInterface::NewCountryForm, type: :model do
     context "when form is invalid" do
       let(:location) { "" }
 
-      it "raises ActiveRecord::RecordInvalid" do
-        expect { subject }.to raise_error(ActiveRecord::RecordInvalid)
+      it "returns false" do
+        expect(subject).to be_falsey
       end
 
       it "does not create a country" do
-        expect { subject }.to raise_error(ActiveRecord::RecordInvalid)
+        expect { subject }.not_to change(Country, :count)
         expect(Country.where(code: "AF")).not_to exist
       end
     end

@@ -43,11 +43,10 @@ module SupportInterface
     def create
       authorize [:support_interface, Country]
       @form = SupportInterface::NewCountryForm.new(new_country_params)
-      if @form.invalid?
-        render :new, status: :unprocessable_entity
-      else
-        @form.save!
+      if @form.save
         redirect_to %i[support_interface countries]
+      else
+        render :new, status: :unprocessable_entity
       end
     end
 

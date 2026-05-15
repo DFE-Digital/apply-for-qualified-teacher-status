@@ -16,8 +16,8 @@ class SupportInterface::NewCountryForm
   validates :has_regions, inclusion: { in: [true, false] }
   validates :region_names, presence: true, if: :has_regions
 
-  def save!
-    raise ActiveRecord::RecordInvalid, self if invalid?
+  def save
+    return false if invalid?
 
     country =
       Country.new(
