@@ -271,8 +271,8 @@ detect-libc@^1.0.3:
 
 "dfe-autocomplete@github:DFE-Digital/dfe-autocomplete":
   version "0.2.1"
-  uid c252e0182848f15c995b666932ed447132fe028d
-  resolved "https://codeload.github.com/DFE-Digital/dfe-autocomplete/tar.gz/c252e0182848f15c995b666932ed447132fe028d"
+  uid "0c9465c30157a7cbf8f7a58dc19a9a6f610cb5be"
+  resolved "https://codeload.github.com/DFE-Digital/dfe-autocomplete/tar.gz/0c9465c30157a7cbf8f7a58dc19a9a6f610cb5be"
   dependencies:
     accessible-autocomplete "^3.0.1"
 
