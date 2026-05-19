@@ -10,7 +10,7 @@ GIT
 
 GIT
   remote: https://github.com/DFE-Digital/dfe-autocomplete.git
-  revision: c252e0182848f15c995b666932ed447132fe028d
+  revision: 0c9465c30157a7cbf8f7a58dc19a9a6f610cb5be
   specs:
     dfe-autocomplete (0.2.1)
       actionview (>= 7.0.2.3)
@@ -729,7 +729,7 @@ GEM
     websocket-extensions (0.1.5)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.7.5)
+    zeitwerk (2.8.0)
     zendesk_api (3.1.1)
       faraday (> 2.0.0)
       faraday-multipart
@@ -1090,7 +1090,7 @@ CHECKSUMS
   websocket-driver (0.8.0) sha256=ed0dba4b943c22f17f9a734817e808bc84cdce6a7e22045f5315aa57676d4962
   websocket-extensions (0.1.5) sha256=1c6ba63092cda343eb53fc657110c71c754c56484aad42578495227d717a8241
   xpath (3.2.0) sha256=6dfda79d91bb3b949b947ecc5919f042ef2f399b904013eb3ef6d20dd3a4082e
-  zeitwerk (2.7.5) sha256=d8da92128c09ea6ec62c949011b00ed4a20242b255293dd66bf41545398f73dd
+  zeitwerk (2.8.0) sha256=474d0a1d2429f635af7c4574f5ddbce0d0cfc286067c7515858b93a26b4f3e3d
   zendesk_api (3.1.1) sha256=f85b646263729fee8dc3c47f02bb3caaf26f1650a094299dee46c063e26e7216
 
 RUBY VERSION
