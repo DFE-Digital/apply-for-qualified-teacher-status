@@ -14,7 +14,8 @@ If the assessment team needs more information before making a final decision, th
 They found that your application does not meet the eligibility criteria. This means the decline decision has not changed.
 
 Note from the assessor:
-^ <%= @decision_review_request.review_note %>
+
+<%= @decision_review_request.review_note %>
 
 ## What you can do next
 
@@ -22,7 +23,7 @@ You’ll be able to make a new application once you’ve addressed all decline r
 
 You may want to explore [other routes to getting QTS](https://www.gov.uk/government/publications/apply-for-qualified-teacher-status-qts-if-you-teach-outside-the-uk/routes-to-qualified-teacher-status-qts-for-teachers-and-those-with-teaching-experience-outside-the-uk#routes-to-qts).
 
-If you disagree with the outcome of this decision review, you are entitled to submit a final appeal to a senior Professional Recognition Manager. To make an appeal request, you will need to provide additional evidence to show:
+If you disagree with the outcome of this decision review, you are entitled to submit a final appeal to a senior Professional Recognition Manager. To make an appeal request, email [<%= t("service.email.enquiries") %>](mailto:<%= t("service.email.enquiries") %>). You will need to provide additional evidence to show:
 
 * an error in law has occurred
 * a factual error has occurred in the application of the law

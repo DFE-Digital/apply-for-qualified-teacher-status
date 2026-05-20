@@ -109,7 +109,7 @@ en:
           PrioritisationReferenceRequest: Prioritisation reference expired
         requestable_reviewed:
           ConsentRequest: Consent reviewed
-          DecisionReviewRequest: Decision review assessed
+          DecisionReviewRequest: Decision review completed
           FurtherInformationRequest: Further information assessed
           ProfessionalStandingRequest: Professional standing reviewed
           QualificationRequest: Qualification reviewed

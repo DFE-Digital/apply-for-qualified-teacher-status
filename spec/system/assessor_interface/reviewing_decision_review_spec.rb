@@ -208,7 +208,7 @@ RSpec.describe "Assessor reviewing an incoming decision review request",
 
   def and_i_see_content_for_upholding_the_decline_decision
     expect(assessor_confirm_decision_review_request_page).to have_content(
-      "Are you sure you want to uphold the decline decision?",
+      "Are you sure you want to reject this decision review?",
     )
     expect(assessor_confirm_decision_review_request_page).to have_content(
       "Select 'Confirm' to notify the applicant that their request to change the decline decision has been rejected." \

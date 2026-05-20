@@ -16,9 +16,11 @@
       <%= simple_format @decision_review_request.comment %>
     </p>
 
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-2">Applicant’s supporting evidence</h3>
     <% if @decision_review_request.has_supporting_documents? %>
-      <h3 class="govuk-heading-s govuk-!-margin-bottom-2">Applicant’s supporting evidence</h3>
       <%= document_link_to(@decision_review_request.decision_review_evidence_document) %>
+    <% else %>
+      <p class="govuk-body govuk-!-margin-bottom-2">None provided</p>
     <% end %>
   <% end %>
 

@@ -13,11 +13,11 @@
     fields: {
       comment: {
         title: "Your decision review reason",
+        value: simple_format(@decision_review_request.comment),
         href: edit_teacher_interface_application_form_decision_review_request_path(@decision_review_request)
       },
       has_supporting_documents: {
         title: "Add supporting evidence",
-        text: @decision_review_request.has_supporting_documents? ? "Yes, I need to upload supporting documents" : "No, I do not need to upload supporting documents",
         href: edit_teacher_interface_application_form_decision_review_request_path(@decision_review_request)
       },
       decision_review_evidence_document: @decision_review_request.has_supporting_documents? ? {

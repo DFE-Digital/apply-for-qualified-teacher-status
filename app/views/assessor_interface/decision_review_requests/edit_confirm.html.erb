@@ -2,7 +2,7 @@
   title = if @decision_review_request.review_passed?
     "Are you sure you want to change the decline decision?"
   else
-    "Are you sure you want to uphold the decline decision?"
+    "Are you sure you want to reject this decision review?"
   end
 %>
 <% content_for :page_title, title %>
@@ -17,6 +17,7 @@
     <p class="govuk-body">Select 'Confirm' to change the decline decision and move the application back into assessment.</p>
     <p class="govuk-body">The applicant will receive an email notifying them that their request to change the decline decision has been successful.</p>
   <% else %>
+    <p class="govuk-body">This means their application will remain declined.</p>
     <p class="govuk-body">Select 'Confirm' to notify the applicant that their request to change the decline decision has been rejected. They will also receive your note.</p>
     <p class="govuk-body">Your note to the applicant:</p>
     <%= govuk_inset_text do %>
