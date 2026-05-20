@@ -165,8 +165,8 @@ RSpec.describe "Countries support", type: :system do
   end
 
   def then_i_complete_the_new_country_form_without_regions
-    select "Afghanistan",
-           from: "support-interface-new-country-form-location-field"
+    fill_in "support-interface-new-country-form-location-field",
+            with: "Afghanistan"
     choose "support-interface-new-country-form-eligibility-route-standard-field",
            visible: :all
     choose "support-interface-new-country-form-has-regions-false-field",
@@ -175,8 +175,8 @@ RSpec.describe "Countries support", type: :system do
   end
 
   def then_i_complete_the_new_country_form_with_regions
-    select "Afghanistan",
-           from: "support-interface-new-country-form-location-field"
+    fill_in "support-interface-new-country-form-location-field",
+            with: "Afghanistan"
     choose "support-interface-new-country-form-eligibility-route-standard-field",
            visible: :all
     choose "support-interface-new-country-form-has-regions-true-field",
