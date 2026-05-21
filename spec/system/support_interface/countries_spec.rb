@@ -62,6 +62,36 @@ RSpec.describe "Countries support", type: :system do
     and_i_see_the_updated_countries
   end
 
+  it "allows creating a new country without regions" do
+    given_countries_exist
+    given_i_am_authorized_as_a_support_user
+    when_i_visit_the_countries_page
+
+    expect(page).to have_link("Add a new country")
+    and_i_click_new_country
+    then_i_see_the_new_country_page
+
+    then_i_complete_the_new_country_form_without_regions
+    then_i_see_the_countries_page
+    and_i_see "Afghanistan"
+  end
+
+  it "allows creating a new country with regions" do
+    given_countries_exist
+    given_i_am_authorized_as_a_support_user
+    when_i_visit_the_countries_page
+
+    expect(page).to have_link("Add a new country")
+    and_i_click_new_country
+    then_i_see_the_new_country_page
+
+    then_i_complete_the_new_country_form_with_regions
+    then_i_see_the_countries_page
+    and_i_see "Afghanistan"
+    and_i_see "Kabul"
+    and_i_see "Herat"
+  end
+
   private
 
   def given_countries_exist
@@ -132,6 +162,28 @@ RSpec.describe "Countries support", type: :system do
     expect(page).to have_content("Certified translations")
     click_on "Proof of qualifications"
     expect(page).to have_content("Qualifications information")
+  end
+
+  def then_i_complete_the_new_country_form_without_regions
+    fill_in "support-interface-new-country-form-location-field",
+            with: "Afghanistan"
+    choose "support-interface-new-country-form-eligibility-route-standard-field",
+           visible: :all
+    choose "support-interface-new-country-form-has-regions-false-field",
+           visible: :all
+    click_button "Create"
+  end
+
+  def then_i_complete_the_new_country_form_with_regions
+    fill_in "support-interface-new-country-form-location-field",
+            with: "Afghanistan"
+    choose "support-interface-new-country-form-eligibility-route-standard-field",
+           visible: :all
+    choose "support-interface-new-country-form-has-regions-true-field",
+           visible: :all
+    fill_in "support-interface-new-country-form-region-names-field",
+            with: "Kabul\nHerat"
+    click_button "Create"
   end
 
   def when_i_fill_regions
@@ -232,5 +284,17 @@ RSpec.describe "Countries support", type: :system do
 
   def and_i_click_preview
     click_button "Preview", visible: false
+  end
+
+  def and_i_click_new_country
+    click_link "Add a new country"
+  end
+
+  def then_i_see_the_new_country_page
+    expect(page).to have_content("Create a new country")
+  end
+
+  def and_i_see(text)
+    expect(page).to have_content(text)
   end
 end

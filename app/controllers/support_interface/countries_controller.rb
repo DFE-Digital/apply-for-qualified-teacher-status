@@ -35,6 +35,21 @@ module SupportInterface
       @form.assign_country_attributes
     end
 
+    def new
+      authorize [:support_interface, Country]
+      @form = SupportInterface::NewCountryForm.new
+    end
+
+    def create
+      authorize [:support_interface, Country]
+      @form = SupportInterface::NewCountryForm.new(new_country_params)
+      if @form.save
+        redirect_to %i[support_interface countries]
+      else
+        render :new, status: :unprocessable_entity
+      end
+    end
+
     private
 
     def country
@@ -43,6 +58,15 @@ module SupportInterface
                     :support_interface,
                     Country.includes(:regions).find(params[:id]),
                   ]
+    end
+
+    def new_country_params
+      params.require(:support_interface_new_country_form).permit(
+        :location,
+        :eligibility_route,
+        :has_regions,
+        :region_names,
+      )
     end
 
     def country_params

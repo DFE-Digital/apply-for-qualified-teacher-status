@@ -1,3 +1,4 @@
+<% content_for :back_link_url, support_interface_countries_path %>
 <% content_for :page_title, title_with_error_prefix(CountryName.from_country(@country), error: @form.errors.any?) %>
 
 <%= form_with model: @form, url: [:support_interface, @country], method: :put do |f| %>

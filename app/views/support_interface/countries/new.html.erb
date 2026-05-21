@@ -1,0 +1,39 @@
+<% content_for :back_link_url, support_interface_countries_path %>
+<% content_for :page_title, title_with_error_prefix("Create a new country", error: @form.errors.any?) %>
+
+<%= form_with model: @form, url: support_interface_countries_path do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <h1 class="govuk-heading-l">Create a new country</h1>
+
+  <%= f.govuk_select :location,
+                     options_for_select(locations, @form.location),
+                     label: { text: "Country of recognition" },
+                     options: { include_blank: true },
+                     data: {
+                       controller: "location-picker-autocomplete",
+                       location_picker_autocomplete_url_value: autocomplete_locations_path,
+                       location_picker_autocomplete_name_value: "location_autocomplete"
+                     } %>
+
+  <%= f.govuk_collection_radio_buttons :eligibility_route,
+                                       [
+                                         OpenStruct.new(value: :standard, label: "Standard – Asks 5 standard questions that most countries would need to be asked."),
+                                         OpenStruct.new(value: :reduced, label: "Reduced – Only asks if the applicant's teaching qualification was completed in their country of recognition."),
+                                         OpenStruct.new(value: :expanded, label: "Expanded – Asks 5 standard questions but the subjects are restricted and age range taught changes to 11-16 years.")
+                                       ],
+                                       :value,
+                                       :label,
+                                       legend: { text: "Which route will applicants take through the eligibility checker?" } %>
+
+  <%= f.govuk_radio_buttons_fieldset :has_regions, legend: { text: "Does this country have regions within it that have a different teaching authority or service journey?" } do %>
+    <%= f.govuk_radio_button :has_regions, :true, label: { text: "Yes" }, link_errors: true do %>
+      <%= f.govuk_text_area :region_names, label: { text: "Add regions below, one region per line." }, hint: { text: "This will allow you to customise the service for each region." }, rows: 10 %>
+    <% end %>
+    <%= f.govuk_radio_button :has_regions, :false, label: { text: "No" } %>
+  <% end %>
+
+  <%= f.govuk_submit "Create" do %>
+    <%= govuk_link_to "Cancel", support_interface_countries_path, class: "govuk-link--no-visited-state" %>
+  <% end %>
+<% end %>

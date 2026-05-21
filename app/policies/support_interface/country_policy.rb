@@ -12,4 +12,12 @@ class SupportInterface::CountryPolicy < ApplicationPolicy
   def preview?
     user.support_console_permission? && !user.archived?
   end
+
+  def new?
+    user.support_console_permission? && !user.archived?
+  end
+
+  def create?
+    user.support_console_permission? && !user.archived?
+  end
 end
