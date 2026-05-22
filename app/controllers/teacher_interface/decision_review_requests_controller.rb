@@ -16,20 +16,20 @@ module TeacherInterface
     skip_before_action :track_history, only: :index
 
     def index
-      if decision_review_request.nil?
+      if decision_review_request_for_current_decline.nil?
         redirect_to %i[
                       declaration
                       teacher_interface
                       application_form
                       decision_review_requests
                     ]
-      elsif decision_review_request.completed?
+      elsif decision_review_request_for_current_decline.completed?
         redirect_to teacher_interface_application_form_decision_review_request_confirm_path(
-                      decision_review_request,
+                      decision_review_request_for_current_decline,
                     )
       else
         redirect_to edit_teacher_interface_application_form_decision_review_request_path(
-                      decision_review_request,
+                      decision_review_request_for_current_decline,
                     )
       end
     end
@@ -136,12 +136,20 @@ module TeacherInterface
     end
 
     def confirmation
+      decision_review_request
     end
 
     private
 
     def decision_review_request
       @decision_review_request ||=
+        application_form.assessment.decision_review_requests.find(
+          params[:decision_review_request_id] || params[:id],
+        )
+    end
+
+    def decision_review_request_for_current_decline
+      @decision_review_request_for_current_decline ||=
         application_form.assessment.decision_review_request_for_current_decline
     end
 
@@ -152,18 +160,18 @@ module TeacherInterface
     end
 
     def redirect_if_decision_review_already_received
-      return if decision_review_request.nil?
+      return if decision_review_request_for_current_decline.nil?
 
-      if decision_review_request.received?
+      if decision_review_request_for_current_decline.received?
         redirect_to teacher_interface_application_form_path
       end
     end
 
     def redirect_if_decision_review_already_created
-      return if decision_review_request.nil?
+      return if decision_review_request_for_current_decline.nil?
 
       redirect_to edit_teacher_interface_application_form_decision_review_request_path(
-                    decision_review_request,
+                    decision_review_request_for_current_decline,
                   )
     end
 

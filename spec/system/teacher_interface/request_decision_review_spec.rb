@@ -7,11 +7,50 @@ RSpec.describe "Teacher decision review request", type: :system do
     create(:application_form, :with_assessment, :declined, teacher:)
   end
 
+  let(:other_decision_review_request) { create(:decision_review_request) }
+
+  let(:received_decision_review_request) do
+    create(
+      :received_decision_review_request,
+      assessment: application_form.assessment,
+    )
+  end
+
   let(:teacher) { create :teacher }
 
   before do
     given_i_am_authorized_as_a_user(teacher)
     given_malware_scanning_is_enabled
+  end
+
+  it "does not allow access to decision review for another application edit page" do
+    given_decision_review_exists_not_belonging_to_teacher
+
+    when_i_visit_the(
+      :teacher_request_decision_review_edit_page,
+      decision_review_request_id: other_decision_review_request.id,
+    )
+    then_i_see_page_not_found_error
+  end
+
+  it "does not allow access to decision review for another application confirm page" do
+    given_decision_review_exists_not_belonging_to_teacher
+
+    when_i_visit_the(
+      :teacher_request_decision_review_confirm_page,
+      decision_review_request_id: other_decision_review_request.id,
+    )
+    then_i_see_page_not_found_error
+  end
+
+  it "does not allow access to received decision review edit page" do
+    given_received_decision_review_exists
+
+    when_i_visit_the(
+      :teacher_request_decision_review_edit_page,
+      decision_review_request_id: received_decision_review_request.id,
+    )
+    then_i_see_the(:teacher_declined_application_page)
   end
 
   it "allows request for a decision review with supporting evidence" do
@@ -126,6 +165,10 @@ RSpec.describe "Teacher decision review request", type: :system do
     application_form.update!(declined_at: 29.days.ago)
   end
 
+  def given_received_decision_review_exists
+    received_decision_review_request
+  end
+
   def and_decision_review_exists_that_did_not_pass_review
     create(
       :received_decision_review_request,
@@ -133,6 +176,11 @@ RSpec.describe "Teacher decision review request", type: :system do
       review_passed: false,
       reviewed_at: Time.current,
     )
+  end
+
+  def given_decision_review_exists_not_belonging_to_teacher
+    application_form
+    other_decision_review_request
   end
 
   def and_i_see_ability_to_request_a_decision_review
@@ -255,5 +303,9 @@ RSpec.describe "Teacher decision review request", type: :system do
   def when_i_dont_need_to_upload_another_file
     teacher_check_document_page.form.false_radio_item.input.click
     teacher_check_document_page.form.continue_button.click
+  end
+
+  def then_i_see_page_not_found_error
+    expect(page).to have_content("Page not found")
   end
 end
