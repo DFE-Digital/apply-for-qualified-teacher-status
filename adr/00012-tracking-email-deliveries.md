@@ -1,4 +1,4 @@
-# 9. Tracking email deliveries on GOV.UK Notify
+# 12. Tracking email deliveries on GOV.UK Notify
 
 Date: 2026-05-26
 
