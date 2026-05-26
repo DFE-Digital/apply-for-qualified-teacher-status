@@ -10,6 +10,17 @@
 # for the mail-notify gem to handle this. Once this has been released
 # we can remove this patch and re-test to ensure our funtionality for
 # GOV.UK Notify delivery status tracking still works.
+
+LAST_TESTED_VERSION = "2.0.0"
+
+require "mail/notify/version"
+
+unless Mail::Notify::VERSION == LAST_TESTED_VERSION
+  raise "mail-notify is version #{Mail::Notify::VERSION} but " \
+          "the patch was last tested on #{LAST_TESTED_VERSION} - manually check " \
+          "if this can be removed, or that it still works as intended"
+end
+
 module CaptureNotifyResponsePatch
   def deliver!(message)
     response = super
