@@ -522,7 +522,7 @@ en:
         teacher_interface/upload_form:
           attributes:
             written_in_english:
-              inclusion: Select whether your document is written in English
+              inclusion: Select if your document is written in English
             original_attachment:
               blank: Select a file to upload
               encrypted_pdf: The selected file is security protected
