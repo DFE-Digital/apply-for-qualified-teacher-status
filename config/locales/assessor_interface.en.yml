@@ -132,14 +132,14 @@ en:
         qualifications_meet_level_6_or_equivalent: applicant holds a level 6 qualification or higher from the country where they’re recognised as a teacher
         qualified_in_mainstream_education: they’re qualified to teach in mainstream education (not vocationally only/SEN only/early years/pre-school only)
         qualified_to_teach: the applicant is qualified to teach at state or government schools
-        qualified_to_teach_children_11_to_16: the applicant is qualified to teach children aged 11-16
+        qualified_to_teach_children_11_to_16: the applicant is qualified to teach children aged anywhere between 11 and 16 years
         registration_number: registration number provided and verified (where applicable)
         referee_email_domain: that the reference’s email address is from the school’s domain, for example, name@school.edu, or if the domain has been flagged with eligibility concerns
         satisfactory_evidence_work_history: the applicant has provided satisfactory evidence of their work history
         teaching_qualification: confirmation of the applicant’s teaching qualification
         teaching_qualification_1_year: the teaching qualification lasted at least 1 academic year
         teaching_qualification_pedagogy: teaching qualification had enough focus on pedagogy (75% of 1-year course, 33% of 3-year course, 25% of 4-year course, 20% of 5-year course)
-        teaching_qualification_subjects_criteria: the teaching qualification specifically qualifies them to teach either Maths, Science, Biology, Chemistry, Physics, French, German, Italian, Japanese, Latin, Mandarin, Russian or Spanish (OR they have a teaching qualification for children aged 11-16 AND at least 50% of their degree was in one of those subjects)
+        teaching_qualification_subjects_criteria: the teaching qualification specifically qualifies them to teach either Maths, Science, Biology, Chemistry, Physics, French, German, Italian, Japanese, Latin, Mandarin, Russian or Spanish (OR they have a teaching qualification for children aged anywhere between 11 and 16 years AND at least 50% of their degree was in one of those subjects)
         teaching_qualifications_completed_in_eligible_country: teaching qualifications were completed in an eligible country (for example, we cannot award QTS where they applied through Spain, but their teaching was completed in South Africa)
         verify_school_details: the school details to verify what the applicant has entered
         work_history_references: that the applicant has provided a reference for each role with an acceptable email address
@@ -195,7 +195,7 @@ en:
           qualifications_dont_match_subjects: Subjects entered are acceptable for QTS, but the uploaded qualifications do not match them.
           qualifications_or_modules_required_not_provided: The applicant has not provided the required qualifications or modules.
           qualified_to_teach: We were not provided with sufficient evidence to confirm qualification to teach at state or government schools.
-          qualified_to_teach_children_11_to_16: The applicant is not qualified to teach children aged 11-16.
+          qualified_to_teach_children_11_to_16: The applicant is not qualified to teach children aged aged anywhere between 11 and 16 years.
           registration_number: We could not find the applicant’s reference number, or the number was in the wrong format. The applicant will need to supply the number again.
           registration_number_alternative: We could not find the applicant’s reference number. The applicant will need to upload written proof of recognition as a teacher instead.
           satisfactory_evidence_work_history: The information provided on work history is not sufficient to award QTS.
@@ -443,7 +443,7 @@ en:
             qualifications_or_modules_required_not_provided_notes:
               blank: Enter a note to the applicant
             qualified_to_teach_children_11_to_16_checked:
-              inclusion: Select whether the applicant qualified to teach children between ages 11-16 in one of the subjects
+              inclusion: Select whether the applicant qualified to teach children aged anywhere between 11 and 16 years in one of the subjects
             qualified_to_teach_children_11_to_16_notes:
               blank: Enter a note to the applicant
             qualified_to_teach_notes:
