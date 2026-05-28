@@ -19,6 +19,7 @@
     <h3 class="govuk-heading-s govuk-!-margin-bottom-2">Applicant’s supporting evidence</h3>
     <% if @decision_review_request.has_supporting_documents? %>
       <%= document_link_to(@decision_review_request.decision_review_evidence_document) %>
+      <%= document_link_to(@decision_review_request.decision_review_evidence_document, translated: true) %>
     <% else %>
       <p class="govuk-body govuk-!-margin-bottom-2">None provided</p>
     <% end %>
