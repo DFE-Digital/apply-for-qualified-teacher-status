@@ -147,6 +147,10 @@ Set `BIGQUERY_DISABLE` to `false` as it defaults to `true` in the development en
 
 [Read more about setting up BigQuery](docs/set-up-analytics.md).
 
+## Infrastructure validation workflow
+
+The scheduled workflow defined in `.github/workflows/validate-infra.yml` runs Terraform plan validations for the AKS cluster plus domains infrastructure/environment each day at **07:00 UTC** against **production** only. Failures and drift notifications are sent to the SD Infra alerts Teams channel via the `TEAMS_WEBHOOK_URL_INFRA` secret.
+
 ### Linting
 
 To run the linters:
