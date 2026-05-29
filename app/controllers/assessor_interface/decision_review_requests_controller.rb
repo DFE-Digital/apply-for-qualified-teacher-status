@@ -73,8 +73,11 @@ module AssessorInterface
                       :confirmation,
                     ]
       else
-        render :edit_confirm
+        render :edit_confirm, status: :unprocessable_entity
       end
+    rescue RollbackAssessment::InvalidState => e
+      flash[:warning] = e.message
+      render :edit_confirm, status: :unprocessable_entity
     end
 
     def confirmation
