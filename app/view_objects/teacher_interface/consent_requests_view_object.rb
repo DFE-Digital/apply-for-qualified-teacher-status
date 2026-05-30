@@ -45,8 +45,8 @@ module TeacherInterface
             :check_your_answers,
             scope: %i[
               teacher_interface
-              further_information_request
-              show
+              consent_requests
+              index
               section
             ],
           ),
@@ -54,7 +54,7 @@ module TeacherInterface
           {
             title:
               I18n.t(
-                "teacher_interface.further_information_request.show.check",
+                "teacher_interface.consent_requests.index.check",
               ),
             href:
               if can_submit?
