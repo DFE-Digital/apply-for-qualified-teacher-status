@@ -38,6 +38,34 @@ module TeacherInterface
       end
     end
 
+    def check_your_answers_task_group
+      {
+        heading:
+          I18n.t(
+            :check_your_answers,
+            scope: %i[
+              teacher_interface
+              further_information_request
+              show
+              section
+            ],
+          ),
+        items: [
+          {
+            title:
+              I18n.t(
+                "teacher_interface.further_information_request.show.check",
+              ),
+            href:
+              if can_submit?
+                %i[check teacher_interface application_form consent_requests]
+              end,
+            status: can_submit? ? "not_started" : "cannot_start",
+          },
+        ],
+      }
+    end
+
     private
 
     attr_reader :application_form
