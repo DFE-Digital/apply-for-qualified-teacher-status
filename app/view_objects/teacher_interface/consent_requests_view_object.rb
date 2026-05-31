@@ -43,19 +43,11 @@ module TeacherInterface
         heading:
           I18n.t(
             :check_your_answers,
-            scope: %i[
-              teacher_interface
-              consent_requests
-              index
-              section
-            ],
+            scope: %i[teacher_interface consent_requests index section],
           ),
         items: [
           {
-            title:
-              I18n.t(
-                "teacher_interface.consent_requests.index.check",
-              ),
+            title: I18n.t("teacher_interface.consent_requests.index.check"),
             href:
               if can_submit?
                 %i[check teacher_interface application_form consent_requests]
