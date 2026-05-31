@@ -88,7 +88,7 @@ RSpec.describe "Teacher consent", type: :system do
 
   def and_i_see_the_download_and_upload_tasks
     task_lists = teacher_consent_requests_page.task_lists
-    expect(task_lists.count).to eq(1)
+    expect(task_lists.count).to eq(2)
 
     task_list = task_lists.first
     expect(task_list.items.count).to eq(2)
