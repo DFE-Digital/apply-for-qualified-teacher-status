@@ -263,7 +263,7 @@ RSpec.describe "Assessor prioritisation checks", type: :system do
   end
 
   def when_i_click_on_prioritisation_work_history_checks
-    assessor_application_page.prioritisation_work_experience_check_task.click
+    assessor_application_page.prioritisation_work_history_check_task.click
   end
 
   def when_i_click_on_prioritisation_reference_checks
@@ -336,7 +336,7 @@ RSpec.describe "Assessor prioritisation checks", type: :system do
   def and_i_see_prioritisation_work_history_checks_task_as_completed
     expect(
       assessor_application_page
-        .prioritisation_work_experience_check_task
+        .prioritisation_work_history_check_task
         .status_tag
         .text,
     ).to eq("Completed")
@@ -410,7 +410,7 @@ RSpec.describe "Assessor prioritisation checks", type: :system do
 
   def and_i_see_content_for_application_being_deprioritised
     expect(assessor_prioritisation_decision_page).to have_content(
-      "You have indicated that this applicant doesn’t have any work experience in England " \
+      "You have indicated that this applicant doesn’t have any work history in England " \
         "that meets the criteria for prioritisation",
     )
   end
@@ -457,8 +457,8 @@ RSpec.describe "Assessor prioritisation checks", type: :system do
 
   def and_i_see_content_for_application_being_prioritised
     expect(assessor_prioritisation_decision_page).to have_content(
-      "You have indicated that this applicant has valid work experience in England " \
-        "to be prioritised and have accepted at least one reference that confirms their work experience in England.",
+      "You have indicated that this applicant has valid work history in England " \
+        "to be prioritised and have accepted at least one reference that confirms their work history in England.",
     )
   end
 

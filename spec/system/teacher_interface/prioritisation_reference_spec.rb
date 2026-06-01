@@ -190,7 +190,7 @@ RSpec.describe "Teacher prioritisation reference", type: :system do
     expect(summary_list.rows[3].value.text).to eq("Yes")
 
     expect(summary_list.rows[4].key.text).to eq(
-      "Can you confirm the applicant’s work experience?",
+      "Can you confirm the applicant’s work history?",
     )
     expect(summary_list.rows[4].value.text).to eq("Yes")
   end
@@ -217,7 +217,7 @@ RSpec.describe "Teacher prioritisation reference", type: :system do
     expect(summary_list.rows[4].value.text).to eq("Comments")
 
     expect(summary_list.rows[5].key.text).to eq(
-      "Can you confirm the applicant’s work experience?",
+      "Can you confirm the applicant’s work history?",
     )
     expect(summary_list.rows[5].value.text).to eq("No")
 

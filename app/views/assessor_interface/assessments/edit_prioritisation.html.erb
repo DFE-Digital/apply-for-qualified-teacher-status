@@ -7,7 +7,7 @@
   <h1 class="govuk-heading-xl"><%= t(".title") %></h1>
 
   <% if @assessment.can_prioritise? %>
-    <p class="govuk-body">You have indicated that this applicant has valid work experience in England to be prioritised and have accepted at least one reference that confirms their work experience in England.</p>
+    <p class="govuk-body">You have indicated that this applicant has valid work history in England to be prioritised and have accepted at least one reference that confirms their work history in England.</p>
 
     <%= f.govuk_collection_radio_buttons :passed,
                                        %i[true],
@@ -20,7 +20,7 @@
       <li>flag this application as prioritised</li>
     </ul>
   <% else %>
-    <p class="govuk-body">You have indicated that this applicant doesn’t have any work experience in England that meets the criteria for prioritisation.</p>
+    <p class="govuk-body">You have indicated that this applicant doesn’t have any work history in England that meets the criteria for prioritisation.</p>
 
     <%= f.govuk_collection_radio_buttons :passed,
                                        %i[false],
