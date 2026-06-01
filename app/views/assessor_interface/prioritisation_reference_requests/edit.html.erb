@@ -58,7 +58,7 @@
       <%= govuk_button_link_to "Resend reference request email", resend_email_assessor_interface_application_form_assessment_prioritisation_reference_request_path(@view_object.application_form, @assessment, @prioritisation_reference_request), secondary: true %>
     <% end %>
 
-    <%= f.govuk_radio_buttons_fieldset :passed, legend: { text: "Are you satisfied with this reference for the applicant’s work history?", size: "s" } do %>
+    <%= f.govuk_radio_buttons_fieldset :passed, legend: { text: "Are you satisfied with this reference for the applicant’s work experience?", size: "s" } do %>
       <%= f.govuk_radio_button :passed, :true, link_errors: true, disabled: @view_object.disable_form? %>
       <%= f.govuk_radio_button :passed, :false, disabled: @view_object.disable_form? do %>
         <%= f.govuk_text_area :note, label: { text: "Note to the applicant" } %>
