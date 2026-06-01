@@ -134,4 +134,51 @@ RSpec.describe TeacherInterface::ConsentRequestsViewObject do
       end
     end
   end
+
+  describe "#check_your_answers_task_group" do
+    subject(:check_your_answers_task_group) do
+      view_object.check_your_answers_task_group
+    end
+
+    let!(:consent_request) do
+      create(
+        :consent_request,
+        :requested,
+        assessment: application_form.assessment,
+      )
+    end
+
+    context "when items are incomplete" do
+      it "disables check your answers in task list group" do
+        expect(check_your_answers_task_group[:heading]).to eq(
+          "Check your answers",
+        )
+        expect(check_your_answers_task_group[:items].first[:status]).to eq(
+          "cannot_start",
+        )
+        expect(check_your_answers_task_group[:items].first[:href]).to be_nil
+      end
+    end
+
+    context "when items are complete" do
+      before do
+        consent_request.update!(unsigned_document_downloaded: true)
+        create(
+          :upload,
+          :clean,
+          document: consent_request.signed_consent_document,
+        )
+      end
+
+      it "enables check your answers in task list group" do
+        expect(check_your_answers_task_group[:heading]).to eq(
+          "Check your answers",
+        )
+        expect(check_your_answers_task_group[:items].first[:status]).to eq(
+          "not_started",
+        )
+        expect(check_your_answers_task_group[:items].first[:href]).to be_present
+      end
+    end
+  end
 end
