@@ -389,9 +389,9 @@ en:
         teacher_interface/prioritisation_reference_request_confirm_applicant_response_form:
           attributes:
             confirm_applicant_response:
-              inclusion: Select if you can confirm the applicant’s work experience
+              inclusion: Select if you can confirm the applicant’s work history
             confirm_applicant_comment:
-              blank: Tell us why you cannot confirm the applicant's work experience
+              blank: Tell us why you cannot confirm the applicant's work history
         teacher_interface/passport_expiry_date_form:
           attributes:
             passport_expiry_date:

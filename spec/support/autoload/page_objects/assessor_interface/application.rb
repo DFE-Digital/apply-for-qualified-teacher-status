@@ -32,12 +32,12 @@ module PageObjects
         task_lists.map { |task_list| task_list.find_item(name) }.compact.first
       end
 
-      def prioritisation_work_experience_check_task
+      def prioritisation_work_history_check_task
         find_task_list_item("Check role, institution and referee details")
       end
 
       def prioritisation_reference_check_task
-        find_task_list_item("Check work experience with referee")
+        find_task_list_item("Check work history with referee")
       end
 
       def prioritisation_decision_task
