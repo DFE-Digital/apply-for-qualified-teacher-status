@@ -135,6 +135,43 @@ RSpec.describe TeacherInterface::ConsentRequestsViewObject do
     end
   end
 
+  describe "#can_submit?" do
+    subject(:can_submit?) { view_object.can_submit? }
+
+    context "with incomplete consent requests" do
+      before do
+        create(
+          :consent_request,
+          :requested,
+          assessment: application_form.assessment,
+        )
+      end
+
+      it { is_expected.to be false }
+    end
+
+    context "with complete consent requests" do
+      let(:consent_request) do
+        create(
+          :consent_request,
+          :requested,
+          assessment: application_form.assessment,
+          unsigned_document_downloaded: true,
+        )
+      end
+
+      before do
+        create(
+          :upload,
+          :clean,
+          document: consent_request.signed_consent_document,
+        )
+      end
+
+      it { is_expected.to be true }
+    end
+  end
+
   describe "#check_your_answers_task_group" do
     subject(:check_your_answers_task_group) do
       view_object.check_your_answers_task_group
