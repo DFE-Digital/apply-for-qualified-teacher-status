@@ -115,7 +115,7 @@ terraform-init: composed-variables vendor-modules set-azure-account ## Initializ
 
 .PHONY: terraform-plan
 terraform-plan: terraform-init
-	terraform -chdir=terraform/application plan -var-file config/$(CONFIG)/variables.tfvars.json
+	terraform -chdir=terraform/application plan ${DETAILED_EXITCODE} -var-file config/$(CONFIG)/variables.tfvars.json
 
 .PHONY: terraform-refresh
 terraform-refresh: terraform-init
@@ -187,7 +187,7 @@ domains-infra-init: set-production-azure-subscription vendor-domain-infra-module
 	terraform -chdir=terraform/domains/infrastructure init -reconfigure -upgrade
 
 domains-infra-plan: domains-infra-init ## terraform plan for dns core resources
-	terraform -chdir=terraform/domains/infrastructure plan -var-file config/zones.tfvars.json
+	terraform -chdir=terraform/domains/infrastructure plan ${DETAILED_EXITCODE} -var-file config/zones.tfvars.json
 
 domains-infra-apply: domains-infra-init ## terraform apply for dns core resources
 	terraform -chdir=terraform/domains/infrastructure apply -var-file config/zones.tfvars.json ${AUTO_APPROVE}
@@ -201,7 +201,7 @@ domains-init: set-production-azure-subscription vendor-domain-modules set-azure-
 	terraform -chdir=terraform/domains/environment_domains init -upgrade -reconfigure -backend-config=key=$(or $(DOMAINS_TERRAFORM_BACKEND_KEY),afqtsdomains_$(CONFIG).tfstate)
 
 domains-plan: domains-init  ## terraform plan for dns resources, eg dev.<domain_name> dns records and frontdoor routing
-	terraform -chdir=terraform/domains/environment_domains plan -var-file config/$(CONFIG).tfvars.json
+	terraform -chdir=terraform/domains/environment_domains plan ${DETAILED_EXITCODE} -var-file config/$(CONFIG).tfvars.json
 
 domains-apply: domains-init ## terraform apply for dns resources
 	terraform -chdir=terraform/domains/environment_domains apply -var-file config/$(CONFIG).tfvars.json ${AUTO_APPROVE}
