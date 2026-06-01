@@ -42,12 +42,15 @@
 #  fk_rails_...  (application_form_id => application_forms.id)
 #
 class Assessment < ApplicationRecord
+  DAYS_TO_REQUEST_DECISION_REVIEW = 28.days
+
   belongs_to :application_form
 
   has_many :prioritisation_work_history_checks, dependent: :destroy
   has_many :sections, class_name: "AssessmentSection", dependent: :destroy
 
   has_many :consent_requests, dependent: :destroy
+  has_many :decision_review_requests, dependent: :destroy
   has_many :further_information_requests, dependent: :destroy
   has_one :professional_standing_request, dependent: :destroy, required: false
   has_many :qualification_requests, dependent: :destroy
@@ -99,6 +102,14 @@ class Assessment < ApplicationRecord
 
   def completed?
     award? || decline?
+  end
+
+  def decision_review_request_for_current_decline
+    @decision_review_request_for_current_decline ||=
+      decision_review_requests.find_by(
+        "created_at > ?",
+        application_form.declined_at,
+      )
   end
 
   def can_award?
@@ -173,6 +184,13 @@ class Assessment < ApplicationRecord
     else
       false
     end
+  end
+
+  def can_request_decision_review?
+    return false unless application_form.declined?
+
+    application_form.declined_at > DAYS_TO_REQUEST_DECISION_REVIEW.ago &&
+      !decision_review_request_for_current_decline&.received?
   end
 
   def can_review?

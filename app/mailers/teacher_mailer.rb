@@ -106,6 +106,24 @@ class TeacherMailer < ApplicationMailer
     )
   end
 
+  def decision_review_received
+    view_mail(
+      GOVUK_NOTIFY_TEMPLATE_ID,
+      to: teacher.email,
+      subject: I18n.t("mailer.teacher.decision_review_received.subject"),
+    )
+  end
+
+  def decision_review_reviewed
+    @decision_review_request = params[:decision_review_request]
+
+    view_mail(
+      GOVUK_NOTIFY_TEMPLATE_ID,
+      to: teacher.email,
+      subject: I18n.t("mailer.teacher.decision_review_reviewed.subject"),
+    )
+  end
+
   def further_information_received
     view_mail(
       GOVUK_NOTIFY_TEMPLATE_ID,

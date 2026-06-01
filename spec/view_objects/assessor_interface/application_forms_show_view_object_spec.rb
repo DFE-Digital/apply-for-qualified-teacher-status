@@ -1653,6 +1653,174 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
           ],
         )
       end
+
+      context "when request has been received" do
+        let!(:decision_review_request) do
+          create :received_decision_review_request,
+                 assessment: application_form.assessment
+        end
+
+        it do
+          expect(subject).to eq(
+            [
+              {
+                name: "Review request for decision review",
+                link: [
+                  :edit,
+                  :assessor_interface,
+                  application_form,
+                  application_form.assessment,
+                  decision_review_request,
+                ],
+                status: :not_started,
+              },
+              {
+                name: "Reverse decision",
+                link: [
+                  :rollback,
+                  :assessor_interface,
+                  application_form,
+                  application_form.assessment,
+                ],
+              },
+              {
+                name: "Withdraw",
+                link: [:withdraw, :assessor_interface, application_form],
+              },
+            ],
+          )
+        end
+      end
+    end
+
+    context "with decision review request" do
+      let!(:decision_review_request) do
+        create :decision_review_request, assessment: application_form.assessment
+      end
+
+      it { is_expected.to be_empty }
+
+      context "when request has been received but not reviewed" do
+        let!(:decision_review_request) do
+          create :received_decision_review_request,
+                 assessment: application_form.assessment
+        end
+
+        it do
+          expect(subject).to eq(
+            [
+              {
+                name: "Review request for decision review",
+                link: [
+                  :edit,
+                  :assessor_interface,
+                  application_form,
+                  application_form.assessment,
+                  decision_review_request,
+                ],
+                status: :not_started,
+              },
+            ],
+          )
+        end
+      end
+
+      context "when request has been received but reviewed but not confirmed" do
+        let!(:decision_review_request) do
+          create :received_decision_review_request,
+                 assessment: application_form.assessment,
+                 review_passed: false
+        end
+
+        it do
+          expect(subject).to eq(
+            [
+              {
+                name: "Review request for decision review",
+                link: [
+                  :edit,
+                  :assessor_interface,
+                  application_form,
+                  application_form.assessment,
+                  decision_review_request,
+                ],
+                status: :in_progress,
+              },
+            ],
+          )
+        end
+      end
+
+      context "when request has been received but reviewed and confirmed" do
+        let!(:decision_review_request) do
+          create :received_decision_review_request,
+                 assessment: application_form.assessment,
+                 review_passed: false,
+                 reviewed_at: Time.current
+        end
+
+        it do
+          expect(subject).to eq(
+            [
+              {
+                name: "Review request for decision review",
+                link: [
+                  :edit,
+                  :assessor_interface,
+                  application_form,
+                  application_form.assessment,
+                  decision_review_request,
+                ],
+                status: :completed,
+              },
+            ],
+          )
+        end
+      end
+
+      context "when there are multiple requests received" do
+        let!(:decision_review_request_one) do
+          create :received_decision_review_request,
+                 assessment: application_form.assessment,
+                 created_at: 2.days.ago,
+                 reviewed_at: Time.current,
+                 review_passed: true
+        end
+
+        let!(:decision_review_request_two) do
+          create :received_decision_review_request,
+                 assessment: application_form.assessment
+        end
+
+        it do
+          expect(subject).to eq(
+            [
+              {
+                name: "Review request for decision review",
+                link: [
+                  :edit,
+                  :assessor_interface,
+                  application_form,
+                  application_form.assessment,
+                  decision_review_request_one,
+                ],
+                status: :completed,
+              },
+              {
+                name: "Review request for decision review",
+                link: [
+                  :edit,
+                  :assessor_interface,
+                  application_form,
+                  application_form.assessment,
+                  decision_review_request_two,
+                ],
+                status: :not_started,
+              },
+            ],
+          )
+        end
+      end
     end
   end
 end

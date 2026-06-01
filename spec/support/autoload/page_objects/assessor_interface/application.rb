@@ -117,6 +117,10 @@ module PageObjects
       def verification_decision_task
         find_task_list_item("Verification decision")
       end
+
+      def review_decision_review_task
+        find_task_list_item("Review request for decision review")
+      end
     end
   end
 end
