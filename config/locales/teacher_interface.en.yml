@@ -55,7 +55,7 @@ en:
             qualifications_dont_match_subjects: The subjects you entered are acceptable for QTS, but the uploaded qualifications do not match them.
             qualifications_or_modules_required_not_provided: You have not provided the required qualifications or modules.
             qualified_to_teach: We were not provided with enough evidence to confirm you are qualified to teach at state or government schools.
-            qualified_to_teach_children_11_to_16: You are not qualified to teach children aged 11-16.
+            qualified_to_teach_children_11_to_16: You are not qualified to teach children aged anywhere between 11 and 16 years.
             registration_number: We could not find your reference number, or the number was in the wrong format.
             registration_number_alternative: There’s a problem with your reference number. You need to provide written proof that you are recognised as a teacher.
             satisfactory_evidence_work_history: The information you provided on work history is not sufficient to award QTS.
