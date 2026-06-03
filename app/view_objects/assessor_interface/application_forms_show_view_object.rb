@@ -581,26 +581,29 @@ class AssessorInterface::ApplicationFormsShowViewObject
   def decision_review_request_task_list_items
     return if decision_review_requests.received.blank?
 
-    decision_review_requests.received.map do |decision_review_request|
-      {
-        name: "Review request for decision review",
-        link: [
-          :edit,
-          :assessor_interface,
-          application_form,
-          assessment,
-          decision_review_request,
-        ],
-        status:
-          if decision_review_request.reviewed_at.present?
-            :completed
-          elsif !decision_review_request.review_passed.nil?
-            :in_progress
-          else
-            :not_started
-          end,
-      }
-    end
+    decision_review_requests
+      .received
+      .order(:received_at)
+      .map do |decision_review_request|
+        {
+          name: "Review request for decision review",
+          link: [
+            :edit,
+            :assessor_interface,
+            application_form,
+            assessment,
+            decision_review_request,
+          ],
+          status:
+            if decision_review_request.reviewed_at.present?
+              :completed
+            elsif !decision_review_request.review_passed.nil?
+              :in_progress
+            else
+              :not_started
+            end,
+        }
+      end
   end
 
   def pre_assessment_complete?
