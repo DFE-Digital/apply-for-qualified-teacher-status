@@ -20,10 +20,6 @@ require "rspec/retry"
 require "rspec/core/formatters/base_text_formatter"
 
 RSpec.configure do |config|
-  if ENV["COVERAGE"]
-    require "simplecov"
-    SimpleCov.start "rails"
-  end
   # RSpec-retry configuration, retry and log any indeterminate tests.
   if ENV["CI"]
     reporter = RSpec::Core::Reporter.new(config)
