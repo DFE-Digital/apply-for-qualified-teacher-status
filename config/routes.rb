@@ -299,10 +299,6 @@ Rails.application.routes.draw do
       end
     end
 
-    get "/application/documents/:id/:scope/pdf",
-        to: "documents#show_pdf",
-        as: :application_form_document_pdf
-
     get "/application/documents/:document_id/uploads/:id",
         to: "uploads#show",
         as: :application_form_document_upload
