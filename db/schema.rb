@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_25_153701) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_30_100317) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -215,6 +215,19 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_25_153701) do
     t.text "teaching_qualification_information", default: "", null: false
     t.datetime "updated_at", null: false
     t.index ["code"], name: "index_countries_on_code", unique: true
+  end
+
+  create_table "decision_review_requests", force: :cascade do |t|
+    t.bigint "assessment_id", null: false
+    t.text "comment", default: "", null: false
+    t.datetime "created_at", null: false
+    t.boolean "has_supporting_documents"
+    t.datetime "received_at"
+    t.text "review_note", default: "", null: false
+    t.boolean "review_passed"
+    t.datetime "reviewed_at"
+    t.datetime "updated_at", null: false
+    t.index ["assessment_id"], name: "index_decision_review_requests_on_assessment_id"
   end
 
   create_table "documents", force: :cascade do |t|
@@ -768,6 +781,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_25_153701) do
   add_foreign_key "assessments", "application_forms"
   add_foreign_key "consent_requests", "assessments"
   add_foreign_key "consent_requests", "qualifications"
+  add_foreign_key "decision_review_requests", "assessments"
   add_foreign_key "eligibility_checks", "regions"
   add_foreign_key "eligibility_domains", "staff", column: "created_by_id"
   add_foreign_key "email_deliveries", "application_forms"

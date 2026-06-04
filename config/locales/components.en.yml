@@ -34,6 +34,7 @@ en:
       received: Received
       received_and_overdue: Received (overdue)
       received_consent: Received consent
+      received_decision_review: Received decision review
       received_ecctis: Received Ecctis
       received_further_information: Received further information
       received_lops: Received LoPS
@@ -93,6 +94,7 @@ en:
           PrioritisationReferenceRequest: Prioritisation reference requested
         requestable_received:
           ConsentRequest: Consent received
+          DecisionReviewRequest: Decision review received
           FurtherInformationRequest: Further information received
           ProfessionalStandingRequest: Professional standing received
           QualificationRequest: Qualification received
@@ -107,6 +109,7 @@ en:
           PrioritisationReferenceRequest: Prioritisation reference expired
         requestable_reviewed:
           ConsentRequest: Consent reviewed
+          DecisionReviewRequest: Decision review completed
           FurtherInformationRequest: Further information assessed
           ProfessionalStandingRequest: Professional standing reviewed
           QualificationRequest: Qualification reviewed
@@ -134,6 +137,7 @@ en:
           ReferenceRequest: A reference has been requested.
           PrioritisationReferenceRequest: A prioritisation reference has been requested.
         requestable_received:
+          DecisionReviewRequest: A decision review request has been received.
           ConsentRequest: A consent request has been received.
           FurtherInformationRequest: Further information requested on %{requested_at} has been received.
           ProfessionalStandingRequest: "The professional standing has been received: %{location_note}"

@@ -24,6 +24,10 @@
         <li>be awarded within the last 2 years before the date of your application</li>
       </ul>
       <%= render "shared/english_language_approved_esol_providers", reduced_evidence_accepted: @application_form.reduced_evidence_accepted %>
+    <% elsif @document.decision_review_evidence? %>
+      <h1 class="govuk-heading-l">Upload your supporting document for a decision review</h1>
+
+      <p class="govuk-body">You should upload any documents that will support your request for a decision review.</p>
     <% elsif @document.identification? %>
       <h1 class="govuk-heading-l">Upload a valid identification document</h1>
 
@@ -225,5 +229,11 @@
     <% end %>
   <% end %>
 
-  <%= render "shared/save_submit_buttons", f: %>
+  <%= f.govuk_submit name: "button", value: "save_and_continue" do %>
+    <% if @document.decision_review_evidence? %>
+      <%= govuk_link_to "Cancel", teacher_interface_application_form_path %>
+    <% else %>
+      <%= f.govuk_submit "Save and come back later", name: "button", value: "save_and_return", secondary: true %>
+    <% end %>
+  <% end %>
 <% end %>

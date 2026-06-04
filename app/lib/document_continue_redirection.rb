@@ -31,6 +31,10 @@ class DocumentContinueRedirection
     %i[check teacher_interface application_form passport_document]
   end
 
+  def decision_review_evidence_url
+    [:teacher_interface, :application_form, documentable, :confirm]
+  end
+
   def name_change_url
     %i[check teacher_interface application_form personal_information]
   end

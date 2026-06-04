@@ -56,6 +56,7 @@ module StatusTag
       received: "purple",
       received_and_overdue: "magenta",
       received_consent: "purple",
+      received_decision_review: "purple",
       received_ecctis: "purple",
       received_further_information: "purple",
       received_lops: "purple",

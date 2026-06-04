@@ -43,6 +43,7 @@ class Document < ApplicationRecord
   UNTRANSLATABLE_SINGLE_TYPES = %w[signed_consent unsigned_consent].freeze
 
   TRANSLATABLE_TYPES = %w[
+    decision_review_evidence
     qualification_certificate
     qualification_document
     qualification_transcript
@@ -101,6 +102,10 @@ class Document < ApplicationRecord
 
   def for_consent_request?
     documentable.is_a?(ConsentRequest)
+  end
+
+  def for_decision_review_request?
+    documentable.is_a?(DecisionReviewRequest)
   end
 
   def application_form

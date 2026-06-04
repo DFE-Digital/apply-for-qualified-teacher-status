@@ -83,6 +83,15 @@ en:
         draft:
           check: Check your application
           save: Save and sign out
+    decision_review_requests:
+      form:
+        title: Your decision review reason
+      edit_declaration:
+        title: Request a decision review
+      edit_confirm:
+        title: Check your decision review request
+      confirmation:
+        title: Request submitted
     documents:
       unsafe_to_link: The selected file contains a suspected virus. Delete it and upload a new file.
     english_language:
@@ -303,6 +312,16 @@ en:
           attributes:
             add_another:
               inclusion: Select whether you need to add another role
+        teacher_interface/create_decision_review_request_form:
+          attributes:
+            comment:
+              blank: Enter the reason you are requesting a decision review
+            has_supporting_documents:
+              inclusion: Select if you need to upload documents to support your decision review request
+        teacher_interface/declaration_decision_review_request_form:
+          attributes:
+            confirm:
+              blank: Select if your request meets the requirements
         teacher_interface/delete_qualification_form:
           attributes:
             confirm:
@@ -319,6 +338,12 @@ en:
           attributes:
             available:
               inclusion: Select whether you have this document available
+        teacher_interface/edit_decision_review_request_form:
+          attributes:
+            comment:
+              blank: Enter the reason you are requesting a decision review
+            has_supporting_documents:
+              inclusion: Select if you need to upload documents to support your decision review request
         teacher_interface/english_language_exemption_form:
           attributes:
             exempt:
@@ -497,7 +522,7 @@ en:
         teacher_interface/upload_form:
           attributes:
             written_in_english:
-              inclusion: Select whether your document is written in English
+              inclusion: Select if your document is written in English
             original_attachment:
               blank: Select a file to upload
               encrypted_pdf: The selected file is security protected

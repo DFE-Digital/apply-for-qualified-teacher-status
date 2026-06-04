@@ -50,6 +50,10 @@ en:
           esol: The certificate must test reading, writing, listening and speaking skills. We cannot accept English language tests from a provider that has not been approved.
           medium_of_instruction: This is sometimes called a 'Medium of Instruction' (MOI) and you can request it from the institution where you studied. It must be signed and stamped by them on official headed paper, and it must state that the medium of instruction was English. It must also include your name, degree title and award date.
           provider: The test must have been taken within the last 2 years. We cannot accept English language tests from a provider that does not appear on the list.
+      teacher_interface_create_decision_review_request_form:
+        comment: You must provide evidence, reasoning or additional information to explain how you meet the required assessment criteria.
+      teacher_interface_edit_decision_review_request_form:
+        comment: You must provide evidence, reasoning or additional information to explain how you meet the required assessment criteria.
       teacher_interface_further_information_request_item_text_form:
         response: Use the text box below to respond to the assessor's request.
       teacher_interface_ghana_registration_number_form:
@@ -254,10 +258,14 @@ en:
       teacher_interface_age_range_form:
         minimum: <span class="govuk-visually-hidden">Age</span> From
         maximum: <span class="govuk-visually-hidden">Age</span> To
+      teacher_interface_create_decision_review_request_form:
+        comment: Tell us why you are requesting a decision review
       teacher_interface_delete_upload_form:
         confirm_options:
           true: "Yes"
           false: "No"
+      teacher_interface_edit_decision_review_request_form:
+        comment: Tell us why you are requesting a decision review
       teacher_interface_name_and_date_of_birth_form:
         national_insurance_number: National Insurance number (optional)
       teacher_interface_delete_work_history_form:
@@ -422,6 +430,8 @@ en:
         scotland_full_registration: Does the applicant have or are they eligible for full registration?
         school_details_cannot_be_verified_work_history_checked: Select the school that we were unable to verify (there may be more than one)
         unrecognised_references_work_history_checked: Select the school that we were unable to verify the reference for (there may be more than one)
+      assessor_interface_decision_review_request_review_form:
+        review_passed: Has the applicant provided enough evidence to change the decline decision?
       assessor_interface_filter_form:
         action_required_by: Action required by
         assessor_ids: Assessor name
@@ -458,8 +468,14 @@ en:
       teacher_interface_alternative_name_form:
         has_alternative_name_passport: Does your name appear differently on your passport or qualifications?
         has_alternative_name_id_documents: Does your name appear differently on your ID documents or qualifications?
+      teacher_interface_create_decision_review_request_form:
+        has_supporting_documents: Do you need to upload supporting documents for your decision review request?
       teacher_interface_document_available_form:
         available: Have you completed your induction period in Northern Ireland?
+      teacher_interface_declaration_decision_review_request_form:
+        confirm: Does your request meet these requirements?
+      teacher_interface_edit_decision_review_request_form:
+        has_supporting_documents: Do you need to upload supporting documents for your decision review request?
       teacher_interface_english_language_proof_method_form:
         proof_method: You need to provide proof of your English language proficiency
       teacher_interface_english_language_provider_form:

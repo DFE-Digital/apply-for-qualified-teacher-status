@@ -1,0 +1,31 @@
+<%
+  title = if @decision_review_request.review_passed?
+    "Are you sure you want to change the decline decision?"
+  else
+    "Are you sure you want to reject this decision review?"
+  end
+%>
+<% content_for :page_title, title %>
+<% content_for :back_link_url, edit_assessor_interface_application_form_assessment_decision_review_request_path(@application_form, @assessment, @decision_review_request) %>
+
+<%= form_with model: @form, url: [:assessor_interface, @application_form, @assessment, @decision_review_request, :confirm], method: :post do |f| %>
+  <h1 class="govuk-heading-xl">
+    <%= title %>
+  </h1>
+
+  <% if @decision_review_request.review_passed? %>
+    <p class="govuk-body">Select 'Confirm' to change the decline decision and move the application back into assessment.</p>
+    <p class="govuk-body">The applicant will receive an email notifying them that their request to change the decline decision has been successful.</p>
+  <% else %>
+    <p class="govuk-body">This means their application will remain declined.</p>
+    <p class="govuk-body">Select 'Confirm' to notify the applicant that their request to change the decline decision has been rejected. They will also receive your note.</p>
+    <p class="govuk-body">Your note to the applicant:</p>
+    <%= govuk_inset_text do %>
+      <p><%= simple_format @decision_review_request.review_note %></p>
+    <% end %>
+  <% end %>
+
+  <%= f.govuk_submit "Confirm" do %>
+    <%= render "shared/assessor_interface/cancel_link" %>
+  <% end %>
+<% end %>

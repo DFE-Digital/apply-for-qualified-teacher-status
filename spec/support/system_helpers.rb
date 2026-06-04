@@ -114,6 +114,27 @@ module SystemHelpers
     given_i_am_authorized_as_a_user(user)
   end
 
+  def given_i_am_authorized_as_a_reverse_decision_user
+    user =
+      create(
+        :staff,
+        :with_reverse_decision_permission,
+        name: "Reverse Decision User",
+      )
+    given_i_am_authorized_as_a_user(user)
+  end
+
+  def given_i_am_authorized_as_a_reverse_decision_archived_user
+    user =
+      create(
+        :staff,
+        :with_reverse_decision_permission,
+        name: "Reverse Decision User",
+        archived: true,
+      )
+    given_i_am_authorized_as_a_user(user)
+  end
+
   def given_malware_scanning_is_enabled(scan_result: "No threats found")
     FeatureFlags::FeatureFlag.activate(:fetch_malware_scan_result)
     response_body = { "Malware Scanning scan result" => scan_result }

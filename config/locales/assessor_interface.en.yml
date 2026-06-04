@@ -238,6 +238,9 @@ en:
           personal_information_id: This applicant has indicated English language exemption by birth/citizenship. I have checked their ID for evidence of this.
           qualifications: This applicant has indicated English language exemption by country of study. I have checked their qualification documents for evidence of this.
 
+    decision_review_requests:
+      edit:
+        title: Review request for decision review
     further_information_requests:
       edit:
         title:
@@ -538,6 +541,14 @@ en:
               blank: Select why you want to flag this application as on hold
             reason_comment:
               blank: Enter the reason you want to flag this application as on hold
+        assessor_interface/decision_review_request_review_form:
+          attributes:
+            review_passed:
+              inclusion: Select if the applicant has provided enough evidence to change the decline decision
+            review_failed_note:
+              blank: Enter a note to the applicant
+            review_passed_note:
+              blank: Enter an internal note
         assessor_interface/release_application_hold_form:
           attributes:
             release_comment:

@@ -1,0 +1,34 @@
+<%= render "shared/teacher_mailer/reference_number" %>
+
+Dear <%= application_form_full_name(@application_form) %>,
+
+A senior Professional Recognition Manager has reviewed your decision review request, including the evidence and reasons you provided.
+
+<% if @decision_review_request.review_passed %>
+They found that your application meets the eligibility criteria. This means the decline decision has been removed.
+
+Your application will now move to the next stage of the assessment process.
+
+If the assessment team needs more information before making a final decision, they will contact you by email.
+<% else %>
+They found that your application does not meet the eligibility criteria. This means the decline decision has not changed.
+
+Note from the senior Professional Recognition Manager:
+
+<%= @decision_review_request.review_note %>
+
+## What you can do next
+
+You’ll be able to make a new application once you’ve addressed all decline reasons given. If you reapply for QTS, you’ll not be able to review the details of your previous application.
+
+You may want to explore [other routes to getting QTS](https://www.gov.uk/government/publications/apply-for-qualified-teacher-status-qts-if-you-teach-outside-the-uk/routes-to-qualified-teacher-status-qts-for-teachers-and-those-with-teaching-experience-outside-the-uk#routes-to-qts).
+
+If you disagree with the outcome of this decision review, you are entitled to submit a final appeal to a senior Professional Recognition Manager. To make an appeal request, email [<%= t("service.email.enquiries") %>](mailto:<%= t("service.email.enquiries") %>). You will need to provide additional evidence to show:
+
+* an error in law has occurred
+* a factual error has occurred in the application of the law
+* the Professional Recognition due process has not been applied in assessing your application
+* show you meet the eligibility criteria for QTS in England
+<% end %>
+
+<%= render "shared/teacher_mailer/footer" %>

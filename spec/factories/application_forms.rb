@@ -226,6 +226,13 @@ FactoryBot.define do
       declined_at { Time.zone.now }
     end
 
+    trait :declined_with_decision_review_received do
+      submitted
+      completed_stage
+      statuses { %w[declined received_decision_review] }
+      declined_at { Time.zone.now }
+    end
+
     trait :withdrawn do
       submitted
       completed_stage
