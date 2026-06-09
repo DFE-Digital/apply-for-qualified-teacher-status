@@ -1,6 +1,6 @@
 # Logging
 
-## Overview
+## Overview
 
 The service uses rails_semantic_logger to emit structured JSON logs to stdout. These are collected and shipped to Logit, where they can be searched and filtered.
 
