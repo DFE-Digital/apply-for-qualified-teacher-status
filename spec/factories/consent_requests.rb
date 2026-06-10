@@ -50,7 +50,11 @@ FactoryBot.define do
 
     trait :with_signed_upload do
       after(:create) do |consent_request, _evaluator|
-        create(:upload, document: consent_request.signed_consent_document)
+        create(
+          :upload,
+          :clean,
+          document: consent_request.signed_consent_document,
+        )
       end
     end
 

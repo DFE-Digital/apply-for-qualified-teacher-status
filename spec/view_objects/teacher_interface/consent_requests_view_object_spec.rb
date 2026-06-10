@@ -151,20 +151,13 @@ RSpec.describe TeacherInterface::ConsentRequestsViewObject do
     end
 
     context "with complete consent requests" do
-      let(:consent_request) do
+      before do
         create(
           :consent_request,
           :requested,
+          :with_signed_upload,
           assessment: application_form.assessment,
           unsigned_document_downloaded: true,
-        )
-      end
-
-      before do
-        create(
-          :upload,
-          :clean,
-          document: consent_request.signed_consent_document,
         )
       end
 
