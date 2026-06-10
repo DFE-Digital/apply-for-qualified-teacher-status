@@ -170,15 +170,15 @@ RSpec.describe TeacherInterface::ConsentRequestsViewObject do
       view_object.check_your_answers_task_group
     end
 
-    let!(:consent_request) do
-      create(
-        :consent_request,
-        :requested,
-        assessment: application_form.assessment,
-      )
-    end
-
     context "when items are incomplete" do
+      before do
+        create(
+          :consent_request,
+          :requested,
+          assessment: application_form.assessment,
+        )
+      end
+
       it "disables check your answers in task list group" do
         expect(check_your_answers_task_group[:heading]).to eq(
           "Check your answers",
@@ -192,11 +192,12 @@ RSpec.describe TeacherInterface::ConsentRequestsViewObject do
 
     context "when items are complete" do
       before do
-        consent_request.update!(unsigned_document_downloaded: true)
         create(
-          :upload,
-          :clean,
-          document: consent_request.signed_consent_document,
+          :consent_request,
+          :requested,
+          :with_signed_upload,
+          assessment: application_form.assessment,
+          unsigned_document_downloaded: true,
         )
       end
 
