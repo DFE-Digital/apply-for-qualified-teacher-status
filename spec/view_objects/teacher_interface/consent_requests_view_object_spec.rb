@@ -229,7 +229,7 @@ RSpec.describe TeacherInterface::ConsentRequestsViewObject do
           )
         end
 
-        it "enables check your answers in task list group" do
+        it "disables check your answers in task list group" do
           expect(check_your_answers_task_group[:heading]).to eq(
             "Check your answers",
           )
