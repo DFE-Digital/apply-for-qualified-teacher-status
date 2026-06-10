@@ -24,8 +24,6 @@ module TeacherInterface
       end
     end
 
-    alias_method :can_check_answers?, :can_submit?
-
     def check_your_answers_fields
       consent_requests.each_with_object({}) do |consent_request, memo|
         memo[consent_request.id] = {
@@ -51,10 +49,10 @@ module TeacherInterface
           {
             title: I18n.t("teacher_interface.consent_requests.index.check"),
             href:
-              if can_check_answers?
+              if can_submit?
                 %i[check teacher_interface application_form consent_requests]
               end,
-            status: can_check_answers? ? "not_started" : "cannot_start",
+            status: can_submit? ? "not_started" : "cannot_start",
           },
         ],
       }
