@@ -119,7 +119,7 @@ RSpec.describe "Teacher consent", type: :system do
   end
 
   def when_i_click_check_your_answers
-    teacher_consent_requests_page.check_your_answers_button.click
+    teacher_consent_requests_page.task_lists.second.items.first.click
   end
 
   def and_i_see_the_documents
