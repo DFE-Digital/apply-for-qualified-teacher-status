@@ -7,35 +7,6 @@ RSpec.describe AssessorInterface::EmailDeliveryFailuresIndexViewObject do
 
   let(:params) { {} }
 
-  let!(:email_delivery_failure_this_week) do
-    create :email_delivery,
-           notify_status: :permanent_failure,
-           notify_completed_at: Time.current
-  end
-
-  let!(:email_delivery_failure_last_week) do
-    create :email_delivery,
-           notify_status: :permanent_failure,
-           notify_completed_at: 1.week.ago
-  end
-
-  before do
-    # Email delivery delivered from this week
-    create :email_delivery,
-           notify_status: :delivered,
-           notify_completed_at: Time.current
-
-    # Email delivery delivered from last week
-    create :email_delivery,
-           notify_status: :delivered,
-           notify_completed_at: 1.week.ago
-
-    # Email delivery failures from 2 weeks ago
-    create :email_delivery,
-           notify_status: :permanent_failure,
-           notify_completed_at: 2.weeks.ago
-  end
-
   describe "#email_deliveries_pagy" do
     subject(:email_deliveries_pagy) { view_object.email_deliveries_pagy }
 
@@ -50,6 +21,35 @@ RSpec.describe AssessorInterface::EmailDeliveryFailuresIndexViewObject do
   describe "#email_deliveries_records" do
     subject(:email_deliveries_records) { view_object.email_deliveries_records }
 
+    let!(:email_delivery_failure_this_week) do
+      create :email_delivery,
+             notify_status: :permanent_failure,
+             notify_completed_at: Time.current
+    end
+
+    let!(:email_delivery_failure_last_week) do
+      create :email_delivery,
+             notify_status: :permanent_failure,
+             notify_completed_at: 1.week.ago
+    end
+
+    before do
+      # Email delivery delivered from this week
+      create :email_delivery,
+             notify_status: :delivered,
+             notify_completed_at: Time.current
+
+      # Email delivery delivered from last week
+      create :email_delivery,
+             notify_status: :delivered,
+             notify_completed_at: 1.week.ago
+
+      # Email delivery failures from 2 weeks ago
+      create :email_delivery,
+             notify_status: :permanent_failure,
+             notify_completed_at: 2.weeks.ago
+    end
+
     it "returns only email delivery failures from this week" do
       expect(subject).to contain_exactly(email_delivery_failure_this_week)
     end
@@ -59,6 +59,58 @@ RSpec.describe AssessorInterface::EmailDeliveryFailuresIndexViewObject do
 
       it "returns only email delivery failures from last week" do
         expect(subject).to contain_exactly(email_delivery_failure_last_week)
+      end
+    end
+  end
+
+  describe "#this_week_tab_name" do
+    subject(:this_week_tab_name) { view_object.this_week_tab_name }
+
+    around do |example|
+      travel_to Date.new(2026, 6, 1) do
+        example.run
+      end
+    end
+
+    it "returns tab name for this week ranging from beginning and end of week" do
+      expect(subject).to eq("This week 01 Jun to 07 Jun (0)")
+    end
+
+    context "when there is an email delivery failure for this week" do
+      before do
+        create :email_delivery,
+               notify_status: :permanent_failure,
+               notify_completed_at: Time.current
+      end
+
+      it "returns tab name for this week ranging from beginning and end of week with counter" do
+        expect(subject).to eq("This week 01 Jun to 07 Jun (1)")
+      end
+    end
+  end
+
+  describe "#last_week_tab_name" do
+    subject(:last_week_tab_name) { view_object.last_week_tab_name }
+
+    around do |example|
+      travel_to Date.new(2026, 6, 1) do
+        example.run
+      end
+    end
+
+    it "returns tab name for last week ranging from beginning and end of week" do
+      expect(subject).to eq("Last week 25 May to 31 May (0)")
+    end
+
+    context "when there is an email delivery failure for last week" do
+      before do
+        create :email_delivery,
+               notify_status: :permanent_failure,
+               notify_completed_at: 1.week.ago
+      end
+
+      it "returns tab name for last week ranging from beginning and end of week with counter" do
+        expect(subject).to eq("Last week 25 May to 31 May (1)")
       end
     end
   end

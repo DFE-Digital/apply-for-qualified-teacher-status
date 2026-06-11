@@ -8,10 +8,10 @@
   </h2>
   <ul class="govuk-tabs__list">
     <li class="govuk-tabs__list-item <%= 'govuk-tabs__list-item--selected' if params[:tab] != "last_week" %>">
-      <%= link_to "This week", assessor_interface_email_delivery_failures_path %>
+      <%= link_to @view_object.this_week_tab_name, assessor_interface_email_delivery_failures_path %>
     </li>
     <li class="govuk-tabs__list-item <%= 'govuk-tabs__list-item--selected' if params[:tab] == "last_week" %>">
-      <%= link_to "Last week", assessor_interface_email_delivery_failures_path(tab: "last_week") %>
+      <%= link_to @view_object.last_week_tab_name, assessor_interface_email_delivery_failures_path(tab: "last_week") %>
     </li>
   </ul>
   <div class="govuk-tabs__panel">
