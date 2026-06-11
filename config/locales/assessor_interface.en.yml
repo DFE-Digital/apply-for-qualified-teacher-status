@@ -241,6 +241,44 @@ en:
     decision_review_requests:
       edit:
         title: Review request for decision review
+
+    email_delivery_failures:
+      index:
+        mailer_action_names:
+          application_awarded: Awarded
+          application_declined: Declined
+          application_from_ineligible_country: Country no longer accepted
+          application_not_submitted: Draft reminder
+          application_prioritised: Prioritised
+          application_not_prioritised: Not prioritised
+          application_received: Application received
+          application_submitted: Application submitted
+          consent_reminder: Consent reminder
+          consent_requested: Consent requested
+          consent_submitted: Consent submitted
+          decision_review_received: Decision review received
+          decision_review_reviewed: Decision review reviewed
+          further_information_received: Further information received
+          further_information_requested: Further information requested
+          further_information_reminder: Further information reminder
+          initial_checks_required: Initial checks required
+          professional_standing_received: Professional standing received
+          professional_standing_requested: Professional standing requested
+          prioritisation_checks_required: Prioritisation checks required
+          prioritisation_reference_reminder: Prioritisation reference reminder
+          prioritisation_reference_requested: Prioritisation reference requested
+          prioritisation_references_requested: Prioritisation references requested
+          prioritisation_references_reminder: Prioritisation references reminder
+          reference_reminder: Reference reminder
+          reference_requested: Reference requested
+          references_requested: References requested
+          references_reminder: References reminder
+        mailer_class_names:
+          teacher_mailer: Applicant
+          referee_mailer: Referee
+          teaching_authority_mailer: Teaching authority
+        results:
+          empty: No failures recorded for this week
     further_information_requests:
       edit:
         title:
