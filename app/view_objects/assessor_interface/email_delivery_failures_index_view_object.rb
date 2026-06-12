@@ -24,6 +24,11 @@ class AssessorInterface::EmailDeliveryFailuresIndexViewObject
     "Last week #{last_week_start_readable_date} to #{last_week_end_readable_date} (#{email_failures_for_last_week.count})"
   end
 
+  def last_week_delivery_stats_statement
+    "#{email_failures_for_last_week_count} out of #{email_deliveries_for_last_week_count} emails " \
+      "failed to send between #{last_week_start_readable_date} and #{last_week_end_readable_date}."
+  end
+
   private
 
   def this_week_start_at
@@ -79,11 +84,21 @@ class AssessorInterface::EmailDeliveryFailuresIndexViewObject
       )
   end
 
+  def email_failures_for_last_week_count
+    email_failures_for_last_week.count
+  end
+
   def email_failures_for_this_week
     @email_failures_for_this_week ||=
       EmailDelivery.failed.where(
         notify_completed_at: this_week_start_at..this_week_end_at,
       )
+  end
+
+  def email_deliveries_for_last_week_count
+    EmailDelivery.where(
+      notify_completed_at: last_week_start_at..last_week_end_at,
+    ).count
   end
 
   attr_reader :params

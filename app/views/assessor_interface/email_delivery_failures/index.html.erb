@@ -2,6 +2,10 @@
 
 <h1 class="govuk-heading-xl">Email failures</h1>
 
+<%= govuk_inset_text do %>
+  <%= @view_object.last_week_delivery_stats_statement %>
+<% end %>
+
 <div class="govuk-tabs" data-module="govuk-tabs">
   <h2 class="govuk-tabs__title">
     Contents
@@ -50,17 +54,18 @@
             end
           end
         %>
-        <%= govuk_pagination(pagy: @view_object.email_deliveries_pagy) %>
       <% else %>
         <%=
           table.with_body do |body|
             body.with_row do |row|
-              row.with_cell(classes: "govuk-body-l", colspan: 6) { t(".results.empty") }
+              row.with_cell(classes: "govuk-body-l govuk-!-font-weight-bold", colspan: 6) { t(".results.empty") }
             end
           end
         %>
       <% end %>
     <% end %>
+
+    <%= govuk_pagination(pagy: @view_object.email_deliveries_pagy) %>
   </div>
 </div>
 

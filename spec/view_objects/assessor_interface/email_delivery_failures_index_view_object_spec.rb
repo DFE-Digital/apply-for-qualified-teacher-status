@@ -114,4 +114,60 @@ RSpec.describe AssessorInterface::EmailDeliveryFailuresIndexViewObject do
       end
     end
   end
+
+  describe "#last_week_delivery_stats_statement" do
+    subject(:last_week_delivery_stats_statement) do
+      view_object.last_week_delivery_stats_statement
+    end
+
+    around do |example|
+      travel_to Date.new(2026, 6, 1) do
+        example.run
+      end
+    end
+
+    it "returns statement for delivery failures rate for last week" do
+      expect(subject).to eq(
+        "0 out of 0 emails failed to send between 25 May and 31 May.",
+      )
+    end
+
+    context "when there are email deliveries without any failures" do
+      before do
+        create_list :email_delivery,
+                    20,
+                    notify_completed_at: Time.current,
+                    notify_status: :delivered
+        create_list :email_delivery,
+                    30,
+                    notify_completed_at: 1.week.ago,
+                    notify_status: :delivered
+      end
+
+      it "returns statement for delivery failures rate for last week" do
+        expect(subject).to eq(
+          "0 out of 30 emails failed to send between 25 May and 31 May.",
+        )
+      end
+
+      context "with failures for this and last week" do
+        before do
+          create_list :email_delivery,
+                      2,
+                      notify_completed_at: Time.current,
+                      notify_status: :permanent_failure
+          create_list :email_delivery,
+                      3,
+                      notify_completed_at: 1.week.ago,
+                      notify_status: :permanent_failure
+        end
+
+        it "returns statement for delivery failures rate for last week with correct failure rate" do
+          expect(subject).to eq(
+            "3 out of 33 emails failed to send between 25 May and 31 May.",
+          )
+        end
+      end
+    end
+  end
 end
