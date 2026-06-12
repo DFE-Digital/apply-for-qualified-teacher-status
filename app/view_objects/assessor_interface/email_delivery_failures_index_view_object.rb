@@ -17,15 +17,15 @@ class AssessorInterface::EmailDeliveryFailuresIndexViewObject
   end
 
   def this_week_tab_name
-    "This week #{this_week_start_readable_date} to #{this_week_end_readable_date} (#{email_failures_for_this_week.count})"
+    "This week #{this_week_start_readable_date} to #{this_week_end_readable_date} (#{this_week_failures_count})"
   end
 
   def last_week_tab_name
-    "Last week #{last_week_start_readable_date} to #{last_week_end_readable_date} (#{email_failures_for_last_week.count})"
+    "Last week #{last_week_start_readable_date} to #{last_week_end_readable_date} (#{last_week_failures_count})"
   end
 
   def last_week_delivery_stats_statement
-    "#{email_failures_for_last_week_count} out of #{email_deliveries_for_last_week_count} emails " \
+    "#{last_week_failures_count} out of #{last_week_total_count} emails " \
       "failed to send between #{last_week_start_readable_date} and #{last_week_end_readable_date}."
   end
 
@@ -69,6 +69,7 @@ class AssessorInterface::EmailDeliveryFailuresIndexViewObject
         email_deliveries_with_filter.preload(application_form: :assessor).order(
           notify_completed_at: :desc,
         ),
+        count: active_tab_failures_count,
       )
   end
 
@@ -88,10 +89,6 @@ class AssessorInterface::EmailDeliveryFailuresIndexViewObject
       )
   end
 
-  def email_failures_for_last_week_count
-    email_failures_for_last_week.count
-  end
-
   def email_failures_for_this_week
     @email_failures_for_this_week ||=
       EmailDelivery.failed.where(
@@ -99,10 +96,27 @@ class AssessorInterface::EmailDeliveryFailuresIndexViewObject
       )
   end
 
-  def email_deliveries_for_last_week_count
-    EmailDelivery.where(
-      notify_completed_at: last_week_start_at..last_week_end_at,
-    ).count
+  def this_week_failures_count
+    @this_week_failures_count ||= email_failures_for_this_week.count
+  end
+
+  def last_week_failures_count
+    @last_week_failures_count ||= email_failures_for_last_week.count
+  end
+
+  def last_week_total_count
+    @last_week_total_count ||=
+      EmailDelivery.where(
+        notify_completed_at: last_week_start_at..last_week_end_at,
+      ).count
+  end
+
+  def active_tab_failures_count
+    if params[:tab] == "last_week"
+      last_week_failures_count
+    else
+      this_week_failures_count
+    end
   end
 
   attr_reader :params
