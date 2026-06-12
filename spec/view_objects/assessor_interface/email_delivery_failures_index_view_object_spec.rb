@@ -13,7 +13,7 @@ RSpec.describe AssessorInterface::EmailDeliveryFailuresIndexViewObject do
     it { is_expected.not_to be_nil }
 
     it "is configured correctly" do
-      expect(subject.limit).to eq(20)
+      expect(subject.limit).to eq(100)
       expect(subject.page).to eq(1)
     end
   end
