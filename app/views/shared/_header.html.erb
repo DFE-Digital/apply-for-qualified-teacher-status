@@ -25,7 +25,7 @@
         <% service_navigation.with_navigation_item(text: "Email domain records", href: main_app.assessor_interface_eligibility_domains_path) %>
       <% end %>
 
-      <% if AssessorInterface::EligibilityDomainPolicy.new(current_staff, EmailDelivery).index? %>
+      <% if AssessorInterface::EmailDeliveryPolicy.new(current_staff, EmailDelivery).index? %>
         <% service_navigation.with_navigation_item(text: "Email failures", href: main_app.assessor_interface_email_delivery_failures_path) %>
       <% end %>
 
