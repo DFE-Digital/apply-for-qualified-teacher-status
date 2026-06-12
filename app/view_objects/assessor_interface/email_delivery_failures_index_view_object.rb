@@ -65,7 +65,11 @@ class AssessorInterface::EmailDeliveryFailuresIndexViewObject
 
   def email_deliveries_with_pagy
     @email_deliveries_with_pagy ||=
-      pagy(email_deliveries_with_filter.order(notify_completed_at: :desc))
+      pagy(
+        email_deliveries_with_filter.preload(application_form: :assessor).order(
+          notify_completed_at: :desc,
+        ),
+      )
   end
 
   def email_deliveries_with_filter
