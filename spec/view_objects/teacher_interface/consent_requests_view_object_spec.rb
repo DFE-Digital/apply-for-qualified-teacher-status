@@ -150,6 +150,19 @@ RSpec.describe TeacherInterface::ConsentRequestsViewObject do
       it { is_expected.to be false }
     end
 
+    context "when unsigned document downloaded but without a signed upload" do
+      before do
+        create(
+          :consent_request,
+          :requested,
+          assessment: application_form.assessment,
+          unsigned_document_downloaded: true,
+        )
+      end
+
+      it { is_expected.to be false }
+    end
+
     context "with complete consent requests" do
       before do
         create(
@@ -162,6 +175,48 @@ RSpec.describe TeacherInterface::ConsentRequestsViewObject do
       end
 
       it { is_expected.to be true }
+    end
+
+    context "when there are two consent requests" do
+      context "when one is incomplete and the other is complete" do
+        before do
+          create(
+            :consent_request,
+            :requested,
+            assessment: application_form.assessment,
+          )
+          create(
+            :consent_request,
+            :requested,
+            :with_signed_upload,
+            assessment: application_form.assessment,
+            unsigned_document_downloaded: true,
+          )
+        end
+
+        it { is_expected.to be false }
+      end
+
+      context "when both are complete" do
+        before do
+          create(
+            :consent_request,
+            :requested,
+            :with_signed_upload,
+            assessment: application_form.assessment,
+            unsigned_document_downloaded: true,
+          )
+          create(
+            :consent_request,
+            :requested,
+            :with_signed_upload,
+            assessment: application_form.assessment,
+            unsigned_document_downloaded: true,
+          )
+        end
+
+        it { is_expected.to be true }
+      end
     end
   end
 
@@ -176,6 +231,27 @@ RSpec.describe TeacherInterface::ConsentRequestsViewObject do
           :consent_request,
           :requested,
           assessment: application_form.assessment,
+        )
+      end
+
+      it "disables check your answers in task list group" do
+        expect(check_your_answers_task_group[:heading]).to eq(
+          "Check your answers",
+        )
+        expect(check_your_answers_task_group[:items].first[:status]).to eq(
+          "cannot_start",
+        )
+        expect(check_your_answers_task_group[:items].first[:href]).to be_nil
+      end
+    end
+
+    context "when unsigned document downloaded but without a signed upload" do
+      before do
+        create(
+          :consent_request,
+          :requested,
+          assessment: application_form.assessment,
+          unsigned_document_downloaded: true,
         )
       end
 
