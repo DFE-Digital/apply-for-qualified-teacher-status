@@ -70,6 +70,7 @@ class AssessorInterface::EmailDeliveryFailuresIndexViewObject
           notify_completed_at: :desc,
         ),
         count: active_tab_failures_count,
+        limit: 100,
       )
   end
 
