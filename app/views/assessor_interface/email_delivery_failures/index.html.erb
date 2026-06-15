@@ -47,7 +47,7 @@
                 end
                 row.with_cell { email_delivery.to }
                 row.with_cell { t(".mailer_class_names.#{email_delivery.mailer_class_name}") }
-                row.with_cell { email_delivery.notify_completed_at.to_fs(:short) }
+                row.with_cell { email_delivery.notify_completed_at.localtime.to_fs(:short) }
                 row.with_cell { t(".mailer_action_names.#{email_delivery.mailer_action_name}") }
                 row.with_cell { email_delivery.application_form.assessor&.name }
               end
