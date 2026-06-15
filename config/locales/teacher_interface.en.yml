@@ -111,6 +111,11 @@ en:
         description: We need to know which of the approved providers you used for your English language proficiency test.
       edit_provider_reference:
         heading: English language proficiency
+    consent_requests:
+      index:
+        check: Check your answers before submitting
+        section:
+          check_your_answers: Check your answers
     further_information_request:
       show:
         check: Check your answers before submitting
