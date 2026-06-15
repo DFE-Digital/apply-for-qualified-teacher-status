@@ -33,30 +33,43 @@
 #  fk_rails_...  (prioritisation_reference_request_id => prioritisation_reference_requests.id)
 #  fk_rails_...  (reference_request_id => reference_requests.id)
 #
-class EmailDelivery < ApplicationRecord
-  belongs_to :application_form
-  belongs_to :reference_request, optional: true
-  belongs_to :prioritisation_reference_request, optional: true
-  belongs_to :further_information_request, optional: true
 
-  scope :failed,
-        -> do
-          where(
-            notify_status: %i[
-              permanent_failure
-              temporary_failure
-              technical_failure
-            ],
-          )
-        end
+require "rails_helper"
 
-  enum :notify_status,
-       {
-         created: "created",
-         delivered: "delivered",
-         permanent_failure: "permanent-failure",
-         temporary_failure: "temporary-failure",
-         technical_failure: "technical-failure",
-       },
-       prefix: true
+RSpec.describe EmailDelivery, type: :model do
+  describe ".failed" do
+    subject(:failed) { described_class.failed }
+
+    before do
+      create(:email_delivery, to: "created@test.com", notify_status: :created)
+      create(
+        :email_delivery,
+        to: "delivered@test.com",
+        notify_status: :delivered,
+      )
+      create(
+        :email_delivery,
+        to: "permanent_failure@test.com",
+        notify_status: :permanent_failure,
+      )
+      create(
+        :email_delivery,
+        to: "temporary_failure@test.com",
+        notify_status: :temporary_failure,
+      )
+      create(
+        :email_delivery,
+        to: "technical_failure@test.com",
+        notify_status: :technical_failure,
+      )
+    end
+
+    it "returns all email deliveries with failure statuses" do
+      expect(subject.pluck(:to)).to contain_exactly(
+        "permanent_failure@test.com",
+        "temporary_failure@test.com",
+        "technical_failure@test.com",
+      )
+    end
+  end
 end

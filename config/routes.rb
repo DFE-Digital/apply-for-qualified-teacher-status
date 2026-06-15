@@ -315,6 +315,10 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :email_delivery_failures,
+              path: "/email-delivery-failures",
+              only: :index
+
     resources :suitability_records, path: "/suitability-records" do
       get "archive", on: :member
     end

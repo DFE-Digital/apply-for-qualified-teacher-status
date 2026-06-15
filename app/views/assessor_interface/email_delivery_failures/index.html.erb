@@ -1,0 +1,71 @@
+<% content_for :page_title, "Email failures" %>
+
+<h1 class="govuk-heading-xl">Email failures</h1>
+
+<%= govuk_inset_text do %>
+  <%= @view_object.last_week_delivery_stats_statement %>
+<% end %>
+
+<div class="govuk-tabs" data-module="govuk-tabs">
+  <h2 class="govuk-tabs__title">
+    Contents
+  </h2>
+  <ul class="govuk-tabs__list">
+    <li class="govuk-tabs__list-item <%= 'govuk-tabs__list-item--selected' if params[:tab] != "last_week" %>">
+      <%= link_to @view_object.this_week_tab_name, assessor_interface_email_delivery_failures_path %>
+    </li>
+    <li class="govuk-tabs__list-item <%= 'govuk-tabs__list-item--selected' if params[:tab] == "last_week" %>">
+      <%= link_to @view_object.last_week_tab_name, assessor_interface_email_delivery_failures_path(tab: "last_week") %>
+    </li>
+  </ul>
+  <div class="govuk-tabs__panel">
+    <%= govuk_table(classes: "app-table__layout_fixed govuk-!-text-break-word") do |table| %>
+      <%=
+        table.with_head do |head|
+          head.with_row do |row|
+            row.with_cell(header: true, text: "Application")
+            row.with_cell(header: true, text: "Email address", width: "one-quarter")
+            row.with_cell(header: true, text: "User")
+            row.with_cell(header: true, text: "Failed at")
+            row.with_cell(header: true, text: "Email type")
+            row.with_cell(header: true, text: "Assigned to")
+          end
+        end
+      %>
+
+      <% if (records = @view_object.email_deliveries_records).present? %>
+        <%=
+          table.with_body do |body|
+            records.each do |email_delivery|
+              body.with_row do |row|
+                row.with_cell do
+                  if email_delivery.application_form.submitted?
+                    govuk_link_to email_delivery.application_form.reference, [:assessor_interface, email_delivery.application_form]
+                  else
+                    "Draft"
+                  end
+                end
+                row.with_cell { email_delivery.to }
+                row.with_cell { t(".mailer_class_names.#{email_delivery.mailer_class_name}") }
+                row.with_cell { email_delivery.notify_completed_at.localtime.strftime("%-d %b %l:%M%P") }
+                row.with_cell { t(".mailer_action_names.#{email_delivery.mailer_action_name}") }
+                row.with_cell { email_delivery.application_form.assessor&.name }
+              end
+            end
+          end
+        %>
+      <% else %>
+        <%=
+          table.with_body do |body|
+            body.with_row do |row|
+              row.with_cell(classes: "govuk-body-l govuk-!-font-weight-bold", colspan: 6) { t(".results.empty") }
+            end
+          end
+        %>
+      <% end %>
+    <% end %>
+
+    <%= govuk_pagination(pagy: @view_object.email_deliveries_pagy) %>
+  </div>
+</div>
+
