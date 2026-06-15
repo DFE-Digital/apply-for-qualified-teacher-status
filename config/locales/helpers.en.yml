@@ -507,7 +507,7 @@ en:
       teacher_interface_prioritisation_reference_request_contact_response_form:
         contact_response: Are these details correct?
       teacher_interface_prioritisation_reference_request_confirm_applicant_response_form:
-        confirm_applicant_response: Can you confirm the applicant’s work history?
+        confirm_applicant_response: Can you confirm the applicant’s work experience?
       teacher_interface_teaching_qualification_part_of_degree_form:
         teaching_qualification_part_of_degree: Is your teaching qualification part of your bachelor’s degree?
       teacher_interface_work_history_school_form:
