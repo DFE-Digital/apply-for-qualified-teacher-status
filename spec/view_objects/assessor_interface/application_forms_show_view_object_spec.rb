@@ -1783,13 +1783,16 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
           create :received_decision_review_request,
                  assessment: application_form.assessment,
                  created_at: 2.days.ago,
+                 received_at: 2.days.ago,
                  reviewed_at: Time.current,
                  review_passed: true
         end
 
         let!(:decision_review_request_two) do
           create :received_decision_review_request,
-                 assessment: application_form.assessment
+                 assessment: application_form.assessment,
+                 created_at: 1.day.ago,
+                 received_at: 1.day.ago
         end
 
         it do
