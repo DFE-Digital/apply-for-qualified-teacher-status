@@ -1,0 +1,629 @@
+erDiagram
+	direction TB
+	"ActiveRecord::SessionStore::Session" {
+		text data
+		string session_id
+	}
+	"ActiveStorage::Attachment" {
+		integer blob_id FK
+		string name
+		integer record_id FK
+		string record_type
+	}
+	"ActiveStorage::Blob" {
+		integer byte_size
+		string checksum
+		string content_type
+		string filename
+		string key
+		text metadata
+		string service_name
+	}
+	"ActiveStorage::VariantRecord" {
+		integer blob_id FK
+		string variation_digest
+	}
+	ApplicationForm {
+		string action_required_by
+		integer age_range_max
+		integer age_range_min
+		string age_range_status
+		text alternative_family_name
+		text alternative_given_names
+		integer assessor_id FK
+		datetime awarded_at
+		boolean confirmed_no_sanctions
+		date date_of_birth
+		datetime declined_at
+		integer eligibility_check_id FK
+		boolean english_language_citizenship_exempt
+		string english_language_proof_method
+		integer english_language_provider_id FK
+		boolean english_language_provider_other
+		text english_language_provider_reference
+		boolean english_language_qualification_exempt
+		string english_language_status
+		text family_name
+		text given_names
+		boolean has_alternative_name
+		boolean has_other_england_work_history
+		boolean has_work_history
+		string identification_document_status
+		boolean includes_prioritisation_features
+		string national_insurance_number
+		boolean needs_registration_number
+		boolean needs_work_history
+		boolean needs_written_statement
+		string other_england_work_history_status
+		string passport_country_of_issue_code
+		string passport_document_status
+		date passport_expiry_date
+		string personal_information_status
+		boolean qualification_changed_work_history_duration
+		string qualifications_status
+		boolean reduced_evidence_accepted
+		string reference
+		integer region_id FK
+		text registration_number
+		string registration_number_status
+		boolean requires_passport_as_identity_proof
+		boolean requires_preliminary_check
+		boolean requires_private_email_for_referee
+		integer reviewer_id FK
+		string stage
+		boolean started_with_private_email_for_referee
+		string statuses
+		boolean subject_limited
+		text subjects
+		string subjects_status
+		datetime submitted_at
+		integer teacher_id FK
+		boolean teaching_authority_provides_written_statement
+		boolean teaching_qualification_part_of_degree
+		jsonb trs_match
+		datetime withdrawn_at
+		string work_history_status
+		integer working_days_between_submitted_and_completed
+		integer working_days_between_submitted_and_today
+		boolean written_statement_confirmation
+		boolean written_statement_optional
+		string written_statement_status
+	}
+	ApplicationHold {
+		integer application_form_id FK
+		string reason
+		string reason_comment
+		string release_comment
+		datetime released_at
+	}
+	Assessment {
+		integer age_range_max
+		integer age_range_min
+		text age_range_note
+		integer application_form_id FK
+		boolean induction_required
+		datetime prioritisation_decision_at
+		boolean prioritised
+		text qualifications_assessor_note
+		string recommendation
+		text recommendation_assessor_note
+		datetime recommended_at
+		boolean references_verified
+		boolean scotland_full_registration
+		datetime started_at
+		text subjects
+		text subjects_note
+		boolean unsigned_consent_document_generated
+		datetime verification_started_at
+		integer working_days_between_started_and_completed
+		integer working_days_between_started_and_today
+		integer working_days_between_started_and_verification_started
+		integer working_days_between_submitted_and_prioritisation_decision
+		integer working_days_between_submitted_and_started
+		integer working_days_between_submitted_and_verification_started
+	}
+	AssessmentSection {
+		datetime assessed_at
+		integer assessment_id FK
+		string checks
+		string failure_reasons
+		string key
+		boolean passed
+		boolean preliminary
+	}
+	ConsentRequest {
+		integer assessment_id FK
+		datetime expired_at
+		integer qualification_id FK
+		datetime received_at
+		datetime requested_at
+		text review_note
+		boolean review_passed
+		datetime reviewed_at
+		boolean unsigned_document_downloaded
+		datetime verified_at
+		text verify_note
+		boolean verify_passed
+	}
+	Country {
+		string code
+		boolean eligibility_enabled
+		boolean eligibility_skip_questions
+		text other_information
+		string sanction_information
+		string status_information
+		boolean subject_limited
+		text teaching_qualification_information
+	}
+	DecisionReviewRequest {
+		integer assessment_id FK
+		text comment
+		boolean has_supporting_documents
+		datetime received_at
+		text review_note
+		boolean review_passed
+		datetime reviewed_at
+	}
+	Document {
+		boolean available
+		string document_type
+		integer documentable_id FK
+		string documentable_type
+	}
+	EligibilityCheck {
+		datetime completed_at
+		string country_code
+		boolean degree
+		boolean eligible_work_experience_in_england
+		boolean free_of_sanctions
+		boolean qualification
+		boolean qualified_for_subject
+		integer region_id FK
+		boolean teach_children
+		string work_experience
+		boolean work_experience_referee
+	}
+	EligibilityDomain {
+		integer application_forms_count
+		datetime archived_at
+		integer created_by_id FK
+		string domain
+	}
+	EmailDelivery {
+		integer application_form_id FK
+		integer further_information_request_id FK
+		string mailer_action_name
+		string mailer_class_name
+		datetime notify_completed_at
+		string notify_id
+		string notify_status
+		integer prioritisation_reference_request_id FK
+		integer reference_request_id FK
+		string subject
+		string to
+	}
+	EnglishLanguageProvider {
+		string accepted_tests
+		text b2_level_requirement
+		string b2_level_requirement_prefix
+		string check_url
+		string name
+		text other_information
+		text reference_hint
+		string reference_name
+		string url
+	}
+	ExportAudit {
+		string export_type
+		integer exported_by_id FK
+		jsonb filter_params
+	}
+	"FeatureFlags::Feature" {
+		boolean active
+		string name
+	}
+	FurtherInformationRequest {
+		integer assessment_id FK
+		datetime expired_at
+		datetime received_at
+		datetime requested_at
+		string review_note
+		boolean review_passed
+		datetime reviewed_at
+		integer working_days_between_assessment_started_to_requested
+	}
+	FurtherInformationRequestItem {
+		string contact_email
+		string contact_job
+		string contact_name
+		text failure_reason_assessor_feedback
+		string failure_reason_key
+		integer further_information_request_id FK
+		string information_type
+		text response
+		string review_decision
+		text review_decision_note
+		integer work_history_id FK
+	}
+	MailDeliveryFailure {
+		string email_address
+		string mailer_action_method
+		string mailer_class
+	}
+	Note {
+		integer application_form_id FK
+		integer author_id FK
+		integer eligibility_domain_id FK
+		text text
+	}
+	PrioritisationReferenceRequest {
+		integer assessment_id FK
+		text confirm_applicant_comment
+		boolean confirm_applicant_response
+		text contact_comment
+		boolean contact_response
+		datetime expired_at
+		integer prioritisation_work_history_check_id FK
+		datetime received_at
+		datetime requested_at
+		text review_note
+		boolean review_passed
+		datetime reviewed_at
+		string slug
+		integer work_history_id FK
+	}
+	PrioritisationWorkHistoryCheck {
+		integer assessment_id FK
+		string checks
+		string failure_reasons
+		boolean passed
+		integer work_history_id FK
+	}
+	ProfessionalStandingRequest {
+		integer assessment_id FK
+		datetime expired_at
+		text location_note
+		datetime received_at
+		datetime requested_at
+		string review_note
+		boolean review_passed
+		datetime reviewed_at
+		datetime verified_at
+		text verify_note
+		boolean verify_passed
+	}
+	Qualification {
+		integer application_form_id FK
+		date certificate_date
+		date complete_date
+		text institution_country_code
+		text institution_name
+		date start_date
+		text title
+	}
+	QualificationRequest {
+		integer assessment_id FK
+		string consent_method
+		datetime expired_at
+		integer qualification_id FK
+		datetime received_at
+		datetime requested_at
+		string review_note
+		boolean review_passed
+		datetime reviewed_at
+		datetime verified_at
+		text verify_note
+		boolean verify_passed
+	}
+	ReferenceRequest {
+		text additional_information_response
+		integer assessment_id FK
+		text children_comment
+		boolean children_response
+		text contact_comment
+		string contact_job
+		string contact_name
+		boolean contact_response
+		text dates_comment
+		boolean dates_response
+		boolean excludes_suitability_and_concerns_question
+		datetime expired_at
+		text hours_comment
+		boolean hours_response
+		text lessons_comment
+		boolean lessons_response
+		text misconduct_comment
+		boolean misconduct_response
+		datetime received_at
+		text reports_comment
+		boolean reports_response
+		datetime requested_at
+		string review_note
+		boolean review_passed
+		datetime reviewed_at
+		text satisfied_comment
+		boolean satisfied_response
+		string slug
+		datetime verified_at
+		text verify_note
+		boolean verify_passed
+		integer work_history_id FK
+	}
+	Region {
+		boolean application_form_skip_work_history
+		integer country_id FK
+		string name
+		text other_information
+		boolean reduced_evidence_accepted
+		boolean requires_preliminary_check
+		string sanction_check
+		string sanction_information
+		string status_check
+		string status_information
+		text teaching_authority_address
+		text teaching_authority_certificate
+		text teaching_authority_emails
+		text teaching_authority_name
+		string teaching_authority_online_checker_url
+		boolean teaching_authority_provides_written_statement
+		boolean teaching_authority_requires_submission_email
+		text teaching_authority_websites
+		text teaching_qualification_information
+		boolean written_statement_optional
+	}
+	ReminderEmail {
+		string name
+		integer remindable_id FK
+		string remindable_type
+	}
+	SelectedFailureReason {
+		integer assessment_section_id FK
+		text assessor_feedback
+		string key
+		integer prioritisation_work_history_check_id FK
+	}
+	SelectedFailureReasonsWorkHistory {
+		text assessor_feedback
+		integer selected_failure_reason_id FK
+		integer work_history_id FK
+	}
+	Staff {
+		boolean archived
+		boolean assess_permission
+		string azure_ad_uid
+		boolean change_email_permission
+		boolean change_name_permission
+		boolean change_work_history_and_qualification_permission
+		datetime confirmation_sent_at
+		string confirmation_token
+		datetime confirmed_at
+		datetime current_sign_in_at
+		string current_sign_in_ip
+		string email
+		string encrypted_password
+		integer failed_attempts
+		datetime invitation_accepted_at
+		datetime invitation_created_at
+		integer invitation_limit
+		datetime invitation_sent_at
+		string invitation_token
+		integer invitations_count
+		integer invited_by_id
+		string invited_by_type
+		datetime last_sign_in_at
+		string last_sign_in_ip
+		datetime locked_at
+		boolean manage_staff_permission
+		text name
+		datetime remember_created_at
+		datetime reset_password_sent_at
+		string reset_password_token
+		boolean reverse_decision_permission
+		integer sign_in_count
+		boolean support_console_permission
+		string unconfirmed_email
+		string unlock_token
+		boolean verify_permission
+		boolean withdraw_permission
+	}
+	SuitabilityRecord {
+		text archive_note
+		datetime archived_at
+		integer archived_by_id FK
+		text country_code
+		integer created_by_id FK
+		date date_of_birth
+		text note
+	}
+	"SuitabilityRecord::Email" {
+		text canonical
+		integer suitability_record_id FK
+		text value
+	}
+	"SuitabilityRecord::Name" {
+		integer suitability_record_id FK
+		text value
+	}
+	SupportRequest {
+		string application_enquiry_type
+		string application_reference
+		text comment
+		string email
+		string name
+		datetime submitted_at
+		string user_type
+		datetime zendesk_ticket_created_at
+		string zendesk_ticket_id
+	}
+	TRSTRNRequest {
+		integer application_form_id FK
+		boolean potential_duplicate
+		uuid request_id
+		string state
+	}
+	Teacher {
+		string access_your_teaching_qualifications_url
+		text canonical_email
+		datetime current_sign_in_at
+		string current_sign_in_ip
+		string email
+		text email_domain
+		string gov_one_email
+		string gov_one_id
+		datetime last_sign_in_at
+		string last_sign_in_ip
+		integer sign_in_count
+		string trn
+		uuid uuid
+	}
+	TimelineEvent {
+		integer age_range_max
+		integer age_range_min
+		text age_range_note
+		integer application_form_id FK
+		integer application_hold_id FK
+		integer assessment_id FK
+		integer assessment_section_id FK
+		integer assignee_id FK
+		string column_name
+		integer creator_id
+		string creator_name
+		string creator_type
+		integer eligibility_domain_id FK
+		string event_type
+		string mailer_action_name
+		string mailer_class_name
+		string message_subject
+		text new_value
+		integer note_id FK
+		text note_text
+		text old_value
+		integer prioritisation_work_history_check_id FK
+		integer qualification_id FK
+		integer requestable_id
+		string requestable_type
+		text subjects
+		text subjects_note
+		integer work_history_id FK
+	}
+	Upload {
+		integer document_id FK
+		string filename
+		string malware_scan_result
+		boolean translation
+	}
+	WorkHistory {
+		string address_line1
+		string address_line2
+		integer application_form_id FK
+		text canonical_contact_email
+		text city
+		text contact_email
+		text contact_email_domain
+		string contact_job
+		text contact_name
+		text country_code
+		integer eligibility_domain_id FK
+		date end_date
+		boolean end_date_is_estimate
+		integer hours_per_week
+		boolean is_other_england_educational_role
+		text job
+		string postcode
+		text school_name
+		string school_website
+		date start_date
+		boolean start_date_is_estimate
+		boolean still_employed
+	}
+	"ActiveStorage::VariantRecord" ||--}o "ActiveStorage::Blob" : ""
+	Record ||--|o "ActiveStorage::Attachment" : ""
+	"ActiveStorage::Blob" ||--|o "ActiveStorage::Attachment" : ""
+	"ActiveStorage::VariantRecord" ||--|o "ActiveStorage::Attachment" : ""
+	Upload ||--|o "ActiveStorage::Attachment" : ""
+	"ActiveStorage::Blob" ||--}o "ActiveStorage::Attachment" : ""
+	"ActiveStorage::Blob" o|..|o "ActiveStorage::Blob" : ""
+	ApplicationForm ||--}o WorkHistory : ""
+	EligibilityDomain o|--}o WorkHistory : ""
+	WorkHistory ||--|o ReferenceRequest : ""
+	SelectedFailureReason o{--}o WorkHistory : ""
+	WorkHistory o|--|o FurtherInformationRequestItem : ""
+	Document ||--}o Upload : ""
+	Upload o|..|o "ActiveStorage::Blob" : ""
+	ApplicationForm ||--|o TRSTRNRequest : ""
+	ApplicationForm o|--}o TimelineEvent : ""
+	ApplicationHold o|--}o TimelineEvent : ""
+	Assessment ||--}o TimelineEvent : ""
+	AssessmentSection ||--}o TimelineEvent : ""
+	Staff o|--}o TimelineEvent : ""
+	Note ||--}o TimelineEvent : ""
+	PrioritisationWorkHistoryCheck o|--}o TimelineEvent : ""
+	Qualification o|--}o TimelineEvent : ""
+	EligibilityDomain o|--}o TimelineEvent : ""
+	WorkHistory o|--}o TimelineEvent : ""
+	SelectedFailureReason ||--}o SelectedFailureReasonsWorkHistory : ""
+	WorkHistory ||--}o SelectedFailureReasonsWorkHistory : ""
+	AssessmentSection o|--}| SelectedFailureReason : ""
+	PrioritisationWorkHistoryCheck o|--}o SelectedFailureReason : ""
+	SelectedFailureReason o|..|o Assessment : ""
+	SelectedFailureReason o|..|o ApplicationForm : ""
+	Remindable ||--}o ReminderEmail : ""
+	ApplicationForm ||--}o ReminderEmail : ""
+	FurtherInformationRequest ||--}o ReminderEmail : ""
+	PrioritisationReferenceRequest ||--}o ReminderEmail : ""
+	ReferenceRequest ||--}o ReminderEmail : ""
+	Country ||--}o Region : ""
+	Region o|--}o EligibilityCheck : ""
+	Assessment ||--}o ReferenceRequest : ""
+	ReferenceRequest o|..|o ApplicationForm : ""
+	ReferenceRequest o|--}o EmailDelivery : ""
+	Assessment ||--}o QualificationRequest : ""
+	QualificationRequest o|..|o ApplicationForm : ""
+	Qualification ||--}o QualificationRequest : ""
+	Documentable ||--}o Document : ""
+	ApplicationForm ||--}o Document : ""
+	ConsentRequest ||--}o Document : ""
+	DecisionReviewRequest ||--}o Document : ""
+	FurtherInformationRequestItem ||--}o Document : ""
+	Qualification ||--}o Document : ""
+	ApplicationForm ||--}o Qualification : ""
+	Assessment ||--|o ProfessionalStandingRequest : ""
+	ProfessionalStandingRequest o|..|o ApplicationForm : ""
+	Assessment ||--}o PrioritisationWorkHistoryCheck : ""
+	WorkHistory ||--}o PrioritisationWorkHistoryCheck : ""
+	Assessment ||--}o PrioritisationReferenceRequest : ""
+	PrioritisationReferenceRequest o|..|o ApplicationForm : ""
+	WorkHistory ||--}o PrioritisationReferenceRequest : ""
+	PrioritisationWorkHistoryCheck ||--}o PrioritisationReferenceRequest : ""
+	PrioritisationReferenceRequest o|--}o EmailDelivery : ""
+	ApplicationForm o|--}o Note : ""
+	EligibilityDomain o|--}o Note : ""
+	Staff ||--}o Note : ""
+	FurtherInformationRequest ||--}o FurtherInformationRequestItem : ""
+	FurtherInformationRequestItem o|..|o Assessment : ""
+	FurtherInformationRequestItem o|..|o ApplicationForm : ""
+	Assessment ||--}o FurtherInformationRequest : ""
+	FurtherInformationRequest o|..|o ApplicationForm : ""
+	Staff ||--}o ExportAudit : ""
+	ApplicationForm ||--}o EmailDelivery : ""
+	FurtherInformationRequest o|--}o EmailDelivery : ""
+	Staff ||--}o EligibilityDomain : ""
+	EligibilityDomain o|..}o ApplicationForm : ""
+	Assessment ||--}o DecisionReviewRequest : ""
+	DecisionReviewRequest o|..|o ApplicationForm : ""
+	Assessment ||--}o ConsentRequest : ""
+	ConsentRequest o|..|o ApplicationForm : ""
+	Qualification ||--}o ConsentRequest : ""
+	Assessment ||--}o AssessmentSection : ""
+	ApplicationForm ||--|o Assessment : ""
+	ApplicationForm ||--}o ApplicationHold : ""
+	Teacher ||--}o ApplicationForm : ""
+	Region ||--}o ApplicationForm : ""
+	EligibilityCheck o|--}o ApplicationForm : ""
+	EnglishLanguageProvider o|--}o ApplicationForm : ""
+	ApplicationForm o|..|o Country : ""
+	Staff o|--}o ApplicationForm : ""
+	SuitabilityRecord ||--}o "SuitabilityRecord::Name" : ""
+	SuitabilityRecord ||--}o "SuitabilityRecord::Email" : ""
+	Staff ||--}o SuitabilityRecord : ""
+	SuitabilityRecord o{--}o ApplicationForm : ""
