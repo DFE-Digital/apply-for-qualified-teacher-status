@@ -19,7 +19,7 @@ RSpec.describe TeacherInterface::DownloadUnsignedConsentDocumentForm,
     subject(:save) { form.save(validate: false) }
 
     context "with a positive response" do
-      let(:downloaded) { "true" }
+      let(:downloaded) { true }
 
       it "sets unsigned_document_downloaded" do
         expect { save }.to change(
@@ -30,13 +30,63 @@ RSpec.describe TeacherInterface::DownloadUnsignedConsentDocumentForm,
     end
 
     context "with a negative response" do
-      let(:downloaded) { "false" }
+      let(:downloaded) { false }
 
       it "doesn't set unsigned_document_downloaded" do
         expect { save }.not_to change(
           consent_request,
           :unsigned_document_downloaded,
         )
+      end
+    end
+
+    context "with nil response" do
+      let(:downloaded) { nil }
+
+      it "doesn't set unsigned_document_downloaded" do
+        expect { save }.not_to change(
+          consent_request,
+          :unsigned_document_downloaded,
+        )
+      end
+    end
+
+    context "when unsigned consent already downloaded" do
+      let(:consent_request) do
+        create(:consent_request, unsigned_document_downloaded: true)
+      end
+
+      context "with a positive response" do
+        let(:downloaded) { true }
+
+        it "sets does not change unsigned_document_downloaded" do
+          expect { save }.not_to change(
+            consent_request,
+            :unsigned_document_downloaded,
+          )
+        end
+      end
+
+      context "with a negative response" do
+        let(:downloaded) { false }
+
+        it "changes unsigned_document_downloaded to false" do
+          expect { save }.to change(
+            consent_request,
+            :unsigned_document_downloaded,
+          ).to(false)
+        end
+      end
+
+      context "with nil response" do
+        let(:downloaded) { nil }
+
+        it "changes unsigned_document_downloaded to false" do
+          expect { save }.to change(
+            consent_request,
+            :unsigned_document_downloaded,
+          ).to(false)
+        end
       end
     end
   end
