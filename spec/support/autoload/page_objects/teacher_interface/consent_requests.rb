@@ -7,8 +7,6 @@ module PageObjects
 
       sections :task_lists, GovukTaskList, ".govuk-task-list"
 
-      element :check_your_answers_button,
-              ".govuk-button:not(.govuk-button--secondary)"
       element :save_and_sign_out_button, ".govuk-button.govuk-button--secondary"
     end
   end
