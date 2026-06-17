@@ -213,14 +213,7 @@ RSpec.describe "Teacher qualifications", type: :system do
   end
 
   def when_i_click_delete_qualification
-    teacher_check_qualifications_page
-      .summary_cards
-      .second
-      .actions
-      .items
-      .first
-      .link
-      .click
+    teacher_check_qualifications_page.summary_cards.second.actions.link.click
   end
 
   def when_i_delete_qualification

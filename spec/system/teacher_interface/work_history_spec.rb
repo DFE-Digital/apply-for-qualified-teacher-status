@@ -567,14 +567,7 @@ RSpec.describe "Teacher work history", type: :system do
   end
 
   def when_i_click_delete_work_history
-    teacher_check_work_histories_page
-      .summary_cards
-      .first
-      .actions
-      .items
-      .first
-      .link
-      .click
+    teacher_check_work_histories_page.summary_cards.first.actions.link.click
   end
 
   def when_i_delete_work_history

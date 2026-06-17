@@ -393,8 +393,6 @@ RSpec.describe "Teacher work history in England", type: :system do
       .summary_cards
       .first
       .actions
-      .items
-      .first
       .link
       .click
   end
