@@ -88,7 +88,7 @@
     </ul>
   <% end %>
 
-  <%= f.govuk_radio_buttons_fieldset :passed, legend: { text: "Does the applicant’s work history meet the criteria for prioritisation?" } do %>
+  <%= f.govuk_radio_buttons_fieldset :passed, legend: { text: "Does the applicant’s work experience meet the criteria for prioritisation?" } do %>
     <%= f.govuk_radio_button :passed, true, label: { text: "Yes" }, link_errors: true, disabled: @view_object.disable_form? %>
     <%= f.govuk_radio_button :passed, false, label: { text: "No" }, disabled: @view_object.disable_form? do %>
       <div id="assessor-interface-prioritisation-work-history-check-form-selected-failure-reasons-field-error"></div>
