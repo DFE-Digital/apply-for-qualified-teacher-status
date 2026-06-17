@@ -5,9 +5,7 @@ module PageObjects
     element :heading, ".govuk-summary-card__title"
 
     section :actions, ".govuk-summary-card__actions" do
-      sections :items, ".govuk-summary-card__action" do
-        element :link, ".govuk-link"
-      end
+      element :link, ".govuk-link"
     end
 
     section :summary_list, GovukSummaryList, ".govuk-summary-list"
