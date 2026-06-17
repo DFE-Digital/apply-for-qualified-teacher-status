@@ -9,7 +9,7 @@ module TeacherInterface
     validates :downloaded, presence: true
 
     def update_model
-      consent_request.update!(unsigned_document_downloaded: !!downloaded)
+      consent_request.update!(unsigned_document_downloaded: !downloaded.nil?)
     end
   end
 end
