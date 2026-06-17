@@ -235,7 +235,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
         it do
           expect(subject).to include_task_list_item(
             "Pre-assessment tasks",
-            "Check work history with referee",
+            "Check work experience with referee",
             status: :not_started,
             link: [
               :new,
@@ -272,7 +272,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
         it do
           expect(subject).to include_task_list_item(
             "Pre-assessment tasks",
-            "Check work history with referee",
+            "Check work experience with referee",
             status: :not_started,
             link: [
               :new,
@@ -306,7 +306,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
           it do
             expect(subject).to include_task_list_item(
               "Pre-assessment tasks",
-              "Check work history with referee",
+              "Check work experience with referee",
               status: :waiting_on,
               link: [
                 :assessor_interface,
@@ -340,7 +340,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
           it do
             expect(subject).to include_task_list_item(
               "Pre-assessment tasks",
-              "Check work history with referee",
+              "Check work experience with referee",
               status: :received,
               link: [
                 :assessor_interface,
@@ -374,7 +374,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
           it do
             expect(subject).to include_task_list_item(
               "Pre-assessment tasks",
-              "Check work history with referee",
+              "Check work experience with referee",
               status: :received,
               link: [
                 :assessor_interface,
@@ -409,7 +409,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
           it do
             expect(subject).to include_task_list_item(
               "Pre-assessment tasks",
-              "Check work history with referee",
+              "Check work experience with referee",
               status: :completed,
               link: [
                 :assessor_interface,
@@ -451,7 +451,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
           it do
             expect(subject).to include_task_list_item(
               "Pre-assessment tasks",
-              "Check work history with referee",
+              "Check work experience with referee",
               status: :waiting_on,
               link: [
                 :assessor_interface,
@@ -486,7 +486,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
           it do
             expect(subject).to include_task_list_item(
               "Pre-assessment tasks",
-              "Check work history with referee",
+              "Check work experience with referee",
               status: :completed,
               link: [
                 :assessor_interface,
@@ -528,7 +528,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
           it do
             expect(subject).to include_task_list_item(
               "Pre-assessment tasks",
-              "Check work history with referee",
+              "Check work experience with referee",
               status: :received,
               link: [
                 :assessor_interface,
@@ -564,7 +564,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
           it do
             expect(subject).to include_task_list_item(
               "Pre-assessment tasks",
-              "Check work history with referee",
+              "Check work experience with referee",
               status: :completed,
               link: [
                 :assessor_interface,
@@ -607,7 +607,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
           it do
             expect(subject).to include_task_list_item(
               "Pre-assessment tasks",
-              "Check work history with referee",
+              "Check work experience with referee",
               status: :overdue,
               link: [
                 :assessor_interface,
@@ -644,7 +644,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
           it do
             expect(subject).to include_task_list_item(
               "Pre-assessment tasks",
-              "Check work history with referee",
+              "Check work experience with referee",
               status: :completed,
               link: [
                 :assessor_interface,
@@ -688,7 +688,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
           it do
             expect(subject).to include_task_list_item(
               "Pre-assessment tasks",
-              "Check work history with referee",
+              "Check work experience with referee",
               status: :overdue,
               link: [
                 :assessor_interface,
@@ -726,7 +726,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
           it do
             expect(subject).to include_task_list_item(
               "Pre-assessment tasks",
-              "Check work history with referee",
+              "Check work experience with referee",
               status: :completed,
               link: [
                 :assessor_interface,
@@ -769,7 +769,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
           it do
             expect(subject).to include_task_list_item(
               "Pre-assessment tasks",
-              "Check work history with referee",
+              "Check work experience with referee",
               status: :received,
               link: [
                 :assessor_interface,
@@ -806,7 +806,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
           it do
             expect(subject).to include_task_list_item(
               "Pre-assessment tasks",
-              "Check work history with referee",
+              "Check work experience with referee",
               status: :overdue,
               link: [
                 :assessor_interface,
@@ -842,7 +842,7 @@ RSpec.describe AssessorInterface::ApplicationFormsShowViewObject do
           it do
             expect(subject).to include_task_list_item(
               "Pre-assessment tasks",
-              "Check work history with referee",
+              "Check work experience with referee",
               status: :overdue,
               link: [
                 :assessor_interface,
