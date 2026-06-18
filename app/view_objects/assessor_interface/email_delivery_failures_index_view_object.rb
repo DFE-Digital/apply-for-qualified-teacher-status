@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class AssessorInterface::EmailDeliveryFailuresIndexViewObject
-  include ActionView::Helpers::FormOptionsHelper
   include Pagy::Backend
 
   def initialize(params:)
