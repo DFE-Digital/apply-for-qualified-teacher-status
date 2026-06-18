@@ -1,13 +1,11 @@
 Hello, <%= @resource.email %>,
 
-<% if @resource.sign_in_count == 0 %>
-Thank you for your interest in applying for qualified teacher status (QTS) in England. Use the link below to confirm your email address and start your application.
-<% else %>
-Welcome back to apply for qualified teacher status (QTS) in England. Use the link below to confirm your email address and sign in to your application.
-<% end %>
+You have received this email because you're signing in to the apply for qualified teacher status (QTS) service.
 
-[Confirm your email address](<%= teacher_magic_link_url(token: @token) %>)
+To sign in, select the link below:
 
-Please note, this link will expire in <%= Devise.passwordless_login_within.inspect %>. After that time, you will need to [return to the service](<%= create_or_new_teacher_session_url %>) and request another confirmation link.
+^ [Confirm your email address](<%= teacher_magic_link_url(token: @token) %>)
+
+This link is only valid for <%= Devise.passwordless_login_within.inspect %>. If the link expires, [return to the service](<%= create_or_new_teacher_session_url %>) and sign in again.
 
 <%= render "shared/teacher_mailer/footer" %>
