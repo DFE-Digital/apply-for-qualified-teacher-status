@@ -179,7 +179,7 @@ RSpec.describe "Teacher authentication", type: :system do
     email_body = message.body.raw_source
 
     expect(email_body).to include(
-      "You have received this email because you're signing in to the apply for qualified teacher status (QTS) service.",
+      "You have received this email because you’re signing in to the apply for qualified teacher status (QTS) service.",
     )
   end
 
