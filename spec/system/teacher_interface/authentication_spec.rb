@@ -185,8 +185,12 @@ RSpec.describe "Teacher authentication", type: :system do
 
   def when_i_sign_in_using_magic_link
     message = ActionMailer::Base.deliveries.last
-    link_line = message.body.raw_source.lines.fifth.chomp
-    url = link_line.match(/\((http[^)]+)\)/)[1]
+    url =
+      message.body.raw_source.match(
+        /\[Confirm your email address\]\((http[^)]+)\)/,
+      )[
+        1
+      ]
     uri = URI.parse(url)
     expect(uri.path).to eq("/teacher/magic_link")
     expect(uri.query).to include("token")
