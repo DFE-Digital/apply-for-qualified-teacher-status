@@ -118,3 +118,11 @@ ul.autocomplete__menu {
   content: url(/images/dfe-logo-black.png);
   height: 30px;
 }
+
+.app-print-link__button {
+  background: url(/images/icon-print.png) no-repeat 10px 50%;
+  background-size: 16px 18px;
+  padding: 10px 10px 10px 36px;
+  text-decoration: none;
+  border: 1px solid #505a5f;
+}
