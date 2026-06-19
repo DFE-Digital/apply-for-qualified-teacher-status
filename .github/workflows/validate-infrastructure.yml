@@ -41,3 +41,5 @@ jobs:
           teams-webhook-url: ${{ secrets.TEAMS_WEBHOOK_URL_INFRA }}
           gcp-wip: projects/385922361840/locations/global/workloadIdentityPools/apply-for-qualified-teacher-sta3/providers/apply-for-qualified-teacher-sta3
           gcp-project-id: apply-for-qts-in-england
+          docker-repo: true
+          service-name: apply-for-qualified-teacher-status
