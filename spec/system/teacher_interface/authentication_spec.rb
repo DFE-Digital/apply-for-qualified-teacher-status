@@ -177,28 +177,20 @@ RSpec.describe "Teacher authentication", type: :system do
     expect(message.to).to include("test@example.com")
 
     email_body = message.body.raw_source
-    teacher = Teacher.find_by(email: "test@example.com")
-    if teacher.sign_in_count == 0
-      expect(email_body).to include(
-        "Thank you for your interest in applying for qualified teacher status (QTS) in England.",
-      )
-      expect(email_body).not_to include(
-        "Welcome back to apply for qualified teacher status (QTS) in England.",
-      )
-    else
-      expect(email_body).to include(
-        "Welcome back to apply for qualified teacher status (QTS) in England.",
-      )
-      expect(email_body).not_to include(
-        "Thank you for your interest in applying for qualified teacher status (QTS) in England.",
-      )
-    end
+
+    expect(email_body).to include(
+      "You have received this email because you’re signing in to the apply for qualified teacher status (QTS) service.",
+    )
   end
 
   def when_i_sign_in_using_magic_link
     message = ActionMailer::Base.deliveries.last
-    link_line = message.body.raw_source.lines.fifth.chomp
-    url = link_line.match(/\((http[^)]+)\)/)[1]
+    url =
+      message.body.raw_source.match(
+        /\[Confirm your email address\]\((http[^)]+)\)/,
+      )[
+        1
+      ]
     uri = URI.parse(url)
     expect(uri.path).to eq("/teacher/magic_link")
     expect(uri.query).to include("token")
