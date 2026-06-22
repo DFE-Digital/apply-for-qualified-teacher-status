@@ -133,8 +133,12 @@ GEM
     annotaterb (4.22.0)
       activerecord (>= 6.0.0)
       activesupport (>= 6.0.0)
+    anonymous_loader (0.1.1)
+      version_gem (~> 1.1, >= 1.1.12)
     ast (2.4.3)
     attr_required (1.0.2)
+    auth-sanitizer (0.2.2)
+      version_gem (~> 1.1, >= 1.1.10)
     azure-blob (0.8.0)
       cgi
       rexml
@@ -215,7 +219,7 @@ GEM
       railties (>= 6.1.0)
     faker (3.8.0)
       i18n (>= 1.8.11, < 2)
-    faraday (2.14.2)
+    faraday (2.14.3)
       faraday-net_http (>= 2.0, < 3.5)
       json
       logger
@@ -223,7 +227,7 @@ GEM
       faraday (>= 1, < 3)
     faraday-multipart (1.2.0)
       multipart-post (~> 2.0)
-    faraday-net_http (3.4.3)
+    faraday-net_http (3.4.4)
       net-http (~> 0.5)
     ferrum (0.17.1)
       addressable (~> 2.5)
@@ -393,14 +397,16 @@ GEM
       racc (~> 1.4)
     notifications-ruby-client (6.3.0)
       jwt (>= 1.5, < 4)
-    oauth2 (2.0.18)
+    oauth2 (2.0.24)
+      anonymous_loader (~> 0.1, >= 0.1.1)
+      auth-sanitizer (~> 0.2, >= 0.2.2)
       faraday (>= 0.17.3, < 4.0)
       jwt (>= 1.0, < 4.0)
       logger (~> 1.2)
       multi_xml (~> 0.5)
       rack (>= 1.2, < 4)
-      snaky_hash (~> 2.0, >= 2.0.3)
-      version_gem (~> 1.1, >= 1.1.9)
+      snaky_hash (~> 2.0, >= 2.0.6)
+      version_gem (~> 1.1, >= 1.1.12)
     okcomputer (1.19.2)
       benchmark
     omniauth (2.1.4)
@@ -651,7 +657,7 @@ GEM
     site_prism-all_there (3.0.8)
     sitemap_generator (7.0.1)
       builder (~> 3.0)
-    snaky_hash (2.0.3)
+    snaky_hash (2.0.6)
       hashie (>= 0.1.0, < 6)
       version_gem (>= 1.1.8, < 3)
     stimulus-rails (1.3.4)
@@ -692,7 +698,7 @@ GEM
     validate_url (1.0.15)
       activemodel (>= 3.0.0)
       public_suffix
-    version_gem (1.1.9)
+    version_gem (1.1.12)
     view_component (4.12.0)
       actionview (>= 7.1.0)
       activesupport (>= 7.1.0)
@@ -831,8 +837,10 @@ CHECKSUMS
   aes_key_wrap (1.1.0) sha256=b935f4756b37375895db45669e79dfcdc0f7901e12d4e08974d5540c8e0776a5
   amazing_print (2.0.0) sha256=2e36aba46ac78d37ed27ca0e2056afe3583183bb5c64f157c246b267355e5d6a
   annotaterb (4.22.0) sha256=66fc40e5f48d5b82ae82013da1e5b43aaaad41ee9bd3d0cf803048efc0a70286
+  anonymous_loader (0.1.1) sha256=b765191e2eadd6e9da52e4eb41ab44f83241fa013fadddb7a8c1374f71157662
   ast (2.4.3) sha256=954615157c1d6a382bc27d690d973195e79db7f55e9765ac7c481c60bdb4d383
   attr_required (1.0.2) sha256=f0ebfc56b35e874f4d0ae799066dbc1f81efefe2364ca3803dc9ea6a4de6cb99
+  auth-sanitizer (0.2.2) sha256=300112debb67fe5e7a4f67a697790cea09744970e816745afb1f4235d6f27bae
   azure-blob (0.8.0) sha256=5c8d50e5c8b4fa9228f6a8d6bf003aba9f33d03c15f525235adeca8ad7879c10
   base64 (0.3.0) sha256=27337aeabad6ffae05c265c450490628ef3ebd4b67be58257393227588f5a97b
   bcrypt (3.1.22) sha256=1f0072e88c2d705d94aff7f2c5cb02eb3f1ec4b8368671e19112527489f29032
@@ -877,10 +885,10 @@ CHECKSUMS
   factory_bot (6.5.6) sha256=12beb373214dccc086a7a63763d6718c49769d5606f0501e0a4442676917e077
   factory_bot_rails (6.5.1) sha256=d3cc4851eae4dea8a665ec4a4516895045e710554d2b5ac9e68b94d351bc6d68
   faker (3.8.0) sha256=c147b308df73a90f27a4fc84f18d4c22ef0ad9c2a64b2b61c86fd0ca71753efc
-  faraday (2.14.2) sha256=73ccb9994a9e8648f010e32eca2ae82e41c57860aa10932cda29418b9e0223ad
+  faraday (2.14.3) sha256=1882247e6766615c8220b4392bf1d27f6ebb63d8e28267587cef1fb0bf37f278
   faraday-follow_redirects (0.5.0) sha256=5cde93c894b30943a5d2b93c2fe9284216a6b756f7af406a1e55f211d97d10ad
   faraday-multipart (1.2.0) sha256=7d89a949693714176f612323ca13746a2ded204031a6ba528adee788694ef757
-  faraday-net_http (3.4.3) sha256=9db13becec9312f345a769eeeecf9049c9287d54c0ae053d7235228993a4eec1
+  faraday-net_http (3.4.4) sha256=0e78af151747ed1b00f33e25973b4bc220d7f16c00c39676817c8b12331eb588
   ferrum (0.17.1) sha256=51d591120fc593e5a13b5d9d6474389f5145bb92a91e36eab147b5d096c8cbe7
   ffi (1.17.3) sha256=0e9f39f7bb3934f77ad6feab49662be77e87eedcdeb2a3f5c0234c2938563d4c
   ffi (1.17.3-aarch64-linux-gnu) sha256=28ad573df26560f0aedd8a90c3371279a0b2bd0b4e834b16a2baa10bd7a97068
@@ -953,7 +961,7 @@ CHECKSUMS
   nokogiri (1.19.3-x86_64-linux-gnu) sha256=2f5078620fe12e83669b5b17311b32532a8153d02eee7ad06948b926d6080976
   nokogiri (1.19.3-x86_64-linux-musl) sha256=248c906d2166eca5efb56d52fdee5f9a1f51d69a72e2b64fdac647b4ce39ea3f
   notifications-ruby-client (6.3.0) sha256=006f5b144721ac9e02415c19a54e6f89b035b71ea55b5d0a69546a4abdc5731f
-  oauth2 (2.0.18) sha256=bacf11e470dfb963f17348666d0a75c7b29ca65bc48fd47be9057cf91a403287
+  oauth2 (2.0.24) sha256=3d4864983ab9fb7d3c836bca9635ef7b347631918fa890fcd9793d40ec82c186
   okcomputer (1.19.2) sha256=d069aedf1e31b8ebe7e1fdf9e327dee158ea49b9fbdebebc2f1bed4690cb7a6d
   omniauth (2.1.4) sha256=42a05b0496f0d22e1dd85d42aaf602f064e36bb47a6826a27ab55e5ba608763c
   omniauth-entra-id (3.1.1) sha256=16622979423891352f916709f0698401e692e60bb41d4dbf5f7a17d98fee27ef
@@ -1037,7 +1045,7 @@ CHECKSUMS
   site_prism (6.0) sha256=620e06cc0c4dba66554d3a89c8fd49d121b0cb97905198db1bd590c3ddaec3e4
   site_prism-all_there (3.0.8) sha256=ce18c10abef29fca1e625d8e962096cba3906fef88a1e4e2fa5bb7cc5bc12720
   sitemap_generator (7.0.1) sha256=cb436da1c6cb073261a63c27e714e27b8292fca1e17ad503dac1db6518b3d2a8
-  snaky_hash (2.0.3) sha256=25a3d299566e8153fb02fa23fd9a9358845950f7a523ddbbe1fa1e0d79a6d456
+  snaky_hash (2.0.6) sha256=3663cae48cdef582b517025cf8a39d8789996eaf0b4ed89e2f0624836505654a
   stimulus-rails (1.3.4) sha256=765676ffa1f33af64ce026d26b48e8ffb2e0b94e0f50e9119e11d6107d67cb06
   stringio (3.2.0) sha256=c37cb2e58b4ffbd33fe5cd948c05934af997b36e0b6ca6fdf43afa234cf222e1
   swd (2.0.3) sha256=4cdbe2a4246c19f093fce22e967ec3ebdd4657d37673672e621bf0c7eb770655
@@ -1059,7 +1067,7 @@ CHECKSUMS
   uri (1.1.1) sha256=379fa58d27ffb1387eaada68c749d1426738bd0f654d812fcc07e7568f5c57c6
   useragent (0.16.11) sha256=700e6413ad4bb954bb63547fa098dddf7b0ebe75b40cc6f93b8d54255b173844
   validate_url (1.0.15) sha256=72fe164c0713d63a9970bd6700bea948babbfbdcec392f2342b6704042f57451
-  version_gem (1.1.9) sha256=0c1a0962ae543c84a00889bb018d9f14d8f8af6029d26b295d98774e3d2eb9a4
+  version_gem (1.1.12) sha256=b78f691677807997e63901e8aba1b96d4ae172ce5570ad9ceb0208eb3a0edb3d
   view_component (4.12.0) sha256=b9a5979d1c43eba2aa21a06a86f661aab3990104855f2909ef7c3779acdcdcb4
   warden (1.2.9) sha256=46684f885d35a69dbb883deabf85a222c8e427a957804719e143005df7a1efd0
   web-console (4.3.0) sha256=e13b71301cdfc2093f155b5aa3a622db80b4672d1f2f713119cc7ec7ac6a6da4
