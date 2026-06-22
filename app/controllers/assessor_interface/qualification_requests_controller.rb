@@ -73,12 +73,7 @@ module AssessorInterface
     end
 
     def generate_unsigned_consent_document
-      send_data(
-        ConsentLetter.new(application_form:).render_pdf,
-        filename: "Apply for QTS - Consent Letter.pdf",
-        type: "application/pdf",
-        disposition: "inline",
-      )
+      render layout: "full_from_desktop"
     end
 
     def edit_consent_method
