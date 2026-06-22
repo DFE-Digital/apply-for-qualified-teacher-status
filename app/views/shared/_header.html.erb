@@ -18,15 +18,27 @@
        ) %>
 
       <% if FeatureFlags::FeatureFlag.active?(:suitability) %>
-        <% service_navigation.with_navigation_item(text: "Suitability records", href: main_app.assessor_interface_suitability_records_path) %>
+        <% service_navigation.with_navigation_item(
+           text: "Suitability records",
+           href: main_app.assessor_interface_suitability_records_path,
+           active: current_page?(main_app.assessor_interface_suitability_records_path)
+         ) %>
       <% end %>
 
       <% if AssessorInterface::EligibilityDomainPolicy.new(current_staff, EligibilityDomain).index? %>
-        <% service_navigation.with_navigation_item(text: "Email domain records", href: main_app.assessor_interface_eligibility_domains_path) %>
+        <% service_navigation.with_navigation_item(
+           text: "Email domain records",
+           href: main_app.assessor_interface_eligibility_domains_path,
+           active: current_page?(main_app.assessor_interface_eligibility_domains_path)
+         ) %>
       <% end %>
 
       <% if AssessorInterface::EmailDeliveryPolicy.new(current_staff, EmailDelivery).index? %>
-        <% service_navigation.with_navigation_item(text: "Email failures", href: main_app.assessor_interface_email_delivery_failures_path) %>
+        <% service_navigation.with_navigation_item(
+           text: "Email failures",
+           href: main_app.assessor_interface_email_delivery_failures_path,
+           active: current_page?(main_app.assessor_interface_email_delivery_failures_path)
+         ) %>
       <% end %>
 
       <% if SupportInterface::CountryPolicy.new(current_staff, Country).index? %>
