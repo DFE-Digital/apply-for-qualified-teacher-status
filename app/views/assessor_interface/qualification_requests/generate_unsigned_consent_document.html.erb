@@ -1,0 +1,21 @@
+<% content_for :page_title, "Save consent document" %>
+
+<div class="app-print-link govuk-!-display-none-print govuk-!-margin-bottom-8">
+  <%= govuk_link_to "Print this page", "#", class: "govuk-link app-print-link__button", data: { controller: "printable", action: "click->printable#printPage" } %>
+</div>
+
+<div class="govuk-width-container govuk-!-text-align-right">
+  <%= image_tag "/dfe-logo-master-portrait-black.png", width: 300 %>
+</div>
+
+<p class="govuk-body">By applying for qualified teacher status (QTS) in England, I agree to the following:</p>
+<p class="govuk-body">I have given consent for my data to be shared with organisations that can confirm teaching qualifications or professional standing as a teacher.</p>
+<p class="govuk-body">I hereby authorise and request all parties to release information on my academic standing/records to the Department for Education for the purpose of verification in accordance with UK GDPR.</p>
+
+<div class="govuk-!-margin-bottom-9 govuk-!-margin-top-9">
+<p class="govuk-body">Name: <%= application_form_full_name(@application_form) %></p>
+<p class="govuk-body">Date of birth: <%= @application_form.date_of_birth.to_fs %></p>
+<p class="govuk-body">Date of consent: <%= @application_form.submitted_at.to_date.to_fs %></p>
+</div>
+
+<p class="govuk-body">The full privacy statement can be found <%= govuk_link_to "here", "https://www.gov.uk/government/publications/privacy-information-education-providers-workforce-including-teachers/5a254207-a566-44f7-ac77-6ba59fd26e04#using-your-data-when-you-use-the-apply-for-qualified-teacher-status-qts-in-england-service" %>.</p>

@@ -8,6 +8,7 @@ import LocationPickerAutocompleteController from "./controllers/location_picker_
 import CheckboxSearchFilterController from "./controllers/checkbox_search_filter_controller";
 import AppendableTemplateController from "./controllers/appendable_template_controller";
 import RemovableElementController from "./controllers/removable_element_controller";
+import PrintableController from "./controllers/printable_controller";
 
 const application = Application.start();
 
@@ -21,6 +22,7 @@ application.register(
 application.register("checkbox-search-filter", CheckboxSearchFilterController);
 application.register("appendable-template", AppendableTemplateController);
 application.register("removable-element", RemovableElementController);
+application.register("printable", PrintableController);
 
 initAll();
 

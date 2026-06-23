@@ -1,13 +1,13 @@
 <%= govuk_header(
       homepage_url: "https://www.education.gov.uk",
-      classes: "app-header--#{HostingEnvironment.name}"
+      classes: "app-header--#{HostingEnvironment.name} govuk-!-display-none-print"
     ) do |header| %>
   <% header.with_custom_logo do %>
     <%= image_tag "/images/dfe-logo-white.png", alt: "Department for Education", class: "govuk-header__logotype" %>
   <% end %>
 <% end %>
 
-<%= govuk_service_navigation(service_name: t(current_namespace, scope: %i[service name]), service_url: "/#{current_namespace}") do |service_navigation| %>
+<%= govuk_service_navigation(classes: "govuk-!-display-none-print", service_name: t(current_namespace, scope: %i[service name]), service_url: "/#{current_namespace}") do |service_navigation| %>
   <% case current_namespace %>
   <% when "assessor" %>
     <% if current_staff %>
