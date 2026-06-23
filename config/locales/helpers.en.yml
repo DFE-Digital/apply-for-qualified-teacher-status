@@ -437,6 +437,7 @@ en:
         assessor_ids: Assessor name
         date_of_birth: Applicant date of birth
         flags: Flagged as
+        region_ids: State/territory trained in
         states: Status of application
         submitted_at: Created date
         submitted_at_after: Start date

@@ -58,6 +58,17 @@ class AssessorInterface::ApplicationFormsIndexViewObject
     )
   end
 
+  def country_filter_has_regions?
+    filtered_country.present? && filtered_country.regions.count > 1
+  end
+
+  def region_filter_options
+    filtered_country
+      .regions
+      .order(:name)
+      .map { |region| OpenStruct.new(id: region.id, name: region.name) }
+  end
+
   def stage_filter_options
     STAGE_FILTER_OPTIONS.map { |name| stage_filter_entry(name) }
   end
@@ -234,5 +245,11 @@ class AssessorInterface::ApplicationFormsIndexViewObject
 
   def suitability_matcher
     @suitability_matcher ||= SuitabilityMatcher.new
+  end
+
+  def filtered_country
+    code = CountryCode.from_location(filter_params[:location])
+
+    Country.find_by(code:)
   end
 end

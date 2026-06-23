@@ -8,6 +8,7 @@ class AssessorInterface::FilterForm
                 :date_of_birth,
                 :email,
                 :location,
+                :region_ids,
                 :name,
                 :reference,
                 :show_all,
