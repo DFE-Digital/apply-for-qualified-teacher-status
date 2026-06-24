@@ -22,23 +22,21 @@ module TeacherInterface
     def submit
       consent_requests = application_form.assessment.consent_requests
 
-      if consent_requests.all?(&:received?)
-        redirect_to %i[teacher_interface application_form]
-      end
+      unless consent_requests.all?(&:received?)
+        ActiveRecord::Base.transaction do
+          consent_requests
+            .reject(&:received?)
+            .each do |requestable|
+              ReceiveRequestable.call(requestable:, user: current_teacher)
+            end
+        end
 
-      ActiveRecord::Base.transaction do
-        consent_requests
-          .reject(&:received?)
-          .each do |requestable|
-            ReceiveRequestable.call(requestable:, user: current_teacher)
-          end
+        DeliverEmail.call(
+          application_form:,
+          mailer: TeacherMailer,
+          action: :consent_submitted,
+        )
       end
-
-      DeliverEmail.call(
-        application_form:,
-        mailer: TeacherMailer,
-        action: :consent_submitted,
-      )
 
       redirect_to %i[teacher_interface application_form]
     end
