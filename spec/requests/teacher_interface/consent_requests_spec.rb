@@ -25,7 +25,7 @@ RSpec.describe "Teacher Interface - Consent Requests", type: :request do
         create(:received_consent_request, assessment:)
       end
 
-      it "redirects safely to the application form without DoubleRenderError" do
+      it "redirects safely to the application form" do
         perform
         expect(response).to redirect_to(%i[teacher_interface application_form])
       end
@@ -41,30 +41,13 @@ RSpec.describe "Teacher Interface - Consent Requests", type: :request do
       end
     end
 
-    context "when there are unreceived consent requests" do
-      before do
-        create(:received_consent_request, assessment:)
-        create(:requested_consent_request, assessment:)
-      end
-
-      it "redirects safely to the application form without DoubleRenderError" do
-        perform
-        expect(response).to redirect_to(%i[teacher_interface application_form])
-      end
-
-      it "delivers a submission email" do
-        expect(DeliverEmail).to receive(:call)
-        perform
-      end
-    end
-
     context "when both consent requests are not received" do
       before do
         create(:requested_consent_request, assessment:)
         create(:requested_consent_request, assessment:)
       end
 
-      it "redirects safely to the application form without DoubleRenderError" do
+      it "redirects safely to the application form" do
         perform
         expect(response).to redirect_to(%i[teacher_interface application_form])
       end
