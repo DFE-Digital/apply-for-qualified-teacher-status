@@ -58,7 +58,7 @@ RSpec.describe "Teacher Interface - Consent Requests", type: :request do
       end
     end
 
-    context "when both consent requests are requested" do
+    context "when both consent requests are not received" do
       before do
         create(:requested_consent_request, assessment:)
         create(:requested_consent_request, assessment:)
