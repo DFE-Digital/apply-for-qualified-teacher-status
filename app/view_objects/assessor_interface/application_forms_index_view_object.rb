@@ -162,6 +162,7 @@ class AssessorInterface::ApplicationFormsIndexViewObject
           ::Filters::Assessor,
           ::Filters::Statuses,
           ::Filters::Country,
+          ::Filters::Regions,
           ::Filters::Name,
           ::Filters::Email,
           ::Filters::DateOfBirth,

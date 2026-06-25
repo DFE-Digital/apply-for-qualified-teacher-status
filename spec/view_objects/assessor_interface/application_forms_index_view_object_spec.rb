@@ -55,6 +55,16 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
         it { is_expected.to be_empty }
       end
 
+      context "with regions filter" do
+        before do
+          allow_any_instance_of(Filters::Regions).to receive(:apply).and_return(
+            ApplicationForm.none,
+          )
+        end
+
+        it { is_expected.to be_empty }
+      end
+
       context "with a name filter" do
         before do
           allow_any_instance_of(Filters::Name).to receive(:apply).and_return(
