@@ -56,12 +56,26 @@ RSpec.describe "Teacher Interface - Consent Requests", type: :request do
         expect(DeliverEmail).to receive(:call)
         perform
       end
+    end
 
-      it "only calls ReceiveRequestable for the unreceived request" do
-        expect(ReceiveRequestable).to receive(:call).with(
-          requestable: ConsentRequest.not_received.first,
-          user: teacher,
-        )
+    context "when both consent requests are requested" do
+      before do
+        create(:requested_consent_request, assessment:)
+        create(:requested_consent_request, assessment:)
+      end
+
+      it "redirects safely to the application form without DoubleRenderError" do
+        perform
+        expect(response).to redirect_to(%i[teacher_interface application_form])
+      end
+
+      it "delivers a submission email" do
+        expect(DeliverEmail).to receive(:call)
+        perform
+      end
+
+      it "calls ReceiveRequestable twice" do
+        expect(ReceiveRequestable).to receive(:call).twice
         perform
       end
     end
