@@ -3,6 +3,8 @@
 class Staff::ConfirmationsController < Devise::ConfirmationsController
   include AssessorCurrentNamespace
 
+  before_action :redirect_to_home
+
   layout "two_thirds"
 
   # GET /resource/confirmation/new
@@ -31,4 +33,12 @@ class Staff::ConfirmationsController < Devise::ConfirmationsController
   # def after_confirmation_path_for(resource_name, resource)
   #   super(resource_name, resource)
   # end
+
+  private
+
+  def redirect_to_home
+    if FeatureFlags::FeatureFlag.active?(:sign_in_with_active_directory)
+      redirect_to root_path
+    end
+  end
 end

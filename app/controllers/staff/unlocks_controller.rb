@@ -3,6 +3,8 @@
 class Staff::UnlocksController < Devise::UnlocksController
   include AssessorCurrentNamespace
 
+  before_action :redirect_to_home
+
   layout "two_thirds"
 
   # GET /resource/unlock/new
@@ -31,4 +33,9 @@ class Staff::UnlocksController < Devise::UnlocksController
   # def after_unlock_path_for(resource)
   #   super(resource)
   # end
+  def redirect_to_home
+    if FeatureFlags::FeatureFlag.active?(:sign_in_with_active_directory)
+      redirect_to root_path
+    end
+  end
 end

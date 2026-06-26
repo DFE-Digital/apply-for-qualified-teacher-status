@@ -3,6 +3,8 @@
 class Staff::PasswordsController < Devise::PasswordsController
   include AssessorCurrentNamespace
 
+  before_action :redirect_to_home
+
   layout "two_thirds"
 
   # GET /resource/password/new
@@ -35,4 +37,12 @@ class Staff::PasswordsController < Devise::PasswordsController
   # def after_sending_reset_password_instructions_path_for(resource_name)
   #   super(resource_name)
   # end
+
+  private
+
+  def redirect_to_home
+    if FeatureFlags::FeatureFlag.active?(:sign_in_with_active_directory)
+      redirect_to root_path
+    end
+  end
 end
