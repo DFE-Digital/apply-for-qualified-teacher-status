@@ -2,6 +2,9 @@
 
 class Staff::ConfirmationsController < Devise::ConfirmationsController
   include AssessorCurrentNamespace
+  include EnforceEntraIdSignIn
+
+  before_action :enforce_entra_id_sign_in
 
   layout "two_thirds"
 
