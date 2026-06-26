@@ -2,8 +2,9 @@
 
 class Staff::PasswordsController < Devise::PasswordsController
   include AssessorCurrentNamespace
+  include EnforceEntraIdSignIn
 
-  before_action :redirect_to_home
+  before_action :enforce_entra_id_sign_in
 
   layout "two_thirds"
 
@@ -37,12 +38,4 @@ class Staff::PasswordsController < Devise::PasswordsController
   # def after_sending_reset_password_instructions_path_for(resource_name)
   #   super(resource_name)
   # end
-
-  private
-
-  def redirect_to_home
-    if FeatureFlags::FeatureFlag.active?(:sign_in_with_active_directory)
-      redirect_to root_path
-    end
-  end
 end

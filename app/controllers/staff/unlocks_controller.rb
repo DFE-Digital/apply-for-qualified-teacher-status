@@ -2,8 +2,9 @@
 
 class Staff::UnlocksController < Devise::UnlocksController
   include AssessorCurrentNamespace
+  include EnforceEntraIdSignIn
 
-  before_action :redirect_to_home
+  before_action :enforce_entra_id_sign_in
 
   layout "two_thirds"
 
@@ -33,9 +34,4 @@ class Staff::UnlocksController < Devise::UnlocksController
   # def after_unlock_path_for(resource)
   #   super(resource)
   # end
-  def redirect_to_home
-    if FeatureFlags::FeatureFlag.active?(:sign_in_with_active_directory)
-      redirect_to root_path
-    end
-  end
 end

@@ -2,8 +2,9 @@
 
 class Staff::ConfirmationsController < Devise::ConfirmationsController
   include AssessorCurrentNamespace
+  include EnforceEntraIdSignIn
 
-  before_action :redirect_to_home
+  before_action :enforce_entra_id_sign_in
 
   layout "two_thirds"
 
@@ -33,12 +34,4 @@ class Staff::ConfirmationsController < Devise::ConfirmationsController
   # def after_confirmation_path_for(resource_name, resource)
   #   super(resource_name, resource)
   # end
-
-  private
-
-  def redirect_to_home
-    if FeatureFlags::FeatureFlag.active?(:sign_in_with_active_directory)
-      redirect_to root_path
-    end
-  end
 end

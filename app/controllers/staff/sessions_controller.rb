@@ -2,8 +2,9 @@
 
 class Staff::SessionsController < Devise::SessionsController
   include AssessorCurrentNamespace
+  include EnforceEntraIdSignIn
 
-  before_action :redirect_to_home, except: %i[signed_out destroy]
+  before_action :enforce_entra_id_sign_in, except: %i[signed_out destroy]
 
   layout "two_thirds"
 
@@ -15,12 +16,6 @@ class Staff::SessionsController < Devise::SessionsController
   end
 
   protected
-
-  def redirect_to_home
-    if FeatureFlags::FeatureFlag.active?(:sign_in_with_active_directory)
-      redirect_to root_path
-    end
-  end
 
   def after_sign_in_path_for(resource)
     stored_location_for(resource) || assessor_interface_root_path
