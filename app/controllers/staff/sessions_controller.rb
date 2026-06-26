@@ -5,6 +5,12 @@ class Staff::SessionsController < Devise::SessionsController
 
   layout "two_thirds"
 
+  before_action :redirect_to_root, except: %i[destroy signed_out]
+
+  def destroy
+    super
+  end
+
   def signed_out
   end
 
@@ -20,5 +26,11 @@ class Staff::SessionsController < Devise::SessionsController
 
   def set_flash_message(*)
     # Intentionally left blank
+  end
+
+  private
+
+  def redirect_to_root
+    redirect_to root_path
   end
 end

@@ -5,6 +5,8 @@ class Staff::PasswordsController < Devise::PasswordsController
 
   layout "two_thirds"
 
+  before_action :redirect_to_root
+
   # GET /resource/password/new
   # def new
   #   super
@@ -35,4 +37,10 @@ class Staff::PasswordsController < Devise::PasswordsController
   # def after_sending_reset_password_instructions_path_for(resource_name)
   #   super(resource_name)
   # end
+
+  private
+
+  def redirect_to_root
+    redirect_to root_path
+  end
 end

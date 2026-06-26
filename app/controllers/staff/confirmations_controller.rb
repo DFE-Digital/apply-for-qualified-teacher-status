@@ -5,6 +5,8 @@ class Staff::ConfirmationsController < Devise::ConfirmationsController
 
   layout "two_thirds"
 
+  before_action :redirect_to_root
+
   # GET /resource/confirmation/new
   # def new
   #   super
@@ -31,4 +33,10 @@ class Staff::ConfirmationsController < Devise::ConfirmationsController
   # def after_confirmation_path_for(resource_name, resource)
   #   super(resource_name, resource)
   # end
+
+  private
+
+  def redirect_to_root
+    redirect_to root_path
+  end
 end

@@ -5,6 +5,8 @@ class Staff::UnlocksController < Devise::UnlocksController
 
   layout "two_thirds"
 
+  before_action :redirect_to_root
+
   # GET /resource/unlock/new
   # def new
   #   super
@@ -31,4 +33,10 @@ class Staff::UnlocksController < Devise::UnlocksController
   # def after_unlock_path_for(resource)
   #   super(resource)
   # end
+
+  private
+
+  def redirect_to_root
+    redirect_to root_path
+  end
 end
