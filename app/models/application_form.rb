@@ -332,6 +332,9 @@ class ApplicationForm < ApplicationRecord
         )
       end
     when "prioritisation_references"
+      return false if assessment.nil?
+      return false if assessment.prioritisation_decision_at.present?
+
       prioritisation_reference_requests_not_yet_received_or_rejected.any? do |prioritisation_reference_request|
         prioritisation_reference_request.should_send_reminder_email?(
           "expiration",
