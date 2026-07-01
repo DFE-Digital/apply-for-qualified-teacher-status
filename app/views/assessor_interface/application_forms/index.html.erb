@@ -56,6 +56,20 @@
                         } %>
     </section>
 
+    <% if @view_object.country_filter_has_regions? %>
+      <section data-controller="checkbox-search-filter" data-checkbox-search-filter-target="container" data-checkbox-search-filter-label-value="Search state/territory trained in" id="app-applications-filters-regions" class="app-checkbox-filter app-checkbox-filter--enhanced">
+        <div class="app-checkbox-filter__container" data-checkbox-search-filter-target="checkboxContainer">
+          <div class="app-checkbox-filter__container-inner" data-checkbox-search-filter-target="checkboxInnerContainer">
+            <%= f.govuk_check_boxes_fieldset :region_ids, legend: { size: "s" }, small: true do %>
+              <% @view_object.region_filter_options.each do |option| %>
+                <%= f.govuk_check_box :region_ids, option.id, label: { text: option.name }, checked: @view_object.filter_form.region_ids&.include?(option.id.to_s), data: { checkbox_search_filter_target: "checkbox" } %>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      </section>
+    <% end %>
+
     <section id="app-applications-filters-reference">
       <%= f.govuk_text_field :reference, label: { size: "s" } %>
     </section>

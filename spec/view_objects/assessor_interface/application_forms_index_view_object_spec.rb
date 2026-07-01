@@ -55,6 +55,16 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
         it { is_expected.to be_empty }
       end
 
+      context "with regions filter" do
+        before do
+          allow_any_instance_of(Filters::Regions).to receive(:apply).and_return(
+            ApplicationForm.none,
+          )
+        end
+
+        it { is_expected.to be_empty }
+      end
+
       context "with a name filter" do
         before do
           allow_any_instance_of(Filters::Name).to receive(:apply).and_return(
@@ -339,6 +349,78 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
       end
 
       it { expect(subject).to eq("Prioritised (1)") }
+    end
+  end
+
+  describe "#country_filter_has_regions?" do
+    subject(:country_filter_has_regions?) do
+      view_object.country_filter_has_regions?
+    end
+
+    context "when no country has been selected in filter" do
+      it { is_expected.to be false }
+    end
+
+    context "when country only has National region" do
+      let(:country) { create :country, :with_national_region, code: "GH" }
+
+      let(:session) do
+        { filter_params: { location: "country:#{country.code}" } }
+      end
+
+      it { is_expected.to be false }
+    end
+
+    context "when country has multiple regions" do
+      let(:country) { create :country, code: "US" }
+
+      let(:session) do
+        { filter_params: { location: "country:#{country.code}" } }
+      end
+
+      before { create_list :region, 3, country: }
+
+      it { is_expected.to be true }
+    end
+  end
+
+  describe "#region_filter_options" do
+    subject(:region_filter_options) { view_object.region_filter_options }
+
+    context "when country only has National region" do
+      let(:country) { create :country, :with_national_region, code: "GH" }
+
+      let(:session) do
+        { filter_params: { location: "country:#{country.code}" } }
+      end
+
+      it do
+        expect(subject).to eq(
+          [OpenStruct.new(id: country.regions.first.id, name: "")],
+        )
+      end
+    end
+
+    context "when country has multiple regions" do
+      let(:country) { create :country, code: "US" }
+
+      let(:session) do
+        { filter_params: { location: "country:#{country.code}" } }
+      end
+
+      let!(:alabama) { create :region, name: "Alabama", country: }
+      let!(:hawaii) { create :region, name: "Hawaii", country: }
+      let!(:texas) { create :region, name: "Texas", country: }
+
+      it do
+        expect(subject).to eq(
+          [
+            OpenStruct.new(id: alabama.id, name: "Alabama"),
+            OpenStruct.new(id: hawaii.id, name: "Hawaii"),
+            OpenStruct.new(id: texas.id, name: "Texas"),
+          ],
+        )
+      end
     end
   end
 end
