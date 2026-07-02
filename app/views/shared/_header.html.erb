@@ -51,6 +51,9 @@
           href: main_app.assessor_interface_staff_index_path,
           active: current_page?(main_app.assessor_interface_staff_index_path)
         ) %>
+      <% end %>
+
+      <% if AssessorInterface::ServiceLevelAgreementPolicy.new(current_staff, :service_level_agreement).index? %>
         <% service_navigation.with_navigation_item(
           text: "SLA Status",
           href: main_app.assessor_interface_service_level_agreements_path,
