@@ -37,6 +37,12 @@ RSpec.describe "POST /teacher/sign_in", type: :request do
     it "does not send the email a magic sign in link" do
       expect { sign_in }.not_to have_enqueued_mail(DeviseMailer, :magic_link)
     end
+
+    it "redirects to check your email page" do
+      sign_in
+
+      expect(response).to redirect_to(teacher_check_email_path(email:))
+    end
   end
 
   context "when the sign_in_or_sign_up is not specified" do

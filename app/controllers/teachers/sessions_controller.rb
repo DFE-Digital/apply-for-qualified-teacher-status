@@ -115,12 +115,9 @@ class Teachers::SessionsController < Devise::SessionsController
 
       self.resource = resource_class.find_by_email(@new_session_form.email)
 
-      if resource
-        resource.send_magic_link
-        redirect_to teacher_check_email_path(email: resource.email)
-      else
-        redirect_to :eligibility_interface_countries
-      end
+      resource.send_magic_link if resource
+
+      redirect_to teacher_check_email_path(email: @new_session_form.email)
     elsif @new_session_form.sign_in_or_sign_up.blank?
       render :new_or_create, status: :unprocessable_entity
     else
