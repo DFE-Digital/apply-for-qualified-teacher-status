@@ -8,6 +8,6 @@ RSpec.describe AssessorInterface::ServiceLevelAgreementPolicy do
   describe "#index?" do
     subject(:index?) { described_class.new(user, nil).index? }
 
-    it_behaves_like "a policy method requiring the manage staff permission"
+    it_behaves_like "a policy method with permission"
   end
 end
