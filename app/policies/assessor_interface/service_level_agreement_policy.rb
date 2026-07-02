@@ -2,6 +2,8 @@
 
 class AssessorInterface::ServiceLevelAgreementPolicy < ApplicationPolicy
   def index?
-    user.manage_staff_permission? && !user.archived?
+    return false if user.archived?
+
+    true
   end
 end
