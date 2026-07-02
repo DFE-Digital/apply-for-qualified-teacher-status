@@ -3,6 +3,7 @@
 class PersonasController < ApplicationController
   include EligibilityCurrentNamespace
 
+  before_action :ensure_not_production
   before_action :ensure_feature_active
 
   before_action :load_staff_personas,
@@ -68,6 +69,12 @@ class PersonasController < ApplicationController
   end
 
   private
+
+  def ensure_not_production
+    if HostingEnvironment.production?
+      render "errors/not_found", status: :not_found
+    end
+  end
 
   def ensure_feature_active
     unless FeatureFlags::FeatureFlag.active?(:personas)
