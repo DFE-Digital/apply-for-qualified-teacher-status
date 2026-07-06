@@ -13,7 +13,7 @@ RSpec.describe "Teacher Interface - Consent Requests", type: :request do
   end
 
   describe "POST /teacher/application/consent-requests/submit" do
-    subject(:perform) do
+    subject(:create_request) do
       post submit_teacher_interface_application_form_consent_requests_path(
              application_form,
            )
@@ -26,18 +26,18 @@ RSpec.describe "Teacher Interface - Consent Requests", type: :request do
       end
 
       it "redirects safely to the application form" do
-        perform
+        create_request
         expect(response).to redirect_to(%i[teacher_interface application_form])
       end
 
       it "does not deliver a submission email" do
         expect(DeliverEmail).not_to receive(:call)
-        perform
+        create_request
       end
 
       it "does not attempt to receive the requestables again" do
         expect(ReceiveRequestable).not_to receive(:call)
-        perform
+        create_request
       end
     end
 
@@ -48,18 +48,18 @@ RSpec.describe "Teacher Interface - Consent Requests", type: :request do
       end
 
       it "redirects safely to the application form" do
-        perform
+        create_request
         expect(response).to redirect_to(%i[teacher_interface application_form])
       end
 
       it "delivers a submission email" do
         expect(DeliverEmail).to receive(:call)
-        perform
+        create_request
       end
 
       it "calls ReceiveRequestable twice" do
         expect(ReceiveRequestable).to receive(:call).twice
-        perform
+        create_request
       end
     end
   end
