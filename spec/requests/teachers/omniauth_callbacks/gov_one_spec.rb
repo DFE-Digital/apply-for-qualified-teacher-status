@@ -20,7 +20,12 @@ RSpec.describe "/teacher/auth/gov_one/callback", type: :request do
   let(:gov_one_id) { "123456789" }
   let(:email) { "test@example.com" }
 
-  before { OmniAuth.config.mock_auth[:default] = omniauth_hash }
+  around do |example|
+    FeatureFlags::FeatureFlag.activate(:gov_one_applicant_login)
+    OmniAuth.config.mock_auth[:default] = omniauth_hash
+    example.run
+    FeatureFlags::FeatureFlag.deactivate(:gov_one_applicant_login)
+  end
 
   context "when the user is new and has a completed eligibility_check_id in session" do
     before { set_session({ eligibility_check_id: eligibility_check.id }) }
@@ -82,6 +87,7 @@ RSpec.describe "/teacher/auth/gov_one/callback", type: :request do
     it "redirects the teacher to eligibility countries selection" do
       gov_one_callback
 
+      expect(controller.current_teacher).to be_nil
       expect(response).to redirect_to(eligibility_interface_countries_path)
     end
 
@@ -93,15 +99,16 @@ RSpec.describe "/teacher/auth/gov_one/callback", type: :request do
   end
 
   context "when the user has an existing teacher record" do
-    before { create :teacher, email:, gov_one_id: }
+    let!(:teacher) { create :teacher, email:, gov_one_id: }
 
     it "does not generate a new teacher record with an application" do
       expect { gov_one_callback }.not_to change(Teacher, :count)
     end
 
-    it "redirects the teacher to the teacher interface" do
+    it "signs in and redirects the teacher to the teacher interface" do
       gov_one_callback
 
+      expect(controller.current_teacher).to eq(teacher)
       expect(response).to redirect_to(teacher_interface_root_path)
     end
 
@@ -113,15 +120,18 @@ RSpec.describe "/teacher/auth/gov_one/callback", type: :request do
   end
 
   context "when the user has an existing teacher record with a different email" do
-    before { create :teacher, email: "oldemail@example.com", gov_one_id: }
+    let!(:teacher) do
+      create :teacher, email: "oldemail@example.com", gov_one_id:
+    end
 
     it "does not generate a new teacher record with an application" do
       expect { gov_one_callback }.not_to change(Teacher, :count)
     end
 
-    it "redirects the teacher to the teacher interface" do
+    it "signs in and redirects the teacher to the teacher interface" do
       gov_one_callback
 
+      expect(controller.current_teacher).to eq(teacher)
       expect(response).to redirect_to(teacher_interface_root_path)
     end
 
@@ -133,15 +143,16 @@ RSpec.describe "/teacher/auth/gov_one/callback", type: :request do
   end
 
   context "when the user has an existing teacher record without a GOV.UK One login ID set" do
-    before { create :teacher, email: }
+    let!(:teacher) { create :teacher, email: }
 
     it "does not generate a new teacher record with an application" do
       expect { gov_one_callback }.not_to change(Teacher, :count)
     end
 
-    it "redirects the teacher to the teacher interface" do
+    it "signs in and redirects the teacher to the teacher interface" do
       gov_one_callback
 
+      expect(controller.current_teacher).to eq(teacher)
       expect(response).to redirect_to(teacher_interface_root_path)
     end
 
@@ -165,9 +176,10 @@ RSpec.describe "/teacher/auth/gov_one/callback", type: :request do
       expect(request.session[:id_token]).to be_nil
     end
 
-    it "redirects the user back to the sign in page" do
+    it "redirects the user back to the sign in page and does not sign in" do
       gov_one_callback
 
+      expect(controller.current_teacher).to be_nil
       expect(response).to redirect_to(root_path)
       expect(request.flash[:alert]).to eq(
         "There was a problem signing in. Please try again.",

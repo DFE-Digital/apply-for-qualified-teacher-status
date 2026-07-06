@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Teachers::OmniauthCallbacksController < ApplicationController
+  before_action :redirect_unless_feature_enabled
   before_action :redirect_teacher_already_if_signed_in
 
   def gov_one
@@ -35,6 +36,12 @@ class Teachers::OmniauthCallbacksController < ApplicationController
   end
 
   private
+
+  def redirect_unless_feature_enabled
+    return if FeatureFlags::FeatureFlag.active?(:gov_one_applicant_login)
+
+    redirect_to root_path
+  end
 
   def redirect_teacher_already_if_signed_in
     redirect_to teacher_interface_root_path if teacher_signed_in?
