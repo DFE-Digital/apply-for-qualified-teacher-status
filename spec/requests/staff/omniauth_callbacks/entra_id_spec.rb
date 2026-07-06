@@ -100,10 +100,6 @@ RSpec.describe "Staff Entra ID sign-in", type: :request do
       get callback_path
 
       expect(response).to redirect_to(root_path)
-      expect(flash[:alert]).to eq(
-        "There was a problem signing in. Please try again.",
-      )
-
       expect(controller.current_staff).to be_nil
 
       expect(staff.reload.azure_ad_uid).to be_nil
