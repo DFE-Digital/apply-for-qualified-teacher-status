@@ -451,6 +451,132 @@ RSpec.describe ApplicationForm, type: :model do
           it { is_expected.to be false }
         end
       end
+
+      context "with prioritisation reference reminders" do
+        let(:name) { "prioritisation_references" }
+
+        context "with no references outstanding" do
+          let(:number_of_reminders_sent) { 0 }
+
+          before do
+            create(
+              :received_prioritisation_reference_request,
+              assessment:,
+              requested_at: 3.weeks.ago,
+            )
+
+            create(
+              :received_prioritisation_reference_request,
+              assessment:,
+              requested_at: 3.weeks.ago,
+            )
+          end
+
+          it { is_expected.to be false }
+        end
+
+        context "with references outstanding and no reminders sent" do
+          let(:number_of_reminders_sent) { 0 }
+
+          before do
+            create(
+              :received_prioritisation_reference_request,
+              assessment:,
+              requested_at: 3.weeks.ago,
+            )
+
+            create(
+              :prioritisation_reference_request,
+              assessment:,
+              requested_at: 3.weeks.ago,
+            )
+          end
+
+          it { is_expected.to be true }
+
+          context "when the prioritisation decision has been made" do
+            before do
+              assessment.update!(
+                prioritisation_decision_at: Time.current,
+                prioritised: true,
+              )
+            end
+
+            it { is_expected.to be false }
+          end
+        end
+
+        context "with references outstanding and first reminder sent with second reminder not due" do
+          let(:number_of_reminders_sent) { 1 }
+
+          before do
+            create(
+              :received_prioritisation_reference_request,
+              assessment:,
+              requested_at: 3.weeks.ago,
+            )
+
+            create(
+              :prioritisation_reference_request,
+              assessment:,
+              requested_at: 3.weeks.ago,
+            )
+          end
+
+          it { is_expected.to be false }
+        end
+
+        context "with reference outstanding and first reminder sent with second reminder due" do
+          let(:number_of_reminders_sent) { 1 }
+
+          before do
+            create(
+              :received_prioritisation_reference_request,
+              assessment:,
+              requested_at: 4.weeks.ago,
+            )
+
+            create(
+              :prioritisation_reference_request,
+              assessment:,
+              requested_at: 4.weeks.ago,
+            )
+          end
+
+          it { is_expected.to be true }
+
+          context "when the prioritisation decision has been made" do
+            before do
+              assessment.update!(
+                prioritisation_decision_at: Time.current,
+                prioritised: true,
+              )
+            end
+
+            it { is_expected.to be false }
+          end
+        end
+
+        context "with reference outstanding and first and second reminders sent" do
+          let(:number_of_reminders_sent) { 2 }
+
+          before do
+            create(
+              :received_prioritisation_reference_request,
+              assessment:,
+              requested_at: 4.weeks.ago,
+            )
+
+            create(
+              :prioritisation_reference_request,
+              assessment:,
+              requested_at: 4.weeks.ago,
+            )
+          end
+
+          it { is_expected.to be false }
+        end
+      end
     end
 
     describe "#from_ineligible_country" do
