@@ -8,10 +8,6 @@ class Staff::SessionsController < Devise::SessionsController
   def signed_out
   end
 
-  def destroy
-    super
-  end
-
   protected
 
   def after_sign_in_path_for(resource)
