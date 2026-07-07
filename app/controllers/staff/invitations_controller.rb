@@ -30,8 +30,4 @@ class Staff::InvitationsController < Devise::InvitationsController
   def after_invite_path_for(inviter, invitee)
     invitee.is_a?(Staff) ? assessor_interface_staff_index_path : super
   end
-
-  def after_accept_path_for(resource)
-    resource.is_a?(Staff) ? assessor_interface_staff_index_path : super
-  end
 end
