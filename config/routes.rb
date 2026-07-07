@@ -387,16 +387,19 @@ Rails.application.routes.draw do
 
   devise_scope :staff do
     get "/staff/sign_out",
-           to: "staff/sessions#destroy",
-           as: "destroy_staff_session"
+        to: "staff/sessions#destroy",
+        as: "destroy_staff_session"
 
     get "/staff/signed_out",
         to: "staff/sessions#signed_out",
         as: "staff_signed_out"
 
-
-    get  "/staff/invitation/new", to: "staff/invitations#new", as: "new_staff_invitation"
-    post "/staff/invitation", to: "staff/invitations#create", as: "staff_invitation"
+    get "/staff/invitation/new",
+        to: "staff/invitations#new",
+        as: "new_staff_invitation"
+    post "/staff/invitation",
+         to: "staff/invitations#create",
+         as: "staff_invitation"
   end
 
   namespace :teacher_interface, path: "/teacher" do
