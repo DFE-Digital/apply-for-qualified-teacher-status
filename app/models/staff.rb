@@ -60,12 +60,9 @@ class Staff < ApplicationRecord
 
   devise :database_authenticatable,
          :confirmable,
-         :recoverable,
-         :rememberable,
          :trackable,
          :timeoutable,
          :validatable,
-         :lockable,
          :invitable,
          :omniauthable,
          omniauth_providers: [:entra_id]
