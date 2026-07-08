@@ -64,8 +64,4 @@ RSpec.describe "Assessor authentication", type: :system do
   def when_i_click_manage_access_link
     assessor_applications_page.header.manage_access_link.click
   end
-
-  def then_i_am_redirect_to_entra_id_authentication
-    expect(page).to have_current_path("/staff/auth/entra_id/callback")
-  end
 end
