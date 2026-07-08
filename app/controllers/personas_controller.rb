@@ -136,7 +136,7 @@ class PersonasController < ApplicationController
         withdraw_permission: :desc,
         manage_staff_permission: :desc,
         email: :asc,
-      )
+      ).where.not(archived: true)
   end
 
   TEACHER_PERSONAS =
