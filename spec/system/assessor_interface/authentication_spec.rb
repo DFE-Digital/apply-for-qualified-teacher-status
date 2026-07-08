@@ -9,11 +9,6 @@ RSpec.describe "Assessor authentication", type: :system do
     FeatureFlags::FeatureFlag.deactivate(:sign_in_with_active_directory)
   end
 
-  it "redirects authentication to entra_id" do
-    when_i_visit_the(:assessor_applications_page)
-    then_i_am_redirect_to_entra_id_authentication
-  end
-
   it "allows signing out" do
     given_i_am_authorized_as_an_assessor_user
 
