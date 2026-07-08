@@ -57,9 +57,17 @@ RSpec.describe AssessorInterface::UploadsController, type: :controller do
     context "when the user session times out" do
       before { sign_out staff }
 
-      it "redirects to the signin page" do
+      it "redirects to the Entra ID authentication path" do
         perform
-        expect(response).to redirect_to(new_staff_session_path)
+        expect(response).to redirect_to("/staff/auth/entra_id")
+      end
+    end
+
+    context "when the user is not authorised" do
+      let(:staff) { create(:staff, :with_assess_permission, archived: true) }
+
+      it "returns unauthorized" do
+        expect { perform }.to raise_error(Pundit::NotAuthorizedError)
       end
     end
 
