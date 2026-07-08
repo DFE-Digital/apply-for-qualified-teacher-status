@@ -126,17 +126,19 @@ class PersonasController < ApplicationController
 
   def load_staff_personas
     @staff_personas =
-      Staff.order(
-        assess_permission: :desc,
-        change_name_permission: :desc,
-        change_work_history_and_qualification_permission: :desc,
-        reverse_decision_permission: :desc,
-        support_console_permission: :desc,
-        verify_permission: :desc,
-        withdraw_permission: :desc,
-        manage_staff_permission: :desc,
-        email: :asc,
-      ).where.not(archived: true)
+      Staff
+        .order(
+          assess_permission: :desc,
+          change_name_permission: :desc,
+          change_work_history_and_qualification_permission: :desc,
+          reverse_decision_permission: :desc,
+          support_console_permission: :desc,
+          verify_permission: :desc,
+          withdraw_permission: :desc,
+          manage_staff_permission: :desc,
+          email: :asc,
+        )
+        .where.not(archived: true)
   end
 
   TEACHER_PERSONAS =
