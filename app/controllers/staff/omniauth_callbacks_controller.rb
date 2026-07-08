@@ -32,7 +32,7 @@ class Staff::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   protected
 
   def fail_sign_in
-    redirect_to new_staff_session_url, alert: t(".failure")
+    redirect_to root_url, alert: t(".failure")
   end
 
   def after_sign_in_path_for(resource)
@@ -40,6 +40,6 @@ class Staff::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def after_omniauth_failure_path_for(_scope)
-    new_staff_session_url
+    root_url
   end
 end
