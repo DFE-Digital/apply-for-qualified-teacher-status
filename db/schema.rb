@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_30_100317) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_07_140158) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -349,15 +349,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_30_100317) do
     t.datetime "updated_at", null: false
     t.integer "working_days_between_assessment_started_to_requested"
     t.index ["assessment_id"], name: "index_further_information_requests_on_assessment_id"
-  end
-
-  create_table "mail_delivery_failures", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.string "email_address", null: false
-    t.string "mailer_action_method", null: false
-    t.string "mailer_class", null: false
-    t.datetime "updated_at", null: false
-    t.index ["email_address"], name: "index_mail_delivery_failures_on_email_address"
   end
 
   create_table "notes", force: :cascade do |t|

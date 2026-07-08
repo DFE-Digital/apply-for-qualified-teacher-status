@@ -30,8 +30,6 @@
     - contact_email
     - contact_name
     - review_decision_note
-  :mail_delivery_failures:
-    - email_address
   :selected_failure_reasons:
     - assessor_feedback
   :selected_failure_reasons_work_histories:
