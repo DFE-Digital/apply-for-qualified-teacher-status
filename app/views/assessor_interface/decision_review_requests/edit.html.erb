@@ -128,6 +128,27 @@
     <% end %>
   <% end %>
 
+  <%= render CheckYourAnswersSummary::Component.new(
+    model: @decision_review_request,
+    id: "decision-review-request",
+    title: "Decision review request (CheckYourAnswersSummary)",
+    changeable: false,
+    fields: {
+      received_at: {
+        title: "Date received",
+        value: @decision_review_request.received_at.to_date.to_fs
+      },
+      comment: {
+        title: "Applicant’s comments",
+        value: simple_format(@decision_review_request.comment)
+      },
+      decision_review_evidence_document: {
+        title: "Applicant’s supporting evidence",
+        value: (@decision_review_request.decision_review_evidence_document if @decision_review_request.has_supporting_documents?)
+      }
+    }
+  ) %>
+
   <%= f.govuk_radio_buttons_fieldset :review_passed do %>
     <%= f.govuk_radio_button :review_passed, true, label: { text: "Yes" }, link_errors: true, disabled: @decision_review_request.reviewed_at.present? || !policy([:assessor_interface,@decision_review_request ]).update? do %>
       <%= f.govuk_text_area :review_passed_note, label: { text: "Add an internal note" }, disabled: @decision_review_request.reviewed_at.present? || !policy([:assessor_interface,@decision_review_request ]).update? %>
