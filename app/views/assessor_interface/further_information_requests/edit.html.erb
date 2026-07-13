@@ -40,9 +40,15 @@
 
         <% if item[:applicant_upload_response] %>
           <% applicant_upload_response = item.fetch(:applicant_upload_response) %>
+          <h3 class="govuk-heading-s govuk-!-margin-bottom-2">Applicant's document</h3>
           <%= document_link_to(applicant_upload_response) %>
-          <%= document_link_to(applicant_upload_response, translated: true) %>
+          <% if applicant_upload_response.translated_uploads.any? %>
+            <h3 class="govuk-heading-s govuk-!-margin-bottom-2">Document translation</h3>
+            <%= document_link_to(applicant_upload_response, translated: true) %>
+          <% end %>
         <% end %>
+
+        <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
 
         <h3 class="govuk-heading-s govuk-!-margin-bottom-2">Further information request</h3>
         <p class="govuk-hint govuk-!-margin-bottom-2"><%= item.fetch(:requested_date) %></p>
