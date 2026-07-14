@@ -71,6 +71,7 @@
 #  region_id                                     :bigint           not null
 #  reviewer_id                                   :bigint
 #  teacher_id                                    :bigint           not null
+#  verifier_id                                   :bigint
 #
 # Indexes
 #
@@ -85,6 +86,7 @@
 #  index_application_forms_on_reviewer_id                   (reviewer_id)
 #  index_application_forms_on_stage                         (stage)
 #  index_application_forms_on_teacher_id                    (teacher_id)
+#  index_application_forms_on_verifier_id                   (verifier_id)
 #
 # Foreign Keys
 #
@@ -94,6 +96,7 @@
 #  fk_rails_...  (region_id => regions.id)
 #  fk_rails_...  (reviewer_id => staff.id)
 #  fk_rails_...  (teacher_id => teachers.id)
+#  fk_rails_...  (verifier_id => staff.id)
 #
 class ApplicationForm < ApplicationRecord
   ATTACHABLE_DOCUMENT_TYPES = %w[
@@ -131,6 +134,7 @@ class ApplicationForm < ApplicationRecord
 
   belongs_to :assessor, class_name: "Staff", optional: true
   belongs_to :reviewer, class_name: "Staff", optional: true
+  belongs_to :verifier, class_name: "Staff", optional: true
 
   validates :awarded_at, absence: true, if: :declined_at?
   validates :awarded_at, absence: true, if: :withdrawn_at?

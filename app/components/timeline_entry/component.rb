@@ -72,6 +72,13 @@ module TimelineEntry
       }
     end
 
+    def verification_decision_made_vars
+      {
+        assignee_name:
+          timeline_event.creator_name.presence || timeline_event.creator&.name,
+      }
+    end
+
     def eligibility_domain_created_vars
       { text: timeline_event.note_text }
     end

@@ -103,6 +103,7 @@ class TimelineEvent < ApplicationRecord
          reviewer_assigned: "reviewer_assigned",
          stage_changed: "stage_changed",
          status_changed: "status_changed",
+         verification_decision_made: "verification_decision_made",
        }
 
   validates :creator, presence: true, unless: -> { creator_name.present? }

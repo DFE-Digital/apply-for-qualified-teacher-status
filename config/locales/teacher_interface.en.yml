@@ -267,6 +267,7 @@ en:
       days_since_submission: Working days since submission
       assessor: Assigned to
       reviewer: Reviewer
+      verifier: Verified by
       reference: Reference
       unassigned: Not assigned
       status: Status

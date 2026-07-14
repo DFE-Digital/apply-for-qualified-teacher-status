@@ -147,6 +147,16 @@ module ApplicationFormHelper
       ),
       {
         key: {
+          text: I18n.t("application_form.summary.verifier"),
+        },
+        value: {
+          text:
+            application_form.verifier&.name ||
+              I18n.t("application_form.summary.unassigned"),
+        },
+      },
+      {
+        key: {
           text: I18n.t("application_form.summary.reference"),
         },
         value: {

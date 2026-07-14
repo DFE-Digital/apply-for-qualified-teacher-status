@@ -111,6 +111,14 @@ module AssessorInterface
         if @form.confirmation
           ActiveRecord::Base.transaction do
             assessment.award!
+            application_form.update!(verifier: current_staff)
+
+            CreateTimelineEvent.call(
+              "verification_decision_made",
+              application_form:,
+              user: current_staff,
+            )
+
             CreateTRSTRNRequest.call(application_form:, user: current_staff)
           end
 

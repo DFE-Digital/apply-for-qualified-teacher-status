@@ -13,6 +13,13 @@ class ReviewAssessment
 
     ActiveRecord::Base.transaction do
       assessment.review!
+      application_form.update!(verifier: user)
+
+      CreateTimelineEvent.call(
+        "verification_decision_made",
+        application_form:,
+        user:,
+      )
 
       ApplicationFormStatusUpdater.call(application_form:, user:)
     end
