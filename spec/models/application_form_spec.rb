@@ -270,6 +270,7 @@ RSpec.describe ApplicationForm, type: :model do
     it { is_expected.to belong_to(:teacher) }
     it { is_expected.to have_many(:notes) }
     it { is_expected.to belong_to(:english_language_provider).optional }
+    it { is_expected.to belong_to(:verifier).class_name("Staff").optional }
   end
 
   describe "validations" do
