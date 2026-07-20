@@ -8,22 +8,26 @@
     <%= t(".title") %>
   </h1>
 
-  <%= govuk_summary_card(title: "Decision review request") do |card| %>
-    <p class="govuk-hint govuk-!-margin-bottom-2"><%= @decision_review_request.received_at.to_date.to_fs %></p>
-    <h3 class="govuk-heading-s govuk-!-margin-bottom-2">Applicant’s comments</h3>
-
-    <p class="govuk-body govuk-!-margin-bottom-2">
-      <%= simple_format @decision_review_request.comment %>
-    </p>
-
-    <h3 class="govuk-heading-s govuk-!-margin-bottom-2">Applicant’s supporting evidence</h3>
-    <% if @decision_review_request.has_supporting_documents? %>
-      <%= document_link_to(@decision_review_request.decision_review_evidence_document) %>
-      <%= document_link_to(@decision_review_request.decision_review_evidence_document, translated: true) %>
-    <% else %>
-      <p class="govuk-body govuk-!-margin-bottom-2">None provided</p>
-    <% end %>
-  <% end %>
+  <%= render CheckYourAnswersSummary::Component.new(
+    model: @decision_review_request,
+    id: "decision-review-request",
+    title: "Decision review request",
+    changeable: false,
+    fields: {
+      received_at: {
+        title: "Date received",
+        value: @decision_review_request.received_at.to_date.to_fs
+      },
+      comment: {
+        title: "Applicant’s comments",
+        value: simple_format(@decision_review_request.comment)
+      },
+      decision_review_evidence_document: {
+        title: "Applicant’s supporting evidence",
+        value: (@decision_review_request.decision_review_evidence_document if @decision_review_request.has_supporting_documents?)
+      }
+    }
+  ) %>
 
   <%= f.govuk_radio_buttons_fieldset :review_passed do %>
     <%= f.govuk_radio_button :review_passed, true, label: { text: "Yes" }, link_errors: true, disabled: @decision_review_request.reviewed_at.present? || !policy([:assessor_interface,@decision_review_request ]).update? do %>
