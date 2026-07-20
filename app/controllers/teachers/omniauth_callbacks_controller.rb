@@ -17,7 +17,7 @@ class Teachers::OmniauthCallbacksController < ApplicationController
       session[:id_token] = auth&.credentials&.id_token
 
       teacher =
-        FindOrCreateTeacherFromGovOne.call(
+        FindOrCreateTeacherFromOneLogin.call(
           email:,
           gov_one_id:,
           eligibility_check:,

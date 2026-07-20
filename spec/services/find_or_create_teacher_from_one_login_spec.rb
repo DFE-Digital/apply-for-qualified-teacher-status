@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe FindOrCreateTeacherFromGovOne do
+RSpec.describe FindOrCreateTeacherFromOneLogin do
   subject(:call) do
     described_class.call(email:, gov_one_id:, eligibility_check:)
   end

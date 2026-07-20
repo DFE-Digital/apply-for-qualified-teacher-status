@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class FindOrCreateTeacherFromGovOne
+class FindOrCreateTeacherFromOneLogin
   include ServicePattern
 
   attr_reader :teacher
