@@ -18,6 +18,7 @@ module ApplicationFormOverview
         application_form,
         current_staff:,
         include_name: true,
+        include_verifier: application_form.verifier.present?,
         highlight_email:,
       ) +
         [
