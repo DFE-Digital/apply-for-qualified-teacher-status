@@ -199,6 +199,25 @@ RSpec.describe ApplicationFormHelper do
       end
     end
 
+    context "include_verifier false" do
+      subject(:summary_rows_without_verifier) do
+        application_form_summary_rows(
+          application_form,
+          current_staff:,
+          include_name: true,
+          include_verifier: false,
+        )
+      end
+
+      it "does not return the verifier element" do
+        expect(
+          summary_rows_without_verifier.find do |row|
+            row[:key][:text] == "Verified by"
+          end,
+        ).to be_nil
+      end
+    end
+
     context "region has an empty name" do
       before { application_form.region.update(name: "") }
 

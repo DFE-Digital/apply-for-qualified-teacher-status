@@ -31,8 +31,19 @@ RSpec.describe ApplicationFormOverview::Component, type: :component do
       it { is_expected.to include("Working days since submission") }
       it { is_expected.to include("Assigned to") }
       it { is_expected.to include("Reviewer") }
+      it { is_expected.not_to include("Verified by") }
       it { is_expected.to include("Reference") }
       it { is_expected.to include("Status") }
+    end
+
+    context "when a verifier is assigned" do
+      let(:application_form) do
+        create(:application_form, :submitted, verifier: create(:staff))
+      end
+
+      it "includes the verifier row" do
+        expect(dl.text.strip).to include("Verified by")
+      end
     end
   end
 end
