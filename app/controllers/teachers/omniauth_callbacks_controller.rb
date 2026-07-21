@@ -9,7 +9,7 @@ class Teachers::OmniauthCallbacksController < ApplicationController
     email = auth&.info&.email
     gov_one_id = auth&.uid
 
-    return error_redirect unless email
+    return error_redirect unless email && gov_one_id
 
     if new_user_without_eligibility_check_completed?(gov_one_id, email)
       redirect_to :eligibility_interface_countries

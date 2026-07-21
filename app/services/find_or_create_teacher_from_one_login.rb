@@ -12,6 +12,8 @@ class FindOrCreateTeacherFromOneLogin
   end
 
   def call
+    return nil if gov_one_id.blank?
+
     ActiveRecord::Base.transaction do
       find_or_create_teacher!
 

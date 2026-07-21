@@ -155,4 +155,18 @@ RSpec.describe FindOrCreateTeacherFromOneLogin do
       expect { call }.not_to change(existing_teacher, :gov_one_id)
     end
   end
+
+  context "when the gov_one_id is nil" do
+    let(:gov_one_id) { nil }
+
+    before { create :teacher, email:, gov_one_id: nil }
+
+    it "does not generate a new teacher record" do
+      expect { call }.not_to change(Teacher, :count)
+    end
+
+    it "returns nil" do
+      expect(call).to be_nil
+    end
+  end
 end
