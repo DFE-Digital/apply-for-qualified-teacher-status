@@ -155,6 +155,17 @@ RSpec.describe "Teacher decision review request", type: :system do
     then_i_see_the(:teacher_declined_application_page)
   end
 
+  context "when application has not yet been submitted" do
+    let(:application_form) { create(:application_form, teacher:) }
+
+    it "redirects to application page" do
+      application_form
+
+      when_i_visit_the(:teacher_request_decision_review_declaration_page)
+      then_i_see_the(:teacher_application_page)
+    end
+  end
+
   private
 
   def given_a_declined_application_form_exists_within_last_28_days

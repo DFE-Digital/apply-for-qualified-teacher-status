@@ -5,6 +5,7 @@ module TeacherInterface
     include HandleApplicationFormSection
     include HistoryTrackable
 
+    before_action :redirect_unless_application_form_has_assessment
     before_action :redirect_unless_can_request_decision_review,
                   except: :confirmation
     before_action :redirect_if_decision_review_already_received,
@@ -151,6 +152,12 @@ module TeacherInterface
     def decision_review_request_for_current_decline
       @decision_review_request_for_current_decline ||=
         application_form.assessment.decision_review_request_for_current_decline
+    end
+
+    def redirect_unless_application_form_has_assessment
+      return if application_form.assessment.present?
+
+      redirect_to teacher_interface_application_form_path
     end
 
     def redirect_unless_can_request_decision_review
