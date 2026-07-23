@@ -3,9 +3,8 @@
 class AssignApplicationFormVerifier
   include ServicePattern
 
-  def initialize(application_form:, user:, verifier:)
+  def initialize(application_form:, verifier:)
     @application_form = application_form
-    @user = user
     @verifier = verifier
   end
 
@@ -17,5 +16,5 @@ class AssignApplicationFormVerifier
 
   private
 
-  attr_reader :application_form, :user, :verifier
+  attr_reader :application_form, :verifier
 end

@@ -3,10 +3,9 @@
 require "rails_helper"
 
 RSpec.describe AssignApplicationFormVerifier do
-  subject(:call) { described_class.call(application_form:, user:, verifier:) }
+  subject(:call) { described_class.call(application_form:, verifier:) }
 
   let!(:application_form) { create(:application_form, :submitted) }
-  let(:user) { create(:staff) }
   let(:verifier) { create(:staff) }
 
   describe "application form verifier" do
