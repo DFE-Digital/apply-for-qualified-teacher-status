@@ -40,6 +40,7 @@ gem "sentry-ruby"
 gem "sidekiq", "<7"
 gem "sidekiq-cron"
 gem "sitemap_generator"
+gem "solid_cache"
 gem "stimulus-rails"
 gem "validate_url"
 
