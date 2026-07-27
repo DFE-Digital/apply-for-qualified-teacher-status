@@ -89,6 +89,13 @@
     - invitation_token
     - reset_password_token
     - unlock_token
+  :solid_cache_entries:
+    - id
+    - key
+    - value
+    - created_at
+    - key_hash
+    - byte_size
   :suitability_records:
     - archive_note
     - note
