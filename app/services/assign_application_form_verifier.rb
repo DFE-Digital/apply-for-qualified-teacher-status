@@ -11,7 +11,15 @@ class AssignApplicationFormVerifier
   def call
     return if application_form.verifier == verifier
 
-    application_form.update!(verifier:)
+    ActiveRecord::Base.transaction do
+      application_form.update!(verifier:)
+
+      CreateTimelineEvent.call(
+        "verification_decision_made",
+        application_form:,
+        user: verifier,
+      )
+    end
   end
 
   private

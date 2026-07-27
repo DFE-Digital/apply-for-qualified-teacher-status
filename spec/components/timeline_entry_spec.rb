@@ -47,6 +47,20 @@ RSpec.describe TimelineEntry::Component, type: :component do
     end
   end
 
+  context "verification decision made" do
+    let(:timeline_event) do
+      create(:timeline_event, :verification_decision_made)
+    end
+
+    it "describes the event" do
+      expect(component.text).to include("Verification decision made")
+    end
+
+    it "attributes to the creator" do
+      expect(component.text).to include(creator.name)
+    end
+  end
+
   context "status changed" do
     let(:timeline_event) do
       create(

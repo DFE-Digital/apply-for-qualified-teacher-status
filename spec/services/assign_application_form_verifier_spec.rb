@@ -8,6 +8,12 @@ RSpec.describe AssignApplicationFormVerifier do
   let!(:application_form) { create(:application_form, :submitted) }
   let(:verifier) { create(:staff) }
 
+  it "creates a timeline event" do
+    expect { call }.to change {
+      application_form.timeline_events.verification_decision_made.count
+    }.by(1)
+  end
+
   describe "application form verifier" do
     subject(:verifier_on_form) { application_form.verifier }
 
