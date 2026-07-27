@@ -109,10 +109,7 @@ module AssessorInterface
 
       if @form.valid?
         if @form.confirmation
-          ActiveRecord::Base.transaction do
-            assessment.award!
-            CreateTRSTRNRequest.call(application_form:, user: current_staff)
-          end
+          SendApplicationForQTSAward.call(assessment:, user: current_staff)
 
           redirect_to [:status, :assessor_interface, application_form]
         else
