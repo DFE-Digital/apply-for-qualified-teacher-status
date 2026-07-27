@@ -329,10 +329,10 @@ govuk-frontend@^5.0.0:
   resolved "https://registry.yarnpkg.com/govuk-frontend/-/govuk-frontend-5.14.0.tgz#d93f1ffa88b0696114509cab86e4ea474006f8e0"
   integrity sha512-MgfaXswIM6KpXS2T5gltEnzgVLgfM3UoE9+rYkhBiR0suaJ8Let31VZXQZqz9QhiPDbv28fW1nRjIyLujfZIBA==
 
-govuk-frontend@^6.3.0:
-  version "6.3.0"
-  resolved "https://registry.yarnpkg.com/govuk-frontend/-/govuk-frontend-6.3.0.tgz#1ff97c181ab08ec0b96fdb96628066a5d32e1018"
-  integrity sha512-cXIQxm5PHCsbic47GXZrVBZhAeeshTLRL6ZBKilLsR6rMCjJuWb7Fruq0VUNMBJFlJk/srsRj/q8d5bM9cgKoA==
+govuk-frontend@^6.4.0:
+  version "6.4.0"
+  resolved "https://registry.yarnpkg.com/govuk-frontend/-/govuk-frontend-6.4.0.tgz#bacd856aae0b27862b9636734eddcfa14b90b3ac"
+  integrity sha512-jU3oaVFXqK1yDVIdZs1YZ6JD7YDB4PFUHF3rFMWJye9ArImp42F9wCsFzzB1+udjuzGCryJGcHHbBQ5HY+8rqQ==
 
 immutable@^5.1.5:
   version "5.1.5"

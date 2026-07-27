@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe FindOrCreateTeacherFromGovOne do
+RSpec.describe FindOrCreateTeacherFromOneLogin do
   subject(:call) do
     described_class.call(email:, gov_one_id:, eligibility_check:)
   end
@@ -137,7 +137,7 @@ RSpec.describe FindOrCreateTeacherFromGovOne do
     end
   end
 
-  context "when a teacher record exists with one gov_one_id and gets updated with a new one" do
+  context "when a teacher record exists with same email but different one gov_one_id" do
     let!(:existing_teacher) do
       create :teacher, email:, gov_one_id: "old-gov-one-id"
     end
@@ -147,9 +147,26 @@ RSpec.describe FindOrCreateTeacherFromGovOne do
       expect { call }.not_to change(Teacher, :count)
     end
 
-    it "updates the gov_one_id on the existing teacher record" do
-      call
-      expect(existing_teacher.reload.gov_one_id).to eq(gov_one_id)
+    it "returns nil" do
+      expect(call).to be_nil
+    end
+
+    it "does not update the gov_one_id on the existing teacher record" do
+      expect { call }.not_to change(existing_teacher, :gov_one_id)
+    end
+  end
+
+  context "when the gov_one_id is nil" do
+    let(:gov_one_id) { nil }
+
+    before { create :teacher, email:, gov_one_id: nil }
+
+    it "does not generate a new teacher record" do
+      expect { call }.not_to change(Teacher, :count)
+    end
+
+    it "returns nil" do
+      expect(call).to be_nil
     end
   end
 end

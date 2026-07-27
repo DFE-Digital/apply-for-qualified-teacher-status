@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class FindOrCreateTeacherFromGovOne
+class FindOrCreateTeacherFromOneLogin
   include ServicePattern
 
   attr_reader :teacher
@@ -12,6 +12,8 @@ class FindOrCreateTeacherFromGovOne
   end
 
   def call
+    return nil if gov_one_id.blank?
+
     ActiveRecord::Base.transaction do
       find_or_create_teacher!
 
@@ -25,16 +27,25 @@ class FindOrCreateTeacherFromGovOne
     nil
   end
 
+  class DifferentOneLoginUidError < StandardError
+  end
+
   private
 
   attr_reader :email, :gov_one_id, :eligibility_check
 
   def find_or_create_teacher!
-    @teacher =
-      Teacher.find_by(gov_one_id:) || Teacher.find_by(email:) ||
-        Teacher.create!(email:)
+    @teacher = Teacher.find_by(gov_one_id:)
 
-    teacher.update!(gov_one_id:, gov_one_email: email)
+    if teacher.nil?
+      @teacher = Teacher.find_by(email:) || Teacher.create!(email:)
+
+      raise DifferentOneLoginUidError if teacher.gov_one_id.present?
+
+      teacher.update!(gov_one_id:)
+    end
+
+    teacher.update!(gov_one_email: email)
   end
 
   def create_application_form!

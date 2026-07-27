@@ -203,4 +203,68 @@ RSpec.describe "/teacher/auth/gov_one/callback", type: :request do
       expect(response).to redirect_to(teacher_interface_root_path)
     end
   end
+
+  context "when the email is nil" do
+    let(:omniauth_hash) do
+      OmniAuth::AuthHash.new(
+        "uid" => gov_one_id,
+        "credentials" => {
+          "id_token" => "99999",
+        },
+      )
+    end
+
+    it "does not generate a new teacher record with an application" do
+      expect { gov_one_callback }.not_to change(Teacher, :count)
+    end
+
+    it "does not set the id_token session" do
+      gov_one_callback
+
+      expect(request.session[:id_token]).to be_nil
+    end
+
+    it "redirects the user back to the sign in page and does not sign in" do
+      gov_one_callback
+
+      expect(controller.current_teacher).to be_nil
+      expect(response).to redirect_to(root_path)
+      expect(request.flash[:alert]).to eq(
+        "There was a problem signing in. Please try again.",
+      )
+    end
+  end
+
+  context "when the uid is nil" do
+    let(:omniauth_hash) do
+      OmniAuth::AuthHash.new(
+        "info" => {
+          "email" => email,
+        },
+        "credentials" => {
+          "id_token" => "99999",
+        },
+      )
+    end
+
+    it "does not generate a new teacher record with an application" do
+      expect { gov_one_callback }.not_to change(Teacher, :count)
+    end
+
+    it "does not set the id_token session" do
+      gov_one_callback
+
+      expect(request.session[:id_token]).to be_nil
+    end
+
+    it "redirects the user back to the sign in page and does not sign in" do
+      gov_one_callback
+
+      expect(controller.current_teacher).to be_nil
+      expect(response).to redirect_to(root_path)
+      expect(request.flash[:alert]).to eq(
+        "There was a problem signing in. Please try again.",
+      )
+    end
+  end
 end
