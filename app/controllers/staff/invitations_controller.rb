@@ -5,10 +5,17 @@ class Staff::InvitationsController < Devise::InvitationsController
 
   layout "two_thirds"
 
+  alias_method :pundit_user, :current_staff
+
+  before_action :authorize_invitation
   before_action :configure_permitted_parameters
   protect_from_forgery prepend: true
 
   protected
+
+  def authorize_invitation
+    authorize %i[assessor_interface staff], :update?
+  end
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(
