@@ -24,4 +24,26 @@ RSpec.describe "Staff sign in", type: :request do
 
     it_behaves_like "an Azure login"
   end
+
+  describe "Removed staff devise routes" do
+    removed_devise_paths = {
+      "database authentication sign-in (new)" => [:get, "/staff/sign_in"],
+      "database authentication sign-in (create)" => [:post, "/staff/sign_in"],
+      "password reset (new)" => [:get, "/staff/password/new"],
+      "password reset (update)" => [:put, "/staff/password"],
+      "confirmation (new)" => [:get, "/staff/confirmation/new"],
+      "confirmation (show)" => [:get, "/staff/confirmation"],
+      "unlock (new)" => [:get, "/staff/unlock/new"],
+      "unlock (show)" => [:get, "/staff/unlock"],
+      "invitation accept (edit)" => [:get, "/staff/invitation/accept"],
+      "invitation (update)" => [:put, "/staff/invitation"],
+    }
+
+    removed_devise_paths.each do |description, (method, path)|
+      it "throws 404 for #{description}" do
+        public_send(method, path)
+        expect(response.status).to eq(404)
+      end
+    end
+  end
 end

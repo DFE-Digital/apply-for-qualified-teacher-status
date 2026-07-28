@@ -3,6 +3,11 @@
 require "rails_helper"
 
 RSpec.describe "Staff assessor", type: :system do
+  it "requires authentication" do
+    when_i_visit_the_staff_page
+    then_i_see_the(:eligibility_start_page)
+  end
+
   it "requires permission" do
     given_i_am_authorized_as_an_assessor_user
     when_i_visit_the_staff_page
@@ -34,30 +39,6 @@ RSpec.describe "Staff assessor", type: :system do
     then_i_sign_out
 
     when_i_visit_the_invitation_email_with_azure_ad_enabled_i_see_the_link_to_access
-  end
-
-  it "allows inviting a user with Azure active directory deactivated" do
-    given_sign_in_with_active_directory_is_disabled
-    given_i_am_authorized_as_a_manage_staff_user
-    when_i_visit_the_staff_page
-    then_i_see_the_staff_index
-
-    when_i_click_on_invite
-    then_i_see_the_staff_invitation_form
-
-    when_i_fill_email_address
-    and_i_fill_name
-    then_i_choose_manage_staff_permission
-    and_i_send_invitation
-    then_i_see_an_invitation_email
-    then_i_see_the_invited_staff_user
-    then_i_sign_out
-
-    when_i_visit_the_invitation_email_with_azure_ad_disabled
-    and_i_fill_password
-    and_i_set_password
-    then_i_see_the_staff_index
-    then_i_see_the_accepted_staff_user
   end
 
   it "allows editing permissions when Azure active directory is active" do
@@ -151,10 +132,6 @@ RSpec.describe "Staff assessor", type: :system do
     FeatureFlags::FeatureFlag.activate(:sign_in_with_active_directory)
   end
 
-  def given_sign_in_with_active_directory_is_disabled
-    FeatureFlags::FeatureFlag.deactivate(:sign_in_with_active_directory)
-  end
-
   def when_i_visit_the_staff_page
     visit assessor_interface_staff_index_path
   end
@@ -163,14 +140,6 @@ RSpec.describe "Staff assessor", type: :system do
     message = ActionMailer::Base.deliveries.first
     uri = URI.parse(URI.extract(message.body.raw_source).second)
     expect(uri.path).to eq("/staff/auth/entra_id")
-  end
-
-  def when_i_visit_the_invitation_email_with_azure_ad_disabled
-    message = ActionMailer::Base.deliveries.first
-    uri = URI.parse(URI.extract(message.body.raw_source).second)
-    expect(uri.path).to eq("/staff/invitation/accept")
-    expect(uri.query).to include("invitation_token=")
-    visit "#{uri.path}?#{uri.query}"
   end
 
   def when_i_click_on_invite
@@ -210,18 +179,8 @@ RSpec.describe "Staff assessor", type: :system do
     expect(page).to have_content("Last signed in\t\t")
   end
 
-  def then_i_see_the_accepted_staff_user
-    expect(page).to have_content("test@example.com")
-    expect(page.text).to match(/Last signed in.*#{Time.zone.now.year}/)
-  end
-
   def and_i_fill_name
     fill_in "staff-name-field", with: "Name"
-  end
-
-  def and_i_fill_password
-    fill_in "staff-password-field", with: "password"
-    fill_in "staff-password-confirmation-field", with: "password"
   end
 
   def then_i_choose_manage_staff_permission
@@ -230,10 +189,6 @@ RSpec.describe "Staff assessor", type: :system do
 
   def and_i_send_invitation
     click_button "Send an invitation", visible: false
-  end
-
-  def and_i_set_password
-    click_button "Set my password", visible: false
   end
 
   def and_i_see_the_helpdesk_user

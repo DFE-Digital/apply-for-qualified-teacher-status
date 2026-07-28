@@ -3,13 +3,16 @@
 require "rails_helper"
 
 RSpec.describe "Assessor authentication", type: :system do
-  it "allows signing in and signing out" do
-    given_staff_exist
+  around do |example|
+    FeatureFlags::FeatureFlag.activate(:sign_in_with_active_directory)
+    example.run
+    FeatureFlags::FeatureFlag.deactivate(:sign_in_with_active_directory)
+  end
+
+  it "allows signing out" do
+    given_i_am_authorized_as_an_assessor_user
 
     when_i_visit_the(:assessor_applications_page)
-    then_i_see_the(:assessor_login_page)
-
-    when_i_login
     then_i_see_the(:assessor_applications_page)
 
     when_i_click_sign_out
@@ -23,12 +26,11 @@ RSpec.describe "Assessor authentication", type: :system do
     then_i_see_the_forbidden_page
   end
 
-  context "when user has support console permission" do
+  context "when user has manage staff permission" do
     it "allows access to manage access" do
-      given_staff_with_manage_staff_permission_exist
+      given_i_am_authorized_as_a_manage_staff_user
 
       when_i_visit_the(:assessor_applications_page)
-      when_i_login
       then_i_see_the_manage_access_link
 
       when_i_click_manage_access_link
@@ -36,34 +38,16 @@ RSpec.describe "Assessor authentication", type: :system do
     end
   end
 
-  context "when user does not have support console permission" do
+  context "when user does not have manage staff permission" do
     it "does not allow access to manage access" do
-      given_staff_exist
+      given_i_am_authorized_as_an_assessor_user
 
       when_i_visit_the(:assessor_applications_page)
-      when_i_login
       then_i_do_not_see_the_manage_access_link
     end
   end
 
   private
-
-  def given_staff_exist
-    create(:staff, email: "staff@example.com", password: "password")
-  end
-
-  def given_staff_with_manage_staff_permission_exist
-    create(
-      :staff,
-      :with_manage_staff_permission,
-      email: "staff@example.com",
-      password: "password",
-    )
-  end
-
-  def when_i_login
-    assessor_login_page.submit(email: "staff@example.com", password: "password")
-  end
 
   def when_i_click_sign_out
     assessor_applications_page.header.sign_out_link.click

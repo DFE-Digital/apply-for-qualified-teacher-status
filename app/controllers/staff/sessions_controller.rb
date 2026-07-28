@@ -2,17 +2,10 @@
 
 class Staff::SessionsController < Devise::SessionsController
   include AssessorCurrentNamespace
-  include EnforceEntraIdSignIn
-
-  before_action :enforce_entra_id_sign_in, except: %i[signed_out destroy]
 
   layout "two_thirds"
 
   def signed_out
-  end
-
-  def destroy
-    super
   end
 
   protected

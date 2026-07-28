@@ -5,10 +5,17 @@ class Staff::InvitationsController < Devise::InvitationsController
 
   layout "two_thirds"
 
+  alias_method :pundit_user, :current_staff
+
+  before_action :authorize_invitation
   before_action :configure_permitted_parameters
   protect_from_forgery prepend: true
 
   protected
+
+  def authorize_invitation
+    authorize %i[assessor_interface staff], :update?
+  end
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(
@@ -29,9 +36,5 @@ class Staff::InvitationsController < Devise::InvitationsController
 
   def after_invite_path_for(inviter, invitee)
     invitee.is_a?(Staff) ? assessor_interface_staff_index_path : super
-  end
-
-  def after_accept_path_for(resource)
-    resource.is_a?(Staff) ? assessor_interface_staff_index_path : super
   end
 end

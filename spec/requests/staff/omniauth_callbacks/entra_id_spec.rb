@@ -55,7 +55,7 @@ RSpec.describe "Staff Entra ID sign-in", type: :request do
       expect(flash[:alert]).to eq(
         "There was a problem signing you in. Please try again.",
       )
-      expect(response).to redirect_to(new_staff_session_url)
+      expect(response).to redirect_to(root_path)
 
       expect(staff.reload.azure_ad_uid).to eq("other-entra-uid")
       expect(controller.current_staff).to be_nil
@@ -69,7 +69,7 @@ RSpec.describe "Staff Entra ID sign-in", type: :request do
       expect(flash[:alert]).to eq(
         "There was a problem signing you in. Please try again.",
       )
-      expect(response).to redirect_to(new_staff_session_url)
+      expect(response).to redirect_to(root_path)
 
       expect(controller.current_staff).to be_nil
     end
@@ -85,7 +85,7 @@ RSpec.describe "Staff Entra ID sign-in", type: :request do
       expect(flash[:alert]).to eq(
         "There was a problem signing you in. Please try again.",
       )
-      expect(response).to redirect_to(new_staff_session_url)
+      expect(response).to redirect_to(root_path)
       expect(controller.current_staff).to be_nil
 
       expect(staff.reload.azure_ad_uid).to be_nil
