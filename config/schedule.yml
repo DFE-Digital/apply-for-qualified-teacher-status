@@ -1,7 +1,3 @@
-update_working_days:
-  cron: "30 1 * * *"
-  class: UpdateWorkingDaysJob
-
 expire_consent_requests:
   cron: "0 2 * * *"
   class: ExpireRequestablesJob

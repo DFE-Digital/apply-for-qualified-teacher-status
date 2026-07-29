@@ -8,3 +8,6 @@ production:
   trim_sessions_job:
     class: "TrimSessionsJob"
     schedule: "0 1 * * *"
+  update_working_days:
+    class: "UpdateWorkingDaysJob"
+    schedule: "30 1 * * *"
