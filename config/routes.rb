@@ -374,7 +374,10 @@ Rails.application.routes.draw do
             request.env["warden"].user.support_console_permission? &&
               !request.env["warden"].user.archived?
           end,
-        ) { mount Sidekiq::Web, at: "sidekiq" }
+        ) do
+          mount Sidekiq::Web, at: "sidekiq"
+          mount MissionControl::Jobs::Engine, at: "/solid_queue_jobs"
+        end
       end
     end
   end
