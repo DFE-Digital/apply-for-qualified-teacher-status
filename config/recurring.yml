@@ -5,3 +5,6 @@ production:
   destroy_abandoned_draft_application_forms:
     class: "DestroyApplicationFormsJob"
     schedule: "15 1 * * *"
+  trim_sessions_job:
+    class: "TrimSessionsJob"
+    schedule: "0 1 * * *"
