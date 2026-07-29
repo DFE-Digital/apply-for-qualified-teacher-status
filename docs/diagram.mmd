@@ -382,6 +382,12 @@ erDiagram
 		integer selected_failure_reason_id FK
 		integer work_history_id FK
 	}
+	"SolidCache::Entry" {
+		integer byte_size
+		binary key
+		integer key_hash
+		binary value
+	}
 	Staff {
 		boolean archived
 		boolean assess_permission
