@@ -388,6 +388,75 @@ erDiagram
 		integer key_hash
 		binary value
 	}
+	"SolidQueue::BlockedExecution" {
+		string concurrency_key
+		datetime expires_at
+		integer job_id FK
+		integer priority
+		string queue_name
+	}
+	"SolidQueue::ClaimedExecution" {
+		integer job_id FK
+		integer process_id FK
+	}
+	"SolidQueue::FailedExecution" {
+		text error
+		integer job_id FK
+	}
+	"SolidQueue::Job" {
+		string active_job_id
+		text arguments
+		string class_name
+		string concurrency_key
+		datetime finished_at
+		integer priority
+		string queue_name
+		datetime scheduled_at
+	}
+	"SolidQueue::Pause" {
+		string queue_name
+	}
+	"SolidQueue::Process" {
+		string hostname
+		string kind
+		datetime last_heartbeat_at
+		text metadata
+		string name
+		integer pid
+		integer supervisor_id FK
+	}
+	"SolidQueue::ReadyExecution" {
+		integer job_id FK
+		integer priority
+		string queue_name
+	}
+	"SolidQueue::RecurringExecution" {
+		integer job_id FK
+		datetime run_at
+		string task_key FK
+	}
+	"SolidQueue::RecurringTask" {
+		text arguments
+		string class_name
+		string command
+		text description
+		string key
+		integer priority
+		string queue_name
+		string schedule
+		boolean static
+	}
+	"SolidQueue::ScheduledExecution" {
+		integer job_id FK
+		integer priority
+		string queue_name
+		datetime scheduled_at
+	}
+	"SolidQueue::Semaphore" {
+		datetime expires_at
+		string key FK
+		integer value
+	}
 	Staff {
 		boolean archived
 		boolean assess_permission
@@ -615,6 +684,16 @@ erDiagram
 	SelectedFailureReason ||--}o SelectedFailureReasonsWorkHistory : ""
 	SelectedFailureReason o{--}o WorkHistory : ""
 	WorkHistory ||--}o SelectedFailureReasonsWorkHistory : ""
+	"SolidQueue::BlockedExecution" o|--|o "SolidQueue::Semaphore" : ""
+	"SolidQueue::Process" ||--}o "SolidQueue::ClaimedExecution" : ""
+	"SolidQueue::Job" o|--|o "SolidQueue::RecurringExecution" : ""
+	"SolidQueue::Job" o|--|o "SolidQueue::FailedExecution" : ""
+	"SolidQueue::Job" o|--|o "SolidQueue::ScheduledExecution" : ""
+	"SolidQueue::Job" o|--|o "SolidQueue::BlockedExecution" : ""
+	"SolidQueue::Job" o|--|o "SolidQueue::ReadyExecution" : ""
+	"SolidQueue::Job" o|--|o "SolidQueue::ClaimedExecution" : ""
+	"SolidQueue::Process" o|--}o "SolidQueue::Process" : ""
+	"SolidQueue::RecurringTask" o|--}o "SolidQueue::RecurringExecution" : ""
 	Staff ||--}o SuitabilityRecord : ""
 	SuitabilityRecord o{--}o ApplicationForm : ""
 	SuitabilityRecord ||--}o "SuitabilityRecord::Email" : ""
