@@ -5,7 +5,7 @@
 # this can be renamed to ApplicationJob with the self.queue_adapter removed
 # since it will be set in production.rb
 class SolidQueueApplicationJob < ApplicationJob
-  self.queue_adapter = :solid_queue
+  self.queue_adapter = :solid_queue unless Rails.env.test?
 
   # Automatically retry jobs that encountered an error
   retry_on StandardError, wait: :polynomially_longer, attempts: 20
