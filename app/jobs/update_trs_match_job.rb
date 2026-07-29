@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class UpdateTRSMatchJob < ApplicationJob
+class UpdateTRSMatchJob < SolidQueueApplicationJob
   def perform(application_form)
     unless application_form.submitted? && application_form.awarded_at.nil? &&
              application_form.declined_at.nil? &&
