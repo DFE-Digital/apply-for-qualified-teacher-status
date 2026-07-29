@@ -41,6 +41,7 @@ gem "sidekiq", "<7"
 gem "sidekiq-cron"
 gem "sitemap_generator"
 gem "solid_cache"
+gem "solid_queue"
 gem "stimulus-rails"
 gem "validate_url"
 
