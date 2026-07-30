@@ -24,6 +24,10 @@ module PageObjects
         summary_list.find_row(key: "Reviewer")
       end
 
+      def verified_by_summary
+        summary_list.find_row(key: "Verified by")
+      end
+
       def status_summary
         summary_list.find_row(key: "Status")
       end

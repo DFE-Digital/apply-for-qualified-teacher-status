@@ -13,8 +13,24 @@ RSpec.describe SendApplicationForQTSAward do
     expect { call }.to change { assessment.reload.recommendation }.to("award")
   end
 
-  it "assigns the verifier" do
-    expect { call }.to change { application_form.reload.verifier }.to(user)
+  context "when the assessment is in the verify stage" do
+    let(:assessment) do
+      create(:assessment, recommendation: "verify", application_form:)
+    end
+
+    it "assigns the verifier" do
+      expect { call }.to change { application_form.reload.verifier }.to(user)
+    end
+  end
+
+  context "when the assessment is in the review stage" do
+    let(:assessment) do
+      create(:assessment, recommendation: "review", application_form:)
+    end
+
+    it "does not assign the verifier" do
+      expect { call }.not_to(change { application_form.reload.verifier })
+    end
   end
 
   it "creates a TRSTRNRequest" do

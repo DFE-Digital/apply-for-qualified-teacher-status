@@ -68,6 +68,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
 
     when_i_click_on_overview_button
     then_the_application_form_is_awarded
+    and_the_verified_by_summary_is_shown
   end
 
   it "verify" do
@@ -450,6 +451,12 @@ RSpec.describe "Assessor completing assessment", type: :system do
       end
 
     expect(declined_timeline_event).not_to be_nil
+  end
+
+  def and_the_verified_by_summary_is_shown
+    expect(assessor_application_page.verified_by_summary.value).to have_text(
+      "Authorized User",
+    )
   end
 
   delegate :reference, to: :application_form

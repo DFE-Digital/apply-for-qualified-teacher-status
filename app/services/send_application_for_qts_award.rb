@@ -9,9 +9,13 @@ class SendApplicationForQTSAward
   end
 
   def call
+    in_verify_stage = assessment.verify?
+
     ActiveRecord::Base.transaction do
       assessment.award!
-      AssignApplicationFormVerifier.call(application_form:, verifier: user)
+      if in_verify_stage
+        AssignApplicationFormVerifier.call(application_form:, verifier: user)
+      end
       CreateTRSTRNRequest.call(application_form:, user:)
     end
   end
