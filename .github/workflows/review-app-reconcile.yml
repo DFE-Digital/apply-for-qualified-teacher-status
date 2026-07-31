@@ -22,6 +22,7 @@ permissions:
 env:
   GLOBAL_CONFIG_PATH: global_config
   TF_VARS_PATH: terraform/application/config
+  TF_VARS_FILE_LOCATION: review/variables.tfvars.json
   TERRAFORM_BASE: terraform/application
   SERVICE_NAME: apply-for-qts
   RESOURCE_GROUP_NAME: s189t01-afqts-rv-rg
@@ -59,6 +60,8 @@ jobs:
           github-repo: ${{ github.repository }}
           tf-vars-path: ${{ env.TF_VARS_PATH }}
           global-config-path: ${{ env.GLOBAL_CONFIG_PATH }}
+          tf-vars-filename: ${{env.TF_VARS_FILE_LOCATION  }}
+
 
   delete-review-apps-after-reconcile:
     name: Delete review app ${{ matrix.pr_number }} after reconcile
@@ -102,4 +105,4 @@ jobs:
           resource-group-name: ${{ env.RESOURCE_GROUP_NAME }}
           storage-account-name: ${{ env.STORAGE_ACCOUNT_NAME }}
           container-name: ${{ env.CONTAINER_NAME }}
-          tf-state-file: terraform-${{ matrix.pr_number }}.tfstate
+          tf-state-file: review-${{ matrix.pr_number }}_kubernetes.tfstate
