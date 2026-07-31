@@ -13,9 +13,9 @@ RSpec.describe SendApplicationForQTSAward do
     expect { call }.to change { assessment.reload.recommendation }.to("award")
   end
 
-  context "when the assessment is in the verify stage" do
-    let(:assessment) do
-      create(:assessment, recommendation: "verify", application_form:)
+  context "when the application form is in the verification stage" do
+    let(:application_form) do
+      create(:application_form, :submitted, stage: "verification")
     end
 
     it "assigns the verifier" do
@@ -23,9 +23,9 @@ RSpec.describe SendApplicationForQTSAward do
     end
   end
 
-  context "when the assessment is in the review stage" do
-    let(:assessment) do
-      create(:assessment, recommendation: "review", application_form:)
+  context "when the application form is in the review stage" do
+    let(:application_form) do
+      create(:application_form, :submitted, stage: "review")
     end
 
     it "does not assign the verifier" do
