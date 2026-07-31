@@ -102,4 +102,4 @@ jobs:
           resource-group-name: ${{ env.RESOURCE_GROUP_NAME }}
           storage-account-name: ${{ env.STORAGE_ACCOUNT_NAME }}
           container-name: ${{ env.CONTAINER_NAME }}
-          tf-state-file: review-${{ matrix.pr_number }}_kubernetes.tfstate
+          tf-state-file: terraform-${{ matrix.pr_number }}.tfstate
