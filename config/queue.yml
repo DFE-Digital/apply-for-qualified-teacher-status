@@ -3,17 +3,9 @@ default: &default
     - polling_interval: 1
       batch_size: 500
   workers:
-    - queues: default
-      threads: <%= ENV.fetch("DEFAULT_QUEUE_THREADS", 1) %>
-      processes: <%= ENV.fetch("DEFAULT_QUEUE_PROCESSES", 1) %>
-      polling_interval: 1
-    - queues: mailer
-      threads: <%= ENV.fetch("MAILER_QUEUE_THREADS", 1) %>
-      processes: <%= ENV.fetch("MAILER_QUEUE_PROCESSES", 1) %>
-      polling_interval: 1
-    - queues: analytics
-      threads: <%= ENV.fetch("ANALYTICS_QUEUE_THREADS", 1) %>
-      processes: <%= ENV.fetch("ANALYTICS_QUEUE_PROCESSES", 1) %>
+    - queues: [default, mailer, analytics]
+      threads: <%= ENV.fetch("QUEUE_THREADS", 5) %>
+      processes: <%= ENV.fetch("QUEUE_PROCESSES", 1) %>
       polling_interval: 1
 
 development:
