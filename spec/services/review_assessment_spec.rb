@@ -26,7 +26,6 @@ RSpec.describe ReviewAssessment do
   end
 
   it "assigns the verifier" do
-    call
-    expect(application_form.verifier).to eq(user)
+    expect { call }.to change(application_form, :verifier).to(user)
   end
 end
