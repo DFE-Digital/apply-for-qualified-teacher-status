@@ -8,6 +8,11 @@ variable "app_replicas" {
   default     = 1
 }
 
+variable "worker_memory_max" {
+  type    = string
+  default = "1Gi"
+}
+
 variable "app_suffix" {
   type    = string
   default = ""

@@ -92,6 +92,7 @@ module "solid_queue_worker_application" {
   environment  = local.environment
   service_name = local.service_name
 
+  max_memory                = var.worker_memory_max
   cluster_configuration_map = module.cluster_data.configuration_map
 
   kubernetes_config_map_name = module.application_configuration.kubernetes_config_map_name
