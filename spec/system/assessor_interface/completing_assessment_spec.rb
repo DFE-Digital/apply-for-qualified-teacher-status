@@ -231,7 +231,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
 
     application_form.assessment.verify!
     application_form.assessment.update!(induction_required: false)
-    ApplicationFormStatusUpdater.call(application_form:, user: assessor_user)
+    application_form.update!(stage: "verification")
   end
 
   def given_there_is_a_verifiable_application_form_with_work_history
