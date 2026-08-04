@@ -40,7 +40,7 @@
     <%= f.govuk_text_field :contact_job, label: { text: "Contact’s job title" } %>
 
     <% if @further_information_request_item.application_form.requires_private_email_for_referee? %>
-      <%= f.govuk_email_field :contact_email, label: { text: "Contact’s email address" }, hint: { text: "The email address must use the school’s domain, for example, name@school.edu" } %>
+      <%= f.govuk_email_field :contact_email, label: { text: "Contact’s email address" }, hint: { text: "This email address must use the school’s domain, for example name@school.edu. We do not accept public email addresses such as those from Gmail, Yahoo, Hotmail or Proton mail" } %>
     <% else %>
       <%= f.govuk_email_field :contact_email, label: { text: "Contact’s email address" } %>
     <% end %>
