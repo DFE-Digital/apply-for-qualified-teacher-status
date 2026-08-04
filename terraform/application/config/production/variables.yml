@@ -1,2 +1,4 @@
 ---
 TRS_API_URL: https://teacher-qualifications-api.education.gov.uk
+QUEUE_THREADS: 5
+QUEUE_PROCESSES: 1
