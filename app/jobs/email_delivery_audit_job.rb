@@ -23,6 +23,8 @@ class EmailDeliveryAuditJob < ApplicationJob
           params[:prioritisation_reference_request],
       )
 
+    raise "Testing for Sentry" unless Rails.env.test?
+
     if notify_id
       EmailDeliveryNotifyStatusUpdateJob.set(wait: 1.minute).perform_later(
         email_delivery,
