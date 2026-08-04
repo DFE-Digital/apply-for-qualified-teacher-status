@@ -65,7 +65,7 @@ Rails.application.configure do
   config.cache_store = :solid_cache_store
 
   # Use a real queuing backend for Active Job (and separate queues per environment).
-  config.active_job.queue_adapter = :sidekiq
+  config.active_job.queue_adapter = :solid_queue
 
   # Avoids exposure of personally identifiable information (PII) in logs.
   config.active_job.log_arguments = false
