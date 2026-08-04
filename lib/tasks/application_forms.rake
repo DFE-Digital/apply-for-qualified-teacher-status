@@ -24,7 +24,7 @@ namespace :application_forms do
     puts "Sending emails for #{application_forms.count} applications! Are you sure you want to continue?"
     $stdin.gets.chomp
 
-    application_forms.each do |application_form|
+    application_forms.find_each do |application_form|
       puts application_form.reference
 
       teacher = application_form.teacher

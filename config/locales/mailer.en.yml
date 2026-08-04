@@ -19,7 +19,7 @@ en:
       application_declined:
         subject: Your QTS application was unsuccessful
       application_from_ineligible_country:
-        subject: "Update: Your qualified teacher status (QTS) application"
+        subject: "Your QTS application has been closed"
       application_not_submitted:
         subject:
           0: Your draft QTS application has not been submitted

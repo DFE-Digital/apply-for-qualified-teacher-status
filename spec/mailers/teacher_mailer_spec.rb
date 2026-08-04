@@ -94,11 +94,7 @@ RSpec.describe TeacherMailer, type: :mailer do
     describe "#subject" do
       subject { mail.subject }
 
-      it do
-        expect(subject).to eq(
-          "Update: Your qualified teacher status (QTS) application",
-        )
-      end
+      it { expect(subject).to eq("Your QTS application has been closed") }
     end
 
     describe "#to" do
@@ -114,8 +110,8 @@ RSpec.describe TeacherMailer, type: :mailer do
 
       it do
         expect(subject).to include(
-          "As we are unable to verify professional standing documents with the teaching authority in France, we " \
-            "have removed France from the list of eligible countries.",
+          "There has been a change to the service which means we can no longer accept applications " \
+            "from teachers trained in France. This is because this country no longer meets our [eligibility requirements]",
         )
       end
     end
