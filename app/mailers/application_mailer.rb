@@ -38,5 +38,7 @@ class ApplicationMailer < Mail::Notify::Mailer
         email_delivery,
       )
     end
+  rescue StandardError => e
+    Sentry.capture_exception(e)
   end
 end
