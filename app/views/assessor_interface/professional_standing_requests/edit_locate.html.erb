@@ -16,12 +16,14 @@
     You can confirm whether you are satisfied with the letter of professional standing during the assessment stage.
   </p>
 
-  <%= f.govuk_check_boxes_fieldset :received, multiple: false, legend: nil do %>
-    <%= f.govuk_check_box :received, true, false, multiple: false, link_errors: true, disabled: @application_form.on_hold?,
-                          label: { text: "The letter of professional standing has been received.", size: "s" } %>
-  <% end %>
+  <%= f.govuk_file_field :attachment, label: { text: "Select a file to upload" }, hint: { text: "You can upload your files in PDF, JPG, PNG or DOCX format. Each file must be no larger than 50MB." }, disabled: @application_form.on_hold? %>
 
   <%= f.govuk_text_area :location_note, label: { text: "Additional information (optional)", size: "m" }, hint: { text: "For example, ticket information or the password needed to open the file." }, disabled: @application_form.on_hold? %>
+
+  <%= f.govuk_check_boxes_fieldset :received, multiple: false, legend: nil do %>
+    <%= f.govuk_check_box :received, true, false, multiple: false, link_errors: true, disabled: @application_form.on_hold?,
+                          label: { text: "I confirm the letter of professional standing has been received.", size: "s" } %>
+  <% end %>
 
   <%= f.govuk_submit disabled: @application_form.on_hold? do %>
     <%= render "shared/assessor_interface/cancel_link" %>

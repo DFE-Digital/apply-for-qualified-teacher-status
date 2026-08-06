@@ -625,8 +625,13 @@ en:
               inclusion: Select whether the teacher requires induction
         assessor_interface/professional_standing_request_location_form:
           attributes:
+            attachment:
+              blank: Select a file to upload
+              encrypted_pdf: The selected file is security protected
+              invalid_content_type: Files must be in PDF, JPG, PNG or DOCX format
+              mismatch_content_type: Files must have matching file type and file name. For example, if the upload is called example.doc, it must be a DOC file.
             received:
-              inclusion: Select whether you received a response about this letter of professional standing
+              inclusion: Select if the letter of professional standing has been received
             expired:
               inclusion: Select whether you want to mark this for review
         assessor_interface/prioritisation_work_history_check_form:

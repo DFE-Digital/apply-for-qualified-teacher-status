@@ -7,6 +7,8 @@ module PageObjects
                 "/professional-standing-request/locate"
 
       section :form, "form" do
+        element :attachment,
+                "#assessor-interface-professional-standing-request-location-form-attachment-field"
         element :received_checkbox, ".govuk-checkboxes__input", visible: false
         element :received_true_radio_item,
                 "#assessor-interface-professional-standing-request-location-form-received-true-field",
