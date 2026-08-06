@@ -16,6 +16,7 @@ RSpec.describe ApplicationFormHelper do
       submitted_at: Date.new(2020, 1, 1),
       given_names: "Given",
       family_name: "Family",
+      verifier: create(:staff),
     )
   end
 
@@ -196,6 +197,25 @@ RSpec.describe ApplicationFormHelper do
             row[:key][:text] == "Reviewer"
           end,
         ).to be_nil
+      end
+    end
+
+    context "include_verifier true" do
+      subject(:summary_rows_with_verifier) do
+        application_form_summary_rows(
+          application_form,
+          current_staff:,
+          include_name: true,
+          include_verifier: true,
+        )
+      end
+
+      it "returns the verifier element" do
+        expect(
+          summary_rows_with_verifier.find do |row|
+            row[:key][:text] == "Verified by"
+          end,
+        ).not_to be_nil
       end
     end
 

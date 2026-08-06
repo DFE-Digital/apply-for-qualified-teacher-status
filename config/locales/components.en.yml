@@ -123,12 +123,14 @@ en:
           ReferenceRequest: Reference verified
         stage_changed: Stage changed
         status_changed: Status changed
+        verification_decision_made: Verification decision made
       description:
         action_required_by_changed: Application requires %{action} action.
         assessor_assigned: "%{assignee_name} is assigned as the assessor."
         email_sent: "%{subject}"
         note_created: "%{text}"
         reviewer_assigned: "%{assignee_name} is assigned as the reviewer."
+        verification_decision_made: "Verification decision made by %{creator_name}"
         requestable_requested:
           ConsentRequest: Consent has been requested.
           FurtherInformationRequest: Further information has been requested.

@@ -146,5 +146,9 @@ FactoryBot.define do
       old_value { ApplicationForm.statuses.keys.sample }
       new_value { ApplicationForm.statuses.keys.sample }
     end
+
+    trait :verification_decision_made do
+      event_type { "verification_decision_made" }
+    end
   end
 end

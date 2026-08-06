@@ -48,6 +48,7 @@
     - requires_preliminary_check
     - requires_private_email_for_referee
     - reviewer_id
+    - verifier_id
     - stage
     - started_with_private_email_for_referee
     - statuses

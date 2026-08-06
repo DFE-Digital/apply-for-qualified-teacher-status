@@ -15,6 +15,7 @@ module ApplicationFormHelper
     current_staff:,
     include_name:,
     include_reviewer: true,
+    include_verifier: false,
     highlight_email: false,
     class_context: nil
   )
@@ -142,6 +143,18 @@ module ApplicationFormHelper
                 href: [:assessor_interface, application_form, :assign_reviewer],
               },
             ],
+          }
+        end
+      ),
+      (
+        if include_verifier
+          {
+            key: {
+              text: I18n.t("application_form.summary.verifier"),
+            },
+            value: {
+              text: application_form.verifier.name,
+            },
           }
         end
       ),

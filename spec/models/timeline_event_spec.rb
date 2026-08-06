@@ -116,6 +116,7 @@ RSpec.describe TimelineEvent do
         reviewer_assigned: "reviewer_assigned",
         stage_changed: "stage_changed",
         status_changed: "status_changed",
+        verification_decision_made: "verification_decision_made",
       ).backed_by_column_of_type(:string)
     end
 

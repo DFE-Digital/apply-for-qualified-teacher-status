@@ -55,6 +55,10 @@ module TimelineEntry
 
     private
 
+    def verification_decision_made_vars
+      { creator_name: creator }
+    end
+
     def status_changed_vars
       {
         old_status:

@@ -14,6 +14,7 @@ class ReviewAssessment
     ActiveRecord::Base.transaction do
       assessment.review!
 
+      AssignApplicationFormVerifier.call(application_form:, verifier: user)
       ApplicationFormStatusUpdater.call(application_form:, user:)
     end
   end

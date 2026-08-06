@@ -24,4 +24,8 @@ RSpec.describe ReviewAssessment do
   it "changes the application form stage" do
     expect { call }.to change(application_form, :stage).to("review")
   end
+
+  it "assigns the verifier" do
+    expect { call }.to change(application_form, :verifier).to(user)
+  end
 end
