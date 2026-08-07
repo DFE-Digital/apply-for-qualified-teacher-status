@@ -160,6 +160,7 @@ RSpec.describe "Assessor pre-assessment tasks", type: :system do
   def when_i_fill_in_the_locate_form
     form = assessor_locate_professional_standing_request_page.form
 
+    form.attachment.attach_file Rails.root.join(file_fixture("upload.pdf"))
     form.received_checkbox.click
     form.note_textarea.fill_in with: "Note."
     form.submit_button.click

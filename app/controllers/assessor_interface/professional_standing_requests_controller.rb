@@ -177,7 +177,7 @@ module AssessorInterface
     def location_form_params
       params.require(
         :assessor_interface_professional_standing_request_location_form,
-      ).permit(:received, :location_note)
+      ).permit(:received, :location_note, :attachment)
     end
 
     def review_form_params
