@@ -16,6 +16,22 @@
     You can confirm whether you are satisfied with the letter of professional standing during the assessment stage.
   </p>
 
+  <% if @application_form.written_statement_document.completed? %>
+    <% upload = @application_form.written_statement_document.uploads.first %>
+    <%= govuk_summary_list do |summary_list|
+      summary_list.with_row do |row|
+        row.with_key(text: "Uploaded file")
+        row.with_value { upload_link_to(upload) }
+      end
+    end %>
+
+    <h2 class="govuk-heading-m">Replace the uploaded file</h2>
+
+    <p class="govuk-body">
+      Upload a new file to replace the one you have already uploaded.
+    </p>
+  <% end %>
+
   <%= f.govuk_file_field :attachment, label: { text: "Select a file to upload" }, hint: { text: "You can upload your files in PDF, JPG, PNG or DOCX format. Each file must be no larger than 50MB." }, disabled: @application_form.on_hold? %>
 
   <%= f.govuk_text_area :location_note, label: { text: "Additional information (optional)", size: "m" }, hint: { text: "For example, ticket information or the password needed to open the file." }, disabled: @application_form.on_hold? %>
