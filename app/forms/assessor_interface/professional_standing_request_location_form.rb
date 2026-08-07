@@ -8,7 +8,7 @@ class AssessorInterface::ProfessionalStandingRequestLocationForm
   validates :requestable, :user, presence: true
 
   attribute :received, :boolean
-  validates :received, inclusion: [true, false]
+  validates :received, inclusion: [true]
 
   attribute :location_note, :string
 
@@ -26,8 +26,6 @@ class AssessorInterface::ProfessionalStandingRequestLocationForm
 
       if received && !requestable.received?
         ReceiveRequestable.call(requestable:, user:)
-      elsif !received && requestable.received?
-        UnreceiveRequestable.call(requestable:, user:)
       end
 
       if requestable.requested? && requestable.reviewed?
