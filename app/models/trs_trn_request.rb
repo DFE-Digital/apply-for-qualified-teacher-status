@@ -6,7 +6,7 @@
 #
 #  id                  :bigint           not null, primary key
 #  potential_duplicate :boolean
-#  state               :string           default("initial"), not null
+#  state               :string           default("pending"), not null
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #  application_form_id :bigint           not null
