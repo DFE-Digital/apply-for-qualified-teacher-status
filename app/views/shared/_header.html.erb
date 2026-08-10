@@ -79,7 +79,7 @@
          href: main_app.support_interface_english_language_providers_path,
          active: request.path.start_with?("/support/english_language_providers")
       ) %>
-      <% service_navigation.with_navigation_item(text: "Sidekiq", href: main_app.support_interface_sidekiq_web_path) %>
+      <% service_navigation.with_navigation_item(text: "Solid Queue", href: main_app.support_interface_mission_control_jobs_path) %>
       <% service_navigation.with_navigation_item(text: "Assessor case management", href: main_app.assessor_interface_root_path) %>
       <% service_navigation.with_navigation_item(text: "Sign out", href: main_app.destroy_staff_session_path) %>
     <% end %>

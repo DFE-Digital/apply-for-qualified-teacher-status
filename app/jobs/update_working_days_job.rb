@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class UpdateWorkingDaysJob < SolidQueueApplicationJob
+class UpdateWorkingDaysJob < ApplicationJob
   def perform
     update_application_forms_since_submission
     update_application_forms_submitted_to_completed

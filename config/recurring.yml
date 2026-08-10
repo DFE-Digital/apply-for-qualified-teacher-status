@@ -1,10 +1,54 @@
 production:
+  analytics_entity_table_check:
+    class: "DfE::Analytics::EntityTableCheckJob"
+    schedule: "0 4 * * *"
+    queue: analytics
   clear_solid_queue_finished_jobs:
     class: "ClearSolidQueueFinishedJobsJob"
     schedule: every hour at minute 12
   destroy_abandoned_draft_application_forms:
     class: "DestroyApplicationFormsJob"
     schedule: "15 1 * * *"
+  expire_consent_requests:
+    class: "ExpireRequestablesJob"
+    args: ["ConsentRequest"]
+    schedule: "0 2 * * *"
+  expire_further_information_requests:
+    class: "ExpireRequestablesJob"
+    args: ["FurtherInformationRequest"]
+    schedule: "12 2 * * *"
+  expire_professional_standing_requests:
+    class: "ExpireRequestablesJob"
+    args: ["ProfessionalStandingRequest"]
+    schedule: "24 2 * * *"
+  expire_qualification_requests:
+    class: "ExpireRequestablesJob"
+    args: ["QualificationRequest"]
+    schedule: "36 2 * * *"
+  expire_reference_requests:
+    class: "ExpireRequestablesJob"
+    args: ["ReferenceRequest"]
+    schedule: "48 2 * * *"
+  expire_prioritisation_reference_requests:
+    class: "ExpireRequestablesJob"
+    args: ["PrioritisationReferenceRequest"]
+    schedule: "48 2 * * *"
+  send_application_form_reminders:
+    class: "SendReminderEmailsJob"
+    args: ["ApplicationForm"]
+    schedule: "0 3 * * *"
+  send_further_information_request_reminders:
+    class: "SendReminderEmailsJob"
+    args: ["FurtherInformationRequest"]
+    schedule: "20 3 * * *"
+  send_reference_request_reminders:
+    class: "SendReminderEmailsJob"
+    args: ["ReferenceRequest"]
+    schedule: "40 3 * * *"
+  send_prioritisation_reference_request_reminders:
+    class: "SendReminderEmailsJob"
+    args: ["PrioritisationReferenceRequest"]
+    schedule: "40 3 * * *"
   trim_sessions_job:
     class: "TrimSessionsJob"
     schedule: "0 1 * * *"
