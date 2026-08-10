@@ -103,6 +103,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_29_105059) do
     t.boolean "teaching_qualification_part_of_degree"
     t.jsonb "trs_match", default: {}
     t.datetime "updated_at", null: false
+    t.bigint "verifier_id"
     t.datetime "withdrawn_at"
     t.string "work_history_status", default: "not_started", null: false
     t.integer "working_days_between_submitted_and_completed"
@@ -121,6 +122,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_29_105059) do
     t.index ["reviewer_id"], name: "index_application_forms_on_reviewer_id"
     t.index ["stage"], name: "index_application_forms_on_stage"
     t.index ["teacher_id"], name: "index_application_forms_on_teacher_id"
+    t.index ["verifier_id"], name: "index_application_forms_on_verifier_id"
   end
 
   create_table "application_forms_suitability_records", id: false, force: :cascade do |t|
@@ -898,6 +900,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_29_105059) do
   add_foreign_key "application_forms", "regions"
   add_foreign_key "application_forms", "staff", column: "assessor_id"
   add_foreign_key "application_forms", "staff", column: "reviewer_id"
+  add_foreign_key "application_forms", "staff", column: "verifier_id"
   add_foreign_key "application_forms", "teachers"
   add_foreign_key "application_holds", "application_forms"
   add_foreign_key "assessment_sections", "assessments"
