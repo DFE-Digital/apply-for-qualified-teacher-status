@@ -48,11 +48,7 @@
                 row.with_cell { govuk_link_to application_form.reference, [:assessor_interface, application_form] }
                 row.with_cell { CountryName.from_region(application_form.region) }
                 row.with_cell do
-                  if params[:sla] == "40"
-                    govuk_tag(text: application_form.working_days_between_submitted_and_today, colour: @view_object.sla_completed_prioritised_tag_colour(application_form) )
-                  else
-                    govuk_tag(text: application_form.working_days_between_submitted_and_today, colour: @view_object.sla_start_prioritisation_checks_tag_colour(application_form) )
-                  end
+                  govuk_tag(text: application_form.working_days_between_submitted_and_today, colour: @view_object.sla_working_day_tag_colour(application_form) )
                 end
                 row.with_cell do
                   render(

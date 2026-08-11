@@ -4,11 +4,9 @@ class AssessorInterface::ServiceLevelAgreementIndexViewObject
   include ActionView::Helpers::FormOptionsHelper
   include Pagy::Backend
 
-  WORKING_DAYS_TO_START_PRIORITISATION_CHECKS = 10
-  WORKING_DAYS_NEARING_START_PRIORITISATION_CHECKS_DEADLINE = 8
-
-  WORKING_DAYS_TO_FINISH_ASSESSMENT_FOR_PRIORITISED = 40
-  WORKING_DAYS_NEARING_FINISH_ASSESSMENT_FOR_PRIORITISED_DEADLINE = 35
+  WORKING_DAYS_FOR_EIGHTY_DAY = 80
+  WORKING_DAYS_FOR_FOURTY_DAY = 40
+  WORKING_DAYS_FOR_TEN_DAY = 10
 
   def initialize(params:)
     @params = params
@@ -22,41 +20,12 @@ class AssessorInterface::ServiceLevelAgreementIndexViewObject
     application_forms_with_pagy.last
   end
 
-  def sla_start_prioritisation_checks_tag_colour(application_form)
-    return if application_form.assessment.nil?
-
-    if application_form.assessment.started_at.present? ||
-         application_form.assessment.prioritisation_work_history_checks.empty?
-      return
-    end
-
-    if application_form.working_days_between_submitted_and_today.to_i >
-         WORKING_DAYS_TO_START_PRIORITISATION_CHECKS
+  def sla_working_day_tag_colour(application_form)
+    if application_form.working_days_between_submitted_and_today.to_i >=
+         breached_sla_working_day
       "red"
-    elsif application_form.working_days_between_submitted_and_today.to_i >=
-          WORKING_DAYS_NEARING_START_PRIORITISATION_CHECKS_DEADLINE
-      "yellow"
     else
-      "green"
-    end
-  end
-
-  def sla_completed_prioritised_tag_colour(application_form)
-    return if application_form.assessment.nil?
-
-    if !application_form.assessment.prioritised? ||
-         application_form.assessment.verification_started_at.present?
-      return
-    end
-
-    if application_form.working_days_between_submitted_and_today.to_i >
-         WORKING_DAYS_TO_FINISH_ASSESSMENT_FOR_PRIORITISED
-      "red"
-    elsif application_form.working_days_between_submitted_and_today.to_i >=
-          WORKING_DAYS_NEARING_FINISH_ASSESSMENT_FOR_PRIORITISED_DEADLINE
       "yellow"
-    else
-      "green"
     end
   end
 
@@ -83,6 +52,16 @@ class AssessorInterface::ServiceLevelAgreementIndexViewObject
       Filters::SLA::FourtyDay
     else
       Filters::SLA::TenDay
+    end
+  end
+
+  def breached_sla_working_day
+    if params[:sla] == "80"
+      WORKING_DAYS_FOR_EIGHTY_DAY
+    elsif params[:sla] == "40"
+      WORKING_DAYS_FOR_FOURTY_DAY
+    else
+      WORKING_DAYS_FOR_TEN_DAY
     end
   end
 
