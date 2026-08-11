@@ -13,10 +13,8 @@ class AssessorInterface::ProfessionalStandingRequestLocationForm
   attribute :location_note, :string
 
   attribute :attachment
-  validates :attachment,
-            file_upload: true,
-            presence: true,
-            unless: -> { document.completed? }
+  validates :attachment, file_upload: true
+  validates :attachment, presence: true, unless: -> { document.completed? }
 
   def save
     return false if invalid?

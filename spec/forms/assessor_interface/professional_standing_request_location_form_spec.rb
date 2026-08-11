@@ -40,6 +40,14 @@ RSpec.describe AssessorInterface::ProfessionalStandingRequestLocationForm,
         end
 
         it { is_expected.to be_valid }
+
+        context "with a new invalid upload" do
+          let(:attachment) do
+            fixture_file_upload("upload.txt", "application/text")
+          end
+
+          it { is_expected.not_to be_valid }
+        end
       end
     end
 
