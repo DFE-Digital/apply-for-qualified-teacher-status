@@ -177,57 +177,51 @@ RSpec.describe AssessorInterface::ServiceLevelAgreementIndexViewObject do
       view_object.application_forms_records
     end
 
-    it "returns all application forms related to the prioritisation checks 10 day SLA" do
-      expect(subject).to contain_exactly(
-        application_form_with_prioritisation_checks_not_started_within_sla,
-        application_form_with_prioritisation_checks_nearing_sla,
-        application_form_with_prioritisation_checks_breached_sla,
-      )
+    before do
+      allow(Filters::SLA::TenDay).to receive(:apply).and_return(ApplicationForm.all)
+      allow(Filters::SLA::FourtyDay).to receive(:apply).and_return(ApplicationForm.all)
+      allow(Filters::SLA::EightyDay).to receive(:apply).and_return(ApplicationForm.all)
     end
 
-    context "when the params includes tab for 40 day SLA" do
-      let(:params) { { tab: "40" } }
+    context "with no SLA param" do
+      let(:params) { {} }
 
-      it "returns all prioritised application forms related to the 40 day SLA" do
-        expect(subject).to contain_exactly(
-          application_form_prioritised_incomplete_within_sla,
-          application_form_prioritised_breached_sla,
-          application_form_prioritised_nearing_sla,
-        )
+      it "applies the ten-day filter" do
+        application_forms_records
+
+        expect(Filters::SLA::TenDay).to have_received(:apply).with(scope: ApplicationForm, params:)
       end
     end
-  end
 
-  describe "#breached_sla_for_starting_prioritisation_checks_count" do
-    subject(:breached_sla_for_starting_prioritisation_checks_count) do
-      view_object.breached_sla_for_starting_prioritisation_checks_count
+    context "when sla in params is 80" do
+      let(:params) { { sla: "80" } }
+
+      it "applies the eighty-day filter" do
+        application_forms_records
+
+        expect(Filters::SLA::EightyDay).to have_received(:apply).with(scope: ApplicationForm, params:)
+      end
     end
 
-    it { is_expected.to eq(1) }
-  end
+    context "when sla in params is 40" do
+      let(:params) { { sla: "40" } }
 
-  describe "#nearing_sla_for_starting_prioritisation_checks_count" do
-    subject(:nearing_sla_for_starting_prioritisation_checks_count) do
-      view_object.nearing_sla_for_starting_prioritisation_checks_count
+      it "applies the forty-day filter" do
+        application_forms_records
+
+        expect(Filters::SLA::FourtyDay).to have_received(:apply).with(scope: ApplicationForm, params:)
+      end
     end
 
-    it { is_expected.to eq(1) }
-  end
+    context "when sla in params is 10" do
+      let(:params) { { sla: "10" } }
 
-  describe "#breached_sla_for_completing_prioritised_applications_count" do
-    subject(:breached_sla_for_completing_prioritised_applications_count) do
-      view_object.breached_sla_for_completing_prioritised_applications_count
+      it "applies the ten-day filter" do
+        application_forms_records
+
+        expect(Filters::SLA::TenDay).to have_received(:apply).with(scope: ApplicationForm, params:)
+      end
     end
-
-    it { is_expected.to eq(1) }
-  end
-
-  describe "#nearing_sla_for_completing_prioritised_applications_count" do
-    subject(:nearing_sla_for_completing_prioritised_applications_count) do
-      view_object.nearing_sla_for_completing_prioritised_applications_count
-    end
-
-    it { is_expected.to eq(1) }
   end
 
   describe "#sla_start_prioritisation_checks_tag_colour" do

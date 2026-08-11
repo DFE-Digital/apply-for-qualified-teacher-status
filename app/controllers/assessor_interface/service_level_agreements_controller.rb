@@ -9,4 +9,7 @@ class AssessorInterface::ServiceLevelAgreementsController < AssessorInterface::B
 
     render layout: "full_from_desktop"
   end
+
+  def totals
+  end
 end

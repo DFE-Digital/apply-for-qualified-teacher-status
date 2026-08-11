@@ -22,34 +22,6 @@ class AssessorInterface::ServiceLevelAgreementIndexViewObject
     application_forms_with_pagy.last
   end
 
-  def breached_sla_for_starting_prioritisation_checks_count
-    application_forms_with_prioritisation_checks_not_started.where(
-      "working_days_between_submitted_and_today > ?",
-      WORKING_DAYS_TO_START_PRIORITISATION_CHECKS,
-    ).count
-  end
-
-  def nearing_sla_for_starting_prioritisation_checks_count
-    application_forms_with_prioritisation_checks_not_started.where(
-      working_days_between_submitted_and_today:
-        WORKING_DAYS_NEARING_START_PRIORITISATION_CHECKS_DEADLINE..WORKING_DAYS_TO_START_PRIORITISATION_CHECKS,
-    ).count
-  end
-
-  def breached_sla_for_completing_prioritised_applications_count
-    application_forms_prioritised_but_assessment_not_completed.where(
-      "working_days_between_submitted_and_today > ?",
-      WORKING_DAYS_TO_FINISH_ASSESSMENT_FOR_PRIORITISED,
-    ).count
-  end
-
-  def nearing_sla_for_completing_prioritised_applications_count
-    application_forms_prioritised_but_assessment_not_completed.where(
-      working_days_between_submitted_and_today:
-        WORKING_DAYS_NEARING_FINISH_ASSESSMENT_FOR_PRIORITISED_DEADLINE..WORKING_DAYS_TO_FINISH_ASSESSMENT_FOR_PRIORITISED,
-    ).count
-  end
-
   def sla_start_prioritisation_checks_tag_colour(application_form)
     return if application_form.assessment.nil?
 
@@ -101,33 +73,17 @@ class AssessorInterface::ServiceLevelAgreementIndexViewObject
 
   def application_forms_with_filter
     @application_forms_with_filter ||=
-      if params[:tab] == "40"
-        application_forms_prioritised_but_assessment_not_completed
-      else
-        application_forms_with_prioritisation_checks_not_started
-      end
+      sla_base_filter.apply(scope: ApplicationForm, params: params)
   end
 
-  def application_forms_with_prioritisation_checks_not_started
-    ApplicationForm
-      .joins(assessment: :prioritisation_work_history_checks)
-      .where(assessment: { started_at: nil }, withdrawn_at: nil)
-      .distinct
-  end
-
-  def application_forms_prioritised_but_assessment_not_completed
-    ApplicationForm
-      .joins(:assessment)
-      .where(
-        awarded_at: nil,
-        declined_at: nil,
-        withdrawn_at: nil,
-        assessment: {
-          verification_started_at: nil,
-          prioritised: true,
-        },
-      )
-      .distinct
+  def sla_base_filter
+    if params[:sla] == "80"
+      Filters::SLA::EightyDay
+    elsif params[:sla] == "40"
+      Filters::SLA::FourtyDay
+    else
+      Filters::SLA::TenDay
+    end
   end
 
   attr_reader :params
