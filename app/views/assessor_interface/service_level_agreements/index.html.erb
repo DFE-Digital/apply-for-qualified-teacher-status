@@ -56,7 +56,7 @@
     </div>
 
     <%= f.govuk_submit t(".filters.apply") do %>
-      <a href="<%= filters_clear_assessor_interface_service_level_agreements_path %>" class="govuk-link">
+      <a href="<%= filters_clear_assessor_interface_service_level_agreements_path(sla: params[:sla]) %>" class="govuk-link">
         <%= t(".filters.clear") %>
         <%= govuk_visually_hidden(t(".filters.of_filter")) %>
       </a>

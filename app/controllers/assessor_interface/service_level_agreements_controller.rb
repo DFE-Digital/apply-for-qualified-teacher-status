@@ -25,7 +25,7 @@ class AssessorInterface::ServiceLevelAgreementsController < AssessorInterface::B
     session[:sla_filter_params] = {}
 
     redirect_to assessor_interface_service_level_agreements_path(
-                  sla: session[:sla_filter_params][:sla],
+                  sla: params[:sla],
                 )
   end
 
