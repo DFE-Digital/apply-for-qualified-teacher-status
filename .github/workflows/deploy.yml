@@ -183,6 +183,13 @@ jobs:
           azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
 
+      - name: Set Airbyte
+        if: (contains(github.event.pull_request.labels.*.name, 'airbyte'))
+        run: |
+          echo "TF_VAR_pg_airbyte_enabled=true" >> $GITHUB_ENV
+          echo "TF_VAR_airbyte_enabled=true" >> $GITHUB_ENV
+          echo "TF_VAR_connection_status=active" >> $GITHUB_ENV
+
       - name: Post sticky pull request comment
         if: github.event_name == 'pull_request'
         uses: marocchino/sticky-pull-request-comment@5770ad5eb8f42dd2c4f34da00c94c5381e49af88 # Pinned at v3.0.5

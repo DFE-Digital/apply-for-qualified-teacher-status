@@ -25,7 +25,7 @@ module "application_configuration" {
   })
 
   secret_key_vault_short = "app"
-  secret_variables = {
+  secret_variables = merge({
     DATABASE_URL = module.postgres.url
     REDIS_URL    = module.redis.url
 
@@ -34,7 +34,14 @@ module "application_configuration" {
     AZURE_STORAGE_CONTAINER    = azurerm_storage_container.uploads.name
 
     GOOGLE_CLOUD_CREDENTIALS = var.bigquery_federated_auth ? module.dfe_analytics[0].google_cloud_credentials : null
-  }
+    },
+    {
+      AIRBYTE_CONFIGURATION = var.airbyte_enabled ? jsonencode({
+        SOURCE_ID      = module.airbyte[0].airbyte_source_id
+        DESTINATION_ID = module.airbyte[0].airbyte_destination_id
+        CONNECTION_ID  = module.airbyte[0].airbyte_connection_id
+      }) : null
+  })
 }
 
 module "web_application" {
