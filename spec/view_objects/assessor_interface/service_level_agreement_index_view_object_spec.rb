@@ -3,9 +3,10 @@
 require "rails_helper"
 
 RSpec.describe AssessorInterface::ServiceLevelAgreementIndexViewObject do
-  subject(:view_object) { described_class.new(params:) }
+  subject(:view_object) { described_class.new(params:, session:) }
 
   let(:params) { {} }
+  let(:session) { {} }
 
   describe "#application_forms_pagy" do
     subject(:application_forms_pagy) { view_object.application_forms_pagy }
@@ -54,7 +55,8 @@ RSpec.describe AssessorInterface::ServiceLevelAgreementIndexViewObject do
 
         expect(Filters::SLA::EightyDay).to have_received(:apply).with(
           scope: ApplicationForm,
-          params:,
+          params: {
+          },
         )
       end
     end
@@ -67,7 +69,8 @@ RSpec.describe AssessorInterface::ServiceLevelAgreementIndexViewObject do
 
         expect(Filters::SLA::FourtyDay).to have_received(:apply).with(
           scope: ApplicationForm,
-          params:,
+          params: {
+          },
         )
       end
     end
@@ -80,7 +83,8 @@ RSpec.describe AssessorInterface::ServiceLevelAgreementIndexViewObject do
 
         expect(Filters::SLA::TenDay).to have_received(:apply).with(
           scope: ApplicationForm,
-          params:,
+          params: {
+          },
         )
       end
     end
@@ -189,6 +193,36 @@ RSpec.describe AssessorInterface::ServiceLevelAgreementIndexViewObject do
 
         it { is_expected.to eq("yellow") }
       end
+    end
+  end
+
+  describe "#breach_statuses_options" do
+    subject(:breach_statuses_options) { view_object.breach_statuses_options }
+
+    it do
+      expect(subject).to eq(
+        [
+          OpenStruct.new(id: "nearing", name: "Nearing"),
+          OpenStruct.new(id: "breached", name: "Breached"),
+        ],
+      )
+    end
+  end
+
+  describe "#country_groupings_options" do
+    subject(:country_groupings_options) do
+      view_object.country_groupings_options
+    end
+
+    it do
+      expect(subject).to eq(
+        [
+          OpenStruct.new(id: "uk_and_gibraltar", name: "UK & Gibraltar"),
+          OpenStruct.new(id: "eu", name: "EU"),
+          OpenStruct.new(id: "efta", name: "EFTA"),
+          OpenStruct.new(id: "rest_of_world", name: "Rest of the world"),
+        ],
+      )
     end
   end
 end

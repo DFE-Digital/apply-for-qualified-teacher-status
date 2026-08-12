@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
 class AssessorInterface::ServiceLevelAgreementIndexViewObject
-  include ActionView::Helpers::FormOptionsHelper
   include Pagy::Backend
 
   WORKING_DAYS_FOR_EIGHTY_DAY = 80
   WORKING_DAYS_FOR_FOURTY_DAY = 40
   WORKING_DAYS_FOR_TEN_DAY = 10
 
-  def initialize(params:)
+  def initialize(params:, session:)
     @params = params
+    @session = session
   end
 
   def application_forms_pagy
@@ -27,6 +27,26 @@ class AssessorInterface::ServiceLevelAgreementIndexViewObject
     else
       "yellow"
     end
+  end
+
+  def breach_statuses_options
+    [
+      OpenStruct.new(id: "nearing", name: "Nearing"),
+      OpenStruct.new(id: "breached", name: "Breached"),
+    ]
+  end
+
+  def country_groupings_options
+    [
+      OpenStruct.new(id: "uk_and_gibraltar", name: "UK & Gibraltar"),
+      OpenStruct.new(id: "eu", name: "EU"),
+      OpenStruct.new(id: "efta", name: "EFTA"),
+      OpenStruct.new(id: "rest_of_world", name: "Rest of the world"),
+    ]
+  end
+
+  def filter_form
+    @filter_form ||= AssessorInterface::SLAFilterForm.new(filter_params)
   end
 
   private
@@ -65,5 +85,11 @@ class AssessorInterface::ServiceLevelAgreementIndexViewObject
     end
   end
 
-  attr_reader :params
+  def filter_params
+    (session[:sla_filter_params] || {}).merge(
+      { sla: params[:sla] },
+    ).with_indifferent_access
+  end
+
+  attr_reader :params, :session
 end

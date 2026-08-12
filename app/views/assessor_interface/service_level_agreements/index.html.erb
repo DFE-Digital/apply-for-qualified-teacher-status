@@ -11,6 +11,58 @@
   </li>
 </ul>
 
+<div class="app-application-forms__filters govuk-!-margin-bottom-8">
+  <h2 class="govuk-heading-m"><%= t(".filters.title") %></h2>
+
+  <%= form_with model: @view_object.filter_form, url: filters_apply_assessor_interface_service_level_agreements_path, method: :post do |f| %>
+    <%= f.hidden_field :sla, value: params[:sla] %>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-third">
+        <section class="app-checkbox-filter app-checkbox-filter--enhanced">
+          <div class="app-checkbox-filter__container">
+            <div class="app-checkbox-filter__container-inner">
+              <%= f.govuk_check_boxes_fieldset :breach_statuses, legend: { size: "s" }, small: true do %>
+                <% @view_object.breach_statuses_options.each do |option| %>
+                  <%= f.govuk_check_box :breach_statuses, option.id, label: { text: option.name }, checked: @view_object.filter_form.breach_statuses&.include?(option.id.to_s) %>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="govuk-grid-column-one-third">
+        <section class="app-checkbox-filter app-checkbox-filter--enhanced">
+          <div class="app-checkbox-filter__container">
+            <div class="app-checkbox-filter__container-inner">
+              <%= f.govuk_check_boxes_fieldset :country_groupings, legend: { size: "s" }, small: true do %>
+                <% @view_object.country_groupings_options.each do |option| %>
+                  <%= f.govuk_check_box :country_groupings, option.id, label: { text: option.name }, checked: @view_object.filter_form.country_groupings&.include?(option.id.to_s) %>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="govuk-grid-column-one-third">
+        <section>
+          <%= f.govuk_check_boxes_fieldset :prioritised, legend: nil, multiple: false, small: true do %>
+            <%= f.govuk_check_box :prioritised, :true, multiple: false, label: { text: "Show only prioritised applications" }, checked: @view_object.filter_form.prioritised == "true" %>
+          <% end %>
+        </section>
+      </div>
+    </div>
+
+    <%= f.govuk_submit t(".filters.apply") do %>
+      <a href="<%= filters_clear_assessor_interface_service_level_agreements_path %>" class="govuk-link">
+        <%= t(".filters.clear") %>
+        <%= govuk_visually_hidden(t(".filters.of_filter")) %>
+      </a>
+    <% end %>
+  <% end %>
+</div>
 
 <div class="govuk-tabs" data-module="govuk-tabs">
   <h2 class="govuk-tabs__title">

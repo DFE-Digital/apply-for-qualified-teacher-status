@@ -347,6 +347,15 @@ en:
       invalid_work_duration:
         title: Qualification cannot be assigned as the teaching qualification
 
+    service_level_agreements:
+      index:
+        filters:
+          title: Filters
+          apply: Apply filters
+          clear: Clear selection
+        results:
+          empty: All applications are within SLA.
+
   activemodel:
     errors:
       models:
