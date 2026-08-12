@@ -63,7 +63,16 @@ class AssessorInterface::ServiceLevelAgreementIndexViewObject
         ::Filters::SLA::CountryGroupings,
         ::Filters::Flags,
       ].reduce(
-        sla_base_filter.apply(scope: ApplicationForm, params: {}),
+        sla_base_filter.apply(
+          scope:
+            ApplicationForm.includes(
+              :assessment,
+              :active_application_hold,
+              region: :country,
+            ),
+          params: {
+          },
+        ),
       ) { |scope, filter| filter.apply(scope:, params: filter_params) }
   end
 

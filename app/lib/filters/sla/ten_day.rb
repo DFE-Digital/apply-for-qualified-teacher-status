@@ -7,7 +7,6 @@ class Filters::SLA::TenDay < Filters::Base
   def apply
     scope
       .joins(assessment: :prioritisation_work_history_checks)
-      .includes(:assessment, region: :country)
       .where(assessment: { started_at: nil }, withdrawn_at: nil)
       .where(
         "working_days_between_submitted_and_today >= ?",

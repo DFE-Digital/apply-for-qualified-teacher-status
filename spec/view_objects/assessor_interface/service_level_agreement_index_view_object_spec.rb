@@ -24,24 +24,16 @@ RSpec.describe AssessorInterface::ServiceLevelAgreementIndexViewObject do
       view_object.application_forms_records
     end
 
-    before do
-      allow(Filters::SLA::TenDay).to receive(:apply).and_return(
-        ApplicationForm.all,
-      )
-      allow(Filters::SLA::FourtyDay).to receive(:apply).and_return(
-        ApplicationForm.all,
-      )
-      allow(Filters::SLA::EightyDay).to receive(:apply).and_return(
-        ApplicationForm.all,
-      )
+    let(:scope) { ApplicationForm.all }
 
-      allow(Filters::SLA::BreachStatuses).to receive(:apply).and_return(
-        ApplicationForm.all,
-      )
-      allow(Filters::SLA::CountryGroupings).to receive(:apply).and_return(
-        ApplicationForm.all,
-      )
-      allow(Filters::Flags).to receive(:apply).and_return(ApplicationForm.all)
+    before do
+      allow(Filters::SLA::TenDay).to receive(:apply).and_return(scope)
+      allow(Filters::SLA::FourtyDay).to receive(:apply).and_return(scope)
+      allow(Filters::SLA::EightyDay).to receive(:apply).and_return(scope)
+
+      allow(Filters::SLA::BreachStatuses).to receive(:apply).and_return(scope)
+      allow(Filters::SLA::CountryGroupings).to receive(:apply).and_return(scope)
+      allow(Filters::Flags).to receive(:apply).and_return(scope)
     end
 
     context "with no SLA param" do
@@ -49,23 +41,23 @@ RSpec.describe AssessorInterface::ServiceLevelAgreementIndexViewObject do
         application_forms_records
 
         expect(Filters::SLA::TenDay).to have_received(:apply).with(
-          scope: ApplicationForm,
+          scope:,
           params:,
         )
         expect(Filters::SLA::BreachStatuses).to have_received(:apply).with(
-          scope: ApplicationForm.all,
+          scope:,
           params: {
             sla: nil,
           },
         )
         expect(Filters::SLA::CountryGroupings).to have_received(:apply).with(
-          scope: ApplicationForm.all,
+          scope:,
           params: {
             sla: nil,
           },
         )
         expect(Filters::Flags).to have_received(:apply).with(
-          scope: ApplicationForm.all,
+          scope:,
           params: {
             sla: nil,
           },
@@ -80,22 +72,19 @@ RSpec.describe AssessorInterface::ServiceLevelAgreementIndexViewObject do
         application_forms_records
 
         expect(Filters::SLA::EightyDay).to have_received(:apply).with(
-          scope: ApplicationForm,
+          scope:,
           params: {
           },
         )
         expect(Filters::SLA::BreachStatuses).to have_received(:apply).with(
-          scope: ApplicationForm.all,
+          scope:,
           params:,
         )
         expect(Filters::SLA::CountryGroupings).to have_received(:apply).with(
-          scope: ApplicationForm.all,
+          scope:,
           params:,
         )
-        expect(Filters::Flags).to have_received(:apply).with(
-          scope: ApplicationForm.all,
-          params:,
-        )
+        expect(Filters::Flags).to have_received(:apply).with(scope:, params:)
       end
     end
 
@@ -106,22 +95,19 @@ RSpec.describe AssessorInterface::ServiceLevelAgreementIndexViewObject do
         application_forms_records
 
         expect(Filters::SLA::FourtyDay).to have_received(:apply).with(
-          scope: ApplicationForm,
+          scope:,
           params: {
           },
         )
         expect(Filters::SLA::BreachStatuses).to have_received(:apply).with(
-          scope: ApplicationForm.all,
+          scope:,
           params:,
         )
         expect(Filters::SLA::CountryGroupings).to have_received(:apply).with(
-          scope: ApplicationForm.all,
+          scope:,
           params:,
         )
-        expect(Filters::Flags).to have_received(:apply).with(
-          scope: ApplicationForm.all,
-          params:,
-        )
+        expect(Filters::Flags).to have_received(:apply).with(scope:, params:)
       end
     end
 
@@ -132,22 +118,19 @@ RSpec.describe AssessorInterface::ServiceLevelAgreementIndexViewObject do
         application_forms_records
 
         expect(Filters::SLA::TenDay).to have_received(:apply).with(
-          scope: ApplicationForm,
+          scope:,
           params: {
           },
         )
         expect(Filters::SLA::BreachStatuses).to have_received(:apply).with(
-          scope: ApplicationForm.all,
+          scope:,
           params:,
         )
         expect(Filters::SLA::CountryGroupings).to have_received(:apply).with(
-          scope: ApplicationForm.all,
+          scope:,
           params:,
         )
-        expect(Filters::Flags).to have_received(:apply).with(
-          scope: ApplicationForm.all,
-          params:,
-        )
+        expect(Filters::Flags).to have_received(:apply).with(scope:, params:)
       end
     end
   end

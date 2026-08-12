@@ -19,30 +19,22 @@
 
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-one-third">
-        <section class="app-checkbox-filter app-checkbox-filter--enhanced">
-          <div class="app-checkbox-filter__container">
-            <div class="app-checkbox-filter__container-inner">
-              <%= f.govuk_check_boxes_fieldset :breach_statuses, legend: { size: "s" }, small: true do %>
-                <% @view_object.breach_statuses_options.each do |option| %>
-                  <%= f.govuk_check_box :breach_statuses, option.id, label: { text: option.name }, checked: @view_object.filter_form.breach_statuses&.include?(option.id.to_s) %>
-                <% end %>
-              <% end %>
-            </div>
-          </div>
+        <section>
+          <%= f.govuk_check_boxes_fieldset :breach_statuses, legend: { size: "s" }, small: true do %>
+            <% @view_object.breach_statuses_options.each do |option| %>
+              <%= f.govuk_check_box :breach_statuses, option.id, label: { text: option.name }, checked: @view_object.filter_form.breach_statuses&.include?(option.id.to_s) %>
+            <% end %>
+          <% end %>
         </section>
       </div>
 
       <div class="govuk-grid-column-one-third">
-        <section class="app-checkbox-filter app-checkbox-filter--enhanced">
-          <div class="app-checkbox-filter__container">
-            <div class="app-checkbox-filter__container-inner">
-              <%= f.govuk_check_boxes_fieldset :country_groupings, legend: { size: "s" }, small: true do %>
-                <% @view_object.country_groupings_options.each do |option| %>
-                  <%= f.govuk_check_box :country_groupings, option.id, label: { text: option.name }, checked: @view_object.filter_form.country_groupings&.include?(option.id.to_s) %>
-                <% end %>
-              <% end %>
-            </div>
-          </div>
+        <section>
+          <%= f.govuk_check_boxes_fieldset :country_groupings, legend: { size: "s" }, small: true do %>
+            <% @view_object.country_groupings_options.each do |option| %>
+              <%= f.govuk_check_box :country_groupings, option.id, label: { text: option.name }, checked: @view_object.filter_form.country_groupings&.include?(option.id.to_s) %>
+            <% end %>
+          <% end %>
         </section>
       </div>
 
@@ -82,14 +74,15 @@
 
   <div class="govuk-tabs__panel">
     <% if (records = @view_object.application_forms_records).present? %>
-      <h2 class="govuk-heading-m"><%= @view_object.application_forms_pagy.count %> application forms</h2>
+      <h2 class="govuk-heading-m"><%= @view_object.application_forms_pagy.count %> applications</h2>
       <%=
         govuk_table(classes: "application-forms-sla") do |table|
           table.with_head do |head|
             head.with_row do |row|
               row.with_cell(header: true, text: "Reference")
-              row.with_cell(header: true, text: "Country/Region")
-              row.with_cell(header: true, text: "Working days since submission")
+              row.with_cell(header: true, text: "Country")
+              row.with_cell(header: true, text: "Days since submission")
+              row.with_cell(header: true, text: "Flagged as")
               row.with_cell(header: true, text: "Status")
             end
           end
@@ -101,6 +94,13 @@
                 row.with_cell { CountryName.from_region(application_form.region) }
                 row.with_cell do
                   govuk_tag(text: application_form.working_days_between_submitted_and_today, colour: @view_object.sla_working_day_tag_colour(application_form) )
+                end
+                row.with_cell do
+                  flags = []
+                  flags << "On hold" if application_form.on_hold?
+                  flags << "Prioritised" if application_form.assessment.prioritised?
+
+                  safe_join(flags, tag.br)
                 end
                 row.with_cell do
                   render(
