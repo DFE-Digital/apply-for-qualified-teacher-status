@@ -552,6 +552,34 @@ module PageHelpers
       PageObjects::SupportInterface::EnglishLanguageProvidersIndex.new
   end
 
+  def support_countries_index_page
+    @support_countries_index_page ||=
+      PageObjects::SupportInterface::CountriesIndex.new
+  end
+
+  def support_new_country_page
+    @support_new_country_page ||= PageObjects::SupportInterface::NewCountry.new
+  end
+
+  def support_edit_country_page
+    @support_edit_country_page ||=
+      PageObjects::SupportInterface::EditCountry.new
+  end
+
+  def support_edit_region_page
+    @support_edit_region_page ||= PageObjects::SupportInterface::EditRegion.new
+  end
+
+  def support_country_preview_page
+    @support_country_preview_page ||=
+      PageObjects::SupportInterface::CountryPreview.new
+  end
+
+  def support_region_preview_page
+    @support_region_preview_page ||=
+      PageObjects::SupportInterface::RegionPreview.new
+  end
+
   def staff_signed_out_page
     @staff_signed_out_page ||= PageObjects::Staff::SignedOut.new
   end
