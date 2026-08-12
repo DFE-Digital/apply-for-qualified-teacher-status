@@ -34,6 +34,14 @@ RSpec.describe AssessorInterface::ServiceLevelAgreementIndexViewObject do
       allow(Filters::SLA::EightyDay).to receive(:apply).and_return(
         ApplicationForm.all,
       )
+
+      allow(Filters::SLA::BreachStatuses).to receive(:apply).and_return(
+        ApplicationForm.all,
+      )
+      allow(Filters::SLA::CountryGroupings).to receive(:apply).and_return(
+        ApplicationForm.all,
+      )
+      allow(Filters::Flags).to receive(:apply).and_return(ApplicationForm.all)
     end
 
     context "with no SLA param" do
@@ -43,6 +51,24 @@ RSpec.describe AssessorInterface::ServiceLevelAgreementIndexViewObject do
         expect(Filters::SLA::TenDay).to have_received(:apply).with(
           scope: ApplicationForm,
           params:,
+        )
+        expect(Filters::SLA::BreachStatuses).to have_received(:apply).with(
+          scope: ApplicationForm.all,
+          params: {
+            sla: nil,
+          },
+        )
+        expect(Filters::SLA::CountryGroupings).to have_received(:apply).with(
+          scope: ApplicationForm.all,
+          params: {
+            sla: nil,
+          },
+        )
+        expect(Filters::Flags).to have_received(:apply).with(
+          scope: ApplicationForm.all,
+          params: {
+            sla: nil,
+          },
         )
       end
     end
@@ -58,6 +84,18 @@ RSpec.describe AssessorInterface::ServiceLevelAgreementIndexViewObject do
           params: {
           },
         )
+        expect(Filters::SLA::BreachStatuses).to have_received(:apply).with(
+          scope: ApplicationForm.all,
+          params:,
+        )
+        expect(Filters::SLA::CountryGroupings).to have_received(:apply).with(
+          scope: ApplicationForm.all,
+          params:,
+        )
+        expect(Filters::Flags).to have_received(:apply).with(
+          scope: ApplicationForm.all,
+          params:,
+        )
       end
     end
 
@@ -72,6 +110,18 @@ RSpec.describe AssessorInterface::ServiceLevelAgreementIndexViewObject do
           params: {
           },
         )
+        expect(Filters::SLA::BreachStatuses).to have_received(:apply).with(
+          scope: ApplicationForm.all,
+          params:,
+        )
+        expect(Filters::SLA::CountryGroupings).to have_received(:apply).with(
+          scope: ApplicationForm.all,
+          params:,
+        )
+        expect(Filters::Flags).to have_received(:apply).with(
+          scope: ApplicationForm.all,
+          params:,
+        )
       end
     end
 
@@ -85,6 +135,18 @@ RSpec.describe AssessorInterface::ServiceLevelAgreementIndexViewObject do
           scope: ApplicationForm,
           params: {
           },
+        )
+        expect(Filters::SLA::BreachStatuses).to have_received(:apply).with(
+          scope: ApplicationForm.all,
+          params:,
+        )
+        expect(Filters::SLA::CountryGroupings).to have_received(:apply).with(
+          scope: ApplicationForm.all,
+          params:,
+        )
+        expect(Filters::Flags).to have_received(:apply).with(
+          scope: ApplicationForm.all,
+          params:,
         )
       end
     end

@@ -3,10 +3,6 @@
 class AssessorInterface::ServiceLevelAgreementIndexViewObject
   include Pagy::Backend
 
-  WORKING_DAYS_FOR_EIGHTY_DAY = 80
-  WORKING_DAYS_FOR_FOURTY_DAY = 40
-  WORKING_DAYS_FOR_TEN_DAY = 10
-
   def initialize(params:, session:)
     @params = params
     @session = session
@@ -62,7 +58,13 @@ class AssessorInterface::ServiceLevelAgreementIndexViewObject
 
   def application_forms_with_filter
     @application_forms_with_filter ||=
-      sla_base_filter.apply(scope: ApplicationForm, params: params)
+      [
+        ::Filters::SLA::BreachStatuses,
+        ::Filters::SLA::CountryGroupings,
+        ::Filters::Flags,
+      ].reduce(
+        sla_base_filter.apply(scope: ApplicationForm, params: {}),
+      ) { |scope, filter| filter.apply(scope:, params: filter_params) }
   end
 
   def sla_base_filter
@@ -76,13 +78,7 @@ class AssessorInterface::ServiceLevelAgreementIndexViewObject
   end
 
   def breached_sla_working_day
-    if params[:sla] == "80"
-      WORKING_DAYS_FOR_EIGHTY_DAY
-    elsif params[:sla] == "40"
-      WORKING_DAYS_FOR_FOURTY_DAY
-    else
-      WORKING_DAYS_FOR_TEN_DAY
-    end
+    sla_base_filter::WORKING_DAYS_BREACHED_FROM
   end
 
   def filter_params

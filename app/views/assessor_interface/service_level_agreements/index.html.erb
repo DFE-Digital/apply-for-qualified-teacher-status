@@ -69,7 +69,7 @@
     Contents
   </h2>
   <ul class="govuk-tabs__list">
-    <li class="govuk-tabs__list-item <%= 'govuk-tabs__list-item--selected' if params[:sla].nil? %>">
+    <li class="govuk-tabs__list-item <%= 'govuk-tabs__list-item--selected' if params[:sla].blank? %>">
       <%= link_to "10 day", assessor_interface_service_level_agreements_path %>
     </li>
     <li class="govuk-tabs__list-item <%= 'govuk-tabs__list-item--selected' if params[:sla] == "40" %>">
