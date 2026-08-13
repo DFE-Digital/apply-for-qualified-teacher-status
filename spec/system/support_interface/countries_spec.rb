@@ -25,37 +25,16 @@ RSpec.describe "Countries support", type: :system do
     when_i_click_on_a_country
     then_i_see_a_country
 
-    when_i_fill_other_information
-    when_i_fill_sanction_information
-    when_i_fill_status_information
-    when_i_fill_teaching_qualification_information
-    when_i_fill_regions
-    and_i_click_preview
+    when_i_fill_in_the_edit_country_form
     then_i_see_country_changes_preview
-    then_i_see_region_changes_confirmation
-    and_i_click_save
+    support_country_preview_page.click_save
 
     when_i_click_on_a_region
     then_i_see_a_region
 
-    when_i_select_sanction_check
-    when_i_select_status_check
-    when_i_fill_other_information
-    when_i_fill_sanction_information
-    when_i_fill_status_information
-    when_i_fill_teaching_authority_address
-    when_i_fill_teaching_authority_certificate
-    when_i_fill_teaching_authority_emails
-    when_i_fill_teaching_authority_name
-    when_i_fill_teaching_authority_online_checker_url
-    when_i_fill_teaching_authority_websites
-    when_i_select_yes_teaching_authority_requires_submission_email
-    when_i_fill_teaching_qualification_information
-    when_i_check_written_statement_optional
-    when_i_check_requires_preliminary_check
-    and_i_click_preview
-    then_i_see_the_preview
-    and_i_click_save
+    and_i_fill_in_the_edit_region_form
+    then_i_see_the_region_preview
+    support_region_preview_page.click_save
 
     when_i_visit_the_countries_page
     then_i_see_the_countries_page
@@ -67,13 +46,12 @@ RSpec.describe "Countries support", type: :system do
     given_i_am_authorized_as_a_support_user
     when_i_visit_the_countries_page
 
-    expect(page).to have_link("Add a new country")
     and_i_click_new_country
     then_i_see_the_new_country_page
 
     then_i_complete_the_new_country_form_without_regions
     then_i_see_the_countries_page
-    and_i_see "Afghanistan"
+    and_i_see_the_newly_created_country
   end
 
   it "allows creating a new country with regions" do
@@ -81,15 +59,12 @@ RSpec.describe "Countries support", type: :system do
     given_i_am_authorized_as_a_support_user
     when_i_visit_the_countries_page
 
-    expect(page).to have_link("Add a new country")
     and_i_click_new_country
     then_i_see_the_new_country_page
 
     then_i_complete_the_new_country_form_with_regions
     then_i_see_the_countries_page
-    and_i_see "Afghanistan"
-    and_i_see "Kabul"
-    and_i_see "Herat"
+    and_i_see_the_newly_created_country_with_regions
   end
 
   private
@@ -110,191 +85,143 @@ RSpec.describe "Countries support", type: :system do
   end
 
   def when_i_visit_the_countries_page
-    visit support_interface_countries_path
+    support_countries_index_page.load
   end
 
   def then_i_see_the_countries_page
-    expect(page).to have_current_path("/support/countries")
-    expect(page).to have_title("Countries")
-    expect(page).to have_content("Countries")
+    expect(support_countries_index_page).to be_displayed
+    expect(support_countries_index_page).to have_heading
   end
 
   def and_i_see_the_initial_countries
-    expect(page).to have_content("United States")
-    expect(page).to have_content("Hawaii")
+    expect(support_countries_index_page).to have_country("United States")
+    expect(support_countries_index_page).to have_region("Hawaii")
   end
 
   def and_i_see_the_updated_countries
-    expect(page).to have_content("United States")
-    expect(page).to have_content("California")
+    expect(support_countries_index_page).to have_country("United States")
+    expect(support_countries_index_page).to have_region("California")
+  end
+
+  def and_i_see_the_newly_created_country
+    expect(support_countries_index_page).to have_country("Afghanistan")
+  end
+
+  def and_i_see_the_newly_created_country_with_regions
+    expect(support_countries_index_page).to have_country("Afghanistan")
+    expect(support_countries_index_page).to have_region("Kabul")
+    expect(support_countries_index_page).to have_region("Herat")
   end
 
   def when_i_click_on_a_country
-    click_link "United States"
+    support_countries_index_page.click_country("United States")
+  end
+
+  def when_i_fill_in_the_edit_country_form
+    support_edit_country_page.fill_in_other_information("Other")
+    support_edit_country_page.fill_in_sanction_information(
+      "Sanction information",
+    )
+    support_edit_country_page.fill_in_status_information("Status information")
+    support_edit_country_page.fill_in_teaching_qualification_information(
+      "Qualifications information",
+    )
+    support_edit_country_page.select_has_regions
+    support_edit_country_page.fill_in_region_names("California")
+    support_edit_country_page.click_preview
   end
 
   def then_i_see_a_country
-    expect(page).to have_title("United States")
+    expect(support_edit_country_page).to be_displayed
+    expect(support_edit_country_page).to have_heading("United States")
   end
 
   def then_i_see_country_changes_preview
+    expect(support_country_preview_page).to be_displayed
     expect(page).to have_content("Other")
     expect(page).to have_content("Qualifications information")
-  end
-
-  def then_i_see_region_changes_confirmation
+    expect(page).to have_content("Sanction information")
+    expect(page).to have_content("Status information")
     expect(page).to have_content("Create California")
     expect(page).to have_content("Delete Hawaii")
   end
 
   def when_i_click_on_a_region
-    click_link "California"
+    support_countries_index_page.click_region("California")
   end
 
   def then_i_see_a_region
-    expect(page).to have_title("California")
+    expect(support_edit_region_page).to be_displayed
+    expect(support_edit_region_page).to have_heading("California")
   end
 
-  def then_i_see_the_preview
+  def and_i_fill_in_the_edit_region_form
+    support_edit_region_page.select_sanction_check("Online")
+    support_edit_region_page.select_status_check("Online")
+    support_edit_region_page.fill_in_other_information("Other")
+    support_edit_region_page.fill_in_sanction_information(
+      "Sanction information",
+    )
+    support_edit_region_page.fill_in_status_information("Status information")
+    support_edit_region_page.fill_in_teaching_authority_address("Address")
+    support_edit_region_page.fill_in_teaching_authority_certificate(
+      "Certificate",
+    )
+    support_edit_region_page.fill_in_teaching_authority_emails("Email address")
+    support_edit_region_page.fill_in_teaching_authority_name("Name")
+    support_edit_region_page.fill_in_teaching_authority_online_checker_url(
+      "https://www.example.com/checks",
+    )
+    support_edit_region_page.fill_in_teaching_authority_websites("Website")
+    support_edit_region_page.select_yes_teaching_authority_requires_submission_email
+    support_edit_region_page.fill_in_teaching_qualification_information(
+      "Qualifications information",
+    )
+    support_edit_region_page.choose_written_statement_optional
+    support_edit_region_page.choose_requires_preliminary_check
+    support_edit_region_page.click_preview
+  end
+
+  def then_i_see_the_region_preview
+    expect(support_region_preview_page).to be_displayed
     expect(page).to have_title("Preview California")
     expect(page).to have_content("You’re eligible to apply")
     expect(page).to have_content("Preparing to apply")
     expect(page).to have_content("Certified translations")
+
     click_on "Proof of qualifications"
     expect(page).to have_content("Qualifications information")
+
+    click_on "Proof that you’re recognised as a teacher"
+    expect(page).to have_content(
+      "As your education department or authority has an online register of teachers",
+    )
+    expect(page).to have_content("Status information")
+    expect(page).to have_content("Sanction information")
+    expect(page).to have_content("Other")
   end
 
   def then_i_complete_the_new_country_form_without_regions
-    fill_in "support-interface-new-country-form-location-field",
-            with: "Afghanistan"
-    choose "support-interface-new-country-form-eligibility-route-standard-field",
-           visible: :all
-    choose "support-interface-new-country-form-has-regions-false-field",
-           visible: :all
-    click_button "Create"
+    support_new_country_page.fill_in_country_of_recognition("Afghanistan")
+    support_new_country_page.select_eligibility_route_standard
+    support_new_country_page.select_has_regions_false
+    support_new_country_page.click_create
   end
 
   def then_i_complete_the_new_country_form_with_regions
-    fill_in "support-interface-new-country-form-location-field",
-            with: "Afghanistan"
-    choose "support-interface-new-country-form-eligibility-route-standard-field",
-           visible: :all
-    choose "support-interface-new-country-form-has-regions-true-field",
-           visible: :all
-    fill_in "support-interface-new-country-form-region-names-field",
-            with: "Kabul\nHerat"
-    click_button "Create"
-  end
-
-  def when_i_fill_regions
-    choose "support-interface-country-form-has-regions-true-field",
-           visible: :all
-    fill_in "support-interface-country-form-region-names-field",
-            with: "California"
-  end
-
-  def when_i_select_sanction_check
-    select "Online", from: "support-interface-region-form-sanction-check-field"
-  end
-
-  def when_i_select_status_check
-    select "Online", from: "support-interface-region-form-status-check-field"
-  end
-
-  def when_i_fill_teaching_authority_name
-    fill_in "support-interface-region-form-teaching-authority-name-field",
-            with: "Name"
-  end
-
-  def when_i_fill_teaching_authority_address
-    fill_in "support-interface-region-form-teaching-authority-address-field",
-            with: "Address"
-  end
-
-  def when_i_fill_teaching_authority_emails
-    fill_in "support-interface-region-form-teaching-authority-emails-string-field",
-            with: "Email address"
-  end
-
-  def when_i_fill_teaching_authority_websites
-    fill_in "support-interface-region-form-teaching-authority-websites-string-field",
-            with: "Website"
-  end
-
-  def when_i_fill_other_information
-    fill_in "support-interface-region-form-other-information-field",
-            with: "Other"
-  rescue Capybara::ElementNotFound
-    fill_in "support-interface-country-form-other-information-field",
-            with: "Other"
-  end
-
-  def when_i_fill_teaching_authority_certificate
-    fill_in "support-interface-region-form-teaching-authority-certificate-field",
-            with: "Certificate"
-  end
-
-  def when_i_fill_teaching_authority_online_checker_url
-    fill_in "support-interface-region-form-teaching-authority-online-checker-url-field",
-            with: "https://www.example.com/checks"
-  end
-
-  def when_i_fill_sanction_information
-    fill_in "support-interface-region-form-sanction-information-field",
-            with: "Sanction information"
-  rescue Capybara::ElementNotFound
-    fill_in "support-interface-country-form-sanction-information-field",
-            with: "Sanction information"
-  end
-
-  def when_i_fill_status_information
-    fill_in "support-interface-region-form-status-information-field",
-            with: "Status information"
-  rescue Capybara::ElementNotFound
-    fill_in "support-interface-country-form-status-information-field",
-            with: "Status information"
-  end
-
-  def when_i_select_yes_teaching_authority_requires_submission_email
-    choose "support-interface-region-form-teaching-authority-requires-submission-email-true-field",
-           visible: :all
-  end
-
-  def when_i_fill_teaching_qualification_information
-    fill_in "support-interface-region-form-teaching-qualification-information-field",
-            with: "Qualifications information"
-  rescue Capybara::ElementNotFound
-    fill_in "support-interface-country-form-teaching-qualification-information-field",
-            with: "Qualifications information"
-  end
-
-  def when_i_check_written_statement_optional
-    choose "support-interface-region-form-written-statement-optional-true-field",
-           visible: false
-  end
-
-  def when_i_check_requires_preliminary_check
-    choose "support-interface-region-form-requires-preliminary-check-true-field",
-           visible: false
-  end
-
-  def and_i_click_save
-    click_button "Save", visible: false
-  end
-
-  def and_i_click_preview
-    click_button "Preview", visible: false
+    support_new_country_page.fill_in_country_of_recognition("Afghanistan")
+    support_new_country_page.select_eligibility_route_standard
+    support_new_country_page.select_has_regions_true
+    support_new_country_page.fill_in_region_names("Kabul\nHerat")
+    support_new_country_page.click_create
   end
 
   def and_i_click_new_country
-    click_link "Add a new country"
+    support_countries_index_page.add_a_new_country_link.click
   end
 
   def then_i_see_the_new_country_page
-    expect(page).to have_content("Create a new country")
-  end
-
-  def and_i_see(text)
-    expect(page).to have_content(text)
+    expect(support_new_country_page).to be_displayed
+    expect(support_new_country_page).to have_heading("Create a new country")
   end
 end
