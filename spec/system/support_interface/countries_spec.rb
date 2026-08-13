@@ -25,47 +25,14 @@ RSpec.describe "Countries support", type: :system do
     when_i_click_on_a_country
     then_i_see_a_country
 
-    support_edit_country_page.fill_in_other_information("Other")
-    support_edit_country_page.fill_in_sanction_information(
-      "Sanction information",
-    )
-    support_edit_country_page.fill_in_status_information("Status information")
-    support_edit_country_page.fill_in_teaching_qualification_information(
-      "Qualifications information",
-    )
-    support_edit_country_page.select_has_regions
-    support_edit_country_page.fill_in_region_names("California")
-    support_edit_country_page.click_preview
+    when_i_fill_in_the_edit_country_form
     then_i_see_country_changes_preview
     support_country_preview_page.click_save
 
     when_i_click_on_a_region
     then_i_see_a_region
 
-    support_edit_region_page.select_sanction_check("Online")
-    support_edit_region_page.select_status_check("Online")
-    support_edit_region_page.fill_in_other_information("Other")
-    support_edit_region_page.fill_in_sanction_information(
-      "Sanction information",
-    )
-    support_edit_region_page.fill_in_status_information("Status information")
-    support_edit_region_page.fill_in_teaching_authority_address("Address")
-    support_edit_region_page.fill_in_teaching_authority_certificate(
-      "Certificate",
-    )
-    support_edit_region_page.fill_in_teaching_authority_emails("Email address")
-    support_edit_region_page.fill_in_teaching_authority_name("Name")
-    support_edit_region_page.fill_in_teaching_authority_online_checker_url(
-      "https://www.example.com/checks",
-    )
-    support_edit_region_page.fill_in_teaching_authority_websites("Website")
-    support_edit_region_page.select_yes_teaching_authority_requires_submission_email
-    support_edit_region_page.fill_in_teaching_qualification_information(
-      "Qualifications information",
-    )
-    support_edit_region_page.check_written_statement_optional
-    support_edit_region_page.check_requires_preliminary_check
-    support_edit_region_page.click_preview
+    and_i_fill_in_the_edit_region_form
     then_i_see_the_region_preview
     support_region_preview_page.click_save
 
@@ -150,6 +117,20 @@ RSpec.describe "Countries support", type: :system do
     support_countries_index_page.click_country("United States")
   end
 
+  def when_i_fill_in_the_edit_country_form
+    support_edit_country_page.fill_in_other_information("Other")
+    support_edit_country_page.fill_in_sanction_information(
+      "Sanction information",
+    )
+    support_edit_country_page.fill_in_status_information("Status information")
+    support_edit_country_page.fill_in_teaching_qualification_information(
+      "Qualifications information",
+    )
+    support_edit_country_page.select_has_regions
+    support_edit_country_page.fill_in_region_names("California")
+    support_edit_country_page.click_preview
+  end
+
   def then_i_see_a_country
     expect(support_edit_country_page).to be_displayed
     expect(support_edit_country_page).to have_heading("United States")
@@ -174,6 +155,33 @@ RSpec.describe "Countries support", type: :system do
     expect(support_edit_region_page).to have_heading("California")
   end
 
+  def and_i_fill_in_the_edit_region_form
+    support_edit_region_page.select_sanction_check("Online")
+    support_edit_region_page.select_status_check("Online")
+    support_edit_region_page.fill_in_other_information("Other")
+    support_edit_region_page.fill_in_sanction_information(
+      "Sanction information",
+    )
+    support_edit_region_page.fill_in_status_information("Status information")
+    support_edit_region_page.fill_in_teaching_authority_address("Address")
+    support_edit_region_page.fill_in_teaching_authority_certificate(
+      "Certificate",
+    )
+    support_edit_region_page.fill_in_teaching_authority_emails("Email address")
+    support_edit_region_page.fill_in_teaching_authority_name("Name")
+    support_edit_region_page.fill_in_teaching_authority_online_checker_url(
+      "https://www.example.com/checks",
+    )
+    support_edit_region_page.fill_in_teaching_authority_websites("Website")
+    support_edit_region_page.select_yes_teaching_authority_requires_submission_email
+    support_edit_region_page.fill_in_teaching_qualification_information(
+      "Qualifications information",
+    )
+    support_edit_region_page.choose_written_statement_optional
+    support_edit_region_page.choose_requires_preliminary_check
+    support_edit_region_page.click_preview
+  end
+
   def then_i_see_the_region_preview
     expect(support_region_preview_page).to be_displayed
     expect(page).to have_title("Preview California")
@@ -194,14 +202,14 @@ RSpec.describe "Countries support", type: :system do
   end
 
   def then_i_complete_the_new_country_form_without_regions
-    support_new_country_page.select_country_of_recognition("Afghanistan")
+    support_new_country_page.fill_in_country_of_recognition("Afghanistan")
     support_new_country_page.select_eligibility_route_standard
     support_new_country_page.select_has_regions_false
     support_new_country_page.click_create
   end
 
   def then_i_complete_the_new_country_form_with_regions
-    support_new_country_page.select_country_of_recognition("Afghanistan")
+    support_new_country_page.fill_in_country_of_recognition("Afghanistan")
     support_new_country_page.select_eligibility_route_standard
     support_new_country_page.select_has_regions_true
     support_new_country_page.fill_in_region_names("Kabul\nHerat")

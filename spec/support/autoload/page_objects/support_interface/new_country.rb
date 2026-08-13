@@ -29,8 +29,8 @@ module PageObjects
         create_button.click
       end
 
-      def select_country_of_recognition(text)
-        country_of_recognition_field.select(text)
+      def fill_in_country_of_recognition(text)
+        country_of_recognition_field.fill_in(with: text)
       end
 
       def select_eligibility_route_standard

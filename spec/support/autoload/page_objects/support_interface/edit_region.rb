@@ -96,11 +96,11 @@ module PageObjects
         )
       end
 
-      def check_written_statement_optional
+      def choose_written_statement_optional
         written_statement_optional_true_field.choose(visible: false)
       end
 
-      def check_requires_preliminary_check
+      def choose_requires_preliminary_check
         requires_preliminary_check_true_field.choose(visible: false)
       end
 
