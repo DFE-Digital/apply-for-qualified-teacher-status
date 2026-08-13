@@ -354,7 +354,7 @@ en:
           apply: Apply filters
           clear: Clear selection
         results:
-          empty: All applications are within SLA.
+          empty: No applications found.
 
   activemodel:
     errors:

@@ -1,0 +1,12 @@
+<% content_for :page_title, "SLA status" %>
+
+<h1 class="govuk-heading-xl govuk-!-margin-bottom-5">SLA status</h1>
+
+<ul class="govuk-service-navigation__list govuk-!-margin-bottom-8">
+  <li class="govuk-service-navigation__item <%= 'govuk-service-navigation__item--active' if current_page?(assessor_interface_service_level_agreements_path) %>">
+    <%= link_to "Applications", assessor_interface_service_level_agreements_path, class: "govuk-service-navigation__link govuk-body" %>
+  </li>
+  <li class="govuk-service-navigation__item <%= 'govuk-service-navigation__item--active' if current_page?(totals_assessor_interface_service_level_agreements_path) %>">
+    <%= link_to "Totals", totals_assessor_interface_service_level_agreements_path, class: "govuk-service-navigation__link govuk-body" %>
+  </li>
+</ul>
