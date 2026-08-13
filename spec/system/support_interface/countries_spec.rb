@@ -79,13 +79,12 @@ RSpec.describe "Countries support", type: :system do
     given_i_am_authorized_as_a_support_user
     when_i_visit_the_countries_page
 
-    expect(page).to have_link("Add a new country")
     and_i_click_new_country
     then_i_see_the_new_country_page
 
     then_i_complete_the_new_country_form_without_regions
     then_i_see_the_countries_page
-    and_i_see "Afghanistan"
+    and_i_see_the_newly_created_country
   end
 
   it "allows creating a new country with regions" do
@@ -93,15 +92,12 @@ RSpec.describe "Countries support", type: :system do
     given_i_am_authorized_as_a_support_user
     when_i_visit_the_countries_page
 
-    expect(page).to have_link("Add a new country")
     and_i_click_new_country
     then_i_see_the_new_country_page
 
     then_i_complete_the_new_country_form_with_regions
     then_i_see_the_countries_page
-    and_i_see "Afghanistan"
-    and_i_see "Kabul"
-    and_i_see "Herat"
+    and_i_see_the_newly_created_country_with_regions
   end
 
   private
@@ -138,6 +134,16 @@ RSpec.describe "Countries support", type: :system do
   def and_i_see_the_updated_countries
     expect(support_countries_index_page).to have_country("United States")
     expect(support_countries_index_page).to have_region("California")
+  end
+
+  def and_i_see_the_newly_created_country
+    expect(support_countries_index_page).to have_country("Afghanistan")
+  end
+
+  def and_i_see_the_newly_created_country_with_regions
+    expect(support_countries_index_page).to have_country("Afghanistan")
+    expect(support_countries_index_page).to have_region("Kabul")
+    expect(support_countries_index_page).to have_region("Herat")
   end
 
   def when_i_click_on_a_country
@@ -188,25 +194,18 @@ RSpec.describe "Countries support", type: :system do
   end
 
   def then_i_complete_the_new_country_form_without_regions
-    fill_in "support-interface-new-country-form-location-field",
-            with: "Afghanistan"
-    choose "support-interface-new-country-form-eligibility-route-standard-field",
-           visible: :all
-    choose "support-interface-new-country-form-has-regions-false-field",
-           visible: :all
-    click_button "Create"
+    support_new_country_page.select_country_of_recognition("Afghanistan")
+    support_new_country_page.select_eligibility_route_standard
+    support_new_country_page.select_has_regions_false
+    support_new_country_page.click_create
   end
 
   def then_i_complete_the_new_country_form_with_regions
-    fill_in "support-interface-new-country-form-location-field",
-            with: "Afghanistan"
-    choose "support-interface-new-country-form-eligibility-route-standard-field",
-           visible: :all
-    choose "support-interface-new-country-form-has-regions-true-field",
-           visible: :all
-    fill_in "support-interface-new-country-form-region-names-field",
-            with: "Kabul\nHerat"
-    click_button "Create"
+    support_new_country_page.select_country_of_recognition("Afghanistan")
+    support_new_country_page.select_eligibility_route_standard
+    support_new_country_page.select_has_regions_true
+    support_new_country_page.fill_in_region_names("Kabul\nHerat")
+    support_new_country_page.click_create
   end
 
   def and_i_click_new_country
@@ -214,10 +213,7 @@ RSpec.describe "Countries support", type: :system do
   end
 
   def then_i_see_the_new_country_page
-    expect(page).to have_content("Create a new country")
-  end
-
-  def and_i_see(text)
-    expect(page).to have_content(text)
+    expect(support_new_country_page).to be_displayed
+    expect(support_new_country_page).to have_heading("Create a new country")
   end
 end
