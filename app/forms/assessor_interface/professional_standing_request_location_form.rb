@@ -7,14 +7,14 @@ class AssessorInterface::ProfessionalStandingRequestLocationForm
   attr_accessor :requestable, :user
   validates :requestable, :user, presence: true
 
-  attribute :received, :boolean
-  validates :received, inclusion: [true]
-
   attribute :location_note, :string
 
   attribute :attachment
   validates :attachment, file_upload: true
   validates :attachment, presence: true, unless: -> { document.completed? }
+
+  attribute :received, :boolean
+  validates :received, inclusion: [true]
 
   def save
     return false if invalid?
