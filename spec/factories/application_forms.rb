@@ -478,6 +478,17 @@ FactoryBot.define do
       registration_number_status { "completed" }
     end
 
+    trait :with_prioritisation_work_history_checks do
+      submitted
+      with_assessment
+      pre_assessment_stage
+
+      after(:create) do |application_form, _evaluator|
+        create :prioritisation_work_history_check,
+               assessment: application_form.assessment
+      end
+    end
+
     factory :draft_application_form, traits: %i[draft_stage]
     factory :submitted_application_form, traits: %i[submitted]
   end

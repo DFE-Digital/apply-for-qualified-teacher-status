@@ -40,13 +40,9 @@ RSpec.describe AssessorInterface::ServiceLevelAgreementTotalsViewObject do
         ghana_region = create :region, :in_country, country_code: "GH"
 
         # UK within 10 day SLA
-        uk_within_10_day_sla =
-          create :application_form,
-                 :with_assessment,
-                 :submitted,
-                 region: uk_region
-        create :prioritisation_work_history_check,
-               assessment: uk_within_10_day_sla.assessment
+        create :application_form,
+               :with_prioritisation_work_history_checks,
+               region: uk_region
 
         # UK within 40 & 80 day SLA
         create :application_form,
@@ -55,14 +51,10 @@ RSpec.describe AssessorInterface::ServiceLevelAgreementTotalsViewObject do
                region: uk_region
 
         # UK nearing 10 day SLA
-        uk_nearing_10_day_sla =
-          create :application_form,
-                 :with_assessment,
-                 :submitted,
-                 region: uk_region,
-                 working_days_between_submitted_and_today: 8
-        create :prioritisation_work_history_check,
-               assessment: uk_nearing_10_day_sla.assessment
+        create :application_form,
+               :with_prioritisation_work_history_checks,
+               region: uk_region,
+               working_days_between_submitted_and_today: 8
 
         # UK nearing 40 day SLA
         create :application_form,
@@ -79,14 +71,10 @@ RSpec.describe AssessorInterface::ServiceLevelAgreementTotalsViewObject do
                working_days_between_submitted_and_today: 65
 
         # UK breached 10 day SLA
-        uk_breached_10_day_sla =
-          create :application_form,
-                 :with_assessment,
-                 :submitted,
-                 region: uk_region,
-                 working_days_between_submitted_and_today: 10
-        create :prioritisation_work_history_check,
-               assessment: uk_breached_10_day_sla.assessment
+        create :application_form,
+               :with_prioritisation_work_history_checks,
+               region: uk_region,
+               working_days_between_submitted_and_today: 10
 
         # UK breached 40 day SLA
         create :application_form,
@@ -103,13 +91,9 @@ RSpec.describe AssessorInterface::ServiceLevelAgreementTotalsViewObject do
                working_days_between_submitted_and_today: 80
 
         # EU within 10 day SLA
-        eu_within_10_day_sla =
-          create :application_form,
-                 :with_assessment,
-                 :submitted,
-                 region: france_region
-        create :prioritisation_work_history_check,
-               assessment: eu_within_10_day_sla.assessment
+        create :application_form,
+               :with_prioritisation_work_history_checks,
+               region: france_region
 
         # EU within 40 & 80 day SLA
         create :application_form,
@@ -118,14 +102,10 @@ RSpec.describe AssessorInterface::ServiceLevelAgreementTotalsViewObject do
                region: france_region
 
         # EU nearing 10 day SLA
-        eu_nearing_10_day_sla =
-          create :application_form,
-                 :with_assessment,
-                 :submitted,
-                 region: france_region,
-                 working_days_between_submitted_and_today: 8
-        create :prioritisation_work_history_check,
-               assessment: eu_nearing_10_day_sla.assessment
+        create :application_form,
+               :with_prioritisation_work_history_checks,
+               region: france_region,
+               working_days_between_submitted_and_today: 8
 
         # EU nearing 40 day SLA
         create :application_form,
@@ -142,14 +122,10 @@ RSpec.describe AssessorInterface::ServiceLevelAgreementTotalsViewObject do
                working_days_between_submitted_and_today: 65
 
         # EU breached 10 day SLA
-        eu_breached_10_day_sla =
-          create :application_form,
-                 :with_assessment,
-                 :submitted,
-                 region: france_region,
-                 working_days_between_submitted_and_today: 10
-        create :prioritisation_work_history_check,
-               assessment: eu_breached_10_day_sla.assessment
+        create :application_form,
+               :with_prioritisation_work_history_checks,
+               region: france_region,
+               working_days_between_submitted_and_today: 10
 
         # EU breached 40 day SLA
         create :application_form,
@@ -166,13 +142,9 @@ RSpec.describe AssessorInterface::ServiceLevelAgreementTotalsViewObject do
                working_days_between_submitted_and_today: 80
 
         # EFTA within 10 day SLA
-        efta_within_10_day_sla =
-          create :application_form,
-                 :with_assessment,
-                 :submitted,
-                 region: switzerland_region
-        create :prioritisation_work_history_check,
-               assessment: efta_within_10_day_sla.assessment
+        create :application_form,
+               :with_prioritisation_work_history_checks,
+               region: switzerland_region
 
         # EFTA within 40/80 day SLA
         create :application_form,
@@ -181,14 +153,10 @@ RSpec.describe AssessorInterface::ServiceLevelAgreementTotalsViewObject do
                region: switzerland_region
 
         # EFTA nearing 10 day SLA
-        efta_nearing_10_day_sla =
-          create :application_form,
-                 :with_assessment,
-                 :submitted,
-                 region: switzerland_region,
-                 working_days_between_submitted_and_today: 8
-        create :prioritisation_work_history_check,
-               assessment: efta_nearing_10_day_sla.assessment
+        create :application_form,
+               :with_prioritisation_work_history_checks,
+               region: switzerland_region,
+               working_days_between_submitted_and_today: 8
 
         # EFTA nearing 40 day SLA
         create :application_form,
@@ -205,14 +173,10 @@ RSpec.describe AssessorInterface::ServiceLevelAgreementTotalsViewObject do
                working_days_between_submitted_and_today: 65
 
         # EFTA breached 10 day SLA
-        efta_breached_10_day_sla =
-          create :application_form,
-                 :with_assessment,
-                 :submitted,
-                 region: switzerland_region,
-                 working_days_between_submitted_and_today: 10
-        create :prioritisation_work_history_check,
-               assessment: efta_breached_10_day_sla.assessment
+        create :application_form,
+               :with_prioritisation_work_history_checks,
+               region: switzerland_region,
+               working_days_between_submitted_and_today: 10
 
         # EFTA breached 40 day SLA
         create :application_form,
@@ -229,13 +193,9 @@ RSpec.describe AssessorInterface::ServiceLevelAgreementTotalsViewObject do
                working_days_between_submitted_and_today: 80
 
         # Rest of world within 10 day SLA
-        row_within_10_day_sla =
-          create :application_form,
-                 :with_assessment,
-                 :submitted,
-                 region: ghana_region
-        create :prioritisation_work_history_check,
-               assessment: row_within_10_day_sla.assessment
+        create :application_form,
+               :with_prioritisation_work_history_checks,
+               region: ghana_region
 
         # Rest of world within 40/80 day SLA
         create :application_form,
@@ -244,14 +204,10 @@ RSpec.describe AssessorInterface::ServiceLevelAgreementTotalsViewObject do
                region: ghana_region
 
         # Rest of world nearing 10 day SLA
-        row_nearing_10_day_sla =
-          create :application_form,
-                 :with_assessment,
-                 :submitted,
-                 region: ghana_region,
-                 working_days_between_submitted_and_today: 8
-        create :prioritisation_work_history_check,
-               assessment: row_nearing_10_day_sla.assessment
+        create :application_form,
+               :with_prioritisation_work_history_checks,
+               region: ghana_region,
+               working_days_between_submitted_and_today: 8
 
         # Rest of world nearing 40 day SLA
         create :application_form,
@@ -268,14 +224,10 @@ RSpec.describe AssessorInterface::ServiceLevelAgreementTotalsViewObject do
                working_days_between_submitted_and_today: 65
 
         # Rest of world breached 10 day SLA
-        row_breached_10_day_sla =
-          create :application_form,
-                 :with_assessment,
-                 :submitted,
-                 region: ghana_region,
-                 working_days_between_submitted_and_today: 10
-        create :prioritisation_work_history_check,
-               assessment: row_breached_10_day_sla.assessment
+        create :application_form,
+               :with_prioritisation_work_history_checks,
+               region: ghana_region,
+               working_days_between_submitted_and_today: 10
 
         # Rest of world breached 40 day SLA
         create :application_form,
