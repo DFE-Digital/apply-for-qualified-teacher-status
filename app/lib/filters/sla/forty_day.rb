@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Filters::SLA::FourtyDay < Filters::Base
+class Filters::SLA::FortyDay < Filters::Base
   WORKING_DAYS_NEARING_FROM = 35
   WORKING_DAYS_BREACHED_FROM = 40
 

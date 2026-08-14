@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Filters::SLA::FourtyDay do
+RSpec.describe Filters::SLA::FortyDay do
   subject(:filtered_scope) { described_class.apply(scope:, params:) }
 
   let(:scope) { ApplicationForm.all }

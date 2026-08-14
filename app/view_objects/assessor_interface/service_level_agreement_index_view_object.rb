@@ -80,7 +80,7 @@ class AssessorInterface::ServiceLevelAgreementIndexViewObject
     if params[:sla] == "80"
       Filters::SLA::EightyDay
     elsif params[:sla] == "40"
-      Filters::SLA::FourtyDay
+      Filters::SLA::FortyDay
     else
       Filters::SLA::TenDay
     end

@@ -28,7 +28,7 @@ RSpec.describe AssessorInterface::ServiceLevelAgreementIndexViewObject do
 
     before do
       allow(Filters::SLA::TenDay).to receive(:apply).and_return(scope)
-      allow(Filters::SLA::FourtyDay).to receive(:apply).and_return(scope)
+      allow(Filters::SLA::FortyDay).to receive(:apply).and_return(scope)
       allow(Filters::SLA::EightyDay).to receive(:apply).and_return(scope)
 
       allow(Filters::SLA::BreachStatuses).to receive(:apply).and_return(scope)
@@ -94,7 +94,7 @@ RSpec.describe AssessorInterface::ServiceLevelAgreementIndexViewObject do
       it "applies the forty-day filter" do
         application_forms_records
 
-        expect(Filters::SLA::FourtyDay).to have_received(:apply).with(
+        expect(Filters::SLA::FortyDay).to have_received(:apply).with(
           scope:,
           params: {
           },

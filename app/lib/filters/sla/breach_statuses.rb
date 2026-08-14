@@ -2,28 +2,23 @@
 
 class Filters::SLA::BreachStatuses < Filters::Base
   def apply
-    return scope if breach_statuses.nil?
+    return scope if breach_statuses.blank?
 
-    if breach_statuses.include?("nearing") &&
-         breach_statuses.include?("breached")
-      scope.where(
-        "working_days_between_submitted_and_today >= ?",
-        nearing_working_days,
-      )
-    elsif breach_statuses.include?("nearing")
-      scope.where(
-        "working_days_between_submitted_and_today >= ? and working_days_between_submitted_and_today < ?",
-        nearing_working_days,
-        breached_working_days,
-      )
-    elsif breach_statuses.include?("breached")
-      scope.where(
-        "working_days_between_submitted_and_today >= ?",
-        breached_working_days,
-      )
-    else
-      scope
-    end
+    nearing = breach_statuses.include?("nearing")
+    breached = breach_statuses.include?("breached")
+
+    working_days_range =
+      if nearing && breached
+        nearing_working_days..
+      elsif nearing
+        nearing_working_days...breached_working_days
+      elsif breached
+        breached_working_days..
+      end
+
+    return scope if working_days_range.nil?
+
+    scope.where(working_days_between_submitted_and_today: working_days_range)
   end
 
   private
@@ -44,7 +39,7 @@ class Filters::SLA::BreachStatuses < Filters::Base
     if params[:sla] == "80"
       Filters::SLA::EightyDay
     elsif params[:sla] == "40"
-      Filters::SLA::FourtyDay
+      Filters::SLA::FortyDay
     else
       Filters::SLA::TenDay
     end
