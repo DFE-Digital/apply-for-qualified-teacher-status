@@ -30,6 +30,9 @@ class AssessorInterface::ServiceLevelAgreementsController < AssessorInterface::B
   end
 
   def totals
+    @view_object =
+      AssessorInterface::ServiceLevelAgreementTotalsViewObject.new(params:)
+
     render layout: "full_from_desktop"
   end
 
