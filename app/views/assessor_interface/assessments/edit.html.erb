@@ -30,7 +30,7 @@
   <p class="govuk-body"><%= description %></p>
 
   <% if @assessment.can_award? && @assessment.can_decline? %>
-    <p class="govuk-body">Note: for <%= CountryName.from_region(@application_form.region, with_definite_article: true) %> applications you can still award QTS if the qualifications could not be verified.
+    <p class="govuk-body">Note: for <%= CountryName.from_region(@application_form.region, with_definite_article: true) %> applications you can still confirm QTS if the qualifications could not be verified.
   <% end %>
 
   <% if @form.requires_confirmation? %>

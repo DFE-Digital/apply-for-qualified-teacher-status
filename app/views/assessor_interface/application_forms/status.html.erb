@@ -11,7 +11,13 @@
                "Final further information request sent successfully"
              end
            else
-             "QTS application #{@view_object.application_form.reference} has been #{@view_object.status.downcase}"
+             if @view_object.application_form.awarded_at.present?
+               "QTS application #{@view_object.application_form.reference} has been confirmed"
+             elsif @view_object.application_form.trs_trn_request.present?
+               "QTS application #{@view_object.application_form.reference} has been confirmed pending checks"
+             else
+               "QTS application #{@view_object.application_form.reference} has been #{@view_object.status.downcase}"
+             end
            end %>
 
 <% content_for :page_title, title %>
@@ -23,7 +29,7 @@
 <% end %>
 
 <% if @view_object.assessment.review? %>
-  <p class="govuk-body">An assessor will now review the application and make a decision on awarding or declining QTS.</p>
+  <p class="govuk-body">An assessor will now review the application and make a decision on confirming or declining QTS.</p>
 <% elsif @view_object.assessment.verify? %>
   <p class="govuk-body">You have submitted your verification requests.</p>
   <p class="govuk-body">These will now be verified by an admin. You do not need to do anything further with this application unless it is flagged for review.</p>
@@ -40,8 +46,8 @@
 <% elsif @view_object.application_form.declined_at.present? %>
   <p class="govuk-body">You do not need to do anything else. The applicant can still request a decision review.</p>
 <% elsif @view_object.application_form.trs_trn_request.present? %>
-  <p class="govuk-body">This status will appear while the award is reconciled with the information in the Teaching Record System (TRS).</p>
-  <p class="govuk-body">Once these checks are complete, the status will change to ‘Awarded’ and the applicant will receive the email telling them they’ve been awarded QTS.</p>
+  <p class="govuk-body">This status will appear while the record is reconciled with the information in the Teaching Record System (TRS).</p>
+  <p class="govuk-body">Once these checks are complete, the status will change to ‘QTS confirmed’ and the applicant will receive the email telling them their QTS has been confirmed.</p>
 <% end %>
 
 <div class="govuk-button-group">

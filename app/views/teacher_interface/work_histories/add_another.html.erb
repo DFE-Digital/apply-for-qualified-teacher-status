@@ -20,7 +20,7 @@
     <% end %>
   <% elsif @years_count == 0 && @months_count < 20 %>
     <%= govuk_inset_text do %>
-      <p>You have indicated you have between 9 and 20 months of teaching work experience. If you are awarded QTS you must complete a 2-year ‘statutory induction’ period as an early career teacher.</p>
+      <p>You have indicated you have between 9 and 20 months of teaching work experience. If your QTS is confirmed you must complete a 2-year ‘statutory induction’ period as an early career teacher.</p>
     <% end %>
 
     <p class="govuk-body">
@@ -58,8 +58,8 @@
 
   <ul class="govuk-list govuk-list--bullet">
     <li><strong class="govuk-!-font-weight-bold">Less than 9 months</strong> – you are not eligible for QTS.</li>
-    <li><strong class="govuk-!-font-weight-bold">More than 9 months but under 20</strong> – if you’re awarded QTS you’ll need to do a 2-year period of statutory induction.</li>
-    <li><strong class="govuk-!-font-weight-bold">20 months or more</strong> – if you’re awarded QTS, there’s no need to do an induction period. You do not need to add more work experience.</li>
+    <li><strong class="govuk-!-font-weight-bold">More than 9 months but under 20</strong> – if your QTS is confirmed, you'll need to do a 2-year period of statutory induction.</li>
+    <li><strong class="govuk-!-font-weight-bold">20 months or more</strong> – if your QTS is confirmed, there's no need to do an induction period. You do not need to add more work experience.</li>
   </ul>
 
   <% if @years_count == 0 && @months_count < 9 %>

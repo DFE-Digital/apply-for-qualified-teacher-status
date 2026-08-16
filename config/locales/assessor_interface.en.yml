@@ -55,7 +55,7 @@ en:
 
     assessment_recommendation_award:
       edit:
-        heading: You’re about to award QTS
+        heading: You’re about to confirm QTS
         important_notes:
           invalid_references: This application has one or more invalid references.
           induction_required: This applicant will need to do a statutory induction period.
@@ -64,8 +64,8 @@ en:
       edit_age_range_subjects:
         heading: Edit age range and subjects
       edit_confirm:
-        legend: Award this QTS application?
-        hint: Select ‘Yes’ to confirm you want to award this application. If you’re not sure, or you need to check something, select ‘No’.
+        legend: Confirm QTS for this application?
+        hint: Select ‘Yes’ to confirm QTS for this applicant. If you’re not sure, or you need to check something, select ‘No’.
 
     assessment_recommendation_decline:
       edit:
@@ -245,7 +245,7 @@ en:
     email_delivery_failures:
       index:
         mailer_action_names:
-          application_awarded: Awarded
+          application_awarded: QTS confirmed
           application_declined: Declined
           application_from_ineligible_country: Country no longer accepted
           application_not_submitted: Draft reminder
