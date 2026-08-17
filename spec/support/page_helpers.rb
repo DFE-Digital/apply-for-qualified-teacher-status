@@ -478,6 +478,14 @@ module PageHelpers
       PageObjects::AssessorInterface::DecisionReviewConfirmation.new
   end
 
+  def assessor_sla_index_page
+    @assessor_sla_index_page ||= PageObjects::AssessorInterface::SLAIndex.new
+  end
+
+  def assessor_sla_totals_page
+    @assessor_sla_totals_page ||= PageObjects::AssessorInterface::SLATotals.new
+  end
+
   def eligibility_country_page
     @eligibility_country_page ||= PageObjects::EligibilityInterface::Country.new
   end
