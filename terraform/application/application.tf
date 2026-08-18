@@ -27,7 +27,6 @@ module "application_configuration" {
   secret_key_vault_short = "app"
   secret_variables = {
     DATABASE_URL = module.postgres.url
-    REDIS_URL    = module.redis.url
 
     AZURE_STORAGE_ACCOUNT_NAME = azurerm_storage_account.uploads.name
     AZURE_STORAGE_ACCESS_KEY   = azurerm_storage_account.uploads.primary_access_key
