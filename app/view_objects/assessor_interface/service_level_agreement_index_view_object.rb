@@ -3,6 +3,9 @@
 class AssessorInterface::ServiceLevelAgreementIndexViewObject
   include Pagy::Backend
 
+  BREACH_STATUSES = %w[nearing breached].freeze
+  COUNTRY_GROUPINGS = %w[uk_and_gibraltar eu efta rest_of_world].freeze
+
   def initialize(params:, session:)
     @params = params
     @session = session
@@ -26,19 +29,15 @@ class AssessorInterface::ServiceLevelAgreementIndexViewObject
   end
 
   def breach_statuses_options
-    [
-      OpenStruct.new(id: "nearing", name: "Nearing"),
-      OpenStruct.new(id: "breached", name: "Breached"),
-    ]
+    BREACH_STATUSES.map do |id|
+      OpenStruct.new(id:, name: breach_status_label(id))
+    end
   end
 
   def country_groupings_options
-    [
-      OpenStruct.new(id: "uk_and_gibraltar", name: "UK & Gibraltar"),
-      OpenStruct.new(id: "eu", name: "EU"),
-      OpenStruct.new(id: "efta", name: "EFTA"),
-      OpenStruct.new(id: "rest_of_world", name: "Rest of the world"),
-    ]
+    COUNTRY_GROUPINGS.map do |id|
+      OpenStruct.new(id:, name: country_grouping_label(id))
+    end
   end
 
   def filter_form
@@ -94,6 +93,32 @@ class AssessorInterface::ServiceLevelAgreementIndexViewObject
     (session[:sla_filter_params] || {}).merge(
       { sla: params[:sla] },
     ).with_indifferent_access
+  end
+
+  def breach_status_label(option)
+    I18n.t(
+      option,
+      scope: %i[
+        helpers
+        label
+        assessor_interface_sla_filter_form
+        breach_statuses_options
+      ],
+      default: option.to_s.humanize,
+    )
+  end
+
+  def country_grouping_label(option)
+    I18n.t(
+      option,
+      scope: %i[
+        helpers
+        label
+        assessor_interface_sla_filter_form
+        country_grouping_options
+      ],
+      default: option.to_s.humanize,
+    )
   end
 
   attr_reader :params, :session
