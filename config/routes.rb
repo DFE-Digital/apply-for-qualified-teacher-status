@@ -372,9 +372,7 @@ Rails.application.routes.draw do
             request.env["warden"].user.support_console_permission? &&
               !request.env["warden"].user.archived?
           end,
-        ) do
-          mount MissionControl::Jobs::Engine, at: "/solid_queue_jobs"
-        end
+        ) { mount MissionControl::Jobs::Engine, at: "/solid_queue_jobs" }
       end
     end
   end
