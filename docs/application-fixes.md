@@ -30,7 +30,7 @@ application_form.awarded_pending_checks!
 CreateTRSTRNRequest.call(application_form:, user:)
 ```
 
-Check the application is in awarded state in the UI and that the sidekiq jobs have gone through.
+Check the application is in awarded state in the UI and that the background jobs have gone through.
 
 ## Rollback further information request
 
