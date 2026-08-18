@@ -58,30 +58,6 @@ module "web_application" {
   run_as_non_root = var.run_as_non_root
 }
 
-module "worker_application" {
-  source = "./vendor/modules/dfe-terraform-modules//aks/application"
-
-  name   = "worker"
-  is_web = false
-
-  namespace    = var.namespace
-  environment  = local.environment
-  service_name = local.service_name
-
-  cluster_configuration_map = module.cluster_data.configuration_map
-
-  kubernetes_config_map_name = module.application_configuration.kubernetes_config_map_name
-  kubernetes_secret_name     = module.application_configuration.kubernetes_secret_name
-
-  docker_image  = var.docker_image
-  command       = ["bundle", "exec", "sidekiq", "-C", "./config/sidekiq.yml"]
-  probe_command = ["pgrep", "-f", "sidekiq"]
-
-  enable_logit    = var.enable_logit
-  enable_gcp_wif  = var.bigquery_federated_auth ? true : null
-  run_as_non_root = var.run_as_non_root
-}
-
 module "solid_queue_worker_application" {
   source = "./vendor/modules/dfe-terraform-modules//aks/application"
 
