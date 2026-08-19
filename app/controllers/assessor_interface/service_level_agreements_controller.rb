@@ -1,7 +1,12 @@
 # frozen_string_literal: true
 
 class AssessorInterface::ServiceLevelAgreementsController < AssessorInterface::BaseController
+  include HistoryTrackable
+
   before_action { authorize %i[assessor_interface service_level_agreement] }
+
+  define_history_origin :index
+  define_history_reset :index
 
   def index
     @view_object =
