@@ -25,8 +25,7 @@ A service that allows international teachers to apply for qualified teacher stat
 - Ruby 3.x
 - Node.js 16.x
 - Yarn 1.22.x
-- PostgreSQL 14.x
-- Redis 7.x
+- PostgreSQL 17.x
 - Terraform 1.5.x
 - Kubectl 1.27.x
 
@@ -94,21 +93,6 @@ Set up the `postgres` user if it doesn't exist:
 createdb default
 psql -d default
 > CREATE ROLE postgres LOGIN SUPERUSER;
-```
-
-#### Redis
-
-You’ll need to install Redis. The way to do this is different on each operating system, but on macOS you can try the following:
-
-```bash
-brew install redis
-brew services start redis
-```
-
-If installing Redis manually, you'll need to start it in a separate terminal:
-
-```bash
-redis-server
 ```
 
 ### Application

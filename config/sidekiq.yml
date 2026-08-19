@@ -1,7 +1,0 @@
----
-:verbose: false
-:concurrency: 10
-:queues:
-  - default
-  - mailer
-  - analytics

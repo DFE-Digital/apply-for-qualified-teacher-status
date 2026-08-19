@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "sidekiq/web"
-
 Rails.application.routes.draw do
   scope via: :all do
     get "/403", to: "errors#forbidden"
@@ -374,10 +372,7 @@ Rails.application.routes.draw do
             request.env["warden"].user.support_console_permission? &&
               !request.env["warden"].user.archived?
           end,
-        ) do
-          mount Sidekiq::Web, at: "sidekiq"
-          mount MissionControl::Jobs::Engine, at: "/solid_queue_jobs"
-        end
+        ) { mount MissionControl::Jobs::Engine, at: "/solid_queue_jobs" }
       end
     end
   end
