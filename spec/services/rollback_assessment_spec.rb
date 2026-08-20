@@ -8,8 +8,33 @@ RSpec.describe RollbackAssessment do
   let(:user) { create(:staff) }
 
   context "with an award assessment" do
-    let(:application_form) { create(:application_form, :awarded) }
-    let(:assessment) { create(:assessment, :award, application_form:) }
+    let(:application_form) do
+      create(
+        :application_form,
+        :awarded,
+        working_days_between_submitted_and_completed: 50,
+      )
+    end
+    let(:assessment) do
+      create(
+        :assessment,
+        :award,
+        application_form:,
+        working_days_between_started_and_completed: 45,
+      )
+    end
+
+    it "resets awarded_at and completed working days timestamps" do
+      expect { call }.to change(application_form, :awarded_at).to(
+        nil,
+      ).and change(
+              application_form,
+              :working_days_between_submitted_and_completed,
+            ).to(nil).and change(
+                    assessment,
+                    :working_days_between_started_and_completed,
+                  ).to(nil)
+    end
 
     context "having requested verification" do
       before { create(:requested_reference_request, assessment:) }
@@ -70,8 +95,33 @@ RSpec.describe RollbackAssessment do
   end
 
   context "with a decline assessment" do
-    let(:application_form) { create(:application_form, :declined) }
-    let(:assessment) { create(:assessment, :decline, application_form:) }
+    let(:application_form) do
+      create(
+        :application_form,
+        :declined,
+        working_days_between_submitted_and_completed: 50,
+      )
+    end
+    let(:assessment) do
+      create(
+        :assessment,
+        :decline,
+        application_form:,
+        working_days_between_started_and_completed: 45,
+      )
+    end
+
+    it "resets declined_at and completed working days timestamps" do
+      expect { call }.to change(application_form, :declined_at).to(
+        nil,
+      ).and change(
+              application_form,
+              :working_days_between_submitted_and_completed,
+            ).to(nil).and change(
+                    assessment,
+                    :working_days_between_started_and_completed,
+                  ).to(nil)
+    end
 
     context "having requested verification" do
       before { create(:requested_reference_request, assessment:) }
@@ -247,8 +297,33 @@ RSpec.describe RollbackAssessment do
   end
 
   context "with an unknown assessment but declined application" do
-    let(:application_form) { create(:application_form, :declined) }
-    let(:assessment) { create(:assessment, :unknown, application_form:) }
+    let(:application_form) do
+      create(
+        :application_form,
+        :declined,
+        working_days_between_submitted_and_completed: 50,
+      )
+    end
+    let(:assessment) do
+      create(
+        :assessment,
+        :unknown,
+        application_form:,
+        working_days_between_started_and_completed: 45,
+      )
+    end
+
+    it "resets declined_at and completed working days timestamps" do
+      expect { call }.to change(application_form, :declined_at).to(
+        nil,
+      ).and change(
+              application_form,
+              :working_days_between_submitted_and_completed,
+            ).to(nil).and change(
+                    assessment,
+                    :working_days_between_started_and_completed,
+                  ).to(nil)
+    end
 
     it "doesn't change the assessment state" do
       expect { call }.not_to change(assessment, :unknown?)
