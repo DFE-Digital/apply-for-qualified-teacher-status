@@ -7,6 +7,7 @@ class WorkingDays::UpdateFurtherInformationRequestsAssessmentStartedToRequestedJ
       .includes(:assessment)
       .where.not(assessment: { started_at: nil })
       .where.not(requested_at: nil)
+      .where(working_days_between_assessment_started_to_requested: nil)
       .find_each do |further_information_request|
         further_information_request.update!(
           working_days_between_assessment_started_to_requested:
