@@ -7,6 +7,7 @@ class WorkingDays::UpdateAssessmentsSubmissionToPrioritisationDecisionJob < Appl
       .includes(:application_form)
       .where.not(application_form: { submitted_at: nil })
       .where.not(prioritisation_decision_at: nil)
+      .where(working_days_between_submitted_and_prioritisation_decision: nil)
       .find_each do |assessment|
         assessment.update!(
           working_days_between_submitted_and_prioritisation_decision:
