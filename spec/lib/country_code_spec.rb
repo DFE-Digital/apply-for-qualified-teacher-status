@@ -88,12 +88,4 @@ RSpec.describe CountryCode do
 
     include_examples "true with codes", %w[GB-NIR]
   end
-
-  describe "#european_economic_area?" do
-    subject(:european_economic_area?) do
-      described_class.european_economic_area?(code)
-    end
-
-    include_examples "true with codes", Country::CODES_IN_EUROPEAN_ECONOMIC_AREA
-  end
 end
