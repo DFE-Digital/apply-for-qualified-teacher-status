@@ -7,6 +7,7 @@ class WorkingDays::UpdateAssessmentsSubmissionToVerificationJob < ApplicationJob
       .includes(:application_form)
       .where.not(application_form: { submitted_at: nil })
       .where.not(verification_started_at: nil)
+      .where(working_days_between_submitted_and_verification_started: nil)
       .find_each do |assessment|
         assessment.update!(
           working_days_between_submitted_and_verification_started:
