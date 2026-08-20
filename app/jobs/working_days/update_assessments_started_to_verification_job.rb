@@ -5,6 +5,7 @@ class WorkingDays::UpdateAssessmentsStartedToVerificationJob < ApplicationJob
     Assessment
       .where.not(started_at: nil)
       .where.not(verification_started_at: nil)
+      .where(working_days_between_started_and_verification_started: nil)
       .find_each do |assessment|
         assessment.update!(
           working_days_between_started_and_verification_started:
