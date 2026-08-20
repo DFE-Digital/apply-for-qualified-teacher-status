@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class WorkingDays::UpdateAssessmentsStartedToVerificationJob < ApplicationJob
+class WorkingDays::UpdateAssessmentsStartedToVerificationJob < WorkingDays::BaseJob
   def perform
     Assessment
       .where.not(started_at: nil)
@@ -15,15 +15,5 @@ class WorkingDays::UpdateAssessmentsStartedToVerificationJob < ApplicationJob
             ),
         )
       end
-  end
-
-  private
-
-  def calendar
-    @calendar ||=
-      Business::Calendar.new(
-        holidays:
-          DfE::ReferenceData::BankHolidays::BANK_HOLIDAYS.all.map(&:date),
-      )
   end
 end

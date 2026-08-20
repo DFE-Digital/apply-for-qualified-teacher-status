@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class WorkingDays::UpdateApplicationsSinceSubmissionJob < ApplicationJob
+class WorkingDays::UpdateApplicationsSinceSubmissionJob < WorkingDays::BaseJob
   def perform
     ApplicationForm
       .where.not(submitted_at: nil)
@@ -13,19 +13,5 @@ class WorkingDays::UpdateApplicationsSinceSubmissionJob < ApplicationJob
             ),
         )
       end
-  end
-
-  private
-
-  def calendar
-    @calendar ||=
-      Business::Calendar.new(
-        holidays:
-          DfE::ReferenceData::BankHolidays::BANK_HOLIDAYS.all.map(&:date),
-      )
-  end
-
-  def today
-    @today ||= Time.zone.now
   end
 end

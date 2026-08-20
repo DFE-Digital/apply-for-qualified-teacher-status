@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class WorkingDays::UpdateAssessmentsSinceStartedJob < ApplicationJob
+class WorkingDays::UpdateAssessmentsSinceStartedJob < WorkingDays::BaseJob
   def perform
     Assessment
       .where.not(started_at: nil)
@@ -10,19 +10,5 @@ class WorkingDays::UpdateAssessmentsSinceStartedJob < ApplicationJob
             calendar.business_days_between(assessment.started_at, today),
         )
       end
-  end
-
-  private
-
-  def calendar
-    @calendar ||=
-      Business::Calendar.new(
-        holidays:
-          DfE::ReferenceData::BankHolidays::BANK_HOLIDAYS.all.map(&:date),
-      )
-  end
-
-  def today
-    @today ||= Time.zone.now
   end
 end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class WorkingDays::UpdateAssessmentsStartedToCompletedJob < ApplicationJob
+class WorkingDays::UpdateAssessmentsStartedToCompletedJob < WorkingDays::BaseJob
   def perform
     Assessment
       .joins(:application_form)
@@ -24,15 +24,5 @@ class WorkingDays::UpdateAssessmentsStartedToCompletedJob < ApplicationJob
             ),
         )
       end
-  end
-
-  private
-
-  def calendar
-    @calendar ||=
-      Business::Calendar.new(
-        holidays:
-          DfE::ReferenceData::BankHolidays::BANK_HOLIDAYS.all.map(&:date),
-      )
   end
 end
