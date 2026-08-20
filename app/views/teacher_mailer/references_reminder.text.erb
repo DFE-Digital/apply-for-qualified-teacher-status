@@ -12,6 +12,6 @@ The following references have just 2 weeks to respond to the reference request.
 - <%= reference_request.work_history.contact_name %> — <%= reference_request.work_history.school_name %>
 <% end %>
 
-They need to respond by <%= @reference_requests.first.expires_at.to_date.to_fs %>. If your references do not respond, and, as a result, we cannot verify your work history, we may not be able to award you QTS. You should contact your reference to remind them about the request.
+They need to respond by <%= @reference_requests.first.expires_at.to_date.to_fs %>. If your references do not respond, and, as a result, we cannot verify your work history, we may not be able to confirm your QTS. You should contact your reference to remind them about the request.
 
 <%= render "shared/teacher_mailer/footer" %>
