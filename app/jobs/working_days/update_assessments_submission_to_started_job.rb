@@ -1,0 +1,21 @@
+# frozen_string_literal: true
+
+class WorkingDays::UpdateAssessmentsSubmissionToStartedJob < WorkingDays::BaseJob
+  def perform
+    Assessment
+      .joins(:application_form)
+      .includes(:application_form)
+      .where.not(application_form: { submitted_at: nil })
+      .where.not(started_at: nil)
+      .where(working_days_between_submitted_and_started: nil)
+      .find_each do |assessment|
+        assessment.update!(
+          working_days_between_submitted_and_started:
+            calendar.business_days_between(
+              assessment.application_form.submitted_at,
+              assessment.started_at,
+            ),
+        )
+      end
+  end
+end

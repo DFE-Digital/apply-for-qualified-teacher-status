@@ -81,6 +81,11 @@ class RollbackAssessment
       application_form.update!(declined_at: nil)
     end
 
+    application_form.update!(working_days_between_submitted_and_completed: nil)
+    application_form.assessment.update!(
+      working_days_between_started_and_completed: nil,
+    )
+
     ApplicationFormStatusUpdater.call(application_form:, user:)
   end
 
