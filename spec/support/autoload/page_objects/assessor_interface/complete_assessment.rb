@@ -10,12 +10,12 @@ module PageObjects
       element :continue_button, ".govuk-button"
 
       def award_qts
-        new_states.find { |radio_item| radio_item.label.text == "Award QTS" }
+        new_states.find { |radio_item| radio_item.label.text == "Confirm QTS" }
       end
 
       def award_qts_pending_verifications
         new_states.find do |radio_item|
-          radio_item.label.text == "Award QTS pending verifications"
+          radio_item.label.text == "Confirm QTS pending verifications"
         end
       end
 

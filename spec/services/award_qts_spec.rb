@@ -27,9 +27,9 @@ RSpec.describe AwardQTS do
     end
   end
 
-  context "with an awarded pending checks application form" do
+  context "with a confirmed pending checks application form" do
     let(:application_form) do
-      create(:application_form, :awarded_pending_checks, teacher:)
+      create(:application_form, :confirmed_pending_checks, teacher:)
     end
 
     before { create(:trs_trn_request, application_form:) }

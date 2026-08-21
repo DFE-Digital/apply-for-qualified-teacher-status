@@ -102,11 +102,11 @@ en:
         confirmation_options:
           true: I have assessed this application based on the eligibility criteria that was in place on the date that it was submitted.
         recommendation_options:
-          award: Award QTS
+          award: Confirm QTS
           decline: Decline QTS
           request_further_information: Request further information
           review: Send application for review
-          verify: Award QTS pending verifications
+          verify: Confirm QTS pending verifications
       assessor_interface_assessment_confirmation_form:
         confirmation_options:
           true: "Yes"

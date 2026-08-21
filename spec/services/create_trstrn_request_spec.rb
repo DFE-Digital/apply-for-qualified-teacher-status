@@ -14,7 +14,7 @@ RSpec.describe CreateTRSTRNRequest do
 
   it "changes the status" do
     expect { call }.to change(application_form, :statuses).to(
-      %w[awarded_pending_checks],
+      %w[confirmed_pending_checks],
     )
   end
 

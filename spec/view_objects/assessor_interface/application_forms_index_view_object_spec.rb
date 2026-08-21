@@ -268,8 +268,6 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
             id: "assessment_not_started",
             label: "Assessment not started",
           ),
-          OpenStruct.new(id: "awarded_pending_checks", label: "Award pending"),
-          OpenStruct.new(id: "awarded", label: "Awarded"),
           OpenStruct.new(id: "declined", label: "Declined"),
           OpenStruct.new(id: "overdue_ecctis", label: "Overdue Ecctis"),
           OpenStruct.new(id: "overdue_lops", label: "Overdue LoPS"),
@@ -288,6 +286,8 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
             id: "prioritisation_check",
             label: "Prioritisation check",
           ),
+          OpenStruct.new(id: "awarded", label: "QTS confirmed"),
+          OpenStruct.new(id: "confirmed_pending_checks", label: "QTS pending"),
           OpenStruct.new(id: "received_consent", label: "Received consent"),
           OpenStruct.new(
             id: "received_decision_review",
