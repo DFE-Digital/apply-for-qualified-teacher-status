@@ -156,7 +156,7 @@ RSpec.describe ApplicationFormStatusUpdater do
 
       include_examples "changes action required by", "assessor"
       include_examples "changes stage", "review"
-      include_examples "changes statuses", %w[awarded_pending_checks]
+      include_examples "changes statuses", %w[confirmed_pending_checks]
     end
 
     context "with a received further information request" do

@@ -53,7 +53,7 @@
     <%= f.govuk_radio_buttons_fieldset :induction_required, legend: { text: t(view_object.country.code, scope: %i[assessor_interface assessment_sections induction_required]) } do %>
       <%= f.govuk_radio_button :induction_required, :false, link_errors: true, disabled: view_object.disable_form? %>
       <%= f.govuk_radio_button :induction_required, :true, disabled: view_object.disable_form? do %>
-        <p class="govuk-hint">We can still award QTS, but applicant must complete a statutory induction period.</p>
+        <p class="govuk-hint">We can still confirm QTS, but applicant must complete a statutory induction period.</p>
       <% end %>
     <% end %>
   <% end %>

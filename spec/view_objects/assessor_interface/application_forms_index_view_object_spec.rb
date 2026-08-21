@@ -268,7 +268,7 @@ RSpec.describe AssessorInterface::ApplicationFormsIndexViewObject do
             id: "assessment_not_started",
             label: "Assessment not started",
           ),
-          OpenStruct.new(id: "awarded_pending_checks", label: "QTS pending"),
+          OpenStruct.new(id: "confirmed_pending_checks", label: "QTS pending"),
           OpenStruct.new(id: "awarded", label: "QTS confirmed"),
           OpenStruct.new(id: "declined", label: "Declined"),
           OpenStruct.new(id: "overdue_ecctis", label: "Overdue Ecctis"),
