@@ -7,8 +7,8 @@ en:
       assessment: Assessment
       assessment_in_progress: Assessment in progress
       assessment_not_started: Assessment not started
-      awarded: Awarded
-      awarded_pending_checks: Award pending
+      awarded: QTS confirmed
+      awarded_pending_checks: QTS pending
       cannot_start: Cannot start
       completed: Completed
       declined: Declined
