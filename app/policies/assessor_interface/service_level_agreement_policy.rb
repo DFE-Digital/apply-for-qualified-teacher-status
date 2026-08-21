@@ -6,4 +6,8 @@ class AssessorInterface::ServiceLevelAgreementPolicy < ApplicationPolicy
 
     true
   end
+
+  alias_method :apply_filters?, :index?
+  alias_method :clear_filters?, :index?
+  alias_method :totals?, :index?
 end

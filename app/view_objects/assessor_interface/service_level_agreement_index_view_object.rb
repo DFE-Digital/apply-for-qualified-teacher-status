@@ -1,17 +1,14 @@
 # frozen_string_literal: true
 
 class AssessorInterface::ServiceLevelAgreementIndexViewObject
-  include ActionView::Helpers::FormOptionsHelper
   include Pagy::Backend
 
-  WORKING_DAYS_TO_START_PRIORITISATION_CHECKS = 10
-  WORKING_DAYS_NEARING_START_PRIORITISATION_CHECKS_DEADLINE = 8
+  BREACH_STATUSES = %w[nearing breached].freeze
+  COUNTRY_GROUPINGS = %w[uk_and_gibraltar eu efta rest_of_world].freeze
 
-  WORKING_DAYS_TO_FINISH_ASSESSMENT_FOR_PRIORITISED = 40
-  WORKING_DAYS_NEARING_FINISH_ASSESSMENT_FOR_PRIORITISED_DEADLINE = 35
-
-  def initialize(params:)
+  def initialize(params:, session:)
     @params = params
+    @session = session
   end
 
   def application_forms_pagy
@@ -22,70 +19,29 @@ class AssessorInterface::ServiceLevelAgreementIndexViewObject
     application_forms_with_pagy.last
   end
 
-  def breached_sla_for_starting_prioritisation_checks_count
-    application_forms_with_prioritisation_checks_not_started.where(
-      "working_days_between_submitted_and_today > ?",
-      WORKING_DAYS_TO_START_PRIORITISATION_CHECKS,
-    ).count
-  end
-
-  def nearing_sla_for_starting_prioritisation_checks_count
-    application_forms_with_prioritisation_checks_not_started.where(
-      working_days_between_submitted_and_today:
-        WORKING_DAYS_NEARING_START_PRIORITISATION_CHECKS_DEADLINE..WORKING_DAYS_TO_START_PRIORITISATION_CHECKS,
-    ).count
-  end
-
-  def breached_sla_for_completing_prioritised_applications_count
-    application_forms_prioritised_but_assessment_not_completed.where(
-      "working_days_between_submitted_and_today > ?",
-      WORKING_DAYS_TO_FINISH_ASSESSMENT_FOR_PRIORITISED,
-    ).count
-  end
-
-  def nearing_sla_for_completing_prioritised_applications_count
-    application_forms_prioritised_but_assessment_not_completed.where(
-      working_days_between_submitted_and_today:
-        WORKING_DAYS_NEARING_FINISH_ASSESSMENT_FOR_PRIORITISED_DEADLINE..WORKING_DAYS_TO_FINISH_ASSESSMENT_FOR_PRIORITISED,
-    ).count
-  end
-
-  def sla_start_prioritisation_checks_tag_colour(application_form)
-    return if application_form.assessment.nil?
-
-    if application_form.assessment.started_at.present? ||
-         application_form.assessment.prioritisation_work_history_checks.empty?
-      return
-    end
-
-    if application_form.working_days_between_submitted_and_today.to_i >
-         WORKING_DAYS_TO_START_PRIORITISATION_CHECKS
+  def sla_working_day_tag_colour(application_form)
+    if application_form.working_days_between_submitted_and_today.to_i >=
+         breached_sla_working_day
       "red"
-    elsif application_form.working_days_between_submitted_and_today.to_i >=
-          WORKING_DAYS_NEARING_START_PRIORITISATION_CHECKS_DEADLINE
-      "yellow"
     else
-      "green"
+      "yellow"
     end
   end
 
-  def sla_completed_prioritised_tag_colour(application_form)
-    return if application_form.assessment.nil?
-
-    if !application_form.assessment.prioritised? ||
-         application_form.assessment.verification_started_at.present?
-      return
+  def breach_statuses_options
+    BREACH_STATUSES.map do |id|
+      OpenStruct.new(id:, name: breach_status_label(id))
     end
+  end
 
-    if application_form.working_days_between_submitted_and_today.to_i >
-         WORKING_DAYS_TO_FINISH_ASSESSMENT_FOR_PRIORITISED
-      "red"
-    elsif application_form.working_days_between_submitted_and_today.to_i >=
-          WORKING_DAYS_NEARING_FINISH_ASSESSMENT_FOR_PRIORITISED_DEADLINE
-      "yellow"
-    else
-      "green"
+  def country_groupings_options
+    COUNTRY_GROUPINGS.map do |id|
+      OpenStruct.new(id:, name: country_grouping_label(id))
     end
+  end
+
+  def filter_form
+    @filter_form ||= AssessorInterface::SLAFilterForm.new(filter_params)
   end
 
   private
@@ -101,34 +57,69 @@ class AssessorInterface::ServiceLevelAgreementIndexViewObject
 
   def application_forms_with_filter
     @application_forms_with_filter ||=
-      if params[:tab] == "40"
-        application_forms_prioritised_but_assessment_not_completed
-      else
-        application_forms_with_prioritisation_checks_not_started
-      end
+      [
+        ::Filters::SLA::BreachStatuses,
+        ::Filters::SLA::CountryGroupings,
+        ::Filters::Flags,
+      ].reduce(
+        sla_base_filter.apply(
+          scope:
+            ApplicationForm.includes(
+              :assessment,
+              :active_application_hold,
+              region: :country,
+            ),
+          params: {
+          },
+        ),
+      ) { |scope, filter| filter.apply(scope:, params: filter_params) }
   end
 
-  def application_forms_with_prioritisation_checks_not_started
-    ApplicationForm
-      .joins(assessment: :prioritisation_work_history_checks)
-      .where(assessment: { started_at: nil }, withdrawn_at: nil)
-      .distinct
+  def sla_base_filter
+    if params[:sla] == "80"
+      Filters::SLA::EightyDay
+    elsif params[:sla] == "40"
+      Filters::SLA::FortyDay
+    else
+      Filters::SLA::TenDay
+    end
   end
 
-  def application_forms_prioritised_but_assessment_not_completed
-    ApplicationForm
-      .joins(:assessment)
-      .where(
-        awarded_at: nil,
-        declined_at: nil,
-        withdrawn_at: nil,
-        assessment: {
-          verification_started_at: nil,
-          prioritised: true,
-        },
-      )
-      .distinct
+  def breached_sla_working_day
+    sla_base_filter::WORKING_DAYS_BREACHED_FROM
   end
 
-  attr_reader :params
+  def filter_params
+    (session[:sla_filter_params] || {}).merge(
+      { sla: params[:sla] },
+    ).with_indifferent_access
+  end
+
+  def breach_status_label(option)
+    I18n.t(
+      option,
+      scope: %i[
+        helpers
+        label
+        assessor_interface_sla_filter_form
+        breach_statuses_options
+      ],
+      default: option.to_s.humanize,
+    )
+  end
+
+  def country_grouping_label(option)
+    I18n.t(
+      option,
+      scope: %i[
+        helpers
+        label
+        assessor_interface_sla_filter_form
+        country_grouping_options
+      ],
+      default: option.to_s.humanize,
+    )
+  end
+
+  attr_reader :params, :session
 end
