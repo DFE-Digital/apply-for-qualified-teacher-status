@@ -121,7 +121,7 @@ class AssessorInterface::ApplicationFormsIndexViewObject
     assessment_in_progress
     assessment_not_started
     awarded
-    awarded_pending_checks
+    confirmed_pending_checks
     declined
     overdue_consent
     overdue_ecctis

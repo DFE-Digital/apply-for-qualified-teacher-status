@@ -8,9 +8,9 @@ en:
       assessment_in_progress: Assessment in progress
       assessment_not_started: Assessment not started
       awarded: QTS confirmed
-      awarded_pending_checks: QTS pending
       cannot_start: Cannot start
       completed: Completed
+      confirmed_pending_checks: QTS pending
       declined: Declined
       draft: Draft
       error: Error

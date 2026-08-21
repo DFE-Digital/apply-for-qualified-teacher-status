@@ -22,7 +22,7 @@
 #
 FactoryBot.define do
   factory :trs_trn_request do
-    association :application_form, :awarded_pending_checks
+    association :application_form, :confirmed_pending_checks
 
     request_id { SecureRandom.uuid }
 
