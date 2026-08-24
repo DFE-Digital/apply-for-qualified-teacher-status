@@ -35,5 +35,5 @@ runs:
 
     - name: Install node.js dependencies
       if: ${{ inputs.skip-node == 'false' }}
-      run: yarn install --immutable
+      run: corepack enable && yarn install --immutable
       shell: bash
