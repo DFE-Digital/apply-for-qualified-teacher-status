@@ -3,7 +3,7 @@
 # production: runs the actual app
 
 # Build builder image
-FROM ruby:3.4.8-alpine3.23 as builder
+FROM ruby:3.4.8-alpine3.23 AS builder
 
 WORKDIR /app
 
@@ -16,12 +16,11 @@ RUN apk add --update --no-cache tzdata && \
 RUN apk upgrade --no-cache openssl libssl3 libcrypto3 curl expat
 
 # build-base: dependencies for bundle
-# yarn: node package manager
 # postgresql-dev: postgres driver and libraries
 # git: dependencies for bundle
 # vips-dev: dependencies for ruby-vips (image processing library)
 # poppler-utils: for analysing PDF files
-RUN apk add --update --no-cache build-base yarn postgresql-dev git vips-dev poppler-utils yaml-dev
+RUN apk add --update --no-cache build-base npm postgresql-dev git vips-dev poppler-utils yaml-dev
 
 # Install gems defined in Gemfile
 COPY Gemfile Gemfile.lock ./
@@ -35,8 +34,11 @@ RUN bundler -v && \
     rm -rf /usr/local/bundle/cache
 
 # Install node packages defined in package.json
-COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile --check-files
+COPY package.json yarn.lock .yarnrc.yml ./
+RUN npm install -g corepack@0.35.0  \
+    && corepack enable  \
+    && yarn install --immutable \
+    && yarn cache clean
 
 # Copy all files to /app (except what is defined in .dockerignore)
 COPY . .
@@ -60,7 +62,7 @@ RUN rm -rf node_modules log/* tmp/* /tmp && \
     find /usr/local/bundle/gems -name "*.html" -delete
 
 # Build runtime image
-FROM ruby:3.4.8-alpine3.23 as production
+FROM ruby:3.4.8-alpine3.23 AS production
 
 # The application runs from /app
 WORKDIR /app
