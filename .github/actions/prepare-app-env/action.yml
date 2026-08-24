@@ -34,7 +34,7 @@ runs:
 
     - name: Install yarn
       if: ${{ inputs.skip-node == 'false' }}
-      run: npm install yarn -g
+      run: npm install corepack -g && corepack enable
       shell: bash
 
     - name: Yarn cache
