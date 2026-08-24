@@ -31,7 +31,7 @@ runs:
       uses: actions/setup-node@v7
       with:
         node-version-file: .tool-versions
-        cache: yarn
+        package-manager-cache: false
 
     - run: corepack enable
       if: ${{ inputs.skip-node == 'false' }}
