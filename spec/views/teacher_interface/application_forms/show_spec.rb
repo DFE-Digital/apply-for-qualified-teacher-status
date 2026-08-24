@@ -294,7 +294,7 @@ RSpec.describe "teacher_interface/application_forms/show.html.erb",
     it { is_expected.to match(/Your QTS application has been closed/) }
   end
 
-  context "when awarded pending checks" do
+  context "when confirmed pending checks" do
     let(:application_form) do
       create(:application_form, :with_assessment, :awarded_pending_checks)
     end

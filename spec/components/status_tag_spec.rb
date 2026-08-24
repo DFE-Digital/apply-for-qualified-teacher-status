@@ -14,7 +14,7 @@ RSpec.describe StatusTag::Component, type: :component do
   describe "text" do
     subject(:text) { component.text.strip }
 
-    it { is_expected.to eq("Awarded") }
+    it { is_expected.to eq("QTS confirmed") }
   end
 
   describe "id" do

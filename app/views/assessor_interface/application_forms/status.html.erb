@@ -40,7 +40,7 @@
 <% elsif @view_object.application_form.declined_at.present? %>
   <p class="govuk-body">You do not need to do anything else. The applicant can still request a decision review.</p>
 <% elsif @view_object.application_form.trs_trn_request.present? %>
-  <p class="govuk-body">This status will appear while the award is reconciled with the information in the Teaching Record System (TRS).</p>
+  <p class="govuk-body">This status will appear while the record is reconciled with the information in the Teaching Record System (TRS).</p>
   <p class="govuk-body">Once these checks are complete, the status will change to 'QTS confirmed’ and the applicant will receive the email telling them their QTS has been confirmed. </p>
 <% end %>
 

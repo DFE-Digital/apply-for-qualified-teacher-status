@@ -118,7 +118,7 @@ class ApplicationFormStatusUpdater
         if trs_trn_request.potential_duplicate?
           %w[potential_duplicate_in_dqt]
         else
-          %w[confirmed_pending_checks]
+          %w[awarded_pending_checks]
         end
       elsif assessment.present?
         if preliminary_check?

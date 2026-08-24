@@ -29,7 +29,7 @@ class AssessorInterface::ApplicationFormsShowViewObject
   end
 
   def status
-    application_form.statuses.map(&:humanize).to_sentence
+    application_form.statuses.map { |status| status_label(status) }.to_sentence
   end
 
   def email_used_as_reference_in_this_application_form?
@@ -98,6 +98,10 @@ class AssessorInterface::ApplicationFormsShowViewObject
            :decision_review_requests,
            to: :assessment
   delegate :canonical_email, to: :teacher
+
+  def status_label(status)
+    I18n.t("application_form.status.#{status}", default: status.humanize)
+  end
 
   def management_task_list_section
     return nil if management_tasks.blank?

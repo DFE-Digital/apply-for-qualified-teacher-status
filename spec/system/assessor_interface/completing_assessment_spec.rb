@@ -417,7 +417,7 @@ RSpec.describe "Assessor completing assessment", type: :system do
 
   def then_the_application_form_is_awarded
     expect(assessor_application_page.status_summary.value).to have_text(
-      "Awarded",
+      "QTS confirmed",
     )
   end
 
