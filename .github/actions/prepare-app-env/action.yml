@@ -33,8 +33,9 @@ runs:
         node-version-file: .tool-versions
         package-manager-cache: false
 
-    - run: corepack enable
+    - name: Enable corepack
       if: ${{ inputs.skip-node == 'false' }}
+      run: corepack enable
       shell: bash
 
     - name: Install node.js dependencies
