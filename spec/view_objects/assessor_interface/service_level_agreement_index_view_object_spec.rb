@@ -3,163 +3,10 @@
 require "rails_helper"
 
 RSpec.describe AssessorInterface::ServiceLevelAgreementIndexViewObject do
-  subject(:view_object) { described_class.new(params:) }
+  subject(:view_object) { described_class.new(params:, session:) }
 
   let(:params) { {} }
-
-  let!(:application_form_draft) { create :application_form }
-
-  let!(:application_form_submitted) do
-    create :application_form,
-           :with_assessment,
-           :submitted,
-           working_days_between_submitted_and_today: 45
-  end
-
-  let!(:application_form_with_prioritisation_checks_not_started_within_sla) do
-    create(
-      :application_form,
-      :submitted,
-      :with_assessment,
-      working_days_between_submitted_and_today: 5,
-    ) do |application_form|
-      create :prioritisation_work_history_check,
-             assessment: application_form.assessment
-    end
-  end
-
-  let!(:application_form_with_prioritisation_checks_started_within_sla) do
-    create(
-      :application_form,
-      :submitted,
-      :with_assessment,
-      working_days_between_submitted_and_today: 5,
-    ) do |application_form|
-      application_form.assessment.update!(started_at: Time.current)
-      create :prioritisation_work_history_check,
-             assessment: application_form.assessment
-    end
-  end
-
-  let!(:application_form_with_prioritisation_checks_nearing_sla) do
-    create(
-      :application_form,
-      :submitted,
-      :with_assessment,
-      working_days_between_submitted_and_today: 9,
-    ) do |application_form|
-      create :prioritisation_work_history_check,
-             assessment: application_form.assessment
-    end
-  end
-
-  let!(:application_form_with_prioritisation_checks_breached_sla) do
-    create(
-      :application_form,
-      :submitted,
-      :with_assessment,
-      working_days_between_submitted_and_today: 12,
-    ) do |application_form|
-      create :prioritisation_work_history_check,
-             assessment: application_form.assessment
-    end
-  end
-
-  let!(:application_form_prioritised_incomplete_within_sla) do
-    create :application_form,
-           :submitted,
-           :with_assessment,
-           working_days_between_submitted_and_today: 15 do |application_form|
-      application_form.assessment.update!(prioritised: true)
-    end
-  end
-
-  let!(:application_form_prioritised_complete_within_sla) do
-    create(
-      :application_form,
-      :submitted,
-      :with_assessment,
-      working_days_between_submitted_and_today: 30,
-    ) do |application_form|
-      application_form.assessment.update!(
-        prioritised: true,
-        verification_started_at: Time.current,
-      )
-    end
-  end
-
-  let!(:application_form_prioritised_breached_sla) do
-    create(
-      :application_form,
-      :submitted,
-      :with_assessment,
-      working_days_between_submitted_and_today: 42,
-    ) do |application_form|
-      application_form.assessment.update!(prioritised: true)
-    end
-  end
-
-  let!(:application_form_prioritised_nearing_sla) do
-    create(
-      :application_form,
-      :submitted,
-      :with_assessment,
-      working_days_between_submitted_and_today: 38,
-    ) do |application_form|
-      application_form.assessment.update!(prioritised: true)
-    end
-  end
-
-  let!(:application_form_prioritised_completed_and_after_sla) do
-    create(
-      :application_form,
-      :submitted,
-      :with_assessment,
-      working_days_between_submitted_and_today: 50,
-    ) do |application_form|
-      application_form.assessment.update!(
-        prioritised: true,
-        verification_started_at: Time.current,
-      )
-    end
-  end
-
-  before do
-    # Including some already completed application forms to ensure they never show
-
-    # Awarded prioritised application
-    create(:application_form, :with_assessment, :awarded) do |application_form|
-      application_form.assessment.update!(
-        prioritised: true,
-        verification_started_at: Time.current,
-      )
-    end
-
-    # Declined prioritised application
-    create(:application_form, :with_assessment, :declined) do |application_form|
-      application_form.assessment.update!(prioritised: true)
-    end
-
-    # Withdrawn prioritised application
-    create(
-      :application_form,
-      :with_assessment,
-      :withdrawn,
-    ) do |application_form|
-      application_form.assessment.update!(prioritised: true)
-    end
-
-    # Withdrawn application without starting prioritisation checks
-    create(
-      :application_form,
-      :submitted,
-      :with_assessment,
-      :withdrawn,
-    ) do |application_form|
-      create :prioritisation_work_history_check,
-             assessment: application_form.assessment
-    end
-  end
+  let(:session) { {} }
 
   describe "#application_forms_pagy" do
     subject(:application_forms_pagy) { view_object.application_forms_pagy }
@@ -177,180 +24,250 @@ RSpec.describe AssessorInterface::ServiceLevelAgreementIndexViewObject do
       view_object.application_forms_records
     end
 
-    it "returns all application forms related to the prioritisation checks 10 day SLA" do
-      expect(subject).to contain_exactly(
-        application_form_with_prioritisation_checks_not_started_within_sla,
-        application_form_with_prioritisation_checks_nearing_sla,
-        application_form_with_prioritisation_checks_breached_sla,
-      )
+    let(:scope) { ApplicationForm.all }
+
+    before do
+      allow(Filters::SLA::TenDay).to receive(:apply).and_return(scope)
+      allow(Filters::SLA::FortyDay).to receive(:apply).and_return(scope)
+      allow(Filters::SLA::EightyDay).to receive(:apply).and_return(scope)
+
+      allow(Filters::SLA::BreachStatuses).to receive(:apply).and_return(scope)
+      allow(Filters::SLA::CountryGroupings).to receive(:apply).and_return(scope)
+      allow(Filters::Flags).to receive(:apply).and_return(scope)
     end
 
-    context "when the params includes tab for 40 day SLA" do
-      let(:params) { { tab: "40" } }
+    context "with no SLA param" do
+      it "applies the ten-day filter" do
+        application_forms_records
 
-      it "returns all prioritised application forms related to the 40 day SLA" do
-        expect(subject).to contain_exactly(
-          application_form_prioritised_incomplete_within_sla,
-          application_form_prioritised_breached_sla,
-          application_form_prioritised_nearing_sla,
+        expect(Filters::SLA::TenDay).to have_received(:apply).with(
+          scope:,
+          params:,
+        )
+        expect(Filters::SLA::BreachStatuses).to have_received(:apply).with(
+          scope:,
+          params: {
+            sla: nil,
+          },
+        )
+        expect(Filters::SLA::CountryGroupings).to have_received(:apply).with(
+          scope:,
+          params: {
+            sla: nil,
+          },
+        )
+        expect(Filters::Flags).to have_received(:apply).with(
+          scope:,
+          params: {
+            sla: nil,
+          },
         )
       end
     end
-  end
 
-  describe "#breached_sla_for_starting_prioritisation_checks_count" do
-    subject(:breached_sla_for_starting_prioritisation_checks_count) do
-      view_object.breached_sla_for_starting_prioritisation_checks_count
-    end
+    context "when sla in params is 80" do
+      let(:params) { { sla: "80" } }
 
-    it { is_expected.to eq(1) }
-  end
+      it "applies the eighty-day filter" do
+        application_forms_records
 
-  describe "#nearing_sla_for_starting_prioritisation_checks_count" do
-    subject(:nearing_sla_for_starting_prioritisation_checks_count) do
-      view_object.nearing_sla_for_starting_prioritisation_checks_count
-    end
-
-    it { is_expected.to eq(1) }
-  end
-
-  describe "#breached_sla_for_completing_prioritised_applications_count" do
-    subject(:breached_sla_for_completing_prioritised_applications_count) do
-      view_object.breached_sla_for_completing_prioritised_applications_count
-    end
-
-    it { is_expected.to eq(1) }
-  end
-
-  describe "#nearing_sla_for_completing_prioritised_applications_count" do
-    subject(:nearing_sla_for_completing_prioritised_applications_count) do
-      view_object.nearing_sla_for_completing_prioritised_applications_count
-    end
-
-    it { is_expected.to eq(1) }
-  end
-
-  describe "#sla_start_prioritisation_checks_tag_colour" do
-    subject(:sla_start_prioritisation_checks_tag_colour) do
-      view_object.sla_start_prioritisation_checks_tag_colour(application_form)
-    end
-
-    context "when draft application form" do
-      let(:application_form) { application_form_draft }
-
-      it { is_expected.to be_nil }
-    end
-
-    context "when submitted non-prioritised application form" do
-      let(:application_form) { application_form_submitted }
-
-      it { is_expected.to be_nil }
-    end
-
-    context "when submitted application form going through prioritisation checks not started and within SLA" do
-      let(:application_form) do
-        application_form_with_prioritisation_checks_not_started_within_sla
+        expect(Filters::SLA::EightyDay).to have_received(:apply).with(
+          scope:,
+          params: {
+          },
+        )
+        expect(Filters::SLA::BreachStatuses).to have_received(:apply).with(
+          scope:,
+          params:,
+        )
+        expect(Filters::SLA::CountryGroupings).to have_received(:apply).with(
+          scope:,
+          params:,
+        )
+        expect(Filters::Flags).to have_received(:apply).with(scope:, params:)
       end
-
-      it { is_expected.to eq("green") }
     end
 
-    context "when submitted application form going through prioritisation checks started and within SLA" do
-      let(:application_form) do
-        application_form_with_prioritisation_checks_started_within_sla
-      end
+    context "when sla in params is 40" do
+      let(:params) { { sla: "40" } }
 
-      it { is_expected.to be_nil }
+      it "applies the forty-day filter" do
+        application_forms_records
+
+        expect(Filters::SLA::FortyDay).to have_received(:apply).with(
+          scope:,
+          params: {
+          },
+        )
+        expect(Filters::SLA::BreachStatuses).to have_received(:apply).with(
+          scope:,
+          params:,
+        )
+        expect(Filters::SLA::CountryGroupings).to have_received(:apply).with(
+          scope:,
+          params:,
+        )
+        expect(Filters::Flags).to have_received(:apply).with(scope:, params:)
+      end
     end
 
-    context "when submitted application form going through prioritisation checks not started and nearing SLA" do
-      let(:application_form) do
-        application_form_with_prioritisation_checks_nearing_sla
+    context "when sla in params is 10" do
+      let(:params) { { sla: "10" } }
+
+      it "applies the ten-day filter" do
+        application_forms_records
+
+        expect(Filters::SLA::TenDay).to have_received(:apply).with(
+          scope:,
+          params: {
+          },
+        )
+        expect(Filters::SLA::BreachStatuses).to have_received(:apply).with(
+          scope:,
+          params:,
+        )
+        expect(Filters::SLA::CountryGroupings).to have_received(:apply).with(
+          scope:,
+          params:,
+        )
+        expect(Filters::Flags).to have_received(:apply).with(scope:, params:)
       end
-
-      it { is_expected.to eq("yellow") }
-    end
-
-    context "when submitted application form going through prioritisation checks not started and breached SLA" do
-      let(:application_form) do
-        application_form_with_prioritisation_checks_breached_sla
-      end
-
-      it { is_expected.to eq("red") }
-    end
-
-    context "when submitted application form going over SLA but has already been prioritised" do
-      let(:application_form) do
-        application_form_prioritised_incomplete_within_sla
-      end
-
-      it { is_expected.to be_nil }
     end
   end
 
-  describe "#sla_completed_prioritised_tag_colour" do
-    subject(:sla_completed_prioritised_tag_colour) do
-      view_object.sla_completed_prioritised_tag_colour(application_form)
+  describe "#sla_working_day_tag_colour" do
+    subject(:sla_working_day_tag_colour) do
+      view_object.sla_working_day_tag_colour(application_form)
     end
 
-    context "when draft application form" do
-      let(:application_form) { application_form_draft }
+    context "with no SLA param that defaults to the ten-day threshold" do
+      context "when working days is at the threshold" do
+        let(:application_form) do
+          build :application_form, working_days_between_submitted_and_today: 10
+        end
 
-      it { is_expected.to be_nil }
-    end
-
-    context "when submitted non-prioritised application form" do
-      let(:application_form) { application_form_submitted }
-
-      it { is_expected.to be_nil }
-    end
-
-    context "when submitted application form going through prioritisation checks not started and breached SLA" do
-      let(:application_form) do
-        application_form_with_prioritisation_checks_breached_sla
+        it { is_expected.to eq("red") }
       end
 
-      before do
-        application_form.update!(working_days_between_submitted_and_today: 50)
+      context "when working days is beyond the threshold" do
+        let(:application_form) do
+          build :application_form, working_days_between_submitted_and_today: 15
+        end
+
+        it { is_expected.to eq("red") }
       end
 
-      it { is_expected.to be_nil }
-    end
+      context "when working days are below the threshold" do
+        let(:application_form) do
+          build :application_form, working_days_between_submitted_and_today: 9
+        end
 
-    context "when submitted prioritised application form incomplete within SLA" do
-      let(:application_form) do
-        application_form_prioritised_incomplete_within_sla
+        it { is_expected.to eq("yellow") }
       end
 
-      it { is_expected.to eq("green") }
+      context "when working days is nil" do
+        let(:application_form) { build :application_form }
+
+        it { is_expected.to eq("yellow") }
+      end
     end
 
-    context "when submitted prioritised application form complete within SLA" do
-      let(:application_form) do
-        application_form_prioritised_complete_within_sla
+    context "with the forty-day SLA" do
+      let(:params) { { sla: "40" } }
+
+      context "when working days is at the threshold" do
+        let(:application_form) do
+          build :application_form, working_days_between_submitted_and_today: 40
+        end
+
+        it { is_expected.to eq("red") }
       end
 
-      it { is_expected.to be_nil }
-    end
+      context "when working days is beyond the threshold" do
+        let(:application_form) do
+          build :application_form, working_days_between_submitted_and_today: 45
+        end
 
-    context "when submitted prioritised application form breached SLA" do
-      let(:application_form) { application_form_prioritised_breached_sla }
-
-      it { is_expected.to eq("red") }
-    end
-
-    context "when submitted prioritised application form complete nearing SLA" do
-      let(:application_form) { application_form_prioritised_nearing_sla }
-
-      it { is_expected.to eq("yellow") }
-    end
-
-    context "when submitted prioritised application form complete and after SLA" do
-      let(:application_form) do
-        application_form_prioritised_completed_and_after_sla
+        it { is_expected.to eq("red") }
       end
 
-      it { is_expected.to be_nil }
+      context "when working days are below the threshold" do
+        let(:application_form) do
+          build :application_form, working_days_between_submitted_and_today: 39
+        end
+
+        it { is_expected.to eq("yellow") }
+      end
+
+      context "when working days is nil" do
+        let(:application_form) { build :application_form }
+
+        it { is_expected.to eq("yellow") }
+      end
+    end
+
+    context "with the eighty-day SLA" do
+      let(:params) { { sla: "80" } }
+
+      context "when working days are at the threshold" do
+        let(:application_form) do
+          build :application_form, working_days_between_submitted_and_today: 80
+        end
+
+        it { is_expected.to eq("red") }
+      end
+
+      context "when working days are at or beyond the threshold" do
+        let(:application_form) do
+          build :application_form, working_days_between_submitted_and_today: 85
+        end
+
+        it { is_expected.to eq("red") }
+      end
+
+      context "when working days are below the threshold" do
+        let(:application_form) do
+          build :application_form, working_days_between_submitted_and_today: 79
+        end
+
+        it { is_expected.to eq("yellow") }
+      end
+
+      context "when working days is nil" do
+        let(:application_form) { build :application_form }
+
+        it { is_expected.to eq("yellow") }
+      end
+    end
+  end
+
+  describe "#breach_statuses_options" do
+    subject(:breach_statuses_options) { view_object.breach_statuses_options }
+
+    it do
+      expect(subject).to eq(
+        [
+          OpenStruct.new(id: "nearing", name: "Nearing"),
+          OpenStruct.new(id: "breached", name: "Breached"),
+        ],
+      )
+    end
+  end
+
+  describe "#country_groupings_options" do
+    subject(:country_groupings_options) do
+      view_object.country_groupings_options
+    end
+
+    it do
+      expect(subject).to eq(
+        [
+          OpenStruct.new(id: "uk_and_gibraltar", name: "UK & Gibraltar"),
+          OpenStruct.new(id: "eu", name: "EU"),
+          OpenStruct.new(id: "efta", name: "EFTA"),
+          OpenStruct.new(id: "rest_of_world", name: "Rest of the world"),
+        ],
+      )
     end
   end
 end

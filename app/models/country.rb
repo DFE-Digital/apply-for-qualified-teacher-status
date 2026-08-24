@@ -34,5 +34,16 @@ class Country < ApplicationRecord
   CODES_IN_EUROPEAN_ECONOMIC_AREA =
     YAML.load(File.read("lib/countries-in-european-economic-area.yaml"))
 
+  CODES_IN_EU = YAML.load(File.read("lib/countries-in-eu.yaml"))
+
+  CODES_IN_EFTA = %w[CH IS LI NO].freeze
+
+  CODES_IN_UK = %w[GB-ENG GB-NIR GB-WLS GB-SCT].freeze
+
+  GIBRALTAR_CODE = "GI"
+
+  CODES_IN_REST_OF_WORLD =
+    CODES - CODES_IN_EU - CODES_IN_EFTA - CODES_IN_UK - [GIBRALTAR_CODE]
+
   validates :code, inclusion: { in: CODES }
 end

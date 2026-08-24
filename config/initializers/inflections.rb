@@ -10,5 +10,6 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.acronym "TRN"
   inflect.acronym "TRS"
   inflect.acronym "CSV"
+  inflect.acronym "SLA"
   inflect.uncountable %w[staff]
 end

@@ -12,7 +12,16 @@ Rails.application.routes.draw do
   namespace :assessor_interface, path: "/assessor" do
     root to: redirect("/assessor/applications")
 
-    resources :service_level_agreements, only: %i[index]
+    resources :service_level_agreements,
+              path: "service-level-agreements",
+              only: %i[index] do
+      collection do
+        get "totals", to: "service_level_agreements#totals"
+
+        post "filters/apply", to: "service_level_agreements#apply_filters"
+        get "filters/clear", to: "service_level_agreements#clear_filters"
+      end
+    end
 
     resources :staff, only: %i[index edit update] do
       member do
