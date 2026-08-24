@@ -31,9 +31,6 @@ class Country < ApplicationRecord
       CountryCode.from_location(row.last)
     end
 
-  CODES_IN_EUROPEAN_ECONOMIC_AREA =
-    YAML.load(File.read("lib/countries-in-european-economic-area.yaml"))
-
   CODES_IN_EU = YAML.load(File.read("lib/countries-in-eu.yaml"))
 
   CODES_IN_EFTA = %w[CH IS LI NO].freeze
