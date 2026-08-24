@@ -33,7 +33,11 @@ runs:
         node-version-file: .tool-versions
         cache: yarn
 
+    - run: corepack enable
+      if: ${{ inputs.skip-node == 'false' }}
+      shell: bash
+
     - name: Install node.js dependencies
       if: ${{ inputs.skip-node == 'false' }}
-      run: corepack enable && yarn install --immutable
+      run: yarn install --immutable
       shell: bash
