@@ -23,8 +23,8 @@ A service that allows international teachers to apply for qualified teacher stat
 ## Dependencies
 
 - Ruby 3.x
-- Node.js 16.x
-- Yarn 1.22.x
+- Node.js 24.x
+- Yarn 4.18.0
 - PostgreSQL 17.x
 - Terraform 1.5.x
 - Kubectl 1.27.x
@@ -54,7 +54,6 @@ brew install asdf # Mac-specific
 asdf plugin add ruby
 asdf plugin add postgres # Unless you are managing postgres yourself
 asdf plugin add nodejs
-asdf plugin add yarn
 asdf plugin add terraform
 asdf plugin add azure-cli
 asdf plugin add kubectl
