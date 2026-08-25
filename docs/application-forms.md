@@ -81,7 +81,7 @@ An application finishes with three possible states:
 
 ### Awarded
 
-Only if the application passes the assessment and verification stage can the assessor award QTS to the applicant.
+Only if the application passes the assessment and verification stage can the assessor confirm QTS to the applicant.
 
 ### Declined
 
