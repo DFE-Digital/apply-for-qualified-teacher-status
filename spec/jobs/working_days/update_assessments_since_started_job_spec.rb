@@ -18,12 +18,26 @@ RSpec.describe WorkingDays::UpdateAssessmentsSinceStartedJob, type: :job do
     end
 
     let(:not_started_assessment) { create(:assessment) }
+
+    let(:completed_application) { create :application_form, :awarded }
+    let(:completed_assessment) do
+      create(:assessment, application_form: completed_application)
+    end
+
     let(:friday_assessment) { create(:assessment, started_at: friday_previous) }
 
     it "ignores not started assessments" do
       expect { perform }.not_to(
         change do
           not_started_assessment.reload.working_days_between_started_and_today
+        end,
+      )
+    end
+
+    it "ignores assessments with completed application form" do
+      expect { perform }.not_to(
+        change do
+          completed_assessment.reload.working_days_between_started_and_today
         end,
       )
     end
