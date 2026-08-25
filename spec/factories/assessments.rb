@@ -57,26 +57,31 @@ FactoryBot.define do
     end
 
     trait :award do
+      started
       recommendation { "award" }
       recommended_at { Time.zone.now }
     end
 
     trait :decline do
+      started
       recommendation { "decline" }
       recommended_at { Time.zone.now }
     end
 
     trait :request_further_information do
+      started
       recommendation { "request_further_information" }
       recommended_at { Time.zone.now }
     end
 
     trait :review do
+      started
       recommendation { "review" }
       recommended_at { Time.zone.now }
     end
 
     trait :verify do
+      started
       recommendation { "verify" }
       verification_started_at { Time.zone.now }
       recommended_at { Time.zone.now }
