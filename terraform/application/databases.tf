@@ -15,4 +15,5 @@ module "postgres" {
   azure_extensions         = ["pg_stat_statements", "pgcrypto"]
   azure_maintenance_window = var.azure_maintenance_window
   server_version           = var.postgres_version
+  use_airbyte              = var.pg_airbyte_enabled
 }

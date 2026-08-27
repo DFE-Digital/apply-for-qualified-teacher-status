@@ -107,3 +107,6 @@ variable "postgres_version" { default = 17 }
 locals {
   environment_variables = yamldecode(file("${path.module}/config/${var.app_environment}/variables.yml"))
 }
+
+# pg_airbyte_enabled used in the postgres module
+variable "pg_airbyte_enabled" { default = false }
