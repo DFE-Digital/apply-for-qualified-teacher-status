@@ -214,12 +214,10 @@
     - updated_at
   :feedback_submissions:
     - id
-    - application_form_id
     - application_status
     - created_at
     - comment
     - overall_experience
-    - teacher_id
     - updated_at
   :further_information_requests:
     - assessment_id

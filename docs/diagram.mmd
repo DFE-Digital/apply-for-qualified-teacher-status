@@ -224,11 +224,9 @@ erDiagram
 		string name
 	}
 	FeedbackSubmission {
-		integer application_form_id FK
 		string application_status
 		text comment
 		string overall_experience
-		integer teacher_id FK
 	}
 	FurtherInformationRequest {
 		integer assessment_id FK
@@ -670,8 +668,6 @@ erDiagram
 	PrioritisationReferenceRequest o|--}o EmailDelivery : ""
 	FurtherInformationRequest o|--}o EmailDelivery : ""
 	Staff ||--}o ExportAudit : ""
-	Teacher o|--}o FeedbackSubmission : ""
-	ApplicationForm o|--}o FeedbackSubmission : ""
 	FurtherInformationRequest o|..|o ApplicationForm : ""
 	FurtherInformationRequest ||--}o FurtherInformationRequestItem : ""
 	FurtherInformationRequestItem o|..|o Assessment : ""

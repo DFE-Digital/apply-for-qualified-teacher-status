@@ -4,8 +4,6 @@ class FeedbackSubmissionForm
   include ActiveModel::Model
   include ActiveModel::Attributes
 
-  attr_accessor :teacher, :application_form
-
   attribute :application_status
   attribute :overall_experience
   attribute :comment
@@ -21,8 +19,6 @@ class FeedbackSubmissionForm
       application_status:,
       overall_experience:,
       comment:,
-      application_form:,
-      teacher:,
     )
 
     true

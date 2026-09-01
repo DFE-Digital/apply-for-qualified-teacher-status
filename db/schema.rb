@@ -322,15 +322,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_31_110910) do
   end
 
   create_table "feedback_submissions", force: :cascade do |t|
-    t.bigint "application_form_id"
     t.string "application_status", null: false
     t.text "comment"
     t.datetime "created_at", null: false
     t.string "overall_experience", null: false
-    t.bigint "teacher_id"
     t.datetime "updated_at", null: false
-    t.index ["application_form_id"], name: "index_feedback_submissions_on_application_form_id"
-    t.index ["teacher_id"], name: "index_feedback_submissions_on_teacher_id"
   end
 
   create_table "further_information_request_items", force: :cascade do |t|
@@ -927,8 +923,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_31_110910) do
   add_foreign_key "email_deliveries", "prioritisation_reference_requests"
   add_foreign_key "email_deliveries", "reference_requests"
   add_foreign_key "export_audits", "staff", column: "exported_by_id"
-  add_foreign_key "feedback_submissions", "application_forms"
-  add_foreign_key "feedback_submissions", "teachers"
   add_foreign_key "further_information_request_items", "work_histories"
   add_foreign_key "notes", "application_forms"
   add_foreign_key "notes", "eligibility_domains"
