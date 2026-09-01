@@ -384,7 +384,7 @@ __metadata:
     "@hotwired/stimulus": "npm:^3.2.2"
     "@ministryofjustice/frontend": "npm:^3.3.1"
     "@prettier/plugin-ruby": "npm:^4.0.4"
-    dfe-autocomplete: "github:DFE-Digital/dfe-autocomplete"
+    dfe-autocomplete: "github:DFE-Digital/dfe-autocomplete#v1.0.0"
     esbuild: "npm:^0.28.2"
     govuk-country-and-territory-autocomplete: "npm:^2.0.0"
     govuk-frontend: "npm:^6.4.0"
@@ -432,12 +432,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dfe-autocomplete@github:DFE-Digital/dfe-autocomplete":
-  version: 0.2.1
-  resolution: "dfe-autocomplete@https://github.com/DFE-Digital/dfe-autocomplete.git#commit=c252e0182848f15c995b666932ed447132fe028d"
+"dfe-autocomplete@github:DFE-Digital/dfe-autocomplete#v1.0.0":
+  version: 1.0.0
+  resolution: "dfe-autocomplete@https://github.com/DFE-Digital/dfe-autocomplete.git#commit=b05eb234268ba7b08629ffe6c4e01920260a5666"
   dependencies:
     accessible-autocomplete: "npm:^3.0.1"
-  checksum: 10c0/623bcca708b33d3f17b7e1be985b9d9402f9eac8aac11751fee0950ac026866409c4ce710fd8c3215ea1c14294679be333e97c26b45b37a85081becce60c51cd
+  peerDependencies:
+    "@hotwired/stimulus": ">=3.0.0"
+  peerDependenciesMeta:
+    "@hotwired/stimulus":
+      optional: true
+  checksum: 10c0/5e4aecaf1a3aa20a37e2cd41a20dba2d21678412623739a4c270624e073e466bd8a3565e3cac1325bb2f0b7265cf7711c1767fb9e3382f029aefa0274fa5a083
   languageName: node
   linkType: hard
 
