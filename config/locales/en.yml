@@ -4,6 +4,10 @@ en:
     success: Success
     warning: Warning
 
+  application_form:
+    status:
+      awarded_pending_checks: "confirmed pending checks"
+
   service:
     name:
       assessor: Manage applications for qualified teacher services (QTS)

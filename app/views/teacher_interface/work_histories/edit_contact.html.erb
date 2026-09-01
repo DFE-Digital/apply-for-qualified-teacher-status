@@ -24,7 +24,7 @@
 
   <%= govuk_warning_text(text: "If your references do not meet all of the above requirements, you are not eligible to apply for QTS in England.") %>
 
-  <p class="govuk-body">We’ll contact this person before awarding QTS to check what you’ve told us. You may want to let them know that you’ve put them forward as a reference.</p>
+  <p class="govuk-body">We’ll contact this person to check what you’ve told us before confirming your QTS. You may want to let them know that you’ve put them forward as a reference.</p>
 
   <% if FeatureFlags::FeatureFlag.active?(:email_domains_for_referees) %>
     <%= govuk_details(summary_text: "About your references’ email addresses") do %>

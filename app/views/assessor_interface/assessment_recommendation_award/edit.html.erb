@@ -6,12 +6,12 @@
 
   <h1 class="govuk-heading-xl"><%= t(".heading") %></h1>
 
-  <p class="govuk-body-l">You’re about to award QTS to <%= application_form_full_name(@application_form) %>.</p>
+  <p class="govuk-body-l">You’re about to confirm QTS for <%= application_form_full_name(@application_form) %>.</p>
 
   <% if (important_notes = @important_notes).present? %>
     <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
 
-    <h2 class="govuk-heading-m">Important notes before you award QTS</h2>
+    <h2 class="govuk-heading-m">Important notes before you confirm QTS</h2>
 
     <ul class="govuk-list govuk-list--bullet">
       <% important_notes.each do |important_note| %>
@@ -22,7 +22,7 @@
     <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
   <% end %>
 
-  <p class="govuk-body">If you’re happy to proceed, read the declaration and if you want to award, select ‘Accept and award QTS’.</p>
+  <p class="govuk-body">If you’re happy to proceed, read the declaration and if you want to confirm, select ‘Accept and confirm QTS’.</p>
   <p class="govuk-body"><%= t("assessor_interface.assessment_recommendation.back_instruction") %></p>
 
   <%= f.govuk_check_boxes_fieldset :declaration, multiple: false, small: true do %>
@@ -30,10 +30,10 @@
                           true,
                           false,
                           link_errors: true,
-                          label: { text: "I’ve reviewed this QTS application and I’m satisfied that the applicant meets all the requirements. I understand that by continuing, the applicant will be awarded qualified teacher status." } %>
+                          label: { text: "I’ve reviewed this QTS application and I’m satisfied that the applicant meets all the requirements. I understand that by continuing, the applicant’s qualified teacher status will be confirmed." } %>
   <% end %>
 
-  <%= f.govuk_submit "Accept and award QTS" do %>
+  <%= f.govuk_submit "Accept and confirm QTS" do %>
     <%= render "shared/assessor_interface/cancel_link" %>
   <% end %>
 <% end %>

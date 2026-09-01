@@ -55,7 +55,7 @@ en:
 
     assessment_recommendation_award:
       edit:
-        heading: You’re about to award QTS
+        heading: You’re about to confirm QTS
         important_notes:
           invalid_references: This application has one or more invalid references.
           induction_required: This applicant will need to do a statutory induction period.
@@ -64,8 +64,8 @@ en:
       edit_age_range_subjects:
         heading: Edit age range and subjects
       edit_confirm:
-        legend: Award this QTS application?
-        hint: Select ‘Yes’ to confirm you want to award this application. If you’re not sure, or you need to check something, select ‘No’.
+        legend: Confirm QTS for this application?
+        hint: Select ‘Yes’ to confirm QTS for this applicant. If you’re not sure, or you need to check something, select ‘No’.
 
     assessment_recommendation_decline:
       edit:
@@ -140,7 +140,7 @@ en:
         teaching_qualification_1_year: the teaching qualification lasted at least 1 academic year
         teaching_qualification_pedagogy: teaching qualification had enough focus on pedagogy (75% of 1-year course, 33% of 3-year course, 25% of 4-year course, 20% of 5-year course)
         teaching_qualification_subjects_criteria: the teaching qualification specifically qualifies them to teach either Maths, Science, Biology, Chemistry, Physics, French, German, Italian, Japanese, Latin, Mandarin, Russian or Spanish (OR they have a teaching qualification for children aged anywhere between 11 and 16 years AND at least 50% of their degree was in one of those subjects)
-        teaching_qualifications_completed_in_eligible_country: teaching qualifications were completed in an eligible country (for example, we cannot award QTS where they applied through Spain, but their teaching was completed in South Africa)
+        teaching_qualifications_completed_in_eligible_country: teaching qualifications were completed in an eligible country (for example, we cannot confirm QTS where they applied through Spain, but their teaching was completed in South Africa)
         verify_school_details: the school details to verify what the applicant has entered
         work_history_references: that the applicant has provided a reference for each role with an acceptable email address
         written_statement_completion_date: induction letter shows the completion date (if applicable)
@@ -198,7 +198,7 @@ en:
           qualified_to_teach_children_11_to_16: The applicant is not qualified to teach children aged aged anywhere between 11 and 16 years.
           registration_number: We could not find the applicant’s reference number, or the number was in the wrong format. The applicant will need to supply the number again.
           registration_number_alternative: We could not find the applicant’s reference number. The applicant will need to upload written proof of recognition as a teacher instead.
-          satisfactory_evidence_work_history: The information provided on work history is not sufficient to award QTS.
+          satisfactory_evidence_work_history: The information provided on work history is not sufficient to confirm QTS.
           school_details_cannot_be_verified: We could not verify school details entered by the applicant.
           special_education_only: Applicant holds a Special Educational Needs and Disabilities (SEND) only qualification and is not qualified to teach in mainstream education.
           suitability: The applicant does not meet the suitability to teach requirements.
@@ -245,7 +245,7 @@ en:
     email_delivery_failures:
       index:
         mailer_action_names:
-          application_awarded: Awarded
+          application_awarded: QTS confirmed
           application_declined: Declined
           application_from_ineligible_country: Country no longer accepted
           application_not_submitted: Draft reminder
