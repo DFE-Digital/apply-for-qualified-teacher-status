@@ -109,11 +109,8 @@ module ApplicationFormHelper
         value: {
           text:
             pluralize(
-              if application_form.completed_stage?
-                application_form.working_days_between_submitted_and_completed
-              else
-                application_form.working_days_between_submitted_and_today
-              end,
+              application_form.working_days_between_submitted_and_completed ||
+                application_form.working_days_between_submitted_and_today,
               "day",
             ),
         },

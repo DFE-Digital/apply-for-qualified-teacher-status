@@ -18,7 +18,6 @@ RSpec.describe ApplicationFormHelper do
       family_name: "Family",
       verifier: create(:staff),
       working_days_between_submitted_and_today: 10,
-      working_days_between_submitted_and_completed: 20,
     )
   end
 
