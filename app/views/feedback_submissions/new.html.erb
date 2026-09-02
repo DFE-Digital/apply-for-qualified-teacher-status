@@ -1,2 +1,31 @@
-<h1>FeedbackSubmissions#new</h1>
-<p>Find me in app/views/feedback_submissions/new.html.erb</p>
+<% content_for :page_title, "Give feedback on Apply for QTS in England", error: @form.errors.any? %>
+
+<%= form_with model: @form, url: %i[feedback_submissions], data: { controller: "disable-submit", action: "submit->disable-submit#disableSubmitButton" } do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <h1 class="govuk-heading-xl">Give feedback on Apply for QTS in England</h1>
+
+  <p class="govuk-body">You can use this form to give feedback on the Apply for QTS in England service. If you need to ask a question or report a problem with this service, use the <%= govuk_link_to "Get help form", new_support_request_path %>.</p>
+
+<%= f.govuk_radio_buttons_fieldset :application_status do %>
+  <%= f.govuk_radio_button :application_status, :not_started %>
+  <%= f.govuk_radio_button :application_status, :submitting_an_application %>
+  <%= f.govuk_radio_button :application_status, :application_submitted %>
+  <%= f.govuk_radio_button :application_status, :confirmed_qts %>
+  <%= f.govuk_radio_button :application_status, :unsuccessful %>
+  <%= f.govuk_radio_divider %>
+  <%= f.govuk_radio_button :application_status, :not_an_applicant %>
+<% end %>
+
+<%= f.govuk_radio_buttons_fieldset :overall_experience do %>
+  <%= f.govuk_radio_button :overall_experience, :highly_satisfied %>
+  <%= f.govuk_radio_button :overall_experience, :somewhat_satisfied %>
+  <%= f.govuk_radio_button :overall_experience, :neither_satisfied_nor_dissatisfied %>
+  <%= f.govuk_radio_button :overall_experience, :dissatisfied %>
+  <%= f.govuk_radio_button :overall_experience, :very_dissatisfied %>
+<% end %>
+
+<%= f.govuk_text_area :comment, max_chars: 2000, label: { size: 'm' } %>
+
+<%= f.govuk_submit "Send feedback", data: { disable_submit_target: "submitButton" } %>
+<% end %>
