@@ -39,6 +39,8 @@ en:
         location: This means you have all the qualifications needed to teach in a state school.<br /><br />You’ll need to show that you completed your teaching training at level 6 or equivalent in the country that you select.
       eligibility_interface_region_form:
         region_id: This means you have all the qualifications needed to teach in a state school.<br /><br />You’ll need to show that you completed your teaching training at level 6 or equivalent in the country that you select.
+      feedback_submission_form:
+        comment: Do not include any personal or financial information
       teacher:
         email: We’ll use this to send you an email with a link to continue with your QTS application. Do not use a work or university email that you might lose access to.
       teacher_interface_add_another_qualification_form:
@@ -243,6 +245,21 @@ en:
         accepted_tests: Accepted tests (we can accept)
         check_url: Check website
         other_information: Other information
+      feedback_submission_form:
+        comment: How could we improve this service? (optional)
+        application_status_options:
+          not_started: "I have not started my application yet"
+          submitting_an_application: "I have started my application but not submitted it"
+          application_submitted: "I have submitted my application"
+          confirmed_qts: "My QTS has been confirmed"
+          unsuccessful: "My application was unsuccessful"
+          not_an_applicant: "I'm not an applicant"
+        overall_experience_options:
+          highly_satisfied: "Highly satisfied"
+          somewhat_satisfied: "Somewhat satisfied"
+          neither_satisfied_nor_dissatisfied: "Neither satisfied nor dissatisfied"
+          dissatisfied: "Dissatisfied"
+          very_dissatisfied: "Very dissatisfied"
       teacher:
         email: Email address
       teacher_interface_add_another_qualification_form:
@@ -476,6 +493,9 @@ en:
         work_experience: How long have you worked as a recognised teacher?
       eligibility_interface_work_experience_referee_form:
         work_experience_referee: Do your employment references meet all of the following requirements?
+      feedback_submission_form:
+        application_status: What is the current status of your application?
+        overall_experience: How would you rate your overall experience of using this service?
       teacher_interface_add_another_qualification_form:
         add_another: Do you want to add another qualification?
       teacher_interface_add_another_upload_form:
