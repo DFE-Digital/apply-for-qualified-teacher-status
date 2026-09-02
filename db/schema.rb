@@ -322,10 +322,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_31_110910) do
   end
 
   create_table "feedback_submissions", force: :cascade do |t|
-    t.string "application_status", null: false
+    t.string "application_status"
     t.text "comment"
     t.datetime "created_at", null: false
-    t.string "overall_experience", null: false
+    t.string "overall_experience"
+    t.datetime "submitted_at"
     t.datetime "updated_at", null: false
   end
 

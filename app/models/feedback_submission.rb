@@ -5,9 +5,10 @@
 # Table name: feedback_submissions
 #
 #  id                 :bigint           not null, primary key
-#  application_status :string           not null
+#  application_status :string
 #  comment            :text
-#  overall_experience :string           not null
+#  overall_experience :string
+#  submitted_at       :datetime
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #

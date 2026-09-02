@@ -218,6 +218,7 @@
     - created_at
     - comment
     - overall_experience
+    - submitted_at
     - updated_at
   :further_information_requests:
     - assessment_id
