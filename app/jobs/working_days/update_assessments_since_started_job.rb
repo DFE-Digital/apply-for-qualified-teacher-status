@@ -4,6 +4,8 @@ class WorkingDays::UpdateAssessmentsSinceStartedJob < WorkingDays::BaseJob
   def perform
     Assessment
       .where.not(started_at: nil)
+      .joins(:application_form)
+      .merge(ApplicationForm.assessable)
       .find_each do |assessment|
         assessment.update!(
           working_days_between_started_and_today:

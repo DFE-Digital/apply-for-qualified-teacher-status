@@ -82,9 +82,10 @@ class RollbackAssessment
     end
 
     application_form.update!(working_days_between_submitted_and_completed: nil)
-    application_form.assessment.update!(
-      working_days_between_started_and_completed: nil,
-    )
+    assessment.update!(working_days_between_started_and_completed: nil)
+
+    application_form.update!(working_days_between_submitted_and_today:)
+    assessment.update!(working_days_between_started_and_today:)
 
     ApplicationFormStatusUpdater.call(application_form:, user:)
   end
@@ -108,6 +109,28 @@ class RollbackAssessment
   def latest_further_information_request
     @latest_further_information_request ||=
       assessment.latest_further_information_request
+  end
+
+  def working_days_between_submitted_and_today
+    calendar.business_days_between(application_form.submitted_at, today)
+  end
+
+  def working_days_between_started_and_today
+    return if assessment.started_at.nil?
+
+    calendar.business_days_between(assessment.started_at, today)
+  end
+
+  def calendar
+    @calendar ||=
+      Business::Calendar.new(
+        holidays:
+          DfE::ReferenceData::BankHolidays::BANK_HOLIDAYS.all.map(&:date),
+      )
+  end
+
+  def today
+    @today ||= Time.zone.now
   end
 
   class InvalidState < StandardError

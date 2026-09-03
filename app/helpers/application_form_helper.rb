@@ -99,12 +99,18 @@ module ApplicationFormHelper
       },
       {
         key: {
-          text: I18n.t("application_form.summary.days_since_submission"),
+          text:
+            if application_form.completed_stage?
+              I18n.t("application_form.summary.days_completed_in")
+            else
+              I18n.t("application_form.summary.days_since_submission")
+            end,
         },
         value: {
           text:
             pluralize(
-              application_form.working_days_between_submitted_and_today,
+              application_form.working_days_between_submitted_and_completed ||
+                application_form.working_days_between_submitted_and_today,
               "day",
             ),
         },

@@ -18,6 +18,7 @@ RSpec.describe WorkingDays::UpdateApplicationsSinceSubmissionJob, type: :job do
     end
 
     let(:draft_application_form) { create(:application_form) }
+    let(:completed_application_form) { create(:application_form, :awarded) }
     let(:tuesday_application_form) do
       create(:application_form, :submitted, submitted_at: Date.new(2023, 5, 2))
     end
@@ -26,6 +27,14 @@ RSpec.describe WorkingDays::UpdateApplicationsSinceSubmissionJob, type: :job do
       expect { perform }.not_to(
         change do
           draft_application_form.reload.working_days_between_submitted_and_today
+        end,
+      )
+    end
+
+    it "ignores completed application forms" do
+      expect { perform }.not_to(
+        change do
+          completed_application_form.reload.working_days_between_submitted_and_today
         end,
       )
     end

@@ -17,6 +17,7 @@ RSpec.describe ApplicationFormHelper do
       given_names: "Given",
       family_name: "Family",
       verifier: create(:staff),
+      working_days_between_submitted_and_today: 10,
     )
   end
 
@@ -86,7 +87,7 @@ RSpec.describe ApplicationFormHelper do
               text: "Working days since submission",
             },
             value: {
-              text: "0 days",
+              text: "10 days",
             },
           },
           {
@@ -228,6 +229,119 @@ RSpec.describe ApplicationFormHelper do
             row[:key][:text] == "State/territory trained in"
           end,
         ).to be_nil
+      end
+    end
+
+    context "when application has completed assessment" do
+      let(:application_form) do
+        create(
+          :application_form,
+          :awarded,
+          region:,
+          reference: "0000001",
+          submitted_at: Date.new(2020, 1, 1),
+          given_names: "Given",
+          family_name: "Family",
+          verifier: create(:staff),
+          working_days_between_submitted_and_today: 10,
+          working_days_between_submitted_and_completed: 20,
+        )
+      end
+
+      it do
+        expect(subject).to eq(
+          [
+            {
+              key: {
+                text: "Name",
+              },
+              value: {
+                text: "Given Family",
+              },
+              actions: [],
+            },
+            {
+              key: {
+                text: "Country trained in",
+              },
+              value: {
+                text: "United States",
+              },
+            },
+            {
+              key: {
+                text: "State/territory trained in",
+              },
+              value: {
+                text: "Region",
+              },
+            },
+            {
+              key: {
+                text: "Email",
+              },
+              value: {
+                text: application_form.teacher.email,
+              },
+              actions: [],
+            },
+            { key: { text: "Created on" }, value: { text: "1 January 2020" } },
+            {
+              key: {
+                text: "Working days to outcome",
+              },
+              value: {
+                text: "20 days",
+              },
+            },
+            {
+              key: {
+                text: "Assigned to",
+              },
+              value: {
+                text: "Not assigned",
+              },
+              actions: [
+                {
+                  visually_hidden_text: "Assigned to",
+                  href: [
+                    :assessor_interface,
+                    application_form,
+                    :assign_assessor,
+                  ],
+                },
+              ],
+            },
+            {
+              key: {
+                text: "Reviewer",
+              },
+              value: {
+                text: "Not assigned",
+              },
+              actions: [
+                {
+                  visually_hidden_text: "Reviewer",
+                  href: [
+                    :assessor_interface,
+                    application_form,
+                    :assign_reviewer,
+                  ],
+                },
+              ],
+            },
+            { key: { text: "Reference" }, value: { text: "0000001" } },
+            {
+              key: {
+                text: "Status",
+              },
+              value: {
+                text:
+                  "<strong class=\"govuk-tag govuk-tag--green\">QTS confirmed</strong>\n",
+              },
+            },
+          ],
+        )
       end
     end
   end

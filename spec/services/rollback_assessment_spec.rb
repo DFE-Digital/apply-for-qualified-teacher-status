@@ -7,11 +7,18 @@ RSpec.describe RollbackAssessment do
 
   let(:user) { create(:staff) }
 
+  around do |example|
+    travel_to Date.new(2026, 6, 1) do
+      example.run
+    end
+  end
+
   context "with an award assessment" do
     let(:application_form) do
       create(
         :application_form,
         :awarded,
+        submitted_at: 10.days.ago,
         working_days_between_submitted_and_completed: 50,
       )
     end
@@ -20,20 +27,29 @@ RSpec.describe RollbackAssessment do
         :assessment,
         :award,
         application_form:,
+        started_at: 5.days.ago,
         working_days_between_started_and_completed: 45,
       )
     end
 
-    it "resets awarded_at and completed working days timestamps" do
-      expect { call }.to change(application_form, :awarded_at).to(
-        nil,
-      ).and change(
-              application_form,
-              :working_days_between_submitted_and_completed,
+    it "resets awarded_at" do
+      expect { call }.to change(application_form, :awarded_at).to(nil)
+    end
+
+    it "resets the working day timestamps" do
+      expect { call }.to change(
+        application_form,
+        :working_days_between_submitted_and_completed,
+      ).to(nil).and change(
+              assessment,
+              :working_days_between_started_and_completed,
             ).to(nil).and change(
-                    assessment,
-                    :working_days_between_started_and_completed,
-                  ).to(nil)
+                    application_form,
+                    :working_days_between_submitted_and_today,
+                  ).to(5).and change(
+                          assessment,
+                          :working_days_between_started_and_today,
+                        ).to(3)
     end
 
     context "having requested verification" do
@@ -82,7 +98,7 @@ RSpec.describe RollbackAssessment do
       end
 
       it "reverts application form status" do
-        expect { call }.to change(application_form, :stage).to("not_started")
+        expect { call }.to change(application_form, :stage).to("assessment")
       end
 
       it "records a timeline event" do
@@ -99,6 +115,7 @@ RSpec.describe RollbackAssessment do
       create(
         :application_form,
         :declined,
+        submitted_at: 10.days.ago,
         working_days_between_submitted_and_completed: 50,
       )
     end
@@ -107,20 +124,29 @@ RSpec.describe RollbackAssessment do
         :assessment,
         :decline,
         application_form:,
+        started_at: 5.days.ago,
         working_days_between_started_and_completed: 45,
       )
     end
 
-    it "resets declined_at and completed working days timestamps" do
-      expect { call }.to change(application_form, :declined_at).to(
-        nil,
-      ).and change(
-              application_form,
-              :working_days_between_submitted_and_completed,
+    it "resets declined_at" do
+      expect { call }.to change(application_form, :declined_at).to(nil)
+    end
+
+    it "resets the working day timestamps" do
+      expect { call }.to change(
+        application_form,
+        :working_days_between_submitted_and_completed,
+      ).to(nil).and change(
+              assessment,
+              :working_days_between_started_and_completed,
             ).to(nil).and change(
-                    assessment,
-                    :working_days_between_started_and_completed,
-                  ).to(nil)
+                    application_form,
+                    :working_days_between_submitted_and_today,
+                  ).to(5).and change(
+                          assessment,
+                          :working_days_between_started_and_today,
+                        ).to(3)
     end
 
     context "having requested verification" do
@@ -260,7 +286,7 @@ RSpec.describe RollbackAssessment do
       end
 
       it "reverts application form status" do
-        expect { call }.to change(application_form, :stage).to("not_started")
+        expect { call }.to change(application_form, :stage).to("assessment")
       end
 
       it "records a timeline event" do
@@ -301,6 +327,7 @@ RSpec.describe RollbackAssessment do
       create(
         :application_form,
         :declined,
+        submitted_at: 10.days.ago,
         working_days_between_submitted_and_completed: 50,
       )
     end
@@ -309,20 +336,29 @@ RSpec.describe RollbackAssessment do
         :assessment,
         :unknown,
         application_form:,
+        started_at: 5.days.ago,
         working_days_between_started_and_completed: 45,
       )
     end
 
-    it "resets declined_at and completed working days timestamps" do
-      expect { call }.to change(application_form, :declined_at).to(
-        nil,
-      ).and change(
-              application_form,
-              :working_days_between_submitted_and_completed,
+    it "resets declined_at" do
+      expect { call }.to change(application_form, :declined_at).to(nil)
+    end
+
+    it "resets the working day timestamps" do
+      expect { call }.to change(
+        application_form,
+        :working_days_between_submitted_and_completed,
+      ).to(nil).and change(
+              assessment,
+              :working_days_between_started_and_completed,
             ).to(nil).and change(
-                    assessment,
-                    :working_days_between_started_and_completed,
-                  ).to(nil)
+                    application_form,
+                    :working_days_between_submitted_and_today,
+                  ).to(5).and change(
+                          assessment,
+                          :working_days_between_started_and_today,
+                        ).to(3)
     end
 
     it "doesn't change the assessment state" do
