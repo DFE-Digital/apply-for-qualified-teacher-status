@@ -288,7 +288,7 @@ RSpec.describe ApplicationFormHelper do
             { key: { text: "Created on" }, value: { text: "1 January 2020" } },
             {
               key: {
-                text: "Working days completed in",
+                text: "Working days to outcome",
               },
               value: {
                 text: "20 days",
@@ -337,7 +337,7 @@ RSpec.describe ApplicationFormHelper do
               },
               value: {
                 text:
-                  "<strong class=\"govuk-tag govuk-tag--green\">Awarded</strong>\n",
+                  "<strong class=\"govuk-tag govuk-tag--green\">QTS confirmed</strong>\n",
               },
             },
           ],

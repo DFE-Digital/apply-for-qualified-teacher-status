@@ -264,7 +264,7 @@ en:
       email: Email
       region: State/territory trained in
       submitted_at: Created on
-      days_completed_in: Working days completed in
+      days_completed_in: Working days to outcome
       days_since_submission: Working days since submission
       assessor: Assigned to
       reviewer: Reviewer
