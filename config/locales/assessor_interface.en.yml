@@ -697,6 +697,10 @@ en:
           attributes:
             scotland_full_registration:
               inclusion: Select whether the teacher has or is eligible for full registration
+        assessor_interface/unlink_one_login_form:
+          attributes:
+            confirm:
+              inclusion: "Select yes if you want to unlink GOV.UK One Login from this application"
         assessor_interface/suitability_record_form:
           attributes:
             name:

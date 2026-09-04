@@ -109,6 +109,26 @@ module AssessorInterface
       end
     end
 
+    def edit_unlink_one_login
+      @form = UnlinkOneLoginForm.new
+    end
+
+    def update_unlink_one_login
+      @form =
+        UnlinkOneLoginForm.new(
+          unlink_one_login_form_params.merge(
+            teacher: application_form.teacher,
+            user: current_staff,
+          ),
+        )
+
+      if @form.save
+        redirect_to [:assessor_interface, application_form]
+      else
+        render :edit_unlink_one_login, status: :unprocessable_entity
+      end
+    end
+
     def withdraw
     end
 
@@ -162,6 +182,10 @@ module AssessorInterface
       params.require(
         :assessor_interface_application_form_date_of_birth_form,
       ).permit(:date_of_birth)
+    end
+
+    def unlink_one_login_form_params
+      params.require(:assessor_interface_unlink_one_login_form).permit(:confirm)
     end
   end
 end

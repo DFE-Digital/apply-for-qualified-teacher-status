@@ -1,0 +1,23 @@
+<%
+  title = "Do you want to unlink GOV.UK One Login from this application?"
+  hint = "You should unlink GOV.UK One Login if the applicant has requested it because their previous GOV.UK One Login account was deleted. \
+          <br /><br />
+          Before unlinking, confirm with the applicant that their new GOV.UK One Login uses the same email address as their application. \
+          <br /><br /> \
+          Once you unlink it, the applicant will be able to sign in using their new GOV.UK One Login."
+%>
+<% content_for :page_title, title_with_error_prefix(title, error: @form.errors.any?) %>
+<% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
+
+<%= form_with model: @form, url: [:unlink_one_login, :assessor_interface, @application_form] do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <%= f.govuk_collection_radio_buttons :confirm,
+                                      [OpenStruct.new(label: "Yes", value: true), OpenStruct.new(label: "No", value: false)],
+                                      :value,
+                                      :label,
+                                      legend: { size: "xl", tag: "h1", text: title },
+                                      hint: { text: hint.html_safe } %>
+
+  <%= render "shared/assessor_interface/continue_cancel_button", f: %>
+<% end %>

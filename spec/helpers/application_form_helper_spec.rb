@@ -80,6 +80,15 @@ RSpec.describe ApplicationFormHelper do
             },
             actions: [],
           },
+          {
+            key: {
+              text: "GOV.UK One Login",
+            },
+            value: {
+              text: "Unlinked",
+            },
+            actions: [],
+          },
           { key: { text: "Created on" }, value: { text: "1 January 2020" } },
           {
             key: {
@@ -228,6 +237,242 @@ RSpec.describe ApplicationFormHelper do
             row[:key][:text] == "State/territory trained in"
           end,
         ).to be_nil
+      end
+    end
+
+    context "when applicant is linked to a GOV.UK One Login account" do
+      before do
+        application_form.teacher.update!(gov_one_id: "gov-uk-one-login-uuid")
+      end
+
+      it do
+        expect(subject).to eq(
+          [
+            {
+              key: {
+                text: "Name",
+              },
+              value: {
+                text: "Given Family",
+              },
+              actions: [],
+            },
+            {
+              key: {
+                text: "Country trained in",
+              },
+              value: {
+                text: "United States",
+              },
+            },
+            {
+              key: {
+                text: "State/territory trained in",
+              },
+              value: {
+                text: "Region",
+              },
+            },
+            {
+              key: {
+                text: "Email",
+              },
+              value: {
+                text: application_form.teacher.email,
+              },
+              actions: [],
+            },
+            {
+              key: {
+                text: "GOV.UK One Login",
+              },
+              value: {
+                text: "Linked",
+              },
+              actions: [],
+            },
+            { key: { text: "Created on" }, value: { text: "1 January 2020" } },
+            {
+              key: {
+                text: "Working days since submission",
+              },
+              value: {
+                text: "0 days",
+              },
+            },
+            {
+              key: {
+                text: "Assigned to",
+              },
+              value: {
+                text: "Not assigned",
+              },
+              actions: [
+                {
+                  visually_hidden_text: "Assigned to",
+                  href: [
+                    :assessor_interface,
+                    application_form,
+                    :assign_assessor,
+                  ],
+                },
+              ],
+            },
+            {
+              key: {
+                text: "Reviewer",
+              },
+              value: {
+                text: "Not assigned",
+              },
+              actions: [
+                {
+                  visually_hidden_text: "Reviewer",
+                  href: [
+                    :assessor_interface,
+                    application_form,
+                    :assign_reviewer,
+                  ],
+                },
+              ],
+            },
+            { key: { text: "Reference" }, value: { text: "0000001" } },
+            {
+              key: {
+                text: "Status",
+              },
+              value: {
+                text:
+                  "<strong class=\"govuk-tag govuk-tag--grey\">Assessment not started</strong>\n",
+              },
+            },
+          ],
+        )
+      end
+
+      context "with staff having assess or verify permissions" do
+        let(:current_staff) { create(:staff, :with_assess_permission) }
+
+        it do
+          expect(subject).to eq(
+            [
+              {
+                key: {
+                  text: "Name",
+                },
+                value: {
+                  text: "Given Family",
+                },
+                actions: [],
+              },
+              {
+                key: {
+                  text: "Country trained in",
+                },
+                value: {
+                  text: "United States",
+                },
+              },
+              {
+                key: {
+                  text: "State/territory trained in",
+                },
+                value: {
+                  text: "Region",
+                },
+              },
+              {
+                key: {
+                  text: "Email",
+                },
+                value: {
+                  text: application_form.teacher.email,
+                },
+                actions: [],
+              },
+              {
+                key: {
+                  text: "GOV.UK One Login",
+                },
+                value: {
+                  text: "Linked",
+                },
+                actions: [
+                  {
+                    visually_hidden_text: "GOV.UK One Login",
+                    href: [
+                      :unlink_one_login,
+                      :assessor_interface,
+                      application_form,
+                    ],
+                  },
+                ],
+              },
+              {
+                key: {
+                  text: "Created on",
+                },
+                value: {
+                  text: "1 January 2020",
+                },
+              },
+              {
+                key: {
+                  text: "Working days since submission",
+                },
+                value: {
+                  text: "0 days",
+                },
+              },
+              {
+                key: {
+                  text: "Assigned to",
+                },
+                value: {
+                  text: "Not assigned",
+                },
+                actions: [
+                  {
+                    visually_hidden_text: "Assigned to",
+                    href: [
+                      :assessor_interface,
+                      application_form,
+                      :assign_assessor,
+                    ],
+                  },
+                ],
+              },
+              {
+                key: {
+                  text: "Reviewer",
+                },
+                value: {
+                  text: "Not assigned",
+                },
+                actions: [
+                  {
+                    visually_hidden_text: "Reviewer",
+                    href: [
+                      :assessor_interface,
+                      application_form,
+                      :assign_reviewer,
+                    ],
+                  },
+                ],
+              },
+              { key: { text: "Reference" }, value: { text: "0000001" } },
+              {
+                key: {
+                  text: "Status",
+                },
+                value: {
+                  text:
+                    "<strong class=\"govuk-tag govuk-tag--grey\">Assessment not started</strong>\n",
+                },
+              },
+            ],
+          )
+        end
       end
     end
   end
