@@ -45,6 +45,7 @@ class SupportRequestForm
         user_type:,
         application_enquiry_type:,
         application_reference:,
+        submitted_at: Time.zone.now,
       )
 
     CreateZendeskRequestJob.perform_later(support_request)

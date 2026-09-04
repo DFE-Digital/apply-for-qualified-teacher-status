@@ -92,6 +92,7 @@ RSpec.describe SupportRequestForm, type: :model do
         application_enquiry_type:,
         application_reference:,
       )
+      expect(support_request.submitted_at).to be_present
     end
 
     it "enqueues a job to generate a request within Zendesk" do
