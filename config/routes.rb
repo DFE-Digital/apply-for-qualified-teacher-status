@@ -688,6 +688,10 @@ Rails.application.routes.draw do
     collection { get "confirmation", to: "support_requests#confirmation" }
   end
 
+  resources :feedback_submissions, path: "feedback", only: %i[new create] do
+    collection { get "confirmation", to: "feedback_submissions#confirmation" }
+  end
+
   get "cookies", to: "static#cookies"
   get "email/:key", to: "static#email", as: "email"
   get "english-language-guidance", to: "static#english_language_guidance"

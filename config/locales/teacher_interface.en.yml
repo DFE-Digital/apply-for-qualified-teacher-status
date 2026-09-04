@@ -281,6 +281,14 @@ en:
   activemodel:
     errors:
       models:
+        feedback_submission_form:
+          attributes:
+            application_status:
+              blank: Select the current status of your application
+            overall_experience:
+              blank: Select how you would rate your overall experience of using this service
+            comment:
+              too_long: Feedback must not be more than 2000 characters
         teacher_interface/age_range_form:
           attributes:
             minimum:

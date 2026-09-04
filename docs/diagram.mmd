@@ -223,6 +223,12 @@ erDiagram
 		boolean active
 		string name
 	}
+	FeedbackSubmission {
+		string application_status
+		text comment
+		string overall_experience
+		datetime submitted_at
+	}
 	FurtherInformationRequest {
 		integer assessment_id FK
 		datetime expired_at

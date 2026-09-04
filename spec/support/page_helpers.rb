@@ -1009,6 +1009,14 @@ module PageHelpers
       PageObjects::TeacherInterface::WrittenStatement.new
   end
 
+  def new_feedback_submission_page
+    @new_feedback_submission_page = PageObjects::NewFeedbackSubmission.new
+  end
+
+  def feedback_confirmation_page
+    @feedback_confirmation_page = PageObjects::FeedbackConfirmation.new
+  end
+
   def new_support_request_page
     @new_support_request_page = PageObjects::NewSupportRequest.new
   end

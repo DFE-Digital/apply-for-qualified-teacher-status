@@ -5,6 +5,7 @@ module PageObjects
     set_url "/support-requests/new"
 
     element :heading, "h1"
+    element :feedback_form_link, "a", text: "feedback form"
 
     section :form, "form" do
       element :name_input, "#support-request-form-name-field"
