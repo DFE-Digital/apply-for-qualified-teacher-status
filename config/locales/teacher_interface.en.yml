@@ -262,6 +262,7 @@ en:
       name: Name
       country: Country trained in
       email: Email
+      gov_uk_one_login: GOV.UK One Login
       region: State/territory trained in
       submitted_at: Created on
       days_completed_in: Working days to outcome

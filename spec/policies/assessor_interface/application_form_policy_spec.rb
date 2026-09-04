@@ -117,4 +117,18 @@ RSpec.describe AssessorInterface::ApplicationFormPolicy do
 
     it_behaves_like "a policy method requiring the withdraw permission"
   end
+
+  describe "#edit_unlink_one_login?" do
+    subject(:edit_unlink_one_login?) { policy.edit_unlink_one_login? }
+
+    it_behaves_like "a policy method requiring the assess permission"
+    it_behaves_like "a policy method requiring the verify permission"
+  end
+
+  describe "#update_unlink_one_login?" do
+    subject(:update_unlink_one_login?) { policy.update_unlink_one_login? }
+
+    it_behaves_like "a policy method requiring the assess permission"
+    it_behaves_like "a policy method requiring the verify permission"
+  end
 end

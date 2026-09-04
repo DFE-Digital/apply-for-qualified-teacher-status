@@ -91,6 +91,27 @@ module ApplicationFormHelper
       },
       {
         key: {
+          text: I18n.t("application_form.summary.gov_uk_one_login"),
+        },
+        value: {
+          text: application_form.teacher.gov_one_id ? "Linked" : "Unlinked",
+        },
+        actions: [
+          if application_form.teacher.gov_one_id.present? &&
+               AssessorInterface::ApplicationFormPolicy.new(
+                 current_staff,
+                 application_form,
+               ).edit_unlink_one_login?
+            {
+              visually_hidden_text:
+                I18n.t("application_form.summary.gov_uk_one_login"),
+              href: [:unlink_one_login, :assessor_interface, application_form],
+            }
+          end,
+        ].compact,
+      },
+      {
+        key: {
           text: I18n.t("application_form.summary.submitted_at"),
         },
         value: {
