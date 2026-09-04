@@ -19,6 +19,7 @@ class FeedbackSubmissionForm
       application_status:,
       overall_experience:,
       comment:,
+      submitted_at: Time.zone.now,
     )
 
     true
