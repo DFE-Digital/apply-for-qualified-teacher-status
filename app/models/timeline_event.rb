@@ -81,6 +81,7 @@ class TimelineEvent < ApplicationRecord
        {
          action_required_by_changed: "action_required_by_changed",
          age_range_subjects_verified: "age_range_subjects_verified",
+         applicant_one_login_unlinked: "applicant_one_login_unlinked",
          application_declined: "application_declined",
          application_put_on_hold: "application_put_on_hold",
          application_removed_hold: "application_removed_hold",

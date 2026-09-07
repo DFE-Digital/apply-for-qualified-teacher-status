@@ -5,6 +5,7 @@ require "rails_helper"
 RSpec.describe AssessorInterface::UnlinkOneLoginForm, type: :model do
   subject(:form) { described_class.new(teacher:, user:, confirm:) }
 
+  let(:application_form) { create(:application_form, :submitted, teacher:) }
   let(:teacher) { create(:teacher, gov_one_id: "gov-one-id-123") }
   let(:user) { create(:staff) }
   let(:confirm) { true }
@@ -45,6 +46,14 @@ RSpec.describe AssessorInterface::UnlinkOneLoginForm, type: :model do
           "gov-one-id-123",
         ).to(nil)
       end
+
+      it "records a timeline event" do
+        expect { save }.to have_recorded_timeline_event(
+          :applicant_one_login_unlinked,
+          creator: user,
+          application_form:,
+        )
+      end
     end
 
     context "when confirm is false" do
@@ -55,6 +64,10 @@ RSpec.describe AssessorInterface::UnlinkOneLoginForm, type: :model do
       it "does not update the gov_one_id" do
         expect { save }.not_to(change(teacher, :gov_one_id))
       end
+
+      it "does not record a timeline event" do
+        expect { save }.not_to have_recorded_timeline_event
+      end
     end
 
     context "when the form is invalid" do
@@ -64,6 +77,10 @@ RSpec.describe AssessorInterface::UnlinkOneLoginForm, type: :model do
 
       it "does not update the teacher" do
         expect { save }.not_to(change(teacher, :gov_one_id))
+      end
+
+      it "does not record a timeline event" do
+        expect { save }.not_to have_recorded_timeline_event
       end
     end
   end

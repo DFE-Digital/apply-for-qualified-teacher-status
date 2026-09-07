@@ -14,7 +14,15 @@ class AssessorInterface::UnlinkOneLoginForm
   def save
     return false if invalid?
 
-    teacher.update!(gov_one_id: nil) if confirm
+    if confirm
+      teacher.update!(gov_one_id: nil)
+
+      TimelineEvent.create!(
+        application_form: teacher.application_form,
+        event_type: "applicant_one_login_unlinked",
+        creator: user,
+      )
+    end
 
     true
   end
