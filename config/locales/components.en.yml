@@ -62,6 +62,7 @@ en:
       title:
         action_required_by_changed: Action required by changed
         age_range_subjects_verified: Age range and subjects verified
+        applicant_one_login_unlinked: GOV.UK One Login unlinked
         application_declined: Application declined
         application_put_on_hold: Application put on hold
         application_removed_hold: Application released

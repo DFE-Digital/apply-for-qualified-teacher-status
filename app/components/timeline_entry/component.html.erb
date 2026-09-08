@@ -124,7 +124,8 @@
           <% end %>
         </ul>
       <% end %>
-
+    <% elsif timeline_event.applicant_one_login_unlinked? %>
+      <%# No description added %>
     <% else %>
       <p class="govuk-body"><%= simple_format description.html_safe %></p>
     <% end %>

@@ -39,4 +39,12 @@ class AssessorInterface::ApplicationFormPolicy < ApplicationPolicy
   end
 
   alias_method :withdraw?, :destroy?
+
+  def edit_unlink_one_login?
+    return false if user.archived?
+
+    user.assess_permission || user.verify_permission
+  end
+
+  alias_method :update_unlink_one_login?, :edit_unlink_one_login?
 end

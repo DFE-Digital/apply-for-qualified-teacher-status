@@ -244,6 +244,11 @@ module PageHelpers
       PageObjects::AssessorInterface::EditWorkHistory.new
   end
 
+  def assessor_edit_unlink_one_login_page
+    @assessor_edit_unlink_one_login_page ||=
+      PageObjects::AssessorInterface::EditUnlinkOneLogin.new
+  end
+
   def assessor_further_information_request_preview_page
     @assessor_further_information_request_preview_page ||=
       PageObjects::AssessorInterface::FurtherInformationRequestPreview.new

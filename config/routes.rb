@@ -51,6 +51,9 @@ Rails.application.routes.draw do
         get "email", to: "application_forms#edit_email"
         post "email", to: "application_forms#update_email"
 
+        get "unlink_one_login", to: "application_forms#edit_unlink_one_login"
+        post "unlink_one_login", to: "application_forms#update_unlink_one_login"
+
         get "name", to: "application_forms#edit_name"
         post "name", to: "application_forms#update_name"
 
