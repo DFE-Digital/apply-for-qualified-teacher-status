@@ -33,6 +33,14 @@ RSpec.describe FeedbackSubmissionForm, type: :model do
       it { is_expected.not_to be_valid }
     end
 
+    context "when comment is exactly 2000 characters long with spaces and returns" do
+      let(:overall_experience) { "highly_satisfied" }
+      let(:application_status) { "application_submitted" }
+      let(:comment) { "A B\r\n" * 500 }
+
+      it { is_expected.to be_valid }
+    end
+
     context "when comment is blank" do
       let(:overall_experience) { "highly_satisfied" }
       let(:application_status) { "application_submitted" }
