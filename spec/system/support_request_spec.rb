@@ -22,6 +22,15 @@ RSpec.describe "Support request form", type: :system do
       FeatureFlags::FeatureFlag.deactivate(:support_request_form)
     end
 
+    it "links to the feedback form" do
+      when_i_visit_the(:new_support_request_page)
+      then_i_see_the(:new_support_request_page)
+
+      new_support_request_page.feedback_form_link.click
+
+      then_i_see_the(:new_feedback_submission_page)
+    end
+
     it "allows the user to submit a request" do
       when_i_visit_the(:new_support_request_page)
       then_i_see_the(:new_support_request_page)

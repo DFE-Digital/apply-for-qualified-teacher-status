@@ -212,6 +212,14 @@
     - filter_params
     - id
     - updated_at
+  :feedback_submissions:
+    - id
+    - application_status
+    - created_at
+    - comment
+    - overall_experience
+    - submitted_at
+    - updated_at
   :further_information_requests:
     - assessment_id
     - created_at

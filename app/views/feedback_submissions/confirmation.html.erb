@@ -1,0 +1,15 @@
+<% content_for :page_title, "Thank you for submitting your feedback" %>
+
+<h1 class="govuk-heading-xl">Thank you for submitting your feedback</h1>
+
+<p class="govuk-body">Thank you for taking the time to give us your feedback.</p>
+
+<p class="govuk-body">We review all feedback to help improve the Apply for qualified teacher status (QTS) in England service.</p>
+
+<p class="govuk-body">We will not reply to feedback. If you need to ask a question or report a problem with this service, use the <%= govuk_link_to "Get help form", new_support_request_path %>.</p>
+
+<% if current_teacher %>
+  <p class="govuk-body"><%= govuk_link_to "Return to your application", teacher_interface_application_form_path %></p>
+<% else %>
+  <p class="govuk-body">You can now close this page.</p>
+<% end %>

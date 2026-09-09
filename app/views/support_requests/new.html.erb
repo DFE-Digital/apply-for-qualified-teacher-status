@@ -7,6 +7,8 @@
 
   <p class="govuk-body">You can use this form to ask a question or report a problem about Apply for qualified teacher status (QTS) in England.</p>
 
+  <p>If you want to tell us about your experience of using this service, use the <%= govuk_link_to "feedback form", new_feedback_submission_path %>.</p>
+
   <% if FeatureFlags::FeatureFlag.active?(:gov_one_applicant_login) %>
     <p class="govuk-body">For questions about creating a GOV.UK One Login or signing into your application, <%= govuk_link_to "contact GOV.UK One Login", "https://home.account.gov.uk/contact-gov-uk-one-login" %>.</p>
   <% end %>
