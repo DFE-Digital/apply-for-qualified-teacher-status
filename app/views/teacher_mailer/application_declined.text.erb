@@ -38,7 +38,6 @@ Or, if you can address the reasons your application has been declined, you can s
 <% end %>
 <% end %>
 
-<% unless @view_object.from_ineligible_country? %>
 <% unless @view_object.declined_cannot_reapply? %>
 <% if @view_object.has_any_further_information_decline_reasons? %>
 # Information we’ll need if you reapply
@@ -77,7 +76,6 @@ To challenge this decision, you must provide:
 You must make the request within 28 days of the date we sent the decision email. Your request will be reviewed by a senior Professional Recognition Manager.
 
 [Sign in to request a decision review](<%= teacher_interface_application_form_decision_review_requests_url %>).
-<% end %>
 
 <%= render "shared/teacher_mailer/help_us_to_improve_this_service" %>
 

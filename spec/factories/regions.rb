@@ -78,5 +78,9 @@ FactoryBot.define do
       transient { country_code { "" } }
       country { Country.find_or_create_by(code: country_code) }
     end
+
+    trait :ineligible do
+      country { create :country, :ineligible }
+    end
   end
 end
