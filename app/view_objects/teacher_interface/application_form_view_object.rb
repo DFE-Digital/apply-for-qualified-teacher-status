@@ -110,22 +110,7 @@ class TeacherInterface::ApplicationFormViewObject
   end
 
   def declined_reasons
-    if from_ineligible_country?
-      country_name = CountryName.from_country(country)
-      teaching_authority_name = region_teaching_authority_name(region)
-      {
-        "" => [
-          {
-            name:
-              "As we are unable to verify professional standing documents with the #{teaching_authority_name} in " \
-                "#{country_name}, we have removed #{country_name} from the list of eligible countries.\n\n" \
-                "We need to be able to verify all documents submitted by " \
-                "applicants with the relevant authorities. This is to ensure QTS requirements are applied " \
-                "fairly and consistently to every teacher, regardless of the country they trained to teach in.",
-          },
-        ],
-      }
-    elsif assessment_declined_reasons.present?
+    if assessment_declined_reasons.present?
       assessment_declined_reasons.sort.to_h
     elsif further_information_request&.expired?
       {

@@ -316,28 +316,6 @@ RSpec.describe TeacherInterface::ApplicationFormViewObject do
 
     it { is_expected.to be_empty }
 
-    context "when the country has been made ineligible" do
-      let(:country) { create(:country, :ineligible, code: "ZW") }
-
-      it do
-        expect(subject).to eq(
-          {
-            "" => [
-              {
-                name:
-                  "As we are unable to verify professional standing documents with the " \
-                    "teaching authority in Zimbabwe, we have removed Zimbabwe from the " \
-                    "list of eligible countries.\n\nWe need to be able to verify all " \
-                    "documents submitted by applicants with the relevant authorities. " \
-                    "This is to ensure QTS requirements are applied fairly and consistently " \
-                    "to every teacher, regardless of the country they trained to teach in.",
-              },
-            ],
-          },
-        )
-      end
-    end
-
     context "when further_information_request is present and expired" do
       before { create(:further_information_request, :expired, assessment:) }
 
