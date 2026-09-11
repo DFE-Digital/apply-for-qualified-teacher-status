@@ -43,7 +43,7 @@ jobs:
       image: ${{ steps.build-docker-image.outputs.image }}
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - uses: DFE-Digital/github-actions/build-docker-image@master
         id: build-docker-image
@@ -78,7 +78,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Prepare application environment
         uses: ./.github/actions/prepare-app-env
@@ -120,7 +120,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Prepare application environment
         uses: ./.github/actions/prepare-app-env
@@ -149,7 +149,7 @@ jobs:
       pull-requests: write
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - uses: ./.github/actions/deploy-environment
         id: deploy
@@ -188,7 +188,7 @@ jobs:
       pull-requests: write
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - uses: ./.github/actions/deploy-environment
         id: deploy
@@ -213,7 +213,7 @@ jobs:
       pull-requests: write
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - uses: ./.github/actions/deploy-environment
         id: deploy
@@ -235,7 +235,7 @@ jobs:
     needs: [docker, rspec_system, rspec_other, deploy_non_production]
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Notify teams channel on job failure
         uses: DFE-Digital/github-actions/send-to-teams-channel@master
@@ -309,7 +309,7 @@ jobs:
       pull-requests: write
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - uses: ./.github/actions/deploy-environment
         id: deploy
