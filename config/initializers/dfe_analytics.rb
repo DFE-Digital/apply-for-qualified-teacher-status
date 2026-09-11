@@ -14,12 +14,11 @@ DfE::Analytics.configure do |config|
       ENV.fetch("BIGQUERY_DISABLE", disabled_by_default.to_s) != "true"
     end
 
-  config.enable_airbyte =
-    proc do
-      disabled_by_default = Rails.env.development?
-      ENV.fetch("BIGQUERY_DISABLE", disabled_by_default.to_s) != "true"
-    end
-  config.airbyte_stream_config_path = "terraform/aks/workspace-variables/airbyte_stream_config.json"
+  if %w[test].include?(HostingEnvironment)
+    config.airbyte_stream_config_path = "terraform/aks/workspace-variables/airbyte_stream_config.json"
+    # Perform airbyte checks on startup and allow airbyte config generation
+    config.airbyte_enabled = ENV["BIGQUERY_AIRBYTE_DATASET"].present?
+  end
 
-  config.azure_federated_auth = ENV.include? "GOOGLE_CLOUD_CREDENTIALS"
+  config.azure_federated_auth = ENV.include?("GOOGLE_CLOUD_CREDENTIALS")
 end
