@@ -383,5 +383,14 @@ RSpec.describe "teacher_interface/application_forms/show.html.erb",
         expect(subject).not_to match(/you can make a new application in future/)
       end
     end
+
+    context "and country eligiblity has been removed" do
+      let(:region) { create :region, :ineligible }
+      let(:application_form) { create(:application_form, :declined, region:) }
+
+      it "allows decision review request" do
+        expect(subject).to match(/If you disagree with our decision/)
+      end
+    end
   end
 end
