@@ -83,6 +83,12 @@ composed-variables: ## Compose variables needed for deployments
 	$(eval STORAGE_ACCOUNT_NAME=$(AZURE_RESOURCE_PREFIX)$(SERVICE_SHORT)tfstate$(CONFIG_SHORT)sa)
 	$(eval LOG_ANALYTICS_WORKSPACE_NAME=${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-log)
 
+airbyte: ## Add airbyte for review apps
+	$(if $(PR_NUMBER), , $(error Missing environment variable "PR_NUMBER", Please specify a pr number for your review app))
+	$(eval export TF_VAR_pg_airbyte_enabled=true)
+	$(eval export TF_VAR_airbyte_enabled=true)
+	$(eval export TF_VAR_connection_status=active)
+
 bin/konduit.sh:
 	curl -s https://raw.githubusercontent.com/DFE-Digital/teacher-services-cloud/main/scripts/konduit.sh -o bin/konduit.sh \
 		&& chmod +x bin/konduit.sh
