@@ -34,6 +34,10 @@ module HostingEnvironment
       name == "review"
     end
 
+    def test?
+      name == "test"
+    end
+
     private
 
     def value
