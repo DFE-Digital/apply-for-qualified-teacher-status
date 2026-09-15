@@ -48,7 +48,8 @@ gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.15.17"
 gem "dfe-autocomplete", github: "DFE-Digital/dfe-autocomplete"
 gem "dfe-reference-data",
     require: "dfe/reference_data",
-    github: "DFE-Digital/dfe-reference-data"
+    github: "DFE-Digital/dfe-reference-data",
+    tag: "v3.8.6"
 gem "govuk-components"
 gem "govuk_design_system_formbuilder"
 gem "govuk_feature_flags", github: "DFE-Digital/govuk_feature_flags"
