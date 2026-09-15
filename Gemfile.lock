@@ -146,7 +146,7 @@ GEM
     base64 (0.3.0)
     bcrypt (3.1.22)
     benchmark (0.5.0)
-    bigdecimal (4.1.2)
+    bigdecimal (4.1.3)
     bindata (2.5.1)
     bindex (0.8.1)
     bootsnap (1.25.0)
@@ -286,7 +286,7 @@ GEM
       html-attributes-utils (~> 1.0.0, >= 1.0.0)
       pagy (>= 6, < 10)
       view_component (>= 4.9, < 4.16)
-    govuk_design_system_formbuilder (6.4.0)
+    govuk_design_system_formbuilder (6.5.0)
       actionview (>= 7.2)
       activemodel (>= 7.2)
       activesupport (>= 7.2)
@@ -851,7 +851,7 @@ CHECKSUMS
   base64 (0.3.0) sha256=27337aeabad6ffae05c265c450490628ef3ebd4b67be58257393227588f5a97b
   bcrypt (3.1.22) sha256=1f0072e88c2d705d94aff7f2c5cb02eb3f1ec4b8368671e19112527489f29032
   benchmark (0.5.0) sha256=465df122341aedcb81a2a24b4d3bd19b6c67c1530713fd533f3ff034e419236c
-  bigdecimal (4.1.2) sha256=53d217666027eab4280346fba98e7d5b66baaae1b9c3c1c0ffe89d48188a3fbd
+  bigdecimal (4.1.3) sha256=61ebe1e5e559bdc3cc6f2c0ee7f427321fc838f59611c294356eb04d6e21cf66
   bindata (2.5.1) sha256=53186a1ec2da943d4cb413583d680644eb810aacbf8902497aac8f191fad9e58
   bindex (0.8.1) sha256=7b1ecc9dc539ed8bccfc8cb4d2732046227b09d6f37582ff12e50a5047ceb17e
   bootsnap (1.25.0) sha256=41059e7d0f9cb4023a33465d095f64b913fc9d1b808d6524c307da945fbcffcf
@@ -917,7 +917,7 @@ CHECKSUMS
   google-logging-utils (0.2.0) sha256=675462b4ea5affa825a3442694ca2d75d0069455a1d0956127207498fca3df7b
   googleauth (1.16.2) sha256=15009502e2e38af71948cda918f230e27d327f6882a1e47967a5a4664930a638
   govuk-components (6.5.0) sha256=9f2476ac0c64a15ce4afc5d331c5f318679401f6cb844876a03b2f120f47b45c
-  govuk_design_system_formbuilder (6.4.0) sha256=28f85f8277d0fe941d04eff20b081e321ac9e84a501152f56c6933ffed1201a6
+  govuk_design_system_formbuilder (6.5.0) sha256=ab8932ed72d49025418a4c91d062d221c4fcf761232c9af217ef8e71c3ae4485
   govuk_feature_flags (0.1.0)
   govuk_markdown (2.0.4) sha256=c744f0a041607d60942c24dcf3d8fd24eaf73c4eb8299ea025455691a211242e
   haml (6.3.0) sha256=8e6eb87d869639e348852009e74a2a1663d79663ed7e7dbcb38beb1f12bcdd97
