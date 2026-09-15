@@ -53,6 +53,16 @@ variable "rate_limit_max" {
   default = null
 }
 
+variable "allow_aks" {
+  type    = bool
+  default = false
+}
+
+variable "block_ip" {
+  type    = bool
+  default = false
+}
+
 locals {
   hostname = "${var.domains[0]}.${var.zone}"
 }
