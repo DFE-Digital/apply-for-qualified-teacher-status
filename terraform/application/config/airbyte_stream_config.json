@@ -1,0 +1,2043 @@
+{
+  "configurations": {
+    "streams": [
+      {
+        "name": "application_forms",
+        "syncMode": "incremental_append",
+        "cursorField": ["_ab_cdc_lsn"],
+        "primaryKey": [["id"]],
+        "selectedFields": [
+          {
+            "fieldPath": ["_ab_cdc_lsn"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_deleted_at"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_updated_at"]
+          },
+          {
+            "fieldPath": ["action_required_by"]
+          },
+          {
+            "fieldPath": ["age_range_max"]
+          },
+          {
+            "fieldPath": ["age_range_min"]
+          },
+          {
+            "fieldPath": ["age_range_status"]
+          },
+          {
+            "fieldPath": ["alternative_family_name"]
+          },
+          {
+            "fieldPath": ["alternative_given_names"]
+          },
+          {
+            "fieldPath": ["assessor_id"]
+          },
+          {
+            "fieldPath": ["awarded_at"]
+          },
+          {
+            "fieldPath": ["confirmed_no_sanctions"]
+          },
+          {
+            "fieldPath": ["created_at"]
+          },
+          {
+            "fieldPath": ["date_of_birth"]
+          },
+          {
+            "fieldPath": ["declined_at"]
+          },
+          {
+            "fieldPath": ["eligibility_check_id"]
+          },
+          {
+            "fieldPath": ["english_language_citizenship_exempt"]
+          },
+          {
+            "fieldPath": ["english_language_proof_method"]
+          },
+          {
+            "fieldPath": ["english_language_provider_id"]
+          },
+          {
+            "fieldPath": ["english_language_provider_other"]
+          },
+          {
+            "fieldPath": ["english_language_provider_reference"]
+          },
+          {
+            "fieldPath": ["english_language_qualification_exempt"]
+          },
+          {
+            "fieldPath": ["english_language_status"]
+          },
+          {
+            "fieldPath": ["family_name"]
+          },
+          {
+            "fieldPath": ["given_names"]
+          },
+          {
+            "fieldPath": ["has_alternative_name"]
+          },
+          {
+            "fieldPath": ["has_other_england_work_history"]
+          },
+          {
+            "fieldPath": ["has_work_history"]
+          },
+          {
+            "fieldPath": ["id"]
+          },
+          {
+            "fieldPath": ["identification_document_status"]
+          },
+          {
+            "fieldPath": ["includes_prioritisation_features"]
+          },
+          {
+            "fieldPath": ["national_insurance_number"]
+          },
+          {
+            "fieldPath": ["needs_registration_number"]
+          },
+          {
+            "fieldPath": ["needs_work_history"]
+          },
+          {
+            "fieldPath": ["needs_written_statement"]
+          },
+          {
+            "fieldPath": ["other_england_work_history_status"]
+          },
+          {
+            "fieldPath": ["passport_document_status"]
+          },
+          {
+            "fieldPath": ["passport_country_of_issue_code"]
+          },
+          {
+            "fieldPath": ["passport_expiry_date"]
+          },
+          {
+            "fieldPath": ["personal_information_status"]
+          },
+          {
+            "fieldPath": ["qualification_changed_work_history_duration"]
+          },
+          {
+            "fieldPath": ["qualifications_status"]
+          },
+          {
+            "fieldPath": ["reduced_evidence_accepted"]
+          },
+          {
+            "fieldPath": ["reference"]
+          },
+          {
+            "fieldPath": ["region_id"]
+          },
+          {
+            "fieldPath": ["registration_number"]
+          },
+          {
+            "fieldPath": ["registration_number_status"]
+          },
+          {
+            "fieldPath": ["requires_passport_as_identity_proof"]
+          },
+          {
+            "fieldPath": ["requires_preliminary_check"]
+          },
+          {
+            "fieldPath": ["requires_private_email_for_referee"]
+          },
+          {
+            "fieldPath": ["reviewer_id"]
+          },
+          {
+            "fieldPath": ["verifier_id"]
+          },
+          {
+            "fieldPath": ["stage"]
+          },
+          {
+            "fieldPath": ["started_with_private_email_for_referee"]
+          },
+          {
+            "fieldPath": ["statuses"]
+          },
+          {
+            "fieldPath": ["subject_limited"]
+          },
+          {
+            "fieldPath": ["subjects"]
+          },
+          {
+            "fieldPath": ["subjects_status"]
+          },
+          {
+            "fieldPath": ["submitted_at"]
+          },
+          {
+            "fieldPath": ["teacher_id"]
+          },
+          {
+            "fieldPath": ["teaching_authority_provides_written_statement"]
+          },
+          {
+            "fieldPath": ["teaching_qualification_part_of_degree"]
+          },
+          {
+            "fieldPath": ["trs_match"]
+          },
+          {
+            "fieldPath": ["updated_at"]
+          },
+          {
+            "fieldPath": ["withdrawn_at"]
+          },
+          {
+            "fieldPath": ["work_history_status"]
+          },
+          {
+            "fieldPath": ["working_days_between_submitted_and_today"]
+          },
+          {
+            "fieldPath": ["working_days_between_submitted_and_completed"]
+          },
+          {
+            "fieldPath": ["written_statement_confirmation"]
+          },
+          {
+            "fieldPath": ["written_statement_optional"]
+          },
+          {
+            "fieldPath": ["written_statement_status"]
+          }
+        ]
+      },
+      {
+        "name": "application_holds",
+        "syncMode": "incremental_append",
+        "cursorField": ["_ab_cdc_lsn"],
+        "primaryKey": [["id"]],
+        "selectedFields": [
+          {
+            "fieldPath": ["_ab_cdc_lsn"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_deleted_at"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_updated_at"]
+          },
+          {
+            "fieldPath": ["id"]
+          },
+          {
+            "fieldPath": ["released_at"]
+          },
+          {
+            "fieldPath": ["reason"]
+          },
+          {
+            "fieldPath": ["reason_comment"]
+          },
+          {
+            "fieldPath": ["release_comment"]
+          },
+          {
+            "fieldPath": ["application_form_id"]
+          },
+          {
+            "fieldPath": ["created_at"]
+          },
+          {
+            "fieldPath": ["updated_at"]
+          }
+        ]
+      },
+      {
+        "name": "assessment_sections",
+        "syncMode": "incremental_append",
+        "cursorField": ["_ab_cdc_lsn"],
+        "primaryKey": [["id"]],
+        "selectedFields": [
+          {
+            "fieldPath": ["_ab_cdc_lsn"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_deleted_at"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_updated_at"]
+          },
+          {
+            "fieldPath": ["assessed_at"]
+          },
+          {
+            "fieldPath": ["assessment_id"]
+          },
+          {
+            "fieldPath": ["checks"]
+          },
+          {
+            "fieldPath": ["created_at"]
+          },
+          {
+            "fieldPath": ["failure_reasons"]
+          },
+          {
+            "fieldPath": ["id"]
+          },
+          {
+            "fieldPath": ["key"]
+          },
+          {
+            "fieldPath": ["passed"]
+          },
+          {
+            "fieldPath": ["preliminary"]
+          },
+          {
+            "fieldPath": ["updated_at"]
+          }
+        ]
+      },
+      {
+        "name": "assessments",
+        "syncMode": "incremental_append",
+        "cursorField": ["_ab_cdc_lsn"],
+        "primaryKey": [["id"]],
+        "selectedFields": [
+          {
+            "fieldPath": ["_ab_cdc_lsn"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_deleted_at"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_updated_at"]
+          },
+          {
+            "fieldPath": ["age_range_max"]
+          },
+          {
+            "fieldPath": ["age_range_min"]
+          },
+          {
+            "fieldPath": ["application_form_id"]
+          },
+          {
+            "fieldPath": ["created_at"]
+          },
+          {
+            "fieldPath": ["id"]
+          },
+          {
+            "fieldPath": ["induction_required"]
+          },
+          {
+            "fieldPath": ["prioritisation_decision_at"]
+          },
+          {
+            "fieldPath": ["prioritised"]
+          },
+          {
+            "fieldPath": ["recommendation"]
+          },
+          {
+            "fieldPath": ["recommendation_assessor_note"]
+          },
+          {
+            "fieldPath": ["recommended_at"]
+          },
+          {
+            "fieldPath": ["references_verified"]
+          },
+          {
+            "fieldPath": ["scotland_full_registration"]
+          },
+          {
+            "fieldPath": ["started_at"]
+          },
+          {
+            "fieldPath": ["subjects"]
+          },
+          {
+            "fieldPath": ["unsigned_consent_document_generated"]
+          },
+          {
+            "fieldPath": ["updated_at"]
+          },
+          {
+            "fieldPath": ["verification_started_at"]
+          },
+          {
+            "fieldPath": ["working_days_between_started_and_today"]
+          },
+          {
+            "fieldPath": ["working_days_between_started_and_completed"]
+          },
+          {
+            "fieldPath": ["working_days_between_submitted_and_started"]
+          },
+          {
+            "fieldPath": [
+              "working_days_between_started_and_verification_started"
+            ]
+          },
+          {
+            "fieldPath": [
+              "working_days_between_submitted_and_verification_started"
+            ]
+          },
+          {
+            "fieldPath": [
+              "working_days_between_submitted_and_prioritisation_decision"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "consent_requests",
+        "syncMode": "incremental_append",
+        "cursorField": ["_ab_cdc_lsn"],
+        "primaryKey": [["id"]],
+        "selectedFields": [
+          {
+            "fieldPath": ["_ab_cdc_lsn"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_deleted_at"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_updated_at"]
+          },
+          {
+            "fieldPath": ["assessment_id"]
+          },
+          {
+            "fieldPath": ["created_at"]
+          },
+          {
+            "fieldPath": ["expired_at"]
+          },
+          {
+            "fieldPath": ["id"]
+          },
+          {
+            "fieldPath": ["qualification_id"]
+          },
+          {
+            "fieldPath": ["received_at"]
+          },
+          {
+            "fieldPath": ["requested_at"]
+          },
+          {
+            "fieldPath": ["review_passed"]
+          },
+          {
+            "fieldPath": ["reviewed_at"]
+          },
+          {
+            "fieldPath": ["unsigned_document_downloaded"]
+          },
+          {
+            "fieldPath": ["updated_at"]
+          },
+          {
+            "fieldPath": ["verified_at"]
+          },
+          {
+            "fieldPath": ["verify_passed"]
+          }
+        ]
+      },
+      {
+        "name": "countries",
+        "syncMode": "incremental_append",
+        "cursorField": ["_ab_cdc_lsn"],
+        "primaryKey": [["id"]],
+        "selectedFields": [
+          {
+            "fieldPath": ["_ab_cdc_lsn"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_deleted_at"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_updated_at"]
+          },
+          {
+            "fieldPath": ["code"]
+          },
+          {
+            "fieldPath": ["created_at"]
+          },
+          {
+            "fieldPath": ["eligibility_enabled"]
+          },
+          {
+            "fieldPath": ["eligibility_skip_questions"]
+          },
+          {
+            "fieldPath": ["id"]
+          },
+          {
+            "fieldPath": ["subject_limited"]
+          },
+          {
+            "fieldPath": ["updated_at"]
+          }
+        ]
+      },
+      {
+        "name": "decision_review_requests",
+        "syncMode": "incremental_append",
+        "cursorField": ["_ab_cdc_lsn"],
+        "primaryKey": [["id"]],
+        "selectedFields": [
+          {
+            "fieldPath": ["_ab_cdc_lsn"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_deleted_at"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_updated_at"]
+          },
+          {
+            "fieldPath": ["assessment_id"]
+          },
+          {
+            "fieldPath": ["comment"]
+          },
+          {
+            "fieldPath": ["created_at"]
+          },
+          {
+            "fieldPath": ["has_supporting_documents"]
+          },
+          {
+            "fieldPath": ["id"]
+          },
+          {
+            "fieldPath": ["received_at"]
+          },
+          {
+            "fieldPath": ["review_passed"]
+          },
+          {
+            "fieldPath": ["reviewed_at"]
+          },
+          {
+            "fieldPath": ["review_note"]
+          },
+          {
+            "fieldPath": ["updated_at"]
+          }
+        ]
+      },
+      {
+        "name": "documents",
+        "syncMode": "incremental_append",
+        "cursorField": ["_ab_cdc_lsn"],
+        "primaryKey": [["id"]],
+        "selectedFields": [
+          {
+            "fieldPath": ["_ab_cdc_lsn"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_deleted_at"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_updated_at"]
+          },
+          {
+            "fieldPath": ["available"]
+          },
+          {
+            "fieldPath": ["created_at"]
+          },
+          {
+            "fieldPath": ["document_type"]
+          },
+          {
+            "fieldPath": ["documentable_id"]
+          },
+          {
+            "fieldPath": ["documentable_type"]
+          },
+          {
+            "fieldPath": ["id"]
+          },
+          {
+            "fieldPath": ["updated_at"]
+          }
+        ]
+      },
+      {
+        "name": "eligibility_checks",
+        "syncMode": "incremental_append",
+        "cursorField": ["_ab_cdc_lsn"],
+        "primaryKey": [["id"]],
+        "selectedFields": [
+          {
+            "fieldPath": ["_ab_cdc_lsn"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_deleted_at"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_updated_at"]
+          },
+          {
+            "fieldPath": ["completed_at"]
+          },
+          {
+            "fieldPath": ["country_code"]
+          },
+          {
+            "fieldPath": ["created_at"]
+          },
+          {
+            "fieldPath": ["degree"]
+          },
+          {
+            "fieldPath": ["free_of_sanctions"]
+          },
+          {
+            "fieldPath": ["id"]
+          },
+          {
+            "fieldPath": ["qualification"]
+          },
+          {
+            "fieldPath": ["qualified_for_subject"]
+          },
+          {
+            "fieldPath": ["region_id"]
+          },
+          {
+            "fieldPath": ["teach_children"]
+          },
+          {
+            "fieldPath": ["updated_at"]
+          },
+          {
+            "fieldPath": ["work_experience"]
+          },
+          {
+            "fieldPath": ["work_experience_referee"]
+          },
+          {
+            "fieldPath": ["eligible_work_experience_in_england"]
+          }
+        ]
+      },
+      {
+        "name": "eligibility_domains",
+        "syncMode": "incremental_append",
+        "cursorField": ["_ab_cdc_lsn"],
+        "primaryKey": [["id"]],
+        "selectedFields": [
+          {
+            "fieldPath": ["_ab_cdc_lsn"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_deleted_at"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_updated_at"]
+          },
+          {
+            "fieldPath": ["archived_at"]
+          },
+          {
+            "fieldPath": ["id"]
+          },
+          {
+            "fieldPath": ["created_at"]
+          },
+          {
+            "fieldPath": ["created_by_id"]
+          },
+          {
+            "fieldPath": ["domain"]
+          },
+          {
+            "fieldPath": ["application_forms_count"]
+          },
+          {
+            "fieldPath": ["updated_at"]
+          }
+        ]
+      },
+      {
+        "name": "email_deliveries",
+        "syncMode": "incremental_append",
+        "cursorField": ["_ab_cdc_lsn"],
+        "primaryKey": [["id"]],
+        "selectedFields": [
+          {
+            "fieldPath": ["_ab_cdc_lsn"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_deleted_at"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_updated_at"]
+          },
+          {
+            "fieldPath": ["application_form_id"]
+          },
+          {
+            "fieldPath": ["created_at"]
+          },
+          {
+            "fieldPath": ["to"]
+          },
+          {
+            "fieldPath": ["further_information_request_id"]
+          },
+          {
+            "fieldPath": ["id"]
+          },
+          {
+            "fieldPath": ["mailer_action_name"]
+          },
+          {
+            "fieldPath": ["mailer_class_name"]
+          },
+          {
+            "fieldPath": ["notify_completed_at"]
+          },
+          {
+            "fieldPath": ["notify_id"]
+          },
+          {
+            "fieldPath": ["notify_status"]
+          },
+          {
+            "fieldPath": ["prioritisation_reference_request_id"]
+          },
+          {
+            "fieldPath": ["reference_request_id"]
+          },
+          {
+            "fieldPath": ["subject"]
+          },
+          {
+            "fieldPath": ["updated_at"]
+          }
+        ]
+      },
+      {
+        "name": "english_language_providers",
+        "syncMode": "incremental_append",
+        "cursorField": ["_ab_cdc_lsn"],
+        "primaryKey": [["id"]],
+        "selectedFields": [
+          {
+            "fieldPath": ["_ab_cdc_lsn"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_deleted_at"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_updated_at"]
+          },
+          {
+            "fieldPath": ["accepted_tests"]
+          },
+          {
+            "fieldPath": ["b2_level_requirement"]
+          },
+          {
+            "fieldPath": ["b2_level_requirement_prefix"]
+          },
+          {
+            "fieldPath": ["check_url"]
+          },
+          {
+            "fieldPath": ["created_at"]
+          },
+          {
+            "fieldPath": ["id"]
+          },
+          {
+            "fieldPath": ["name"]
+          },
+          {
+            "fieldPath": ["other_information"]
+          },
+          {
+            "fieldPath": ["reference_hint"]
+          },
+          {
+            "fieldPath": ["reference_name"]
+          },
+          {
+            "fieldPath": ["updated_at"]
+          },
+          {
+            "fieldPath": ["url"]
+          }
+        ]
+      },
+      {
+        "name": "export_audits",
+        "syncMode": "incremental_append",
+        "cursorField": ["_ab_cdc_lsn"],
+        "primaryKey": [["id"]],
+        "selectedFields": [
+          {
+            "fieldPath": ["_ab_cdc_lsn"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_deleted_at"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_updated_at"]
+          },
+          {
+            "fieldPath": ["created_at"]
+          },
+          {
+            "fieldPath": ["export_type"]
+          },
+          {
+            "fieldPath": ["exported_by_id"]
+          },
+          {
+            "fieldPath": ["filter_params"]
+          },
+          {
+            "fieldPath": ["id"]
+          },
+          {
+            "fieldPath": ["updated_at"]
+          }
+        ]
+      },
+      {
+        "name": "feedback_submissions",
+        "syncMode": "incremental_append",
+        "cursorField": ["_ab_cdc_lsn"],
+        "primaryKey": [["id"]],
+        "selectedFields": [
+          {
+            "fieldPath": ["_ab_cdc_lsn"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_deleted_at"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_updated_at"]
+          },
+          {
+            "fieldPath": ["id"]
+          },
+          {
+            "fieldPath": ["application_status"]
+          },
+          {
+            "fieldPath": ["created_at"]
+          },
+          {
+            "fieldPath": ["comment"]
+          },
+          {
+            "fieldPath": ["overall_experience"]
+          },
+          {
+            "fieldPath": ["submitted_at"]
+          },
+          {
+            "fieldPath": ["updated_at"]
+          }
+        ]
+      },
+      {
+        "name": "further_information_requests",
+        "syncMode": "incremental_append",
+        "cursorField": ["_ab_cdc_lsn"],
+        "primaryKey": [["id"]],
+        "selectedFields": [
+          {
+            "fieldPath": ["_ab_cdc_lsn"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_deleted_at"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_updated_at"]
+          },
+          {
+            "fieldPath": ["assessment_id"]
+          },
+          {
+            "fieldPath": ["created_at"]
+          },
+          {
+            "fieldPath": ["expired_at"]
+          },
+          {
+            "fieldPath": ["id"]
+          },
+          {
+            "fieldPath": ["received_at"]
+          },
+          {
+            "fieldPath": ["requested_at"]
+          },
+          {
+            "fieldPath": ["review_passed"]
+          },
+          {
+            "fieldPath": ["reviewed_at"]
+          },
+          {
+            "fieldPath": ["updated_at"]
+          },
+          {
+            "fieldPath": [
+              "working_days_between_assessment_started_to_requested"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "further_information_request_items",
+        "syncMode": "incremental_append",
+        "cursorField": ["_ab_cdc_lsn"],
+        "primaryKey": [["id"]],
+        "selectedFields": [
+          {
+            "fieldPath": ["_ab_cdc_lsn"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_deleted_at"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_updated_at"]
+          },
+          {
+            "fieldPath": ["contact_email"]
+          },
+          {
+            "fieldPath": ["contact_job"]
+          },
+          {
+            "fieldPath": ["contact_name"]
+          },
+          {
+            "fieldPath": ["created_at"]
+          },
+          {
+            "fieldPath": ["failure_reason_assessor_feedback"]
+          },
+          {
+            "fieldPath": ["failure_reason_key"]
+          },
+          {
+            "fieldPath": ["further_information_request_id"]
+          },
+          {
+            "fieldPath": ["id"]
+          },
+          {
+            "fieldPath": ["information_type"]
+          },
+          {
+            "fieldPath": ["review_decision"]
+          },
+          {
+            "fieldPath": ["review_decision_note"]
+          },
+          {
+            "fieldPath": ["updated_at"]
+          },
+          {
+            "fieldPath": ["work_history_id"]
+          }
+        ]
+      },
+      {
+        "name": "notes",
+        "syncMode": "incremental_append",
+        "cursorField": ["_ab_cdc_lsn"],
+        "primaryKey": [["id"]],
+        "selectedFields": [
+          {
+            "fieldPath": ["_ab_cdc_lsn"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_deleted_at"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_updated_at"]
+          },
+          {
+            "fieldPath": ["application_form_id"]
+          },
+          {
+            "fieldPath": ["author_id"]
+          },
+          {
+            "fieldPath": ["created_at"]
+          },
+          {
+            "fieldPath": ["eligibility_domain_id"]
+          },
+          {
+            "fieldPath": ["id"]
+          },
+          {
+            "fieldPath": ["updated_at"]
+          }
+        ]
+      },
+      {
+        "name": "professional_standing_requests",
+        "syncMode": "incremental_append",
+        "cursorField": ["_ab_cdc_lsn"],
+        "primaryKey": [["id"]],
+        "selectedFields": [
+          {
+            "fieldPath": ["_ab_cdc_lsn"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_deleted_at"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_updated_at"]
+          },
+          {
+            "fieldPath": ["assessment_id"]
+          },
+          {
+            "fieldPath": ["created_at"]
+          },
+          {
+            "fieldPath": ["expired_at"]
+          },
+          {
+            "fieldPath": ["id"]
+          },
+          {
+            "fieldPath": ["received_at"]
+          },
+          {
+            "fieldPath": ["requested_at"]
+          },
+          {
+            "fieldPath": ["review_passed"]
+          },
+          {
+            "fieldPath": ["reviewed_at"]
+          },
+          {
+            "fieldPath": ["updated_at"]
+          },
+          {
+            "fieldPath": ["verified_at"]
+          },
+          {
+            "fieldPath": ["verify_passed"]
+          }
+        ]
+      },
+      {
+        "name": "prioritisation_reference_requests",
+        "syncMode": "incremental_append",
+        "cursorField": ["_ab_cdc_lsn"],
+        "primaryKey": [["id"]],
+        "selectedFields": [
+          {
+            "fieldPath": ["_ab_cdc_lsn"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_deleted_at"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_updated_at"]
+          },
+          {
+            "fieldPath": ["id"]
+          },
+          {
+            "fieldPath": ["assessment_id"]
+          },
+          {
+            "fieldPath": ["work_history_id"]
+          },
+          {
+            "fieldPath": ["prioritisation_work_history_check_id"]
+          },
+          {
+            "fieldPath": ["contact_response"]
+          },
+          {
+            "fieldPath": ["confirm_applicant_response"]
+          },
+          {
+            "fieldPath": ["received_at"]
+          },
+          {
+            "fieldPath": ["requested_at"]
+          },
+          {
+            "fieldPath": ["expired_at"]
+          },
+          {
+            "fieldPath": ["review_passed"]
+          },
+          {
+            "fieldPath": ["reviewed_at"]
+          },
+          {
+            "fieldPath": ["review_note"]
+          },
+          {
+            "fieldPath": ["created_at"]
+          },
+          {
+            "fieldPath": ["updated_at"]
+          }
+        ]
+      },
+      {
+        "name": "prioritisation_work_history_checks",
+        "syncMode": "incremental_append",
+        "cursorField": ["_ab_cdc_lsn"],
+        "primaryKey": [["id"]],
+        "selectedFields": [
+          {
+            "fieldPath": ["_ab_cdc_lsn"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_deleted_at"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_updated_at"]
+          },
+          {
+            "fieldPath": ["assessment_id"]
+          },
+          {
+            "fieldPath": ["work_history_id"]
+          },
+          {
+            "fieldPath": ["checks"]
+          },
+          {
+            "fieldPath": ["created_at"]
+          },
+          {
+            "fieldPath": ["failure_reasons"]
+          },
+          {
+            "fieldPath": ["id"]
+          },
+          {
+            "fieldPath": ["passed"]
+          },
+          {
+            "fieldPath": ["updated_at"]
+          }
+        ]
+      },
+      {
+        "name": "qualifications",
+        "syncMode": "incremental_append",
+        "cursorField": ["_ab_cdc_lsn"],
+        "primaryKey": [["id"]],
+        "selectedFields": [
+          {
+            "fieldPath": ["_ab_cdc_lsn"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_deleted_at"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_updated_at"]
+          },
+          {
+            "fieldPath": ["application_form_id"]
+          },
+          {
+            "fieldPath": ["certificate_date"]
+          },
+          {
+            "fieldPath": ["complete_date"]
+          },
+          {
+            "fieldPath": ["created_at"]
+          },
+          {
+            "fieldPath": ["id"]
+          },
+          {
+            "fieldPath": ["institution_country_code"]
+          },
+          {
+            "fieldPath": ["institution_name"]
+          },
+          {
+            "fieldPath": ["start_date"]
+          },
+          {
+            "fieldPath": ["title"]
+          },
+          {
+            "fieldPath": ["updated_at"]
+          }
+        ]
+      },
+      {
+        "name": "qualification_requests",
+        "syncMode": "incremental_append",
+        "cursorField": ["_ab_cdc_lsn"],
+        "primaryKey": [["id"]],
+        "selectedFields": [
+          {
+            "fieldPath": ["_ab_cdc_lsn"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_deleted_at"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_updated_at"]
+          },
+          {
+            "fieldPath": ["assessment_id"]
+          },
+          {
+            "fieldPath": ["consent_method"]
+          },
+          {
+            "fieldPath": ["created_at"]
+          },
+          {
+            "fieldPath": ["expired_at"]
+          },
+          {
+            "fieldPath": ["id"]
+          },
+          {
+            "fieldPath": ["qualification_id"]
+          },
+          {
+            "fieldPath": ["received_at"]
+          },
+          {
+            "fieldPath": ["requested_at"]
+          },
+          {
+            "fieldPath": ["review_passed"]
+          },
+          {
+            "fieldPath": ["reviewed_at"]
+          },
+          {
+            "fieldPath": ["updated_at"]
+          },
+          {
+            "fieldPath": ["verified_at"]
+          },
+          {
+            "fieldPath": ["verify_passed"]
+          }
+        ]
+      },
+      {
+        "name": "reference_requests",
+        "syncMode": "incremental_append",
+        "cursorField": ["_ab_cdc_lsn"],
+        "primaryKey": [["id"]],
+        "selectedFields": [
+          {
+            "fieldPath": ["_ab_cdc_lsn"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_deleted_at"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_updated_at"]
+          },
+          {
+            "fieldPath": ["assessment_id"]
+          },
+          {
+            "fieldPath": ["children_response"]
+          },
+          {
+            "fieldPath": ["contact_job"]
+          },
+          {
+            "fieldPath": ["contact_name"]
+          },
+          {
+            "fieldPath": ["contact_response"]
+          },
+          {
+            "fieldPath": ["created_at"]
+          },
+          {
+            "fieldPath": ["dates_response"]
+          },
+          {
+            "fieldPath": ["excludes_suitability_and_concerns_question"]
+          },
+          {
+            "fieldPath": ["expired_at"]
+          },
+          {
+            "fieldPath": ["hours_response"]
+          },
+          {
+            "fieldPath": ["id"]
+          },
+          {
+            "fieldPath": ["lessons_response"]
+          },
+          {
+            "fieldPath": ["misconduct_response"]
+          },
+          {
+            "fieldPath": ["received_at"]
+          },
+          {
+            "fieldPath": ["reports_response"]
+          },
+          {
+            "fieldPath": ["requested_at"]
+          },
+          {
+            "fieldPath": ["review_passed"]
+          },
+          {
+            "fieldPath": ["reviewed_at"]
+          },
+          {
+            "fieldPath": ["satisfied_response"]
+          },
+          {
+            "fieldPath": ["updated_at"]
+          },
+          {
+            "fieldPath": ["verified_at"]
+          },
+          {
+            "fieldPath": ["verify_passed"]
+          },
+          {
+            "fieldPath": ["work_history_id"]
+          }
+        ]
+      },
+      {
+        "name": "regions",
+        "syncMode": "incremental_append",
+        "cursorField": ["_ab_cdc_lsn"],
+        "primaryKey": [["id"]],
+        "selectedFields": [
+          {
+            "fieldPath": ["_ab_cdc_lsn"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_deleted_at"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_updated_at"]
+          },
+          {
+            "fieldPath": ["application_form_skip_work_history"]
+          },
+          {
+            "fieldPath": ["country_id"]
+          },
+          {
+            "fieldPath": ["created_at"]
+          },
+          {
+            "fieldPath": ["id"]
+          },
+          {
+            "fieldPath": ["name"]
+          },
+          {
+            "fieldPath": ["reduced_evidence_accepted"]
+          },
+          {
+            "fieldPath": ["requires_preliminary_check"]
+          },
+          {
+            "fieldPath": ["sanction_check"]
+          },
+          {
+            "fieldPath": ["status_check"]
+          },
+          {
+            "fieldPath": ["teaching_authority_address"]
+          },
+          {
+            "fieldPath": ["teaching_authority_certificate"]
+          },
+          {
+            "fieldPath": ["teaching_authority_emails"]
+          },
+          {
+            "fieldPath": ["teaching_authority_name"]
+          },
+          {
+            "fieldPath": ["teaching_authority_online_checker_url"]
+          },
+          {
+            "fieldPath": ["teaching_authority_provides_written_statement"]
+          },
+          {
+            "fieldPath": ["teaching_authority_requires_submission_email"]
+          },
+          {
+            "fieldPath": ["teaching_authority_websites"]
+          },
+          {
+            "fieldPath": ["updated_at"]
+          },
+          {
+            "fieldPath": ["written_statement_optional"]
+          }
+        ]
+      },
+      {
+        "name": "reminder_emails",
+        "syncMode": "incremental_append",
+        "cursorField": ["_ab_cdc_lsn"],
+        "primaryKey": [["id"]],
+        "selectedFields": [
+          {
+            "fieldPath": ["_ab_cdc_lsn"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_deleted_at"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_updated_at"]
+          },
+          {
+            "fieldPath": ["created_at"]
+          },
+          {
+            "fieldPath": ["id"]
+          },
+          {
+            "fieldPath": ["name"]
+          },
+          {
+            "fieldPath": ["remindable_id"]
+          },
+          {
+            "fieldPath": ["remindable_type"]
+          },
+          {
+            "fieldPath": ["updated_at"]
+          }
+        ]
+      },
+      {
+        "name": "selected_failure_reasons",
+        "syncMode": "incremental_append",
+        "cursorField": ["_ab_cdc_lsn"],
+        "primaryKey": [["id"]],
+        "selectedFields": [
+          {
+            "fieldPath": ["_ab_cdc_lsn"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_deleted_at"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_updated_at"]
+          },
+          {
+            "fieldPath": ["assessment_section_id"]
+          },
+          {
+            "fieldPath": ["assessor_feedback"]
+          },
+          {
+            "fieldPath": ["created_at"]
+          },
+          {
+            "fieldPath": ["id"]
+          },
+          {
+            "fieldPath": ["key"]
+          },
+          {
+            "fieldPath": ["prioritisation_work_history_check_id"]
+          },
+          {
+            "fieldPath": ["updated_at"]
+          }
+        ]
+      },
+      {
+        "name": "selected_failure_reasons_work_histories",
+        "syncMode": "incremental_append",
+        "cursorField": ["_ab_cdc_lsn"],
+        "primaryKey": [["selected_failure_reason_id"]],
+        "selectedFields": [
+          {
+            "fieldPath": ["_ab_cdc_lsn"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_deleted_at"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_updated_at"]
+          },
+          {
+            "fieldPath": ["selected_failure_reason_id"]
+          },
+          {
+            "fieldPath": ["work_history_id"]
+          },
+          {
+            "fieldPath": ["assessor_feedback"]
+          }
+        ]
+      },
+      {
+        "name": "staff",
+        "syncMode": "incremental_append",
+        "cursorField": ["_ab_cdc_lsn"],
+        "primaryKey": [["id"]],
+        "selectedFields": [
+          {
+            "fieldPath": ["_ab_cdc_lsn"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_deleted_at"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_updated_at"]
+          },
+          {
+            "fieldPath": ["archived"]
+          },
+          {
+            "fieldPath": ["assess_permission"]
+          },
+          {
+            "fieldPath": ["change_email_permission"]
+          },
+          {
+            "fieldPath": ["change_name_permission"]
+          },
+          {
+            "fieldPath": ["change_work_history_and_qualification_permission"]
+          },
+          {
+            "fieldPath": ["confirmation_sent_at"]
+          },
+          {
+            "fieldPath": ["confirmed_at"]
+          },
+          {
+            "fieldPath": ["created_at"]
+          },
+          {
+            "fieldPath": ["current_sign_in_at"]
+          },
+          {
+            "fieldPath": ["current_sign_in_ip"]
+          },
+          {
+            "fieldPath": ["email"]
+          },
+          {
+            "fieldPath": ["failed_attempts"]
+          },
+          {
+            "fieldPath": ["id"]
+          },
+          {
+            "fieldPath": ["invitation_accepted_at"]
+          },
+          {
+            "fieldPath": ["invitation_created_at"]
+          },
+          {
+            "fieldPath": ["invitation_limit"]
+          },
+          {
+            "fieldPath": ["invitation_sent_at"]
+          },
+          {
+            "fieldPath": ["invitations_count"]
+          },
+          {
+            "fieldPath": ["invited_by_id"]
+          },
+          {
+            "fieldPath": ["invited_by_type"]
+          },
+          {
+            "fieldPath": ["last_sign_in_at"]
+          },
+          {
+            "fieldPath": ["last_sign_in_ip"]
+          },
+          {
+            "fieldPath": ["locked_at"]
+          },
+          {
+            "fieldPath": ["manage_staff_permission"]
+          },
+          {
+            "fieldPath": ["name"]
+          },
+          {
+            "fieldPath": ["remember_created_at"]
+          },
+          {
+            "fieldPath": ["reset_password_sent_at"]
+          },
+          {
+            "fieldPath": ["reverse_decision_permission"]
+          },
+          {
+            "fieldPath": ["sign_in_count"]
+          },
+          {
+            "fieldPath": ["support_console_permission"]
+          },
+          {
+            "fieldPath": ["unconfirmed_email"]
+          },
+          {
+            "fieldPath": ["updated_at"]
+          },
+          {
+            "fieldPath": ["verify_permission"]
+          },
+          {
+            "fieldPath": ["withdraw_permission"]
+          }
+        ]
+      },
+      {
+        "name": "suitability_record_emails",
+        "syncMode": "incremental_append",
+        "cursorField": ["_ab_cdc_lsn"],
+        "primaryKey": [["id"]],
+        "selectedFields": [
+          {
+            "fieldPath": ["_ab_cdc_lsn"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_deleted_at"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_updated_at"]
+          },
+          {
+            "fieldPath": ["canonical"]
+          },
+          {
+            "fieldPath": ["created_at"]
+          },
+          {
+            "fieldPath": ["id"]
+          },
+          {
+            "fieldPath": ["suitability_record_id"]
+          },
+          {
+            "fieldPath": ["updated_at"]
+          },
+          {
+            "fieldPath": ["value"]
+          }
+        ]
+      },
+      {
+        "name": "suitability_record_names",
+        "syncMode": "incremental_append",
+        "cursorField": ["_ab_cdc_lsn"],
+        "primaryKey": [["id"]],
+        "selectedFields": [
+          {
+            "fieldPath": ["_ab_cdc_lsn"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_deleted_at"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_updated_at"]
+          },
+          {
+            "fieldPath": ["created_at"]
+          },
+          {
+            "fieldPath": ["id"]
+          },
+          {
+            "fieldPath": ["suitability_record_id"]
+          },
+          {
+            "fieldPath": ["updated_at"]
+          },
+          {
+            "fieldPath": ["value"]
+          }
+        ]
+      },
+      {
+        "name": "suitability_records",
+        "syncMode": "incremental_append",
+        "cursorField": ["_ab_cdc_lsn"],
+        "primaryKey": [["id"]],
+        "selectedFields": [
+          {
+            "fieldPath": ["_ab_cdc_lsn"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_deleted_at"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_updated_at"]
+          },
+          {
+            "fieldPath": ["archived_at"]
+          },
+          {
+            "fieldPath": ["archived_by_id"]
+          },
+          {
+            "fieldPath": ["country_code"]
+          },
+          {
+            "fieldPath": ["created_at"]
+          },
+          {
+            "fieldPath": ["created_by_id"]
+          },
+          {
+            "fieldPath": ["date_of_birth"]
+          },
+          {
+            "fieldPath": ["id"]
+          },
+          {
+            "fieldPath": ["updated_at"]
+          }
+        ]
+      },
+      {
+        "name": "support_requests",
+        "syncMode": "incremental_append",
+        "cursorField": ["_ab_cdc_lsn"],
+        "primaryKey": [["id"]],
+        "selectedFields": [
+          {
+            "fieldPath": ["_ab_cdc_lsn"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_deleted_at"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_updated_at"]
+          },
+          {
+            "fieldPath": ["application_enquiry_type"]
+          },
+          {
+            "fieldPath": ["application_reference"]
+          },
+          {
+            "fieldPath": ["user_type"]
+          },
+          {
+            "fieldPath": ["created_at"]
+          },
+          {
+            "fieldPath": ["comment"]
+          },
+          {
+            "fieldPath": ["email"]
+          },
+          {
+            "fieldPath": ["name"]
+          },
+          {
+            "fieldPath": ["id"]
+          },
+          {
+            "fieldPath": ["submitted_at"]
+          },
+          {
+            "fieldPath": ["updated_at"]
+          },
+          {
+            "fieldPath": ["zendesk_ticket_created_at"]
+          },
+          {
+            "fieldPath": ["zendesk_ticket_id"]
+          }
+        ]
+      },
+      {
+        "name": "teachers",
+        "syncMode": "incremental_append",
+        "cursorField": ["_ab_cdc_lsn"],
+        "primaryKey": [["id"]],
+        "selectedFields": [
+          {
+            "fieldPath": ["_ab_cdc_lsn"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_deleted_at"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_updated_at"]
+          },
+          {
+            "fieldPath": ["canonical_email"]
+          },
+          {
+            "fieldPath": ["created_at"]
+          },
+          {
+            "fieldPath": ["current_sign_in_at"]
+          },
+          {
+            "fieldPath": ["current_sign_in_ip"]
+          },
+          {
+            "fieldPath": ["email"]
+          },
+          {
+            "fieldPath": ["email_domain"]
+          },
+          {
+            "fieldPath": ["gov_one_email"]
+          },
+          {
+            "fieldPath": ["id"]
+          },
+          {
+            "fieldPath": ["last_sign_in_at"]
+          },
+          {
+            "fieldPath": ["last_sign_in_ip"]
+          },
+          {
+            "fieldPath": ["sign_in_count"]
+          },
+          {
+            "fieldPath": ["trn"]
+          },
+          {
+            "fieldPath": ["updated_at"]
+          },
+          {
+            "fieldPath": ["uuid"]
+          }
+        ]
+      },
+      {
+        "name": "trs_trn_requests",
+        "syncMode": "incremental_append",
+        "cursorField": ["_ab_cdc_lsn"],
+        "primaryKey": [["id"]],
+        "selectedFields": [
+          {
+            "fieldPath": ["_ab_cdc_lsn"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_deleted_at"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_updated_at"]
+          },
+          {
+            "fieldPath": ["application_form_id"]
+          },
+          {
+            "fieldPath": ["created_at"]
+          },
+          {
+            "fieldPath": ["id"]
+          },
+          {
+            "fieldPath": ["potential_duplicate"]
+          },
+          {
+            "fieldPath": ["request_id"]
+          },
+          {
+            "fieldPath": ["state"]
+          },
+          {
+            "fieldPath": ["updated_at"]
+          }
+        ]
+      },
+      {
+        "name": "uploads",
+        "syncMode": "incremental_append",
+        "cursorField": ["_ab_cdc_lsn"],
+        "primaryKey": [["id"]],
+        "selectedFields": [
+          {
+            "fieldPath": ["_ab_cdc_lsn"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_deleted_at"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_updated_at"]
+          },
+          {
+            "fieldPath": ["created_at"]
+          },
+          {
+            "fieldPath": ["document_id"]
+          },
+          {
+            "fieldPath": ["filename"]
+          },
+          {
+            "fieldPath": ["id"]
+          },
+          {
+            "fieldPath": ["malware_scan_result"]
+          },
+          {
+            "fieldPath": ["translation"]
+          },
+          {
+            "fieldPath": ["updated_at"]
+          }
+        ]
+      },
+      {
+        "name": "work_histories",
+        "syncMode": "incremental_append",
+        "cursorField": ["_ab_cdc_lsn"],
+        "primaryKey": [["id"]],
+        "selectedFields": [
+          {
+            "fieldPath": ["_ab_cdc_lsn"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_deleted_at"]
+          },
+          {
+            "fieldPath": ["_ab_cdc_updated_at"]
+          },
+          {
+            "fieldPath": ["address_line1"]
+          },
+          {
+            "fieldPath": ["address_line2"]
+          },
+          {
+            "fieldPath": ["application_form_id"]
+          },
+          {
+            "fieldPath": ["canonical_contact_email"]
+          },
+          {
+            "fieldPath": ["city"]
+          },
+          {
+            "fieldPath": ["contact_email"]
+          },
+          {
+            "fieldPath": ["contact_email_domain"]
+          },
+          {
+            "fieldPath": ["contact_job"]
+          },
+          {
+            "fieldPath": ["contact_name"]
+          },
+          {
+            "fieldPath": ["country_code"]
+          },
+          {
+            "fieldPath": ["created_at"]
+          },
+          {
+            "fieldPath": ["eligibility_domain_id"]
+          },
+          {
+            "fieldPath": ["end_date"]
+          },
+          {
+            "fieldPath": ["end_date_is_estimate"]
+          },
+          {
+            "fieldPath": ["hours_per_week"]
+          },
+          {
+            "fieldPath": ["id"]
+          },
+          {
+            "fieldPath": ["is_other_england_educational_role"]
+          },
+          {
+            "fieldPath": ["job"]
+          },
+          {
+            "fieldPath": ["postcode"]
+          },
+          {
+            "fieldPath": ["school_name"]
+          },
+          {
+            "fieldPath": ["school_website"]
+          },
+          {
+            "fieldPath": ["start_date"]
+          },
+          {
+            "fieldPath": ["start_date_is_estimate"]
+          },
+          {
+            "fieldPath": ["still_employed"]
+          },
+          {
+            "fieldPath": ["updated_at"]
+          }
+        ]
+      },
+      {
+        "name": "airbyte_heartbeat",
+        "syncMode": "full_refresh_overwrite",
+        "primaryKey": [["id"]],
+        "selectedFields": [
+          {
+            "fieldPath": ["id"]
+          },
+          {
+            "fieldPath": ["last_heartbeat"]
+          }
+        ]
+      }
+    ]
+  }
+}
