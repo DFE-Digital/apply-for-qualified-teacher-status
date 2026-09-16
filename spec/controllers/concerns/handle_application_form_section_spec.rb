@@ -95,14 +95,19 @@ RSpec.describe HandleApplicationFormSection, type: :controller do
         let(:session) do
           {
             history_stack: [
-              { path: "/check", check: true },
-              { path: "/current" },
+              {
+                path: "/teacher/application/personal_information/check",
+                check: true,
+              },
+              { path: "/teacher/application" },
             ],
           }
         end
 
         it "redirects to application form" do
-          expect(controller).to receive(:redirect_to).with("/check")
+          expect(controller).to receive(:redirect_to).with(
+            "/teacher/application/personal_information/check",
+          )
           handle_application_form_section
         end
       end

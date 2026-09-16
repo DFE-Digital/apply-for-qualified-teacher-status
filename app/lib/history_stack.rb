@@ -64,7 +64,7 @@ class HistoryStack
   end
 
   def last_path_if_check(identifier: nil)
-    last_entry[:path] if last_entry_is_check?(identifier:)
+    apply_safe_path(last_entry[:path]) if last_entry_is_check?(identifier:)
   end
 
   private
