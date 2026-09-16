@@ -22,6 +22,14 @@ RSpec.describe HistoryStack do
       end
     end
 
+    context "with a path that matches no route on our service" do
+      let(:path) { "/not-real" }
+
+      it "does not store it" do
+        expect { push }.to change { session }.to({ history_stack: [] })
+      end
+    end
+
     [
       "//external.example",
       "/\\external.example",
@@ -43,7 +51,7 @@ RSpec.describe HistoryStack do
       history_stack.push_self(request, origin:, check:, reset:)
     end
 
-    let(:request) { OpenStruct.new(fullpath: "/path?page=1") }
+    let(:request) { OpenStruct.new(fullpath: "/assessor/applications?page=1") }
     let(:check) { false }
 
     context "with an empty session" do
@@ -57,7 +65,11 @@ RSpec.describe HistoryStack do
           expect { push_self }.to change { session }.to(
             {
               history_stack: [
-                { origin: true, check: false, path: "/path?page=1" },
+                {
+                  origin: true,
+                  check: false,
+                  path: "/assessor/applications?page=1",
+                },
               ],
             },
           )
@@ -67,7 +79,11 @@ RSpec.describe HistoryStack do
           expect { 2.times { push_self } }.to change { session }.to(
             {
               history_stack: [
-                { origin: true, check: false, path: "/path?page=1" },
+                {
+                  origin: true,
+                  check: false,
+                  path: "/assessor/applications?page=1",
+                },
               ],
             },
           )
@@ -81,7 +97,11 @@ RSpec.describe HistoryStack do
           expect { push_self }.to change { session }.to(
             {
               history_stack: [
-                { origin: false, check: false, path: "/path?page=1" },
+                {
+                  origin: false,
+                  check: false,
+                  path: "/assessor/applications?page=1",
+                },
               ],
             },
           )
@@ -91,7 +111,11 @@ RSpec.describe HistoryStack do
 
     context "with an existing session" do
       let(:session) do
-        { history_stack: [{ path: "/origin", check: false, origin: true }] }
+        {
+          history_stack: [
+            { path: "/assessor/applications/1", check: false, origin: true },
+          ],
+        }
       end
       let(:origin) { false }
 
@@ -102,7 +126,11 @@ RSpec.describe HistoryStack do
           expect { push_self }.to change { session }.to(
             {
               history_stack: [
-                { origin: false, check: false, path: "/path?page=1" },
+                {
+                  origin: false,
+                  check: false,
+                  path: "/assessor/applications?page=1",
+                },
               ],
             },
           )
@@ -116,8 +144,16 @@ RSpec.describe HistoryStack do
           expect { push_self }.to change { session }.to(
             {
               history_stack: [
-                { origin: true, check: false, path: "/origin" },
-                { origin: false, check: false, path: "/path?page=1" },
+                {
+                  origin: true,
+                  check: false,
+                  path: "/assessor/applications/1",
+                },
+                {
+                  origin: false,
+                  check: false,
+                  path: "/assessor/applications?page=1",
+                },
               ],
             },
           )
@@ -139,13 +175,13 @@ RSpec.describe HistoryStack do
       let(:session) do
         {
           history_stack: [
-            { path: "/origin", origin: true },
-            { path: "/page", origin: false },
+            { path: "/assessor/applications", origin: true },
+            { path: "/assessor/applications/2", origin: false },
           ],
         }
       end
 
-      it { is_expected.to eq("/origin") }
+      it { is_expected.to eq("/assessor/applications") }
 
       it "stores the stack in the session" do
         expect { pop_back }.to change { session }.to({ history_stack: [] })
@@ -156,7 +192,7 @@ RSpec.describe HistoryStack do
           {
             history_stack: [
               { path: "//external.example", origin: false },
-              { path: "/page", origin: false },
+              { path: "/assessor/applications", origin: false },
             ],
           }
         end
@@ -179,14 +215,14 @@ RSpec.describe HistoryStack do
       let(:session) do
         {
           history_stack: [
-            { path: "/origin", origin: true },
-            { path: "/page1", origin: false },
-            { path: "/page2", origin: false },
+            { path: "/assessor/applications", origin: true },
+            { path: "/assessor/applications/123456", origin: false },
+            { path: "/assessor/applications/343333", origin: false },
           ],
         }
       end
 
-      it { is_expected.to eq("/origin") }
+      it { is_expected.to eq("/assessor/applications") }
 
       it "stores the stack in the session" do
         expect { pop_to_origin }.to change { session }.to({ history_stack: [] })
@@ -197,8 +233,8 @@ RSpec.describe HistoryStack do
           {
             history_stack: [
               { path: "//external.example", origin: true },
-              { path: "/page1", origin: false },
-              { path: "/page2", origin: false },
+              { path: "/assessor/applications?page=1", origin: false },
+              { path: "/assessor/applications?page=2", origin: false },
             ],
           }
         end
@@ -213,7 +249,7 @@ RSpec.describe HistoryStack do
       history_stack.replace_self(path:, origin:, check:)
     end
 
-    let(:path) { "/path?page=1" }
+    let(:path) { "/assessor/applications?page=1" }
     let(:check) { false }
 
     context "with an empty session" do
@@ -226,7 +262,11 @@ RSpec.describe HistoryStack do
           expect { replace_self }.to change { session }.to(
             {
               history_stack: [
-                { origin: true, check: false, path: "/path?page=1" },
+                {
+                  origin: true,
+                  check: false,
+                  path: "/assessor/applications?page=1",
+                },
               ],
             },
           )
@@ -236,7 +276,11 @@ RSpec.describe HistoryStack do
           expect { 2.times { replace_self } }.to change { session }.to(
             {
               history_stack: [
-                { origin: true, check: false, path: "/path?page=1" },
+                {
+                  origin: true,
+                  check: false,
+                  path: "/assessor/applications?page=1",
+                },
               ],
             },
           )
@@ -250,7 +294,11 @@ RSpec.describe HistoryStack do
           expect { replace_self }.to change { session }.to(
             {
               history_stack: [
-                { origin: false, check: false, path: "/path?page=1" },
+                {
+                  origin: false,
+                  check: false,
+                  path: "/assessor/applications?page=1",
+                },
               ],
             },
           )
@@ -268,7 +316,11 @@ RSpec.describe HistoryStack do
         expect { replace_self }.to change { session }.to(
           {
             history_stack: [
-              { origin: false, check: false, path: "/path?page=1" },
+              {
+                origin: false,
+                check: false,
+                path: "/assessor/applications?page=1",
+              },
             ],
           },
         )

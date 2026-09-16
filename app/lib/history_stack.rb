@@ -80,8 +80,16 @@ class HistoryStack
     return nil unless value.is_a?(String)
     return nil unless value.start_with?("/")
     return nil if value.start_with?("//", "/\\")
+    return nil unless path_exists?(value)
 
     value
+  end
+
+  def path_exists?(path)
+    Rails.application.routes.recognize_path(path)
+    true
+  rescue ActionController::RoutingError
+    false
   end
 
   attr_reader :session
