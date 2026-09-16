@@ -66,6 +66,31 @@ RSpec.describe HistoryController, type: :controller do
           expect(response).to redirect_to("/fallback")
         end
       end
+
+      context "with an unsafe default param" do
+        before do
+          allow_any_instance_of(HistoryStack).to receive(:pop_back).and_return(
+            nil,
+          )
+        end
+
+        [
+          "//external.example",
+          "/\\external.example",
+          "https://external.example",
+          "https:external.example",
+        ].each do |unsafe|
+          context "when default is #{unsafe.inspect}" do
+            let(:default) { unsafe }
+
+            it "redirects to root, not the external host" do
+              perform
+
+              expect(response).to redirect_to(root_path)
+            end
+          end
+        end
+      end
     end
   end
 end

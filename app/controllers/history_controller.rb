@@ -12,7 +12,11 @@ class HistoryController < ApplicationController
   private
 
   def default_path
-    URI.parse(back_params[:default]).path
+    path = URI.parse(back_params[:default]).path.presence
+
+    path&.start_with?("/") && !path.start_with?("//", "/\\") ? path : root_path
+  rescue URI::InvalidURIError
+    root_path
   end
 
   def back_params
