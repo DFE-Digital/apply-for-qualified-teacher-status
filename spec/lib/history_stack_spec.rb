@@ -5,6 +5,39 @@ require "rails_helper"
 RSpec.describe HistoryStack do
   subject(:history_stack) { described_class.new(session:) }
 
+  describe "#push" do
+    subject(:push) do
+      history_stack.push(path:, origin: false, check: false, reset: false)
+    end
+
+    let(:session) { {} }
+
+    context "with a legitimate path" do
+      let(:path) { "/teacher/application/" }
+
+      it "stores it" do
+        expect { push }.to change { session }.to(
+          { history_stack: [{ origin: false, check: false, path: }] },
+        )
+      end
+    end
+
+    [
+      "//external.example",
+      "/\\external.example",
+      "https://external.example",
+      "https:external.example",
+    ].each do |external_path|
+      context "with the external path #{external_path.inspect}" do
+        let(:path) { external_path }
+
+        it "does not store it" do
+          expect { push }.to change { session }.to({ history_stack: [] })
+        end
+      end
+    end
+  end
+
   describe "#push_self" do
     subject(:push_self) do
       history_stack.push_self(request, origin:, check:, reset:)
@@ -117,6 +150,19 @@ RSpec.describe HistoryStack do
       it "stores the stack in the session" do
         expect { pop_back }.to change { session }.to({ history_stack: [] })
       end
+
+      context "with an unsafe path stored in the stack" do
+        let(:session) do
+          {
+            history_stack: [
+              { path: "//external.example", origin: false },
+              { path: "/page", origin: false },
+            ],
+          }
+        end
+
+        it { is_expected.to be_nil }
+      end
     end
   end
 
@@ -144,6 +190,20 @@ RSpec.describe HistoryStack do
 
       it "stores the stack in the session" do
         expect { pop_to_origin }.to change { session }.to({ history_stack: [] })
+      end
+
+      context "with an unsafe origin path stored in the stack" do
+        let(:session) do
+          {
+            history_stack: [
+              { path: "//external.example", origin: true },
+              { path: "/page1", origin: false },
+              { path: "/page2", origin: false },
+            ],
+          }
+        end
+
+        it { is_expected.to be_nil }
       end
     end
   end

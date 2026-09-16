@@ -6,10 +6,14 @@ class HistoryStack
   end
 
   def push(path:, origin:, check:, reset:)
+    safe_path = apply_safe_path(path)
+
     apply_to_stack do |stack|
       stack.clear if reset
+      next if safe_path.nil?
+
       current_entry = stack.last
-      new_entry = { path:, origin:, check: }
+      new_entry = { path: safe_path, origin:, check: }
       stack.push(new_entry) if current_entry != new_entry
     end
   end
@@ -26,7 +30,7 @@ class HistoryStack
     pop # self
 
     entry = pop
-    entry[:path] if entry
+    apply_safe_path(entry[:path]) if entry
   end
 
   def pop_to_origin
@@ -35,7 +39,7 @@ class HistoryStack
     loop do
       entry = pop
       return nil if entry.nil?
-      return entry[:path] if entry[:origin]
+      return apply_safe_path(entry[:path]) if entry[:origin]
     end
   end
 
@@ -70,6 +74,14 @@ class HistoryStack
     return_value = yield stack
     session[:history_stack] = stack
     return_value
+  end
+
+  def apply_safe_path(value)
+    return nil unless value.is_a?(String)
+    return nil unless value.start_with?("/")
+    return nil if value.start_with?("//", "/\\")
+
+    value
   end
 
   attr_reader :session
