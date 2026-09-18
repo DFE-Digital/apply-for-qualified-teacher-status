@@ -14,7 +14,7 @@ DfE::Analytics.configure do |config|
       ENV.fetch("BIGQUERY_DISABLE", disabled_by_default.to_s) != "true"
     end
 
-  if HostingEnvironment.test?
+  if HostingEnvironment.test? || HostingEnvironment.production?
     config.airbyte_stream_config_path =
       "terraform/application/config/airbyte_stream_config.json"
     # Perform airbyte checks on startup and allow airbyte config generation
