@@ -6,7 +6,7 @@ Dear <%= application_form_full_name(@application_form) %>,
 
 To confirm if your application can be prioritised, we've contacted the following references you named in your application:
 <% @prioritisation_reference_requests.each do |prioritisation_reference_request| %>
-* <%= prioritisation_reference_request.work_history.school_name %>, <%= prioritisation_reference_request.work_history.job %>, <%= prioritisation_reference_request.work_history.school_name %>,
+* <%= prioritisation_reference_request.work_history.school_name %>, <%= prioritisation_reference_request.work_history.job %>
 <% end %>
 
 They need to respond by <%= @prioritisation_reference_requests.first.expires_at.to_date.to_fs %>.
