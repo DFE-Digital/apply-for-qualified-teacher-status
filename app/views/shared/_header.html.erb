@@ -60,6 +60,7 @@
           active: current_page?(main_app.assessor_interface_service_level_agreements_path)
         ) %>
       <% end %>
+      <% service_navigation.with_navigation_item(text: "Service feedback", href: "#") %>
       <% service_navigation.with_navigation_item(text: "Sign out", href: main_app.destroy_staff_session_path) %>
     <% end %>
   <% when "support" %>
