@@ -373,6 +373,7 @@
     - prioritisation_work_history_check_id
     - updated_at
   :selected_failure_reasons_work_histories:
+    - id
     - selected_failure_reason_id
     - work_history_id
     - assessor_feedback
