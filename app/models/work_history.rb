@@ -45,7 +45,9 @@ class WorkHistory < ApplicationRecord
   belongs_to :application_form
   belongs_to :eligibility_domain, optional: true
   has_one :reference_request, required: false
-  has_and_belongs_to_many :selected_failure_reasons
+  has_many :selected_failure_reasons_work_histories
+  has_many :selected_failure_reasons,
+           through: :selected_failure_reasons_work_histories
   has_one :further_information_request_item,
           required: false,
           dependent: :destroy

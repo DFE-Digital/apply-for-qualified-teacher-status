@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_31_110910) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_22_111232) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -545,10 +545,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_31_110910) do
     t.index ["prioritisation_work_history_check_id"], name: "index_as_failure_reason_prioritisation_work_history_check_id"
   end
 
-  create_table "selected_failure_reasons_work_histories", id: false, force: :cascade do |t|
+  create_table "selected_failure_reasons_work_histories", force: :cascade do |t|
     t.text "assessor_feedback"
     t.bigint "selected_failure_reason_id", null: false
     t.bigint "work_history_id", null: false
+    t.index ["selected_failure_reason_id", "work_history_id"], name: "idx_on_selected_failure_reason_id_work_history_id_2013815cea", unique: true
   end
 
   create_table "sessions", force: :cascade do |t|

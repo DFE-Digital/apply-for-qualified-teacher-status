@@ -1496,7 +1496,7 @@
         "name": "selected_failure_reasons_work_histories",
         "syncMode": "incremental_append",
         "cursorField": ["_ab_cdc_lsn"],
-        "primaryKey": [["selected_failure_reason_id"]],
+        "primaryKey": [["id"]],
         "selectedFields": [
           {
             "fieldPath": ["_ab_cdc_lsn"]
@@ -1506,6 +1506,9 @@
           },
           {
             "fieldPath": ["_ab_cdc_updated_at"]
+          },
+          {
+            "fieldPath": ["id"]
           },
           {
             "fieldPath": ["selected_failure_reason_id"]
