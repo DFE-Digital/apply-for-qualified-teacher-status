@@ -21,9 +21,35 @@ RSpec.describe AssessorInterface::PersonalInformationForm, type: :model do
     it { is_expected.to validate_presence_of(:user) }
 
     it do
-      expect(subject).to allow_values(true, false).for(
+      expect(subject).to allow_values(true).for(
         :english_language_section_passed,
       )
+    end
+
+    context "when a passport is required as identity proof" do
+      before do
+        assessment_section.assessment.application_form.update!(
+          requires_passport_as_identity_proof: true,
+        )
+      end
+
+      it "returns the passport specific error message when blank" do
+        form.valid?
+
+        expect(form.errors[:english_language_section_passed]).to include(
+          "Confirm if you checked the country of birth or citizenship in the passport",
+        )
+      end
+    end
+
+    context "when ID documents are required as identity proof" do
+      it "returns the ID-document-specific error message when blank" do
+        form.valid?
+
+        expect(form.errors[:english_language_section_passed]).to include(
+          "Confirm if you checked the country of birth or citizenship in the ID documents",
+        )
+      end
     end
   end
 
