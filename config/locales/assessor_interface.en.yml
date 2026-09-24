@@ -234,9 +234,9 @@ en:
 
       english_language_proficiency:
         passed:
-          personal_information_passport: This applicant has indicated English language exemption by birth/citizenship. I have checked their passport for evidence of this.
-          personal_information_id: This applicant has indicated English language exemption by birth/citizenship. I have checked their ID for evidence of this.
-          qualifications: This applicant has indicated English language exemption by country of study. I have checked their qualification documents for evidence of this.
+          personal_information_passport: I have checked the country of birth or citizenship in the passport.
+          personal_information_id: I have checked the country of birth or citizenship in the ID documents.
+          qualifications: I have checked the country of study in the qualification documents.
 
     decision_review_requests:
       edit:
