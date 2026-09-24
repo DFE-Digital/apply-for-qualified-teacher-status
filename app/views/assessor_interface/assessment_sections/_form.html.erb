@@ -10,17 +10,31 @@
       <% english_language_section_passed_label = t(view_object.assessment_section.key, scope: %i[assessor_interface assessment_sections english_language_proficiency passed]) %>
     <% end %>
 
-    <%= f.govuk_check_box :english_language_section_passed,
-                          true,
-                          false,
-                          multiple: false,
-                          link_errors: true,
-                          small: true,
-                          label: {
-                            text: english_language_section_passed_label,
-                            size: "s",
-                          },
-                          disabled: view_object.disable_form? %>
+    <div class="govuk-!-margin-bottom-8">
+      <%= f.govuk_check_boxes_fieldset :english_language_section_passed, legend: { text: "English language proficiency exemption" } do %>
+        <% if view_object.assessment_section.personal_information? %>
+          <p class="govuk-body">The applicant has indicated that they are exempt from English language proficiency by birth or citizenship.</p>
+        <% else %>
+          <p class="govuk-body">The applicant has indicated that they are exempt from English language proficiency by country of study.</p>
+        <% end %>
+
+        <%= govuk_details(summary_text: "Which countries are exempt?") do %>
+          <%= render "shared/english_language_exempt_countries" %>
+        <% end %>
+
+        <%= f.govuk_check_box :english_language_section_passed,
+                              true,
+                              false,
+                              multiple: false,
+                              link_errors: true,
+                              small: true,
+                              label: {
+                                text: english_language_section_passed_label,
+                                size: "s",
+                              },
+                              disabled: view_object.disable_form? %>
+      <% end %>
+    </div>
   <% end %>
 
   <% if view_object.show_english_language_provider_details? %>
