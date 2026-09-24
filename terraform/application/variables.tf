@@ -111,7 +111,7 @@ locals {
     {
       BIGQUERY_AIRBYTE_DATASET   = var.airbyte_enabled ? local.gcp_dataset_name : null
       AIRBYTE_SERVER_URL         = var.airbyte_enabled ? "https://airbyte-${var.namespace}.${module.cluster_data.ingress_domain}" : null
-      BIGQUERY_HIDDEN_POLICY_TAG = var.airbyte_enabled ? "projects/rugged-abacus-218110/locations/europe-west2/taxonomies/69524444121704657/policyTags/6523652585511281766" : null
+      BIGQUERY_HIDDEN_POLICY_TAG = var.airbyte_enabled ? "projects/apply-for-qts-in-england/locations/europe-west2/taxonomies/5456044749211275650/policyTags/2399328962407973209" : null
       AIRBYTE_INTERNAL_DATASET   = var.airbyte_enabled ? "${local.gcp_dataset_name}_internal" : null
     }
   )
