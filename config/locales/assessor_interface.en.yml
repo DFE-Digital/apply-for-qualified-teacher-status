@@ -414,6 +414,10 @@ en:
               blank: Select the reasons for your recommendation
             passed:
               inclusion: Select whether the applicant completed this section to your satisfaction
+            english_language_section_passed:
+              blank: Confirm if you have checked the country of study in the qualification documents
+              blank_passport: Confirm if you checked the country of birth or citizenship in the passport
+              blank_id_documents: Confirm if you checked the country of birth or citizenship in the ID documents
             additional_degree_certificate_illegible_notes:
               blank: Enter a note to the applicant
             additional_degree_transcript_illegible_notes:
