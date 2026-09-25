@@ -15,6 +15,24 @@ RSpec.describe AssessorInterface::QualificationsForm, type: :model do
   let(:user) { create(:staff) }
   let(:attributes) { {} }
 
+  describe "validations" do
+    it { is_expected.to validate_presence_of(:user) }
+
+    it do
+      expect(subject).to allow_values(true).for(
+        :english_language_section_passed,
+      )
+    end
+
+    it "returns the qualification specific error message when blank" do
+      form.valid?
+
+      expect(form.errors[:english_language_section_passed]).to include(
+        "Confirm if you have checked the country of study in the qualification documents",
+      )
+    end
+  end
+
   describe "#save" do
     subject(:save) { form.save }
 
