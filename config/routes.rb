@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   namespace :assessor_interface, path: "/assessor" do
     root to: redirect("/assessor/applications")
 
+    resources :feedback_submissions, path: "feedback", only: %i[index]
+
     resources :service_level_agreements,
               path: "service-level-agreements",
               only: %i[index] do
