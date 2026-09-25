@@ -369,7 +369,13 @@ RSpec.describe "Assessor reviewing further information", type: :system do
         :with_work_history,
       ).tap do |application_form|
         assessment =
-          create(:assessment, :request_further_information, application_form:)
+          create(
+            :assessment,
+            application_form:,
+            started_at: Time.zone.now,
+            recommendation: "request_further_information",
+            recommended_at: Time.zone.now,
+          )
         create(:assessment_section, :qualifications, :failed, assessment:)
       end
   end
