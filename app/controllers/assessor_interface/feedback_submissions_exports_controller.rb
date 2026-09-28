@@ -10,7 +10,7 @@ module AssessorInterface
     end
 
     def index
-      @view_object = FeedbackSubmissionsIndexViewObject.new(params:)
+      @view_object = FeedbackSubmissionsIndexViewObject.new(params:, session:)
 
       set_csv_headers(
         filename: "feedback-submissions-#{Time.current.iso8601}.csv",

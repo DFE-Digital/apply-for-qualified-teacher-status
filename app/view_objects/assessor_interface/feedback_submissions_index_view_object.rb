@@ -3,8 +3,9 @@
 class AssessorInterface::FeedbackSubmissionsIndexViewObject
   include Pagy::Backend
 
-  def initialize(params:)
+  def initialize(params:, session:)
     @params = params
+    @session = session
   end
 
   def feedback_submissions_pagy
@@ -16,7 +17,14 @@ class AssessorInterface::FeedbackSubmissionsIndexViewObject
   end
 
   def feedback_submissions_scope
-    FeedbackSubmission.order(submitted_at: :desc)
+    ::Filters::SubmittedAt.apply(
+      scope: FeedbackSubmission.all,
+      params: filter_params
+    ).order(submitted_at: :desc)
+  end
+
+  def filter_form
+    @filter_form ||= AssessorInterface::FeedbackSubmissionFilterForm.new(filter_params)
   end
 
   private
@@ -25,5 +33,9 @@ class AssessorInterface::FeedbackSubmissionsIndexViewObject
     @feedback_submissions_with_pagy ||= pagy(feedback_submissions_scope)
   end
 
-  attr_reader :params
+  def filter_params
+    (session[:feedback_submissions_filter_params] || {}).with_indifferent_access
+  end
+
+  attr_reader :params, :session
 end
