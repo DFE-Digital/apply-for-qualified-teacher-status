@@ -6,5 +6,7 @@ class AssessorInterface::FeedbackSubmissionsController < AssessorInterface::Base
   def index
     @view_object =
       AssessorInterface::FeedbackSubmissionsIndexViewObject.new(params:)
+
+    render layout: "full_from_desktop"
   end
 end
