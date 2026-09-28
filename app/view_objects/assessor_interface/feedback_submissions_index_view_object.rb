@@ -15,11 +15,14 @@ class AssessorInterface::FeedbackSubmissionsIndexViewObject
     feedback_submissions_with_pagy.last
   end
 
+  def feedback_submissions_scope
+    FeedbackSubmission.order(submitted_at: :desc)
+  end
+
   private
 
   def feedback_submissions_with_pagy
-    @feedback_submissions_with_pagy ||=
-      pagy(FeedbackSubmission.order(submitted_at: :desc))
+    @feedback_submissions_with_pagy ||= pagy(feedback_submissions_scope)
   end
 
   attr_reader :params
