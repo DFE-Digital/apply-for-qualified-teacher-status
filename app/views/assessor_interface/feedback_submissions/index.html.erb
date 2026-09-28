@@ -46,7 +46,12 @@
       table.with_body do |body|
         records.each do |feedback_submission|
           body.with_row do |row|
-            row.with_cell { feedback_submission.id.to_s.rjust(4, "0") }
+            row.with_cell do
+              govuk_link_to(
+                feedback_submission.id.to_s.rjust(4, "0"),
+                [:assessor_interface, feedback_submission],
+              )
+            end
             row.with_cell { feedback_submission.application_status&.humanize }
             row.with_cell { feedback_submission.overall_experience&.humanize }
             row.with_cell { simple_format(feedback_submission.comment) }

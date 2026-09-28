@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   namespace :assessor_interface, path: "/assessor" do
     root to: redirect("/assessor/applications")
 
-    resources :feedback_submissions, path: "feedback", only: %i[index] do
+    resources :feedback_submissions, path: "feedback", only: %i[index show] do
       collection do
         post "filters/apply", to: "feedback_submissions#apply_filters"
         get "filters/clear", to: "feedback_submissions#clear_filters"

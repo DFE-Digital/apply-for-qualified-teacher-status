@@ -1,13 +1,22 @@
 # frozen_string_literal: true
 
 class AssessorInterface::FeedbackSubmissionsController < AssessorInterface::BaseController
-  before_action { authorize %i[assessor_interface service_level_agreement] }
+  before_action do
+    authorize %i[assessor_interface service_level_agreement], :index?
+  end
 
   def index
     @view_object =
-      AssessorInterface::FeedbackSubmissionsIndexViewObject.new(params:, session:)
+      AssessorInterface::FeedbackSubmissionsIndexViewObject.new(
+        params:,
+        session:,
+      )
 
     render layout: "full_from_desktop"
+  end
+
+  def show
+    @feedback_submission = FeedbackSubmission.find(params[:id])
   end
 
   def apply_filters

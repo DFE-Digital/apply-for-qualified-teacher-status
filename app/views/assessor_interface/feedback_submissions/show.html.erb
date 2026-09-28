@@ -1,0 +1,9 @@
+<% content_for :page_title, "Service feedback" %>
+
+<% content_for :back_link_url, assessor_interface_feedback_submissions_path %>
+
+<h1 class="govuk-heading-xl">Service feedback</h1>
+
+<p class="govuk-body">
+  Feedback submission <%= @feedback_submission.id.to_s.rjust(4, "0") %>
+</p>
