@@ -6,7 +6,7 @@ module AssessorInterface
     include CSVStreamable
 
     before_action only: %i[index] do
-      authorize %i[assessor_interface service_level_agreement]
+      authorize %i[assessor_interface feedback_submission]
     end
 
     def index
