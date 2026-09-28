@@ -3,9 +3,14 @@
 require "rails_helper"
 
 RSpec.describe "Teacher work history", type: :system do
+  let(:teacher) { create(:teacher) }
+
+  let!(:application_form) do
+    create(:application_form, teacher:, needs_work_history: true)
+  end
+
   before do
     given_i_am_authorized_as_a_user(teacher)
-    given_an_application_form_exists
     given_malware_scanning_is_enabled
   end
 
@@ -245,10 +250,6 @@ RSpec.describe "Teacher work history", type: :system do
   end
 
   private
-
-  def given_an_application_form_exists
-    application_form
-  end
 
   def given_the_application_accepts_reduced_evidence
     application_form.update!(reduced_evidence_accepted: true)
@@ -587,14 +588,5 @@ RSpec.describe "Teacher work history", type: :system do
     expect(teacher_edit_work_history_contact_page).to have_content(
       "Enter an official email address that uses the institution’s domain",
     )
-  end
-
-  def teacher
-    @teacher ||= create(:teacher)
-  end
-
-  def application_form
-    @application_form ||=
-      create(:application_form, teacher:, needs_work_history: true)
   end
 end
