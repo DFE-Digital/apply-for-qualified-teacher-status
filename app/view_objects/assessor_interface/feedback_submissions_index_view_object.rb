@@ -19,12 +19,13 @@ class AssessorInterface::FeedbackSubmissionsIndexViewObject
   def feedback_submissions_scope
     ::Filters::SubmittedAt.apply(
       scope: FeedbackSubmission.all,
-      params: filter_params
+      params: filter_params,
     ).order(submitted_at: :desc)
   end
 
   def filter_form
-    @filter_form ||= AssessorInterface::FeedbackSubmissionFilterForm.new(filter_params)
+    @filter_form ||=
+      AssessorInterface::FeedbackSubmissionFilterForm.new(filter_params)
   end
 
   private
