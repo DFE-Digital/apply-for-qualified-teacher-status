@@ -2,6 +2,30 @@
 
 <h1 class="govuk-heading-xl">Service feedback</h1>
 
+<div class="app-application-forms__filters govuk-!-margin-bottom-8">
+  <h2 class="govuk-heading-m">Filters</h2>
+
+  <%= form_with model: @view_object.filter_form, url: filters_apply_assessor_interface_feedback_submissions_path, method: :post do |f| %>
+    <%= f.govuk_fieldset legend: { text: "Date feedback submitted", size: "s" } do %>
+      <div class="app-inline-content">
+        <div class="govuk-!-margin-right-9">
+          <%= f.govuk_date_field :submitted_at_after, legend: { text: "From", size: "s" } %>
+        </div>
+
+        <div>
+          <%= f.govuk_date_field :submitted_at_before, legend: { text: "To", size: "s" } %>
+        </div>
+      </div>
+    <% end %>
+
+    <%= f.govuk_submit "Apply filters" do %>
+      <a href="<%= filters_clear_assessor_interface_feedback_submissions_path %>" class="govuk-link">
+        Clear selection
+      </a>
+    <% end %>
+  <% end %>
+</div>
+
 <% if (records = @view_object.feedback_submissions_records).present? %>
   <%= govuk_button_link_to "Download feedback (CSV)", assessor_interface_feedback_submissions_exports_path, secondary: true %>
 

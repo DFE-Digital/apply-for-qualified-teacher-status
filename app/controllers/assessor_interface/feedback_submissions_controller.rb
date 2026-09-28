@@ -5,8 +5,26 @@ class AssessorInterface::FeedbackSubmissionsController < AssessorInterface::Base
 
   def index
     @view_object =
-      AssessorInterface::FeedbackSubmissionsIndexViewObject.new(params:)
+      AssessorInterface::FeedbackSubmissionsIndexViewObject.new(params:, session:)
 
     render layout: "full_from_desktop"
+  end
+
+  def apply_filters
+    session[:feedback_submissions_filter_params] = extract_filter_params(params)
+
+    redirect_to assessor_interface_feedback_submissions_path
+  end
+
+  def clear_filters
+    session[:feedback_submissions_filter_params] = {}
+
+    redirect_to assessor_interface_feedback_submissions_path
+  end
+
+  private
+
+  def extract_filter_params(params)
+    params[:assessor_interface_feedback_submission_filter_form].permit!.to_h
   end
 end
