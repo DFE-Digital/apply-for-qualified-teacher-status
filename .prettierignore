@@ -32,3 +32,4 @@ storage
 tmp
 vendor
 .yarn/*
+.github/workflows
