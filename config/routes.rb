@@ -13,6 +13,9 @@ Rails.application.routes.draw do
     root to: redirect("/assessor/applications")
 
     resources :feedback_submissions, path: "feedback", only: %i[index]
+    resources :feedback_submissions_exports,
+              path: "feedback-export",
+              only: %i[index]
 
     resources :service_level_agreements,
               path: "service-level-agreements",
