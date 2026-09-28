@@ -244,8 +244,8 @@ en:
       previous_role: Previous role as a teacher
       school:
         heading:
-          current_or_most_recent_role: Add your current or most recent role as a teacher
-          previous_role: Add another role as a teacher
+          current_or_most_recent_role: Add your current or most recent teaching role
+          previous_role: Add another teaching role
       contact:
         heading: Who should we contact to verify this role at %{school_name}?
     other_england_work_history:
