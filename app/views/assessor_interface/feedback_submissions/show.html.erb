@@ -1,9 +1,45 @@
-<% content_for :page_title, "Service feedback" %>
+<% content_for :page_title, "Feedback details" %>
 
 <% content_for :back_link_url, assessor_interface_feedback_submissions_path %>
 
-<h1 class="govuk-heading-xl">Service feedback</h1>
+<h1 class="govuk-heading-xl">Feedback details</h1>
 
-<p class="govuk-body">
-  Feedback submission <%= @feedback_submission.id.to_s.rjust(4, "0") %>
-</p>
+<%= govuk_summary_list(actions: false) do |summary_list| %>
+  <% summary_list.with_row do |row| %>
+    <% row.with_key { "ID" } %>
+    <% row.with_value { @feedback_submission.id.to_s.rjust(4, "0") } %>
+  <% end %>
+
+  <% summary_list.with_row do |row| %>
+    <% row.with_key { "Status" } %>
+    <% row.with_value { @feedback_submission.application_status&.humanize } %>
+  <% end %>
+
+  <% summary_list.with_row do |row| %>
+    <% row.with_key { "Rating" } %>
+    <% row.with_value { @feedback_submission.overall_experience&.humanize } %>
+  <% end %>
+
+  <% summary_list.with_row do |row| %>
+    <% row.with_key { "Submitted on" } %>
+    <% row.with_value do %>
+      <% if @feedback_submission.submitted_at.present? %>
+        <%= safe_join(
+          [
+            @feedback_submission.submitted_at.strftime("%d/%m/%Y"),
+            tag.br,
+            @feedback_submission.submitted_at.strftime("%H:%M"),
+          ],
+        ) %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
+
+<h2 class="govuk-heading-m">Comments</h2>
+
+<% if @feedback_submission.comment.present? %>
+  <%= simple_format(@feedback_submission.comment, class: "govuk-body") %>
+<% else %>
+  <p class="govuk-body">No comment provided.</p>
+<% end %>
