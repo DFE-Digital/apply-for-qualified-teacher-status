@@ -54,7 +54,15 @@
             end
             row.with_cell { feedback_submission.application_status&.humanize }
             row.with_cell { feedback_submission.overall_experience&.humanize }
-            row.with_cell { simple_format(feedback_submission.comment) }
+            row.with_cell do
+              simple_format(
+                truncate(
+                  feedback_submission.comment,
+                  length: 151,
+                  omission: "…",
+                ),
+              )
+            end
             row.with_cell do
               if feedback_submission.submitted_at.present?
                 safe_join(

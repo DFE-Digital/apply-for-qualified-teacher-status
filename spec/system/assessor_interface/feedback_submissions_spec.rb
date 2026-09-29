@@ -63,6 +63,19 @@ RSpec.describe "Assessor service feedback", type: :system do
     )
   end
 
+  it "truncates comments longer than 151 characters on the index" do
+    create_feedback_submission(
+      comment: "#{"a" * 150}bc",
+      submitted_at: Time.zone.local(2024, 1, 15, 14, 30),
+    )
+
+    when_i_visit_the(:assessor_feedback_submissions_page)
+
+    expect(
+      assessor_feedback_submissions_page.feedback_rows.first.comments.text,
+    ).to eq("#{"a" * 150}…")
+  end
+
   it "filters feedback by submitted date and clears the selection" do
     before_range =
       create_feedback_submission(
