@@ -26,29 +26,67 @@ RSpec.describe AssessorInterface::PersonalInformationForm, type: :model do
       )
     end
 
-    context "when a passport is required as identity proof" do
+    context "when english language exemption is by citizenship" do
       before do
         assessment_section.assessment.application_form.update!(
-          requires_passport_as_identity_proof: true,
+          english_language_citizenship_exempt: true,
         )
       end
 
-      it "returns the passport specific error message when blank" do
-        form.valid?
+      context "when a passport is required as identity proof" do
+        before do
+          assessment_section.assessment.application_form.update!(
+            requires_passport_as_identity_proof: true,
+          )
+        end
 
-        expect(form.errors[:english_language_section_passed]).to include(
-          "Confirm if you checked the country of birth or citizenship in the passport",
-        )
+        it "returns the passport specific error message when blank" do
+          form.valid?
+
+          expect(form.errors[:english_language_section_passed]).to include(
+            "Confirm if you checked the country of birth or citizenship in the passport",
+          )
+        end
+      end
+
+      context "when ID documents are required as identity proof" do
+        it "returns the ID-document-specific error message when blank" do
+          form.valid?
+
+          expect(form.errors[:english_language_section_passed]).to include(
+            "Confirm if you checked the country of birth or citizenship in the ID documents",
+          )
+        end
       end
     end
 
-    context "when ID documents are required as identity proof" do
-      it "returns the ID-document-specific error message when blank" do
-        form.valid?
-
-        expect(form.errors[:english_language_section_passed]).to include(
-          "Confirm if you checked the country of birth or citizenship in the ID documents",
+    context "when english language exemption is not by citizenship" do
+      before do
+        assessment_section.assessment.application_form.update!(
+          english_language_citizenship_exempt: false,
         )
+      end
+
+      context "when a passport is required as identity proof" do
+        before do
+          assessment_section.assessment.application_form.update!(
+            requires_passport_as_identity_proof: true,
+          )
+        end
+
+        it "does not add an error when blank" do
+          form.valid?
+
+          expect(form.errors[:english_language_section_passed]).to be_empty
+        end
+      end
+
+      context "when ID documents are required as identity proof" do
+        it "does not add an error when blank" do
+          form.valid?
+
+          expect(form.errors[:english_language_section_passed]).to be_empty
+        end
       end
     end
   end

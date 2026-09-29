@@ -24,12 +24,34 @@ RSpec.describe AssessorInterface::QualificationsForm, type: :model do
       )
     end
 
-    it "returns the qualification specific error message when blank" do
-      form.valid?
+    context "when english language exemption is by qualification" do
+      before do
+        assessment_section.assessment.application_form.update!(
+          english_language_qualification_exempt: true,
+        )
+      end
 
-      expect(form.errors[:english_language_section_passed]).to include(
-        "Confirm if you have checked the country of study in the qualification documents",
-      )
+      it "returns the qualification specific error message when blank" do
+        form.valid?
+
+        expect(form.errors[:english_language_section_passed]).to include(
+          "Confirm if you have checked the country of study in the qualification documents",
+        )
+      end
+    end
+
+    context "when english language exemption is not by qualification" do
+      before do
+        assessment_section.assessment.application_form.update!(
+          english_language_qualification_exempt: false,
+        )
+      end
+
+      it "does not add an error when blank" do
+        form.valid?
+
+        expect(form.errors[:english_language_section_passed]).to be_empty
+      end
     end
   end
 

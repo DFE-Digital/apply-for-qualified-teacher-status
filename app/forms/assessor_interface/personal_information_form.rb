@@ -9,12 +9,18 @@ class AssessorInterface::PersonalInformationForm < AssessorInterface::Assessment
             presence: {
               message: :blank_passport,
             },
-            if: :requires_passport_as_identity_proof?
+            if: -> do
+              english_language_citizenship_exempt? &&
+                requires_passport_as_identity_proof?
+            end
   validates :english_language_section_passed,
             presence: {
               message: :blank_id_documents,
             },
-            unless: :requires_passport_as_identity_proof?
+            if: -> do
+              english_language_citizenship_exempt? &&
+                !requires_passport_as_identity_proof?
+            end
 
   private
 
@@ -23,5 +29,9 @@ class AssessorInterface::PersonalInformationForm < AssessorInterface::Assessment
       .assessment
       .application_form
       .requires_passport_as_identity_proof?
+  end
+
+  def english_language_citizenship_exempt?
+    application_form.english_language_citizenship_exempt?
   end
 end
