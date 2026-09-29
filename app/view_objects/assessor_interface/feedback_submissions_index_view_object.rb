@@ -3,9 +3,10 @@
 class AssessorInterface::FeedbackSubmissionsIndexViewObject
   include Pagy::Backend
 
-  def initialize(params:, session:)
+  def initialize(params:, session:, filter_form: nil)
     @params = params
     @session = session
+    @filter_form = filter_form
   end
 
   def feedback_submissions_pagy
