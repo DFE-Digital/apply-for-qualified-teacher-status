@@ -10,24 +10,24 @@ RSpec.describe AssessorInterface::FeedbackSubmissionPolicy do
   describe "#index?" do
     subject(:index?) { policy.index? }
 
-    it_behaves_like "a policy method with permission"
+    it_behaves_like "a policy method requiring the support console permission"
   end
 
   describe "#show?" do
     subject(:show?) { policy.show? }
 
-    it_behaves_like "a policy method with permission"
+    it_behaves_like "a policy method requiring the support console permission"
   end
 
   describe "#apply_filters?" do
     subject(:apply_filters?) { policy.apply_filters? }
 
-    it_behaves_like "a policy method with permission"
+    it_behaves_like "a policy method requiring the support console permission"
   end
 
   describe "#clear_filters?" do
     subject(:clear_filters?) { policy.clear_filters? }
 
-    it_behaves_like "a policy method with permission"
+    it_behaves_like "a policy method requiring the support console permission"
   end
 end

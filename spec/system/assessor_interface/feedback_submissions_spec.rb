@@ -3,7 +3,11 @@
 require "rails_helper"
 
 RSpec.describe "Assessor service feedback", type: :system do
-  before { given_i_am_authorized_as_an_assessor_user }
+  before do
+    given_i_am_authorized_as_a_user(
+      create(:staff, :with_assess_permission, :with_support_console_permission),
+    )
+  end
 
   it "lists feedback newest first and links to its details" do
     oldest =
