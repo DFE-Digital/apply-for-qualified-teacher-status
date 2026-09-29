@@ -111,6 +111,26 @@ RSpec.describe "Assessor service feedback", type: :system do
     )
   end
 
+  it "shows date filter errors and preserves the entered dates" do
+    when_i_visit_the(:assessor_feedback_submissions_page)
+    fill_in_submitted_at_filter(
+      from: Date.current + 1.day,
+      to: Date.current + 2.days,
+    )
+    assessor_feedback_submissions_page.apply_filters.click
+
+    expect(assessor_feedback_submissions_page.error_summary).to have_content(
+      "The date you want to filter from must be today or in the past",
+    )
+    expect(assessor_feedback_submissions_page.error_summary).to have_content(
+      "The date you want to filter to must be today or in the past",
+    )
+    expect_filter_to_contain(
+      from: Date.current + 1.day,
+      to: Date.current + 2.days,
+    )
+  end
+
   it "shows an empty state when there is no feedback" do
     when_i_visit_the(:assessor_feedback_submissions_page)
 
@@ -153,5 +173,15 @@ RSpec.describe "Assessor service feedback", type: :system do
     filter.end_day.set(to.day)
     filter.end_month.set(to.month)
     filter.end_year.set(to.year)
+  end
+
+  def expect_filter_to_contain(from:, to:)
+    filter = assessor_feedback_submissions_page.submitted_at_filter
+    expect(filter.start_day.value).to eq(from.day.to_s)
+    expect(filter.start_month.value).to eq(from.month.to_s)
+    expect(filter.start_year.value).to eq(from.year.to_s)
+    expect(filter.end_day.value).to eq(to.day.to_s)
+    expect(filter.end_month.value).to eq(to.month.to_s)
+    expect(filter.end_year.value).to eq(to.year.to_s)
   end
 end

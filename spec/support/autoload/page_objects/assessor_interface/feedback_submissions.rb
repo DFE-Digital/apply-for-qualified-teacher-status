@@ -10,13 +10,15 @@ module PageObjects
       section :submitted_at_filter,
               "form[action='/assessor/feedback/filters/apply']" do
         element :start_day,
-                "#assessor_interface_feedback_submission_filter_form_submitted_at_after_3i"
+                "#assessor_interface_feedback_submission_filter_form_submitted_at_after_3i, " \
+                "#assessor-interface-feedback-submission-filter-form-submitted-at-after-field-error"
         element :start_month,
                 "#assessor_interface_feedback_submission_filter_form_submitted_at_after_2i"
         element :start_year,
                 "#assessor_interface_feedback_submission_filter_form_submitted_at_after_1i"
         element :end_day,
-                "#assessor_interface_feedback_submission_filter_form_submitted_at_before_3i"
+                "#assessor_interface_feedback_submission_filter_form_submitted_at_before_3i, " \
+                "#assessor-interface-feedback-submission-filter-form-submitted-at-before-field-error"
         element :end_month,
                 "#assessor_interface_feedback_submission_filter_form_submitted_at_before_2i"
         element :end_year,
@@ -36,6 +38,7 @@ module PageObjects
       element :download_feedback,
               "a.govuk-button",
               text: "Download feedback (CSV)"
+      section :error_summary, GovukErrorSummary, ".govuk-error-summary"
     end
   end
 end

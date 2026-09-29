@@ -6,6 +6,8 @@
   <h2 class="govuk-heading-m">Filters</h2>
 
   <%= form_with model: @view_object.filter_form, url: filters_apply_assessor_interface_feedback_submissions_path, method: :post do |f| %>
+    <%= f.govuk_error_summary %>
+
     <%= f.govuk_fieldset legend: { text: "Date feedback submitted", size: "s" } do %>
       <div class="app-inline-content">
         <div class="govuk-!-margin-right-9">

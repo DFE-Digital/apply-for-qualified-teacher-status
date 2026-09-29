@@ -18,9 +18,22 @@ class AssessorInterface::FeedbackSubmissionsController < AssessorInterface::Base
   end
 
   def apply_filters
-    session[:feedback_submissions_filter_params] = extract_filter_params(params)
+    filter_params = extract_filter_params(params)
+    filter_form =
+      AssessorInterface::FeedbackSubmissionFilterForm.new(filter_params)
 
-    redirect_to assessor_interface_feedback_submissions_path
+    if filter_form.valid?
+      session[:feedback_submissions_filter_params] = filter_params
+      redirect_to assessor_interface_feedback_submissions_path
+    else
+      @view_object =
+        AssessorInterface::FeedbackSubmissionsIndexViewObject.new(
+          params:,
+          session:,
+          filter_form:,
+        )
+      render :index, layout: "full_from_desktop", status: :unprocessable_entity
+    end
   end
 
   def clear_filters
