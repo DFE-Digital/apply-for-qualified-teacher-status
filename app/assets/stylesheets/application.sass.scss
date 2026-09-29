@@ -1,11 +1,18 @@
-$govuk-global-styles: true;
-$govuk-new-link-styles: true;
-$govuk-assets-path: "/";
+// MOJ configures govuk-frontend's base module with `with (...)`, so it has to
+// load it first. Loaded `as *` so the assignments below update MOJ's and
+// govuk's settings rather than creating new globals.
+@use "@ministryofjustice/frontend/moj/vendor/govuk-frontend" as * with (
+  $moj-assets-path: "/",
+  $govuk-global-styles: true
+);
+
+// MOJ hard-codes this to false; turn GDS Transport back on
+$govuk-include-default-font-face: true;
+// Used by _checkbox_search_filter.scss
 $moj-images-path: "/";
 
-@use "@ministryofjustice/frontend/moj/vendor/govuk-frontend" as moj-govuk with (
-  $moj-assets-path: "/"
-);
+$govuk-global-styles: true;
+$govuk-assets-path: "/";
 
 @import "govuk-frontend/dist/govuk/index";
 @import "moj";
