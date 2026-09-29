@@ -48,9 +48,6 @@ module TeacherInterface
       end
     end
 
-    # TODO: Once all existing draft applications have gone through post release,
-    # we no longer need to do this check on any of the above. This would mean that
-    # all existing draft application have started_with_private_email_for_referee is true
     def requires_private_email_for_referee?
       FeatureFlags::FeatureFlag.active?(:email_domains_for_referees)
     end

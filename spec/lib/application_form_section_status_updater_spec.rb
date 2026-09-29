@@ -389,9 +389,6 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
 
         it { is_expected.to eq("in_progress") }
 
-        # TODO: Once all existing draft applications have gone through post release,
-        # we no longer need to do this check on any of the above. This would mean that
-        # all existing draft application have started_with_private_email_for_referee is true
         context "when private email domain for referee feature is enabled" do
           before do
             FeatureFlags::FeatureFlag.activate(:email_domains_for_referees)
@@ -416,9 +413,6 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
 
         it { is_expected.to eq("completed") }
 
-        # TODO: Once all existing draft applications have gone through post release,
-        # we no longer need to do this check on any of the above. This would mean that
-        # all existing draft application have started_with_private_email_for_referee is true
         context "when private email domain for referee feature is enabled" do
           before do
             FeatureFlags::FeatureFlag.activate(:email_domains_for_referees)
@@ -554,9 +548,6 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
 
         it { is_expected.to eq("in_progress") }
 
-        # TODO: Once all existing draft applications have gone through post release,
-        # we no longer need to do this check on any of the above. This would mean that
-        # all existing draft application have started_with_private_email_for_referee is true
         context "when private email domain for referee feature is enabled" do
           before do
             FeatureFlags::FeatureFlag.activate(:email_domains_for_referees)
@@ -590,9 +581,6 @@ RSpec.describe ApplicationFormSectionStatusUpdater do
 
         it { is_expected.to eq("completed") }
 
-        # TODO: Once all existing draft applications have gone through post release,
-        # we no longer need to do this check on any of the above. This would mean that
-        # all existing draft application have started_with_private_email_for_referee is true
         context "when private email domain for referee feature is enabled" do
           before do
             FeatureFlags::FeatureFlag.activate(:email_domains_for_referees)
