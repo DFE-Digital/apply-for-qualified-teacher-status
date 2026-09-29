@@ -71,16 +71,16 @@ RSpec.describe AssessorInterface::FeedbackSubmissionsIndexViewObject do
       }
     end
 
-    let!(:old_submission) do
-      FeedbackSubmission.create!(submitted_at: Time.zone.local(2022, 6, 1))
-    end
-
     let!(:new_submission) do
       FeedbackSubmission.create!(submitted_at: Time.zone.local(2023, 5, 1))
     end
 
     let!(:newest_submission) do
       FeedbackSubmission.create!(submitted_at: Time.zone.local(2023, 8, 1))
+    end
+
+    before do
+      FeedbackSubmission.create!(submitted_at: Time.zone.local(2022, 6, 1))
     end
 
     it "filters out submissions before the start date and orders them newest first" do
