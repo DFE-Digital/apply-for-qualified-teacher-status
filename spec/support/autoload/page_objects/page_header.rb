@@ -10,5 +10,8 @@ module PageObjects
     element :support_console_link,
             "a.govuk-service-navigation__link",
             text: "Support console"
+    element :service_feedback_link,
+            "a.govuk-service-navigation__link",
+            text: "Service feedback"
   end
 end
