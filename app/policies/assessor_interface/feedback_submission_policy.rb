@@ -2,9 +2,7 @@
 
 class AssessorInterface::FeedbackSubmissionPolicy < ApplicationPolicy
   def index?
-    return false if user.archived?
-
-    true
+    user.support_console_permission? && !user.archived?
   end
 
   alias_method :show?, :index?
