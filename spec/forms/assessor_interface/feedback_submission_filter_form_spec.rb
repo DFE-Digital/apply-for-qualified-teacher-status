@@ -6,10 +6,7 @@ RSpec.describe AssessorInterface::FeedbackSubmissionFilterForm do
   subject(:form) { described_class.new(params) }
 
   let(:params) do
-    date_params(
-      after: Date.current - 2.days,
-      before: Date.current - 1.day,
-    )
+    date_params(after: Date.current - 2.days, before: Date.current - 1.day)
   end
 
   it { is_expected.to be_valid }
@@ -54,9 +51,7 @@ RSpec.describe AssessorInterface::FeedbackSubmissionFilterForm do
   end
 
   context "when the dates are not real" do
-    let(:params) do
-      date_params(after: [31, 2, 2024], before: [31, 2, 2024])
-    end
+    let(:params) { date_params(after: [31, 2, 2024], before: [31, 2, 2024]) }
 
     it "reports both invalid dates" do
       expect(form).to be_invalid
@@ -73,10 +68,7 @@ RSpec.describe AssessorInterface::FeedbackSubmissionFilterForm do
 
   context "when the dates are in the future" do
     let(:params) do
-      date_params(
-        after: Date.current + 1.day,
-        before: Date.current + 2.days,
-      )
+      date_params(after: Date.current + 1.day, before: Date.current + 2.days)
     end
 
     it "reports both future dates" do
@@ -94,10 +86,7 @@ RSpec.describe AssessorInterface::FeedbackSubmissionFilterForm do
 
   context "when the to date is before the from date" do
     let(:params) do
-      date_params(
-        after: Date.current - 1.day,
-        before: Date.current - 2.days,
-      )
+      date_params(after: Date.current - 1.day, before: Date.current - 2.days)
     end
 
     it "reports the invalid date order" do
