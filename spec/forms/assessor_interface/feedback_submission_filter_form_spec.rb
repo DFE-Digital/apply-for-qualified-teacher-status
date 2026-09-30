@@ -92,9 +92,18 @@ RSpec.describe AssessorInterface::FeedbackSubmissionFilterForm do
     it "reports the invalid date order" do
       expect(form).to be_invalid
       expect(form.errors.messages[:submitted_at_before]).to contain_exactly(
-        "The date you want to filter to must be after the date you want to filter from",
+        "The date you want to filter to must be the same as or after the date you want to filter from",
       )
     end
+  end
+
+  context "when the from and to dates are the same" do
+    let(:params) do
+      date = Date.current - 1.day
+      date_params(after: date, before: date)
+    end
+
+    it { is_expected.to be_valid }
   end
 
   def date_params(after:, before:)
