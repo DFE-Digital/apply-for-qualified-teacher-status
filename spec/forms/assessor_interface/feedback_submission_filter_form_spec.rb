@@ -11,6 +11,14 @@ RSpec.describe AssessorInterface::FeedbackSubmissionFilterForm do
 
   it { is_expected.to be_valid }
 
+  context "when the to date is today" do
+    let(:params) do
+      date_params(after: Date.current - 1.day, before: Date.current)
+    end
+
+    it { is_expected.to be_valid }
+  end
+
   context "when both dates are blank" do
     let(:params) { {} }
 
