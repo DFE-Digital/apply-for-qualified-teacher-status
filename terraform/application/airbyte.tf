@@ -11,15 +11,14 @@ module "airbyte" {
   postgres_version      = var.postgres_version
   postgres_url          = module.postgres.url
 
-  host_name          = module.postgres.host
-  database_name      = module.postgres.name
-  workspace_id       = var.airbyte_enabled ? module.infrastructure_secrets.map.AIRBYTE-WORKSPACE-ID : null
-  client_id          = var.airbyte_enabled ? module.infrastructure_secrets.map.AIRBYTE-CLIENT-ID : null
-  client_secret      = var.airbyte_enabled ? module.infrastructure_secrets.map.AIRBYTE-CLIENT-SECRET : null
-  repl_password      = var.airbyte_enabled ? module.infrastructure_secrets.map.AIRBYTE-REPLICATION-PASSWORD : null
-  server_url         = "https://airbyte-${var.namespace}.${module.cluster_data.ingress_domain}"
-  connection_status  = var.connection_status
-  connection_streams = local.connection_streams
+  host_name         = module.postgres.host
+  database_name     = module.postgres.name
+  workspace_id      = var.airbyte_enabled ? module.infrastructure_secrets.map.AIRBYTE-WORKSPACE-ID : null
+  client_id         = var.airbyte_enabled ? module.infrastructure_secrets.map.AIRBYTE-CLIENT-ID : null
+  client_secret     = var.airbyte_enabled ? module.infrastructure_secrets.map.AIRBYTE-CLIENT-SECRET : null
+  repl_password     = var.airbyte_enabled ? module.infrastructure_secrets.map.AIRBYTE-REPLICATION-PASSWORD : null
+  server_url        = "https://airbyte-${var.namespace}.${module.cluster_data.ingress_domain}"
+  connection_status = var.connection_status
 
   cluster           = var.cluster
   namespace         = var.namespace
@@ -47,6 +46,5 @@ variable "connection_status" {
 }
 
 locals {
-  connection_streams = var.airbyte_enabled ? file("config/airbyte_stream_config.json") : null
-  gcp_dataset_name   = replace("${var.service_short}_airbyte_${local.environment}", "-", "_")
+  gcp_dataset_name = replace("${var.service_short}_airbyte_${local.environment}", "-", "_")
 }
