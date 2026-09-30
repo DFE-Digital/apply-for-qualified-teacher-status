@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/DFE-Digital/dfe-analytics.git
-  revision: 3367c90f9e2566f9b27b87abee13b4070f6b663f
-  tag: v1.16.0
+  revision: 1beb572140130981efc7c7a77229c1702c7e79bd
+  tag: v1.16.1
   specs:
-    dfe-analytics (1.16.0)
+    dfe-analytics (1.16.1)
       google-cloud-bigquery (~> 1.38)
       httparty (~> 0.24)
       json (< 3)
@@ -878,7 +878,7 @@ CHECKSUMS
   devise (5.0.4) sha256=d605f2b85854e74e56ee789e2d398702bc2d06e6bcd894717a670a3199c74cc1
   devise-passwordless (1.1.0) sha256=4a4b8c93e68fcc69a143140f8cdd53ca919751b07d0c2eeb2e598a77f9c39929
   devise_invitable (2.0.12) sha256=3ff1cb9dc85b5675e49c733399872916fc0a60b9e8a4c42ac04828d36c114e78
-  dfe-analytics (1.16.0)
+  dfe-analytics (1.16.1)
   dfe-autocomplete (1.0.0)
   dfe-reference-data (3.8.6)
   diff-lcs (1.6.2) sha256=9ae0d2cba7d4df3075fe8cd8602a8604993efc0dfa934cff568969efb1909962
