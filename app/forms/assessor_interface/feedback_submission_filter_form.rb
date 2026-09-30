@@ -6,8 +6,14 @@ class AssessorInterface::FeedbackSubmissionFilterForm
 
   attr_accessor :submitted_at_after, :submitted_at_before
 
-  validate :submitted_at_after_valid
-  validate :submitted_at_before_valid
+  validate :submitted_at_after_parts_present
+  validate :submitted_at_before_parts_present
+  validates :submitted_at_after,
+            date: true,
+            if: -> { date_parts_present?(:submitted_at_after) }
+  validates :submitted_at_before,
+            date: true,
+            if: -> { date_parts_present?(:submitted_at_before) }
   validates_with DateComparisonValidator,
                  earlier_field: :submitted_at_after,
                  later_field: :submitted_at_before,
@@ -15,15 +21,15 @@ class AssessorInterface::FeedbackSubmissionFilterForm
 
   private
 
-  def submitted_at_after_valid
-    validate_date(:submitted_at_after)
+  def submitted_at_after_parts_present
+    validate_date_parts(:submitted_at_after)
   end
 
-  def submitted_at_before_valid
-    validate_date(:submitted_at_before)
+  def submitted_at_before_parts_present
+    validate_date_parts(:submitted_at_before)
   end
 
-  def validate_date(attribute)
+  def validate_date_parts(attribute)
     value = public_send(attribute)
 
     if value.blank?
@@ -34,14 +40,6 @@ class AssessorInterface::FeedbackSubmissionFilterForm
     missing_date_parts(value).each do |date_part|
       errors.add(attribute, :"missing_#{date_part}")
     end
-    return if errors.include?(attribute)
-
-    date = parsed_date(value)
-    if date.nil?
-      errors.add(attribute, :invalid)
-    elsif date > Date.current
-      errors.add(attribute, :future)
-    end
   end
 
   def missing_date_parts(value)
@@ -50,9 +48,8 @@ class AssessorInterface::FeedbackSubmissionFilterForm
     end
   end
 
-  def parsed_date(value)
-    Date.new(value[1], value[2], value[3])
-  rescue Date::Error
-    nil
+  def date_parts_present?(attribute)
+    value = public_send(attribute)
+    value.present? && missing_date_parts(value).empty?
   end
 end
