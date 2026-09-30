@@ -32,14 +32,14 @@
       <p class="govuk-body">You’ll need to provide references for each role so we can verify your teaching work history.</p>
     <% end %>
 
-    <%= f.govuk_check_boxes_fieldset :meets_all_requirements, legend: { text: "Does your role meet these requirements?" }, multiple: false do %>
+    <%= f.govuk_check_boxes_fieldset :meets_all_requirements, legend: { text: "Does your teaching role meet these requirements?" }, multiple: false do %>
       <%= f.govuk_check_box :meets_all_requirements, 1, 0, multiple: false, link_errors: true, label: {
-        text: "I confirm that the role I’m about to add meets all the above requirements.", size: "s"
+        text: "I confirm that the teaching role I’m about to add meets all the above requirements.", size: "s"
       } %>
     <% end %>
 
     <p class="govuk-body govuk-!-margin-top-3">
-      <%= govuk_link_to "I do not have any roles that meet all of these requirements.", requirements_unmet_teacher_interface_application_form_work_histories_path %>
+      <%= govuk_link_to "I do not have any teaching roles that meet all of these requirements.", requirements_unmet_teacher_interface_application_form_work_histories_path %>
     </p>
   <% end %>
 

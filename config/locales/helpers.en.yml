@@ -501,7 +501,7 @@ en:
       teacher_interface_add_another_upload_form:
         add_another: Do you need to upload another page?
       teacher_interface_add_another_work_history_form:
-        add_another: Add another role?
+        add_another: Add another teaching role?
       teacher_interface_alternative_name_form:
         has_alternative_name_passport: Does your name appear differently on your passport or qualifications?
         has_alternative_name_id_documents: Does your name appear differently on your ID documents or qualifications?
