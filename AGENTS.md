@@ -64,6 +64,7 @@ Keep work inside the correct interface and do not share code across them unless 
 - View components in `app/components` for reusable or complex markup
 - View objects in `app/view_objects` for presenter logic, not helpers or logic in templates
 - Check `app/services` for an existing service before creating a new one
+- Check `app/validators` for an existing custom validator (e.g. `DateValidator`, `DateComparisonValidator`, `MaxStringLengthValidator`, `MaxTextLengthValidator`, `FileUploadValidator`, `ValidForNotifyValidator`) before writing bespoke validation logic. Reuse and extend an existing validator rather than duplicating its behaviour
 - Authorise every controller action through Pundit with `authorize`. `policy_scope` is not used because assessors can view all applications, so do not add it unless asked. Never skip `authorize` on a new action
 - GOV.UK Design System components and styling only, no bespoke markup or CSS
 - User-facing copy in `config/locales` (titles, legends, labels, hints and error messages) where pattern already exists
@@ -80,6 +81,12 @@ Form legends, labels and hints are defined in `config/locales/helpers.en.yml`. F
 - `hint`: supporting instructions or context to help the user answer
 
 Do not add placeholders unless the existing form already uses them. Before adding or changing copy, inspect nearby entries and reuse the established naming and wording.
+
+### Maintaining established patterns
+
+Before implementing a requirement, look for the closest existing examples and shared patterns across the relevant interface. This applies to user-facing content and wording, GOV.UK Design System components, form and interaction patterns, and validation (including custom validators in `app/validators` and domain-specific validators in `app/lib`, such as `NationalInsuranceNumberValidator`).
+
+If acceptance criteria appears to require a new or divergent pattern, pause and ask the developer whether that difference is intentional and necessary, or whether the requirement should follow the established pattern. Where appropriate, suggest pushing back to product and design to align the criteria rather than introducing an inconsistent one-off. Proceed with a new pattern only once the need for the divergence is confirmed.
 
 ## Testing
 
