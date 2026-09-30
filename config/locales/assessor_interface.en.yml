@@ -375,7 +375,7 @@ en:
               missing_year: The date you want to filter to must include a year
               invalid: The date you want to filter to must be a real date
               future: The date you want to filter to must be today or in the past
-              comparison: The date you want to filter to must be after the date you want to filter from
+              comparison: The date you want to filter to must be the same as or after the date you want to filter from
         assessor_interface/application_form_date_of_birth_form:
           attributes:
             date_of_birth:

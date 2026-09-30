@@ -8,7 +8,10 @@ class AssessorInterface::FeedbackSubmissionFilterForm
 
   validate :submitted_at_after_valid
   validate :submitted_at_before_valid
-  validate :submitted_at_before_after_submitted_at_after
+  validates_with DateComparisonValidator,
+                 earlier_field: :submitted_at_after,
+                 later_field: :submitted_at_before,
+                 allow_equal: true
 
   private
 
@@ -45,16 +48,6 @@ class AssessorInterface::FeedbackSubmissionFilterForm
     { day: 3, month: 2, year: 1 }.filter_map do |date_part, index|
       date_part if value[index].blank?
     end
-  end
-
-  def submitted_at_before_after_submitted_at_after
-    return if errors.any?
-
-    after_date = parsed_date(submitted_at_after)
-    before_date = parsed_date(submitted_at_before)
-    return if after_date.nil? || before_date.nil? || before_date > after_date
-
-    errors.add(:submitted_at_before, :comparison)
   end
 
   def parsed_date(value)
