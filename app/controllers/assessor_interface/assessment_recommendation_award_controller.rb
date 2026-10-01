@@ -150,7 +150,8 @@ module AssessorInterface
     def load_important_notes
       @important_notes = [
         (
-          if assessment.reference_requests.any?(&:review_failed?)
+          if assessment.review? &&
+               assessment.reference_requests.any?(&:review_failed?)
             :invalid_references
           end
         ),
