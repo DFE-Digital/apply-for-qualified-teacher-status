@@ -22,13 +22,19 @@ RSpec.describe AssessorInterface::FeedbackSubmissionFilterForm do
   context "when both dates are blank" do
     let(:params) { {} }
 
-    it "requires both dates" do
-      expect(form).to be_invalid
-      expect(form.errors.messages).to eq(
-        submitted_at_after: ["Enter the date you want to filter from"],
-        submitted_at_before: ["Enter the date you want to filter to"],
-      )
-    end
+    it { is_expected.to be_valid }
+  end
+
+  context "when only the from date is present" do
+    let(:params) { date_params(after: Date.current - 1.day) }
+
+    it { is_expected.to be_valid }
+  end
+
+  context "when only the to date is present" do
+    let(:params) { date_params(before: Date.current - 1.day) }
+
+    it { is_expected.to be_valid }
   end
 
   %i[day month year].each do |date_part|
@@ -44,15 +50,11 @@ RSpec.describe AssessorInterface::FeedbackSubmissionFilterForm do
         end
       end
 
-      it "reports the missing #{date_part} for both dates" do
+      it "reports both incomplete dates" do
         expect(form).to be_invalid
         expect(form.errors.messages).to eq(
-          submitted_at_after: [
-            "The date you want to filter from must include a #{date_part}",
-          ],
-          submitted_at_before: [
-            "The date you want to filter to must include a #{date_part}",
-          ],
+          submitted_at_after: ["Enter the date you want to filter from"],
+          submitted_at_before: ["Enter the date you want to filter to"],
         )
       end
     end
@@ -114,15 +116,17 @@ RSpec.describe AssessorInterface::FeedbackSubmissionFilterForm do
     it { is_expected.to be_valid }
   end
 
-  def date_params(after:, before:)
-    {
-      "submitted_at_after(1i)" => date_part(after, :year),
-      "submitted_at_after(2i)" => date_part(after, :month),
-      "submitted_at_after(3i)" => date_part(after, :day),
-      "submitted_at_before(1i)" => date_part(before, :year),
-      "submitted_at_before(2i)" => date_part(before, :month),
-      "submitted_at_before(3i)" => date_part(before, :day),
-    }
+  def date_params(after: nil, before: nil)
+    {}.tap do |params|
+      add_date_params(params, "submitted_at_after", after) if after
+      add_date_params(params, "submitted_at_before", before) if before
+    end
+  end
+
+  def add_date_params(params, attribute, value)
+    params["#{attribute}(1i)"] = date_part(value, :year)
+    params["#{attribute}(2i)"] = date_part(value, :month)
+    params["#{attribute}(3i)"] = date_part(value, :day)
   end
 
   def date_part(value, part)
