@@ -1,4 +1,4 @@
-<% content_for :page_title, "Service feedback" %>
+<% content_for :page_title, title_with_error_prefix("Service feedback", error: @view_object.filter_form.errors.any?) %>
 
 <h1 class="govuk-heading-xl">Service feedback</h1>
 
