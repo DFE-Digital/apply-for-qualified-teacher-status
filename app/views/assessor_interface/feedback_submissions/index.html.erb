@@ -31,7 +31,12 @@
 <% if (records = @view_object.feedback_submissions_records).present? %>
   <%= govuk_button_link_to "Download feedback (CSV)", assessor_interface_feedback_submissions_exports_path, secondary: true %>
 
-  <h2 class="govuk-heading-m"><%= @view_object.feedback_submissions_pagy.count %> feedback results</h2>
+  <h2 class="govuk-heading-m">
+    <%= pluralize(
+      @view_object.feedback_submissions_pagy.count,
+      "feedback result",
+    ) %>
+  </h2>
 
   <%=
     govuk_table do |table|
