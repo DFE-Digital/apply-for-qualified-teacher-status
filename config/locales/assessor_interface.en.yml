@@ -363,16 +363,10 @@ en:
           attributes:
             submitted_at_after:
               blank: Enter the date you want to filter from
-              missing_day: The date you want to filter from must include a day
-              missing_month: The date you want to filter from must include a month
-              missing_year: The date you want to filter from must include a year
               invalid: The date you want to filter from must be a real date
               future: The date you want to filter from must be today or in the past
             submitted_at_before:
               blank: Enter the date you want to filter to
-              missing_day: The date you want to filter to must include a day
-              missing_month: The date you want to filter to must include a month
-              missing_year: The date you want to filter to must include a year
               invalid: The date you want to filter to must be a real date
               future: The date you want to filter to must be today or in the past
               comparison: The date you want to filter to must be the same as or after the date you want to filter from
