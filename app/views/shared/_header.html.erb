@@ -1,96 +1,54 @@
 <%= govuk_header(
       homepage_url: "https://www.education.gov.uk",
-      classes: "app-header--#{HostingEnvironment.name} govuk-!-display-none-print"
+      classes: "app-header--#{HostingEnvironment.name} govuk-!-display-none-print",
+      container_classes: "app-header__container"
     ) do |header| %>
   <% header.with_custom_logo do %>
     <%= image_tag "/images/dfe-logo-white.png", alt: "Department for Education", class: "govuk-header__logotype" %>
   <% end %>
-<% end %>
 
-<%= govuk_service_navigation(classes: "govuk-!-display-none-print", service_name: t(current_namespace, scope: %i[service name]), service_url: "/#{current_namespace}") do |service_navigation| %>
   <% case current_namespace %>
-  <% when "assessor" %>
+  <% when "assessor", "support" %>
     <% if current_staff %>
-      <% service_navigation.with_navigation_item(
-         text: "Search",
-         href: main_app.assessor_interface_application_forms_path,
-         active: current_page?(main_app.assessor_interface_application_forms_path)
-       ) %>
-
-      <% if FeatureFlags::FeatureFlag.active?(:suitability) %>
-        <% service_navigation.with_navigation_item(
-           text: "Suitability records",
-           href: main_app.assessor_interface_suitability_records_path,
-           active: current_page?(main_app.assessor_interface_suitability_records_path)
-         ) %>
-      <% end %>
-
-      <% if AssessorInterface::EligibilityDomainPolicy.new(current_staff, EligibilityDomain).index? %>
-        <% service_navigation.with_navigation_item(
-           text: "Email domain records",
-           href: main_app.assessor_interface_eligibility_domains_path,
-           active: current_page?(main_app.assessor_interface_eligibility_domains_path)
-         ) %>
-      <% end %>
-
-      <% if AssessorInterface::EmailDeliveryPolicy.new(current_staff, EmailDelivery).index? %>
-        <% service_navigation.with_navigation_item(
-           text: "Email failures",
-           href: main_app.assessor_interface_email_delivery_failures_path,
-           active: current_page?(main_app.assessor_interface_email_delivery_failures_path)
-         ) %>
-      <% end %>
-
-      <% if SupportInterface::CountryPolicy.new(current_staff, Country).index? %>
-        <% service_navigation.with_navigation_item(text: "Support console", href: main_app.support_interface_root_path) %>
-      <% end %>
-
-      <% if AssessorInterface::StaffPolicy.new(current_staff, Staff).index? %>
-        <% service_navigation.with_navigation_item(
-          text: "Manage access",
-          href: main_app.assessor_interface_staff_index_path,
-          active: current_page?(main_app.assessor_interface_staff_index_path)
-        ) %>
-      <% end %>
-
-      <% if AssessorInterface::ServiceLevelAgreementPolicy.new(current_staff, :service_level_agreement).index? %>
-        <% service_navigation.with_navigation_item(
-          text: "SLA status",
-          href: main_app.assessor_interface_service_level_agreements_path,
-          active: current_page?(main_app.assessor_interface_service_level_agreements_path)
-        ) %>
-      <% end %>
-      <% service_navigation.with_navigation_item(text: "Sign out", href: main_app.destroy_staff_session_path) %>
-    <% end %>
-  <% when "support" %>
-    <% if current_staff %>
-      <% service_navigation.with_navigation_item(
-         text: "Features",
-         href: main_app.support_interface_feature_flags_path,
-         active: current_page?(main_app.support_interface_feature_flags_path)
-       ) %>
-      <% service_navigation.with_navigation_item(
-         text: "Countries",
-         href: main_app.support_interface_countries_path,
-         active: request.path.start_with?("/support/countries") || request.path.start_with?("/support/regions")
-       ) %>
-      <% service_navigation.with_navigation_item(
-         text: "English language test providers",
-         href: main_app.support_interface_english_language_providers_path,
-         active: request.path.start_with?("/support/english_language_providers")
-      ) %>
-      <% service_navigation.with_navigation_item(text: "Solid Queue", href: main_app.support_interface_mission_control_jobs_path) %>
-      <% service_navigation.with_navigation_item(text: "Assessor case management", href: main_app.assessor_interface_root_path) %>
-      <% service_navigation.with_navigation_item(text: "Sign out", href: main_app.destroy_staff_session_path) %>
+      <%= govuk_link_to "Sign out", main_app.destroy_staff_session_path, inverse: true, class: "govuk-!-display-inline-block govuk-!-font-size-19 app-header__sign-out" %>
     <% end %>
   <% when "teacher" %>
     <% if current_teacher %>
-      <% if FeatureFlags::FeatureFlag.active?(:gov_one_applicant_login) %>
-        <%= service_navigation.with_navigation_item(text: "Sign out", href: logout_uri) %>
-      <% else %>
-        <% service_navigation.with_navigation_item(text: "Sign out", href: main_app.destroy_teacher_session_path) %>
+      <% teacher_sign_out_path = FeatureFlags::FeatureFlag.active?(:gov_one_applicant_login) ? logout_uri : main_app.destroy_teacher_session_path %>
+      <%= govuk_link_to "Sign out", teacher_sign_out_path, inverse: true, class: "govuk-!-display-inline-block govuk-!-font-size-19 app-header__sign-out" %>
+    <% end %>
+  <% end %>
+<% end %>
+
+<% sections = staff_navigation_sections %>
+<% current_section = current_staff_navigation_section(sections) %>
+
+<%= govuk_service_navigation(classes: "govuk-!-display-none-print", service_name: t(current_namespace, scope: %i[service name]), service_url: "/#{current_namespace}") do |service_navigation| %>
+  <% sections.each do |section| %>
+    <% service_navigation.with_navigation_item(
+        text: section[:text],
+        href: section[:href] || section[:items].first[:href],
+        active: section == current_section
+      ) %>
+  <% end %>
+<% end %>
+
+<% if current_section && current_section[:items].any? %>
+  <%= govuk_service_navigation(classes: "govuk-!-display-none-print", navigation_id: "sub-navigation", html_attributes: { data: { module: nil } }) do |sub_navigation| %>
+    <% current_section[:items].reject { |item| item[:new_tab] }.each do |item| %>
+      <% sub_navigation.with_navigation_item(
+           text: item[:text],
+           href: item[:href],
+           active: staff_navigation_item_active?(item)
+         ) %>
+    <% end %>
+
+    <% if (new_tab_item = current_section[:items].find { |item| item[:new_tab] }) %>
+      <% sub_navigation.with_navigation_end do %>
+        <li class="govuk-service-navigation__item">
+          <%= govuk_link_to new_tab_item[:text], new_tab_item[:href], class: "govuk-service-navigation__link", new_tab: true %>
+        </li>
       <% end %>
     <% end %>
   <% end %>
-
 <% end %>
