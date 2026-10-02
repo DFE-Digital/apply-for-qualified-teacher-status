@@ -9,12 +9,12 @@
     <%= f.govuk_error_summary %>
 
     <%= f.govuk_fieldset legend: { text: "Date feedback submitted", size: "s" } do %>
-      <div class="app-inline-content">
-        <div class="govuk-!-margin-right-9">
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-half-from-desktop">
           <%= f.govuk_date_field :submitted_at_after, legend: { text: "From", size: "s" } %>
         </div>
 
-        <div>
+        <div class="govuk-grid-column-one-half-from-desktop">
           <%= f.govuk_date_field :submitted_at_before, legend: { text: "To", size: "s" } %>
         </div>
       </div>
