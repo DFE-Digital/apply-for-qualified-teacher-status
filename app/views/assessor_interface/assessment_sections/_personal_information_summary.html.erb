@@ -4,9 +4,3 @@
 <% else %>
   <%= render "shared/application_form/identification_document_summary", application_form:, changeable: false %>
 <% end %>
-
-<% if application_form.english_language_citizenship_exempt %>
-  <%= govuk_accordion do |accordion| %>
-    <% render "english_language_exempt_accordion_section", accordion: %>
-  <% end %>
-<% end %>

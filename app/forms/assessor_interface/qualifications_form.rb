@@ -4,4 +4,14 @@ class AssessorInterface::QualificationsForm < AssessorInterface::AssessmentSecti
   include AssessorInterface::UpdatesEnglishLanguageStatus
 
   EXEMPTION_ATTR = :english_language_qualification_exempt
+
+  validates :english_language_section_passed,
+            presence: true,
+            if: :english_language_qualification_exempt?
+
+  private
+
+  def english_language_qualification_exempt?
+    application_form.english_language_qualification_exempt?
+  end
 end
