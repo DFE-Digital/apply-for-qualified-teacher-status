@@ -31,9 +31,9 @@ RSpec.describe "Assessor authentication", type: :system do
       given_i_am_authorized_as_a_manage_staff_user
 
       when_i_visit_the(:assessor_applications_page)
-      then_i_see_the_manage_access_link
+      then_i_see_the_support_console_link
 
-      when_i_click_manage_access_link
+      when_i_click_support_console_link
       then_i_see_the(:assessor_staff_index_page)
     end
   end
@@ -43,7 +43,7 @@ RSpec.describe "Assessor authentication", type: :system do
       given_i_am_authorized_as_an_assessor_user
 
       when_i_visit_the(:assessor_applications_page)
-      then_i_do_not_see_the_manage_access_link
+      then_i_do_not_see_the_support_console_link
     end
   end
 
@@ -53,15 +53,15 @@ RSpec.describe "Assessor authentication", type: :system do
     assessor_applications_page.header.sign_out_link.click
   end
 
-  def then_i_see_the_manage_access_link
-    expect(assessor_applications_page).to have_content("Manage access")
+  def then_i_see_the_support_console_link
+    expect(assessor_applications_page.header).to have_support_console_link
   end
 
-  def then_i_do_not_see_the_manage_access_link
-    expect(assessor_applications_page).not_to have_content("Manage access")
+  def then_i_do_not_see_the_support_console_link
+    expect(assessor_applications_page.header).not_to have_support_console_link
   end
 
-  def when_i_click_manage_access_link
-    assessor_applications_page.header.manage_access_link.click
+  def when_i_click_support_console_link
+    assessor_applications_page.header.support_console_link.click
   end
 end
