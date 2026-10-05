@@ -45,5 +45,31 @@ RSpec.describe FeedbackSubmissionsExportContent do
         ],
       )
     end
+
+    ["=", "+", "-", "@", "\t", "\r"].each do |prefix|
+      context "when the comment starts with #{prefix.inspect}" do
+        before { feedback_submission.comment = "#{prefix}HYPERLINK(\"x\")" }
+
+        it "prefixes the comment with an apostrophe" do
+          expect(csv_row[3]).to eq("'#{prefix}HYPERLINK(\"x\")")
+        end
+      end
+    end
+
+    context "when the comment contains a formula character later on" do
+      before { feedback_submission.comment = "Score = 10" }
+
+      it "leaves the comment unchanged" do
+        expect(csv_row[3]).to eq("Score = 10")
+      end
+    end
+
+    context "when the comment is nil" do
+      before { feedback_submission.comment = nil }
+
+      it "returns nil for the comment" do
+        expect(csv_row[3]).to be_nil
+      end
+    end
   end
 end
