@@ -53,8 +53,12 @@ RSpec.describe AssessorInterface::FeedbackSubmissionFilterForm do
       it "reports both incomplete dates" do
         expect(form).to be_invalid
         expect(form.errors.messages).to eq(
-          submitted_at_after: ["Enter the date you want to filter from"],
-          submitted_at_before: ["Enter the date you want to filter to"],
+          submitted_at_after: [
+            "Enter the date you want to filter from in the format 27 3 2024",
+          ],
+          submitted_at_before: [
+            "Enter the date you want to filter to in the format 27 3 2024",
+          ],
         )
       end
     end
@@ -67,10 +71,10 @@ RSpec.describe AssessorInterface::FeedbackSubmissionFilterForm do
       expect(form).to be_invalid
       expect(form.errors.messages).to eq(
         submitted_at_after: [
-          "The date you want to filter from must be a real date",
+          "Enter the date you want to filter from in the format 27 3 2024",
         ],
         submitted_at_before: [
-          "The date you want to filter to must be a real date",
+          "Enter the date you want to filter to in the format 27 3 2024",
         ],
       )
     end
@@ -102,7 +106,7 @@ RSpec.describe AssessorInterface::FeedbackSubmissionFilterForm do
     it "reports the invalid date order" do
       expect(form).to be_invalid
       expect(form.errors.messages[:submitted_at_before]).to contain_exactly(
-        "The date you want to filter to must be the same as or after the date you want to filter from",
+        "The 'to' date must be the same or after the 'from' date",
       )
     end
   end
