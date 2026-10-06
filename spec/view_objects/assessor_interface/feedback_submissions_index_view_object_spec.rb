@@ -106,6 +106,25 @@ RSpec.describe AssessorInterface::FeedbackSubmissionsIndexViewObject do
         )
       end
     end
+
+    context "with submitted after and before filters" do
+      let(:session) do
+        {
+          feedback_submissions_filter_params: {
+            "submitted_at_after(1i)" => "2023",
+            "submitted_at_after(2i)" => "1",
+            "submitted_at_after(3i)" => "1",
+            "submitted_at_before(1i)" => "2023",
+            "submitted_at_before(2i)" => "6",
+            "submitted_at_before(3i)" => "1",
+          },
+        }
+      end
+
+      it "returns submissions within the date range" do
+        expect(feedback_submissions_scope).to eq([new_submission])
+      end
+    end
   end
 
   describe "#filter_form" do
