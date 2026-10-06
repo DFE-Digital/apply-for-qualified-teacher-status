@@ -10,34 +10,174 @@ RSpec.describe "Assessor service feedback", type: :system do
   end
 
   it "lists feedback newest first and links to its details" do
-    oldest =
+    given_there_are_feedback_submissions_with_different_times
+
+    when_i_visit_the(:assessor_applications_page)
+    and_i_click_the_service_feedback_link
+
+    then_i_see_the(:assessor_feedback_submissions_page)
+    and_i_see_the_feedback_ordered_newest_first
+    and_i_see_a_download_feedback_link
+
+    when_i_click_the_first_feedback_link
+
+    then_i_see_the(:assessor_feedback_submission_page, id: @newest.id)
+    and_i_see_the_feedback_details
+  end
+
+  it "shows a fallback when feedback has no comment" do
+    given_there_is_a_feedback_submission_with_no_comment
+
+    when_i_visit_the(
+      :assessor_feedback_submission_page,
+      id: @feedback_submission.id,
+    )
+
+    then_i_see_a_no_comment_fallback_message
+  end
+
+  it "truncates comments longer than 151 characters on the index" do
+    given_there_is_a_feedback_submission_with_a_long_comment
+
+    when_i_visit_the(:assessor_feedback_submissions_page)
+
+    then_i_see_the_truncated_comment
+  end
+
+  it "filters feedback by submitted date and clears the selection" do
+    given_there_are_feedback_submissions_with_various_dates
+
+    when_i_visit_the(:assessor_feedback_submissions_page)
+    and_i_fill_in_the_submitted_at_filter(
+      from: Date.new(2024, 1, 10),
+      to: Date.new(2024, 1, 20),
+    )
+    and_i_apply_the_filters
+
+    then_i_see_only_the_feedback_within_the_date_range
+
+    when_i_clear_the_filters
+
+    then_i_see_all_the_feedback
+  end
+
+  it "shows date filter errors and preserves the entered dates" do
+    when_i_visit_the(:assessor_feedback_submissions_page)
+    and_i_fill_in_invalid_future_dates_in_the_filter
+    and_i_apply_the_filters
+
+    then_i_see_date_filter_errors
+    and_i_see_the_invalid_dates_preserved
+  end
+
+  it "shows an empty state when there is no feedback" do
+    when_i_visit_the(:assessor_feedback_submissions_page)
+
+    then_i_see_the_empty_feedback_state
+    and_i_do_not_see_a_download_feedback_link
+  end
+
+  private
+
+  # Setup (given)
+
+  def given_there_are_feedback_submissions_with_different_times
+    @oldest =
       create_feedback_submission(
         application_status: "not_started",
         overall_experience: "dissatisfied",
         comment: "The oldest feedback",
         submitted_at: Time.zone.local(2024, 1, 10, 9, 15),
       )
-    newest =
+    @newest =
       create_feedback_submission(
         application_status: "application_submitted",
         overall_experience: "highly_satisfied",
         comment: "The newest feedback",
         submitted_at: Time.zone.local(2024, 1, 15, 14, 30),
       )
+  end
 
-    when_i_visit_the(:assessor_applications_page)
-    assessor_applications_page.header.service_feedback_link.click
+  def given_there_is_a_feedback_submission_with_no_comment
+    @feedback_submission =
+      create_feedback_submission(
+        comment: nil,
+        submitted_at: Time.zone.local(2024, 1, 15, 14, 30),
+      )
+  end
 
-    then_i_see_the(:assessor_feedback_submissions_page)
-    expect(visible_feedback_ids).to eq(
-      [formatted_id(newest), formatted_id(oldest)],
+  def given_there_is_a_feedback_submission_with_a_long_comment
+    create_feedback_submission(
+      comment: "#{"a" * 150}bc",
+      submitted_at: Time.zone.local(2024, 1, 15, 14, 30),
     )
-    expect(assessor_feedback_submissions_page).to have_download_feedback
+  end
 
+  def given_there_are_feedback_submissions_with_various_dates
+    @before_range =
+      create_feedback_submission(
+        comment: "Before range",
+        submitted_at: Time.zone.local(2024, 1, 5),
+      )
+    @within_range =
+      create_feedback_submission(
+        comment: "Within range",
+        submitted_at: Time.zone.local(2024, 1, 15),
+      )
+    @after_range =
+      create_feedback_submission(
+        comment: "After range",
+        submitted_at: Time.zone.local(2024, 1, 25),
+      )
+  end
+
+  # Actions (when / and)
+
+  def and_i_click_the_service_feedback_link
+    assessor_applications_page.header.service_feedback_link.click
+  end
+
+  def when_i_click_the_first_feedback_link
     assessor_feedback_submissions_page.feedback_rows.first.id_link.click
+  end
 
-    then_i_see_the(:assessor_feedback_submission_page, id: newest.id)
-    expect(summary_value("ID")).to eq(formatted_id(newest))
+  def and_i_fill_in_the_submitted_at_filter(from:, to:)
+    fill_in_submitted_at_filter(from:, to:)
+  end
+
+  def and_i_fill_in_invalid_future_dates_in_the_filter
+    fill_in_submitted_at_filter(
+      from: Date.current + 1.day,
+      to: Date.current + 2.days,
+    )
+  end
+
+  def and_i_apply_the_filters
+    assessor_feedback_submissions_page.apply_filters.click
+  end
+
+  def when_i_clear_the_filters
+    assessor_feedback_submissions_page.clear_filters.click
+  end
+
+  # Expectations (then / and)
+
+  def and_i_see_the_feedback_ordered_newest_first
+    expect(visible_feedback_ids).to eq(
+      [formatted_id(@newest), formatted_id(@oldest)],
+    )
+  end
+
+  def and_i_see_a_download_feedback_link
+    expect(assessor_feedback_submissions_page).to have_download_feedback
+  end
+
+  def and_i_do_not_see_a_download_feedback_link
+    expect(assessor_feedback_submissions_page).not_to have_download_feedback
+  end
+
+  def and_i_see_the_feedback_details
+    expect(summary_value("ID")).to eq(formatted_id(@newest))
     expect(summary_value("Status")).to eq("Application submitted")
     expect(summary_value("Rating")).to eq("Highly satisfied")
     expect(summary_value("Submitted on")).to eq("15/01/2024\n14:30")
@@ -46,101 +186,53 @@ RSpec.describe "Assessor service feedback", type: :system do
     )
   end
 
-  it "shows a fallback when feedback has no comment" do
-    feedback_submission =
-      create_feedback_submission(
-        comment: nil,
-        submitted_at: Time.zone.local(2024, 1, 15, 14, 30),
-      )
-
-    when_i_visit_the(
-      :assessor_feedback_submission_page,
-      id: feedback_submission.id,
-    )
-
+  def then_i_see_a_no_comment_fallback_message
     expect(assessor_feedback_submission_page.comments).to have_text(
       "No comment provided.",
     )
   end
 
-  it "truncates comments longer than 151 characters on the index" do
-    create_feedback_submission(
-      comment: "#{"a" * 150}bc",
-      submitted_at: Time.zone.local(2024, 1, 15, 14, 30),
-    )
-
-    when_i_visit_the(:assessor_feedback_submissions_page)
-
+  def then_i_see_the_truncated_comment
     expect(
       assessor_feedback_submissions_page.feedback_rows.first.comments.text,
     ).to eq("#{"a" * 150}…")
   end
 
-  it "filters feedback by submitted date and clears the selection" do
-    before_range =
-      create_feedback_submission(
-        comment: "Before range",
-        submitted_at: Time.zone.local(2024, 1, 5),
-      )
-    within_range =
-      create_feedback_submission(
-        comment: "Within range",
-        submitted_at: Time.zone.local(2024, 1, 15),
-      )
-    after_range =
-      create_feedback_submission(
-        comment: "After range",
-        submitted_at: Time.zone.local(2024, 1, 25),
-      )
+  def then_i_see_only_the_feedback_within_the_date_range
+    expect(visible_feedback_ids).to eq([formatted_id(@within_range)])
+  end
 
-    when_i_visit_the(:assessor_feedback_submissions_page)
-    fill_in_submitted_at_filter(
-      from: Date.new(2024, 1, 10),
-      to: Date.new(2024, 1, 20),
-    )
-    assessor_feedback_submissions_page.apply_filters.click
-
-    expect(visible_feedback_ids).to eq([formatted_id(within_range)])
-
-    assessor_feedback_submissions_page.clear_filters.click
-
+  def then_i_see_all_the_feedback
     expect(visible_feedback_ids).to contain_exactly(
-      formatted_id(before_range),
-      formatted_id(within_range),
-      formatted_id(after_range),
+      formatted_id(@before_range),
+      formatted_id(@within_range),
+      formatted_id(@after_range),
     )
   end
 
-  it "shows date filter errors and preserves the entered dates" do
-    when_i_visit_the(:assessor_feedback_submissions_page)
-    fill_in_submitted_at_filter(
-      from: Date.current + 1.day,
-      to: Date.current + 2.days,
-    )
-    assessor_feedback_submissions_page.apply_filters.click
-
+  def then_i_see_date_filter_errors
     expect(assessor_feedback_submissions_page.error_summary).to have_content(
       "The date you want to filter from must be today or in the past",
     )
     expect(assessor_feedback_submissions_page.error_summary).to have_content(
       "The date you want to filter to must be today or in the past",
     )
+  end
+
+  def and_i_see_the_invalid_dates_preserved
     expect_filter_to_contain(
       from: Date.current + 1.day,
       to: Date.current + 2.days,
     )
   end
 
-  it "shows an empty state when there is no feedback" do
-    when_i_visit_the(:assessor_feedback_submissions_page)
-
+  def then_i_see_the_empty_feedback_state
     expect(assessor_feedback_submissions_page).to have_content(
       "No feedback found.",
     )
-    expect(assessor_feedback_submissions_page).not_to have_download_feedback
   end
 
-  private
+  # Helpers
 
   def create_feedback_submission(attributes)
     FeedbackSubmission.create!(
