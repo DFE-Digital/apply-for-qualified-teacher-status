@@ -38,6 +38,18 @@ RSpec.describe AssessorInterface::QualificationsForm, type: :model do
           "Confirm if you have checked the country of study in the qualification documents",
         )
       end
+
+      context "when the assessment section is preliminary" do
+        let(:assessment_section) do
+          create(:assessment_section, :qualifications, :preliminary)
+        end
+
+        it "does not add an error when blank" do
+          form.valid?
+
+          expect(form.errors[:english_language_section_passed]).to be_empty
+        end
+      end
     end
 
     context "when english language exemption is not by qualification" do
