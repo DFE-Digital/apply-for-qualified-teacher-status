@@ -23,7 +23,9 @@
 <% sections = staff_navigation_sections %>
 <% current_section = current_staff_navigation_section(sections) %>
 
-<%= govuk_service_navigation(classes: "govuk-!-display-none-print", service_name: t(current_namespace, scope: %i[service name]), service_url: "/#{current_namespace}") do |service_navigation| %>
+<% service_url = current_namespace.in?(%w[assessor support]) ? "/assessor" : "/#{current_namespace}" %>
+
+<%= govuk_service_navigation(classes: "govuk-!-display-none-print", service_name: t(current_namespace, scope: %i[service name]), service_url:) do |service_navigation| %>
   <% sections.each do |section| %>
     <% service_navigation.with_navigation_item(
         text: section[:text],
