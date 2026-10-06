@@ -146,6 +146,8 @@
   <% end %>
 <% end %>
 
-<p class="govuk-body">
-  Your <%= region_certificate_name(region) %> must be dated within 6 months of you applying for QTS.
-</p>
+<% if region.status_check_written? || region.sanction_check_written? %>
+  <p class="govuk-body">
+    Your <%= region_certificate_name(region) %> must be dated within 6 months of you applying for QTS.
+  </p>
+<% end %>
