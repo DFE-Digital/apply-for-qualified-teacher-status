@@ -149,6 +149,66 @@ RSpec.describe RollbackAssessment do
                         ).to(3)
     end
 
+    context "having reviewed requestables" do
+      let!(:consent_request) do
+        create(:consent_request, :review_passed, assessment:)
+      end
+
+      let!(:reference_request) do
+        create(:reference_request, :review_failed, assessment:)
+      end
+
+      let!(:qualification_request) do
+        create(:qualification_request, :review_passed, assessment:)
+      end
+
+      let!(:professional_standing_request) do
+        create(:professional_standing_request, :review_failed, assessment:)
+      end
+
+      it "resets the review state of the consent requests" do
+        expect { call }.to change { consent_request.reload.review_passed }.to(
+          nil,
+        ).and change { consent_request.reload.reviewed_at }.to(nil)
+      end
+
+      it "resets the review state of the reference requests" do
+        expect { call }.to change { reference_request.reload.review_passed }.to(
+          nil,
+        ).and change { reference_request.reload.review_note }.to(
+                "",
+              ).and change { reference_request.reload.reviewed_at }.to(nil)
+      end
+
+      it "resets the review state of the qualification requests" do
+        expect { call }.to change {
+          qualification_request.reload.review_passed
+        }.to(nil)
+      end
+
+      it "resets the review state of the professional standing request" do
+        expect { call }.to change {
+          professional_standing_request.reload.review_passed
+        }.to(nil)
+      end
+
+      context "when the teaching authority provides a written statement" do
+        let(:application_form) do
+          create(
+            :application_form,
+            :declined,
+            :teaching_authority_provides_written_statement,
+          )
+        end
+
+        it "does not reset the review state of the professional standing request" do
+          expect { call }.not_to(
+            change { professional_standing_request.reload.review_passed },
+          )
+        end
+      end
+    end
+
     context "having requested verification" do
       before { create(:requested_reference_request, assessment:) }
 
