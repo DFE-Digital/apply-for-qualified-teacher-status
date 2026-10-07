@@ -359,6 +359,17 @@ en:
   activemodel:
     errors:
       models:
+        assessor_interface/feedback_submission_filter_form:
+          attributes:
+            submitted_at_after:
+              blank: Enter the date you want to filter from in the format 27 3 2024
+              invalid: Enter the date you want to filter from in the format 27 3 2024
+              future: The date you want to filter from must be today or in the past
+            submitted_at_before:
+              blank: Enter the date you want to filter to in the format 27 3 2024
+              invalid: Enter the date you want to filter to in the format 27 3 2024
+              future: The date you want to filter to must be today or in the past
+              comparison: The 'to' date must be the same or after the 'from' date
         assessor_interface/application_form_date_of_birth_form:
           attributes:
             date_of_birth:
