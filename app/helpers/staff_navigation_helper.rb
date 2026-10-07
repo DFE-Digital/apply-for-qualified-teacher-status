@@ -74,7 +74,10 @@ module StaffNavigationHelper
               match: %w[/support/countries /support/regions],
             }
           end,
-          if SupportInterface::CountryPolicy.new(current_staff, Country).index?
+          if SupportInterface::EnglishLanguageProviderPolicy.new(
+               current_staff,
+               EnglishLanguageProvider,
+             ).index?
             {
               text: "English language test providers",
               href: main_app.support_interface_english_language_providers_path,
