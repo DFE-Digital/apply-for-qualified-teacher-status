@@ -455,6 +455,7 @@ en:
       assessor_interface_assessment_recommendation_form:
         confirmation: Confirmation
       assessor_interface_assessment_section_form:
+        english_language_section_passed: English language proficiency exemption
         selected_failure_reasons: What are the reasons for your recommendation?
         scotland_full_registration: Does the applicant have or are they eligible for full registration?
         school_details_cannot_be_verified_work_history_checked: Select the school that we were unable to verify (there may be more than one)
