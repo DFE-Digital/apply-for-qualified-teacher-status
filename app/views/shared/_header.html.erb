@@ -36,7 +36,7 @@
 <% end %>
 
 <% if current_section && current_section[:items].any? %>
-  <%= govuk_service_navigation(classes: "govuk-!-display-none-print", navigation_id: "sub-navigation", html_attributes: { data: { module: nil } }) do |sub_navigation| %>
+  <%= govuk_service_navigation(classes: "govuk-!-display-none-print", navigation_id: "sub-navigation", aria_label: "Sub-navigation", html_attributes: { data: { module: nil } }) do |sub_navigation| %>
     <% current_section[:items].reject { |item| item[:new_tab] }.each do |item| %>
       <% sub_navigation.with_navigation_item(
            text: item[:text],
