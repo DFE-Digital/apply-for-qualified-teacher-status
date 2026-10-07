@@ -94,6 +94,8 @@ RSpec.describe "Assessor Interface - Assessment Recommendation Award",
       it "does not show the invalid references important note" do
         get_edit
 
+        expect(response).to have_http_status(:ok)
+
         expect(response.body).not_to include(
           "Important notes before you confirm QTS",
         )
