@@ -12,6 +12,7 @@ class RollbackAssessment
     ActiveRecord::Base.transaction do
       validate_state
       update_assessment
+      reset_reviewed_requestables
 
       if previously_further_information_requested? &&
            latest_further_information_request.expired?
@@ -71,6 +72,26 @@ class RollbackAssessment
 
   delegate :application_form, to: :assessment
   delegate :teacher, to: :application_form
+
+  def reset_reviewed_requestables
+    reviewed_requestables.each do |requestable|
+      requestable.update!(review_passed: nil, review_note: "", reviewed_at: nil)
+    end
+  end
+
+  def reviewed_requestables
+    requestables = [
+      *assessment.consent_requests,
+      *assessment.reference_requests,
+      *assessment.qualification_requests,
+    ]
+
+    unless application_form.teaching_authority_provides_written_statement
+      requestables << assessment.professional_standing_request
+    end
+
+    requestables.compact.select(&:reviewed?)
+  end
 
   def update_application_form
     if application_form.awarded_at.present?
