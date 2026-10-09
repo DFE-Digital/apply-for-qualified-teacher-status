@@ -7,7 +7,7 @@ module PageObjects
 
       element :heading, "h1.govuk-heading-l"
       element :archive_button, ".govuk-button"
-      element :cancel_link, ".govuk-link"
+      element :cancel_link, ".govuk-link", text: "No, cancel"
     end
   end
 end

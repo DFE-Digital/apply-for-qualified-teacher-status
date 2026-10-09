@@ -1,0 +1,13 @@
+.app-header__container {
+  @include govuk-media-query($from: tablet) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.app-header__sign-out {
+  @include govuk-media-query($until: tablet) {
+    margin-bottom: govuk-spacing(2);
+  }
+}

@@ -10,9 +10,9 @@ en:
 
   service:
     name:
-      assessor: Manage applications for qualified teacher services (QTS)
+      assessor: Manage the Apply for QTS in England service
       eligibility: Apply for qualified teacher status (QTS) in England
-      support: Support for qualified teacher services (QTS)
+      support: Manage the Apply for QTS in England service
       teacher: Apply for qualified teacher status (QTS) in England
 
     email:

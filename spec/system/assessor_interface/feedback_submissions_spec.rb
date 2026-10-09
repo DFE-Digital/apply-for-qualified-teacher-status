@@ -12,9 +12,7 @@ RSpec.describe "Assessor service feedback", type: :system do
   it "lists feedback newest first and links to its details" do
     given_there_are_feedback_submissions_with_different_times
 
-    when_i_visit_the(:assessor_applications_page)
-    and_i_click_the_service_feedback_link
-
+    when_i_visit_the(:assessor_feedback_submissions_page)
     then_i_see_the(:assessor_feedback_submissions_page)
     and_i_see_the_feedback_ordered_newest_first
     and_i_see_a_download_feedback_link
@@ -132,10 +130,6 @@ RSpec.describe "Assessor service feedback", type: :system do
   end
 
   # Actions (when / and)
-
-  def and_i_click_the_service_feedback_link
-    assessor_applications_page.header.service_feedback_link.click
-  end
 
   def when_i_click_the_first_feedback_link
     assessor_feedback_submissions_page.feedback_rows.first.id_link.click
