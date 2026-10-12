@@ -2,11 +2,10 @@
 
 module PageObjects
   class PageHeader < SitePrism::Section
-    element :search_link, "a.govuk-service-navigation__link", text: "Search"
-    element :sign_out_link, "a.govuk-service-navigation__link", text: "Sign out"
-    element :manage_access_link,
+    element :applications_link,
             "a.govuk-service-navigation__link",
-            text: "Manage access"
+            text: "Applications"
+    element :sign_out_link, "a.govuk-link--inverse", text: "Sign out"
     element :support_console_link,
             "a.govuk-service-navigation__link",
             text: "Support console"

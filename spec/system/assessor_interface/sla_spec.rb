@@ -257,10 +257,10 @@ RSpec.describe "Assessor view SLA statuses", type: :system do
   end
 
   def when_i_go_to_view_totals_page
-    assessor_sla_index_page.click_on "Totals"
+    assessor_sla_index_page.totals_tab_link.click
   end
 
   def when_i_go_to_applications_page
-    assessor_sla_index_page.click_on "Applications"
+    assessor_sla_index_page.applications_tab_link.click
   end
 end

@@ -5,7 +5,7 @@ module PageObjects
     class Applications < SitePrism::Page
       set_url "/assessor/applications"
 
-      section :header, PageHeader, "nav"
+      section :header, PageHeader, "body"
 
       section :assessor_filter, "#app-applications-filters-assessor" do
         sections :assessors, GovukCheckboxItem, ".govuk-checkboxes__item"
