@@ -66,11 +66,10 @@ class WorkHistoryDuration
 
   def work_histories
     @work_histories ||=
-      relation.order(:start_date).select(
-        :start_date,
-        :end_date,
-        :hours_per_week,
-      )
+      relation
+        .includes(:reference_request)
+        .order(:start_date)
+        .select(:id, :start_date, :end_date, :hours_per_week)
   end
 
   def teaching_qualification
@@ -105,8 +104,16 @@ class WorkHistoryDuration
   end
 
   def work_history_end_date(work_history)
-    work_history.end_date || application_form.awarded_at ||
-      application_form.declined_at || Time.zone.today
+    work_history.end_date ||
+      work_history_reference_request_received(work_history) ||
+      application_form.awarded_at || application_form.declined_at ||
+      application_form.withdrawn_at || Time.zone.today
+  end
+
+  def work_history_reference_request_received(work_history)
+    return nil unless work_history.reference_request
+
+    work_history.reference_request.received_at
   end
 
   def date_first_of_month(date)

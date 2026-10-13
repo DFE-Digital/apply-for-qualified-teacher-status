@@ -64,7 +64,7 @@ RSpec.describe WorkHistoryDuration do
     end
 
     context "with an ongoing full time work history" do
-      before do
+      let!(:work_history) do
         create(
           :work_history,
           application_form:,
@@ -74,6 +74,18 @@ RSpec.describe WorkHistoryDuration do
       end
 
       it { is_expected.to eq(7) }
+
+      context "and the reference request has been received" do
+        before do
+          create(
+            :received_reference_request,
+            work_history:,
+            received_at: Date.new(2020, 10, 1),
+          )
+        end
+
+        it { is_expected.to eq(4) }
+      end
     end
 
     context "with an ongoing full time work history and an awarded application form" do
@@ -81,7 +93,7 @@ RSpec.describe WorkHistoryDuration do
         create(:application_form, awarded_at: Date.new(2020, 12, 1))
       end
 
-      before do
+      let!(:work_history) do
         create(
           :work_history,
           application_form:,
@@ -91,6 +103,18 @@ RSpec.describe WorkHistoryDuration do
       end
 
       it { is_expected.to eq(6) }
+
+      context "and the reference request has been received before the application form was awarded" do
+        before do
+          create(
+            :received_reference_request,
+            work_history:,
+            received_at: Date.new(2020, 10, 1),
+          )
+        end
+
+        it { is_expected.to eq(4) }
+      end
     end
 
     context "with an ongoing full time work history and a declined application form" do
@@ -98,7 +122,7 @@ RSpec.describe WorkHistoryDuration do
         create(:application_form, declined_at: Date.new(2020, 12, 1))
       end
 
-      before do
+      let!(:work_history) do
         create(
           :work_history,
           application_form:,
@@ -108,10 +132,51 @@ RSpec.describe WorkHistoryDuration do
       end
 
       it { is_expected.to eq(6) }
+
+      context "and the reference request has been received before the application form was declined" do
+        before do
+          create(
+            :received_reference_request,
+            work_history:,
+            received_at: Date.new(2020, 10, 1),
+          )
+        end
+
+        it { is_expected.to eq(4) }
+      end
+    end
+
+    context "with an ongoing full time work history and a withdrawn application form" do
+      let(:application_form) do
+        create(:application_form, withdrawn_at: Date.new(2020, 12, 1))
+      end
+
+      let!(:work_history) do
+        create(
+          :work_history,
+          application_form:,
+          start_date: Date.new(2020, 1, 1),
+          hours_per_week: 30,
+        )
+      end
+
+      it { is_expected.to eq(6) }
+
+      context "and the reference request has been received before the application form was withdrawn" do
+        before do
+          create(
+            :received_reference_request,
+            work_history:,
+            received_at: Date.new(2020, 10, 1),
+          )
+        end
+
+        it { is_expected.to eq(4) }
+      end
     end
 
     context "with an ongoing part time work history" do
-      before do
+      let!(:work_history) do
         create(
           :work_history,
           application_form:,
@@ -121,6 +186,18 @@ RSpec.describe WorkHistoryDuration do
       end
 
       it { is_expected.to eq(4) }
+
+      context "and the reference request has been received" do
+        before do
+          create(
+            :received_reference_request,
+            work_history:,
+            received_at: Date.new(2020, 10, 1),
+          )
+        end
+
+        it { is_expected.to eq(2) }
+      end
     end
 
     context "with a full time and a part time work history" do
