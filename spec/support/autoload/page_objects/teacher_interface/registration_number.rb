@@ -6,6 +6,9 @@ module PageObjects
       set_url "/teacher/application/registration_number"
 
       element :heading, "h1"
+      element :hint, ".govuk-hint"
+      element :details_summary, ".govuk-details__summary-text"
+      element :details_text, ".govuk-details__text"
 
       section :form, "form" do
         element :registration_number_field,
