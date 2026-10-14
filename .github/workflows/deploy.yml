@@ -150,7 +150,7 @@ jobs:
         uses: ./.github/actions/prepare-app-env
 
       - name: Run Brakeman
-        run: bin/bundle exec brakeman --quiet --no-pager
+        run: bin/bundle exec brakeman --quiet --no-pager --summary --ensure-ignore-notes
 
   deploy_review:
     name: Deploy to review environment
