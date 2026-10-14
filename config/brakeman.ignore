@@ -1,0 +1,28 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "Command Injection",
+      "warning_code": 14,
+      "fingerprint": "2c40442ac32516cd6c6ae52bcc5185d3f13ab5f2353ff5d5a152450fd08b019f",
+      "check_name": "Execute",
+      "message": "Possible command injection",
+      "file": "app/validators/file_upload_validator.rb",
+      "line": 50,
+      "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
+      "code": "`pdfinfo \"#{uploaded_file.path}\" 2> /dev/null`",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "FileUploadValidator",
+        "method": "validate_pdf_not_encrypted"
+      },
+      "user_input": "uploaded_file.path",
+      "confidence": "Medium",
+      "cwe_id": [
+        77
+      ],
+      "note": "Not exploitable as uploaded_file.path is a path assigned internally by Rack's Tempfile. The user has no way to influence that string."
+    }
+  ],
+  "brakeman_version": "8.1.0"
+}
