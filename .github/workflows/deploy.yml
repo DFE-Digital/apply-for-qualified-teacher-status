@@ -137,6 +137,21 @@ jobs:
       - name: Run tests
         run: bundle exec rspec spec/lib spec/forms spec/models spec/view_objects spec/components spec/controllers spec/policies spec/helpers spec/validators spec/jobs spec/mailers spec/views spec/requests spec/services --format documentation
 
+  brakeman:
+    name: Brakeman
+    runs-on: ubuntu-latest
+    if: github.event_name != 'workflow_dispatch'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Prepare application environment
+        uses: ./.github/actions/prepare-app-env
+
+      - name: Run Brakeman
+        run: bin/bundle exec brakeman --quiet --no-pager
+
   deploy_review:
     name: Deploy to review environment
     concurrency: deploy_review_${{ github.event.pull_request.number }}
