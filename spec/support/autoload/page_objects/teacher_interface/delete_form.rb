@@ -15,6 +15,11 @@ module PageObjects
 
         element :continue_button, ".govuk-button:not(.govuk-button--secondary)"
       end
+
+      def submit_yes
+        form.true_radio_item.choose
+        form.continue_button.click
+      end
     end
   end
 end
