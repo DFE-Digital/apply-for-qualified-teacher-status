@@ -133,7 +133,7 @@ en:
         qualified_in_mainstream_education: they’re qualified to teach in mainstream education (not vocationally only/SEN only/early years/pre-school only)
         qualified_to_teach: the applicant is qualified to teach at state or government schools
         qualified_to_teach_children_11_to_16: the applicant is qualified to teach children aged anywhere between 11 and 16 years
-        registration_number: registration number provided and verified (where applicable)
+        registration_number: teacher reference number provided and verified (where applicable)
         referee_email_domain: that the reference’s email address is from the school’s domain, for example, name@school.edu, or if the domain has been flagged with eligibility concerns
         satisfactory_evidence_work_history: the applicant has provided satisfactory evidence of their work history
         teaching_qualification: confirmation of the applicant’s teaching qualification
@@ -196,8 +196,8 @@ en:
           qualifications_or_modules_required_not_provided: The applicant has not provided the required qualifications or modules.
           qualified_to_teach: We were not provided with sufficient evidence to confirm qualification to teach at state or government schools.
           qualified_to_teach_children_11_to_16: The applicant is not qualified to teach children aged aged anywhere between 11 and 16 years.
-          registration_number: We could not find the applicant’s reference number, or the number was in the wrong format. The applicant will need to supply the number again.
-          registration_number_alternative: We could not find the applicant’s reference number. The applicant will need to upload written proof of recognition as a teacher instead.
+          registration_number: We could not find the applicant’s teacher reference number, or the number was in the wrong format. The applicant will need to supply the number again.
+          registration_number_alternative: We could not find the applicant’s teacher reference number. The applicant will need to upload written proof of recognition as a teacher instead.
           satisfactory_evidence_work_history: The information provided on work history is not sufficient to confirm QTS.
           school_details_cannot_be_verified: We could not verify school details entered by the applicant.
           special_education_only: Applicant holds a Special Educational Needs and Disabilities (SEND) only qualification and is not qualified to teach in mainstream education.
