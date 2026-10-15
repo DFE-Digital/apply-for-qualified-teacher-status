@@ -153,6 +153,8 @@ GEM
     bindex (0.8.1)
     bootsnap (1.25.0)
       msgpack (~> 1.5)
+    brakeman (8.1.0)
+      racc
     builder (3.3.0)
     business (3.1.0)
     capybara (3.40.0)
@@ -762,6 +764,7 @@ DEPENDENCIES
   annotaterb
   azure-blob
   bootsnap
+  brakeman
   business
   capybara
   climate_control
@@ -858,6 +861,7 @@ CHECKSUMS
   bindata (2.5.1) sha256=53186a1ec2da943d4cb413583d680644eb810aacbf8902497aac8f191fad9e58
   bindex (0.8.1) sha256=7b1ecc9dc539ed8bccfc8cb4d2732046227b09d6f37582ff12e50a5047ceb17e
   bootsnap (1.25.0) sha256=41059e7d0f9cb4023a33465d095f64b913fc9d1b808d6524c307da945fbcffcf
+  brakeman (8.1.0) sha256=cfa9e5214e4925842f4bc849a64f8a7e6c5d0425fe98eac8d7b7bc60fdc17e07
   builder (3.3.0) sha256=497918d2f9dca528fdca4b88d84e4ef4387256d984b8154e9d5d3fe5a9c8835f
   business (3.1.0) sha256=b6603b297cf8848aea509db4d8b71482d068819d8b4f862ab996351687603307
   capybara (3.40.0) sha256=42dba720578ea1ca65fd7a41d163dd368502c191804558f6e0f71b391054aeef

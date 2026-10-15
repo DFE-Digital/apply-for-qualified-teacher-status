@@ -35,7 +35,12 @@ module TeacherInterface
       @exemption_field = params[:exemption_field]
 
       exempt =
-        application_form.send("english_language_#{@exemption_field}_exempt")
+        case @exemption_field
+        when "citizenship"
+          application_form.english_language_citizenship_exempt
+        when "qualification"
+          application_form.english_language_qualification_exempt
+        end
 
       @form =
         EnglishLanguageExemptionForm.new(

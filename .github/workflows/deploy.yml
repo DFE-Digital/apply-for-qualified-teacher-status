@@ -137,10 +137,25 @@ jobs:
       - name: Run tests
         run: bundle exec rspec spec/lib spec/forms spec/models spec/view_objects spec/components spec/controllers spec/policies spec/helpers spec/validators spec/jobs spec/mailers spec/views spec/requests spec/services --format documentation
 
+  brakeman:
+    name: Brakeman
+    runs-on: ubuntu-latest
+    if: github.event_name != 'workflow_dispatch'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Prepare application environment
+        uses: ./.github/actions/prepare-app-env
+
+      - name: Run Brakeman
+        run: bin/bundle exec brakeman --quiet --no-pager --summary --ensure-ignore-notes
+
   deploy_review:
     name: Deploy to review environment
     concurrency: deploy_review_${{ github.event.pull_request.number }}
-    needs: [docker, rspec_system, rspec_other]
+    needs: [docker, rspec_system, rspec_other, brakeman]
     runs-on: ubuntu-latest
     if: contains(github.event.pull_request.labels.*.name, 'deploy')
     environment: review
@@ -170,7 +185,7 @@ jobs:
   deploy_non_production:
     name: Deploy to ${{ matrix.environment }} environment
     runs-on: ubuntu-latest
-    needs: [docker, rspec_system, rspec_other]
+    needs: [docker, rspec_system, rspec_other, brakeman]
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     concurrency: deploy_${{ matrix.environment }}
     strategy:
@@ -200,7 +215,7 @@ jobs:
 
   deploy_production:
     name: Deploy to production environment
-    needs: [docker, rspec_system, rspec_other, deploy_non_production]
+    needs: [docker, rspec_system, rspec_other, brakeman, deploy_non_production]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     environment:
@@ -231,7 +246,7 @@ jobs:
       id-token: write
 
     if: ${{ failure() && github.ref == 'refs/heads/main' && github.event_name == 'push' }}
-    needs: [docker, rspec_system, rspec_other, deploy_non_production]
+    needs: [docker, rspec_system, rspec_other, brakeman, deploy_non_production]
 
     steps:
       - uses: actions/checkout@v7

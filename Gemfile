@@ -73,6 +73,7 @@ group :development do
   gem "web-console"
 
   gem "annotaterb", require: false
+  gem "brakeman", require: false
   gem "prettier_print", require: false
   gem "rubocop-govuk", require: false
   gem "syntax_tree", require: false
