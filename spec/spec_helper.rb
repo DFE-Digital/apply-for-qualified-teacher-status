@@ -30,7 +30,22 @@ RSpec.configure do |config|
     reporter.register_listener(formatter, "message")
     config.retry_reporter = reporter
 
-    config.around { |ex| ex.run_with_retry retry: 3 }
+    config.around do |ex|
+      ex.metadata[:instance_variables_before_first_attempt] = instance_variables
+      ex.run_with_retry retry: 3
+    end
+
+    # rspec-retry re-runs a failed example on the same example group instance
+    # and only clears `let`s. Remove anything else set during the failed attempt,
+    # such as `@application_form ||= create(...)`, otherwise the retry reuses
+    # records that were rolled back with that attempt's transaction.
+    config.retry_callback =
+      proc do |ex|
+        (
+          instance_variables -
+            ex.metadata[:instance_variables_before_first_attempt]
+        ).each { |name| remove_instance_variable(name) }
+      end
   end
 
   # rspec-expectations config goes here. You can use an alternate
