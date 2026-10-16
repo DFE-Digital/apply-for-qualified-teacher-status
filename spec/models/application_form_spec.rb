@@ -269,6 +269,24 @@ RSpec.describe ApplicationForm, type: :model do
     end
   end
 
+  describe "#past_initial_assessment?" do
+    {
+      draft: false,
+      pre_assessment: false,
+      not_started: false,
+      assessment: false,
+      verification: true,
+      review: true,
+      completed: true,
+    }.each do |stage, expected|
+      it "returns #{expected} in the #{stage} stage" do
+        application_form = build(:application_form, stage:)
+
+        expect(application_form.past_initial_assessment?).to eq(expected)
+      end
+    end
+  end
+
   describe "associations" do
     it { is_expected.to belong_to(:teacher) }
     it { is_expected.to have_many(:notes) }

@@ -15,6 +15,7 @@ class AssessorInterface::ProfessionalStandingRequestLocationForm
 
   attribute :received, :boolean
   validates :received, inclusion: [true]
+  validate :application_form_not_past_initial_assessment
 
   def save
     return false if invalid?
@@ -40,6 +41,12 @@ class AssessorInterface::ProfessionalStandingRequestLocationForm
   delegate :application_form, to: :requestable
 
   private
+
+  def application_form_not_past_initial_assessment
+    if application_form.past_initial_assessment?
+      errors.add(:base, :past_initial_assessment)
+    end
+  end
 
   def create_upload!
     document.uploads.each(&:destroy!)

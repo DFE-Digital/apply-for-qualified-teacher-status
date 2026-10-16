@@ -649,6 +649,8 @@ en:
               inclusion: Select whether the teacher requires induction
         assessor_interface/professional_standing_request_location_form:
           attributes:
+            base:
+              past_initial_assessment: Confirmation of the letter of professional standing cannot be updated because the application has moved past initial assessment
             attachment:
               blank: Select a file to upload
               encrypted_pdf: The selected file is security protected

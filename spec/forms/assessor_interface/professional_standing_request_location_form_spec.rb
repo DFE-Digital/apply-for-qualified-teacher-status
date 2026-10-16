@@ -28,6 +28,32 @@ RSpec.describe AssessorInterface::ProfessionalStandingRequestLocationForm,
     it { is_expected.to validate_presence_of(:user) }
     it { is_expected.to allow_values(true).for(:received) }
 
+    %i[pre_assessment_stage not_started_stage assessment_stage].each do |stage|
+      context "with a #{stage.to_s.delete_suffix("_stage")} application form" do
+        let(:application_form) { create(:application_form, :submitted, stage) }
+        let(:received) { true }
+
+        it { is_expected.to be_valid }
+      end
+    end
+
+    %i[verification_stage review_stage completed_stage].each do |stage|
+      context "with a #{stage.to_s.delete_suffix("_stage")} application form" do
+        let(:application_form) { create(:application_form, :submitted, stage) }
+        let(:received) { true }
+
+        it { is_expected.not_to be_valid }
+
+        it "adds an error explaining that the form cannot be updated" do
+          form.valid?
+
+          expect(form.errors.details[:base]).to include(
+            error: :past_initial_assessment,
+          )
+        end
+      end
+    end
+
     context "with nil attachment" do
       let(:attachment) { nil }
       let(:received) { "true" }
@@ -65,6 +91,53 @@ RSpec.describe AssessorInterface::ProfessionalStandingRequestLocationForm,
     let(:location_note) { "Note." }
 
     it { is_expected.to be true }
+
+    %i[verification_stage review_stage completed_stage].each do |stage|
+      context "with a #{stage.to_s.delete_suffix("_stage")} application form" do
+        let(:application_form) { create(:application_form, :submitted, stage) }
+
+        it { is_expected.to be false }
+
+        it "does not update the request or upload a file" do
+          expect { save }.not_to(
+            change do
+              [
+                requestable.reload.received_at,
+                requestable.location_note,
+                application_form.written_statement_document.uploads.count,
+              ]
+            end,
+          )
+        end
+      end
+
+      context "with an uploaded letter and reviewed request in #{stage}" do
+        let(:application_form) do
+          create(:application_form, :submitted, :with_written_statement, stage)
+        end
+        let(:requestable) do
+          create(
+            :professional_standing_request,
+            :requested,
+            :received,
+            :review_passed,
+            application_form:,
+          )
+        end
+
+        it "preserves the existing upload and review decision" do
+          existing_upload =
+            application_form.written_statement_document.uploads.sole
+          original_attributes = requestable.attributes
+
+          expect(save).to be false
+          expect(requestable.reload.attributes).to eq(original_attributes)
+          expect(
+            application_form.written_statement_document.uploads.reload.sole.id,
+          ).to eq(existing_upload.id)
+        end
+      end
+    end
 
     it "sets the received at date" do
       expect { save }.to change(requestable, :received_at).from(nil)
