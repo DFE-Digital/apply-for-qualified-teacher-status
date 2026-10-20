@@ -296,63 +296,44 @@ RSpec.describe "Teacher work history", type: :system do
   end
 
   def when_i_fill_in_the_school_information
-    teacher_new_work_history_page.form.meets_all_requirements_checkbox.click
-    teacher_new_work_history_page.form.school_name_input.fill_in with: "School"
-    teacher_new_work_history_page.form.address_line1_input.fill_in with:
-      "Building A"
-    teacher_new_work_history_page.form.address_line2_input.fill_in with:
-      "Street B"
-    teacher_new_work_history_page.form.city_input.fill_in with: "City"
-    teacher_new_work_history_page.form.country_input.fill_in with: "France"
-    teacher_new_work_history_page.form.postcode_input.fill_in with: "12345"
-    teacher_new_work_history_page.form.school_website_input.fill_in with:
-      "www.schoolwebsite.com"
-    teacher_new_work_history_page.form.job_input.fill_in with: "Job"
-    teacher_new_work_history_page.form.hours_per_week_input.fill_in with: "30"
-    teacher_new_work_history_page.form.start_date_month_input.fill_in with: "1"
-    teacher_new_work_history_page.form.start_date_year_input.fill_in with:
-      "2020"
-    teacher_new_work_history_page.form.still_employed_radio_items.second.choose
-    teacher_new_work_history_page.form.end_date_month_input.fill_in with: "12"
-    teacher_new_work_history_page.form.end_date_year_input.fill_in with: "2021"
-    teacher_new_work_history_page.form.continue_button.click
+    fill_in_the_school_form(country: "France")
   end
 
   def when_i_fill_in_the_school_information_with_england
-    teacher_new_work_history_page.form.meets_all_requirements_checkbox.click
-    teacher_new_work_history_page.form.school_name_input.fill_in with: "School"
-    teacher_new_work_history_page.form.address_line1_input.fill_in with:
-      "Building A"
-    teacher_new_work_history_page.form.address_line2_input.fill_in with:
-      "Street B"
-    teacher_new_work_history_page.form.city_input.fill_in with: "City"
-    teacher_new_work_history_page.form.country_input.fill_in with: "England"
-    teacher_new_work_history_page.form.postcode_input.fill_in with: "12345"
-    teacher_new_work_history_page.form.school_website_input.fill_in with:
-      "www.schoolwebsite.com"
-    teacher_new_work_history_page.form.job_input.fill_in with: "Job"
-    teacher_new_work_history_page.form.hours_per_week_input.fill_in with: "30"
-    teacher_new_work_history_page.form.start_date_month_input.fill_in with: "1"
-    teacher_new_work_history_page.form.start_date_year_input.fill_in with:
-      "2020"
-    teacher_new_work_history_page.form.still_employed_radio_items.second.choose
-    teacher_new_work_history_page.form.end_date_month_input.fill_in with: "12"
-    teacher_new_work_history_page.form.end_date_year_input.fill_in with: "2021"
-    teacher_new_work_history_page.form.continue_button.click
+    fill_in_the_school_form(country: "England")
+  end
+
+  def fill_in_the_school_form(country:)
+    teacher_new_work_history_page.check_meets_all_requirements
+    teacher_new_work_history_page.fill_in_school_name("School")
+    teacher_new_work_history_page.fill_in_address_line1("Building A")
+    teacher_new_work_history_page.fill_in_address_line2("Street B")
+    teacher_new_work_history_page.fill_in_city("City")
+    teacher_new_work_history_page.fill_in_country(country)
+    teacher_new_work_history_page.fill_in_postcode("12345")
+    teacher_new_work_history_page.fill_in_school_website(
+      "www.schoolwebsite.com",
+    )
+    teacher_new_work_history_page.fill_in_job("Job")
+    teacher_new_work_history_page.fill_in_hours_per_week("30")
+    teacher_new_work_history_page.fill_in_start_date(month: "1", year: "2020")
+    teacher_new_work_history_page.select_not_still_employed
+    teacher_new_work_history_page.fill_in_end_date(month: "12", year: "2021")
+    teacher_new_work_history_page.click_continue
   end
 
   def when_i_fill_in_the_contact_information
-    teacher_edit_work_history_contact_page.form.name_input.fill_in with: "Name"
-    teacher_edit_work_history_contact_page.form.job_input.fill_in with: "Job"
-    teacher_edit_work_history_contact_page.form.email_input.fill_in with:
-      "contact@example.com"
-    teacher_edit_work_history_contact_page.form.continue_button.click
+    teacher_edit_work_history_contact_page.fill_in_name("Name")
+    teacher_edit_work_history_contact_page.fill_in_job("Job")
+    teacher_edit_work_history_contact_page.fill_in_email("contact@example.com")
+    teacher_edit_work_history_contact_page.click_continue
   end
 
   def when_i_update_the_contact_email_with_error
-    teacher_edit_work_history_contact_page.form.email_input_with_error.fill_in with:
-      "contact@example.com"
-    teacher_edit_work_history_contact_page.form.continue_button.click
+    teacher_edit_work_history_contact_page.fill_in_email_with_error(
+      "contact@example.com",
+    )
+    teacher_edit_work_history_contact_page.click_continue
   end
 
   def and_i_see_the_work_history_information
@@ -568,12 +549,11 @@ RSpec.describe "Teacher work history", type: :system do
   end
 
   def when_i_click_delete_work_history
-    teacher_check_work_histories_page.summary_cards.first.actions.link.click
+    teacher_check_work_histories_page.click_delete_first_work_history
   end
 
   def when_i_delete_work_history
-    teacher_delete_work_history_page.form.true_radio_item.choose
-    teacher_delete_work_history_page.form.continue_button.click
+    teacher_delete_work_history_page.submit_yes
   end
 
   def and_i_see_two_work_histories
