@@ -6,6 +6,7 @@ module PageObjects
       set_url "/assessor/applications/{reference}/assessments/{assessment_id}/sections/{section_id}"
 
       element :heading, "h1"
+      element :back_link, "a", text: "Back"
 
       section :form, "form" do
         element :true_radio_item,

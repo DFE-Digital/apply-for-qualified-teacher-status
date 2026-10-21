@@ -1,5 +1,12 @@
 <% content_for :page_title, "Application" %>
-<% content_for :back_link_url, back_history_path(default: assessor_interface_application_forms_path) %>
+
+<% previous_path = HistoryStack.new(session:).last_entry&.fetch(:path)&.split("?")&.first %>
+
+<% if previous_path == assessor_interface_application_forms_path || previous_path&.start_with?("#{assessor_interface_application_forms_path}/") %>
+  <% content_for :back_link_url, assessor_interface_application_forms_path %>
+<% else %>
+  <% content_for :back_link_url, back_history_path(default: assessor_interface_application_forms_path) %>
+<% end %>
 
 <% application_form = @view_object.application_form %>
 
