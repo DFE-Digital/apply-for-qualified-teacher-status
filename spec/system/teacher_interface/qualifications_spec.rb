@@ -77,14 +77,208 @@ RSpec.describe "Teacher qualifications", type: :system do
     and_i_see_the_age_subject_restrictions
   end
 
+  it "partially saved additional qualification" do
+    given_a_completed_teaching_qualification_exists
+
+    when_i_visit_the(:teacher_application_page)
+    when_i_click_the_qualifications_task
+    then_i_see_the(:teacher_check_qualifications_page)
+
+    when_i_continue_from_the_qualifications_collection
+    then_i_see_the(:teacher_add_another_qualification_page)
+    when_i_add_another_qualification
+    then_i_see_the(:teacher_new_qualification_page)
+
+    when_i_save_partial_qualification_details
+    then_i_see_the(:teacher_application_page)
+    and_the_qualifications_task_is("In progress")
+
+    when_i_click_the_qualifications_task
+    then_i_see_the(:teacher_check_qualifications_page)
+    and_i_see_the_partial_additional_qualification
+
+    when_i_continue_from_the_qualifications_collection
+    then_i_see_the_edit_for_saved_incomplete_additional_qualification
+  end
+
+  it "partially saved teaching qualification" do
+    given_an_application_form_exists
+
+    when_i_visit_the(:teacher_application_page)
+    when_i_click_the_qualifications_task
+    then_i_see_the(:teacher_new_qualification_page)
+
+    when_i_save_partial_qualification_details
+    then_i_see_the(:teacher_application_page)
+    and_the_qualifications_task_is("In progress")
+
+    when_i_click_the_qualifications_task
+    then_i_see_the(:teacher_edit_qualification_page)
+    and_i_see_the_saved_teaching_qualification
+  end
+
+  it "ability to add another for already completed qualifications" do
+    given_some_qualifications_exist
+
+    when_i_visit_the(:teacher_application_page)
+    and_the_qualifications_task_is("Completed")
+    when_i_click_the_qualifications_task
+    then_i_see_the(:teacher_check_qualifications_page)
+
+    and_i_see_the_completed_qualification
+
+    when_i_continue_from_the_qualifications_collection
+    then_i_see_the(:teacher_add_another_qualification_page)
+  end
+
+  it "editing an incomplete qualification" do
+    given_a_completed_teaching_qualification_exists
+    given_an_incomplete_additional_qualification_exists
+
+    when_i_visit_the(:teacher_application_page)
+    when_i_click_the_qualifications_task
+    then_i_see_the(:teacher_check_qualifications_page)
+
+    when_i_change_the_additional_qualification(
+      field: "Additional qualification title",
+    )
+    then_i_see_the(:teacher_edit_qualification_page)
+
+    when_i_save_the_amended_qualification
+    then_i_see_the(:teacher_application_page)
+    and_the_qualifications_task_is("In progress")
+  end
+
+  it "saves an unfinished qualification document and returns to the task list" do
+    given_a_completed_teaching_qualification_exists
+    given_an_incomplete_additional_qualification_exists
+
+    when_i_visit_the(:teacher_application_page)
+    when_i_click_the_qualifications_task
+    then_i_see_the(:teacher_check_qualifications_page)
+
+    when_i_change_the_additional_qualification(field: "Certificate document")
+    then_i_see_the(:teacher_upload_document_page)
+
+    when_i_save_the_unfinished_document
+    then_i_see_the(:teacher_application_page)
+    and_the_qualifications_task_is("In progress")
+  end
+
   private
+
+  def when_i_continue_from_the_qualifications_collection
+    teacher_check_qualifications_page.continue_button.click
+  end
+
+  def when_i_add_another_qualification
+    teacher_add_another_qualification_page.submit_yes
+  end
+
+  def when_i_change_the_additional_qualification(field:)
+    teacher_check_qualifications_page
+      .summary_cards
+      .second
+      .find_row(key: field)
+      .actions
+      .link
+      .click
+  end
+
+  def when_i_save_the_amended_qualification
+    teacher_edit_qualification_page.form.title_field.fill_in with:
+      "Example amended diploma"
+    teacher_edit_qualification_page.form.save_and_come_back_later_button.click
+  end
+
+  def when_i_save_the_unfinished_document
+    teacher_upload_document_page.form.save_and_come_back_later_button.click
+  end
+
+  def then_i_see_the_edit_for_saved_incomplete_additional_qualification
+    then_i_see_the(
+      :teacher_edit_qualification_page,
+      qualification_id: application_form.qualifications.order_by_user.last.id,
+    )
+    and_i_see_the_saved_institution_name
+  end
+
+  def and_i_see_the_saved_teaching_qualification
+    expect(teacher_edit_qualification_page.heading.text).to eq(
+      "Teaching qualification",
+    )
+    expect(teacher_edit_qualification_page.form.title_field.value).to eq(
+      "Example teaching diploma",
+    )
+    and_i_see_the_saved_institution_name
+  end
+
+  def and_i_see_the_saved_institution_name
+    expect(
+      teacher_edit_qualification_page.form.institution_name_field.value,
+    ).to eq("Example University")
+  end
+
+  def and_i_see_the_completed_qualification
+    first_qualification = application_form.qualifications.order_by_user.first
+    first_card = teacher_check_qualifications_page.summary_cards.first
+    expect(first_card.heading.text).to eq(
+      "#{first_qualification.title} (#{first_qualification.institution_name})",
+    )
+    expect(
+      first_card.find_row(key: "Certificate document").value.text,
+    ).to include(
+      first_qualification.certificate_document.uploads.first.filename,
+    )
+  end
+
+  def given_a_completed_teaching_qualification_exists
+    create(:qualification, :completed, application_form:)
+    application_form.update!(teaching_qualification_part_of_degree: true)
+    ApplicationFormSectionStatusUpdater.call(application_form:)
+  end
+
+  def given_an_incomplete_additional_qualification_exists
+    create(:qualification, application_form:)
+    ApplicationFormSectionStatusUpdater.call(application_form:)
+  end
+
+  def when_i_save_partial_qualification_details
+    teacher_new_qualification_page.form.title_field.fill_in with:
+      "Example teaching diploma"
+    teacher_new_qualification_page.form.institution_name_field.fill_in with:
+      "Example University"
+    teacher_new_qualification_page.form.save_and_come_back_later_button.click
+  end
+
+  def and_the_qualifications_task_is(status)
+    expect(
+      teacher_application_page.qualifications_task_item.status_tag.text,
+    ).to eq(status)
+  end
+
+  def and_i_see_the_partial_additional_qualification
+    card = teacher_check_qualifications_page.summary_cards.second
+
+    expect(card.heading.text).to eq(
+      "Example teaching diploma (Example University)",
+    )
+    expect(
+      card.find_row(key: "Additional qualification title").value.text,
+    ).to eq("Example teaching diploma")
+    expect(card.find_row(key: "Name of institution").value.text).to eq(
+      "Example University",
+    )
+    expect(
+      card.find_row(key: "When did you start this qualification?").value.text,
+    ).to eq("Not provided")
+    expect(card.find_row(key: "Certificate document").value.text).to eq(
+      "Not provided",
+    )
+  end
 
   def given_an_application_form_exists
     application_form
-  end
-
-  def given_the_application_accepts_reduced_evidence
-    application_form.update!(reduced_evidence_accepted: true)
   end
 
   def given_some_qualifications_exist
