@@ -14,6 +14,12 @@ RSpec.describe QualificationHelper do
       before { qualification.title = "Title" }
 
       it { is_expected.to eq("Title") }
+
+      context "with an institution name" do
+        before { qualification.institution_name = "Example University" }
+
+        it { is_expected.to eq("Title (Example University)") }
+      end
     end
 
     context "with an institution name" do
