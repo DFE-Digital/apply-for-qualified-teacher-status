@@ -12,14 +12,14 @@ module HandleApplicationFormSection
     save_and_continue = params[:button] != "save_and_return"
 
     if form.save(validate: save_and_continue)
-      check_path =
-        history_stack.last_path_if_check(identifier: check_identifier)
-
       if save_and_continue
+        check_path =
+          history_stack.last_path_if_check(identifier: check_identifier)
+
         redirect_to if_success_then_redirect.try(:call, check_path) ||
                       check_path || if_success_then_redirect
       else
-        redirect_to check_path || %i[teacher_interface application_form]
+        redirect_to %i[teacher_interface application_form]
       end
     else
       send_errors_to_big_query(form)
