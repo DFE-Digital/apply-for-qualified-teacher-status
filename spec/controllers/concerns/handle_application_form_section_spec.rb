@@ -48,6 +48,27 @@ RSpec.describe HandleApplicationFormSection, type: :controller do
           expect(controller).to receive(:redirect_to)
           handle_application_form_section
         end
+
+        context "with a check entry in the history" do
+          let(:session) do
+            {
+              history_stack: [
+                {
+                  path: "/teacher/application/personal_information/check",
+                  check: true,
+                },
+                { path: "/teacher/application" },
+              ],
+            }
+          end
+
+          it "still returns to the check page" do
+            expect(controller).to receive(:redirect_to).with(
+              "/teacher/application/personal_information/check",
+            )
+            handle_application_form_section
+          end
+        end
       end
 
       context "when form is invalid" do
@@ -91,6 +112,14 @@ RSpec.describe HandleApplicationFormSection, type: :controller do
         handle_application_form_section
       end
 
+      it "saves without requiring complete answers" do
+        allow(controller).to receive(:redirect_to)
+
+        handle_application_form_section
+
+        expect(form).to have_received(:save).with(validate: false)
+      end
+
       context "with a check entry in the history" do
         let(:session) do
           {
@@ -104,9 +133,9 @@ RSpec.describe HandleApplicationFormSection, type: :controller do
           }
         end
 
-        it "redirects to application form" do
+        it "returns to the application form rather than the check page" do
           expect(controller).to receive(:redirect_to).with(
-            "/teacher/application/personal_information/check",
+            %i[teacher_interface application_form],
           )
           handle_application_form_section
         end
