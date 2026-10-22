@@ -49,6 +49,16 @@ RSpec.describe HandleApplicationFormSection, type: :controller do
           handle_application_form_section
         end
 
+        it "does not use the save-and-return destination when continuing" do
+          expect(controller).to receive(:redirect_to).with(:redirect)
+
+          controller.handle_application_form_section(
+            form:,
+            if_success_then_redirect: :redirect,
+            if_save_and_come_back_later_then_redirect: "/custom-return",
+          )
+        end
+
         context "with a check entry in the history" do
           let(:session) do
             {
@@ -116,6 +126,18 @@ RSpec.describe HandleApplicationFormSection, type: :controller do
         allow(controller).to receive(:redirect_to)
 
         handle_application_form_section
+
+        expect(form).to have_received(:save).with(validate: false)
+      end
+
+      it "uses an explicitly supplied save-and-return destination" do
+        path = "/teacher/application/further_information_requests/1"
+        expect(controller).to receive(:redirect_to).with(path)
+
+        controller.handle_application_form_section(
+          form:,
+          if_save_and_come_back_later_then_redirect: path,
+        )
 
         expect(form).to have_received(:save).with(validate: false)
       end
