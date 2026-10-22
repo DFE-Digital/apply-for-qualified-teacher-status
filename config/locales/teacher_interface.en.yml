@@ -259,6 +259,7 @@ en:
       contact:
         heading: Who should we contact to verify this role at %{school_name}?
     summary:
+      registration_number: Teacher reference number
       name: Name
       country: Country trained in
       email: Email
