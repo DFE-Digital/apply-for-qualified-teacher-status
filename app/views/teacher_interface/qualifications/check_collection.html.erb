@@ -9,7 +9,9 @@
            qualifications: @qualifications,
            changeable: true %>
 
-<% if @came_from_add_another %>
+<% if @incomplete_qualification %>
+  <%= govuk_button_link_to "Continue", [:edit, :teacher_interface, :application_form, @incomplete_qualification] %>
+<% elsif @came_from_add_another %>
   <%= govuk_button_link_to "Continue", %i[teacher_interface application_form] %>
 <% else %>
   <%= govuk_button_link_to "Continue", %i[add_another teacher_interface application_form qualifications] %>
