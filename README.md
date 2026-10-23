@@ -22,7 +22,7 @@ A service that allows international teachers to apply for qualified teacher stat
 
 ## Dependencies
 
-- Ruby 3.x
+- Ruby 4.0.x
 - Node.js 24.x
 - Yarn 4.18.0
 - PostgreSQL 17.x
