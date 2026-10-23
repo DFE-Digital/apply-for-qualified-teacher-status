@@ -133,18 +133,19 @@ RSpec.describe "Assessor prioritisation checks", type: :system do
     before do
       assessment.prioritisation_work_history_checks.update_all(passed: true)
 
-      create(
-        :received_prioritisation_reference_request,
-        assessment:,
-        prioritisation_work_history_check:
-          assessment.prioritisation_work_history_checks.first,
-      )
-      create(
-        :received_prioritisation_reference_request,
-        assessment:,
-        prioritisation_work_history_check:
-          assessment.prioritisation_work_history_checks.last,
-      )
+      # Use the check's work history, as RequestPrioritisationReferenceRequests
+      # does. The factory default creates a new one with a random Faker school
+      # name, which can collide and make the links on the references page ambiguous.
+      assessment
+        .prioritisation_work_history_checks
+        .each do |prioritisation_work_history_check|
+        create(
+          :received_prioritisation_reference_request,
+          assessment:,
+          prioritisation_work_history_check:,
+          work_history: prioritisation_work_history_check.work_history,
+        )
+      end
     end
 
     it "accepts reference requests and prioritises" do
