@@ -21,6 +21,32 @@ RSpec.describe "Assessor view application form", type: :system do
     then_i_see_the(:assessor_applications_page)
   end
 
+  it "returns to the application list after coming back from an assessment task" do
+    given_there_is_an_application_form
+    given_i_am_authorized_as_an_assessor_user
+
+    when_i_visit_the(:assessor_application_page, reference:)
+    when_i_open_the_personal_information_task
+    then_i_see_the(:assessor_assessment_section_page)
+
+    when_i_return_from_the_assessment_task
+    then_i_see_the(:assessor_application_page, reference:)
+
+    when_i_click_back_link
+    then_i_see_the(:assessor_applications_page)
+  end
+
+  it "returns to the previous assessor area outside applications" do
+    given_there_is_an_application_form
+    given_i_am_authorized_as_an_assessor_user
+
+    when_i_visit_the(:assessor_sla_index_page)
+    when_i_visit_the(:assessor_application_page, reference:)
+
+    when_i_click_back_link
+    then_i_see_the(:assessor_sla_index_page)
+  end
+
   private
 
   def given_there_is_an_application_form
@@ -29,6 +55,14 @@ RSpec.describe "Assessor view application form", type: :system do
 
   def when_i_click_back_link
     assessor_application_page.back_link.click
+  end
+
+  def when_i_open_the_personal_information_task
+    assessor_application_page.personal_information_task.name_and_hint.link.click
+  end
+
+  def when_i_return_from_the_assessment_task
+    assessor_assessment_section_page.back_link.click
   end
 
   def then_i_see_the_application
