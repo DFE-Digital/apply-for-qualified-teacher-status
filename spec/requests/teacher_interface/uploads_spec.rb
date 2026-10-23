@@ -76,6 +76,55 @@ RSpec.describe "Teacher Interface - Uploads", type: :request do
       end
     end
 
+    context "with a consent document" do
+      let(:application_form) do
+        create(
+          :application_form,
+          :submitted,
+          teacher:,
+          statuses: %w[waiting_on_consent],
+        )
+      end
+      let(:assessment) { create(:assessment, application_form:) }
+      let(:consent_request) { create(:requested_consent_request, assessment:) }
+      let(:document) { consent_request.signed_consent_document }
+
+      it "returns from an unfinished upload without submitting the consent request" do
+        perform
+
+        expect(response).to redirect_to(
+          teacher_interface_application_form_consent_requests_path,
+        )
+        expect(document.uploads).to be_empty
+        expect(consent_request.reload).not_to be_received
+      end
+
+      context "when a file is attached" do
+        let(:params) do
+          {
+            button: "save_and_return",
+            teacher_interface_upload_form: {
+              original_attachment:
+                Rack::Test::UploadedFile.new(
+                  file_fixture("upload.pdf"),
+                  "application/pdf",
+                ),
+            },
+          }
+        end
+
+        it "saves the file and returns without submitting the consent request" do
+          perform
+
+          expect(response).to redirect_to(
+            teacher_interface_application_form_consent_requests_path,
+          )
+          expect(document.uploads.pluck(:filename)).to eq(["upload.pdf"])
+          expect(consent_request.reload).not_to be_received
+        end
+      end
+    end
+
     context "with a normal application document" do
       it "returns to the main application page" do
         perform

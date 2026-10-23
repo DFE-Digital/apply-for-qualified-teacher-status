@@ -53,6 +53,30 @@ RSpec.describe "Teacher Interface - Documents", type: :request do
       end
     end
 
+    context "with a consent document" do
+      let(:application_form) do
+        create(
+          :application_form,
+          :submitted,
+          teacher:,
+          statuses: %w[waiting_on_consent],
+        )
+      end
+      let(:assessment) { create(:assessment, application_form:) }
+      let(:consent_request) { create(:requested_consent_request, assessment:) }
+      let(:document) { consent_request.signed_consent_document }
+
+      it "returns to the consent task list without submitting or removing uploads" do
+        perform
+
+        expect(response).to redirect_to(
+          teacher_interface_application_form_consent_requests_path,
+        )
+        expect(document.uploads).to contain_exactly(upload)
+        expect(consent_request.reload).not_to be_received
+      end
+    end
+
     context "with a normal application document" do
       it "returns to the main application page" do
         perform

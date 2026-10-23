@@ -46,7 +46,7 @@ handle_application_form_section(
 )
 ```
 
-For document uploads and reviews, the override is applied only to further-information documents. Other documents retain the default save-and-return destination. Returning to a further-information request does not submit it.
+For document uploads and reviews, the override is applied only to further-information and consent documents. Other documents retain the default save-and-return destination. Returning to a further-information request or the consent task list does not submit it.
 
 Controllers with custom submission handling outside this concern determine their own save-and-return destinations.
 
