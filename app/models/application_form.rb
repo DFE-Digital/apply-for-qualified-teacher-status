@@ -258,6 +258,10 @@ class ApplicationForm < ApplicationRecord
     withdrawn_at.present?
   end
 
+  def past_initial_assessment?
+    verification_stage? || review_stage? || completed_stage?
+  end
+
   def on_hold?
     active_application_hold.present?
   end
