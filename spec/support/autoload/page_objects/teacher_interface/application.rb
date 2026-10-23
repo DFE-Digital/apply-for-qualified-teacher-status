@@ -52,7 +52,7 @@ module PageObjects
       end
 
       def registration_number_task_item
-        find_task_list_item("Enter your registration number")
+        find_task_list_item("Enter your teacher reference number")
       end
 
       def ghana_registration_number_task_item
