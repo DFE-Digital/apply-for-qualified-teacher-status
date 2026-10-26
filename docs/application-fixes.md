@@ -60,3 +60,34 @@ assessment.update!(recommendation: "unknown", recommended_at: nil)
 # change back the application form state
 ApplicationFormStatusUpdater.call(application_form:, user:)
 ```
+
+## Update country of recognition on draft application
+
+There are cases where applicants generate a draft application and realise that during the eligibility check process, they entered the wrong country of recognition for their first teaching qualification. They are then blocked because of this during the application process.
+
+To resolve this, they reach out to support and developers need to manually update the country of recognition.
+
+Typically, application forms are found using the email of the applicant since at this point they don't know their reference numbers.
+
+In a production console:
+
+```ruby
+# New region to change application to
+region = Region.find(id_of_region)
+
+# Finding application using email
+application_form = Teacher.find_by(email:).application_form
+
+# Update application region + any settings related to the region configuration which impacts their application flow.
+application_form.update!(
+  region:
+  needs_registration_number: region.status_check_online? || region.sanction_check_online?,
+  needs_work_history: !region.application_form_skip_work_history,
+  needs_written_statement: region.status_check_written? || region.sanction_check_written?,
+  reduced_evidence_accepted: region.reduced_evidence_accepted,
+  teaching_authority_provides_written_statement: region.teaching_authority_provides_written_statement,
+  written_statement_optional: region.written_statement_optional,
+)
+```
+
+We are currently designing a feature to introduce this ability for assessors and this can then be removed.
