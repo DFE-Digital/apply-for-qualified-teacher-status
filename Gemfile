@@ -3,7 +3,7 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.4.8"
+ruby "4.0.7"
 
 gem "rails", "~> 8.1"
 
@@ -27,6 +27,7 @@ gem "okcomputer"
 gem "omniauth-entra-id"
 gem "omniauth_openid_connect"
 gem "omniauth-rails_csrf_protection"
+gem "ostruct"
 gem "pagy"
 gem "pg"
 gem "propshaft"

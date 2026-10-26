@@ -2,5 +2,5 @@ azure-cli 2.51.0
 kubectl   1.27.3
 nodejs    24.13.0
 postgres  14.9
-ruby      3.4.8
+ruby      4.0.7
 terraform 1.14.5

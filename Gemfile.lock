@@ -457,6 +457,7 @@ GEM
       webfinger (~> 2.0)
     orm_adapter (0.5.0)
     os (1.1.4)
+    ostruct (0.6.3)
     pagy (9.4.0)
     parallel (1.28.0)
     parser (3.3.11.1)
@@ -802,6 +803,7 @@ DEPENDENCIES
   omniauth-entra-id
   omniauth-rails_csrf_protection
   omniauth_openid_connect
+  ostruct
   pagy
   pg
   prettier_print
@@ -869,6 +871,7 @@ CHECKSUMS
   bootsnap (1.25.0) sha256=41059e7d0f9cb4023a33465d095f64b913fc9d1b808d6524c307da945fbcffcf
   brakeman (8.1.0) sha256=cfa9e5214e4925842f4bc849a64f8a7e6c5d0425fe98eac8d7b7bc60fdc17e07
   builder (3.3.0) sha256=497918d2f9dca528fdca4b88d84e4ef4387256d984b8154e9d5d3fe5a9c8835f
+  bundler (4.0.23) sha256=407ba8a1d928f412847f819aa5f8b6aef7c59fb51feb517112af8a165487287b
   business (3.1.0) sha256=b6603b297cf8848aea509db4d8b71482d068819d8b4f862ab996351687603307
   capybara (3.40.0) sha256=42dba720578ea1ca65fd7a41d163dd368502c191804558f6e0f71b391054aeef
   cgi (0.4.2) sha256=a3cb190d46a820ca01a3e28bd5b64e67003ff99d7884b70512448566f35347e6
@@ -991,6 +994,7 @@ CHECKSUMS
   openid_connect (2.3.1) sha256=5d808380cff80d78e3d3d54cfaebe2d6461d835c674faa29e2314a402c1b2182
   orm_adapter (0.5.0) sha256=aa5d0be5d540cbb46d3a93e88061f4ece6a25f6e97d6a47122beb84fe595e9b9
   os (1.1.4) sha256=57816d6a334e7bd6aed048f4b0308226c5fb027433b67d90a9ab435f35108d3f
+  ostruct (0.6.3) sha256=95a2ed4a4bd1d190784e666b47b2d3f078e4a9efda2fccf18f84ddc6538ed912
   pagy (9.4.0) sha256=db3f2e043f684155f18f78be62a81e8d033e39b9f97b1e1a8d12ad38d7bce738
   parallel (1.28.0) sha256=33e6de1484baf2524792d178b0913fc8eb94c628d6cfe45599ad4458c638c970
   parser (3.3.11.1) sha256=d17ace7aabe3e72c3cc94043714be27cc6f852f104d81aa284c2281aecc65d54
@@ -1102,7 +1106,7 @@ CHECKSUMS
   zendesk_api (3.1.2) sha256=3f726c133af8ed3518a9e7cfa9015a368617bd210754ed9173d984f12ddcec15
 
 RUBY VERSION
-   ruby 3.4.8p72
+  ruby 4.0.7p0
 
 BUNDLED WITH
-   2.6.9
+  4.0.23
