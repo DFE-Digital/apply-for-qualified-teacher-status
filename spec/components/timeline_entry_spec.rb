@@ -782,6 +782,24 @@ RSpec.describe TimelineEntry::Component, type: :component do
     it "attributes to the creator" do
       expect(component.text).to include(creator.name)
     end
+
+    context "when the date of birth changes" do
+      let(:timeline_event) do
+        create(
+          :timeline_event,
+          :information_changed,
+          column_name: "date_of_birth",
+          old_value: "2000-01-01",
+          new_value: "1990-03-30",
+        )
+      end
+
+      it "formats both dates using the standard date format" do
+        expect(component.text.squish).to include(
+          "Date of birth has changed from 1 January 2000 to 30 March 1990.",
+        )
+      end
+    end
   end
 
   context "action required by changed" do

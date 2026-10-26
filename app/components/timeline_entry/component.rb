@@ -241,11 +241,15 @@ module TimelineEntry
     end
 
     def information_changed_vars
-      {
-        column_name: timeline_event.column_name,
-        old_value: timeline_event.old_value,
-        new_value: timeline_event.new_value,
-      }
+      old_value = timeline_event.old_value
+      new_value = timeline_event.new_value
+
+      if timeline_event.column_name == "date_of_birth"
+        old_value = old_value.to_date.to_fs
+        new_value = new_value.to_date.to_fs
+      end
+
+      { column_name: timeline_event.column_name, old_value:, new_value: }
     end
 
     def action_required_by_changed_vars
