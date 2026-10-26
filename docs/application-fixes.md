@@ -2,35 +2,36 @@
 
 There are currently some operations that need to be done as developer tasks until we decide whether we need to build them into the UI of the service.
 
-## Manually award a declined application
+## Manually reverse application from review back to verification
 
-When an application has been declined but is later awarded e.g. following an appeal
+When an application has moved to review stage from verification due to consent request not being returned, it only allows assessors to decline the application at review stage.
 
-**Note:** this process will cause an email to be sent to the user so double check the correct application is being awarded.
+Assessors at times manually chase those applicants and get the consent they need. However, the system currently has not capability to reverse the application back to verification stage for them to continue with the verification of qualifications.
 
-> You can find the ID of the application from the URL: `/assessor/applications/<application-id>`
+> You can find the reference of the application from the URL: `/assessor/applications/<reference>` or if provided to you by support team.
 
 In a production console:
 
 ```ruby
-# find the application form and user who is performing the change
-application_form = ApplicationForm.find(...)
-user = Staff.find_by(name: ...)
+# Find the application form and user who is performing the change
+application_form = ApplicationForm.find_by(reference:)
+user = Staff.find_by(email: ...) # Your email
 
-# set the awarded at date to that provided by the assessor. This is sent to TRS and will form part of the teacher record
+# Set assessment back to verify
+application_form.assessment.verify!
 
-application_form.assessment.update(assessment_recommended_at: <date>)
+# Update application form state
+ApplicationFormStatusUpdater.call(application_form:, user:)
 
-# set the application form to the correct state to be awarded
-
-application_form.awarded_pending_checks!
-
-# process the award
-
-CreateTRSTRNRequest.call(application_form:, user:)
+# Create a note on this change for audit
+CreateNote.call(
+  application_form:,
+  author: user,
+  text: "Manually reversing application from review to verification as requested by {name of support staff}"
+)
 ```
 
-Check the application is in awarded state in the UI and that the background jobs have gone through.
+Check the application is in verification stage in the UI.
 
 ## Rollback further information request
 
@@ -38,14 +39,14 @@ When further information has been requested on an application and we need to ask
 
 **Note:** this process will lose any information provided already by the teacher, you might want to record a note that this is happening.
 
-> You can find the ID of the application from the URL: `/assessor/applications/<application-id>`
+> You can find the reference of the application from the URL: `/assessor/applications/<reference>`
 
 In a production console:
 
 ```ruby
 # find the application form and user who is performing the change
-application_form = ApplicationForm.find(...)
-user = Staff.find_by(name: ...)
+application_form = ApplicationForm.find_by(reference:)
+user = Staff.find_by(email: ...)
 
 # set some useful variables
 assessment = application_form.assessment
