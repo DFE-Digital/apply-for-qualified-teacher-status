@@ -239,6 +239,17 @@ RSpec.describe TeacherInterface::ApplicationFormViewObject do
           "Enter your teacher reference number",
         )
       end
+
+      context "with an existing Ghana application" do
+        before { application_form.country.update!(code: "GH") }
+
+        it "uses the same registration number task heading" do
+          expect(subject).to include_task_list_item(
+            "Proof that you’re recognised as a teacher",
+            "Enter your teacher reference number",
+          )
+        end
+      end
     end
 
     context "requires passport upload for identification" do

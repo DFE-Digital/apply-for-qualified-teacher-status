@@ -194,9 +194,7 @@ en:
         english_language: Verify your English language proficiency
         work_history: Add your work history
         other_england_work_history: Add other work experience in England
-        registration_number:
-          ghana: Enter your teacher license number
-          other: Enter your teacher reference number
+        registration_number: Enter your teacher reference number
         written_statement:
           upload: Upload your written statement
           provide: Provide your written statement
