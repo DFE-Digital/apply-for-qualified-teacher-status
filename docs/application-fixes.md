@@ -2,6 +2,12 @@
 
 There are currently some operations that need to be done as developer tasks until we decide whether we need to build them into the UI of the service.
 
+## Before making a change
+
+- Agree the correction, expected outcome and approval with the support team or service owner. Prefer an existing UI action where it meets the need.
+- Confirm the console's environment and the exact application reference. Use your own staff account as the audit author.
+- Coordinate with the assessor and, where relevant, the applicant so they do not update the application during the fix.
+
 ## Manually reverse application from review back to verification
 
 When an application has moved to review stage from verification due to consent request not being returned, it only allows assessors to decline the application at review stage.
