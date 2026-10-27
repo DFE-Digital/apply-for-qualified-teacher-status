@@ -59,6 +59,10 @@ These represent a reason why an application might fail the assessment stage. Fai
 
 The failure reasons are stored in the database in the `SelectedFailureReason` model linked to each `AssessmentSection`.
 
+We may add or remove available checks and failure reasons as assessment requirements evolve. These changes apply to newly submitted applications; existing assessments retain the checks and failure reasons saved at submission.
+
+On rare occasions, these additions or removals may also need to be reflected in existing submitted applications. Avoid doing this unless absolutely necessary, to preserve consistency in how applications are assessed. The sync procedure only updates non-preliminary sections for applications in pre-assessment or whose assessment has not started; it does not update assessments already in progress or beyond that stage. See [Assessment section failure reason updates](assessment-checks-and-failure-reason-updates.md) for the procedure and its safeguards.
+
 ### Further information requests
 
 Sometimes there is missing information in the original application. Once the failure reasons have been selected and the assessor submits the initial assessment, [the initial request service](../app/services/further_information_requests/create_from_assessment_sections.rb) performs these steps:
