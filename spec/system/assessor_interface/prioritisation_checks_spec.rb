@@ -4,6 +4,34 @@
 require "rails_helper"
 
 RSpec.describe "Assessor prioritisation checks", type: :system do
+  let(:application_form) do
+    create(:application_form, :submitted).tap do |application_form|
+      assessment = create(:assessment, application_form:)
+      create(
+        :prioritisation_work_history_check,
+        assessment:,
+        work_history:
+          create(
+            :work_history,
+            :completed,
+            school_name: "School 1",
+            application_form:,
+          ),
+      )
+      create(
+        :prioritisation_work_history_check,
+        assessment:,
+        work_history:
+          create(
+            :work_history,
+            :completed,
+            school_name: "School 2",
+            application_form:,
+          ),
+      )
+    end
+  end
+
   before do
     given_i_am_authorized_as_an_assessor_user
     given_there_is_an_application_form_with_prioritisation_checks_pending
@@ -503,35 +531,6 @@ RSpec.describe "Assessor prioritisation checks", type: :system do
 
   def and_i_see_dont_see_flag_for_application_prioritised
     expect(page).not_to have_content("Prioritised")
-  end
-
-  def application_form
-    @application_form ||=
-      create(:application_form, :submitted).tap do |application_form|
-        assessment = create(:assessment, application_form:)
-        create(
-          :prioritisation_work_history_check,
-          assessment:,
-          work_history:
-            create(
-              :work_history,
-              :completed,
-              school_name: "School 1",
-              application_form:,
-            ),
-        )
-        create(
-          :prioritisation_work_history_check,
-          assessment:,
-          work_history:
-            create(
-              :work_history,
-              :completed,
-              school_name: "School 2",
-              application_form:,
-            ),
-        )
-      end
   end
 
   delegate :reference, :assessment, to: :application_form
