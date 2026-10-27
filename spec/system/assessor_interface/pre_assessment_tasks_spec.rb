@@ -36,6 +36,16 @@ RSpec.describe "Assessor pre-assessment tasks", type: :system do
     and_the_teacher_receives_a_professional_standing_received_email
   end
 
+  it "does not allow locating professional standing once past initial assessment" do
+    given_the_application_form_has_progressed_to_verification
+
+    when_i_visit_the(:assessor_application_page, reference:)
+    then_i_see_the(:assessor_application_page, reference:)
+    and_i_click_awaiting_professional_standing
+    then_i_see_the_locate_professional_standing_request_form_is_read_only
+    and_i_see_the_uploaded_letter_without_replacement_options
+  end
+
   it "fails preliminary check" do
     when_i_visit_the(:assessor_application_page, reference:)
     then_i_see_the(:assessor_application_page, reference:)
@@ -164,6 +174,37 @@ RSpec.describe "Assessor pre-assessment tasks", type: :system do
     form.received_checkbox.click
     form.note_textarea.fill_in with: "Note."
     form.submit_button.click
+  end
+
+  def and_i_see_the_uploaded_letter_without_replacement_options
+    page = assessor_locate_professional_standing_request_page
+
+    expect(page.form.uploaded_file_summary).to have_text(
+      "professional-standing.pdf",
+    )
+    expect(page.form).to have_no_replace_uploaded_file_heading
+    expect(page.form).to have_no_replace_uploaded_file_instructions
+  end
+
+  def given_the_application_form_has_progressed_to_verification
+    create(
+      :upload,
+      :clean,
+      document: application_form.written_statement_document,
+      filename: "professional-standing.pdf",
+    )
+
+    application_form.assessment.professional_standing_request.requested!
+    application_form.verification_stage!
+  end
+
+  def then_i_see_the_locate_professional_standing_request_form_is_read_only
+    form = assessor_locate_professional_standing_request_page.form
+
+    expect(form.has_attachment?).to be false
+    expect(form.note_textarea).to be_disabled
+    expect(form.received_checkbox).to be_disabled
+    expect(form.submit_button).to be_disabled
   end
 
   def and_the_teacher_receives_a_professional_standing_received_email
