@@ -10,6 +10,15 @@ RSpec.describe QualificationHelper do
 
     it { is_expected.to eq("Teaching qualification") }
 
+    context "when the qualification is an additional qualification" do
+      let(:application_form) { create(:application_form) }
+      let(:qualification) { create(:qualification, application_form:) }
+
+      before { create_list(:qualification, 2, application_form:) }
+
+      it { is_expected.to eq("Additional qualification") }
+    end
+
     context "with a title" do
       before { qualification.title = "Title" }
 
@@ -26,12 +35,6 @@ RSpec.describe QualificationHelper do
       before { qualification.institution_name = "Name" }
 
       it { is_expected.to eq("Name") }
-    end
-
-    context "with an institution country" do
-      before { qualification.institution_country_code = "FR" }
-
-      it { is_expected.to eq("France") }
     end
   end
 end
