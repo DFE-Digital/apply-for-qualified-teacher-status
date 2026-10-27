@@ -16,9 +16,9 @@ Certain pages are given specific behaviours to support the journeys as described
 
 The `HistoryTrackable` concern automatically records when a user navigates to a page (navigate here refers to any `GET` request) using a `track_history` `before_action` which can be skipped if necessary. There are a number of other methods defined to customise how the page is tracked.
 
-- `define_history_origins` - This takes action names which should be defined as origin pages when they’re tracked.
-- `define_history_checks` - This takes action names which should be defined as check pages when they’re tracked.
-- `define_history_resets` - This takes action names which should reset the history when they're navigated to, this is useful to clear the history when a user navigates directly to the start of the journey (for example by clicking on a link in the header).
+- `define_history_origin` - This takes action names which should be defined as origin pages when they’re tracked.
+- `define_history_check` - This takes action names which should be defined as check pages when they’re tracked. An optional `identifier:` distinguishes check flows; passing a symbol calls the corresponding controller method to obtain the identifier.
+- `define_history_reset` - This takes action names which should reset the history when they're navigated to, this is useful to clear the history when a user navigates directly to the start of the journey (for example by clicking on a link in the header).
 
 [history-stack]: https://github.com/DFE-Digital/apply-for-qualified-teacher-status/blob/main/app/lib/history_stack.rb
 [history-trackable]: https://github.com/DFE-Digital/apply-for-qualified-teacher-status/blob/main/app/controllers/concerns/history_trackable.rb
