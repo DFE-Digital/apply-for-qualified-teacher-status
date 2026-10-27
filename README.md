@@ -44,6 +44,6 @@ If you use AI coding assistants (for example GitHub Copilot, Claude or ChatGPT) 
 - Follow the conventions in [AGENTS.md](AGENTS.md), which coding agents are configured to read automatically
 - Disclose AI assistance in every commit with a `Co-authored-by:` trailer, as described in `AGENTS.md`
 
-## Licence
+## License
 
-[MIT Licence](LICENCE).
+[MIT License](LICENSE).
