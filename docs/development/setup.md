@@ -41,6 +41,14 @@ brew install postgresql@17
 brew services start postgresql@17
 ```
 
+The application connects to PostgreSQL as the `postgres` role by default. If that role does not exist on your machine, create it:
+
+```bash
+createuser -s postgres
+```
+
+Run this only if the role is missing; `-s` gives it superuser privileges on your local PostgreSQL instance.
+
 ## 3. Prepare the application
 
 Clone the repository if you have not already.
