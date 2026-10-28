@@ -180,6 +180,7 @@ COUNTRIES = {
     { name: "Thuringia", status_check: "written" },
   ],
   "GH" => {
+    eligibility_enabled: false,
     subject_limited: true,
     regions: [
       {
@@ -237,6 +238,7 @@ COUNTRIES = {
     },
   ],
   "IN" => {
+    eligibility_enabled: false,
     subject_limited: true,
     regions: [
       {
@@ -261,12 +263,10 @@ COUNTRIES = {
     },
   ],
   "JM" => {
-    subject_limited: true,
     regions: [
       {
         status_check: "written",
         sanction_check: "written",
-        requires_preliminary_check: true,
         teaching_authority_certificate: "Statement of Professional Standing",
       },
     ],
@@ -315,6 +315,7 @@ COUNTRIES = {
     },
   ],
   "NG" => {
+    eligibility_enabled: false,
     subject_limited: true,
     regions: [
       {
@@ -382,7 +383,6 @@ COUNTRIES = {
     ],
   },
   "SG" => {
-    subject_limited: true,
     regions: [
       {
         teaching_authority_certificate:
@@ -403,12 +403,10 @@ COUNTRIES = {
     },
   ],
   "ZA" => {
-    subject_limited: true,
     regions: [
       {
         status_check: "written",
         sanction_check: "written",
-        requires_preliminary_check: true,
         teaching_authority_certificate: "Letter of Good Standing",
       },
     ],
