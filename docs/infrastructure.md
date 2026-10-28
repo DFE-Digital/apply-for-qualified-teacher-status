@@ -43,6 +43,15 @@ Azure CIP account and access to the s189 subscription
 
 - see https://github.com/DFE-Digital/teacher-services-cloud#kubectl
 
+`kubelogin` installed locally for Azure authentication
+
+On macOS, install these tools using Homebrew:
+
+```sh
+brew install azure-cli kubectl
+brew install Azure/kubelogin/kubelogin
+```
+
 ### Cluster and app info
 
 There are several AKS clusters, but only 2 are relevant for register services.
@@ -72,8 +81,10 @@ Example: Activate `s189-teacher-services-cloud-test`. It will be approved automa
 
 #### Azure setup
 
-```
-$ az login
+Sign in to the Azure tenant associated with your CIP account. Replace `<tenantid>` with the tenant ID provided by your devops team:
+
+```sh
+az login --tenant <tenantid>
 ```
 
 Select account for az:

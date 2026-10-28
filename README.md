@@ -1,6 +1,20 @@
 # Apply for qualified teacher status
 
-A service that allows international teachers to apply for qualified teacher status (QTS) in England.
+A service that allows overseas trained teachers to apply for qualified teacher status (QTS) in England.
+
+Apply for QTS is a monolithic Rails app built with the GOV.UK Design System and hosted on Azure AKS.
+
+## Getting started
+
+New to the project? Start with the [developer guide](docs/development/README.md), including [local setup](docs/development/setup.md) and [tests and linting](docs/development/README.md#tests-and-linting).
+
+## Documentation
+
+- [Documentation index](docs/README.md)
+- [Architecture](docs/architecture/architecture.md)
+- [Application lifecycle](docs/application-forms.md)
+- [Architecture decision records](adr/README.md)
+- [Infrastructure](docs/infrastructure.md)
 
 ## Environments
 
@@ -20,150 +34,6 @@ A service that allows international teachers to apply for qualified teacher stat
 | Test        | For internal use by DfE for testing      | Live           |
 | Development | For internal use by dev team for testing | Test           |
 
-## Dependencies
-
-- Ruby 4.0.x
-- Node.js 24.x
-- Yarn 4.18.0
-- PostgreSQL 17.x
-- Terraform 1.5.x
-- Kubectl 1.27.x
-
-## How the application works
-
-Apply for Qualified Teacher Status is a monolithic Rails app built with the GOV.UK Design System and hosted on Azure AKS.
-
-We keep track of architecture decisions in [Architecture Decision Records (ADRs)](/adr/).
-
-We use `rladr` to generate the boilerplate for new records:
-
-```bash
-bin/bundle exec rladr new title
-```
-
-## Setup
-
-### Dependencies
-
-Install dependencies using your preferred method, using `asdf` or `rbenv` or
-`nvm`. Example with `asdf`:
-
-```sh
-# The first time
-brew install asdf # Mac-specific
-asdf plugin add ruby
-asdf plugin add postgres # Unless you are managing postgres yourself
-asdf plugin add nodejs
-asdf plugin add terraform
-asdf plugin add azure-cli
-asdf plugin add kubectl
-
-# To install (or update, following a change to .tool-versions)
-asdf install
-```
-
-#### VIPS
-
-You’ll need to install `lipvips`. This varies on each operating system, but on macOS you can try this:
-
-```bash
-brew install libvips
-```
-
-#### PostgreSQL
-
-You’ll need to install PostgreSQL. This can be installed via `asdf`, otherwise the way to do this is different on each operating system.
-
-On macOS you can try the following:
-
-```bash
-brew install postgresql
-```
-
-If installed via `asdf`, start `postgres` database service if installed:
-
-```sh
-pg_ctl start
-```
-
-Set up the `postgres` user if it doesn't exist:
-
-```sh
-createdb default
-psql -d default
-> CREATE ROLE postgres LOGIN SUPERUSER;
-```
-
-### Application
-
-Setup the project (re-run after `Gemfile` or `package.json` updates, automatically restarts any running Rails server):
-
-```bash
-bin/setup
-```
-
-Generate fake application forms and staff. For development and non-production environments we have a script that generates useful fake data.
-
-```bash
-bundle exec rake fake_data:generate
-```
-
-To enable the 'personas' feature, from the rails console
-
-```ruby
-FeatureFlags::FeatureFlag.activate(:personas)
-```
-
-Navigate to /personas for persona based logins.
-
-Run the application on `http://localhost:3000`:
-
-```bash
-bin/dev
-```
-
-### BigQuery
-
-Edit `.env.local` and add a BigQuery key if you want to use BigQuery locally.
-
-Set `BIGQUERY_DISABLE` to `false` as it defaults to `true` in the development environment.
-
-[Read more about setting up BigQuery](docs/set-up-analytics.md).
-
-### Infrastructure validation workflow
-
-The scheduled workflow defined in `.github/workflows/validate-infra.yml` runs Terraform plan validations for the AKS cluster plus domains infrastructure/environment each day at **07:00 UTC** against **production** only. Failures and drift notifications are sent to the SD Infra alerts Teams channel via the `TEAMS_WEBHOOK_URL_INFRA` secret.
-
-### Linting
-
-To run the linters:
-
-```bash
-bin/lint
-```
-
-### Testing
-
-To run the tests:
-
-```bash
-bin/test
-```
-
-### Static security analysis
-
-Brakeman scans the code for security issues on every pull request and push to `main`, and must pass before anything is deployed. CI only shows a summary because this repository is public, so if the check fails, run it locally to see the details:
-
-```bash
-bin/bundle exec brakeman
-```
-
-If a warning is a false positive, ignore it with a note explaining why it's safe:
-
-```bash
-bin/bundle exec brakeman -I
-```
-
 ## Using AI tools
 
 If you use AI coding assistants (for example GitHub Copilot, Claude or ChatGPT) to help write code for this repository:
@@ -174,6 +44,6 @@ If you use AI coding assistants (for example GitHub Copilot, Claude or ChatGPT) 
 - Follow the conventions in [AGENTS.md](AGENTS.md), which coding agents are configured to read automatically
 - Disclose AI assistance in every commit with a `Co-authored-by:` trailer, as described in `AGENTS.md`
 
-## Licence
+## License
 
-[MIT Licence](LICENCE).
+[MIT License](LICENSE).

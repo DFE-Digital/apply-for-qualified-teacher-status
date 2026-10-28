@@ -1,6 +1,6 @@
 # Assessment section failure reason updates
 
-Our system currently allows assessors to assess each section of the application separately. Each assessment section is persisted under the `assessment_sections` (AssessmentSection) table which has a list of `checks` and `failure_reasons` saved as columns. These values are persisted as part of the `AssessmentFactory` service once an application is persisted.
+Our system currently allows assessors to assess each section of the application separately. Each assessment section is persisted under the `assessment_sections` (AssessmentSection) table which has a list of `checks` and `failure_reasons` saved as columns. These values are persisted as part of the `AssessmentFactory` service when an application is submitted.
 
 Overtime, as our application evolves and we get more feedback from assessors on how they use checks and failure reasons to assess and request further information (FI) from applicants, we may decide to introduce or even remove some checks to applications being assessed moving forward. These new additions or removals can be simply amended on each of the `AssessmentFactories` sections (e.g. a new check or/and failure reason for personal information assessment section can be done within `AssessmentFactories::PersonalInformationSection`).
 
@@ -15,3 +15,7 @@ rails assessment_sections:sync_not_started_assessments_checks_and_failure_reason
 ```
 
 This rake task triggers an async `SyncAssessmentChecksAndFailureReasonsJob` for each assessment in pre-assessment or not started.
+
+The job updates non-preliminary sections only. It rechecks the application's stage when it runs and raises `AssessmentAlreadyInProgress` if the application has moved beyond pre-assessment or not started.
+
+The task finishing means the jobs have been enqueued, not that the updates have completed. Check their outcomes in the jobs dashboard and verify the affected sections before considering the sync complete.

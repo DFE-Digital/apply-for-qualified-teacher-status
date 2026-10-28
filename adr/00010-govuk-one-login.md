@@ -24,10 +24,10 @@ Before we can make the technical changes to adopt GOV.UK One Login we will need 
 
 ## Consequences
 
-We will adopt GOV.UK One Login using OAuth via the [Omniauth Gem] & [Omiauth OpenId Connect Gem].
+We will adopt GOV.UK One Login using OpenID Connect via the [OmniAuth gem] and [OmniAuth OpenID Connect gem].
 
 We will use the shared DfE [sector identifier].
 
-[Omniauth Gem]: https://github.com/omniauth/omniauth
-[Omiauth OpenId Connect Gem]: https://github.com/omniauth/omniauth_openid_connect
+[OmniAuth gem]: https://github.com/omniauth/omniauth
+[OmniAuth OpenID Connect gem]: https://github.com/omniauth/omniauth_openid_connect
 [sector identifier]: https://docs.sign-in.service.gov.uk/before-integrating/choose-your-sector-identifier/

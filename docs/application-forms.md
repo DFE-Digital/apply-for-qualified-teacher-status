@@ -1,6 +1,6 @@
 # Application Forms
 
-The lifecycle of an application generally follows this linear process of a number of distinct stages:
+The lifecycle of an application follows the stages below. The [status updater](../app/lib/application_form_status_updater.rb) calculates its stage and statuses from the assessment, outstanding requests and final outcome.
 
 ## Draft stage
 
@@ -59,13 +59,19 @@ These represent a reason why an application might fail the assessment stage. Fai
 
 The failure reasons are stored in the database in the `SelectedFailureReason` model linked to each `AssessmentSection`.
 
+We may add or remove available checks and failure reasons as assessment requirements evolve. These changes apply to newly submitted applications; existing assessments retain the checks and failure reasons saved at submission.
+
+On rare occasions, these additions or removals may also need to be reflected in existing submitted applications. Avoid doing this unless absolutely necessary, to preserve consistency in how applications are assessed. The sync procedure only updates non-preliminary sections for applications in pre-assessment or whose assessment has not started; it does not update assessments already in progress or beyond that stage. See [Assessment section failure reason updates](assessment-checks-and-failure-reason-updates.md) for the procedure and its safeguards.
+
 ### Further information requests
 
-Sometimes there is missing information in the original application and the applicant has one attempt to provide additional information. Once [the failure reasons have been selected and the assessor submits the assessment](https://github.com/DFE-Digital/apply-for-qualified-teacher-status/blob/main/app/services/request_further_information.rb):
+Sometimes there is missing information in the original application. Once the failure reasons have been selected and the assessor submits the initial assessment, [the initial request service](../app/services/further_information_requests/create_from_assessment_sections.rb) performs these steps:
 
-- The assessment decision is made (`request_further_information`)
+- The initial assessment decision/recommendation is made (`request_further_information`)
 - A `FurtherInformationRequest` is created.
 - An email is sent to the applicant.
+
+After reviewing a response, the assessor can request further information on outstanding items using [the follow-up request service](../app/services/further_information_requests/create_from_further_information_review.rb). This creates a separate request rather than replacing the original request.
 
 ## Verification stage
 
@@ -75,13 +81,19 @@ If the application passes assessment, parts of the application now need to be ve
 - Qualification certificates (`QualificationRequest`)
 - Work references (`ReferenceRequest`)
 
+## Review stage
+
+The application enters the review stage when its assessment has a `review` recommendation. Assessors review the verification evidence before a final decision.
+
+An application also remains in this stage while a `TRSTRNRequest` is being resolved through TRS. Its status is `awarded_pending_checks`, or `potential_duplicate_in_dqt` if a potential duplicate has been identified. Despite the legacy status name, this handoff uses TRS.
+
 ## Completed stage
 
 An application finishes with three possible states:
 
 ### Awarded
 
-Only if the application passes the assessment and verification stage can the assessor confirm QTS to the applicant.
+An award recommendation is not itself a completed award. The application enters the completed stage with an `awarded` status once `awarded_at` is set.
 
 ### Declined
 
@@ -89,6 +101,8 @@ This can happen at a number of points in the process for a number of reasons.
 
 The [reasons for decline are calculated dynamically according to a number of rules](https://github.com/DFE-Digital/apply-for-qualified-teacher-status/blob/bb31e57ae604e8465438b67f86b216e644ec99bd/app/view_objects/teacher_interface/application_form_view_object.rb#L68).
 
+A declined application can also have the `received_decision_review` status when a decision-review request for the current decline has been received but not yet reviewed. It remains in the completed stage during that review.
+
 ### Withdrawn
 
-The applicant can choose to withdraw application before it's fully assessed, this is functionally equivalent to declined but isn't included in any statistics.
+A withdrawn application has a separate `withdrawn` status and remains in the completed stage. It is not recorded as declined.
