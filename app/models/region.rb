@@ -50,6 +50,9 @@ class Region < ApplicationRecord
        default: :none,
        prefix: true
 
+  scope :eligibility_enabled,
+        -> { joins(:country).where(countries: { eligibility_enabled: true }) }
+
   validates :name, uniqueness: { scope: :country_id }
 
   validates :sanction_check, inclusion: { in: sanction_checks.values }

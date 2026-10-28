@@ -104,7 +104,7 @@ class PersonasController < ApplicationController
   INELIGIBLE_COUNTRY_CODES = Country::CODES - Country.pluck(:code)
 
   def load_eligible_personas
-    all_regions = Region.includes(:country).order(:id)
+    all_regions = Region.eligibility_enabled.preload(:country).order(:id)
 
     @eligible_personas =
       ELIGIBLE_PERSONAS.filter_map do |persona|
@@ -159,15 +159,10 @@ class PersonasController < ApplicationController
 
   def load_teacher_personas
     all_application_forms =
-      ApplicationForm.includes(
-        :teacher,
-        region: :country,
-        documents: :uploads,
-        qualifications: {
-          documents: :uploads,
-        },
-        work_histories: [],
-      ).order(:id)
+      ApplicationForm
+        .where(region: Region.eligibility_enabled)
+        .preload(:teacher, :country, :region)
+        .order(:id)
 
     @teacher_personas =
       TEACHER_PERSONAS.filter_map do |persona|
