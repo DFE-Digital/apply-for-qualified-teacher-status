@@ -67,6 +67,13 @@ RSpec.describe "Assessor change application form date of birth",
           key: "Date of birth",
         ),
       ).to have_text("1 January 1990")
+
+      when_i_visit_the(:assessor_timeline_page, reference:)
+      expect(
+        assessor_timeline_page.timeline_items.first.description,
+      ).to have_text(
+        "Date of birth has changed from #{application_form.date_of_birth.to_fs} to 1 January 1990.",
+      )
     end
   end
 
