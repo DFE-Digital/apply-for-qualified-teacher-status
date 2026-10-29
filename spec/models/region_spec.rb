@@ -61,4 +61,15 @@ RSpec.describe Region, type: :model do
         .backed_by_column_of_type(:string)
     end
   end
+
+  describe ".eligibility_enabled" do
+    it "only includes regions whose country has eligibility enabled" do
+      enabled_region = create(:region)
+      create(:region, :ineligible)
+
+      expect(described_class.eligibility_enabled).to contain_exactly(
+        enabled_region,
+      )
+    end
+  end
 end
