@@ -13,6 +13,23 @@ RSpec.describe "Eligible region content", type: :view do
   it { is_expected.to match(/You’re eligible/) }
   it { is_expected.to match(/What we’ll ask for/) }
 
+  context "with a Northern Ireland region" do
+    let(:region) do
+      create(
+        :region,
+        country: create(:country, code: "GB-NIR"),
+        status_check: :online,
+      )
+    end
+
+    it "names the teacher reference number in the GTCNI guidance" do
+      expect(subject.squish).to include(
+        "If you hold active registration with The General Teaching Council for Northern Ireland (GTCNI), " \
+          "you can provide your teacher reference number as part of your QTS application.",
+      )
+    end
+  end
+
   context "with a fully online region" do
     let(:region) do
       create(:region, status_check: :online, sanction_check: :online)
@@ -20,6 +37,13 @@ RSpec.describe "Eligible region content", type: :view do
 
     it { is_expected.to match(/Proof that you’re recognised as a teacher/) }
     it { is_expected.to match(/has an online register of teachers/) }
+
+    it "asks for the teacher reference number" do
+      expect(subject.squish).to include(
+        "As your education department or authority has an online register of teachers, " \
+          "you'll also need to provide your teacher reference number so we can check your record",
+      )
+    end
   end
 
   context "with a fully written region" do
