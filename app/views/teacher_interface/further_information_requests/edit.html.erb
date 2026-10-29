@@ -15,7 +15,7 @@
             if item[:value].is_a?(Document)
               tag.ul(class: "govuk-list") do
                 item[:value]
-                  .uploads
+                  .original_uploads
                   .order(:created_at)
                   .each { |upload| concat(tag.li(upload_link_to(upload))) }
               end
@@ -27,6 +27,23 @@
             href: item[:href],
             visually_hidden_text: item[:title].downcase
           )
+        end
+        if item[:translation_value_title].present?
+          summary_list.with_row do |row|
+            row.with_key { item[:translation_value_title] }
+            row.with_value do
+              tag.ul(class: "govuk-list") do
+                item[:value]
+                  .translated_uploads
+                  .order(:created_at)
+                  .each { |upload| concat(tag.li(upload_link_to(upload))) }
+              end
+            end
+            row.with_action(
+              href: item[:href],
+              visually_hidden_text: "#{item[:title].downcase} translation"
+            )
+          end
         end
         summary_list.with_row do |row|
           row.with_key { "Note from assessor" }

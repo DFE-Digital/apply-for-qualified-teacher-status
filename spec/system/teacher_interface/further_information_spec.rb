@@ -105,6 +105,18 @@ RSpec.describe "Teacher further information", type: :system do
     and_i_receive_a_further_information_received_email
   end
 
+  it "shows translations separately on check your answers" do
+    given_there_is_a_transcript_item_with_translations
+
+    when_i_visit_the(
+      :teacher_check_further_information_request_answers_page,
+      request_id: further_information_request.id,
+    )
+
+    then_i_see_the_transcript_documents_and_translations_separately
+    and_i_do_not_see_a_translation_row_for_the_identity_document
+  end
+
   context "when the further information request has already expired" do
     before do
       application_form.assessment.further_information_requests.first.expired!
@@ -346,6 +358,71 @@ RSpec.describe "Teacher further information", type: :system do
       .summary_lists
       .third
       .rows
+      .first
+  end
+
+  def given_there_is_a_transcript_item_with_translations
+    item =
+      create(
+        :further_information_request_item,
+        further_information_request:,
+        information_type: "document",
+        failure_reason_key: "degree_transcript_illegible",
+      )
+    document = create(:document, :qualification_transcript, documentable: item)
+
+    create(:upload, :clean, document:, filename: "transcript-1.pdf")
+    create(:upload, :clean, document:, filename: "transcript-2.pdf")
+    create(
+      :upload,
+      :translation,
+      :clean,
+      document:,
+      filename: "transcript-translation-1.pdf",
+    )
+    create(
+      :upload,
+      :translation,
+      :clean,
+      document:,
+      filename: "transcript-translation-2.pdf",
+    )
+
+    create(
+      :selected_failure_reason,
+      assessment_section:
+        create(
+          :assessment_section,
+          :qualifications,
+          assessment: application_form.assessment,
+        ),
+      key: item.failure_reason_key,
+    )
+  end
+
+  def then_i_see_the_transcript_documents_and_translations_separately
+    originals = check_answers_row("Transcript documents").value
+    expect(originals).to have_link("transcript-1.pdf")
+    expect(originals).to have_link("transcript-2.pdf")
+    expect(originals).not_to have_content("transcript-translation")
+
+    translations = check_answers_row("Transcript documents translation").value
+    expect(translations).to have_link("transcript-translation-1.pdf")
+    expect(translations).to have_link("transcript-translation-2.pdf")
+    expect(translations).not_to have_link("transcript-1.pdf")
+    expect(translations).not_to have_link("transcript-2.pdf")
+  end
+
+  def and_i_do_not_see_a_translation_row_for_the_identity_document
+    expect(check_answers_row("Identity documents")).not_to be_nil
+    expect(check_answers_row("Identity documents translation")).to be_nil
+  end
+
+  def check_answers_row(key)
+    teacher_check_further_information_request_answers_page
+      .summary_lists
+      .lazy
+      .filter_map { |list| list.find_row(key:) }
       .first
   end
 
