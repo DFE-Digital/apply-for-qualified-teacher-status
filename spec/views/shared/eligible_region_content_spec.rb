@@ -41,7 +41,7 @@ RSpec.describe "Eligible region content", type: :view do
     it "asks for the teacher reference number" do
       expect(subject.squish).to include(
         "As your education department or authority has an online register of teachers, " \
-          "you'll also need to provide your teacher reference number so we can check your record",
+          "you'll also need to provide your teacher reference number so we can check your record.",
       )
     end
   end
