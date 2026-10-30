@@ -77,6 +77,25 @@ RSpec.describe "Teacher qualifications", type: :system do
     and_i_see_the_age_subject_restrictions
   end
 
+  it "deletes an incomplete additional qualification" do
+    given_a_completed_teaching_qualification_exists
+    given_an_incomplete_additional_qualification_exists
+
+    when_i_visit_the(:teacher_application_page)
+    and_the_qualifications_task_is("In progress")
+    when_i_click_the_qualifications_task
+    then_i_see_the(:teacher_check_qualifications_page)
+
+    when_i_click_delete_qualification
+    then_i_see_the(:teacher_delete_qualification_page)
+    when_i_delete_qualification
+    then_i_see_the(:teacher_check_qualifications_page)
+    and_i_see_one_teaching_qualification
+
+    when_i_visit_the(:teacher_application_page)
+    and_the_qualifications_task_is("Completed")
+  end
+
   it "partially saved additional qualification" do
     given_a_completed_teaching_qualification_exists
     given_malware_scanning_is_enabled
@@ -271,7 +290,9 @@ RSpec.describe "Teacher qualifications", type: :system do
 
   def given_an_incomplete_additional_qualification_exists
     create(:qualification, application_form:)
-    ApplicationFormSectionStatusUpdater.call(application_form:)
+    ApplicationFormSectionStatusUpdater.call(
+      application_form: application_form.reload,
+    )
   end
 
   def additional_qualification
@@ -457,6 +478,13 @@ RSpec.describe "Teacher qualifications", type: :system do
     teacher_add_another_qualification_page.submit_no
   end
 
+  def and_i_see_one_teaching_qualification
+    expect(teacher_check_qualifications_page.summary_cards.count).to eq(1)
+    expect(application_form.qualifications.reload).to contain_exactly(
+      application_form.teaching_qualification,
+    )
+  end
+
   def and_i_see_three_qualifications
     expect(teacher_check_qualifications_page.summary_cards.count).to eq(3)
   end
@@ -471,7 +499,7 @@ RSpec.describe "Teacher qualifications", type: :system do
   end
 
   def and_i_see_two_qualifications
-    expect(teacher_check_work_histories_page.summary_cards.count).to eq(2)
+    expect(teacher_check_qualifications_page.summary_cards.count).to eq(2)
   end
 
   def teacher
