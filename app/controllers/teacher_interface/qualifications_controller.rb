@@ -198,11 +198,17 @@ module TeacherInterface
       handle_application_form_section(
         form: @form,
         check_identifier: check_member_identifier,
-        if_success_then_redirect: [
-          :teacher_interface,
-          :application_form,
-          qualification.certificate_document,
-        ],
+        if_success_then_redirect: ->(check_path) do
+          if check_path && qualification.complete?
+            check_path
+          else
+            [
+              :teacher_interface,
+              :application_form,
+              qualification.certificate_document,
+            ]
+          end
+        end,
       )
     end
 

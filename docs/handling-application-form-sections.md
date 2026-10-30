@@ -30,6 +30,8 @@ After a successful save, it looks for a matching check page in the history, usin
 
 This lets applicants return to check your answers after changing a field, while controllers can override the next step where needed.
 
+For example, qualification updates use a callback to return to the matching check page only when the saved qualification is complete, including its certificate and transcript documents. Otherwise, they continue to the certificate document step. Completing the details alone must not return an applicant resuming a partial qualification to check your answers before they have completed the document steps.
+
 ## Save and come back later
 
 When `params[:button]` is `"save_and_return"`, the concern calls `form.save(validate: false)` so that incomplete answers can be saved.

@@ -79,6 +79,7 @@ RSpec.describe "Teacher qualifications", type: :system do
 
   it "partially saved additional qualification" do
     given_a_completed_teaching_qualification_exists
+    given_malware_scanning_is_enabled
 
     when_i_visit_the(:teacher_application_page)
     when_i_click_the_qualifications_task
@@ -99,6 +100,33 @@ RSpec.describe "Teacher qualifications", type: :system do
 
     when_i_continue_from_the_qualifications_collection
     then_i_see_the_edit_for_saved_incomplete_additional_qualification
+
+    when_i_complete_the_saved_additional_qualification_details
+    then_i_see_the(
+      :teacher_upload_document_page,
+      document_id: additional_qualification.certificate_document.id,
+    )
+
+    when_i_upload_a_file
+    then_i_see_the(:teacher_check_document_page)
+
+    when_i_dont_need_to_upload_another_file
+    then_i_see_the(
+      :teacher_upload_document_page,
+      document_id: additional_qualification.transcript_document.id,
+    )
+
+    when_i_upload_a_file
+    then_i_see_the(:teacher_check_document_page)
+
+    when_i_dont_need_to_upload_another_file
+    then_i_see_the(
+      :teacher_check_qualification_page,
+      qualification_id: additional_qualification.id,
+    )
+
+    teacher_check_qualification_page.continue_button.click
+    then_i_see_the(:teacher_add_another_qualification_page)
   end
 
   it "partially saved teaching qualification" do
@@ -129,6 +157,9 @@ RSpec.describe "Teacher qualifications", type: :system do
 
     when_i_continue_from_the_qualifications_collection
     then_i_see_the(:teacher_add_another_qualification_page)
+
+    when_i_dont_add_another_qualification
+    then_i_see_the(:teacher_application_page)
   end
 
   it "editing an incomplete qualification" do
@@ -241,6 +272,30 @@ RSpec.describe "Teacher qualifications", type: :system do
   def given_an_incomplete_additional_qualification_exists
     create(:qualification, application_form:)
     ApplicationFormSectionStatusUpdater.call(application_form:)
+  end
+
+  def additional_qualification
+    application_form.qualifications.order_by_user.last
+  end
+
+  def when_i_complete_the_saved_additional_qualification_details
+    teacher_edit_qualification_page.form.title_field.fill_in with:
+      "Example additional diploma"
+    teacher_edit_qualification_page.form.institution_country_field.fill_in with:
+      "France"
+    teacher_edit_qualification_page.form.start_date_month_field.fill_in with:
+      "1"
+    teacher_edit_qualification_page.form.start_date_year_field.fill_in with:
+      "2010"
+    teacher_edit_qualification_page.form.complete_date_month_field.fill_in with:
+      "6"
+    teacher_edit_qualification_page.form.complete_date_year_field.fill_in with:
+      "2013"
+    teacher_edit_qualification_page.form.certificate_date_month_field.fill_in with:
+      "7"
+    teacher_edit_qualification_page.form.certificate_date_year_field.fill_in with:
+      "2013"
+    teacher_edit_qualification_page.form.continue_button.click
   end
 
   def when_i_save_partial_qualification_details
