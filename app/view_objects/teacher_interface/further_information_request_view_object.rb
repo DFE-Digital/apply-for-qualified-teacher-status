@@ -94,6 +94,7 @@ module TeacherInterface
             title: item_name(item),
             description: item_description(item),
             value_title: item_value_title(item),
+            translation_value_title: item_translation_value_title(item),
             value: item_value(item),
             assessor_note: item.failure_reason_assessor_feedback,
             href: [
@@ -123,6 +124,12 @@ module TeacherInterface
         end
       elsif item.work_history_contact?
         "Reference details"
+      end
+    end
+
+    def item_translation_value_title(item)
+      if item.document? && item.document.translated_uploads.any?
+        "#{item_value_title(item)} translation"
       end
     end
 

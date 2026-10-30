@@ -86,6 +86,7 @@ RSpec.describe TeacherInterface::FurtherInformationRequestViewObject do
               status: "not_started",
               value: nil,
               value_title: "Your response",
+              translation_value_title: nil,
               assessor_note: text_item.failure_reason_assessor_feedback,
             },
           ],
@@ -112,11 +113,71 @@ RSpec.describe TeacherInterface::FurtherInformationRequestViewObject do
               status: "not_started",
               value: document_item.document,
               value_title: "Identity documents",
+              translation_value_title: nil,
               assessor_note: document_item.failure_reason_assessor_feedback,
             },
           ],
         },
       )
+    end
+
+    context "with a translatable document" do
+      let(:translatable_item) do
+        create(
+          :further_information_request_item,
+          further_information_request:,
+          information_type: "document",
+          failure_reason_key: "degree_transcript_illegible",
+        )
+      end
+
+      let(:translatable_items) do
+        view_object
+          .grouped_task_list_items
+          .flat_map { |group| group[:items] }
+          .select { |item| item[:value] == translatable_item.document }
+      end
+
+      before do
+        create(
+          :document,
+          :qualification_transcript,
+          documentable: translatable_item,
+        )
+        create :selected_failure_reason,
+               assessment_section: qualifications_assessment_section,
+               key: translatable_item.failure_reason_key
+      end
+
+      context "without translated uploads" do
+        before { create(:upload, :clean, document: translatable_item.document) }
+
+        it "does not include a translation title" do
+          expect(translatable_items.first).to include(
+            value_title: "Transcript documents",
+            translation_value_title: nil,
+          )
+        end
+      end
+
+      context "with translated uploads" do
+        before do
+          create(:upload, :clean, document: translatable_item.document)
+          create(
+            :upload,
+            :translation,
+            :clean,
+            document: translatable_item.document,
+          )
+        end
+
+        it "includes a translation title" do
+          expect(translatable_items.first).to include(
+            value_title: "Transcript documents",
+            translation_value_title: "Transcript documents translation",
+          )
+        end
+      end
     end
   end
 
