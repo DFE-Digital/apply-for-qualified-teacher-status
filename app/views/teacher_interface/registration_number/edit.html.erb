@@ -1,4 +1,4 @@
-<% content_for :page_title, title_with_error_prefix(t("application_form.tasks.items.registration_number.other"), error: @form.errors.any?) %>
+<% content_for :page_title, title_with_error_prefix(t("application_form.tasks.items.registration_number"), error: @form.errors.any?) %>
 <% content_for :back_link_url, back_history_path(default: teacher_interface_application_form_path) %>
 
 <%= form_with model: @form, url: %i[registration_number teacher_interface application_form] do |f| %>
@@ -28,10 +28,11 @@
     <% end %>
   <% end %>
 
-  <%= govuk_details(summary_text: "When we might need more information") do %>
+  <%= govuk_details(summary_text: "What to do if you don’t have a teacher reference number") do %>
     <p>
-      If we’re unable to find you using your registration number, we may need to
-      contact you for more information as part of your application.
+      If you don’t have a teacher reference number, leave it empty and select Continue.
+      We may need to contact you for more information if we cannot find you on your
+      country’s online register of teachers.
     </p>
   <% end %>
 

@@ -15,6 +15,7 @@ RSpec.describe "Teacher registration number", type: :system do
 
     when_i_click_the_registration_number_task
     then_i_see_the(:teacher_registration_number_page)
+    and_i_see_the_teacher_reference_number_content
 
     when_i_fill_in_the_registration_number
     then_i_see_the(:teacher_application_page)
@@ -33,6 +34,25 @@ RSpec.describe "Teacher registration number", type: :system do
 
   def when_i_click_the_registration_number_task
     teacher_application_page.registration_number_task_item.click
+  end
+
+  def and_i_see_the_teacher_reference_number_content
+    expect(teacher_registration_number_page.heading).to have_content(
+      "What is your teacher reference number?",
+    )
+    expect(teacher_registration_number_page.hint).to have_content(
+      "This may be called a registration or licence number in your country.",
+    )
+    expect(teacher_registration_number_page.details_summary).to have_content(
+      "What to do if you don’t have a teacher reference number",
+    )
+
+    teacher_registration_number_page.details_summary.click
+    expect(teacher_registration_number_page.details_text).to have_content(
+      "If you don’t have a teacher reference number, leave it empty and select " \
+        "Continue. We may need to contact you for more information if we cannot " \
+        "find you on your country’s online register of teachers.",
+    )
   end
 
   def when_i_fill_in_the_registration_number

@@ -80,7 +80,7 @@ en:
       teacher_interface_reference_request_hours_response_form:
         hours_response: This means all the hours they spent working per week, including time spent teaching as well as other non-teaching activities (such as planning lessons, after-school meetings, running extra-curricular clubs and marking work).
       teacher_interface_registration_number_form:
-        registration_number: Your country has an online register of teachers. If you have a registration number, enter it on this screen. If you do not have one, just select ‘Continue’.
+        registration_number: This may be called a registration or licence number in your country.
       teacher_interface_teaching_qualification_part_of_degree_form:
         teaching_qualification_part_of_degree: Enter your bachelor’s degree if your teaching qualification was separate, for example a postgraduate degree, diploma, or certificate in education.
       teacher_interface_work_history_school_form:
@@ -391,7 +391,7 @@ en:
           false: "No"
         confirm_applicant_comment: Provide a reason
       teacher_interface_registration_number_form:
-        registration_number: What is your registration number?
+        registration_number: What is your teacher reference number?
       teacher_interface_subjects_form:
         subject_1: Subject 1
         subject_2: Subject 2 (optional)
