@@ -51,7 +51,7 @@ Run the relevant system spec with `bundle exec rspec`, as with other specs. Use 
 
 ### Linting
 
-The existing lint script runs RuboCop, Prettier and Brakeman:
+The lint script runs RuboCop with `--autocorrect-all`, Prettier with `--write`, and Brakeman:
 
 ```bash
 bin/lint
@@ -59,7 +59,7 @@ bin/lint
 
 This script **rewrites files** using RuboCop autocorrection and Prettier formatting. Review its diff before committing.
 
-For read-only style checks:
+For the same check-only style commands used by CI:
 
 ```bash
 bin/bundle exec rubocop
