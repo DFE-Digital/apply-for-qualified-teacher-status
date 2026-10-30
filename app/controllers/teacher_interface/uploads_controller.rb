@@ -38,6 +38,13 @@ module TeacherInterface
 
       handle_application_form_section(
         form: @form,
+        if_save_and_come_back_later_then_redirect:
+          if document.for_further_information_request? ||
+               document.for_consent_request?
+            DocumentContinueRedirection.call(document:)
+          else
+            %i[teacher_interface application_form]
+          end,
         if_success_then_redirect: ->(_check_path) do
           history_stack.replace_self(
             path:

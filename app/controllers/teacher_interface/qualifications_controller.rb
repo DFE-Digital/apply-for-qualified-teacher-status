@@ -14,7 +14,11 @@ module TeacherInterface
     define_history_check :check_member, identifier: :check_member_identifier
 
     def index
-      if application_form.qualifications_status_completed?
+      if application_form.qualifications_status_completed? ||
+           (
+             application_form.qualifications.many? &&
+               application_form.teaching_qualification.complete?
+           )
         redirect_to %i[check teacher_interface application_form qualifications]
       elsif application_form.qualifications.empty?
         redirect_to %i[new teacher_interface application_form qualification]
@@ -36,6 +40,7 @@ module TeacherInterface
 
     def check_collection
       @qualifications = application_form.qualifications.order_by_user
+      @incomplete_qualification = @qualifications.find(&:incomplete?)
       @came_from_add_another =
         history_stack.last_entry&.fetch(:path) ==
           add_another_teacher_interface_application_form_qualifications_path
@@ -193,11 +198,17 @@ module TeacherInterface
       handle_application_form_section(
         form: @form,
         check_identifier: check_member_identifier,
-        if_success_then_redirect: [
-          :teacher_interface,
-          :application_form,
-          qualification.certificate_document,
-        ],
+        if_success_then_redirect: ->(check_path) do
+          if check_path && qualification.complete?
+            check_path
+          else
+            [
+              :teacher_interface,
+              :application_form,
+              qualification.certificate_document,
+            ]
+          end
+        end,
       )
     end
 
