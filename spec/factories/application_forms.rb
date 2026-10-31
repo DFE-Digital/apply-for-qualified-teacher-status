@@ -485,7 +485,8 @@ FactoryBot.define do
 
       after(:create) do |application_form, _evaluator|
         create :prioritisation_work_history_check,
-               assessment: application_form.assessment
+               assessment: application_form.assessment,
+               work_history: create(:work_history, application_form:)
       end
     end
 
