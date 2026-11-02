@@ -35,6 +35,10 @@ RSpec.describe AssessorInterface::FurtherInformationRequestReviewForm,
   describe "#save" do
     subject(:form_save) { form.save }
 
+    let(:first_item) { further_information_request.items.first }
+    let(:second_item) { further_information_request.items.second }
+    let(:third_item) { further_information_request.items.last }
+
     context "when all items are accepted" do
       let(:params) do
         object = {}
@@ -49,15 +53,9 @@ RSpec.describe AssessorInterface::FurtherInformationRequestReviewForm,
       it "updates the items review_decision" do
         form_save
 
-        expect(
-          further_information_request.items.reload.first,
-        ).to be_review_decision_accept
-        expect(
-          further_information_request.items.reload.second,
-        ).to be_review_decision_accept
-        expect(
-          further_information_request.items.reload.last,
-        ).to be_review_decision_accept
+        expect(first_item.reload).to be_review_decision_accept
+        expect(second_item.reload).to be_review_decision_accept
+        expect(third_item.reload).to be_review_decision_accept
       end
 
       it "updates review passed field" do
@@ -88,15 +86,9 @@ RSpec.describe AssessorInterface::FurtherInformationRequestReviewForm,
       let(:params) do
         object = {}
 
-        object[
-          "#{further_information_request.items.first.id}_decision"
-        ] = "decline"
-        object[
-          "#{further_information_request.items.second.id}_decision"
-        ] = "accept"
-        object[
-          "#{further_information_request.items.last.id}_decision"
-        ] = "accept"
+        object["#{first_item.id}_decision"] = "decline"
+        object["#{second_item.id}_decision"] = "accept"
+        object["#{third_item.id}_decision"] = "accept"
 
         object
       end
@@ -104,15 +96,9 @@ RSpec.describe AssessorInterface::FurtherInformationRequestReviewForm,
       it "updates the items review_decision" do
         form_save
 
-        expect(
-          further_information_request.items.reload.first,
-        ).to be_review_decision_decline
-        expect(
-          further_information_request.items.reload.second,
-        ).to be_review_decision_accept
-        expect(
-          further_information_request.items.reload.last,
-        ).to be_review_decision_accept
+        expect(first_item.reload).to be_review_decision_decline
+        expect(second_item.reload).to be_review_decision_accept
+        expect(third_item.reload).to be_review_decision_accept
       end
 
       it "does not update review passed field" do
@@ -153,15 +139,9 @@ RSpec.describe AssessorInterface::FurtherInformationRequestReviewForm,
       it "updates the items review_decision" do
         form_save
 
-        expect(
-          further_information_request.items.reload.first,
-        ).to be_review_decision_decline
-        expect(
-          further_information_request.items.reload.second,
-        ).to be_review_decision_decline
-        expect(
-          further_information_request.items.reload.last,
-        ).to be_review_decision_decline
+        expect(first_item.reload).to be_review_decision_decline
+        expect(second_item.reload).to be_review_decision_decline
+        expect(third_item.reload).to be_review_decision_decline
       end
 
       it "does not update review passed field" do
@@ -202,15 +182,9 @@ RSpec.describe AssessorInterface::FurtherInformationRequestReviewForm,
       it "updates the items review_decision" do
         form_save
 
-        expect(
-          further_information_request.items.reload.first,
-        ).to be_review_decision_further_information
-        expect(
-          further_information_request.items.reload.second,
-        ).to be_review_decision_further_information
-        expect(
-          further_information_request.items.reload.last,
-        ).to be_review_decision_further_information
+        expect(first_item.reload).to be_review_decision_further_information
+        expect(second_item.reload).to be_review_decision_further_information
+        expect(third_item.reload).to be_review_decision_further_information
       end
 
       it "does not update review passed field" do
@@ -241,15 +215,9 @@ RSpec.describe AssessorInterface::FurtherInformationRequestReviewForm,
       let(:params) do
         object = {}
 
-        object[
-          "#{further_information_request.items.first.id}_decision"
-        ] = "decline"
-        object[
-          "#{further_information_request.items.second.id}_decision"
-        ] = "further_information"
-        object[
-          "#{further_information_request.items.last.id}_decision"
-        ] = "further_information"
+        object["#{first_item.id}_decision"] = "decline"
+        object["#{second_item.id}_decision"] = "further_information"
+        object["#{third_item.id}_decision"] = "further_information"
 
         object
       end
@@ -257,15 +225,9 @@ RSpec.describe AssessorInterface::FurtherInformationRequestReviewForm,
       it "updates the items review_decision" do
         form_save
 
-        expect(
-          further_information_request.items.reload.first,
-        ).to be_review_decision_decline
-        expect(
-          further_information_request.items.reload.second,
-        ).to be_review_decision_further_information
-        expect(
-          further_information_request.items.reload.last,
-        ).to be_review_decision_further_information
+        expect(first_item.reload).to be_review_decision_decline
+        expect(second_item.reload).to be_review_decision_further_information
+        expect(third_item.reload).to be_review_decision_further_information
       end
 
       it "does not update review passed field" do
@@ -296,15 +258,9 @@ RSpec.describe AssessorInterface::FurtherInformationRequestReviewForm,
       let(:params) do
         object = {}
 
-        object[
-          "#{further_information_request.items.first.id}_decision"
-        ] = "accept"
-        object[
-          "#{further_information_request.items.second.id}_decision"
-        ] = "accept"
-        object[
-          "#{further_information_request.items.last.id}_decision"
-        ] = "further_information"
+        object["#{first_item.id}_decision"] = "accept"
+        object["#{second_item.id}_decision"] = "accept"
+        object["#{third_item.id}_decision"] = "further_information"
 
         object
       end
@@ -312,15 +268,9 @@ RSpec.describe AssessorInterface::FurtherInformationRequestReviewForm,
       it "updates the items review_decision" do
         form_save
 
-        expect(
-          further_information_request.items.reload.first,
-        ).to be_review_decision_accept
-        expect(
-          further_information_request.items.reload.second,
-        ).to be_review_decision_accept
-        expect(
-          further_information_request.items.reload.last,
-        ).to be_review_decision_further_information
+        expect(first_item.reload).to be_review_decision_accept
+        expect(second_item.reload).to be_review_decision_accept
+        expect(third_item.reload).to be_review_decision_further_information
       end
 
       it "does not update review passed field" do
@@ -351,15 +301,9 @@ RSpec.describe AssessorInterface::FurtherInformationRequestReviewForm,
       let(:params) do
         object = {}
 
-        object[
-          "#{further_information_request.items.first.id}_decision"
-        ] = "decline"
-        object[
-          "#{further_information_request.items.second.id}_decision"
-        ] = "accept"
-        object[
-          "#{further_information_request.items.last.id}_decision"
-        ] = "further_information"
+        object["#{first_item.id}_decision"] = "decline"
+        object["#{second_item.id}_decision"] = "accept"
+        object["#{third_item.id}_decision"] = "further_information"
 
         object
       end
@@ -367,15 +311,9 @@ RSpec.describe AssessorInterface::FurtherInformationRequestReviewForm,
       it "updates the items review_decision" do
         form_save
 
-        expect(
-          further_information_request.items.reload.first,
-        ).to be_review_decision_decline
-        expect(
-          further_information_request.items.reload.second,
-        ).to be_review_decision_accept
-        expect(
-          further_information_request.items.reload.last,
-        ).to be_review_decision_further_information
+        expect(first_item.reload).to be_review_decision_decline
+        expect(second_item.reload).to be_review_decision_accept
+        expect(third_item.reload).to be_review_decision_further_information
       end
 
       it "does not update review passed field" do
