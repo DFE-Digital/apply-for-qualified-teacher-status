@@ -64,6 +64,8 @@ module TeacherInterface
         form: @form,
         if_success_then_redirect:
           teacher_interface_application_form_consent_requests_path,
+        if_save_and_come_back_later_then_redirect:
+          teacher_interface_application_form_consent_requests_path,
         if_failure_then_render: :edit_download,
       )
     end

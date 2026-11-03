@@ -7,19 +7,23 @@ module HandleApplicationFormSection
     form:,
     check_identifier: nil,
     if_success_then_redirect: %i[teacher_interface application_form],
+    if_save_and_come_back_later_then_redirect: %i[
+      teacher_interface
+      application_form
+    ],
     if_failure_then_render: :edit
   )
     save_and_continue = params[:button] != "save_and_return"
 
     if form.save(validate: save_and_continue)
-      check_path =
-        history_stack.last_path_if_check(identifier: check_identifier)
-
       if save_and_continue
+        check_path =
+          history_stack.last_path_if_check(identifier: check_identifier)
+
         redirect_to if_success_then_redirect.try(:call, check_path) ||
                       check_path || if_success_then_redirect
       else
-        redirect_to check_path || %i[teacher_interface application_form]
+        redirect_to if_save_and_come_back_later_then_redirect
       end
     else
       send_errors_to_big_query(form)

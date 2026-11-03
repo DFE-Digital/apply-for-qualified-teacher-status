@@ -59,6 +59,8 @@ module TeacherInterface
 
       handle_application_form_section(
         form: @form,
+        if_save_and_come_back_later_then_redirect:
+          further_information_request_path,
         if_success_then_redirect: [
           :teacher_interface,
           :application_form,
@@ -77,6 +79,8 @@ module TeacherInterface
 
       handle_application_form_section(
         form: @form,
+        if_save_and_come_back_later_then_redirect:
+          further_information_request_path,
         if_success_then_redirect: [
           :teacher_interface,
           :application_form,

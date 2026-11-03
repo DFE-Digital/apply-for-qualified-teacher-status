@@ -2,7 +2,7 @@
   <%= render(CheckYourAnswersSummary::Component.new(
     id: "qualification-#{qualification.id}",
     model: qualification,
-    title: qualification.title,
+    title: qualification_title(qualification),
     fields: {
       title: {
         title: t(qualification.locale_key, scope: %i[application_form qualifications form fields title]),
@@ -33,9 +33,11 @@
       },
       certificate_document: {
         href: [:teacher_interface, :application_form, qualification.certificate_document],
+        value: qualification.certificate_document.uploads.empty? ? nil : qualification.certificate_document,
       },
       transcript_document: {
         href: [:teacher_interface, :application_form, qualification.transcript_document],
+        value: qualification.transcript_document.uploads.empty? ? nil : qualification.transcript_document,
       },
       part_of_degree: qualification.is_teaching? ? {
         title: "Part of your bachelor’s degree?",
@@ -45,6 +47,6 @@
     },
     changeable:,
     with_action_link_to: changeable && qualification.can_delete? ? [:delete, :teacher_interface, :application_form, qualification] : nil,
-    with_action_link_label: changeable && qualification.can_delete? ? "Delete <span class=\"govuk-visually-hidden\">#{qualification.title.downcase}</span>" : nil,
+    with_action_link_label: changeable && qualification.can_delete? ? "Delete <span class=\"govuk-visually-hidden\">#{qualification_title(qualification).downcase}</span>" : nil,
   )) %>
 <% end %>
