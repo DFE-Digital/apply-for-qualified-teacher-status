@@ -1,3 +1,5 @@
+@use "govuk-frontend/dist/govuk/index" as *;
+
 .hods-alert {
   @extend .govuk-inset-text;
   border-color: #2b8cc4;

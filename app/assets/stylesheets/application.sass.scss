@@ -1,32 +1,19 @@
-// MOJ configures govuk-frontend's base module with `with (...)`, so it has to
-// load it first. Loaded `as *` so the assignments below update MOJ's and
-// govuk's settings rather than creating new globals.
-@use "@ministryofjustice/frontend/moj/vendor/govuk-frontend" as * with (
-  $moj-assets-path: "/",
-  $govuk-global-styles: true
+@use "govuk-frontend/dist/govuk/index" as * with (
+  $govuk-global-styles: true,
+  $govuk-assets-path: "/",
+  $govuk-include-default-font-face: true
 );
-
-// MOJ hard-codes this to false; turn GDS Transport back on
-$govuk-include-default-font-face: true;
-// Used by _checkbox_search_filter.scss
-$moj-images-path: "/";
-
-$govuk-global-styles: true;
-$govuk-assets-path: "/";
-
-@import "govuk-frontend/dist/govuk/index";
-@import "moj";
-@import "dfe-autocomplete/src/dfe-autocomplete";
-@import "location-autocomplete.min";
-
-@import "_alerts";
-@import "_application_forms";
-@import "_checkbox_search_filter";
-@import "_description_list";
-@import "_environments";
-@import "_header";
-@import "_search_results";
-@import "_support";
+@use "moj";
+@use "autocomplete";
+@use "location-autocomplete.min.css";
+@use "alerts";
+@use "application_forms";
+@use "checkbox_search_filter";
+@use "description_list";
+@use "environments";
+@use "header";
+@use "search_results";
+@use "support";
 
 ul.autocomplete__menu {
   li {
@@ -85,13 +72,15 @@ ul.autocomplete__menu {
   margin-right: 0px;
 }
 
-.govuk-inset-text .govuk-details__text {
+.govuk-inset-text .govuk-details__text,
+.hods-alert .govuk-details__text {
   padding-left: 0;
   border-left: none;
   padding-bottom: 0;
 }
 
-.govuk-inset-text .govuk-details {
+.govuk-inset-text .govuk-details,
+.hods-alert .govuk-details {
   margin-bottom: 0;
 }
 

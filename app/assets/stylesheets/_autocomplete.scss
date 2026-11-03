@@ -1,0 +1,4 @@
+@use "govuk-frontend/dist/govuk/base" as *;
+
+// DfE autocomplete still needs GOV.UK APIs in the importing scope.
+@import "dfe-autocomplete/src/dfe-autocomplete";

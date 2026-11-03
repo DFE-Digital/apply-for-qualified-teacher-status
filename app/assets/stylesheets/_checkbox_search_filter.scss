@@ -1,3 +1,5 @@
+@use "govuk-frontend/dist/govuk/base" as *;
+
 .app-checkbox-filter {
   position: relative;
   margin-bottom: govuk-spacing(2);
@@ -108,7 +110,7 @@
   }
 
   &:after {
-    background-image: url(#{$moj-images-path}icon-tag-remove-cross.svg);
+    background-image: url(/icon-tag-remove-cross.svg);
     content: "";
     display: inline-block;
     font-weight: bold;
@@ -119,6 +121,6 @@
   }
 
   &:hover:after {
-    background-image: url(#{$moj-images-path}icon-tag-remove-cross-white.svg);
+    background-image: url(/icon-tag-remove-cross-white.svg);
   }
 }
