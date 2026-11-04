@@ -100,5 +100,47 @@ RSpec.describe SupportRequestForm, type: :model do
         SupportRequest.last,
       )
     end
+
+    %w[
+      submitting_an_application
+      providing_a_reference
+      other
+    ].each do |new_user_type|
+      context "when user_type changes to #{new_user_type}" do
+        before { form.user_type = new_user_type }
+
+        it "saves the request without the application details" do
+          expect { form.save }.to change(SupportRequest, :count).by(1)
+
+          expect(SupportRequest.last).to have_attributes(
+            email:,
+            name:,
+            comment:,
+            user_type: new_user_type,
+            application_enquiry_type: nil,
+            application_reference: nil,
+          )
+        end
+
+        it "enqueues a job to generate a request within Zendesk" do
+          expect { form.save }.to have_enqueued_job(
+            CreateZendeskRequestJob,
+          ).with(SupportRequest.last)
+        end
+      end
+    end
+
+    context "when the form is invalid" do
+      let(:application_reference) { "" }
+
+      it "does not save a request or enqueue a Zendesk job" do
+        expect(CreateZendeskRequestJob).not_to receive(:perform_later)
+
+        expect { expect(form.save).to be(false) }.not_to change(
+          SupportRequest,
+          :count,
+        )
+      end
+    end
   end
 end
