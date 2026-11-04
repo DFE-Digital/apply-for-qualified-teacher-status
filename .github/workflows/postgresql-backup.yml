@@ -1,6 +1,10 @@
 name: PostgreSQL - Backup
 
 on:
+  push:
+    branches:
+      - 3186-tests-new-postgres-backups
+
   workflow_dispatch:
     inputs:
       environment:
@@ -9,10 +13,6 @@ on:
         type: choice
         options:
           - test
-          - production
-
-  schedule:
-    - cron: "0 4 * * *" # 04:00 UTC
 
 permissions:
   id-token: write
@@ -28,10 +28,10 @@ jobs:
     runs-on: ubuntu-latest
 
     environment:
-      name: ${{ inputs.environment || 'production' }}
+      name: ${{ inputs.environment || 'test' }}
 
     env:
-      DEPLOY_ENV: ${{ inputs.environment || 'production' }}
+      DEPLOY_ENV: ${{ inputs.environment || 'test' }}
 
     steps:
       - uses: actions/checkout@v7
