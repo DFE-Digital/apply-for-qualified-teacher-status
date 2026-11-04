@@ -1,0 +1,69 @@
+name: PostgreSQL - Custom Restore
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        required: true
+        default: test
+        type: choice
+        options:
+          - test
+          - production
+
+      restore-file:
+        description: Backup file to restore
+        required: true
+        type: string
+
+      destination-server:
+        description: Target PostgreSQL server
+        required: true
+        type: string
+
+      destination-database:
+        description: Target database
+        required: true
+        type: string
+
+permissions:
+  id-token: write
+
+env:
+  SERVICE_NAME: apply-for-qts
+  SERVICE_SHORT: afqts
+  TF_VARS_PATH: terraform/application/config
+
+jobs:
+  custom-restore:
+    name: PostgreSQL Custom Restore
+    runs-on: ubuntu-latest
+
+    environment:
+      name: ${{ inputs.environment }}
+
+    env:
+      DEPLOY_ENV: ${{ inputs.environment }}
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: azure/login@v3
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - uses: DFE-Digital/github-actions/postgres-tools@master
+        with:
+          azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          operation: restore-custom
+          service-name: ${{ env.SERVICE_NAME }}
+          service-short: ${{ env.SERVICE_SHORT }}
+          environment: ${{ env.DEPLOY_ENV }}
+          tf-vars-path: ${{ env.TF_VARS_PATH }}
+          restore-file: ${{ inputs.restore-file }}
+          destination-server: ${{ inputs.destination-server }}
+          destination-database: ${{ inputs.destination-database }}
