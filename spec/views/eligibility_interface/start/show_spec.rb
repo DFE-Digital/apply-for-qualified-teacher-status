@@ -41,6 +41,18 @@ RSpec.describe "eligibility_interface/start/show.html.erb", type: :view do
     end
   end
 
+  context "when a subject-limited country is ineligible" do
+    before { create(:country, :subject_limited, :ineligible) }
+
+    it "does not display the subject and age content" do
+      expect(subject).not_to include(
+        "Depending on the country that you trained to teach in",
+        "11 and 16 years old",
+        "a teaching specialism in one of the following subjects",
+      )
+    end
+  end
+
   it do
     expect(subject).to match(
       /If you’ve already started your application using this service, you can/,

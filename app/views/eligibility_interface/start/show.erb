@@ -48,7 +48,7 @@
   <% end %>
 </ul>
 
-<% if Country.exists?(subject_limited: true) %>
+<% if Country.exists?(subject_limited: true, eligibility_enabled: true) %>
   <p class="govuk-body">Depending on the country that you trained to teach in, you may be required to have:</p>
 
   <ul class="govuk-list govuk-list--bullet">
