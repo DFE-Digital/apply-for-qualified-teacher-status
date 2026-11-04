@@ -1,7 +1,6 @@
 @use "govuk-frontend/dist/govuk/index" as * with (
   $govuk-global-styles: true,
-  $govuk-assets-path: "/",
-  $govuk-include-default-font-face: true
+  $govuk-assets-path: "/"
 );
 @use "moj";
 @use "autocomplete";
