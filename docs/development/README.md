@@ -49,6 +49,12 @@ RAILS_ENV=test bin/rails db:test:prepare
 
 Run the relevant system spec with `bundle exec rspec`, as with other specs. Use the existing page objects when adding journey tests.
 
+### Stylesheets and assets
+
+`yarn build:css` compiles `app/assets/stylesheets/application.sass.scss` into the shared application stylesheet in `app/assets/builds`. Rails serves it through Propshaft; `bin/dev` watches for stylesheet changes.
+
+Application partials use Sass modules with explicit GOV.UK dependencies. Use the GOV.UK base module for variables, functions and mixins; a partial extending a GOV.UK CSS selector must also depend on the module that emits it. `_autocomplete.scss` is the compatibility exception: it imports DfE autocomplete because that dependency still expects GOV.UK APIs in its importing scope.
+
 ### Linting
 
 The existing lint script runs RuboCop, Prettier and Brakeman:

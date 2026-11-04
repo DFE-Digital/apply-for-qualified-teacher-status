@@ -1,3 +1,5 @@
+@use "govuk-frontend/dist/govuk/base" as *;
+
 .app-application-forms__filters {
   background-color: govuk-colour("black", $variant: "tint-95");
   padding: govuk-spacing(3);
