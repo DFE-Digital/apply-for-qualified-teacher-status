@@ -22,9 +22,11 @@ RSpec.describe "POST /support-requests", type: :request do
   end
 
   it "saves the request without application details for another user type" do
-    expect {
-      post support_requests_path, params: { support_request_form: form_params }
-    }.to have_enqueued_job(CreateZendeskRequestJob).with(SupportRequest.last)
+    post support_requests_path, params: { support_request_form: form_params }
+
+    expect(CreateZendeskRequestJob).to have_been_enqueued.with(
+      SupportRequest.last,
+    )
 
     expect(response).to redirect_to(confirmation_support_requests_path)
     expect(SupportRequest.last).to have_attributes(
@@ -39,12 +41,11 @@ RSpec.describe "POST /support-requests", type: :request do
     let(:user_type) { "application_submitted" }
 
     it "saves the request with its application details" do
-      expect {
-        post support_requests_path,
-             params: {
-               support_request_form: form_params,
-             }
-      }.to have_enqueued_job(CreateZendeskRequestJob).with(SupportRequest.last)
+      post support_requests_path, params: { support_request_form: form_params }
+
+      expect(CreateZendeskRequestJob).to have_been_enqueued.with(
+        SupportRequest.last,
+      )
 
       expect(response).to redirect_to(confirmation_support_requests_path)
       expect(SupportRequest.last).to have_attributes(form_params)

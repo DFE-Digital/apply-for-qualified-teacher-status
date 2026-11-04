@@ -96,7 +96,9 @@ RSpec.describe SupportRequestForm, type: :model do
     end
 
     it "enqueues a job to generate a request within Zendesk" do
-      expect { form.save }.to have_enqueued_job(CreateZendeskRequestJob).with(
+      form.save
+
+      expect(CreateZendeskRequestJob).to have_been_enqueued.with(
         SupportRequest.last,
       )
     end
@@ -123,9 +125,11 @@ RSpec.describe SupportRequestForm, type: :model do
         end
 
         it "enqueues a job to generate a request within Zendesk" do
-          expect { form.save }.to have_enqueued_job(
-            CreateZendeskRequestJob,
-          ).with(SupportRequest.last)
+          form.save
+
+          expect(CreateZendeskRequestJob).to have_been_enqueued.with(
+            SupportRequest.last,
+          )
         end
       end
     end
