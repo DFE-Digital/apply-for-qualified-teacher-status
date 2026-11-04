@@ -48,12 +48,14 @@
   <% end %>
 </ul>
 
-<p class="govuk-body">Depending on the country that you trained to teach in, you may be required to have:</p>
+<% if Country.exists?(subject_limited: true) %>
+  <p class="govuk-body">Depending on the country that you trained to teach in, you may be required to have:</p>
 
-<ul class="govuk-list govuk-list--bullet">
-  <li>qualifications to show you can teach children aged anywhere between 11 and 16 years old</li>
-  <li>a teaching specialism in one of the following subjects: maths, science, biology, chemistry, physics, French, German, Italian, Japanese, Latin, Mandarin, Russian, or Spanish</li>
-</ul>
+  <ul class="govuk-list govuk-list--bullet">
+    <li>qualifications to show you can teach children aged anywhere between 11 and 16 years old</li>
+    <li>a teaching specialism in one of the following subjects: maths, science, biology, chemistry, physics, French, German, Italian, Japanese, Latin, Mandarin, Russian, or Spanish</li>
+  </ul>
+<% end %>
 
 <p class="govuk-body">If you trained in England or Wales, or have not yet qualified, learn more about <%= govuk_link_to "other routes to getting QTS", "https://www.gov.uk/government/publications/apply-for-qualified-teacher-status-qts-if-you-teach-outside-the-uk/routes-to-qualified-teacher-status-qts-for-teachers-and-those-with-teaching-experience-outside-the-uk#routes-to-qts" %>.</p>
 
