@@ -3,6 +3,15 @@
 require "rails_helper"
 
 RSpec.describe "Teacher documents", type: :system do
+  let(:translation) do
+    create(
+      :upload,
+      :clean,
+      :translation,
+      document: application_form.written_statement_document,
+    )
+  end
+
   before do
     given_i_am_authorized_as_a_user(teacher)
     given_there_is_an_application_form
@@ -37,6 +46,81 @@ RSpec.describe "Teacher documents", type: :system do
     and_i_choose_yes
     and_i_click_continue
     then_i_see_the_check_your_uploaded_files_page
+  end
+
+  it "keeps the task incomplete until a deleted original is replaced" do
+    given_a_written_statement_with_an_original_and_translation
+
+    when_i_visit_the(:teacher_application_page)
+    when_i_open_the_written_statement_task
+    then_i_see_the(:teacher_check_document_page)
+
+    when_i_delete_the_original_document
+    then_i_see_the(:teacher_upload_document_page)
+    then_only_the_translation_remains
+
+    when_i_visit_the(:teacher_application_page)
+    then_the_written_statement_task_is_in_progress
+
+    when_i_open_the_written_statement_task
+    then_i_see_the(:teacher_upload_document_page)
+
+    when_i_upload_a_replacement_original
+    then_i_see_the(:teacher_check_document_page)
+
+    when_i_finish_uploading_documents
+    then_i_see_the(:teacher_application_page)
+    then_the_written_statement_task_is_completed
+  end
+
+  def given_a_written_statement_with_an_original_and_translation
+    document = application_form.written_statement_document
+    create(:upload, :clean, document:)
+    translation
+  end
+
+  def when_i_open_the_written_statement_task
+    teacher_application_page
+      .upload_written_statement_task_item
+      .name_and_hint
+      .link
+      .click
+  end
+
+  def when_i_delete_the_original_document
+    teacher_check_uploaded_files_page.delete_links.first.click
+    teacher_delete_upload_page.submit_yes
+  end
+
+  def then_only_the_translation_remains
+    expect(
+      application_form.written_statement_document.reload.uploads,
+    ).to contain_exactly(translation)
+  end
+
+  def then_the_written_statement_task_is_in_progress
+    expect(
+      teacher_application_page.upload_written_statement_task_item.status_tag,
+    ).to have_text("In progress")
+  end
+
+  def when_i_upload_a_replacement_original
+    teacher_upload_document_page.form.original_attachment.attach_file(
+      Rails.root.join(file_fixture("upload.pdf")),
+    )
+    teacher_upload_document_page.form.written_in_english_items.first.choose
+    teacher_upload_document_page.form.continue_button.click
+  end
+
+  def when_i_finish_uploading_documents
+    teacher_check_document_page.form.false_radio_item.choose
+    teacher_check_document_page.form.continue_button.click
+  end
+
+  def then_the_written_statement_task_is_completed
+    expect(
+      teacher_application_page.upload_written_statement_task_item.status_tag,
+    ).to have_text("Completed")
   end
 
   def given_there_is_an_application_form

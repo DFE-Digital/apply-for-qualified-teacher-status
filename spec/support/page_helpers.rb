@@ -689,6 +689,10 @@ module PageHelpers
       PageObjects::TeacherInterface::CheckUploadedFiles.new
   end
 
+  def teacher_delete_upload_page
+    @teacher_delete_upload_page = PageObjects::TeacherInterface::DeleteForm.new
+  end
+
   def teacher_check_work_histories_page
     @teacher_check_work_histories_page ||=
       PageObjects::TeacherInterface::CheckWorkHistories.new

@@ -90,6 +90,16 @@ RSpec.describe FurtherInformationRequestItem do
         end
 
         it { is_expected.to eq("completed") }
+
+        context "when the document is incomplete" do
+          before do
+            allow(further_information_request_item.document).to receive(
+              :completed?,
+            ).and_return(false)
+          end
+
+          it { is_expected.to eq("not_started") }
+        end
       end
     end
 

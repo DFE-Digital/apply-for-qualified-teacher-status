@@ -34,6 +34,60 @@ RSpec.describe DecisionReviewRequest, type: :model do
     it { is_expected.not_to validate_presence_of(:received_at) }
   end
 
+  describe "#completed?" do
+    subject(:completed?) { decision_review_request.completed? }
+
+    let(:decision_review_request) do
+      build(:decision_review_request, comment:, has_supporting_documents:)
+    end
+    let(:comment) { "Example decision review reason" }
+    let(:has_supporting_documents) { nil }
+    let(:document_completed) { false }
+    let(:document) { instance_double(Document, completed?: document_completed) }
+
+    before do
+      allow(decision_review_request).to receive(
+        :decision_review_evidence_document,
+      ).and_return(document)
+    end
+
+    context "without a supporting-evidence choice" do
+      it { is_expected.to be false }
+    end
+
+    context "without supporting evidence" do
+      let(:has_supporting_documents) { false }
+
+      it { is_expected.to be true }
+
+      context "without a comment" do
+        let(:comment) { "" }
+
+        it { is_expected.to be false }
+      end
+    end
+
+    context "with supporting evidence" do
+      let(:has_supporting_documents) { true }
+
+      context "when the document is incomplete" do
+        it { is_expected.to be false }
+      end
+
+      context "when the document is complete" do
+        let(:document_completed) { true }
+
+        it { is_expected.to be true }
+
+        context "without a comment" do
+          let(:comment) { "" }
+
+          it { is_expected.to be false }
+        end
+      end
+    end
+  end
+
   describe "#received!" do
     let(:call) { subject.received! }
 

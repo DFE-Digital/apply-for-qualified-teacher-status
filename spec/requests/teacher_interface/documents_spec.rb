@@ -6,9 +6,127 @@ RSpec.describe "Teacher Interface - Documents", type: :request do
   let(:teacher) { create(:teacher) }
   let(:application_form) { create(:application_form, teacher:) }
   let(:document) { application_form.identification_document }
-  let!(:upload) { create(:upload, :clean, document:) }
 
   before { sign_in teacher, scope: :teacher }
+
+  describe "GET /teacher/application/documents/:id" do
+    subject(:perform) do
+      get teacher_interface_application_form_document_path(document)
+    end
+
+    before { perform }
+
+    context "with no uploads" do
+      it "redirects to upload" do
+        expect(response).to redirect_to(
+          new_teacher_interface_application_form_document_upload_path(document),
+        )
+      end
+    end
+
+    context "with an original upload" do
+      let(:document) do
+        create(:document, :with_upload, documentable: application_form)
+      end
+
+      it "redirects to review the uploaded files" do
+        expect(response).to redirect_to(
+          edit_teacher_interface_application_form_document_path(document),
+        )
+      end
+    end
+
+    context "with an original and a translation" do
+      let(:document) do
+        create(
+          :document,
+          :written_statement,
+          :with_upload,
+          :with_translation,
+          documentable: application_form,
+        )
+      end
+
+      it "redirects to review the uploaded files" do
+        expect(response).to redirect_to(
+          edit_teacher_interface_application_form_document_path(document),
+        )
+      end
+    end
+
+    context "with only a translation" do
+      let(:document) do
+        create(
+          :document,
+          :written_statement,
+          :with_translation,
+          documentable: application_form,
+        )
+      end
+
+      it "redirects to upload" do
+        expect(response).to redirect_to(
+          new_teacher_interface_application_form_document_upload_path(document),
+        )
+      end
+
+      it "retains the translation" do
+        expect(document.reload.translated_uploads.count).to eq(1)
+      end
+    end
+
+    context "with an optional written statement" do
+      let(:document) do
+        create(
+          :document,
+          :optional_written_statement,
+          documentable: application_form,
+        )
+      end
+
+      it "redirects to the availability form when there are no uploads" do
+        expect(response).to redirect_to(
+          edit_teacher_interface_application_form_document_path(document),
+        )
+      end
+
+      context "with an original upload" do
+        let(:document) do
+          create(
+            :document,
+            :optional_written_statement,
+            :with_upload,
+            documentable: application_form,
+          )
+        end
+
+        it "redirects to review the uploaded files" do
+          expect(response).to redirect_to(
+            edit_teacher_interface_application_form_document_path(document),
+          )
+        end
+      end
+
+      context "with only a translation" do
+        let(:document) do
+          create(
+            :document,
+            :optional_written_statement,
+            :with_translation,
+            documentable: application_form,
+          )
+        end
+
+        it "redirects to upload" do
+          expect(response).to redirect_to(
+            new_teacher_interface_application_form_document_upload_path(
+              document,
+            ),
+          )
+        end
+      end
+    end
+  end
 
   describe "PATCH /teacher/application/documents/:id" do
     subject(:perform) do
@@ -17,6 +135,8 @@ RSpec.describe "Teacher Interface - Documents", type: :request do
               button: "save_and_return",
             }
     end
+
+    let!(:upload) { create(:upload, :clean, document:) }
 
     context "with a further-information document" do
       let(:application_form) do

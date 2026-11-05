@@ -72,7 +72,7 @@ class Document < ApplicationRecord
   end
 
   def completed?
-    (uploads.present? && uploads.all?(&:safe_to_link?)) ||
+    (uploads.any?(&:original?) && uploads.all?(&:safe_to_link?)) ||
       (optional? && available == false)
   end
 

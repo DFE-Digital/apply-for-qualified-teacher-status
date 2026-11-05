@@ -9,6 +9,22 @@ RSpec.describe "Teacher decision review request", type: :system do
 
   let(:other_decision_review_request) { create(:decision_review_request) }
 
+  let(:decision_review_request) do
+    create(:decision_review_request, assessment: application_form.assessment)
+  end
+
+  let(:supporting_document) do
+    decision_review_request.decision_review_evidence_document
+  end
+
+  let(:supporting_original) do
+    create(:upload, :clean, document: supporting_document)
+  end
+
+  let(:supporting_translation) do
+    create(:upload, :clean, :translation, document: supporting_document)
+  end
+
   let(:received_decision_review_request) do
     create(
       :received_decision_review_request,
@@ -132,6 +148,31 @@ RSpec.describe "Teacher decision review request", type: :system do
     and_i_see_content_that_submitted_a_decision_review
   end
 
+  it "requires a replacement original after deleting supporting evidence" do
+    given_a_declined_application_form_exists_within_last_28_days
+    given_a_decision_review_with_an_original_and_translation
+
+    when_i_review_the_decision_review
+    when_i_click_change_supporting_evidence_documents
+    then_i_see_the(:teacher_check_document_page)
+
+    when_i_delete_the_original_supporting_document
+    then_i_see_the(:teacher_upload_document_page)
+    then_only_the_supporting_translation_remains
+    then_the_decision_review_is_incomplete
+
+    when_i_upload_a_file
+    then_i_see_the(:teacher_check_document_page)
+
+    when_i_dont_need_to_upload_another_file
+    then_i_see_the(:teacher_request_decision_review_confirm_page)
+
+    when_i_submit_decision_review
+    then_i_see_the(:teacher_request_decision_review_confirmation_page)
+    then_the_supporting_translation_is_retained
+    then_the_decision_review_is_received
+  end
+
   it "does not allow for a decision review for declined application over 28 days ago" do
     given_a_declined_application_form_exists_over_28_days_ago
 
@@ -167,6 +208,53 @@ RSpec.describe "Teacher decision review request", type: :system do
   end
 
   private
+
+  def given_a_decision_review_with_an_original_and_translation
+    supporting_original
+    supporting_translation
+  end
+
+  def when_i_review_the_decision_review
+    when_i_visit_the(
+      :teacher_request_decision_review_confirm_page,
+      decision_review_request_id: decision_review_request.id,
+    )
+  end
+
+  def when_i_click_change_supporting_evidence_documents
+    teacher_request_decision_review_confirm_page
+      .summary_rows
+      .first
+      .find_row(key: "Supporting evidence documents")
+      .actions
+      .link
+      .click
+  end
+
+  def when_i_delete_the_original_supporting_document
+    teacher_check_uploaded_files_page.delete_links.first.click
+    teacher_delete_upload_page.submit_yes
+  end
+
+  def then_only_the_supporting_translation_remains
+    expect(supporting_document.reload.uploads).to contain_exactly(
+      supporting_translation,
+    )
+  end
+
+  def then_the_decision_review_is_incomplete
+    expect(decision_review_request.reload).not_to be_completed
+  end
+
+  def then_the_supporting_translation_is_retained
+    expect(supporting_document.reload.translated_uploads).to contain_exactly(
+      supporting_translation,
+    )
+  end
+
+  def then_the_decision_review_is_received
+    expect(decision_review_request.reload).to be_received
+  end
 
   def given_a_declined_application_form_exists_within_last_28_days
     application_form.update!(declined_at: 10.days.ago)

@@ -9,6 +9,76 @@ RSpec.describe "Teacher Interface - Uploads", type: :request do
 
   before { sign_in teacher, scope: :teacher }
 
+  describe "DELETE /teacher/application/documents/:document_id/uploads/:id" do
+    subject(:perform) do
+      delete teacher_interface_application_form_document_upload_path(
+               document,
+               original,
+             ),
+             params: {
+               teacher_interface_delete_upload_form: {
+                 confirm: true,
+               },
+             }
+    end
+
+    let(:application_form) do
+      create(:application_form, teacher:, needs_written_statement: true)
+    end
+    let(:document) { application_form.written_statement_document }
+    let!(:original) { create(:upload, :clean, document:) }
+    let!(:translation) { create(:upload, :clean, :translation, document:) }
+
+    it "redirects to the document entry point" do
+      perform
+
+      expect(response).to redirect_to(
+        teacher_interface_application_form_document_path(document),
+      )
+    end
+
+    it "deletes the original" do
+      perform
+
+      expect(Upload.exists?(original.id)).to be false
+    end
+
+    it "retains the translation" do
+      perform
+
+      expect(document.reload.uploads).to contain_exactly(translation)
+    end
+
+    it "marks the task as in progress" do
+      perform
+
+      expect(application_form.reload.written_statement_status).to eq(
+        "in_progress",
+      )
+    end
+
+    context "with another original remaining" do
+      let!(:another_original) { create(:upload, :clean, document:) }
+
+      it "retains the remaining original and translation" do
+        perform
+
+        expect(document.reload.uploads).to contain_exactly(
+          another_original,
+          translation,
+        )
+      end
+
+      it "keeps the task completed" do
+        perform
+
+        expect(application_form.reload.written_statement_status).to eq(
+          "completed",
+        )
+      end
+    end
+  end
+
   describe "POST /teacher/application/documents/:document_id/uploads" do
     subject(:perform) do
       post teacher_interface_application_form_document_uploads_path(document),

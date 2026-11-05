@@ -12,7 +12,7 @@ module TeacherInterface
     skip_before_action :track_history, only: :show
 
     def show
-      if document.uploads.empty? && !document.optional?
+      if document.uploads.none?(&:original?) && !show_available_form?
         redirect_to [
                       :new,
                       :teacher_interface,
