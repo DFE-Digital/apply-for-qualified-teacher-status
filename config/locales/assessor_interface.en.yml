@@ -9,6 +9,11 @@ en:
           clear: Clear selection
           of_filter: of filters
           sort: Apply sort
+        sort_options:
+          submitted_at_desc: Created newest to oldest
+          submitted_at_asc: Created oldest to newest
+          last_updated_at_desc: Last updated newest to oldest
+          last_updated_at_asc: Last updated oldest to newest
         results:
           empty: No applications found. Use the filters on the left to try again or refine your search.
 
