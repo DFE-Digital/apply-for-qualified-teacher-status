@@ -43,8 +43,10 @@ class SupportRequestForm
         name:,
         comment:,
         user_type:,
-        application_enquiry_type:,
-        application_reference:,
+        application_enquiry_type:
+          application_submitted_user? ? application_enquiry_type : nil,
+        application_reference:
+          application_submitted_user? ? application_reference : nil,
         submitted_at: Time.zone.now,
       )
 
