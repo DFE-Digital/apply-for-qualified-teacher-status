@@ -161,6 +161,9 @@ RSpec.describe "Assessor reviewing an incoming decision review request",
     expect(assessor_application_page.status_summary.value.text).not_to include(
       "Received decision review",
     )
+    expect(
+      assessor_application_page.decision_review_requested_summary,
+    ).to be_nil
   end
 
   def and_i_see_application_status_is_declined_and_decision_review_received
@@ -170,6 +173,9 @@ RSpec.describe "Assessor reviewing an incoming decision review request",
     expect(assessor_application_page.status_summary.value.text).to include(
       "Received decision review",
     )
+    expect(
+      assessor_application_page.decision_review_requested_summary,
+    ).to be_visible
   end
 
   def and_i_see_application_status_not_to_be_declined
@@ -179,6 +185,9 @@ RSpec.describe "Assessor reviewing an incoming decision review request",
     expect(assessor_application_page.status_summary.value.text).not_to include(
       "Received decision review",
     )
+    expect(
+      assessor_application_page.decision_review_requested_summary,
+    ).to be_nil
   end
 
   def when_i_click_on_review_decision_review_task
