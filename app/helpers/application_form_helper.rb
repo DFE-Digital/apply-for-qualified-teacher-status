@@ -118,6 +118,18 @@ module ApplicationFormHelper
           text: application_form.submitted_at.to_date.to_fs,
         },
       },
+      (
+        if application_form.pending_decision_review?
+          {
+            key: {
+              text: "Decision review requested",
+            },
+            value: {
+              text: application_form.decision_review_received_at.to_date.to_fs,
+            },
+          }
+        end
+      ),
       {
         key: {
           text:
