@@ -60,7 +60,7 @@ en:
           invalid_references: This application has one or more invalid references.
           induction_required: This applicant will need to do a statutory induction period.
       age_range_subjects:
-        heading: Confirm age range and subjects
+        heading: Review age range and subjects
       edit_age_range_subjects:
         heading: Edit age range and subjects
       edit_confirm:

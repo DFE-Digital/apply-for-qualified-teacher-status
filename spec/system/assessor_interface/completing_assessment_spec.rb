@@ -309,8 +309,10 @@ RSpec.describe "Assessor completing assessment", type: :system do
   end
 
   def and_i_see_the_age_range_subjects
-    rows =
-      assessor_age_range_subjects_assessment_recommendation_award_page.summary_list.rows
+    page = assessor_age_range_subjects_assessment_recommendation_award_page
+    expect(page.heading.text).to eq("Review age range and subjects")
+
+    rows = page.summary_list.rows
 
     expect(rows.count).to eq(3)
 
