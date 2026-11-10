@@ -76,6 +76,10 @@ FactoryBot.define do
       new_value { %w[admin assessor external none].sample }
     end
 
+    trait :application_declined do
+      event_type { "application_declined" }
+    end
+
     trait :assessment_section_recorded do
       event_type { "assessment_section_recorded" }
       assessment_section do
