@@ -50,7 +50,7 @@ RSpec.describe DeclineQTS do
       )
     end
 
-    it "persists an snapshot of declined reasons" do
+    it "persists a snapshot of declined reasons" do
       call
 
       expect(decline_event.reload.event_data).to eq("declined_reasons" => {})
