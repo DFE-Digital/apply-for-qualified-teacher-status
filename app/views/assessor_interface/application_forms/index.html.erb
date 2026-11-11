@@ -121,8 +121,10 @@
     <div class="app-inline-content app-inline-content__justify-end">
       <%= f.govuk_collection_select :sort_by,
                               [
-                                OpenStruct.new(id: "submitted_at_desc", name: "Newest to oldest"),
-                                OpenStruct.new(id: "submitted_at_asc", name: "Oldest to newest"),
+                                OpenStruct.new(id: "submitted_at_desc", name: t(".sort_options.submitted_at_desc")),
+                                OpenStruct.new(id: "submitted_at_asc", name: t(".sort_options.submitted_at_asc")),
+                                OpenStruct.new(id: "last_updated_at_desc", name: t(".sort_options.last_updated_at_desc")),
+                                OpenStruct.new(id: "last_updated_at_asc", name: t(".sort_options.last_updated_at_asc")),
                               ],
                               :id,
                               :name,
