@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "open3"
+
 class FileUploadValidator < ActiveModel::EachValidator
   MAX_FILE_SIZE = 50.megabytes
 
@@ -47,7 +49,12 @@ class FileUploadValidator < ActiveModel::EachValidator
   end
 
   def validate_pdf_not_encrypted(record, attribute, uploaded_file)
-    output = `pdfinfo "#{uploaded_file.path}" 2> /dev/null`
+    output =
+      begin
+        Open3.capture2("pdfinfo", uploaded_file.path, err: File::NULL).first
+      rescue Errno::ENOENT
+        ""
+      end
     is_encrypted =
       output.lines.any? do |line|
         line.starts_with?("Encrypted") && line.include?("yes")
