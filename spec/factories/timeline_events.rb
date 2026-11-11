@@ -11,6 +11,7 @@
 #  column_name                          :string           default(""), not null
 #  creator_name                         :string           default(""), not null
 #  creator_type                         :string
+#  event_data                           :jsonb            not null
 #  event_type                           :string           not null
 #  mailer_action_name                   :string           default(""), not null
 #  mailer_class_name                    :string           default(""), not null
@@ -73,6 +74,10 @@ FactoryBot.define do
       event_type { "action_required_by_changed" }
       old_value { %w[admin assessor external none].sample }
       new_value { %w[admin assessor external none].sample }
+    end
+
+    trait :application_declined do
+      event_type { "application_declined" }
     end
 
     trait :assessment_section_recorded do

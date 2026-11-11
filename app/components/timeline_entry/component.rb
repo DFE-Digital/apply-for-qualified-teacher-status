@@ -273,7 +273,17 @@ module TimelineEntry
     end
 
     def application_declined_vars
-      {}
+      event_data = timeline_event.event_data.with_indifferent_access
+      declined_reasons =
+        if event_data.key?(:declined_reasons)
+          event_data[:declined_reasons]
+        else
+          TeacherInterface::ApplicationFormViewObject.new(
+            application_form: timeline_event.application_form,
+          ).declined_reasons
+        end
+
+      { declined_reasons: declined_reasons.sort.to_h }
     end
   end
 end

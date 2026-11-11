@@ -14,7 +14,14 @@ class DeclineQTS
     ActiveRecord::Base.transaction do
       application_form.update!(declined_at: Time.zone.now)
       ApplicationFormStatusUpdater.call(application_form:, user:)
-      CreateTimelineEvent.call("application_declined", application_form:, user:)
+      CreateTimelineEvent.call(
+        "application_declined",
+        application_form:,
+        user:,
+        event_data: {
+          declined_reasons:,
+        },
+      )
     end
 
     DeliverEmail.call(
@@ -27,4 +34,10 @@ class DeclineQTS
   private
 
   attr_reader :application_form, :user
+
+  def declined_reasons
+    TeacherInterface::ApplicationFormViewObject.new(
+      application_form:,
+    ).declined_reasons
+  end
 end
