@@ -5,6 +5,8 @@ module PageObjects
     class PrioritisationReferenceReview < ReviewRequestablePage
       set_url "/assessor/applications/{reference}/assessments/{assessment_id}" \
                 "/prioritisation-reference-requests/{prioritisation_reference_request_id}/edit"
+
+      element :heading, "h1"
     end
   end
 end

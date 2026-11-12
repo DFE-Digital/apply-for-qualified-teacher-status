@@ -61,6 +61,7 @@ RSpec.describe "Assessor prioritisation checks", type: :system do
         prioritisation_work_history_check_id:
           prioritisation_work_history_check.id,
       )
+      and_i_see_the_check_work_history_heading
 
       when_i_submit_yes_on_the_work_history_check_form
       then_i_see_the(
@@ -198,6 +199,7 @@ RSpec.describe "Assessor prioritisation checks", type: :system do
         prioritisation_reference_request_id:
           assessment.prioritisation_reference_requests.first.id,
       )
+      and_i_see_the_review_reference_heading
 
       when_i_submit_yes_on_the_prioritisation_reference_review_form
       then_i_see_the(:assessor_application_page, reference:)
@@ -282,6 +284,45 @@ RSpec.describe "Assessor prioritisation checks", type: :system do
       then_i_see_the(:assessor_application_page, reference:)
       and_i_see_prioritisation_decision_task_as_completed
       and_i_see_dont_see_flag_for_application_prioritised
+    end
+  end
+
+  context "when the prioritisation decision has been made" do
+    before do
+      assessment.prioritisation_work_history_checks.update_all(passed: true)
+
+      assessment
+        .prioritisation_work_history_checks
+        .each do |prioritisation_work_history_check|
+        create(
+          :received_prioritisation_reference_request,
+          assessment:,
+          prioritisation_work_history_check:,
+          work_history: prioritisation_work_history_check.work_history,
+        )
+      end
+
+      assessment.update!(prioritisation_decision_at: Time.zone.now)
+    end
+
+    it "shows the work history check and reference as view only" do
+      when_i_visit_the(
+        :assessor_prioritisation_work_history_check_page,
+        reference:,
+        assessment_id:,
+        prioritisation_work_history_check_id:
+          assessment.prioritisation_work_history_checks.first.id,
+      )
+      then_i_see_the_view_work_history_heading
+
+      when_i_visit_the(
+        :review_assessor_prioritisation_reference_page,
+        reference:,
+        assessment_id:,
+        prioritisation_reference_request_id:
+          assessment.prioritisation_reference_requests.first.id,
+      )
+      then_i_see_the_view_reference_heading
     end
   end
 
@@ -522,6 +563,30 @@ RSpec.describe "Assessor prioritisation checks", type: :system do
   def then_i_see_content_for_confirming_application_deprioritised
     expect(page).to have_content(
       "QTS application #{application_form.reference} won’t be prioritised",
+    )
+  end
+
+  def and_i_see_the_check_work_history_heading
+    expect(
+      assessor_prioritisation_work_history_check_page.heading,
+    ).to have_text("Check role, institution and referee details")
+  end
+
+  def then_i_see_the_view_work_history_heading
+    expect(
+      assessor_prioritisation_work_history_check_page.heading,
+    ).to have_text("View role, institution and referee details")
+  end
+
+  def and_i_see_the_review_reference_heading
+    expect(review_assessor_prioritisation_reference_page.heading).to have_text(
+      "Review reference",
+    )
+  end
+
+  def then_i_see_the_view_reference_heading
+    expect(review_assessor_prioritisation_reference_page.heading).to have_text(
+      "View reference",
     )
   end
 

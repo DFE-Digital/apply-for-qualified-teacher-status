@@ -6,6 +6,8 @@ module PageObjects
       set_url "/assessor/applications/{reference}/assessments/{assessment_id}" \
                 "/prioritisation-work-history-checks/{prioritisation_work_history_check_id}/edit"
 
+      element :heading, "h1"
+
       section :form, "form" do
         element :true_radio_item,
                 "#assessor-interface-prioritisation-work-history-check-form-passed-true-field",

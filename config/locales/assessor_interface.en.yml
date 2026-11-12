@@ -317,11 +317,13 @@ en:
         title: Request work experience confirmation from referees
       edit:
         title: Review reference
+        read_only_title: View reference
     prioritisation_work_history_checks:
       index:
         title: Check role, institution and referee details
       edit:
-        title: View role, institution and referee details
+        title: Check role, institution and referee details
+        read_only_title: View role, institution and referee details
       checks:
         prioritisation_work_history_role: the applicant’s role is valid for prioritisation
         prioritisation_work_history_setting: the setting the applicant worked in is valid for prioritisation

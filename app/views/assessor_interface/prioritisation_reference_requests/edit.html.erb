@@ -1,4 +1,6 @@
-<% content_for :page_title, title_with_error_prefix(t(".title"), error: @form.errors.any?) %>
+<% title = @view_object.disable_form? ? t(".read_only_title") : t(".title") %>
+
+<% content_for :page_title, title_with_error_prefix(title, error: @form.errors.any?) %>
 <% content_for :back_link_url, assessor_interface_application_form_assessment_prioritisation_reference_requests_path(@view_object.application_form, @assessment) %>
 
 <% work_history = @view_object.work_history %>
@@ -6,7 +8,7 @@
 <%= form_with model: @form, url: [:assessor_interface, @view_object.application_form, @assessment, @prioritisation_reference_request], method: :put do |f| %>
   <%= f.govuk_error_summary %>
 
-  <h1 class="govuk-heading-xl"><%= t(".title") %></h1>
+  <h1 class="govuk-heading-xl"><%= title %></h1>
 
   <h2 class="govuk-heading-m">
     Reference details
