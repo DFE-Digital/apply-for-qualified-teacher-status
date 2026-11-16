@@ -14,7 +14,6 @@ namespace :review_app do
       use_passport_for_identity_verification
       prioritisation
       email_domains_for_referees
-      gov_one_applicant_login
       support_request_form
       service_open
     ].each { |feature| FeatureFlags::FeatureFlag.activate(feature) }
