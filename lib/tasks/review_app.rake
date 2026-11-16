@@ -16,6 +16,7 @@ namespace :review_app do
       email_domains_for_referees
       gov_one_applicant_login
       support_request_form
+      service_open
     ].each { |feature| FeatureFlags::FeatureFlag.activate(feature) }
   end
 end
