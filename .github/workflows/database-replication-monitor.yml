@@ -25,6 +25,10 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v7
 
+    # The action reads <tf-vars-path>/<environment>.tfvars.json. Our files are in <environment>/variables.tfvars.json.
+    - name: Copy tfvars to the path the action reads
+      run: cp ${{ env.TF_VARS_PATH }}/${{ matrix.environment }}/variables.tfvars.json ${{ env.TF_VARS_PATH }}/${{ matrix.environment }}.tfvars.json
+
     - name: Monitor ${{ matrix.environment }}
       uses: DFE-Digital/github-actions/monitor-postgres-wal@master
       with:
@@ -34,5 +38,5 @@ jobs:
         environment: ${{ matrix.environment }}
         teams-webhook-url: ${{ secrets.TEAMS_WEBHOOK_URL }}
         service: ${{ vars.TEAMS_MSG_SERVICE_NAME }}
-        app-name: ${{ env.SERVICE_NAME }}-${{ matrix.environment }}
+        app-name: ${{ env.SERVICE_NAME }}-${{ matrix.environment }}-web
         tf-vars-path: ${{ env.TF_VARS_PATH }}
