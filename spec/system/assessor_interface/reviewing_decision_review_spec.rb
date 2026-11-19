@@ -7,11 +7,13 @@ RSpec.describe "Assessor reviewing an incoming decision review request",
   let(:application_form) do
     create :application_form,
            :with_assessment,
-           :declined_with_decision_review_received
+           :declined_with_decision_review_received,
+           declined_at: 3.days.ago
   end
   let(:decision_review_request) do
     create :received_decision_review_request,
-           assessment: application_form.assessment
+           assessment: application_form.assessment,
+           received_at: 1.day.ago
   end
 
   before do
@@ -85,6 +87,9 @@ RSpec.describe "Assessor reviewing an incoming decision review request",
     then_i_see_the(:assessor_application_page, reference:)
     and_i_see_the_decision_review_request_task_completed
     and_i_see_application_status_not_to_be_declined
+
+    when_i_visit_the(:assessor_applications_page)
+    then_i_do_not_see_decision_review_requested_in_search_results
   end
 
   it "upholds decline decision" do
@@ -124,9 +129,39 @@ RSpec.describe "Assessor reviewing an incoming decision review request",
     then_i_see_the(:assessor_application_page, reference:)
     and_i_see_the_decision_review_request_task_completed
     and_i_see_application_status_is_declined_only
+
+    when_i_visit_the(:assessor_applications_page)
+    then_i_do_not_see_decision_review_requested_in_search_results
+  end
+
+  it "shows 'Decision review requested' and its date directly below 'Created on' in search results" do
+    given_i_am_authorized_as_a_reverse_decision_user
+    when_i_visit_the(:assessor_applications_page)
+    then_i_see_decision_review_requested_below_created_on_in_search_results
   end
 
   private
+
+  def then_i_see_decision_review_requested_below_created_on_in_search_results
+    result = assessor_applications_page.search_results.first
+    keys = result.summary_keys.map(&:text)
+
+    expect(keys[keys.index("Created on") + 1]).to eq(
+      "Decision review requested",
+    )
+    expect(result.summary_value("Decision review requested")).to eq(
+      decision_review_request.received_at.to_date.to_fs,
+    )
+  end
+
+  def then_i_do_not_see_decision_review_requested_in_search_results
+    expect(assessor_applications_page.search_results.size).to eq(1)
+    expect(
+      assessor_applications_page.search_results.first.summary_value(
+        "Decision review requested",
+      ),
+    ).to be_nil
+  end
 
   def given_there_is_a_declined_application_form_with_decision_review_request
     application_form
@@ -176,6 +211,14 @@ RSpec.describe "Assessor reviewing an incoming decision review request",
     expect(
       assessor_application_page.decision_review_requested_summary,
     ).to be_visible
+    expect(
+      assessor_application_page.decision_review_requested_summary.value.text,
+    ).to eq(decision_review_request.received_at.to_date.to_fs)
+    keys =
+      assessor_application_page.summary_list.rows.map { |row| row.key.text }
+    expect(keys[keys.index("Created on") + 1]).to eq(
+      "Decision review requested",
+    )
   end
 
   def and_i_see_application_status_not_to_be_declined
