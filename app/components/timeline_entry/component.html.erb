@@ -110,7 +110,7 @@
         Status has changed to <%= render(StatusTag::Component.new(:declined)) %>
       </p>
 
-      <% TeacherInterface::ApplicationFormViewObject.new(application_form: timeline_event.application_form).declined_reasons.each do |title, reasons| %>
+      <% description_vars[:declined_reasons].each do |title, reasons| %>
         <% if title.present? %>
           <h4 class="govuk-heading-s"><%= title %></h4>
         <% end %>

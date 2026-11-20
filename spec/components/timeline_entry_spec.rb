@@ -7,6 +7,92 @@ RSpec.describe TimelineEntry::Component, type: :component do
 
   let(:creator) { timeline_event.creator }
 
+  context "application declined" do
+    let(:application_form) do
+      create(:application_form, :submitted, :with_assessment)
+    end
+
+    let(:timeline_event) do
+      create(
+        :timeline_event,
+        :application_declined,
+        application_form:,
+        event_data:,
+      )
+    end
+
+    let(:event_data) do
+      {
+        declined_reasons: {
+          "Your qualifications" => [{ name: "Original qualification reason." }],
+          "" => [{ name: "Original recommendation.\nAnother paragraph." }],
+          "About you" => [
+            {
+              name: "Original passport reason.",
+              assessor_note: "Original assessor feedback.",
+            },
+            { name: "Original duplicate application reason." },
+          ],
+        },
+      }
+    end
+
+    before do
+      application_form.assessment.update!(
+        recommendation_assessor_note: "Latest recommendation.",
+      )
+      timeline_event.reload
+    end
+
+    it "renders the saved reasons and feedback instead of the latest assessment" do
+      expect(component.text).to include(
+        "Status has changed to Declined",
+        "Original recommendation.",
+        "Another paragraph.",
+        "Original passport reason.",
+        "Original assessor feedback.",
+        "Original duplicate application reason.",
+        "Original qualification reason.",
+      )
+      expect(component.text).not_to include("Latest recommendation.")
+    end
+
+    it "preserves the section heading order and omits the blank heading" do
+      expect(component.css("h4").map(&:text)).to eq(
+        ["About you", "Your qualifications"],
+      )
+    end
+
+    it "retains paragraph formatting and optional feedback" do
+      expect(component.css("li").count).to eq(5)
+      expect(component.css("li").first.at_css("br")).to be_present
+    end
+
+    it "does not recalculate or translate the saved reasons" do
+      expect(component.text).to include("Original passport reason.")
+    end
+
+    context "with an intentionally empty snapshot" do
+      let(:event_data) { { declined_reasons: {} } }
+
+      it "does not fall back to later assessment reasons" do
+        expect(component.text).to include("Status has changed to Declined")
+        expect(component.text).not_to include("Latest recommendation.")
+        expect(component.css("ul")).to be_empty
+      end
+    end
+
+    [{}, { example_detail: "Unrelated event data." }].each do |legacy_data|
+      context "with #{legacy_data.inspect} and no decline snapshot" do
+        let(:event_data) { legacy_data }
+
+        it "uses the latest assessment reasons as before" do
+          expect(component.text).to include("Latest recommendation.")
+        end
+      end
+    end
+  end
+
   context "with a creator name" do
     let(:timeline_event) do
       create(:timeline_event, :stage_changed, creator_name: "TRS", creator: nil)
