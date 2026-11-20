@@ -141,6 +141,89 @@ RSpec.describe ApplicationFormHelper do
       )
     end
 
+    context "when a decision review is pending" do
+      let(:application_form) do
+        create(
+          :application_form,
+          :with_assessment,
+          :declined_with_decision_review_received,
+          declined_at: 3.days.ago,
+        )
+      end
+
+      let!(:decision_review_request) do
+        create(
+          :received_decision_review_request,
+          assessment: application_form.assessment,
+          created_at: 2.days.ago,
+          received_at: 1.day.ago,
+        )
+      end
+
+      before do
+        create(
+          :received_decision_review_request,
+          assessment: application_form.assessment,
+          created_at: 5.days.ago,
+          received_at: 4.days.ago,
+          reviewed_at: 4.days.ago,
+          review_passed: false,
+        )
+      end
+
+      it "shows 'Decision review requested' and its date directly below 'Created on'" do
+        created_index =
+          summary_rows.index { |row| row[:key][:text] == "Created on" }
+
+        expect(summary_rows[created_index + 1]).to eq(
+          {
+            key: {
+              text: "Decision review requested",
+            },
+            value: {
+              text: decision_review_request.received_at.to_date.to_fs,
+            },
+          },
+        )
+      end
+
+      context "when the decline is upheld" do
+        before do
+          decision_review_request.update!(
+            reviewed_at: Time.current,
+            review_passed: false,
+          )
+          application_form.update!(statuses: %w[declined])
+        end
+
+        it "does not show 'Decision review requested' or its date" do
+          expect(summary_rows.map { |row| row[:key][:text] }).not_to include(
+            "Decision review requested",
+          )
+        end
+      end
+
+      context "when the application returns to assessment" do
+        before do
+          decision_review_request.update!(
+            reviewed_at: Time.current,
+            review_passed: true,
+          )
+          application_form.update!(
+            declined_at: nil,
+            stage: "assessment",
+            statuses: %w[assessment_in_progress],
+          )
+        end
+
+        it "does not show 'Decision review requested' or its date" do
+          expect(summary_rows.map { |row| row[:key][:text] }).not_to include(
+            "Decision review requested",
+          )
+        end
+      end
+    end
+
     context "user has change email permission" do
       let(:current_staff) { create(:staff, :with_change_email_permission) }
 

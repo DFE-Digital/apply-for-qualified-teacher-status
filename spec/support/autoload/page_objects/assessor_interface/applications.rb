@@ -67,7 +67,19 @@ module PageObjects
 
       sections :search_results, ".app-search-results__item" do
         element :name, "h2"
+        elements :summary_keys, ".app-description-list dt"
+        elements :summary_values, ".app-description-list dd"
+
+        def summary_value(key)
+          index = summary_keys.map(&:text).index(key)
+          summary_values[index].text if index
+        end
       end
+
+      element :sort_by, "#assessor-interface-sort-form-sort-by-field"
+      elements :sort_options,
+               "#assessor-interface-sort-form-sort-by-field option"
+      element :apply_sort, "button", text: "Apply sort"
 
       element :clear_filters, "div.govuk-button-group a.govuk-link"
       element :apply_filters, "div.govuk-button-group button"

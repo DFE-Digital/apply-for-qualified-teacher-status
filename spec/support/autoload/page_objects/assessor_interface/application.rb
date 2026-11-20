@@ -32,6 +32,10 @@ module PageObjects
         summary_list.find_row(key: "Status")
       end
 
+      def decision_review_requested_summary
+        summary_list.find_row(key: "Decision review requested")
+      end
+
       def find_task_list_item(name)
         task_lists.map { |task_list| task_list.find_item(name) }.compact.first
       end
