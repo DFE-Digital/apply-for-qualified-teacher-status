@@ -265,6 +265,7 @@ en:
       gov_uk_one_login: GOV.UK One Login
       region: State/territory trained in
       submitted_at: Created on
+      decision_review_requested: Decision review requested
       days_completed_in: Working days to outcome
       days_since_submission: Working days since submission
       assessor: Assigned to

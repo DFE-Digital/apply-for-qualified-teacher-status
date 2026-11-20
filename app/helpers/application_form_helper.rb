@@ -122,7 +122,7 @@ module ApplicationFormHelper
         if application_form.pending_decision_review?
           {
             key: {
-              text: "Decision review requested",
+              text: I18n.t("application_form.summary.decision_review_requested"),
             },
             value: {
               text: application_form.decision_review_received_at.to_date.to_fs,
