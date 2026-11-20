@@ -156,7 +156,7 @@ GEM
     brakeman (8.1.0)
       racc
     builder (3.3.0)
-    business (3.1.0)
+    business (3.2.0)
     capybara (3.40.0)
       addressable
       matrix
@@ -873,7 +873,7 @@ CHECKSUMS
   brakeman (8.1.0) sha256=cfa9e5214e4925842f4bc849a64f8a7e6c5d0425fe98eac8d7b7bc60fdc17e07
   builder (3.3.0) sha256=497918d2f9dca528fdca4b88d84e4ef4387256d984b8154e9d5d3fe5a9c8835f
   bundler (4.0.23) sha256=407ba8a1d928f412847f819aa5f8b6aef7c59fb51feb517112af8a165487287b
-  business (3.1.0) sha256=b6603b297cf8848aea509db4d8b71482d068819d8b4f862ab996351687603307
+  business (3.2.0) sha256=f1825c315a43bc12038d486b1251fb1eb2f34962c9f72e4444695a85cbd641d5
   capybara (3.40.0) sha256=42dba720578ea1ca65fd7a41d163dd368502c191804558f6e0f71b391054aeef
   cgi (0.4.2) sha256=a3cb190d46a820ca01a3e28bd5b64e67003ff99d7884b70512448566f35347e6
   choice (0.2.0) sha256=a19617f7dfd4921b38a85d0616446620de685a113ec6d1ecc85bdb67bf38c974
