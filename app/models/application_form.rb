@@ -404,6 +404,14 @@ class ApplicationForm < ApplicationRecord
     CountryOfIssueForPassport.to_name(passport_country_of_issue_code)
   end
 
+  def pending_decision_review?
+    statuses.include?("received_decision_review")
+  end
+
+  def decision_review_received_at
+    assessment&.decision_review_request_for_current_decline&.received_at
+  end
+
   private
 
   def reference_requests_not_yet_received_or_rejected
