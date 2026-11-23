@@ -11,7 +11,14 @@ RSpec.describe AssessorInterface::AssessmentDeclarationDeclineForm,
     )
   end
 
-  let(:assessment) { create(:assessment, :decline) }
+  let(:assessment) do
+    create(
+      :assessment,
+      recommendation: "decline",
+      started_at: Time.zone.now,
+      recommended_at: Time.zone.now,
+    )
+  end
 
   describe "validations" do
     context "when recommendation is declined with no failure reasons" do
