@@ -26,6 +26,8 @@ en:
         release_comment: Briefly explain why you are removing the on hold flag from this application.
       assessor_interface_filter_form:
         reference: "Example: 210245"
+      assessor_interface_draft_application_forms_filter_form:
+        email: You can search by email address
       assessor_interface_sla_filter_form:
         breach_statuses: Select all that apply
         country_groupings: Select all that apply
@@ -179,6 +181,8 @@ en:
         location: Country trained in
         name: Applicant name
         reference: Application reference number
+      assessor_interface_draft_application_forms_filter_form:
+        email: Find a draft application
       assessor_interface_qualification_update_form:
         title: New teaching qualification title
         institution_name: New name of institution

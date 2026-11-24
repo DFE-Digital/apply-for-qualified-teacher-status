@@ -247,6 +247,28 @@ en:
       edit:
         title: Review request for decision review
 
+    draft_application_forms:
+      index:
+        title: Draft Applications
+        search: Search
+        not_provided: Not provided
+        days:
+          one: "%{count} day"
+          other: "%{count} days"
+        summary:
+          name: Name
+          country: Country trained in
+          started_at: Draft Started
+          days_until_deletion: Days until deletion
+        results:
+          count:
+            one: "1 result for ‘%{email}’"
+            other: "%{count} results for ‘%{email}’"
+          clear: Clear search results
+          empty: No applications found. Use the search bar above to try again or refine your search
+      show:
+        title: Draft application
+
     email_delivery_failures:
       index:
         mailer_action_names:

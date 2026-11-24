@@ -9,8 +9,16 @@ module StaffNavigationHelper
     [
       {
         text: "Applications",
-        href: main_app.assessor_interface_application_forms_path,
-        items: [],
+        items: [
+          {
+            text: "Submitted",
+            href: main_app.assessor_interface_application_forms_path,
+          },
+          {
+            text: "Drafts",
+            href: main_app.assessor_interface_draft_application_forms_path,
+          },
+        ],
       },
       {
         text: "Records",

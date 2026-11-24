@@ -47,6 +47,16 @@ Rails.application.routes.draw do
               path: "applications-export",
               only: :index
 
+    resources :draft_application_forms,
+              path: "draft-applications",
+              only: %i[index show],
+              param: :reference do
+      collection do
+        post "filters/apply", to: "draft_application_forms#apply_filters"
+        get "filters/clear", to: "draft_application_forms#clear_filters"
+      end
+    end
+
     resources :application_forms,
               path: "/applications",
               only: %i[index show destroy],
