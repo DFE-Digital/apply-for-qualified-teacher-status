@@ -364,6 +364,8 @@ class TeacherInterface::ApplicationFormViewObject
             FailureReasons.decline?(failure_reason.key)
           end
 
+        next if decline_reasons.empty?
+
         reasons =
           decline_reasons.map do |failure_reason|
             title =

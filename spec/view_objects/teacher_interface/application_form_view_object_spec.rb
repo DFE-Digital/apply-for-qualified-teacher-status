@@ -369,6 +369,87 @@ RSpec.describe TeacherInterface::ApplicationFormViewObject do
       it { is_expected.to eq({ "" => [{ name: "A note." }] }) }
     end
 
+    context "with only further information reasons in an assessment section" do
+      before do
+        create(
+          :assessment_section,
+          :personal_information,
+          :failed,
+          assessment:,
+          selected_failure_reasons: [
+            build(
+              :selected_failure_reason,
+              key: FailureReasons::PASSPORT_DOCUMENT_ILLEGIBLE,
+              assessor_feedback: "Example further information feedback.",
+            ),
+          ],
+        )
+      end
+
+      it "omits the section heading and reasons" do
+        expect(declined_reasons).to eq({})
+      end
+
+      context "with a recommendation note" do
+        before do
+          assessment.update!(
+            recommendation_assessor_note: "Example decline note.",
+          )
+        end
+
+        it "returns the note without an empty section" do
+          expect(declined_reasons).to eq(
+            "" => [{ name: "Example decline note." }],
+          )
+        end
+      end
+
+      context "with a decline reason in another section" do
+        before do
+          create(
+            :assessment_section,
+            :qualifications,
+            :failed,
+            assessment:,
+            selected_failure_reasons: [
+              build(
+                :selected_failure_reason,
+                key: FailureReasons::DUPLICATE_APPLICATION,
+                assessor_feedback: "Example decline feedback.",
+              ),
+            ],
+          )
+        end
+
+        it "returns only the section containing a decline reason" do
+          expect(declined_reasons).to eq(
+            "Your qualifications" => [
+              {
+                name: "You already have an application in progress.",
+                assessor_note: "Example decline feedback.",
+              },
+            ],
+          )
+        end
+      end
+
+      context "when a professional standing request has expired" do
+        before { create(:professional_standing_request, :expired, assessment:) }
+
+        it "returns the expiry reason instead of an empty section" do
+          expect(declined_reasons).to eq(
+            "" => [
+              {
+                name:
+                  "Your application has been declined as we did not receive your Letter " \
+                    "of Professional Standing from teaching authority within 180 days.",
+              },
+            ],
+          )
+        end
+      end
+    end
+
     context "with failure reasons that include FI and Declines" do
       let(:assessment_section) do
         create(
