@@ -3,8 +3,22 @@
 require "rails_helper"
 
 RSpec.describe "Assessor check submitted details", type: :system do
+  let(:application_form) do
+    create(
+      :application_form,
+      :with_teaching_qualification,
+      :with_work_history,
+      :with_registration_number,
+      :with_personal_information,
+      :submitted,
+      :with_assessment,
+      region: create(:region, :in_country, country_code: "GB-SCT"),
+    )
+  end
+
   before do
     given_there_is_an_application_form
+    given_there_are_assessment_sections
     given_i_am_authorized_as_an_assessor_user
   end
 
@@ -303,6 +317,42 @@ RSpec.describe "Assessor check submitted details", type: :system do
     application_form
   end
 
+  def given_there_are_assessment_sections
+    create(
+      :assessment_section,
+      :personal_information,
+      failure_reasons: %w[identification_document_expired],
+      assessment: application_form.assessment,
+    )
+    create(
+      :assessment_section,
+      :qualifications,
+      failure_reasons: %w[identification_document_expired],
+      assessment: application_form.assessment,
+    )
+    create(
+      :assessment_section,
+      :age_range_subjects,
+      failure_reasons: %w[identification_document_expired],
+      assessment: application_form.assessment,
+    )
+    create(
+      :assessment_section,
+      :work_history,
+      assessment: application_form.assessment,
+      failure_reasons: %w[
+        unrecognised_references
+        identification_document_expired
+      ],
+    )
+    create(
+      :assessment_section,
+      :professional_standing,
+      failure_reasons: %w[identification_document_expired],
+      assessment: application_form.assessment,
+    )
+  end
+
   def given_application_form_doesnt_need_work_history
     application_form.update!(
       needs_work_history: false,
@@ -533,59 +583,6 @@ RSpec.describe "Assessor check submitted details", type: :system do
       .failure_reason_note_textareas
       .first.fill_in with: "Note."
     assessor_check_professional_standing_page.form.continue_button.click
-  end
-
-  def application_form
-    @application_form ||=
-      begin
-        application_form =
-          create(
-            :application_form,
-            :with_teaching_qualification,
-            :with_work_history,
-            :with_registration_number,
-            :with_personal_information,
-            :submitted,
-            :with_assessment,
-            region: create(:region, :in_country, country_code: "GB-SCT"),
-          )
-
-        create(
-          :assessment_section,
-          :personal_information,
-          failure_reasons: %w[identification_document_expired],
-          assessment: application_form.assessment,
-        )
-        create(
-          :assessment_section,
-          :qualifications,
-          failure_reasons: %w[identification_document_expired],
-          assessment: application_form.assessment,
-        )
-        create(
-          :assessment_section,
-          :age_range_subjects,
-          failure_reasons: %w[identification_document_expired],
-          assessment: application_form.assessment,
-        )
-        create(
-          :assessment_section,
-          :work_history,
-          assessment: application_form.assessment,
-          failure_reasons: %w[
-            unrecognised_references
-            identification_document_expired
-          ],
-        )
-        create(
-          :assessment_section,
-          :professional_standing,
-          failure_reasons: %w[identification_document_expired],
-          assessment: application_form.assessment,
-        )
-
-        application_form
-      end
   end
 
   delegate :reference, to: :application_form
