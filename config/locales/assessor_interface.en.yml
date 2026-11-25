@@ -265,6 +265,10 @@ en:
       show:
         title: Draft application
 
+    draft_created_timeline_entry:
+      title: Draft created
+      byline: by applicant
+
     email_delivery_failures:
       index:
         mailer_action_names:
