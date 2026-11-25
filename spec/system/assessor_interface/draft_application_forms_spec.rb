@@ -158,10 +158,10 @@ RSpec.describe "Assessor viewing draft applications", type: :system do
     ).to have_active_applications_link
     expect(assessor_draft_applications_page.header).to have_active_drafts_link
     expect(assessor_draft_applications_page.heading.text).to eq(
-      "Draft Applications",
+      "Draft applications",
     )
     expect(assessor_draft_applications_page.title).to start_with(
-      "Draft Applications",
+      "Draft applications",
     )
   end
 
