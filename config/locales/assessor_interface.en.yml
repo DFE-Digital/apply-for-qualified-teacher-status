@@ -251,10 +251,6 @@ en:
       index:
         title: Draft Applications
         search: Search
-        not_provided: Not provided
-        days:
-          one: "%{count} day"
-          other: "%{count} days"
         summary:
           name: Name
           country: Country trained in

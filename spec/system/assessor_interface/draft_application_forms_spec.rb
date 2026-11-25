@@ -84,11 +84,12 @@ RSpec.describe "Assessor viewing draft applications", type: :system do
     and_no_search_is_active
   end
 
-  it "opens the placeholder show page and returns to the searched list" do
+  it "opens the read-only overview and returns to the searched list" do
     when_i_visit_the(:assessor_draft_applications_page)
     when_i_search_by_email(draft.teacher.email)
     when_i_open_the_draft_application
-    then_i_see_the_placeholder_draft_application
+    then_i_see_the_draft_application
+    and_i_see_the_read_only_overview
 
     when_i_click_the_back_link
     then_i_see_the(:assessor_draft_applications_page)
@@ -226,16 +227,55 @@ RSpec.describe "Assessor viewing draft applications", type: :system do
     expect(assessor_draft_applications_page).not_to have_result_count
   end
 
-  def then_i_see_the_placeholder_draft_application
+  def then_i_see_the_draft_application
     then_i_see_the(:assessor_draft_application_page, reference: draft.reference)
     expect(assessor_draft_application_page.title).to start_with(
       "Draft application",
     )
-    expect(assessor_draft_application_page.main_content.text).to be_empty
+    expect(assessor_draft_application_page.heading.text).to eq(
+      "Draft application",
+    )
     expect(
       assessor_draft_application_page.header,
     ).to have_active_applications_link
     expect(assessor_draft_application_page.header).to have_active_drafts_link
+  end
+
+  def and_i_see_the_read_only_overview
+    expect(assessor_draft_application_page.overview_heading.text).to eq(
+      "Overview",
+    )
+    rows = assessor_draft_application_page.summary_list.rows
+    expect(rows.map { |row| row.key.text }).to eq(
+      [
+        "Name",
+        "Country trained in",
+        "Email",
+        "GOV.UK One Login",
+        "Draft created",
+        "Days until deletion",
+        "Reference",
+        "Application history",
+      ],
+    )
+    expect(rows.map { |row| row.value.text }).to eq(
+      [
+        "Not provided",
+        "France",
+        draft.teacher.email,
+        "Unlinked",
+        "31 May 2026",
+        "6 days",
+        draft.reference,
+        "View timeline of this application’s actions",
+      ],
+    )
+    and_i_cannot_change_or_delete_the_draft
+  end
+
+  def and_i_cannot_change_or_delete_the_draft
+    expect(assessor_draft_application_page).to have_no_change_links
+    expect(assessor_draft_application_page).to have_no_delete_controls
   end
 
   def then_i_see_the_first_page_of_matching_drafts

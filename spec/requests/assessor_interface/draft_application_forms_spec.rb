@@ -22,6 +22,7 @@ RSpec.describe "Assessor Interface - Draft Applications", type: :request do
     [
       %i[get assessor_interface_draft_application_forms_path ok],
       %i[get assessor_interface_draft_application_form_path ok],
+      %i[get timeline_assessor_interface_draft_application_form_path ok],
       %i[
         post
         filters_apply_assessor_interface_draft_application_forms_path
@@ -35,7 +36,12 @@ RSpec.describe "Assessor Interface - Draft Applications", type: :request do
     ].each do |verb, route, expected_status|
       context "for #{route}" do
         let(:path) do
-          if route == :assessor_interface_draft_application_form_path
+          if route.in?(
+               %i[
+                 assessor_interface_draft_application_form_path
+                 timeline_assessor_interface_draft_application_form_path
+               ],
+             )
             public_send(route, draft)
           else
             public_send(route)

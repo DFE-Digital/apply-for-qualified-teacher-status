@@ -51,6 +51,8 @@ Rails.application.routes.draw do
               path: "draft-applications",
               only: %i[index show],
               param: :reference do
+      member { get "timeline" }
+
       collection do
         post "filters/apply", to: "draft_application_forms#apply_filters"
         get "filters/clear", to: "draft_application_forms#clear_filters"

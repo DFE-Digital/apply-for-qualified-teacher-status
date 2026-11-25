@@ -26,27 +26,14 @@ class AssessorInterface::DraftApplicationFormsIndexViewObject
   end
 
   def summary_rows(application_form)
-    name = [application_form.given_names, application_form.family_name].reject(
-      &:blank?
-    ).join(" ")
+    view_object =
+      AssessorInterface::DraftApplicationFormViewObject.new(application_form:)
 
     [
-      [
-        :name,
-        name.presence ||
-          I18n.t(
-            "assessor_interface.draft_application_forms.index.not_provided",
-          ),
-      ],
+      [:name, view_object.name],
       [:country, CountryName.from_country(application_form.region.country)],
       [:started_at, application_form.created_at.to_date.to_fs],
-      [
-        :days_until_deletion,
-        I18n.t(
-          "assessor_interface.draft_application_forms.index.days",
-          count: [application_form.days_until_expired, 0].max,
-        ),
-      ],
+      [:days_until_deletion, view_object.days_until_deletion],
     ].map do |key, value|
       {
         key: {
