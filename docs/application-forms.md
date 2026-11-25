@@ -6,7 +6,7 @@ The lifecycle of an application follows the stages below. The [status updater](.
 
 Before an application is submitted (stored in the `submitted_at` column) all the information from the applicant must be submitted, this information is mostly stored in the `ApplicationForm` model, with some additional information stored in the `WorkHistory` and `Qualification` models.
 
-Active staff can view draft applications under **Applications > Drafts** in the assessor interface. The list supports exact email search using the same matching as submitted applications and shows 20 drafts per page, newest started first. It displays the applicant's current name (or "Not provided"), country trained in, draft start date and days until deletion.
+Active staff can view draft applications under **Applications > Drafts** at `/assessor/applications/drafts` in the assessor interface. The list supports exact email search using the same matching as submitted applications and shows 20 drafts per page, newest started first. It displays the applicant's current name (or "Not provided"), country trained in, draft start date and days until deletion.
 
 The countdown uses the existing six-calendar-month expiry from draft creation. Drafts remain listed until deleted, with overdue countdowns displayed as zero days. The draft detail page is currently a placeholder with a Back link to the list.
 

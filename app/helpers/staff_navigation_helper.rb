@@ -13,6 +13,7 @@ module StaffNavigationHelper
           {
             text: "Submitted",
             href: main_app.assessor_interface_application_forms_path,
+            match: %r{\A/assessor/applications(?:\z|/(?!drafts(?:/|\z)))},
           },
           {
             text: "Drafts",

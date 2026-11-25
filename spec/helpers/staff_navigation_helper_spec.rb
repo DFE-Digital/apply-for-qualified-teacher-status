@@ -180,6 +180,14 @@ RSpec.describe StaffNavigationHelper do
       let(:path) { "#{main_app.assessor_interface_application_forms_path}/123" }
 
       it { expect(current_section[:text]).to eq("Applications") }
+
+      it "activates only the Submitted item" do
+        expect(
+          current_section[:items]
+            .select { |item| staff_navigation_item_active?(item) }
+            .map { |item| item[:text] },
+        ).to eq(["Submitted"])
+      end
     end
 
     context "on the draft application list" do
@@ -219,6 +227,21 @@ RSpec.describe StaffNavigationHelper do
             .select { |item| staff_navigation_item_active?(item) }
             .map { |item| item[:text] },
         ).to eq(["Submitted"])
+      end
+    end
+
+    context "on a draft application's timeline" do
+      let(:path) do
+        main_app.timeline_assessor_interface_draft_application_form_path("123")
+      end
+
+      it "activates Applications and only the Drafts item" do
+        expect(current_section[:text]).to eq("Applications")
+        expect(
+          current_section[:items]
+            .select { |item| staff_navigation_item_active?(item) }
+            .map { |item| item[:text] },
+        ).to eq(["Drafts"])
       end
     end
 

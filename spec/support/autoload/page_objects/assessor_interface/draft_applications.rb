@@ -3,7 +3,7 @@
 module PageObjects
   module AssessorInterface
     class DraftApplications < SitePrism::Page
-      set_url "/assessor/draft-applications"
+      set_url "/assessor/applications/drafts"
 
       section :header, PageHeader, "body"
 

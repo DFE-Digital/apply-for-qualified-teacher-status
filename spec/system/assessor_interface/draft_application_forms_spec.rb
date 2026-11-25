@@ -177,7 +177,7 @@ RSpec.describe "Assessor viewing draft applications", type: :system do
   def and_i_see_the_draft_details
     result = assessor_draft_applications_page.search_results.last
     expect(result.email[:href]).to end_with(
-      "/assessor/draft-applications/#{draft.reference}",
+      "/assessor/applications/drafts/#{draft.reference}",
     )
     expect(result.summary_keys.map(&:text)).to eq(
       ["Name", "Country trained in", "Draft Started", "Days until deletion"],

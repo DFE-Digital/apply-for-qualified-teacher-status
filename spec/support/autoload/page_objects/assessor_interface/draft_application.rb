@@ -3,7 +3,7 @@
 module PageObjects
   module AssessorInterface
     class DraftApplication < SitePrism::Page
-      set_url "/assessor/draft-applications/{reference}"
+      set_url "/assessor/applications/drafts/{reference}"
 
       section :header, PageHeader, "body"
       element :back_link, ".govuk-back-link"

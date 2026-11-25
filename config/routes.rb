@@ -48,7 +48,7 @@ Rails.application.routes.draw do
               only: :index
 
     resources :draft_application_forms,
-              path: "draft-applications",
+              path: "applications/drafts",
               only: %i[index show],
               param: :reference do
       member { get "timeline" }
