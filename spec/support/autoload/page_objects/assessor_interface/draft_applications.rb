@@ -9,7 +9,6 @@ module PageObjects
 
       element :heading, "h1"
       element :email_label, "label"
-      element :email_hint, "#draft-email-hint"
       element :email, "input[type=text]"
       element :search, "button", text: "Search", exact_text: true
       element :clear_search, "a", text: "Clear search results"

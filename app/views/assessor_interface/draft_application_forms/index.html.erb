@@ -4,9 +4,8 @@
 
 <%= form_with model: @view_object.filter_form, url: filters_apply_assessor_interface_draft_application_forms_path, method: :post do |f| %>
   <%= f.govuk_label :email, size: "s" %>
-  <div id="draft-email-hint" class="govuk-hint"><%= t("helpers.hint.assessor_interface_draft_application_forms_filter_form.email") %></div>
   <div class="app-inline-content app-inline-content__items-baseline">
-    <%= f.govuk_text_field :email, label: nil, hint: nil, form_group: { class: "govuk-!-width-full govuk-!-margin-right-2" }, aria: { describedby: "draft-email-hint" } %>
+    <%= f.govuk_text_field :email, label: nil, hint: nil, form_group: { class: "govuk-!-width-full govuk-!-margin-right-2" } %>
     <%= f.govuk_submit t(".search") %>
   </div>
 <% end %>

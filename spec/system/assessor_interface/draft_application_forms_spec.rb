@@ -167,10 +167,7 @@ RSpec.describe "Assessor viewing draft applications", type: :system do
 
   def and_i_see_the_draft_search
     expect(assessor_draft_applications_page.email_label.text).to eq(
-      "Find a draft application",
-    )
-    expect(assessor_draft_applications_page.email_hint.text).to eq(
-      "You can search by email address",
+      "Applicant email",
     )
   end
 
