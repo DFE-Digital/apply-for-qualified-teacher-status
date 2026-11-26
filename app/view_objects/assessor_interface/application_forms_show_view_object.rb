@@ -64,10 +64,14 @@ class AssessorInterface::ApplicationFormsShowViewObject
            current_staff,
            assessment,
          ).rollback?
-        {
-          name: "Reverse decision",
-          link: [:rollback, :assessor_interface, application_form, assessment],
-        }
+        if application_form.pending_decision_review?
+          { name: "Reverse decision", status: :unavailable }
+        else
+          {
+            name: "Reverse decision",
+            link: [:rollback, :assessor_interface, application_form, assessment],
+          }
+        end
       end,
       if AssessorInterface::ApplicationFormPolicy.new(
            current_staff,

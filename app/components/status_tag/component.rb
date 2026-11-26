@@ -66,6 +66,7 @@ module StatusTag
       requested: "yellow",
       review: "magenta",
       submitted: "grey",
+      unavailable: "red",
       update_needed: "red",
       valid: "green",
       verification: "yellow",

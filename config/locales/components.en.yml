@@ -44,6 +44,7 @@ en:
       requested: Waiting on
       review: Review
       submitted: Not started
+      unavailable: Unavailable
       update_needed: Update needed
       valid: Valid
       verification: Verification

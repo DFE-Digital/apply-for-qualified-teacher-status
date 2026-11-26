@@ -16,6 +16,8 @@ module AssessorInterface
 
     before_action :ensure_can_make_prioritisation_decision,
                   only: %i[edit_prioritisation update_prioritisation]
+    before_action :ensure_no_pending_decision_review,
+                  only: %i[rollback destroy]
 
     def review
       @professional_standing_request =
@@ -156,6 +158,12 @@ module AssessorInterface
 
     def ensure_can_make_prioritisation_decision
       return if @assessment.can_update_prioritisation_decision?
+
+      redirect_to [:assessor_interface, application_form]
+    end
+
+    def ensure_no_pending_decision_review
+      return unless application_form.pending_decision_review?
 
       redirect_to [:assessor_interface, application_form]
     end
