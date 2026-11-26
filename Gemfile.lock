@@ -667,6 +667,8 @@ GEM
     site_prism-all_there (3.0.9)
     sitemap_generator (7.1.1)
       builder (~> 3.0)
+    skylight (7.2.0)
+      activesupport (>= 7.2.0)
     snaky_hash (2.0.6)
       hashie (>= 0.1.0, < 6)
       version_gem (>= 1.1.8, < 3)
@@ -830,6 +832,7 @@ DEPENDENCIES
   shoulda-matchers
   site_prism
   sitemap_generator
+  skylight
   solid_cache
   solid_queue
   stimulus-rails
@@ -1073,6 +1076,7 @@ CHECKSUMS
   site_prism (6.0.1) sha256=f8144d8baa8d533787436c0f777dd95ac6a17b4f9743d10e3141c418b6bd5843
   site_prism-all_there (3.0.9) sha256=3d9e0b722fa62a3553589130dea23fa50c99dc80f108c851d7480d341d83f4f6
   sitemap_generator (7.1.1) sha256=ab2a133d512a7b33ed713a27a9977f61d8379c9943e3b79900243fc1c4f7f81d
+  skylight (7.2.0) sha256=c06de4873eed91d9665ca4ee7691273df7ffc8049394cdd75e4d84512fe0da55
   snaky_hash (2.0.6) sha256=3663cae48cdef582b517025cf8a39d8789996eaf0b4ed89e2f0624836505654a
   solid_cache (1.0.10) sha256=bc05a2fb3ac78a6f43cbb5946679cf9db67dd30d22939ededc385cb93e120d41
   solid_queue (1.7.0) sha256=6566b70b801d1c317c81bba7bcdd5677c019afac584a30374b4164002ca356d3
