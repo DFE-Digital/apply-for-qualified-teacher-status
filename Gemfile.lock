@@ -197,9 +197,9 @@ GEM
     devise-passwordless (1.1.0)
       devise
       globalid
-    devise_invitable (2.0.14)
-      actionmailer (>= 5.0)
-      devise (>= 4.6)
+    devise_invitable (3.1.0)
+      actionmailer (>= 7.0)
+      devise (>= 5.0)
     diff-lcs (1.6.2)
     dotenv (3.2.0)
     dotenv-rails (3.2.0)
@@ -384,7 +384,7 @@ GEM
     net-http (0.10.0)
       net-protocol (>= 0.3.0)
       uri (>= 0.11.1)
-    net-imap (0.6.7)
+    net-imap (0.6.8)
       date
       net-protocol
     net-pop (0.1.2)
@@ -896,7 +896,7 @@ CHECKSUMS
   declarative (0.0.20) sha256=8021dd6cb17ab2b61233c56903d3f5a259c5cf43c80ff332d447d395b17d9ff9
   devise (5.0.4) sha256=d605f2b85854e74e56ee789e2d398702bc2d06e6bcd894717a670a3199c74cc1
   devise-passwordless (1.1.0) sha256=4a4b8c93e68fcc69a143140f8cdd53ca919751b07d0c2eeb2e598a77f9c39929
-  devise_invitable (2.0.14) sha256=c092843761aa31702ff18809383956ebce4773317cdafc3891fd6112f4f2a745
+  devise_invitable (3.1.0) sha256=f26447c88f5e95fe81fb5eb4e397289e1f24d645ee5905accbd705ed67d13ed9
   dfe-analytics (1.16.4)
   dfe-autocomplete (1.0.0)
   dfe-reference-data (3.8.6)
@@ -975,7 +975,7 @@ CHECKSUMS
   multi_xml (0.6.0) sha256=d24393cf958adb226db884b976b007914a89c53ad88718e25679d7008823ad52
   multipart-post (2.4.1) sha256=9872d03a8e552020ca096adadbf5e3cb1cd1cdd6acd3c161136b8a5737cdb4a8
   net-http (0.10.0) sha256=1a2ff6e37a05724973c43f2bf7bf105f59c36a4cd0a7e9b1c021a0a566987c27
-  net-imap (0.6.7) sha256=b5c9573be975d856de252ee851871724da66aa2d449b2482d5690bd12bc23660
+  net-imap (0.6.8) sha256=eb30bb62227b64a3af6b518b04b2375113d69f68f15de59b0193b07d98acf6d9
   net-pop (0.1.2) sha256=848b4e982013c15b2f0382792268763b748cce91c9e91e36b0f27ed26420dff3
   net-protocol (0.4.0) sha256=f9f90c8c6f64794a45160bf422177a336db12809de3beeeaa26b88fcd2e8c853
   net-smtp (0.5.2) sha256=35103cc04d6b2d94632f9928ede07483c24b70b9c0db1f231fea43909b678f3c
