@@ -1,13 +1,17 @@
-<% content_for :page_title, "Reverse decision" %>
+<% content_for :page_title, title_with_error_prefix("Reverse decision", error: @form.errors.any?) %>
 <% content_for :back_link_url, assessor_interface_application_form_path(@application_form) %>
 
-<h1 class="govuk-heading-l">Are you sure you want to reverse this decision?</h1>
+<%= form_with model: @form, url: [:assessor_interface, @application_form, @assessment], method: :delete do |f| %>
+  <%= f.govuk_error_summary %>
 
-<p class="govuk-body">
-  This will require the application to be reassessed.
-  The applicant will not be informed of the reversal and any draft applications will be deleted.
-</p>
+  <h1 class="govuk-heading-l">Are you sure you want to reverse this decision?</h1>
 
-<%= form_with url: [:assessor_interface, @application_form, @assessment], method: :delete do |f| %>
+  <p class="govuk-body">
+    This will require the application to be reassessed.
+    The applicant will not be informed of the reversal and any draft applications will be deleted.
+  </p>
+
+  <%= f.govuk_collection_radio_buttons :reverse, %i[true false], :itself, legend: nil %>
+
   <%= render "shared/assessor_interface/continue_cancel_button", f: %>
 <% end %>

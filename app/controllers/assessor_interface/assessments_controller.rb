@@ -74,6 +74,7 @@ module AssessorInterface
     end
 
     def rollback
+      @form = ReverseDecisionForm.new
     end
 
     def edit_prioritisation
@@ -108,7 +109,19 @@ module AssessorInterface
     end
 
     def destroy
-      RollbackAssessment.call(assessment:, user: current_staff)
+      @form =
+        ReverseDecisionForm.new(
+          reverse:
+            params.dig(:assessor_interface_reverse_decision_form, :reverse),
+        )
+
+      unless @form.valid?
+        render :rollback, status: :unprocessable_entity
+        return
+      end
+
+      RollbackAssessment.call(assessment:, user: current_staff) if @form.reverse
+
       redirect_to [:assessor_interface, application_form]
     rescue RollbackAssessment::InvalidState => e
       flash[:warning] = e.message
