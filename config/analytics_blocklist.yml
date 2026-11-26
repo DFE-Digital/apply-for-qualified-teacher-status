@@ -199,6 +199,7 @@
     - creator_id
     - creator_name
     - creator_type
+    - event_data
     - event_type
     - eligibility_domain_id
     - id

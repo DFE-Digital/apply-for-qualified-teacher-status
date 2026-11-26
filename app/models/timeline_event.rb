@@ -11,6 +11,7 @@
 #  column_name                          :string           default(""), not null
 #  creator_name                         :string           default(""), not null
 #  creator_type                         :string
+#  event_data                           :jsonb            not null
 #  event_type                           :string           not null
 #  mailer_action_name                   :string           default(""), not null
 #  mailer_class_name                    :string           default(""), not null
