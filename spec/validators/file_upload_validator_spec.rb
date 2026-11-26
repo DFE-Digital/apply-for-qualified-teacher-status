@@ -109,20 +109,19 @@ RSpec.describe FileUploadValidator do
       expect(model).to be_valid
     end
 
-    context "with a non-PDF file" do
-      let(:file) { fixture_file_upload("upload.txt", "text/plain") }
+    context "with an accepted non-PDF file" do
+      let(:file) { fixture_file_upload("id_example.JPG", "image/jpeg") }
 
-      it "invokes pdfinfo after checking the content type" do
-        expect(Open3).to receive(:capture2).with(
+      it "accepts the file when pdfinfo produces no output" do
+        allow(status).to receive(:success?).and_return(false)
+        allow(Open3).to receive(:capture2).and_return(["", status])
+
+        expect(model).to be_valid
+        expect(Open3).to have_received(:capture2).with(
           "pdfinfo",
           file.path,
           err: File::NULL,
-        ) do
-          expect(model.errors.of_kind?(:file, :invalid_content_type)).to be true
-          ["", status]
-        end
-
-        expect(model).not_to be_valid
+        )
       end
     end
   end
