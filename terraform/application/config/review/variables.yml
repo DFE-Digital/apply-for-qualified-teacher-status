@@ -3,5 +3,4 @@ TRS_API_URL: https://preprod.teacher-qualifications-api.education.gov.uk
 BIGQUERY_DISABLE: true
 QUEUE_THREADS: 5
 QUEUE_PROCESSES: 1
-SKYLIGHT_ENABLED: true
-SKYLIGHT_ENV: review
+SKYLIGHT_ENABLED: false
