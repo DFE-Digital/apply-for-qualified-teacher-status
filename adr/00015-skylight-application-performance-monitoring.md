@@ -17,7 +17,7 @@ We want application performance monitoring that integrates with Rails without be
 Introduce [Skylight](https://www.skylight.io/) using its Ruby gem and automatic Rails integration, alongside the existing monitoring and logging tools.
 
 - Enable reporting for desired environments, using explicit Skylight environment labels.
-- Exclude `HealthcheckController#show` so healthcheck traffic does not affect request usage or performance aggregates.
+- Exclude `OkComputer::OkComputerController#show` and `OkComputer::OkComputerController#index` so healthcheck traffic does not affect request usage or performance aggregates.
 - Supply authentication through environment secrets.
 - Retain agent defaults unless an operational requirement justifies an override. Do not duplicate internal native-agent settings in deployment configuration.
 

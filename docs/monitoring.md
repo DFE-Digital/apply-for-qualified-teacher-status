@@ -12,7 +12,7 @@ Skylight adds application performance monitoring for Rails requests, including t
 
 Ask the team for access to the service's application in [Skylight](https://www.skylight.io/). Select the relevant environment before investigating an endpoint's response times, database queries or rendering costs.
 
-The configuration in [config/skylight.yml](../config/skylight.yml) excludes `HealthcheckController#show`. Healthcheck requests are not instrumented or included in Skylight's request usage and aggregated performance graphs.
+The configuration in [config/skylight.yml](../config/skylight.yml) excludes `OkComputer::OkComputerController#show` and `OkComputer::OkComputerController#index`. These cover `/healthcheck`, individual checks such as `/healthcheck/postgresql`, and `/healthcheck/all`. Healthcheck requests are excluded from Skylight reporting, request usage and aggregated performance graphs.
 
 ### Environment variables and defaults
 

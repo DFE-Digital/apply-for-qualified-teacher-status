@@ -1,3 +1,4 @@
 ---
 ignored_endpoints:
-  - HealthcheckController#show
+  - OkComputer::OkComputerController#show
+  - OkComputer::OkComputerController#index
