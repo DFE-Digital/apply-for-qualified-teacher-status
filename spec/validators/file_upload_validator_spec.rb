@@ -53,4 +53,76 @@ RSpec.describe FileUploadValidator do
 
     it { is_expected.not_to be_valid }
   end
+
+  describe "pdfinfo invocation" do
+    let(:file) { fixture_file_upload("upload.pdf", "application/pdf") }
+    let(:status) { instance_double(Process::Status, success?: true) }
+
+    it "invokes pdfinfo without a shell" do
+      allow(Open3).to receive(:capture2).and_return(["Encrypted: no\n", status])
+
+      expect(model).to be_valid
+      expect(Open3).to have_received(:capture2).with(
+        "pdfinfo",
+        file.path,
+        err: File::NULL,
+      )
+    end
+
+    it "accepts the file when pdfinfo is missing" do
+      allow(Open3).to receive(:capture2).and_raise(Errno::ENOENT)
+
+      expect(model).to be_valid
+    end
+
+    it "accepts the file when pdfinfo fails without output" do
+      allow(status).to receive(:success?).and_return(false)
+      allow(Open3).to receive(:capture2).and_return(["", status])
+
+      expect(model).to be_valid
+    end
+
+    it "rejects an encrypted PDF" do
+      allow(Open3).to receive(:capture2).and_return(
+        ["Encrypted: yes\n", status],
+      )
+
+      expect(model).not_to be_valid
+      expect(model.errors.of_kind?(:file, :encrypted_pdf)).to be true
+    end
+
+    it "checks the output even when pdfinfo fails" do
+      allow(status).to receive(:success?).and_return(false)
+      allow(Open3).to receive(:capture2).and_return(
+        ["Encrypted: yes\n", status],
+      )
+
+      expect(model).not_to be_valid
+      expect(model.errors.of_kind?(:file, :encrypted_pdf)).to be true
+    end
+
+    it "only checks lines starting with Encrypted" do
+      allow(Open3).to receive(:capture2).and_return(
+        ["Title: Encrypted yes\nEncrypted: no\n", status],
+      )
+
+      expect(model).to be_valid
+    end
+
+    context "with an accepted non-PDF file" do
+      let(:file) { fixture_file_upload("id_example.JPG", "image/jpeg") }
+
+      it "accepts the file when pdfinfo produces no output" do
+        allow(status).to receive(:success?).and_return(false)
+        allow(Open3).to receive(:capture2).and_return(["", status])
+
+        expect(model).to be_valid
+        expect(Open3).to have_received(:capture2).with(
+          "pdfinfo",
+          file.path,
+          err: File::NULL,
+        )
+      end
+    end
+  end
 end
