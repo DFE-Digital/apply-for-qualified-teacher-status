@@ -69,7 +69,12 @@ class AssessorInterface::ApplicationFormsShowViewObject
         else
           {
             name: "Reverse decision",
-            link: [:rollback, :assessor_interface, application_form, assessment],
+            link: [
+              :rollback,
+              :assessor_interface,
+              application_form,
+              assessment,
+            ],
           }
         end
       end,
