@@ -574,6 +574,10 @@ en:
           attributes:
             passed:
               inclusion: Select your prioritisation decision
+        assessor_interface/reverse_decision_form:
+          attributes:
+            reverse:
+              inclusion: Select yes if you want to reverse this decision
         assessor_interface/check_age_range_subjects_form:
           attributes:
             age_range_min:

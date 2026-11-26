@@ -16,6 +16,7 @@ module AssessorInterface
 
     before_action :ensure_can_make_prioritisation_decision,
                   only: %i[edit_prioritisation update_prioritisation]
+    before_action :ensure_no_pending_decision_review, only: %i[rollback destroy]
 
     def review
       @professional_standing_request =
@@ -73,6 +74,7 @@ module AssessorInterface
     end
 
     def rollback
+      @form = ReverseDecisionForm.new
     end
 
     def edit_prioritisation
@@ -107,7 +109,19 @@ module AssessorInterface
     end
 
     def destroy
-      RollbackAssessment.call(assessment:, user: current_staff)
+      @form =
+        ReverseDecisionForm.new(
+          reverse:
+            params.dig(:assessor_interface_reverse_decision_form, :reverse),
+        )
+
+      unless @form.valid?
+        render :rollback, status: :unprocessable_entity
+        return
+      end
+
+      RollbackAssessment.call(assessment:, user: current_staff) if @form.reverse
+
       redirect_to [:assessor_interface, application_form]
     rescue RollbackAssessment::InvalidState => e
       flash[:warning] = e.message
@@ -156,6 +170,12 @@ module AssessorInterface
 
     def ensure_can_make_prioritisation_decision
       return if @assessment.can_update_prioritisation_decision?
+
+      redirect_to [:assessor_interface, application_form]
+    end
+
+    def ensure_no_pending_decision_review
+      return unless application_form.pending_decision_review?
 
       redirect_to [:assessor_interface, application_form]
     end

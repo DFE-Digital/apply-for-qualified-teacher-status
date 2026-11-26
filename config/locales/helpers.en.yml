@@ -120,6 +120,10 @@ en:
         passed_options:
           true: "Prioritise this application"
           false: "Confirm application is not valid for prioritisation"
+      assessor_interface_reverse_decision_form:
+        reverse_options:
+          true: "Yes"
+          false: "No"
       assessor_interface_assessment_section_form:
         age_range_max: To
         age_range_min: From
