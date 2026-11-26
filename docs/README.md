@@ -17,7 +17,7 @@
 ## Operations
 
 - [Infrastructure](infrastructure.md)
-- [Monitoring](monitoring.md)
+- [Monitoring](monitoring.md): Grafana metrics and alerts, and [Skylight application performance monitoring](monitoring.md#skylight).
 - [Logging](logging.md)
 - [Setting up analytics](setting-up-analytics.md)
 - [Assessment check and failure reason updates](assessment-checks-and-failure-reason-updates.md)

@@ -18,6 +18,7 @@ These records explain the context and reasoning behind technical decisions. For 
 12. [Tracking email deliveries](00012-tracking-email-deliveries.md)
 13. [PDF generation](00013-pdf-generation.md)
 14. [Solid Queue and Solid Cache](00014-solid_cache_and_solid_queue.md)
+15. [Skylight application performance monitoring](00015-skylight-application-performance-monitoring.md)
 
 ## Adding a record
 

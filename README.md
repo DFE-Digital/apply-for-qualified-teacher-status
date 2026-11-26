@@ -1,3 +1,5 @@
+[![View performance data on Skylight](https://badges.skylight.io/status/E1VCisqrzYze.svg?token=hfyxhdMQ4d1E7G7A-LlhnPk4jzdj7U-4jPeJZ4BnAV4)](https://www.skylight.io/app/applications/E1VCisqrzYze)
+
 # Apply for qualified teacher status
 
 A service that allows overseas trained teachers to apply for qualified teacher status (QTS) in England.
@@ -11,10 +13,7 @@ New to the project? Start with the [developer guide](docs/development/README.md)
 ## Documentation
 
 - [Documentation index](docs/README.md)
-- [Architecture](docs/architecture/architecture.md)
-- [Application lifecycle](docs/application-forms.md)
 - [Architecture decision records](adr/README.md)
-- [Infrastructure](docs/infrastructure.md)
 
 ## Environments
 

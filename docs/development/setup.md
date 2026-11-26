@@ -106,3 +106,13 @@ Next, follow [tests and linting](README.md#tests-and-linting).
 BigQuery is not required for ordinary local development. Analytics is disabled by default in development; enable it only when your work requires it.
 
 See [setting up analytics](../setting-up-analytics.md) and agree local access with the team before adding credentials or setting `BIGQUERY_DISABLE=false`.
+
+## Optional: Skylight
+
+Skylight is not required for ordinary local development or tests. The sample configuration sets `SKYLIGHT_ENABLED=false`; leave it disabled unless you need to profile application performance.
+
+For local profiling, agree access and the reporting environment with the team first. Supply `SKYLIGHT_AUTHENTICATION` securely in your untracked local environment configuration, set `SKYLIGHT_ENABLED=true`, and set `SKYLIGHT_ENV` to the agreed label. The sample uses `test`, which is also the deployed test environment's label; do not send local traces there unintentionally.
+
+Restart the application after changing these settings and use fake data only: enabling Skylight sends performance data to an external service. Set `SKYLIGHT_ENABLED=false` and restart when finished.
+
+See [monitoring](../monitoring.md#skylight) for defaults, deployment configuration and verification.
