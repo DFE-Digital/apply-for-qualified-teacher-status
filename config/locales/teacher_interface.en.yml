@@ -261,6 +261,8 @@ en:
       country: Country trained in
       email: Email
       gov_uk_one_login: GOV.UK One Login
+      draft_created: Draft created
+      days_until_deletion: Days until deletion
       region: State/territory trained in
       submitted_at: Created on
       decision_review_requested: Decision review requested

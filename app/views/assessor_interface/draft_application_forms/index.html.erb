@@ -1,0 +1,37 @@
+<% content_for :page_title, t(".title") %>
+
+<h1 class="govuk-heading-xl"><%= t(".title") %></h1>
+
+<%= form_with model: @view_object.filter_form, url: filters_apply_assessor_interface_draft_application_forms_path, method: :post do |f| %>
+  <%= f.govuk_label :email, size: "s" %>
+  <div class="app-inline-content app-inline-content__items-baseline">
+    <%= f.govuk_text_field :email, label: nil, hint: nil, form_group: { class: "govuk-!-width-full govuk-!-margin-right-2" } %>
+    <%= f.govuk_submit t(".search") %>
+  </div>
+<% end %>
+
+<% records = @view_object.application_forms_records %>
+
+<% if @view_object.active_search? %>
+  <% if records.present? %>
+    <h2 class="govuk-heading-m govuk-!-margin-bottom-2"><%= t(".results.count", count: @view_object.application_forms_pagy.count, email: @view_object.filter_form.email) %></h2>
+  <% else %>
+      <h2 class="govuk-heading-m"><%= t(".results.empty") %></h2>
+  <% end %>
+
+  <p class="govuk-body"><%= govuk_link_to t(".results.clear"), filters_clear_assessor_interface_draft_application_forms_path %></p>
+<% end %>
+
+<% if records.present? %>
+  <ul class="app-search-results">
+    <% records.each do |application_form| %>
+      <li class="app-search-results__item">
+        <h2 class="app-search-result__item-title">
+          <%= govuk_link_to application_form.teacher.email, assessor_interface_draft_application_form_path(application_form) %>
+        </h2>
+        <%= render DescriptionList::Component.new(rows: @view_object.summary_rows(application_form), classes: ["app-description-list--search-result"]) %>
+      </li>
+    <% end %>
+  </ul>
+  <%= govuk_pagination(pagy: @view_object.application_forms_pagy) %>
+<% end %>

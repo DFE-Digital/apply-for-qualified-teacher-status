@@ -41,6 +41,10 @@ RSpec.describe StaffNavigationHelper do
           ["Email failures", "SLA status"],
         )
       end
+
+      it "includes the application items" do
+        expect(item_texts(sections, "Applications")).to eq(%w[Submitted Drafts])
+      end
     end
 
     context "with a staff member who has all permissions" do
@@ -97,12 +101,18 @@ RSpec.describe StaffNavigationHelper do
         expect(solid_queue[:new_tab]).to be(true)
       end
 
-      it "gives Applications its own link and no sub navigation items" do
+      it "keeps the Applications destination and adds both sub navigation links" do
         applications = sections.first
-        expect(applications[:href]).to eq(
+        destination = applications[:href] || applications[:items].first[:href]
+        expect(destination).to eq(
           main_app.assessor_interface_application_forms_path,
         )
-        expect(applications[:items]).to be_empty
+        expect(applications[:items].map { |item| item[:href] }).to eq(
+          [
+            main_app.assessor_interface_application_forms_path,
+            main_app.assessor_interface_draft_application_forms_path,
+          ],
+        )
       end
     end
 
@@ -170,6 +180,69 @@ RSpec.describe StaffNavigationHelper do
       let(:path) { "#{main_app.assessor_interface_application_forms_path}/123" }
 
       it { expect(current_section[:text]).to eq("Applications") }
+
+      it "activates only the Submitted item" do
+        expect(
+          current_section[:items]
+            .select { |item| staff_navigation_item_active?(item) }
+            .map { |item| item[:text] },
+        ).to eq(["Submitted"])
+      end
+    end
+
+    context "on the draft application list" do
+      let(:path) { main_app.assessor_interface_draft_application_forms_path }
+
+      it "activates Applications and only the Drafts item" do
+        expect(current_section[:text]).to eq("Applications")
+        expect(
+          current_section[:items]
+            .select { |item| staff_navigation_item_active?(item) }
+            .map { |item| item[:text] },
+        ).to eq(["Drafts"])
+      end
+    end
+
+    context "on a draft application page" do
+      let(:path) do
+        "#{main_app.assessor_interface_draft_application_forms_path}/123"
+      end
+
+      it "activates Applications and only the Drafts item" do
+        expect(current_section[:text]).to eq("Applications")
+        expect(
+          current_section[:items]
+            .select { |item| staff_navigation_item_active?(item) }
+            .map { |item| item[:text] },
+        ).to eq(["Drafts"])
+      end
+    end
+
+    context "on the submitted application list" do
+      let(:path) { main_app.assessor_interface_application_forms_path }
+
+      it "activates only the Submitted item" do
+        expect(
+          current_section[:items]
+            .select { |item| staff_navigation_item_active?(item) }
+            .map { |item| item[:text] },
+        ).to eq(["Submitted"])
+      end
+    end
+
+    context "on a draft application's timeline" do
+      let(:path) do
+        main_app.timeline_assessor_interface_draft_application_form_path("123")
+      end
+
+      it "activates Applications and only the Drafts item" do
+        expect(current_section[:text]).to eq("Applications")
+        expect(
+          current_section[:items]
+            .select { |item| staff_navigation_item_active?(item) }
+            .map { |item| item[:text] },
+        ).to eq(["Drafts"])
+      end
     end
 
     context "on a regions page" do

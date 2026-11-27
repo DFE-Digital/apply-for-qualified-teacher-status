@@ -7,4 +7,5 @@
   <% @timeline_events.each do |timeline_event| %>
     <%= render(TimelineEntry::Component.new(timeline_event:))%>
   <% end %>
+  <%= render "shared/assessor_interface/draft_created_timeline_entry", application_form: @view_object.application_form %>
 </div>

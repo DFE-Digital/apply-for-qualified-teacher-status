@@ -1,0 +1,14 @@
+<div class="moj-timeline__item">
+  <div class="moj-timeline__header">
+    <h2 class="moj-timeline__title"><%= t("assessor_interface.draft_created_timeline_entry.title") %></h2>
+    <p class="moj-timeline__byline"><%= t("assessor_interface.draft_created_timeline_entry.byline") %></p>
+  </div>
+
+  <p class="moj-timeline__date">
+    <time datetime="<%= application_form.created_at.iso8601 %>">
+      <%= application_form.created_at.localtime.to_fs %>
+    </time>
+  </p>
+
+  <div class="moj-timeline__description"></div>
+</div>

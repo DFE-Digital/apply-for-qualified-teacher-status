@@ -1,0 +1,16 @@
+<% content_for :page_title, t(".title") %>
+<% content_for :back_link_url, assessor_interface_draft_application_forms_path %>
+
+<h1 class="govuk-heading-xl"><%= t(".title") %></h1>
+
+<section id="app-application-overview">
+  <h2 class="govuk-heading-l"><%= t("application_form.overview.title") %></h2>
+  <%= govuk_summary_list(rows: @view_object.summary_rows, actions: false) do |summary_list| %>
+    <% summary_list.with_row do |row| %>
+      <% row.with_key { t("application_form.overview.application_history") } %>
+      <% row.with_value do %>
+        <%= govuk_link_to t("application_form.overview.view_timeline"), timeline_assessor_interface_draft_application_form_path(params[:reference]) %>
+      <% end %>
+    <% end %>
+  <% end %>
+</section>

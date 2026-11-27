@@ -179,6 +179,8 @@ en:
         location: Country trained in
         name: Applicant name
         reference: Application reference number
+      assessor_interface_draft_application_forms_filter_form:
+        email: Applicant email
       assessor_interface_qualification_update_form:
         title: New teaching qualification title
         institution_name: New name of institution

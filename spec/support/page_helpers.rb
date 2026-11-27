@@ -29,6 +29,16 @@ module PageHelpers
       PageObjects::AssessorInterface::Applications.new
   end
 
+  def assessor_draft_applications_page
+    @assessor_draft_applications_page ||=
+      PageObjects::AssessorInterface::DraftApplications.new
+  end
+
+  def assessor_draft_application_page
+    @assessor_draft_application_page ||=
+      PageObjects::AssessorInterface::DraftApplication.new
+  end
+
   def assessor_feedback_submissions_page
     @assessor_feedback_submissions_page ||=
       PageObjects::AssessorInterface::FeedbackSubmissions.new

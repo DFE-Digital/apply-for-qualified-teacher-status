@@ -51,13 +51,24 @@ RSpec.describe "Assessor view timeline events", type: :system do
     expect(assessor_timeline_page.timeline_items.third.heading).to have_content(
       "Assessor assigned",
     )
+    expect(assessor_timeline_page.timeline_items.last.heading).to have_content(
+      "Draft created",
+    )
+    expect(assessor_timeline_page.timeline_items.last.date.text).to eq(
+      application_form.created_at.localtime.to_fs.squish,
+    )
   end
 
   def application_form
     @application_form ||=
       begin
         application_form =
-          create(:application_form, :submitted, :with_assessment)
+          create(
+            :application_form,
+            :submitted,
+            :with_assessment,
+            created_at: 2.days.ago,
+          )
         create(:timeline_event, :assessor_assigned, application_form:)
         create(:timeline_event, :stage_changed, application_form:)
         create(:timeline_event, :note_created, application_form:)
