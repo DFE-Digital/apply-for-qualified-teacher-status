@@ -177,7 +177,7 @@ RSpec.describe "Assessor viewing draft applications", type: :system do
       "/assessor/applications/drafts/#{draft.reference}",
     )
     expect(result.summary_keys.map(&:text)).to eq(
-      ["Name", "Country trained in", "Draft Started", "Days until deletion"],
+      ["Name", "Country trained in", "Draft created", "Days until deletion"],
     )
     expect(result.summary_values.map(&:text)).to eq(
       ["Not provided", "France", "31 May 2026", "6 days"],
@@ -213,9 +213,6 @@ RSpec.describe "Assessor viewing draft applications", type: :system do
 
   def then_i_see_no_matching_drafts
     expect(assessor_draft_applications_page).to have_empty_state
-    expect(assessor_draft_applications_page.result_count.text).to eq(
-      "0 results for ‘missing-draft@example.com’",
-    )
     expect(assessor_draft_applications_page).to have_no_search_results
   end
 

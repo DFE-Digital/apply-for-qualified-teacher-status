@@ -126,7 +126,7 @@ RSpec.describe AssessorInterface::DraftApplicationFormsIndexViewObject do
         [
           { key: { text: "Name" }, value: { text: "Not provided" } },
           { key: { text: "Country trained in" }, value: { text: "France" } },
-          { key: { text: "Draft Started" }, value: { text: "31 May 2026" } },
+          { key: { text: "Draft created" }, value: { text: "31 May 2026" } },
           { key: { text: "Days until deletion" }, value: { text: "6 days" } },
         ],
       )
@@ -148,7 +148,7 @@ RSpec.describe AssessorInterface::DraftApplicationFormsIndexViewObject do
     end
 
     [[25, "1 day"], [24, "0 days"], [23, "0 days"]].each do |day, expected|
-      it "shows #{expected} for a draft started on 2026-05-#{day}" do
+      it "shows #{expected} for a Draft created on 2026-05-#{day}" do
         application_form.created_at = Time.zone.local(2026, 5, day, 12)
 
         expect(rows.last[:value][:text]).to eq(expected)

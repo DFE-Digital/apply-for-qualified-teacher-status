@@ -254,7 +254,7 @@ en:
         summary:
           name: Name
           country: Country trained in
-          started_at: Draft Started
+          started_at: Draft created
           days_until_deletion: Days until deletion
         results:
           count:
