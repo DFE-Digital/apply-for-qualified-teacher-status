@@ -261,7 +261,7 @@ en:
             one: "1 result for ‘%{email}’"
             other: "%{count} results for ‘%{email}’"
           clear: Clear search results
-          empty: No applications found. Use the search bar above to try again or refine your search
+          empty: No applications found. Use the search bar above to try again or refine your search.
       show:
         title: Draft application
 
